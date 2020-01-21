@@ -15,13 +15,37 @@ export const thunkLoadProducts = (): ThunkAction<void, types.ProductsState, null
   dispatch,
 ): any => {
   dispatch(loadProducts(true));
-  api()
+  return api()
     .products.get()
     .then(({ data }) => {
       dispatch(loadProducts(false, data.data));
     })
     .catch(err => {
+      throw err;
       dispatch(loadProducts(false));
+      captureException(err);
+    });
+};
+
+function showProduct(isFetching, currentProduct = null): types.ProductsActionTypes {
+  return {
+    type: types.SHOW_PRODUCT,
+    payload: currentProduct,
+    isFetching,
+  };
+}
+export const thunkShowProduct = (slug, req = null): ThunkAction<void, types.ProductsState, null, Action<string>> => (
+  dispatch,
+): any => {
+  dispatch(showProduct(true));
+  return api(req)
+    .products.show(slug)
+    .then(({ data }) => {
+      dispatch(showProduct(false, data.data));
+    })
+    .catch(err => {
+      throw err;
+      dispatch(showProduct(false));
       captureException(err);
     });
 };

@@ -22,7 +22,4 @@ interface Logout {
   isFetching: boolean;
 }
 
-export type UsersActionTypes =
-  | SetLogin
-  | Login
-  | Logout;
+export type UsersActionTypes = SetLogin | Login | Logout;

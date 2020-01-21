@@ -15,6 +15,13 @@ const reducer = (state = initialState, action: types.ProductsActionTypes): types
         isFetching: action.isFetching,
       };
     }
+    case types.SHOW_PRODUCT: {
+      return {
+        ...state,
+        currentProduct: action.payload,
+        isFetching: action.isFetching,
+      };
+    }
     default:
       return state;
   }

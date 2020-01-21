@@ -3,9 +3,9 @@ import { Provider } from 'react-redux'
 import cookies from 'next-cookies'
 import { NextPage } from 'next';
 // import * as Sentry from '@sentry/browser'
-import withReduxStore from '../lib/with-redux-store'
-import actions from "../store/actions";
-import '../styles/tailwind.css';
+import withReduxStore from 'lib/with-redux-store'
+import actions from "store/actions";
+import 'styles/tailwind.css';
 import 'reset-css';
 
 // disable when development

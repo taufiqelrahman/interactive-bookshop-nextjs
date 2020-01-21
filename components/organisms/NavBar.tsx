@@ -32,9 +32,11 @@ const NavBar = () => {
       <div className={stickyClassName()} ref={ref}>
         <div className="c-nav-bar">
         <div className="u-container">
-          <div className="c-nav-bar__logo">
-            whenigrowup
-          </div>
+          <Link href="/">
+            <a className="c-nav-bar__logo">
+              whenigrowup
+            </a>
+          </Link>
           <div className="c-nav-bar__menu">
             { menu.map((menu, i) => {
               return (
