@@ -43,7 +43,4 @@ interface RemoveFromCart {
   isFetching: boolean;
 }
 
-export type CartActionTypes =
-  | LoadCart
-  | AddToCart
-  | RemoveFromCart;
+export type CartActionTypes = LoadCart | AddToCart | RemoveFromCart;

@@ -45,6 +45,4 @@ interface LoadOrder {
   isFetching: boolean;
 }
 
-export type OrdersActionTypes =
-  | Checkout
-  | LoadOrder;
+export type OrdersActionTypes = Checkout | LoadOrder;

@@ -1,4 +1,5 @@
 export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
+export const SHOW_PRODUCT = 'SHOW_PRODUCT';
 
 export interface Product {
   id: number;
@@ -33,4 +34,10 @@ interface LoadProducts {
   isFetching: boolean;
 }
 
-export type ProductsActionTypes = LoadProducts;
+interface ShowProduct {
+  type: typeof SHOW_PRODUCT;
+  payload: Product | null;
+  isFetching: boolean;
+}
+
+export type ProductsActionTypes = LoadProducts | ShowProduct;

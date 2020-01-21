@@ -13,7 +13,7 @@ function loadCart(isFetching, cart = null): types.CartActionTypes {
 }
 export const thunkLoadCart = (): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
   dispatch(loadCart(true));
-  api()
+  return api()
     .cart.get()
     .then(({ data }) => {
       dispatch(loadCart(false, data.data));
@@ -35,10 +35,9 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
   dispatch,
 ): any => {
   dispatch(addToCart(true));
-  api()
+  return api()
     .cart.addToCart(newProduct)
     .then(({ data }) => {
-      debugger
       dispatch(addToCart(false, data.data));
     })
     .catch(err => {
@@ -58,7 +57,7 @@ export const thunkRemoveFromCart = (existingProduct: any): ThunkAction<void, typ
   dispatch,
 ): any => {
   dispatch(removeFromCart(true));
-  api()
+  return api()
     .cart.removeFromCart(existingProduct)
     .then(({ data }) => {
       dispatch(removeFromCart(false, data.data));

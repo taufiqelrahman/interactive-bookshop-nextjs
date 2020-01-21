@@ -16,7 +16,7 @@ export const thunkCheckout = (newOrder): ThunkAction<void, types.OrdersState, nu
   dispatch,
 ): any => {
   dispatch(checkout(true));
-  api()
+  return api()
     .orders.checkout(newOrder)
     .then(({ data }) => {
       dispatch(checkout(false, data.data));
@@ -38,7 +38,7 @@ export const thunkLoadOrder = (chargeData): ThunkAction<void, types.OrdersState,
   dispatch,
 ): any => {
   dispatch(loadOrder(true));
-  api()
+  return api()
     .orders.loadOrder(chargeData)
     .then(({ data }) => {
       dispatch(loadOrder(false, data.data));

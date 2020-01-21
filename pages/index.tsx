@@ -5,6 +5,7 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import DefaultLayout from 'components/layouts/Default';
 import Hero from 'components/organisms/Hero';
 import Features from 'components/organisms/Features';
+import actions from 'store/actions';
 
 const Index = (props) => {
   // const register = () => {
@@ -70,39 +71,30 @@ const Index = (props) => {
   //   props.thunkLoadOrder(201900000001);
   // }
 
-  const features = [
-    {
-      title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      slug: 'lorem-ipsum',
-      imageUrl: 'https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/0430-nytrees04.jpg',
-    },
-    {
-      title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      slug: 'dolor-sit',
-      imageUrl: 'https://www.counterpunch.org/wp-content/dropzone/2019/10/03453A49-E9C4-4BB0-AA5B-5CC5213E75A5.jpg',
-    },
-    {
-      title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      slug: 'amet',
-      imageUrl: 'https://newsroom.unsw.edu.au/sites/default/files/styles/full_width/public/thumbnails/image/dead_tree_on_a_dusty_plain_1.jpg',
-    },
-  ];
-
   return (
-    <div>
+    <DefaultLayout>
       <Hero />
-      <Features features={features} />
+      <Features features={props.state.products.products} />
+      {/* <button onClick={login}>Login</button> */}
       {/* <button onClick={loadProducts.bind(this)}>Get Products</button>
       <button onClick={register}>Register</button>
-      <button onClick={login}>Login</button>
       <button onClick={logout}>Logout</button>
       <button onClick={getCart}>Get Cart</button>
       <button onClick={addToCart}>Add to Cart</button>
       <button onClick={removeFromCart}>Remove from Cart</button>
       <button onClick={checkout}>Checkout</button>
       <button onClick={loadOrder}>Get Order</button> */}
-    </div>
+    </DefaultLayout>
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout(Index))
+Index.getInitialProps = async (ctx) => {
+  try {
+    await ctx.reduxStore.dispatch(actions.thunkLoadProducts());
+  } catch (err) {
+    console.log(err.message);
+  }
+  return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index)

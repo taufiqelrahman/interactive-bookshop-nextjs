@@ -23,7 +23,7 @@ function login(isFetching, state = null): types.UsersActionTypes {
 }
 export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
   dispatch(login(true));
-  api()
+  return api()
     .users.login(userData)
     .then(({ data }) => {
       const token = CryptoJS.AES.encrypt(data.token, process.env.SECRET_KEY).toString();
@@ -45,7 +45,7 @@ function logout(isFetching, state = null): types.UsersActionTypes {
 }
 export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
   dispatch(logout(true));
-  api()
+  return api()
     .users.logout()
     .then(({ data }) => {
       Cookies.remove('user');

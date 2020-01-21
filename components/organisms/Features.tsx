@@ -11,9 +11,9 @@ const Features = (props) => {
                 <a
                   className="c-features__item"
                   style={{
-                    background: `url(\'${item.imageUrl}\')`,
+                    background: `url(\'${item.images[0].filepath}\')`,
                   }}>
-                  { item.title }
+                  { item.name }
                 </a>
               </Link>
             )
@@ -25,7 +25,7 @@ const Features = (props) => {
           @apply py-6;
 
           &__item {
-            @apply mr-3 bg-cover bg-center text-white text-center p-5 text-xl !important;
+            @apply mr-3 bg-cover bg-center text-white text-center p-5 text-xl w-1/3 !important;
             height: 370px;
             &:last-child {
               @apply mr-0;
