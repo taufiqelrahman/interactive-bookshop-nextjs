@@ -2,22 +2,14 @@ const Footer = () => {
   return (
     <div>
       <div className="c-footer">
-        <div className="c-footer__top">
-        
-        </div>
+        <div className="c-footer__top"></div>
         <div className="c-footer__bottom">
           <div className="u-container">
             <div className="c-footer__bottom__menu">
-              <div className="c-footer__bottom__menu__item">
-                Terms & Conditions
-              </div>
-              <div className="c-footer__bottom__menu__item">
-                Privacy Policy
-              </div>
+              <div className="c-footer__bottom__menu__item">Terms & Conditions</div>
+              <div className="c-footer__bottom__menu__item">Privacy Policy</div>
             </div>
-            <div className="c-footer__copyright">
-              whenigrowup
-            </div>
+            <div className="c-footer__copyright">whenigrowup</div>
           </div>
         </div>
       </div>
@@ -40,7 +32,7 @@ const Footer = () => {
         }
       `}</style>
     </div>
-  )
+  );
 };
 
 export default Footer;

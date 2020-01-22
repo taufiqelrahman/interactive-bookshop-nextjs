@@ -1,10 +1,11 @@
-import React from 'react'
-import { Provider } from 'react-redux'
-import cookies from 'next-cookies'
+import React from 'react';
+import { Provider } from 'react-redux';
+import cookies from 'next-cookies';
 import { NextPage } from 'next';
 // import * as Sentry from '@sentry/browser'
-import withReduxStore from 'lib/with-redux-store'
-import actions from "store/actions";
+import withReduxStore from 'lib/with-redux-store';
+import { appWithTranslation } from 'i18n';
+import actions from 'store/actions';
 import 'styles/tailwind.css';
 import 'reset-css';
 
@@ -21,7 +22,7 @@ import 'reset-css';
 //    }
 // });
 
-const App : NextPage<any> = (props) => {
+const App: NextPage<any> = (props: any) => {
   const { Component, pageProps, reduxStore } = props;
   return (
     <Provider store={reduxStore}>
@@ -39,21 +40,19 @@ const App : NextPage<any> = (props) => {
         }
       `}</style>
     </Provider>
-  )
+  );
 };
 
-App.getInitialProps = async ({ Component, ctx, router } : any) => {
+App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
   if (cookies(ctx).user) {
-    ctx.reduxStore.dispatch(actions.setLogin(true))
+    ctx.reduxStore.dispatch(actions.setLogin(true));
   } else {
-    ctx.reduxStore.dispatch(actions.setLogin(false))
+    ctx.reduxStore.dispatch(actions.setLogin(false));
   }
 
   return {
-    pageProps: Component.getInitialProps
-      ? await Component.getInitialProps(ctx)
-      : {},
-  }
-}
+    pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},
+  };
+};
 
-export default withReduxStore(App);
+export default appWithTranslation(withReduxStore(App));

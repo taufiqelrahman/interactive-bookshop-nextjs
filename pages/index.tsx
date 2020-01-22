@@ -4,10 +4,10 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 // import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import Hero from 'components/organisms/Hero';
-import Features from 'components/organisms/Features';
-import actions from 'store/actions';
+// import Features from 'components/organisms/Features';
+// import actions from 'store/actions';
 
-const Index = (props) => {
+const Index = (): any => {
   // const register = () => {
   //   api().users.register({
   //     name: 'taufiq',
@@ -71,10 +71,55 @@ const Index = (props) => {
   //   props.thunkLoadOrder(201900000001);
   // }
 
+  // const getProducts = (): any => {
+  //   props.thunkLoadProducts();
+  //   // props.client.product.fetchAll().then(() => {
+  //   //   // Do something with the products
+  //   //   // console.log(products);
+  //   //   // console.log(products[0].variants[0].id);
+  //   // });
+  //   // // Build a custom products query using the unoptimized version of the SDK
+  //   // const productsQuery = props.client.graphQLClient.query(root => {
+  //   //   root.addConnection('order', { args: { first: 10 } }, () => {
+  //   //     // product.add('title');
+  //   //   });
+  //   // });
+
+  //   // // Call the send method with the custom products query
+  //   // props.client.graphQLClient.send(productsQuery).then(({ model }) => {
+  //   //   // Do something with the products
+  //   //   console.log(model);
+  //   // });
+  // };
+
+  // const checkout = (): any => {
+  //   // const variantId = 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMTM5OTAxOTkwNTE2NA==';
+  //   props.client.checkout
+  //     .create({
+  //       email: 'asd@asd.com',
+  //     })
+  //     .then(checkout => {
+  //       console.log(checkout);
+  //       // Do something with the checkout
+  //       // const lineItemsToAdd = [
+  //       //   {
+  //       //     variantId,
+  //       //     quantity: 1,
+  //       //     customAttributes: [{ key: 'MyKey', value: 'MyValue' }],
+  //       //   },
+  //       // ];
+  //       // props.client.checkout.addLineItems(checkout.id, lineItemsToAdd).then(res => {
+  //       //   console.log(res.webUrl);
+  //       // });
+  //     });
+  // };
+
   return (
     <DefaultLayout>
       <Hero />
-      <Features features={props.state.products.products} />
+      {/* <Features features={props.state.products.products} /> */}
+      {/* <button onClick={getProducts}>get products</button> */}
+      {/* <button onClick={checkout}>checkout</button> */}
       {/* <button onClick={login}>Login</button> */}
       {/* <button onClick={loadProducts.bind(this)}>Get Products</button>
       <button onClick={register}>Register</button>
@@ -85,16 +130,16 @@ const Index = (props) => {
       <button onClick={checkout}>Checkout</button>
       <button onClick={loadOrder}>Get Order</button> */}
     </DefaultLayout>
-  )
-}
+  );
+};
 
-Index.getInitialProps = async (ctx) => {
-  try {
-    await ctx.reduxStore.dispatch(actions.thunkLoadProducts());
-  } catch (err) {
-    console.log(err.message);
-  }
-  return {};
-}
+// Index.getInitialProps = async (ctx: any): Promise<any> => {
+//   try {
+//     await ctx.reduxStore.dispatch(actions.thunkLoadProducts());
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+//   return {};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index)
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

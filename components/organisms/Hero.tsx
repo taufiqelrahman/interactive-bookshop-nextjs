@@ -2,9 +2,7 @@ const Hero = () => {
   return (
     <div>
       <div className="c-hero">
-        <h1 className="c-hero__title">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </h1>
+        <h1 className="c-hero__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
       </div>
       <style jsx>{`
         .c-hero {
@@ -19,7 +17,7 @@ const Hero = () => {
         }
       `}</style>
     </div>
-  )
+  );
 };
 
 export default Hero;
