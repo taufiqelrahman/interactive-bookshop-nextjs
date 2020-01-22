@@ -29,6 +29,8 @@ const TranslationToggle = () => {
             @apply w-2/4 text-center;
             line-height: 20px;
             color: #898699;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
 
             &.active {
               @apply text-white;
