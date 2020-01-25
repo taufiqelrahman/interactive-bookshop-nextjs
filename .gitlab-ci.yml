@@ -1,0 +1,6 @@
+image: mhart/alpine-node:12
+
+test:
+  script:
+    - yarn
+    - npm run lint
