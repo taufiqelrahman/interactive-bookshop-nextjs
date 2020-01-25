@@ -1,5 +1,10 @@
 {
-  "h1": "A simple example",
+  "login": "Login",
+  "register": "Register",
+  "account": "Account",
+  "cart": "Cart",
+  "cart-link": "Go to Cart",
+  "cart-empty": "Your cart is empty",
   "change-locale": "Change locale",
   "to-second-page": "To second page",
   "error-with-status": "A {{statusCode}} error occurred on server",

@@ -1,5 +1,10 @@
 {
-  "h1": "Sebuah contoh yang simpel",
+  "login": "Masuk",
+  "register": "Daftar",
+  "account": "Akun",
+  "cart": "Keranjang",
+  "cart-link": "Lihat Keranjang",
+  "cart-empty": "Keranjang kosong",
   "change-locale": "Change locale",
   "to-second-page": "To second page",
   "error-with-status": "A {{statusCode}} error occurred on server",

@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'whenigrowup';
+  src:  url('/static/fonts/whenigrowup.eot?ckltd0');
+  src:  url('/static/fonts/whenigrowup.eot?ckltd0#iefix') format('embedded-opentype'),
+    url('/static/fonts/whenigrowup.ttf?ckltd0') format('truetype'),
+    url('/static/fonts/whenigrowup.woff?ckltd0') format('woff'),
+    url('/static/fonts/whenigrowup.svg?ckltd0#whenigrowup') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'whenigrowup' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-cart:before {
+  content: "\e900";
+}
+.icon-account:before {
+  content: "\e901";
+}

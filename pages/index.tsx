@@ -7,7 +7,7 @@ import Hero from 'components/organisms/Hero';
 // import Features from 'components/organisms/Features';
 // import actions from 'store/actions';
 
-const Index = (): any => {
+const Index = (props: any): any => {
   // const register = () => {
   //   api().users.register({
   //     name: 'taufiq',
@@ -115,7 +115,7 @@ const Index = (): any => {
   // };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart}>
       <Hero />
       {/* <Features features={props.state.products.products} /> */}
       {/* <button onClick={getProducts}>get products</button> */}
@@ -141,5 +141,9 @@ const Index = (): any => {
 //   }
 //   return {};
 // };
+
+Index.getInitialProps = async () => ({
+  namespacesRequired: ['common'],
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

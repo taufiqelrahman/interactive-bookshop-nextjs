@@ -7,6 +7,7 @@ import withReduxStore from 'lib/with-redux-store';
 import { appWithTranslation } from 'i18n';
 import actions from 'store/actions';
 import 'styles/tailwind.css';
+import 'styles/icomoon/style.css';
 import 'reset-css';
 
 // disable when development
@@ -28,15 +29,26 @@ const App: NextPage<any> = (props: any) => {
     <Provider store={reduxStore}>
       <Component {...pageProps} />
       <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins&display=swap');
+
         body {
           @apply font-sans;
+          font-family: 'Poppins', sans-serif;
         }
 
         .u-container {
-          @apply flex items-center justify-between w-full m-auto;
+          @apply flex items-center justify-between w-full mx-auto;
           @screen lg {
             @apply w-11/12;
           }
+        }
+
+        /* icons */
+        .icon-cart:before {
+          content: '\e900';
+        }
+        .icon-account:before {
+          content: '\e901';
         }
       `}</style>
     </Provider>
