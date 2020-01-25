@@ -32,14 +32,13 @@ const App: NextPage<any> = (props: any) => {
         @import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins&display=swap');
 
         body {
-          @apply font-sans;
-          font-family: 'Poppins', sans-serif;
+          @apply font-poppins;
         }
 
         .u-container {
           @apply flex items-center justify-between w-full mx-auto;
           @screen lg {
-            @apply w-11/12;
+            @apply w-9/12;
           }
         }
 

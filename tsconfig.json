@@ -26,11 +26,11 @@
     "strict": false,
     "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
       "*": [
-        "*",
+        "*"
       ]
     }
   },
@@ -41,5 +41,5 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+  ]
 }

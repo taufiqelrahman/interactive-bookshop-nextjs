@@ -48,7 +48,7 @@ const NavBar = (props: any) => {
               </a>
             </Link>
             <div className="c-nav-bar__menu">
-              <TranslationToggle />
+              {isSticky && <TranslationToggle />}
               <Link href="/cart">
                 <a
                   className="c-nav-bar__menu__cart"
@@ -81,7 +81,7 @@ const NavBar = (props: any) => {
         {`
           .c-nav-bar {
             ${router.pathname === '/' ? 'position: absolute; width: 100%;' : ''}
-            @apply flex;
+            @apply flex z-50;
             height: 80px;
 
             .c-nav-bar--sticky & {

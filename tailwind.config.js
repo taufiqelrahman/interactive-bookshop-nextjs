@@ -11,6 +11,10 @@ module.exports = {
       brand: '#DE6236',
       'dark-grey': '#333',
     }),
+    fontFamily: {
+      poppins: ['Poppins', 'sans-serif'],
+      opensans: ['Open Sans', 'sans-serif'],
+    },
     extend: {},
   },
   variants: {},

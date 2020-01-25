@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 // import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
-import Hero from 'components/organisms/Hero';
+import { withTranslation } from 'i18n';
+// import Hero from 'components/organisms/Hero';
 // import Features from 'components/organisms/Features';
 // import actions from 'store/actions';
 
@@ -116,7 +117,47 @@ const Index = (props: any): any => {
 
   return (
     <DefaultLayout isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart}>
-      <Hero />
+      <div className="c-section--top">
+        <div className="c-section__create-now">
+          <div className="u-container">
+            <div>
+              <div className="flex w-full items-center">
+                <div className="c-section--top__image">
+                  <img src="/static/images/airbaloon.png" alt="hot-airbaloon" />
+                </div>
+                <div className="c-section--top__content">
+                  <h1>{props.t('createnow-title')}</h1>
+                  <div>{props.t('createnow-content')}</div>
+                  {/* <Button variant="ghost" color="black">{props.t('createnow-button')}</Button> */}
+                </div>
+              </div>
+              <div className="c-section__create-now__book">
+                <img src="/static/images/floating-book.png" alt="floating-book" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="c-section__start-story">
+          <div className="u-container">
+            <div>
+              <div className="flex w-full items-center">
+                <div className="c-section--top__image">
+                  <img src="/static/images/bubblegum-kid.png" alt="hot-airbaloon" />
+                </div>
+                <div className="c-section--top__content text-white">
+                  <h1>{props.t('startstory-title')}</h1>
+                  <div>{props.t('startstory-content')}</div>
+                  {/* <Button variant="ghost" color="black">{props.t('startstory-button')}</Button> */}
+                </div>
+              </div>
+              <div className="c-section__start-story__socks">
+                <img src="/static/images/socks.png" alt="socks" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <Hero /> */}
       {/* <Features features={props.state.products.products} /> */}
       {/* <button onClick={getProducts}>get products</button> */}
       {/* <button onClick={checkout}>checkout</button> */}
@@ -129,6 +170,51 @@ const Index = (props: any): any => {
       <button onClick={removeFromCart}>Remove from Cart</button>
       <button onClick={checkout}>Checkout</button>
       <button onClick={loadOrder}>Get Order</button> */}
+      <style jsx>{`
+        .c-section {
+          &--top {
+            background: url('/static/images/clouds.png') 0 80px no-repeat,
+              linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
+            background-size: 95%;
+            &__image {
+              @apply w-7/12 flex justify-end mr-6;
+            }
+            &__content {
+              @apply w-5/12;
+              h1 {
+                @apply font-semibold mb-4;
+                font-size: 44px;
+                line-height: 55px;
+              }
+              div {
+                line-height: 22px;
+                width: 350px;
+              }
+            }
+          }
+          &__clouds {
+            @apply h-full;
+            background: url('/static/images/clouds.png');
+          }
+          &__create-now {
+            &__book {
+              @apply ml-auto w-5/12 mt-12;
+              img {
+                width: 202px;
+                height: 162px;
+              }
+            }
+          }
+          &__start-story {
+            @apply mt-40;
+            &__socks {
+              @apply ml-auto mt-16;
+              width: 159px;
+              height: 138px;
+            }
+          }
+        }
+      `}</style>
     </DefaultLayout>
   );
 };
@@ -143,7 +229,7 @@ const Index = (props: any): any => {
 // };
 
 Index.getInitialProps = async () => ({
-  namespacesRequired: ['common'],
+  namespacesRequired: ['common', 'page-index'],
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default withTranslation('page-index')(connect(mapStateToProps, mapDispatchToProps)(Index));

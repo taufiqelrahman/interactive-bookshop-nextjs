@@ -46,12 +46,11 @@ const CartDropdown = (props: any) => {
           padding: 18px;
 
           &--empty {
-            @apply flex items-center justify-center italic text-base;
+            @apply flex items-center justify-center italic text-base font-opensans;
             left: -15px;
             width: 200px;
             height: 58px;
             color: #898699;
-            font-family: 'Open Sans', sans-serif;
           }
 
           &__header {
