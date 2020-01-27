@@ -36,13 +36,19 @@ const App: NextPage<any> = (props: any) => {
         }
 
         .u-container {
-          @apply flex items-center justify-between w-full mx-auto;
+          @apply flex items-center justify-between w-11/12 mx-auto;
           @screen lg {
             @apply w-9/12;
           }
         }
 
         /* icons */
+        .icon-chevron_right:before {
+          content: '\e902';
+        }
+        .icon-chevron_left:before {
+          content: '\e903';
+        }
         .icon-cart:before {
           content: '\e900';
         }

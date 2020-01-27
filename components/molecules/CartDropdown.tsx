@@ -15,20 +15,18 @@ const CartDropdown = (props: any) => {
             </div>
             <div className="c-cart-dropdown__content">
               {/* dummy */}
-              {[1, 2, 3].map(item => {
-                return (
-                  <div key={item} className="c-cart-dropdown__item">
-                    <div className="flex">
-                      <img alt="item" className="c-cart-dropdown__item__image" width="44" height="44" />
-                      <div>
-                        <div className="c-cart-dropdown__item__name">WIGO book for Rivandi Anjas</div>
-                        <div className="c-cart-dropdown__item__quantity">1 item</div>
-                      </div>
+              {[1, 2, 3].map(item => (
+                <div key={item} className="c-cart-dropdown__item">
+                  <div className="flex items-center">
+                    <img alt="item" className="c-cart-dropdown__item__image" width="44" height="44" />
+                    <div>
+                      <div className="c-cart-dropdown__item__name">WIGO book for Rivandi Anjas</div>
+                      <div className="c-cart-dropdown__item__quantity">1 item</div>
                     </div>
-                    <div className="c-cart-dropdown__item__total">Rp65.444</div>
                   </div>
-                );
-              })}
+                  <div className="c-cart-dropdown__item__total">Rp65.444</div>
+                </div>
+              ))}
             </div>
           </div>
         ) : (

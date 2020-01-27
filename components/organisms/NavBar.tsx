@@ -38,7 +38,7 @@ const NavBar = (props: any) => {
   const cartNotEmpty = !!props.cart.cart && props.cart.cart.length > 0;
 
   return (
-    <div>
+    <div className="relative z-50">
       <div className={stickyClassName()} ref={ref}>
         <div className="c-nav-bar">
           <div className="u-container">
