@@ -1,3 +1,10 @@
 {
-  "continue-button": "Continue"
+  "continue-button": "Continue",
+  "name-label": "Name",
+  "name-placeholder": "Enter name here...",
+  "occupations-label": "Choose 3 dream occupations",
+  "age-label": "Portray me as a...",
+  "age-baby": "Baby",
+  "age-toddler": "Toddler",
+  "age-kid": "Kid"
 }

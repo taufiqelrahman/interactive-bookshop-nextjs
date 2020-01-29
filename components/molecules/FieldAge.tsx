@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'i18n';
 import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 
@@ -6,12 +7,12 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
   <div>
     <div className="c-field-age">
       <div className="c-field-age__header">
-        Portray me as a...
+        {props.t('age-label')}
         {props.errors && <Badge>!</Badge>}
       </div>
       <div className="c-field-age__options">
         {/* dummy */}
-        {['Baby', 'Toddler', 'Kid'].map(age => (
+        {[props.t('age-baby'), props.t('age-toddler'), props.t('age-kid')].map(age => (
           <Radio key={age} ref={ref} value={age} name="age" errors={props.errors} />
         ))}
       </div>
@@ -34,4 +35,4 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
 ));
 FieldAge.displayName = 'FieldAge';
 
-export default FieldAge;
+export default withTranslation('form', { withRef: true })<any>(FieldAge);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withTranslation } from 'i18n';
 import Checkbox from 'components/atoms/Checkbox';
 import Badge from 'components/atoms/Badge';
 
@@ -6,7 +7,7 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => (
   <div>
     <div className="c-field-occupations">
       <div className="c-field-occupations__header">
-        Choose 3 dream occupations
+        {props.t('occupations-label')}
         {props.errors && <Badge>!</Badge>}
       </div>
       <div className="c-field-occupations__options">
@@ -31,4 +32,4 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => (
 ));
 FieldOccupations.displayName = 'FieldOccupations';
 
-export default FieldOccupations;
+export default withTranslation('form', { withRef: true })<any>(FieldOccupations);

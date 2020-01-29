@@ -1,3 +1,10 @@
 {
-  "continue-button": "Lanjutkan"
+  "continue-button": "Lanjutkan",
+  "name-label": "Nama",
+  "name-placeholder": "Ketik namamu disini...",
+  "occupations-label": "Pilih 3 pekerjaan impianmu",
+  "age-label": "Umurku...",
+  "age-baby": "Bayi",
+  "age-toddler": "Balita",
+  "age-kid": "Anak"
 }
