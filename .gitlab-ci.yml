@@ -4,3 +4,4 @@ test:
   script:
     - yarn
     - npm run lint
+    - npm run build

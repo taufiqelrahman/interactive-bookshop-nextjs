@@ -4,8 +4,8 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 // import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import { withTranslation } from 'i18n';
-// import Hero from 'components/organisms/Hero';
 import TestimonialSlider from 'components/organisms/TestimonialSlider';
+import BookForm from 'components/organisms/BookForm';
 import Button from 'components/atoms/Button';
 // import actions from 'store/actions';
 
@@ -130,7 +130,9 @@ const Index = (props: any): any => {
                   <h1>{props.t('createnow-title')}</h1>
                   <div className="c-section__content__content">{props.t('createnow-content')}</div>
                   <a href="#create-book">
-                    <Button color="black">{props.t('createnow-button')}</Button>
+                    <Button variant="outline" color="black">
+                      {props.t('createnow-button')}
+                    </Button>
                   </a>
                 </div>
               </div>
@@ -151,7 +153,9 @@ const Index = (props: any): any => {
                   <h2>{props.t('startstory-title')}</h2>
                   <div className="c-section__content__content">{props.t('startstory-content')}</div>
                   <a href="#create-book">
-                    <Button color="white">{props.t('startstory-button')}</Button>
+                    <Button variant="outline" color="white">
+                      {props.t('startstory-button')}
+                    </Button>
                   </a>
                 </div>
               </div>
@@ -179,7 +183,9 @@ const Index = (props: any): any => {
           <h2>{props.t('choosenow-title')}</h2>
           <div className="c-section__content__content">{props.t('choosenow-content')}</div>
           <a href="#create-book">
-            <Button color="white">{props.t('choosenow-button')}</Button>
+            <Button variant="outline" color="white">
+              {props.t('choosenow-button')}
+            </Button>
           </a>
         </div>
       </div>
@@ -189,7 +195,10 @@ const Index = (props: any): any => {
             <TestimonialSlider />
           </div>
         </div>
-        <div id="create-book" className="c-section--bottom__create-book"></div>
+        <div id="create-book" className="c-section--bottom__create-book">
+          <h2>{props.t('createbook-header')}</h2>
+          <BookForm />
+        </div>
       </div>
       {/* <Features features={props.state.products.products} />
       <button onClick={getProducts}>get products</button>
@@ -224,11 +233,16 @@ const Index = (props: any): any => {
               background: linear-gradient(180deg, #3ba99c 0%, #f4c574 100%);
             }
             &__create-book {
-              @apply bg-no-repeat bg-cover;
+              @apply bg-no-repeat bg-cover pt-24;
               background-color: #f4c574;
               background-image: url('/static/images/create-book-bg.png');
               height: 1019px;
               background-position: center bottom;
+              h2 {
+                @apply font-semibold mb-8 text-center text-white pt-56;
+                font-size: 40px;
+                line-height: 58px;
+              }
             }
           }
           &__content {
@@ -305,7 +319,7 @@ const Index = (props: any): any => {
 // };
 
 Index.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'page-index'],
+  namespacesRequired: ['common', 'page-index', 'form'],
 });
 
 export default withTranslation('page-index')(connect(mapStateToProps, mapDispatchToProps)(Index));
