@@ -5,8 +5,7 @@
   "cart": "Cart",
   "cart-link": "Go to Cart",
   "cart-empty": "Your cart is empty",
-  "change-locale": "Change locale",
-  "to-second-page": "To second page",
+  "help-contact-us": "Help & Contact Us",
   "error-with-status": "A {{statusCode}} error occurred on server",
   "error-without-status": "An error occurred on the server"
 }

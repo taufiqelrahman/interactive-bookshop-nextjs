@@ -5,6 +5,7 @@
   "cart": "Keranjang",
   "cart-link": "Lihat Keranjang",
   "cart-empty": "Keranjang kosong",
+  "help-contact-us": "Bantuan & Hubungi Kami",
   "error-with-status": "A {{statusCode}} error occurred on server",
   "error-without-status": "An error occurred on the server"
 }

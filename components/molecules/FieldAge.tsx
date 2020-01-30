@@ -12,7 +12,7 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
       </div>
       <div className="c-field-age__options">
         {/* dummy */}
-        {[props.t('age-baby'), props.t('age-toddler'), props.t('age-kid')].map(age => (
+        {[props.t('age-toddler'), props.t('age-kid')].map(age => (
           <Radio key={age} ref={ref} value={age} name="age" errors={props.errors} />
         ))}
       </div>
