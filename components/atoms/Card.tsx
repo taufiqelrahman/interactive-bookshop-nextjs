@@ -9,6 +9,9 @@ const Card = (props: any) => {
           border-radius: 24px;
           &--shadow {
             box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
+            &--bold {
+              box-shadow: 0px 32px 32px rgba(0, 0, 0, 0.12);
+            }
           }
           &--border {
             border: 2px solid #e1e0e7;

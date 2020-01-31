@@ -5,5 +5,6 @@
   "occupations-label": "Choose 3 dream occupations",
   "age-label": "Portray me as a...",
   "age-toddler": "Toddler",
-  "age-kid": "Kid"
+  "age-kid": "Kid",
+  "dob-label": "Date of Birth"
 }

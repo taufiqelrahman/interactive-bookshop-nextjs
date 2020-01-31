@@ -8,11 +8,6 @@ const Checkbox = React.forwardRef((props: any, ref: any) => (
     </label>
     <style jsx>{`
       .c-checkbox {
-        @apply mb-2;
-        margin-right: 20px;
-        @screen lg {
-          margin-right: 34px;
-        }
         &:last-child {
           margin-right: 0;
         }

@@ -32,7 +32,7 @@ const BookForm = (props: any) => {
   return (
     <div>
       <div className="c-book-form">
-        <Card>
+        <Card variant="shadow--bold">
           <form className="c-book-form__container" onSubmit={handleSubmit(onSubmit)}>
             <FieldOccupations ref={register(schema.occupations)} errors={errors.occupations} />
             <div className="c-book-form__second-row">

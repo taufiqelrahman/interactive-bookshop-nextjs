@@ -4,7 +4,7 @@ import TextField from 'components/atoms/TextField';
 import Badge from 'components/atoms/Badge';
 
 const FieldName: any = React.forwardRef((props: any, ref: any) => (
-  <div>
+  <div style={props.style}>
     <div className="c-field-name">
       <div className="c-field-name__header">
         {props.t('name-label')}
