@@ -1,4 +1,4 @@
-import { withTranslation } from 'i18n';
+import { withTranslation, Router } from 'i18n';
 import { useForm } from 'react-hook-form';
 import Card from 'components/atoms/Card';
 import Button from 'components/atoms/Button';
@@ -14,6 +14,7 @@ const BookForm = (props: any) => {
   });
   const onSubmit = data => {
     console.log(data);
+    Router.push('/create');
   };
   const schema = {
     occupations: {

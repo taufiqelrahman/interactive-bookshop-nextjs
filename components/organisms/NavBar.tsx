@@ -8,6 +8,7 @@ import Dot from 'components/atoms/Dot';
 
 const NavBar = (props: any) => {
   const router = useRouter();
+  const isIndexPage = router.pathname === '/';
   const [isSticky, setSticky] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const guestMenu = [
@@ -37,6 +38,15 @@ const NavBar = (props: any) => {
 
   const cartNotEmpty = !!props.cart.cart && props.cart.cart.length > 0;
 
+  const toggleShowCart = state => {
+    setShowCart(state);
+    if (state) {
+      document.body.classList.add('overlay-active');
+    } else {
+      document.body.classList.remove('overlay-active');
+    }
+  };
+
   return (
     <div className="relative z-50">
       <div className={stickyClassName()} ref={ref}>
@@ -44,16 +54,16 @@ const NavBar = (props: any) => {
           <div className="u-container">
             <Link href="/">
               <a className="c-nav-bar__logo">
-                <img src={`/static/images/logo${isSticky ? '' : '-black'}.png`} alt="logo" />
+                <img src={`/static/images/logo${isSticky || !isIndexPage ? '' : '-black'}.png`} alt="logo" />
               </a>
             </Link>
             <div className="c-nav-bar__menu">
-              {isSticky && <TranslationToggle />}
+              {(isSticky || !isIndexPage) && <TranslationToggle />}
               <Link href="/cart">
                 <a
                   className="c-nav-bar__menu__cart"
-                  onMouseEnter={() => setShowCart(true)}
-                  onMouseLeave={() => setShowCart(false)}
+                  onMouseEnter={() => toggleShowCart(true)}
+                  onMouseLeave={() => toggleShowCart(false)}
                 >
                   <div className="c-nav-bar__menu__item c-nav-bar__menu__cart__button">
                     <span className="c-nav-bar__menu__icon icon-cart"></span>
@@ -80,9 +90,10 @@ const NavBar = (props: any) => {
       <style jsx>
         {`
           .c-nav-bar {
-            ${router.pathname === '/' ? 'position: absolute; width: 100%;' : ''}
+            ${isIndexPage ? 'position: absolute; width: 100%;' : ''}
             @apply flex z-50;
             height: 80px;
+            box-shadow: ${isIndexPage ? 'none' : '0px 2px 8px rgba(0, 0, 0, 0.08)'};
 
             .c-nav-bar--sticky & {
               @apply fixed top-0 inset-x-0 bg-white;

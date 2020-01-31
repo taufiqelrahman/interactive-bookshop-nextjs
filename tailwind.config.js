@@ -5,6 +5,7 @@ module.exports = {
       ...theme('colors'),
       brand: '#DE6236',
       'dark-grey': '#333',
+      'light-grey': '#E5E5E5',
     }),
     textColor: theme => ({
       ...theme('colors'),
