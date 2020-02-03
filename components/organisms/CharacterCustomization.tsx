@@ -5,9 +5,11 @@ import FieldName from 'components/molecules/FieldName';
 import FieldAge from 'components/molecules/FieldAge';
 import FieldDob from 'components/molecules/FieldDob';
 import Divider from 'components/atoms/Divider';
+import Button from 'components/atoms/Button';
+import { useEffect } from 'react';
 
 const CharacterCustomization = () => {
-  const { register, handleSubmit, errors, formState, watch } = useForm({
+  const { register, handleSubmit, errors, formState, watch, setValue, triggerValidation } = useForm({
     mode: 'onChange',
   });
   const onSubmit = data => {
@@ -19,9 +21,13 @@ const CharacterCustomization = () => {
       validate: value => value.length === 3,
     },
     name: { required: true },
-    gender: { required: true },
-    date: { required: true },
+    age: { required: true },
+    dob: { required: true },
   };
+  useEffect(() => {
+    register({ name: 'dob' }, schema.dob);
+  }, []);
+
   return (
     <div>
       <div className="c-char-custom">
@@ -35,9 +41,18 @@ const CharacterCustomization = () => {
             <Divider />
             <div className="flex">
               <FieldName ref={register(schema.name)} errors={errors.name} style={{ marginRight: 36 }} />
-              <FieldAge ref={register(schema.gender)} errors={errors.gender} />
+              <FieldAge ref={register(schema.age)} errors={errors.age} />
             </div>
-            <FieldDob ref={register(schema.date)} errors={errors.dob} style={{ marginTop: 24 }} />
+            <FieldDob
+              name="dob"
+              setValue={setValue}
+              triggerValidation={triggerValidation}
+              errors={errors.dob}
+              style={{ marginTop: 24 }}
+            />
+            <Button type="submit" width={308}>
+              Submit
+            </Button>
           </form>
         </Card>
       </div>
