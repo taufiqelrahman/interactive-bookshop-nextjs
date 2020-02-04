@@ -38,9 +38,40 @@ const DateField = (props: any) => {
     return generateNumberOpts(range);
   };
   const months = generateNumberOpts(12);
+  const customStyles = {
+    menu: provided => ({
+      ...provided,
+      marginTop: 0,
+      border: '2px solid #333',
+      borderTopRightRadius: 0,
+      borderTopLeftRadius: 0,
+      borderTop: 'none',
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    option: provided => ({
+      ...provided,
+      '&:hover': {
+        background: '#333',
+        color: 'white',
+      },
+    }),
+    control: (provided, state) => ({
+      ...provided,
+      borderWidth: 2,
+      borderType: 'solid',
+      borderColor: state.isFocused ? '#333' : '#e1e0e7',
+      borderBottomRightRadius: state.isFocused ? 0 : provided.borderBottomRightRadius,
+      borderBottomLeftRadius: state.isFocused ? 0 : provided.borderBottomLeftRadius,
+      paddingLeft: 6,
+    }),
+  };
   return (
     <div className={`c-date-field ${props.errors ? 'c-date-field--error' : ''}`}>
       <Select
+        styles={customStyles}
+        className="c-date-field__date"
         instanceId="DD"
         placeholder="DD"
         value={date}
@@ -48,6 +79,8 @@ const DateField = (props: any) => {
         onChange={e => handleChange(e, setDate)}
       />
       <Select
+        styles={customStyles}
+        className="c-date-field__month"
         instanceId="MM"
         placeholder="MM"
         value={month}
@@ -55,6 +88,8 @@ const DateField = (props: any) => {
         onChange={e => handleChange(e, setMonth)}
       />
       <Select
+        styles={customStyles}
+        className="c-date-field__year"
         instanceId="YYYY"
         placeholder="YYYY"
         value={year}
@@ -78,6 +113,18 @@ const DateField = (props: any) => {
           }
           &--error select {
             border: 2px solid #de3636;
+          }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-date-field {
+          &__date,
+          &__month {
+            width: 82px;
+            margin-right: 6px;
+          }
+          &__year {
+            width: 102px;
           }
         }
       `}</style>

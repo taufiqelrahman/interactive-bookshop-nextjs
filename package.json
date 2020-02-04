@@ -40,6 +40,7 @@
     "react-feather": "^2.0.3",
     "react-hook-form": "^4.7.1",
     "react-redux": "^7.1.1",
+    "react-select": "^3.0.8",
     "redux-thunk": "^2.3.0",
     "reset-css": "^5.0.1",
     "styled-jsx-plugin-postcss": "^2.0.1"
