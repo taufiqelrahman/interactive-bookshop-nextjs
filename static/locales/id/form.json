@@ -1,10 +1,18 @@
 {
   "continue-button": "Lanjutkan",
+  "save-button": "Simpan dan lanjutkan",
   "name-label": "Nama",
   "name-placeholder": "Ketik namamu disini...",
   "occupations-label": "Pilih 3 pekerjaan impianmu",
   "age-label": "Umurku...",
   "age-toddler": "Balita",
   "age-kid": "Anak",
-  "dob-label": "Tanggal lahir"
+  "dob-label": "Tanggal Lahir",
+  "gender-label": "Jenis Kelamin",
+  "hair-label": "Jenis Rambut",
+  "skin-label": "Warna Kulit",
+  "language-label": "Bahasa Buku",
+  "dedication-label": "Tulis halaman dedikasi (opsional)",
+  "dedication-hint": "Pesan yang akan ditampilkan di halaman pertama",
+  "dedication-placeholder": "Tuliskan pesanmu disini..."
 }

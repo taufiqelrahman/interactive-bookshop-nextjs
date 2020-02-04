@@ -3,29 +3,29 @@ import { withTranslation } from 'i18n';
 import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 
-const FieldAge = React.forwardRef((props: any, ref: any) => (
+const FieldLanguage = React.forwardRef((props: any, ref: any) => (
   <div>
-    <div className="c-field-age">
-      <div className="c-field-age__header">
-        {props.t('age-label')}
+    <div className="c-field-language">
+      <div className="c-field-language__header">
+        {props.t('language-label')}
         {props.errors && <Badge>!</Badge>}
       </div>
-      <div className="c-field-age__options">
+      <div className="c-field-language__options">
         {/* dummy */}
-        {[props.t('age-toddler'), props.t('age-kid')].map(age => (
+        {['English', 'Bahasa Indonesia'].map(language => (
           <Radio
-            key={age}
+            key={language}
             ref={ref}
-            value={age}
-            name="age"
+            value={language}
+            name="language"
             errors={props.errors}
-            style={{ height: 44, minWidth: 92 }}
+            style={{ height: 44, minWidth: 219 }}
           />
         ))}
       </div>
     </div>
     <style jsx>{`
-      .c-field-age {
+      .c-field-language {
         @apply mb-4;
         @screen md {
           @apply mb-0;
@@ -40,6 +40,6 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
     `}</style>
   </div>
 ));
-FieldAge.displayName = 'FieldAge';
+FieldLanguage.displayName = 'FieldLanguage';
 
-export default withTranslation('form', { withRef: true })<any>(FieldAge);
+export default withTranslation('form', { withRef: true })<any>(FieldLanguage);

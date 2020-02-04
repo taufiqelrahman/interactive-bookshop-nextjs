@@ -1,10 +1,18 @@
 {
   "continue-button": "Continue",
+  "save-button": "Save and continue",
   "name-label": "Name",
   "name-placeholder": "Enter name here...",
   "occupations-label": "Choose 3 dream occupations",
   "age-label": "Portray me as a...",
   "age-toddler": "Toddler",
   "age-kid": "Kid",
-  "dob-label": "Date of Birth"
+  "dob-label": "Date of Birth",
+  "gender-label": "Gender",
+  "hair-label": "Hair Style",
+  "skin-label": "Skin Color",
+  "language-label": "Book Language",
+  "dedication-label": "Write Dedication Page (Optional)",
+  "dedication-hint": "Write notes to be printed on the first page",
+  "dedication-placeholder": "Enter your dedication letter here..."
 }

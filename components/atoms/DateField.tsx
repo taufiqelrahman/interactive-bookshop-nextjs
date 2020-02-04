@@ -11,10 +11,18 @@ const DateField = (props: any) => {
     props.triggerValidation(props.name);
   };
 
+  const padNumber = number => {
+    let s = String(number);
+    while (s.length < 2) {
+      s = `0${s}`;
+    }
+    return s;
+  };
+
   const generateNumberOpts = (range: any) => {
     const numbers = [...(Array(range + 1) as any).keys()];
     numbers.shift();
-    return numbers.map(num => ({ value: num, label: num }));
+    return numbers.map(num => ({ value: padNumber(num), label: padNumber(num) }));
   };
 
   const handleChange = (selectedOption, setter) => {
@@ -38,6 +46,12 @@ const DateField = (props: any) => {
     return generateNumberOpts(range);
   };
   const months = generateNumberOpts(12);
+  const years = () => {
+    const now = new Date().getUTCFullYear();
+    return Array(now - (now - 20))
+      .fill('')
+      .map((_v, idx) => ({ value: now - idx, label: now - idx }));
+  };
   const customStyles = {
     menu: provided => ({
       ...provided,
@@ -65,6 +79,9 @@ const DateField = (props: any) => {
       borderBottomRightRadius: state.isFocused ? 0 : provided.borderBottomRightRadius,
       borderBottomLeftRadius: state.isFocused ? 0 : provided.borderBottomLeftRadius,
       paddingLeft: 6,
+      '.c-date-field--error &': {
+        border: '2px solid #de3636',
+      },
     }),
   };
   return (
@@ -93,7 +110,7 @@ const DateField = (props: any) => {
         instanceId="YYYY"
         placeholder="YYYY"
         value={year}
-        options={months}
+        options={years()}
         onChange={e => handleChange(e, setYear)}
       />
       <style jsx>{`

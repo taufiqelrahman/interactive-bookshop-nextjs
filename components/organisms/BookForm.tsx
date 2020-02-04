@@ -38,7 +38,7 @@ const BookForm = (props: any) => {
             <div className="c-book-form__second-row">
               <FieldName ref={register(schema.name)} errors={errors.name} />
               <FieldAge ref={register(schema.gender)} errors={errors.gender} />
-              <Button type="submit" width={308} disabled={!isFormValid}>
+              <Button type="submit" width="308px" disabled={!isFormValid}>
                 {props.t('continue-button')}
               </Button>
             </div>
