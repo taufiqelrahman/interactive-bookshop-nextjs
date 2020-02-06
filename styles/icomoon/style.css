@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'whenigrowup';
-  src:  url('/static/fonts/whenigrowup.eot?nyjode');
-  src:  url('/static/fonts/whenigrowup.eot?nyjode#iefix') format('embedded-opentype'),
-    url('/static/fonts/whenigrowup.ttf?nyjode') format('truetype'),
-    url('/static/fonts/whenigrowup.woff?nyjode') format('woff'),
-    url('/static/fonts/whenigrowup.svg?nyjode#whenigrowup') format('svg');
+  src:  url('/static/fonts/whenigrowup.eot?ru2221');
+  src:  url('/static/fonts/whenigrowup.eot?ru2221#iefix') format('embedded-opentype'),
+    url('/static/fonts/whenigrowup.ttf?ru2221') format('truetype'),
+    url('/static/fonts/whenigrowup.woff?ru2221') format('woff'),
+    url('/static/fonts/whenigrowup.svg?ru2221#whenigrowup') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-facebook_white:before {
+  content: "\e904";
+  color: #fafafa;
+}
+.icon-instagram_white:before {
+  content: "\e905";
+  color: #fafafa;
+}
+.icon-twitter_white:before {
+  content: "\e906";
+  color: #fafafa;
+}
 .icon-chevron_right:before {
   content: "\e902";
 }

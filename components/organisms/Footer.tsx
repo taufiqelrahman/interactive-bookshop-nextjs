@@ -3,9 +3,9 @@ import { withTranslation, Link } from 'i18n';
 
 const Footer = React.memo((props: any) => {
   const socialMedia = [
-    { icon: 'twitter', url: 'twitter.com' },
-    { icon: 'instagram', url: 'instagram.com' },
-    { icon: 'facebook', url: 'facebook.com' },
+    { icon: 'twitter_white', url: 'https://twitter.com' },
+    { icon: 'instagram_white', url: 'https://instagram.com' },
+    { icon: 'facebook_white', url: 'https://facebook.com' },
   ];
 
   return (
@@ -34,9 +34,7 @@ const Footer = React.memo((props: any) => {
                 {socialMedia.map(med => (
                   <Link key={med.icon} href={med.url}>
                     <a>
-                      {/* <span className={`icon-${med.icon}`} /> */}
-                      {/* dummy */}
-                      <span className="icon-chevron_left" />
+                      <span className={`icon-${med.icon}`} />
                     </a>
                   </Link>
                 ))}
@@ -74,8 +72,9 @@ const Footer = React.memo((props: any) => {
             &__social {
               @apply flex items-center;
               padding-left: 30px;
+              font-size: 30px;
               a {
-                margin-right: 6px;
+                margin-right: 18px;
                 &:last-child {
                   margin-right: 0;
                 }

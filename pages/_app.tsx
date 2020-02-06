@@ -44,6 +44,18 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+        .icon-facebook_white:before {
+          content: '\e904';
+          color: #fafafa;
+        }
+        .icon-instagram_white:before {
+          content: '\e905';
+          color: #fafafa;
+        }
+        .icon-twitter_white:before {
+          content: '\e906';
+          color: #fafafa;
+        }
         .icon-chevron_right:before {
           content: '\e902';
         }
