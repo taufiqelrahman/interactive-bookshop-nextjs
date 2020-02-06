@@ -3,7 +3,7 @@ import { withTranslation, Link } from 'i18n';
 const CartDropdown = (props: any) => {
   const cartNotEmpty = !!props.cart && props.cart.length > 0;
   return (
-    <div>
+    <div onClick={e => e.stopPropagation()}>
       <div className={`c-cart-dropdown ${!cartNotEmpty ? 'c-cart-dropdown--empty' : ''}`}>
         {cartNotEmpty ? (
           <div className="c-cart-dropdown__container">

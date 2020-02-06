@@ -32,11 +32,9 @@ const Footer = React.memo((props: any) => {
               </div>
               <div className="c-footer__right__social">
                 {socialMedia.map(med => (
-                  <Link key={med.icon} href={med.url}>
-                    <a>
-                      <span className={`icon-${med.icon}`} />
-                    </a>
-                  </Link>
+                  <a key={med.icon} href={med.url} target="_blank" rel="noopener noreferrer">
+                    <span className={`icon-${med.icon}`} />
+                  </a>
                 ))}
               </div>
             </div>

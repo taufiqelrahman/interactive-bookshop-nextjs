@@ -1,6 +1,8 @@
 {
   "login": "Masuk",
   "register": "Daftar",
+  "sign-out": "Keluar",
+  "my-orders": "Pesanan Saya",
   "account": "Akun",
   "cart": "Keranjang",
   "cart-link": "Lihat Keranjang",

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { withTranslation, Link } from 'i18n';
 import TranslationToggle from 'components/molecules/TranslationToggle';
 import CartDropdown from 'components/molecules/CartDropdown';
+import AccountDropdown from 'components/molecules/AccountDropdown';
 import Dot from 'components/atoms/Dot';
 
 const NavBar = (props: any) => {
@@ -11,12 +12,11 @@ const NavBar = (props: any) => {
   const isIndexPage = router.pathname === '/';
   const [isSticky, setSticky] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [showAccount, setShowAccount] = useState(false);
   const guestMenu = [
     { text: props.t('login'), path: '/login' },
     { text: props.t('register'), path: '/register', className: 'text-brand' },
   ];
-  const userMenu = [{ text: props.t('account'), path: '/account', icon: 'account' }];
-  const menu = props.isLoggedIn ? userMenu : guestMenu;
   const ref = useRef<HTMLInputElement>(null);
   const handleScroll = () => {
     if (ref && ref.current) {
@@ -38,8 +38,8 @@ const NavBar = (props: any) => {
 
   const cartNotEmpty = !!props.cart.cart && props.cart.cart.length > 0;
 
-  const toggleShowCart = state => {
-    setShowCart(state);
+  const toggleShow = (state, action) => {
+    action(state);
     if (state) {
       document.body.classList.add('overlay-active');
     } else {
@@ -48,7 +48,7 @@ const NavBar = (props: any) => {
   };
 
   return (
-    <div className="relative z-50">
+    <div className={`relative z-50 ${showCart || showAccount ? 'bg-white' : ''}`}>
       <div className={stickyClassName()} ref={ref}>
         <div className="c-nav-bar">
           <div className="u-container">
@@ -60,29 +60,44 @@ const NavBar = (props: any) => {
             <div className="c-nav-bar__menu">
               {(isSticky || !isIndexPage) && <TranslationToggle />}
               <Link href="/cart">
-                <a
+                <div
                   className="c-nav-bar__menu__cart"
-                  onMouseEnter={() => toggleShowCart(true)}
-                  onMouseLeave={() => toggleShowCart(false)}
+                  onMouseEnter={() => toggleShow(true, setShowCart)}
+                  onMouseLeave={() => toggleShow(false, setShowCart)}
                 >
-                  <div className="c-nav-bar__menu__item c-nav-bar__menu__cart__button">
-                    <span className="c-nav-bar__menu__icon icon-cart"></span>
-                    {props.t('cart')}
-                    {cartNotEmpty && <Dot color="red" />}
-                  </div>
+                  <a>
+                    <div className="c-nav-bar__menu__item c-nav-bar__menu__cart__button">
+                      <span className="c-nav-bar__menu__icon icon-cart"></span>
+                      {props.t('cart')}
+                      {cartNotEmpty && <Dot color="red" />}
+                    </div>
+                  </a>
                   {showCart && <CartDropdown cart={props.cart.cart} />}
-                </a>
+                </div>
               </Link>
-              {(menu as any).map((menu, i): any => {
-                return (
-                  <Link key={i} href={menu.path}>
-                    <a className={`c-nav-bar__menu__item ${menu.className || ''}`}>
-                      {menu.icon && <span className={`c-nav-bar__menu__icon icon-${menu.icon}`}></span>}
-                      {menu.text}
-                    </a>
-                  </Link>
-                );
-              })}
+              <Link href="/account">
+                <div
+                  className="c-nav-bar__menu__account"
+                  onMouseEnter={() => toggleShow(true, setShowAccount)}
+                  onMouseLeave={() => toggleShow(false, setShowAccount)}
+                >
+                  <a>
+                    <div className="c-nav-bar__menu__item c-nav-bar__menu__button">
+                      <span className="c-nav-bar__menu__icon icon-account"></span>
+                      {props.t('account')}
+                    </div>
+                  </a>
+                  {showAccount && <AccountDropdown />}
+                </div>
+              </Link>
+              {!props.isLoggedIn &&
+                (guestMenu as any).map((menu, i): any => {
+                  return (
+                    <Link key={i} href={menu.path}>
+                      <a className={`c-nav-bar__menu__item ${menu.className || ''}`}>{menu.text}</a>
+                    </Link>
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -116,14 +131,16 @@ const NavBar = (props: any) => {
                 @apply mr-3;
                 font-size: 16px;
               }
-              &__cart {
+              &__cart,
+              &__account {
                 @apply relative h-full flex items-center;
 
                 &__button {
                   @apply mx-6 justify-center;
                   width: 120px;
                 }
-                &:hover .c-nav-bar__menu__cart__button {
+                &:hover .c-nav-bar__menu__cart__button,
+                &:hover .c-nav-bar__menu__button {
                   background: #f5f5f5;
                   border-radius: 6px;
                 }

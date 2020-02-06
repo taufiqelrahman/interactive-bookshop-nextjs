@@ -1,6 +1,8 @@
 {
   "login": "Login",
   "register": "Register",
+  "sign-out": "Sign Out",
+  "my-orders": "My Orders",
   "account": "Account",
   "cart": "Cart",
   "cart-link": "Go to Cart",
