@@ -30,6 +30,7 @@ const App: NextPage<any> = (props: any) => {
       <Component {...pageProps} />
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins&display=swap');
+        @import 'static/styles/ReactToastify.min.css';
 
         body {
           @apply font-poppins;

@@ -13,9 +13,10 @@ import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
 import { useEffect } from 'react';
 import { withTranslation, Router } from 'i18n';
+import { toast } from 'react-toastify';
 
 const CharacterCustomization = (props: any) => {
-  const { register, handleSubmit, errors, setValue, triggerValidation, watch } = useForm({
+  const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
     mode: 'onChange',
   });
   const onSubmit = data => {
@@ -39,6 +40,12 @@ const CharacterCustomization = (props: any) => {
   useEffect(() => {
     register({ name: 'dob' }, schema.dob);
   }, []);
+  useEffect(() => {
+    if (!formState.isValid) {
+      window.scrollTo(0, 0);
+      toast.error(props.t('form-error'));
+    }
+  }, [errors]);
   return (
     <div>
       <div className="c-char-custom">
