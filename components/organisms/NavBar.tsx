@@ -75,29 +75,31 @@ const NavBar = (props: any) => {
                   {showCart && <CartDropdown cart={props.cart.cart} />}
                 </div>
               </Link>
-              <Link href="/account">
-                <div
-                  className="c-nav-bar__menu__account"
-                  onMouseEnter={() => toggleShow(true, setShowAccount)}
-                  onMouseLeave={() => toggleShow(false, setShowAccount)}
-                >
-                  <a>
-                    <div className="c-nav-bar__menu__item c-nav-bar__menu__button">
-                      <span className="c-nav-bar__menu__icon icon-account"></span>
-                      {props.t('account')}
-                    </div>
-                  </a>
-                  {showAccount && <AccountDropdown />}
-                </div>
-              </Link>
-              {!props.isLoggedIn &&
+              {props.isLoggedIn ? (
+                <Link href="/account">
+                  <div
+                    className="c-nav-bar__menu__account"
+                    onMouseEnter={() => toggleShow(true, setShowAccount)}
+                    onMouseLeave={() => toggleShow(false, setShowAccount)}
+                  >
+                    <a>
+                      <div className="c-nav-bar__menu__item c-nav-bar__menu__button">
+                        <span className="c-nav-bar__menu__icon icon-account"></span>
+                        {props.t('account')}
+                      </div>
+                    </a>
+                    {showAccount && <AccountDropdown />}
+                  </div>
+                </Link>
+              ) : (
                 (guestMenu as any).map((menu, i): any => {
                   return (
                     <Link key={i} href={menu.path}>
                       <a className={`c-nav-bar__menu__item ${menu.className || ''}`}>{menu.text}</a>
                     </Link>
                   );
-                })}
+                })
+              )}
             </div>
           </div>
         </div>

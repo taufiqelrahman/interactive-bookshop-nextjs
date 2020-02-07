@@ -3,23 +3,23 @@ import TextArea from 'components/atoms/TextArea';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
 
-const FieldDedication = React.forwardRef((props: any, ref: any) => (
+const FormTextArea = React.forwardRef((props: any, ref: any) => (
   <div style={props.style}>
-    <div className="c-field-dedication">
-      <div className="c-field-dedication__header">
-        {props.t('dedication-label')}
+    <div className="c-form-text-area">
+      <div className="c-form-text-area__label">
+        {props.label}
         {props.errors && <Badge>!</Badge>}
       </div>
-      <div className="c-field-dedication__hint">{props.t('dedication-hint')}</div>
-      <TextArea name="dedication" placeholder={props.t('dedication-placeholder')} ref={ref} errors={props.errors} />
+      <div className="c-form-text-area__hint">{props.hint}</div>
+      <TextArea name={props.name} placeholder={props.placeholder} ref={ref} errors={props.errors} />
     </div>
     <style jsx>{`
-      .c-field-dedication {
+      .c-form-text-area {
         @apply mb-4;
         @screen md {
           @apply mb-0;
         }
-        &__header {
+        &__label {
           @apply font-semibold mb-2 flex;
         }
         &__hint {
@@ -33,6 +33,6 @@ const FieldDedication = React.forwardRef((props: any, ref: any) => (
     `}</style>
   </div>
 ));
-FieldDedication.displayName = 'FieldDedication';
+FormTextArea.displayName = 'FormTextArea';
 
-export default withTranslation('form', { withRef: true })<any>(FieldDedication);
+export default withTranslation('form', { withRef: true })<any>(FormTextArea);

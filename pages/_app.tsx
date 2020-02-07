@@ -43,6 +43,10 @@ const App: NextPage<any> = (props: any) => {
           }
         }
 
+        .h-min-screen {
+          min-height: calc(100vh - 239px);
+        }
+
         /* icons */
         .icon-facebook_white:before {
           content: '\e904';

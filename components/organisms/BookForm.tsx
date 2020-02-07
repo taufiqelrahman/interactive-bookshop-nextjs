@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Card from 'components/atoms/Card';
 import Button from 'components/atoms/Button';
 import FieldOccupations from 'components/molecules/FieldOccupations';
-import FieldName from 'components/molecules/FieldName';
+import FormTextField from 'components/molecules/FormTextField';
 import FieldAge from 'components/molecules/FieldAge';
 import { useState, useEffect } from 'react';
 
@@ -36,7 +36,13 @@ const BookForm = (props: any) => {
           <form className="c-book-form__container" onSubmit={handleSubmit(onSubmit)}>
             <FieldOccupations ref={register(schema.occupations)} errors={errors.occupations} />
             <div className="c-book-form__second-row">
-              <FieldName ref={register(schema.name)} errors={errors.name} />
+              <FormTextField
+                label={props.t('name-label')}
+                name="name"
+                placeholder={props.t('name-placeholder')}
+                ref={register(schema.name)}
+                errors={errors.name}
+              />
               <FieldAge ref={register(schema.gender)} errors={errors.gender} />
               <Button type="submit" width="308px" disabled={!isFormValid}>
                 {props.t('continue-button')}

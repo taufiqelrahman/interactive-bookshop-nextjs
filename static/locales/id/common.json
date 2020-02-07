@@ -1,6 +1,13 @@
 {
   "login": "Masuk",
   "register": "Daftar",
+  "welcome-back": "Selamat datang!",
+  "login-google": "Masuk dengan Google",
+  "login-facebook": "Masuk dengan Facebook",
+  "login-email": "Masuk dengan Email",
+  "forgot-password": "Lupa Sandi?",
+  "go-back": "Kembal",
+  "no-account": "Tidak punya akun?",
   "sign-out": "Keluar",
   "my-orders": "Pesanan Saya",
   "account": "Akun",

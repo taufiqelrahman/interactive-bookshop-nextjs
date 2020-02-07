@@ -3,28 +3,28 @@ import { withTranslation } from 'i18n';
 import TextField from 'components/atoms/TextField';
 import Badge from 'components/atoms/Badge';
 
-const FieldName: any = React.forwardRef((props: any, ref: any) => (
+const FormTextField: any = React.forwardRef((props: any, ref: any) => (
   <div style={props.style}>
-    <div className="c-field-name">
-      <div className="c-field-name__header">
-        {props.t('name-label')}
+    <div className="c-form-text-field">
+      <div className="c-form-text-field__label">
+        {props.label}
         {props.errors && <Badge>!</Badge>}
       </div>
-      <TextField name="name" placeholder={props.t('name-placeholder')} ref={ref} errors={props.errors} />
+      <TextField ref={ref} {...props} />
     </div>
     <style jsx>{`
-      .c-field-name {
+      .c-form-text-field {
         @apply mb-4;
         @screen md {
           @apply mb-0;
         }
-        &__header {
+        &__label {
           @apply font-semibold mb-3 flex;
         }
       }
     `}</style>
   </div>
 ));
-FieldName.displayName = 'FieldName';
+FormTextField.displayName = 'FormTextField';
 
-export default withTranslation('form', { withRef: true })<any>(FieldName);
+export default withTranslation('form', { withRef: true })<any>(FormTextField);

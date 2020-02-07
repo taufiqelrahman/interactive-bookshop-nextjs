@@ -3,7 +3,7 @@ const Button = (props: any) => {
   const colorClass = props.color ? `c-button--${props.color}` : '';
   const disabledClass = props.disabled ? `c-button--disabled` : '';
   return (
-    <div>
+    <div style={props.style}>
       <button
         type={props.type ? props.type : null}
         className={`c-button ${variantClass} ${colorClass} ${disabledClass}`}

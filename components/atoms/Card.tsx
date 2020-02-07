@@ -1,7 +1,7 @@
 const Card = (props: any) => {
   const variantClass = props.variant ? `c-card--${props.variant}` : '';
   return (
-    <div>
+    <div style={props.style}>
       <div className={`c-card ${variantClass}`}>{props.children}</div>
       <style jsx>{`
         .c-card {

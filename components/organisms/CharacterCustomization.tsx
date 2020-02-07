@@ -1,19 +1,19 @@
 import Card from 'components/atoms/Card';
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { withTranslation, Router } from 'i18n';
+import { toast } from 'react-toastify';
 import FieldOccupations from 'components/molecules/FieldOccupations';
-import FieldName from 'components/molecules/FieldName';
+import FormTextField from 'components/molecules/FormTextField';
 import FieldAge from 'components/molecules/FieldAge';
 import FieldDob from 'components/molecules/FieldDob';
 import FieldGender from 'components/molecules/FieldGender';
 import FieldHair from 'components/molecules/FieldHair';
 import FieldSkin from 'components/molecules/FieldSkin';
 import FieldLanguage from 'components/molecules/FieldLanguage';
-import FieldDedication from 'components/molecules/FieldDedication';
+import FormTextArea from 'components/molecules/FormTextArea';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
-import { useEffect } from 'react';
-import { withTranslation, Router } from 'i18n';
-import { toast } from 'react-toastify';
 
 const CharacterCustomization = (props: any) => {
   const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
@@ -58,7 +58,14 @@ const CharacterCustomization = (props: any) => {
             />
             <Divider />
             <div className="flex">
-              <FieldName ref={register(schema.name)} errors={errors.name} style={{ marginRight: 36 }} />
+              <FormTextField
+                label={props.t('name-label')}
+                name="name"
+                placeholder={props.t('name-placeholder')}
+                ref={register(schema.name)}
+                errors={errors.name}
+                style={{ marginRight: 36 }}
+              />
               <FieldAge ref={register(schema.age)} errors={errors.age} />
             </div>
             <FieldDob
@@ -80,7 +87,11 @@ const CharacterCustomization = (props: any) => {
             <FieldSkin ref={register(schema.skin)} errors={errors.skin} style={{ marginTop: 24, marginBottom: 24 }} />
             <Divider />
             <FieldLanguage ref={register(schema.language)} errors={errors.language} style={{ marginTop: 24 }} />
-            <FieldDedication
+            <FormTextArea
+              label={props.t('dedication-label')}
+              hint={props.t('dedication-hint')}
+              name="dedication"
+              placeholder={props.t('dedication-placeholder')}
               ref={register(schema.dedication)}
               errors={errors.dedication}
               style={{ marginTop: 24, marginBottom: 24 }}

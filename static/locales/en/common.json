@@ -1,6 +1,13 @@
 {
   "login": "Login",
   "register": "Register",
+  "welcome-back": "Welcome back!",
+  "login-google": "Login with Google",
+  "login-facebook": "Login with Facebook",
+  "login-email": "Login with Email",
+  "forgot-password": "Forgot Password?",
+  "go-back": "Go back",
+  "no-account": "No account?",
   "sign-out": "Sign Out",
   "my-orders": "My Orders",
   "account": "Account",

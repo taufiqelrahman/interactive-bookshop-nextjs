@@ -7,7 +7,7 @@ const DefaultLayout = (props: any) => (
   <div>
     <div style={{ height: 1 }}></div>
     <NavBar isLoggedIn={props.isLoggedIn} cart={props.cart} />
-    <div style={{ minHeight: 1000, position: 'relative' }}>
+    <div className="h-min-screen" style={{ position: 'relative' }}>
       <ToastContainer
         className="c-toast__container"
         toastClassName="c-toast__toast"
