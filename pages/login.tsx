@@ -53,13 +53,13 @@ const Login = (props: any): any => {
                     <img className="c-login__image" src="/static/images/welcome.png" />
                     <h1 className="c-login__title">{props.t('welcome-back')}</h1>
                     <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {props.t('login-google')}
+                      {`${props.t('login-with')} Goggle`}
                     </Button>
                     <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {props.t('login-facebook')}
+                      {`${props.t('login-with')} Facebook`}
                     </Button>
                     <div onClick={loginEmail} className="c-login__link" style={{ marginBottom: 24, marginTop: 18 }}>
-                      {props.t('login-email')}
+                      {`${props.t('login-with')} Email`}
                     </div>
                     <Divider />
                     <Link href="/register">
@@ -72,7 +72,7 @@ const Login = (props: any): any => {
                 )}
                 {loginStep === stepEnum.EMAIL && (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className="c-login__title">{props.t('login-email')}</h1>
+                    <h1 className="c-login__title">{`${props.t('login-with')} Email`}</h1>
                     <FormTextField
                       label={props.t('form:email-label')}
                       name="email"

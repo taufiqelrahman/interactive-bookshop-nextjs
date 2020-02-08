@@ -34,8 +34,8 @@ const Register = (props: any): any => {
   };
   const schema = {
     email: {
-      required: { value: true, message: `Email ${props.t('required-error')}` },
-      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: props.t('invalid-email') },
+      required: { value: true, message: `Email ${props.t('form:required-error')}` },
+      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: props.t('form:email-invalid') },
       // validate: async value => await fetch(url) // watch for duplicate email
     },
     phone: { required: true },
@@ -59,17 +59,17 @@ const Register = (props: any): any => {
                     <img className="c-register__image" src="/static/images/welcome.png" />
                     <h1 className="c-register__title">{props.t('lets-join')}</h1>
                     <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {props.t('register-google')}
+                      {`${props.t('register-with')} Goggle`}
                     </Button>
                     <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {props.t('register-facebook')}
+                      {`${props.t('register-with')} Facebook`}
                     </Button>
                     <div
                       onClick={registerEmail}
                       className="c-register__link"
                       style={{ marginBottom: 24, marginTop: 18 }}
                     >
-                      {props.t('register-email')}
+                      {`${props.t('register-with')} Email`}
                     </div>
                     <Divider />
                     <Link href="/login">
@@ -82,7 +82,7 @@ const Register = (props: any): any => {
                 )}
                 {registerStep === stepEnum.EMAIL && (
                   <form onSubmit={handleSubmit(submitEmail)}>
-                    <h1 className="c-register__title">{props.t('register-email')}</h1>
+                    <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
                     <FormTextField
                       label={props.t('form:email-label')}
                       name="email"
@@ -93,7 +93,7 @@ const Register = (props: any): any => {
                       hint={props.t('form:email-hint')}
                     />
                     <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                      {props.t('continue')}
+                      {props.t('form:continue-button')}
                     </Button>
                     <div onClick={goBack} className="c-register__link">
                       {props.t('go-back')}
