@@ -2,7 +2,7 @@ import { withTranslation, Link } from 'i18n';
 
 const AccountDropdown = (props: any) => {
   const signOut = () => {
-    console.log('sign-out');
+    props.logout();
   };
   return (
     <div onClick={e => e.stopPropagation()}>

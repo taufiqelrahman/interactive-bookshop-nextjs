@@ -3,6 +3,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
+import { Router } from 'i18n';
 
 import * as types from './types';
 import api from '../../services/api';
@@ -29,6 +30,7 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
       const token = CryptoJS.AES.encrypt(data.token, process.env.SECRET_KEY).toString();
       Cookies.set('user', token);
       dispatch(login(false, data));
+      Router.push(userData.from || '/');
     })
     .catch(err => {
       dispatch(login(false));
@@ -50,6 +52,7 @@ export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<
     .then(({ data }) => {
       Cookies.remove('user');
       dispatch(logout(false, data));
+      Router.push('/');
     })
     .catch(err => {
       dispatch(logout(false));

@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const DefaultLayout = (props: any) => (
   <div>
     <div style={{ height: 1 }}></div>
-    <NavBar isLoggedIn={props.isLoggedIn} cart={props.cart} />
+    <NavBar isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart} thunkLogout={props.thunkLogout} />
     <div className="h-min-screen" style={{ position: 'relative' }}>
       <ToastContainer
         className="c-toast__container"

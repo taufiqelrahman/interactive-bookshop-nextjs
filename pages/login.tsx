@@ -15,7 +15,7 @@ const Login = (props: any): any => {
     mode: 'onChange',
   });
   const onSubmit = data => {
-    console.log(data);
+    props.thunkLogin(data);
   };
   const stepEnum = { WELCOME: 0, EMAIL: 1, RESET: 2, SENT: 3 };
   const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
@@ -29,16 +29,16 @@ const Login = (props: any): any => {
     setLoginStep(stepEnum.WELCOME);
   };
   const schema = {
-    email: { required: true },
+    email: { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
     password: { required: true },
   };
   useEffect(() => {
     if (!formState.isValid) {
-      toast.error(props.t('form-error'));
+      toast.error(props.t('form:form-error'));
     }
   }, [errors]);
   return (
-    <DefaultLayout isLoggedIn={{}} cart={{}}>
+    <DefaultLayout {...props}>
       <div className="bg-light-grey h-min-screen">
         <div className="u-container">
           <div className="c-login">
@@ -70,7 +70,7 @@ const Login = (props: any): any => {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <h1 className="c-login__title">{props.t('login-email')}</h1>
                     <FormTextField
-                      label={props.t('email-label')}
+                      label={props.t('form:email-label')}
                       name="email"
                       placeholder="example@yourdomain.com"
                       ref={register(schema.email)}
@@ -78,9 +78,9 @@ const Login = (props: any): any => {
                       variant="full-width"
                     />
                     <FormTextField
-                      label={props.t('password-label')}
+                      label={props.t('form:password-label')}
                       name="password"
-                      placeholder={props.t('password-placeholder')}
+                      placeholder={props.t('form:password-placeholder')}
                       ref={register(schema.password)}
                       errors={errors.password}
                       variant="full-width"
@@ -96,6 +96,27 @@ const Login = (props: any): any => {
                     </div>
                     <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
                       {props.t('login')}
+                    </Button>
+                    <div onClick={goBack} className="c-login__link">
+                      {props.t('go-back')}
+                    </div>
+                  </form>
+                )}
+                {loginStep === stepEnum.RESET && (
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <h1 className="c-login__title">{props.t('form:reset-title')}</h1>
+                    <div className="c-login__subtitle">{props.t('form:reset-subtitle')}</div>
+                    <FormTextField
+                      label={props.t('form:email-label')}
+                      name="email"
+                      placeholder="example@yourdomain.com"
+                      ref={register(schema.email)}
+                      errors={errors.email}
+                      variant="full-width"
+                      style={{ marginTop: 24 }}
+                    />
+                    <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                      {props.t('form:reset-send')}
                     </Button>
                     <div onClick={goBack} className="c-login__link">
                       {props.t('go-back')}
@@ -129,6 +150,10 @@ const Login = (props: any): any => {
             line-height: 42px;
             margin: 12px 0;
           }
+          &__subtitle {
+            @apply font-opensans;
+            line-height: 22px;
+          }
           &__link {
             @apply font-semibold cursor-pointer;
             color: #445ca4;
@@ -142,4 +167,4 @@ const Login = (props: any): any => {
   );
 };
 
-export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Login));

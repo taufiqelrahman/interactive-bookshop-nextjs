@@ -7,7 +7,7 @@ import CharacterCustomization from 'components/organisms/CharacterCustomization'
 
 const Create = (props: any): any => {
   return (
-    <DefaultLayout isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart}>
+    <DefaultLayout {...props}>
       <div className="bg-light-grey">
         <div className="u-container">
           <div className="flex w-full">

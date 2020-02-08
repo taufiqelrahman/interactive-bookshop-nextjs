@@ -33,7 +33,7 @@ const App: NextPage<any> = (props: any) => {
         @import 'static/styles/ReactToastify.min.css';
 
         body {
-          @apply font-poppins;
+          @apply font-poppins text-dark-grey;
         }
 
         .u-container {

@@ -47,6 +47,11 @@ const NavBar = (props: any) => {
     }
   };
 
+  const logout = () => {
+    props.thunkLogout();
+    toggleShow(false, setShowAccount);
+  };
+
   return (
     <div className={`relative z-50 ${showCart || showAccount ? 'bg-white' : ''}`}>
       <div className={stickyClassName()} ref={ref}>
@@ -88,7 +93,7 @@ const NavBar = (props: any) => {
                         {props.t('account')}
                       </div>
                     </a>
-                    {showAccount && <AccountDropdown />}
+                    {showAccount && <AccountDropdown logout={logout} />}
                   </div>
                 </Link>
               ) : (

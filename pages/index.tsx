@@ -117,7 +117,7 @@ const Index = (props: any): any => {
   // };
 
   return (
-    <DefaultLayout isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart}>
+    <DefaultLayout {...props}>
       <div className="c-section--top">
         <div className="c-section__create-now">
           <div className="u-container">
