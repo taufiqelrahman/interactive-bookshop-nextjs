@@ -13,6 +13,7 @@ const DefaultLayout = (props: any) => (
         toastClassName="c-toast__toast"
         position={toast.POSITION.TOP_CENTER}
         hideProgressBar={true}
+        // autoClose={false}
       />
       {props.children}
     </div>
@@ -36,6 +37,8 @@ const DefaultLayout = (props: any) => (
         }
         &__container {
           top: 105px !important;
+          transform: translateX(-50%);
+          margin: 0 !important;
         }
         &__toast {
           @apply text-center font-poppins;
