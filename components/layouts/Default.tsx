@@ -37,7 +37,7 @@ const DefaultLayout = (props: any) => (
         }
         &__container {
           top: 105px !important;
-          transform: translateX(-50%);
+          transform: translateX(-50%) !important;
           margin: 0 !important;
         }
         &__toast {

@@ -11,16 +11,18 @@ import Divider from 'components/atoms/Divider';
 import FormTextField from 'components/molecules/FormTextField';
 
 const Register = (props: any): any => {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, errors, formState, watch } = useForm({
     mode: 'onChange',
   });
   const stepEnum = { WELCOME: 0, EMAIL: 1, DETAIL: 2, GOOGLE: 3 };
   const [registerStep, setRegisterStep] = useState(stepEnum.WELCOME);
+  const [savedEmail, setSavedEmail] = useState('');
   const onSubmit = data => {
-    props.thunkRegister(data);
+    console.log({ ...data, email: savedEmail });
   };
   const submitEmail = data => {
     console.log(data);
+    setSavedEmail(data.email);
     setRegisterStep(stepEnum.DETAIL);
   };
   const registerEmail = () => {
@@ -38,9 +40,12 @@ const Register = (props: any): any => {
       pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: props.t('form:email-invalid') },
       // validate: async value => await fetch(url) // watch for duplicate email
     },
-    phone: { required: true },
-    password: { required: true },
-    confirmPassword: { required: true },
+    phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },
+    password: { required: { value: true, message: `Password ${props.t('form:required-error')}` } },
+    confirmPassword: {
+      required: { value: true, message: `Password ${props.t('form:required-error')}` },
+      validate: value => value === watch('password') || props.t('form:password-different'),
+    },
   };
   useEffect(() => {
     if (!formState.isValid) {
@@ -100,37 +105,47 @@ const Register = (props: any): any => {
                     </div>
                   </form>
                 )}
-                {/* {registerStep === stepEnum.RESET && (
-                  <form onSubmit={handleSubmit(onReset)}>
-                    <h1 className="c-register__title">{props.t('form:reset-title')}</h1>
-                    <div className="c-register__subtitle">{props.t('form:reset-subtitle')}</div>
+                {registerStep === stepEnum.DETAIL && (
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
+                    <div className="c-register__saved-email">{savedEmail}</div>
                     <FormTextField
-                      label={props.t('form:email-label')}
-                      name="email"
-                      placeholder="example@yourdomain.com"
-                      ref={register(schema.email)}
-                      errors={errors.email}
+                      label={props.t('form:phone-label')}
+                      name="phone"
+                      placeholder={props.t('form:phone-placeholder')}
+                      ref={register(schema.phone)}
+                      errors={errors.phone}
                       variant="full-width"
+                      type="number"
+                    />
+                    <FormTextField
+                      label={props.t('form:password-label')}
+                      name="password"
+                      placeholder={props.t('form:new-password-placeholder')}
+                      ref={register(schema.password)}
+                      errors={errors.password}
+                      variant="full-width"
+                      isPassword={true}
+                      style={{ marginTop: 24 }}
+                    />
+                    <FormTextField
+                      label={props.t('form:confirm-password-label')}
+                      name="confirmPassword"
+                      placeholder={props.t('form:confirm-password-placeholder')}
+                      ref={register(schema.confirmPassword)}
+                      errors={errors.confirmPassword}
+                      variant="full-width"
+                      isPassword={true}
                       style={{ marginTop: 24 }}
                     />
                     <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                      {props.t('form:reset-send')}
+                      {props.t('form:create-account-button')}
                     </Button>
                     <div onClick={goBack} className="c-register__link">
                       {props.t('go-back')}
                     </div>
                   </form>
-                )} */}
-                {/* {registerStep === stepEnum.SENT && (
-                  <div>
-                    <img className="c-register__image" src="/static/images/welcome.png" />
-                    <h1 className="c-register__title">{props.t('form:email-sent-title')}</h1>
-                    <div className="c-register__subtitle">{props.t('form:email-sent-subtitle')}</div>
-                    <Button onClick={goBack} width="100%" style={{ margin: '30px 0' }}>
-                      {props.t('go-back')}
-                    </Button>
-                  </div>
-                )} */}
+                )}
               </div>
             </Card>
           </div>
@@ -168,6 +183,13 @@ const Register = (props: any): any => {
             span {
               @apply font-normal;
             }
+          }
+          &__saved-email {
+            @apply w-full;
+            border-radius: 60px;
+            background: #f5f5f8;
+            margin: 24px 0;
+            padding: 10px;
           }
         }
       `}</style>

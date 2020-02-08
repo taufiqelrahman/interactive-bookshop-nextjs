@@ -5,7 +5,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
   return (
     <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass}`}>
       <input
-        type={props.isPassword ? 'password' : 'text'}
+        type={props.isPassword ? 'password' : props.type || 'text'}
         name={props.name}
         placeholder={props.placeholder}
         ref={ref}
