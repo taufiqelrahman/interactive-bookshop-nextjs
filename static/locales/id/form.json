@@ -21,5 +21,7 @@
   "dedication-placeholder": "Tuliskan pesanmu disini...",
   "reset-title": "Set Ulang Sandi",
   "reset-subtitle": "Masukkan emailmu supaya kami bisa kirimkan cara set ulang sandimu. Jangan khawatir!",
-  "reset-send": "Kirim tautan"
+  "reset-send": "Kirim tautan",
+  "email-sent-title": "Email terkirim!",
+  "email-sent-subtitle": "Cek emailmu dan klik tautan untuk set ulang sandimu"
 }

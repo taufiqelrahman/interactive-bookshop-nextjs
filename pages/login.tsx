@@ -14,11 +14,15 @@ const Login = (props: any): any => {
   const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onChange',
   });
+  const stepEnum = { WELCOME: 0, EMAIL: 1, RESET: 2, SENT: 3 };
+  const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
   const onSubmit = data => {
     props.thunkLogin(data);
   };
-  const stepEnum = { WELCOME: 0, EMAIL: 1, RESET: 2, SENT: 3 };
-  const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
+  const onReset = data => {
+    console.log(data);
+    setLoginStep(stepEnum.SENT);
+  };
   const loginEmail = () => {
     setLoginStep(stepEnum.EMAIL);
   };
@@ -103,7 +107,7 @@ const Login = (props: any): any => {
                   </form>
                 )}
                 {loginStep === stepEnum.RESET && (
-                  <form onSubmit={handleSubmit(onSubmit)}>
+                  <form onSubmit={handleSubmit(onReset)}>
                     <h1 className="c-login__title">{props.t('form:reset-title')}</h1>
                     <div className="c-login__subtitle">{props.t('form:reset-subtitle')}</div>
                     <FormTextField
@@ -122,6 +126,16 @@ const Login = (props: any): any => {
                       {props.t('go-back')}
                     </div>
                   </form>
+                )}
+                {loginStep === stepEnum.SENT && (
+                  <div>
+                    <img className="c-login__image" src="/static/images/welcome.png" />
+                    <h1 className="c-login__title">{props.t('form:email-sent-title')}</h1>
+                    <div className="c-login__subtitle">{props.t('form:email-sent-subtitle')}</div>
+                    <Button onClick={goBack} width="100%" style={{ margin: '30px 0' }}>
+                      {props.t('go-back')}
+                    </Button>
+                  </div>
                 )}
               </div>
             </Card>
