@@ -37,7 +37,13 @@ const App: NextPage<any> = (props: any) => {
         }
 
         .u-container {
-          @apply flex items-center justify-between w-11/12 mx-auto;
+          @apply w-11/12 mx-auto;
+          &__spread {
+            @apply flex items-center justify-between;
+          }
+          &__page {
+            padding: 30px 0;
+          }
           @screen lg {
             @apply w-9/12;
           }
@@ -48,6 +54,9 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+        .icon-arrow_left:before {
+          content: '\e907';
+        }
         .icon-facebook_white:before {
           content: '\e904';
           color: #fafafa;

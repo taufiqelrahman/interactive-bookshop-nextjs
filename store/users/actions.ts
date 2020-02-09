@@ -30,7 +30,7 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
       const token = CryptoJS.AES.encrypt(data.token, process.env.SECRET_KEY).toString();
       Cookies.set('user', token);
       dispatch(login(false, data));
-      Router.push(userData.from || '/');
+      Router.push(`/${userData.from || ''}`);
     })
     .catch(err => {
       dispatch(login(false));

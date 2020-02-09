@@ -56,7 +56,7 @@ const NavBar = (props: any) => {
     <div className={`relative z-50 ${showCart || showAccount ? 'bg-white' : ''}`}>
       <div className={stickyClassName()} ref={ref}>
         <div className="c-nav-bar">
-          <div className="u-container">
+          <div className="u-container u-container__spread">
             <Link href="/">
               <a className="c-nav-bar__logo">
                 <img src={`/static/images/logo${isSticky || !isIndexPage ? '' : '-black'}.png`} alt="logo" />
@@ -64,7 +64,7 @@ const NavBar = (props: any) => {
             </Link>
             <div className="c-nav-bar__menu">
               {(isSticky || !isIndexPage) && <TranslationToggle />}
-              <Link href="/cart">
+              <Link href={props.isLoggedIn ? '/cart' : '/login?from=cart'}>
                 <div
                   className="c-nav-bar__menu__cart"
                   onMouseEnter={() => toggleShow(true, setShowCart)}
@@ -143,7 +143,7 @@ const NavBar = (props: any) => {
                 @apply relative h-full flex items-center;
 
                 &__button {
-                  @apply mx-6 justify-center;
+                  @apply mx-6 justify-center cursor-pointer;
                   width: 120px;
                 }
                 &:hover .c-nav-bar__menu__cart__button,

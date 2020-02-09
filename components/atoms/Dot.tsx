@@ -6,12 +6,19 @@ const Dot = (props: any) => {
       <style jsx>{`
         .c-dot {
           @apply bg-black flex mx-1;
-          width: 6px;
-          height: 6px;
+          width: ${props.width || '6px'};
+          height: ${props.width || '6px'};
           border-radius: 50%;
 
           &--red {
             background: #de3636;
+          }
+          &--blue {
+            background: #445ca4;
+          }
+          &--white {
+            background: #fff;
+            border: 1px solid #e1e1e1;
           }
         }
       `}</style>

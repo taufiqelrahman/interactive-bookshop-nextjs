@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
+import { withTranslation, Link, Router } from 'i18n';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -17,7 +17,7 @@ const Login = (props: any): any => {
   const stepEnum = { WELCOME: 0, EMAIL: 1, RESET: 2, SENT: 3 };
   const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
   const onSubmit = data => {
-    props.thunkLogin(data);
+    props.thunkLogin({ ...data, from: Router.query.from });
   };
   const onReset = data => {
     console.log(data);

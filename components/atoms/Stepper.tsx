@@ -4,23 +4,26 @@ const Stepper = (props: any) => {
   return (
     <div className="c-stepper">
       <div className="c-stepper__back">
-        <span className="icon-chevron_left" onClick={() => Router.back()} />
+        <span className="icon-arrow_left" onClick={() => Router.back()} />
       </div>
       <div>
-        <div className="c-stepper__steps">
-          {`${props.t('step')} ${props.step} ${props.t('of')} ${props.totalSteps}`}
-        </div>
+        {props.totalSteps && (
+          <div className="c-stepper__steps">
+            {`${props.t('step')} ${props.step} ${props.t('of')} ${props.totalSteps}`}
+          </div>
+        )}
         <div className="c-stepper__title">
           <h1>{props.title}</h1>
         </div>
       </div>
       <style jsx>{`
         .c-stepper {
-          @apply flex items-end;
+          @apply flex items-end w-full;
           &__back {
             @apply font-bold cursor-pointer;
             margin-right: 12px;
-            line-height: 42px;
+            line-height: 39px;
+            font-size: 24px;
           }
           &__steps {
             @apply font-opensans text-xs;

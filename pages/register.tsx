@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
+import { withTranslation, Link, Router } from 'i18n';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ const Register = (props: any): any => {
   const [registerStep, setRegisterStep] = useState(stepEnum.WELCOME);
   const [savedEmail, setSavedEmail] = useState('');
   const onSubmit = data => {
-    console.log({ ...data, email: savedEmail });
+    console.log({ ...data, email: savedEmail, from: Router.query.from });
   };
   const submitEmail = data => {
     console.log(data);
