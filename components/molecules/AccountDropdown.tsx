@@ -1,4 +1,5 @@
 import { withTranslation, Link } from 'i18n';
+import Divider from 'components/atoms/Divider';
 
 const AccountDropdown = (props: any) => {
   const signOut = () => {
@@ -12,7 +13,7 @@ const AccountDropdown = (props: any) => {
             <a>{props.t('my-orders')}</a>
           </Link>
         </div>
-        <hr />
+        <Divider style={{ borderColor: '#ededed', borderWidth: 1, margin: '0 18px' }} />
         <div className="c-account-dropdown__item c-account-dropdown__sign-out" onClick={signOut}>
           {props.t('sign-out')}
         </div>
@@ -30,11 +31,6 @@ const AccountDropdown = (props: any) => {
           }
           &__sign-out {
             @apply text-brand cursor-pointer;
-          }
-          hr {
-            border-color: #ededed;
-            border-width: 1px;
-            margin: 0 18px;
           }
         }
       `}</style>

@@ -54,6 +54,17 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+        .icon-info:before {
+          content: '\e90a';
+        }
+        .icon-edit:before {
+          content: '\e908';
+          color: #e1e1e1;
+        }
+        .icon-trash:before {
+          content: '\e909';
+          color: #e1e1e1;
+        }
         .icon-arrow_left:before {
           content: '\e907';
         }

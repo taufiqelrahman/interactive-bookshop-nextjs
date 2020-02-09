@@ -116,7 +116,6 @@ const Register = (props: any): any => {
                       ref={register(schema.phone)}
                       errors={errors.phone}
                       variant="full-width"
-                      type="number"
                     />
                     <FormTextField
                       label={props.t('form:password-label')}

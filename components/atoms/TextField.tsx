@@ -1,15 +1,20 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
 
 const TextField = React.forwardRef((props: any, ref: any) => {
   const variantClass = props.variant ? `c-text-field--${props.variant}` : '';
   return (
     <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass}`}>
-      <input
-        type={props.isPassword ? 'password' : props.type || 'text'}
-        name={props.name}
-        placeholder={props.placeholder}
-        ref={ref}
-      />
+      {props.name === 'phone' ? (
+        <NumberFormat format="#### #### ####" name={props.name} placeholder={props.placeholder} getInputRef={ref} />
+      ) : (
+        <input
+          type={props.isPassword ? 'password' : props.type || 'text'}
+          name={props.name}
+          placeholder={props.placeholder}
+          ref={ref}
+        />
+      )}
       <div className="c-text-field__message">{props.errors ? props.errors.message : props.hint}</div>
       <style jsx>{`
         .c-text-field {
@@ -17,6 +22,17 @@ const TextField = React.forwardRef((props: any, ref: any) => {
           @screen md {
             @apply mb-0;
           }
+          &__message {
+            @apply text-sm text-left;
+            margin-top: 7px;
+            .c-text-field--error & {
+              @apply text-red-600;
+            }
+          }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-text-field {
           &--full-width {
             input {
               @apply w-full;
@@ -33,13 +49,6 @@ const TextField = React.forwardRef((props: any, ref: any) => {
           }
           &--error input {
             border: 2px solid #de3636;
-          }
-          &__message {
-            @apply text-sm text-left;
-            margin-top: 7px;
-            .c-text-field--error & {
-              @apply text-red-600;
-            }
           }
         }
       `}</style>
