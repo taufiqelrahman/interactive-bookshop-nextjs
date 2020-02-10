@@ -2,11 +2,14 @@
   "continue-button": "Lanjutkan",
   "save-button": "Simpan dan lanjutkan",
   "create-account-button": "Bikin akunku",
+  "send-button": "Kirim",
   "form-error": "Mohon lengkapi untuk lanjut",
   "required-error": "perlu diisi",
   "name-label": "Nama",
   "name-placeholder": "Ketik namamu disini...",
   "email-label": "Email",
+  "your-email-label": "Alamat emailmu",
+  "email-placeholder": "Ketik alamat emailmu",
   "email-hint": "Diperlukan email yang valid",
   "email-invalid": "Email tidak valid",
   "password-label": "Sandi",
@@ -32,5 +35,7 @@
   "reset-subtitle": "Masukkan emailmu supaya kami bisa kirimkan cara set ulang sandimu. Jangan khawatir!",
   "reset-send": "Kirim tautan",
   "email-sent-title": "Email terkirim!",
-  "email-sent-subtitle": "Cek emailmu dan klik tautan untuk set ulang sandimu"
+  "email-sent-subtitle": "Cek emailmu dan klik tautan untuk set ulang sandimu",
+  "message-label": "Pesan",
+  "message-placeholder": "Ketik pesanmu di sini"
 }

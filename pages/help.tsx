@@ -25,7 +25,7 @@ const Help = (props: any): any => {
       pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: props.t('form:email-invalid') },
     },
     message: {
-      required: { value: true, message: `${props.t('message-label')} ${props.t('form:required-error')}` },
+      required: { value: true, message: `${props.t('form:message-label')} ${props.t('form:required-error')}` },
     },
   };
   return (
@@ -74,7 +74,7 @@ const Help = (props: any): any => {
                       style={{ marginTop: 24, marginBottom: 24 }}
                     />
                     <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {props.t('form:send')}
+                      {props.t('form:send-button')}
                     </Button>
                   </form>
                 </div>

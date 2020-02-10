@@ -2,11 +2,14 @@
   "continue-button": "Continue",
   "save-button": "Save and continue",
   "create-account-button": "Create my account",
+  "send-button": "Send",
   "form-error": "Please fill in required fields to continue",
   "required-error": "is required",
   "name-label": "Name",
   "name-placeholder": "Enter name here...",
   "email-label": "Email",
+  "your-email-label": "Your email address",
+  "email-placeholder": "Enter your email address",
   "email-hint": "A valid email is needed",
   "email-invalid": "Email is invalid",
   "password-label": "Password",
@@ -32,5 +35,7 @@
   "reset-subtitle": "Enter your registered email so we can send you a link to reset your password. Don’t worry!",
   "reset-send": "Send reset link",
   "email-sent-title": "Email sent!",
-  "email-sent-subtitle": "Check your email inbox and click the link to reset your password"
+  "email-sent-subtitle": "Check your email inbox and click the link to reset your password",
+  "message-label": "Message",
+  "message-placeholder": "Enter your message here"
 }
