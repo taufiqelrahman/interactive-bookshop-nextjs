@@ -34,8 +34,10 @@ const Cart = (props: any): any => {
                   </div>
                   <div className="flex justify-between">
                     <div>
-                      <div className="c-cart__summary__title">When I Grow Up {props.t('book')}</div>
-                      <div className="c-cart__summary__quantity">Quantity: {dummyCart.quantity}</div>
+                      <div className="c-cart__summary__title">When I Grow Up</div>
+                      <div className="c-cart__summary__quantity">
+                        {props.t('quantity')}: {dummyCart.quantity}
+                      </div>
                     </div>
                     <div className="c-cart__summary__total">
                       <NumberFormat value={dummyCart.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />

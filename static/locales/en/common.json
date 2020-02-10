@@ -21,5 +21,13 @@
   "step": "Step",
   "of": "of",
   "error-with-status": "A {{statusCode}} error occurred on server",
-  "error-without-status": "An error occurred on the server"
+  "error-without-status": "An error occurred on the server",
+  "name": "Name",
+  "dream-occupation": "Dream Occupations",
+  "dedication-note": "Dedication Notes",
+  "preview-note": "Preview Notes",
+  "order-summary": "Order Summary",
+  "quantity": "Quantity",
+  "shipping-not-included": "Shipping cost is not yet included",
+  "continue-payment": "Continue to Payment"
 }

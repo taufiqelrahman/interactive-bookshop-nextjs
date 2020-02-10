@@ -21,5 +21,13 @@
   "step": "Tahap",
   "of": "dari",
   "error-with-status": "A {{statusCode}} error occurred on server",
-  "error-without-status": "An error occurred on the server"
+  "error-without-status": "An error occurred on the server",
+  "name": "Nama",
+  "dream-occupation": "Pekerjaan",
+  "dedication-note": "Pesan Khusus",
+  "preview-note": "Lihat Pesan",
+  "order-summary": "Ringkasan Pembelian",
+  "quantity": "Jumlah",
+  "shipping-not-included": "Belum termasuk biaya ongkos kirim",
+  "continue-payment": "Lanjut ke Pembayaran"
 }

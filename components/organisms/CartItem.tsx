@@ -27,14 +27,14 @@ const CartItem = (props: any) => {
           <div className="c-cart-item__detail">
             <div className="c-cart-item__detail--top">
               <div className="c-cart-item__detail--top--left">
-                <div className="c-cart-item__detail__label">Name</div>
+                <div className="c-cart-item__detail__label">{props.t('name-label')}</div>
                 <div className="c-cart-item__detail__value">{props.attributes.name}</div>
-                <div className="c-cart-item__detail__label">Dream Occupations</div>
+                <div className="c-cart-item__detail__label">{props.t('dream-occupation')}</div>
                 <div className="c-cart-item__detail__value">{props.attributes.occupation}</div>
               </div>
               <div className="c-cart-item__detail--top--right">
-                <div className="c-cart-item__detail__label">Dedication Notes</div>
-                <div className="c-cart-item__detail__link">Preview Notes</div>
+                <div className="c-cart-item__detail__label">{props.t('dedication-note')}</div>
+                <div className="c-cart-item__detail__link">{props.t('preview-note')}</div>
               </div>
             </div>
             <Divider style={{ borderColor: '#EDEDED', margin: '8px 0 18px' }} />
@@ -150,4 +150,4 @@ const CartItem = (props: any) => {
   );
 };
 
-export default withTranslation('form')(CartItem);
+export default withTranslation('common')(CartItem);
