@@ -54,6 +54,12 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+        .icon-chevron_up:before {
+          content: '\e90b';
+        }
+        .icon-chevron_down:before {
+          content: '\e90c';
+        }
         .icon-info:before {
           content: '\e90a';
         }

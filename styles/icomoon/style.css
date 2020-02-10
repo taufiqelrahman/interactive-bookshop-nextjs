@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'whenigrowup';
-  src:  url('/static/fonts/whenigrowup.eot?rslfgx');
-  src:  url('/static/fonts/whenigrowup.eot?rslfgx#iefix') format('embedded-opentype'),
-    url('/static/fonts/whenigrowup.ttf?rslfgx') format('truetype'),
-    url('/static/fonts/whenigrowup.woff?rslfgx') format('woff'),
-    url('/static/fonts/whenigrowup.svg?rslfgx#whenigrowup') format('svg');
+  src:  url('/static/fonts/whenigrowup.eot?2btlnu');
+  src:  url('/static/fonts/whenigrowup.eot?2btlnu#iefix') format('embedded-opentype'),
+    url('/static/fonts/whenigrowup.ttf?2btlnu') format('truetype'),
+    url('/static/fonts/whenigrowup.woff?2btlnu') format('woff'),
+    url('/static/fonts/whenigrowup.svg?2btlnu#whenigrowup') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-chevron_up:before {
+  content: "\e90b";
+}
+.icon-chevron_down:before {
+  content: "\e90c";
+}
 .icon-info:before {
   content: "\e90a";
 }
