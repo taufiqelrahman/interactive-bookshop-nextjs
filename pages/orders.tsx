@@ -42,4 +42,4 @@ const Orders = (props: any): any => {
   );
 };
 
-export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Orders));
+export default withTranslation('page-orders')(connect(mapStateToProps, mapDispatchToProps)(Orders));

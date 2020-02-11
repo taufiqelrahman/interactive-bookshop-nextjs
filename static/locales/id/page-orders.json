@@ -1,0 +1,8 @@
+{
+  "orders-title": "Pesanan Saya",
+  "sent": "dikirim",
+  "pending": "menunggu pembayaran",
+  "received": "selesai",
+  "order-date": "Tanggal Pesan",
+  "order-id": "ID Pesanan"
+}

@@ -37,7 +37,7 @@ const OrderItem = (props: any) => {
             <div className="c-order-item__detail__occupation">{props.occupation}</div>
             <div className="c-order-item__detail--middle">
               <div style={{ marginRight: 100 }}>
-                <div className="c-order-item__detail__label">Order ID</div>
+                <div className="c-order-item__detail__label">{props.t('order-id')}</div>
                 <div className="c-order-item__detail__value">{props.orderId}</div>
               </div>
               <div>
@@ -123,4 +123,4 @@ const OrderItem = (props: any) => {
   );
 };
 
-export default withTranslation('common')(OrderItem);
+export default withTranslation('page-orders')(OrderItem);
