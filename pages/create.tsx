@@ -22,10 +22,22 @@ const Create = (props: any): any => {
       <style jsx>{`
         .c-section {
           &__left {
-            @apply w-3/5;
+            @apply w-full;
+            @screen lg {
+              @apply w-4/5;
+            }
+            @screen xl {
+              @apply w-3/5;
+            }
           }
           &__right {
-            @apply w-2/5;
+            @apply w-0;
+            @screen lg {
+              @apply w-1/5;
+            }
+            @screen xl {
+              @apply w-2/5;
+            }
           }
         }
       `}</style>

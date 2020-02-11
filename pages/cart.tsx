@@ -3,7 +3,7 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
-import CartItem from 'components/organisms/CartItem';
+import CartItem from 'components/molecules/CartItem';
 import Card from 'components/atoms/Card';
 import dummyCart from '_mocks/cart';
 import Dot from 'components/atoms/Dot';
@@ -63,14 +63,23 @@ const Cart = (props: any): any => {
       </div>
       <style jsx>{`
         .c-cart-section {
-          @apply flex w-full;
+          @apply flex w-full flex-col;
+          @screen xl {
+            @apply flex-row;
+          }
           padding: 31px 0;
           &__left {
-            @apply w-3/5;
+            @apply w-full;
             margin-right: 30px;
+            @screen xl {
+              @apply w-3/5;
+            }
           }
           &__right {
-            @apply w-2/5;
+            @apply w-full;
+            @screen xl {
+              @apply w-2/5;
+            }
           }
         }
         .c-cart {

@@ -14,7 +14,7 @@ class Order extends Model
     3: paid (telah dibayar: settlement, capture)
     4: sent (telah dikirim, shipping_number terisi)
     5: expired (expire)
-    // received (telah diterima)
+    // received (telah diterima) (need create auto-receive job)
     // canceled (dibatalkan /gagal)
     */
 

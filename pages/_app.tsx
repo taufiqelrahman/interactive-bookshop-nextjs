@@ -29,7 +29,7 @@ const App: NextPage<any> = (props: any) => {
     <Provider store={reduxStore}>
       <Component {...pageProps} />
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600|Poppins:400,600,700&display=swap');
         @import 'static/styles/ReactToastify.min.css';
 
         body {
@@ -54,6 +54,9 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+        .icon-cross_check:before {
+          content: '\e90d';
+        }
         .icon-chevron_up:before {
           content: '\e90b';
         }

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
+import GoogleMapReact from 'google-map-react';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Accordion from 'components/atoms/Accordion';
@@ -28,6 +29,7 @@ const Help = (props: any): any => {
       required: { value: true, message: `${props.t('form:message-label')} ${props.t('form:required-error')}` },
     },
   };
+  const Marker = (props: any) => <div>{props.text}</div>;
   return (
     <DefaultLayout {...props}>
       <div className="bg-light-grey h-min-screen">
@@ -45,7 +47,20 @@ const Help = (props: any): any => {
                 <div className="c-help-section__contact-us">
                   <h2>{props.t('contact-us')}</h2>
                   <div className="flex">
-                    <div className="c-help-section__map">map</div>
+                    <div className="c-help-section__map">
+                      <GoogleMapReact
+                        bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
+                        defaultCenter={{
+                          lat: 59.95,
+                          lng: 30.33,
+                        }}
+                        defaultZoom={11}
+                      >
+                        <Marker lat={59.955413} lng={30.337844}>
+                          marker
+                        </Marker>
+                      </GoogleMapReact>
+                    </div>
                     <div className="c-help-section__info">
                       <h2 style={{ marginBottom: 16 }}>PT. When I Grow Up Indonesia</h2>
                       <div className="c-help-section__address">
@@ -88,7 +103,13 @@ const Help = (props: any): any => {
           @apply flex w-full;
           margin-top: 36px;
           &__left {
-            @apply w-3/5;
+            @apply w-full;
+            @screen lg {
+              @apply w-4/5;
+            }
+            @screen xl {
+              @apply w-3/5;
+            }
             h2 {
               @apply font-semibold;
               font-size: 20px;
@@ -97,7 +118,10 @@ const Help = (props: any): any => {
             }
           }
           &__right {
-            @apply w-2/5;
+            @apply w-0;
+            @screen xl {
+              @apply w-2/5;
+            }
           }
           &__contact-us {
             padding: 20px 24px;
@@ -109,6 +133,7 @@ const Help = (props: any): any => {
             border-radius: 12px;
             background: #efeef4;
             margin-right: 24px;
+            height: 160px;
           }
           &__info {
             @apply w-1/2;

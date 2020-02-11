@@ -20,7 +20,7 @@ const AccountDropdown = (props: any) => {
       </div>
       <style jsx>{`
         .c-account-dropdown {
-          @apply absolute bg-gray-100 text-xs font-medium;
+          @apply absolute bg-gray-100 text-xs;
           box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.08);
           border-radius: 0px 0px 6px 6px;
           top: 80px;
