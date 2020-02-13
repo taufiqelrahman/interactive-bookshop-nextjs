@@ -20,11 +20,12 @@ const NavBar = (props: any) => {
   const ref = useRef<HTMLInputElement>(null);
   const handleScroll = () => {
     if (ref && ref.current) {
-      setSticky(ref.current.getBoundingClientRect().top <= 0);
+      setSticky(ref.current.getBoundingClientRect().top < -80);
     }
   };
 
   useEffect(() => {
+    if (!isIndexPage) return;
     window.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -112,9 +113,10 @@ const NavBar = (props: any) => {
       <style jsx>
         {`
           .c-nav-bar {
-            ${isIndexPage ? 'position: absolute; width: 100%;' : ''}
-            @apply flex z-50;
+            ${isIndexPage ? '' : 'background: white; top: 0;'}
+            @apply flex z-50 w-full;
             height: 80px;
+            position: ${isIndexPage ? 'absolute' : 'fixed'};
             box-shadow: ${isIndexPage ? 'none' : '0px 2px 8px rgba(0, 0, 0, 0.08)'};
 
             .c-nav-bar--sticky & {

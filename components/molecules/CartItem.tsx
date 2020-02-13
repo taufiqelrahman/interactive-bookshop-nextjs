@@ -1,16 +1,39 @@
 import { withTranslation } from 'i18n';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import NumberFormat from 'react-number-format';
+import debounce from 'lodash.debounce';
 import Card from 'components/atoms/Card';
 import Dot from 'components/atoms/Dot';
 import Divider from 'components/atoms/Divider';
-// import { useState, useEffect } from 'react';
 
 const CartItem = (props: any) => {
+  const [quantity, setQuantity] = useState(props.quantity);
   const previewImg = () => {
     const filePath = '/static/images/preview/child';
     const { gender, age, skin, hair } = props.attributes;
     return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
   };
+  const onDecrease = () => {
+    if (quantity > 0) setQuantity(quantity - 1);
+  };
+  const updateShopify = () => {
+    console.log('updated');
+  };
+  const debouncedFunctionRef = useRef();
+  (debouncedFunctionRef.current as any) = () => updateShopify();
+  const debouncedChange = useCallback(
+    debounce(() => (debouncedFunctionRef.current as any)(), 2000),
+    [],
+  );
+  const isFirstRun = useRef(true);
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    debouncedChange();
+  }, [quantity]);
+
   return (
     <div style={props.style}>
       <Card variant="border">
@@ -46,9 +69,19 @@ const CartItem = (props: any) => {
                 {/* <span className="c-cart-item__detail__actions__icon icon-edit" /> */}
                 <span className="c-cart-item__detail__actions__icon icon-trash" />
                 <div className="c-cart-item__detail__quantity">
-                  <span className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__minus">-</span>
-                  <input type="number" value={props.quantity} />
-                  <span className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__plus">+</span>
+                  <span
+                    onClick={onDecrease}
+                    className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__minus"
+                  >
+                    -
+                  </span>
+                  <input type="number" value={quantity} onChange={e => setQuantity(parseInt(e.target.value, 10))} />
+                  <span
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__plus"
+                  >
+                    +
+                  </span>
                 </div>
               </div>
             </div>
@@ -105,7 +138,7 @@ const CartItem = (props: any) => {
               margin-bottom: 13px;
             }
             &__link {
-              @apply font-semibold;
+              @apply font-semibold cursor-pointer;
               color: #445ca4;
               line-height: 24px;
             }

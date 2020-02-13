@@ -11,9 +11,9 @@ const Orders = (props: any): any => {
     <DefaultLayout {...props}>
       <div className="bg-light-grey h-min-screen">
         <div className="u-container u-container__page">
-          <Stepper title={props.t('orders-title')} />
-          <div className="c-cart-section">
-            <div className="c-cart-section__left">
+          <Stepper title={props.t('my-orders')} />
+          <div className="c-orders-section">
+            <div className="c-orders-section__left">
               {dummyOrders &&
                 dummyOrders.map(item => (
                   <Link key={item.id} href={`/orders/${item.id}`}>
@@ -27,7 +27,7 @@ const Orders = (props: any): any => {
         </div>
       </div>
       <style jsx>{`
-        .c-cart-section {
+        .c-orders-section {
           @apply flex w-full;
           padding: 31px 0;
           &__left {

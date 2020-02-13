@@ -1,5 +1,6 @@
 import { withTranslation } from 'i18n';
 import NumberFormat from 'react-number-format';
+import { date } from 'lib/format-date';
 import Card from 'components/atoms/Card';
 import Dot from 'components/atoms/Dot';
 import Capsule from 'components/atoms/Capsule';
@@ -38,11 +39,11 @@ const OrderItem = (props: any) => {
             <div className="c-order-item__detail--middle">
               <div style={{ marginRight: 100 }}>
                 <div className="c-order-item__detail__label">{props.t('order-id')}</div>
-                <div className="c-order-item__detail__value">{props.orderId}</div>
+                <div className="c-order-item__detail__value">{props.order_id}</div>
               </div>
               <div>
                 <div className="c-order-item__detail__label">{props.t('order-date')}</div>
-                <div className="c-order-item__detail__value">{props.createdAt}</div>
+                <div className="c-order-item__detail__value">{date(props.created_at)}</div>
               </div>
             </div>
             <div className="c-order-item__detail--bottom">

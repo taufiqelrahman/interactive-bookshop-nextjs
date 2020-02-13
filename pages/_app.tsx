@@ -4,7 +4,9 @@ import cookies from 'next-cookies';
 import { NextPage } from 'next';
 // import * as Sentry from '@sentry/browser'
 import withReduxStore from 'lib/with-redux-store';
-import { appWithTranslation } from 'i18n';
+import { appWithTranslation, i18n } from 'i18n';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/id';
 import actions from 'store/actions';
 import 'styles/tailwind.css';
 import 'styles/icomoon/style.css';
@@ -30,7 +32,7 @@ const App: NextPage<any> = (props: any) => {
       <Component {...pageProps} />
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600|Poppins:400,600,700&display=swap');
-        @import 'static/styles/ReactToastify.min.css';
+        @import '/static/styles/ReactToastify.min.css';
 
         body {
           @apply font-poppins text-dark-grey;
@@ -106,12 +108,14 @@ const App: NextPage<any> = (props: any) => {
   );
 };
 
-App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
+App.getInitialProps = async ({ Component, ctx, router, language }: any): Promise<any> => {
   if (cookies(ctx).user) {
     ctx.reduxStore.dispatch(actions.setLogin(true));
   } else {
     ctx.reduxStore.dispatch(actions.setLogin(false));
   }
+  const currentLanguage = language || i18n.language;
+  dayjs.locale(currentLanguage);
 
   return {
     pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/camelcase */
 export default [
   {
     id: 1,
-    orderId: 'WIGO-00001',
+    order_id: 'WIGO-00001',
     price: 399000,
-    createdAt: '2020-02-11 07:02:42',
+    created_at: '2008-01-10T11:00:00-05:00',
     state: 'sent',
     cover: 'blue',
     name: 'Lee Lane',
@@ -15,9 +16,9 @@ export default [
   },
   {
     id: 2,
-    orderId: 'WIGO-00001',
+    order_id: 'WIGO-00001',
     price: 399000,
-    createdAt: '2020-02-11 07:02:42',
+    created_at: '2008-01-10T11:00:00-05:00',
     state: 'pending',
     cover: 'blue',
     name: 'Lee Lane',
@@ -29,9 +30,9 @@ export default [
   },
   {
     id: 3,
-    orderId: 'WIGO-00001',
+    order_id: 'WIGO-00001',
     price: 399000,
-    createdAt: '2020-02-11 07:02:42',
+    created_at: '2008-01-10T11:00:00-05:00',
     state: 'received',
     cover: 'blue',
     name: 'Lee Lane',

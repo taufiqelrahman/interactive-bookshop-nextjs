@@ -1,5 +1,6 @@
 {
-  "orders-title": "My Orders",
+  "my-orders": "My Orders",
+  "orders-title": "Orders",
   "sent": "on delivery",
   "pending": "awaiting payment",
   "received": "done",

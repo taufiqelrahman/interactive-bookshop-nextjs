@@ -1,0 +1,38 @@
+/* eslint-disable @typescript-eslint/camelcase */
+export default {
+  id: 1,
+  orderId: 'WIGO-00001',
+  price: 399000,
+  created_at: '2008-01-10T11:00:00-05:00',
+  sent_at: '2008-01-10T11:00:00-05:00',
+  state: 'sent',
+  shipping_number: 'JT772817192901',
+  line_items: [
+    {
+      cover: 'blue',
+      name: 'Lee Lane',
+      occupation: 'Doctor, Chef, Musician',
+      gender: 'boy',
+      age: 'toddler',
+      skin: 'light',
+      hair: 'curly',
+    },
+  ],
+  shipping_address: {
+    address1: '123 Amoebobacterieae St',
+    address2: '',
+    city: 'Ottawa',
+    company: null,
+    country: 'Canada',
+    first_name: 'Bob',
+    last_name: 'Bobsen',
+    latitude: '45.41634',
+    longitude: '-75.6868',
+    phone: '555-625-1199',
+    province: 'Ontario',
+    zip: 'K2P0V6',
+    name: 'Bob Bobsen',
+    country_code: 'CA',
+    province_code: 'ON',
+  },
+};

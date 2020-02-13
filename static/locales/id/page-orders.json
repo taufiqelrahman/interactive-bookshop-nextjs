@@ -1,5 +1,6 @@
 {
-  "orders-title": "Pesanan Saya",
+  "my-orders": "Pesanan Saya",
+  "orders-title": "Pesanan",
   "sent": "dikirim",
   "pending": "menunggu pembayaran",
   "received": "selesai",
