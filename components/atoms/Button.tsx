@@ -17,7 +17,10 @@ const Button = (props: any) => {
           @apply font-semibold bg-brand text-white;
           border-radius: 60px;
           padding: 12px;
-          width: ${props.width || '255px'};
+          @apply w-full;
+          @screen sm {
+            width: ${props.width || '255px'};
+          }
           line-height: 24px;
           &--outline {
             @apply bg-transparent;

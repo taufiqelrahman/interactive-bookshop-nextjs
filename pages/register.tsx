@@ -54,10 +54,10 @@ const Register = (props: any): any => {
   }, [errors]);
   return (
     <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen">
+      <div className="bg-light-grey h-min-screen" style={{ paddingTop: 61 }}>
         <div className="u-container">
           <div className="c-register">
-            <Card variant="border" style={{ marginTop: 61 }}>
+            <Card variant="border">
               <div className="c-register__container">
                 {registerStep === stepEnum.WELCOME && (
                   <div>

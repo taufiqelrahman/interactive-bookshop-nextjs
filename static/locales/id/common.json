@@ -32,5 +32,9 @@
   "order-summary": "Ringkasan Pembelian",
   "quantity": "Jumlah",
   "shipping-not-included": "Belum termasuk biaya ongkos kirim",
-  "continue-payment": "Lanjut ke Pembayaran"
+  "continue-payment": "Lanjut ke Pembayaran",
+  "order-success": "Pesanan berhasil, terima kasih!",
+  "order-success-content": "Cek emailmu untuk detail pemesanan. Kamu dapat melihat pesanan kamu di halaman 'Pesananku'.",
+  "go-to-orders": "Lihat pesananku",
+  "back-to-home": "Kembali ke Halaman Utama"
 }

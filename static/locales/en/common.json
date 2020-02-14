@@ -32,5 +32,9 @@
   "order-summary": "Order Summary",
   "quantity": "Quantity",
   "shipping-not-included": "Shipping cost is not yet included",
-  "continue-payment": "Continue to Payment"
+  "continue-payment": "Continue to Payment",
+  "order-success": "Order placed, thank you!",
+  "order-success-content": "Check your email for order details. You can track your order at My Orders menu, or just conveniently wait for our SMS and email updates.",
+  "go-to-orders": "Go to My Orders",
+  "back-to-home": "Go to My Orders"
 }

@@ -10,7 +10,7 @@ const DefaultLayout = (props: any) => {
   return (
     <div>
       <NavBar isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart} thunkLogout={props.thunkLogout} />
-      <div className="h-min-screen" style={{ position: 'relative', marginTop: isIndexPage ? 0 : 80 }}>
+      <div className="h-min-screen" style={{ position: 'relative', paddingTop: isIndexPage ? 0 : 80 }}>
         <ToastContainer
           className="c-toast__container"
           toastClassName="c-toast__toast"
