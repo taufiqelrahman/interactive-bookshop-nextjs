@@ -5,6 +5,7 @@ import debounce from 'lodash.debounce';
 import Card from 'components/atoms/Card';
 import Dot from 'components/atoms/Dot';
 import Divider from 'components/atoms/Divider';
+import Popover from 'components/atoms/Popover';
 
 const CartItem = (props: any) => {
   const [quantity, setQuantity] = useState(props.quantity);
@@ -55,10 +56,14 @@ const CartItem = (props: any) => {
                 <div className="c-cart-item__detail__label">{props.t('dream-occupation')}</div>
                 <div className="c-cart-item__detail__value">{props.attributes.occupation}</div>
               </div>
-              <div className="c-cart-item__detail--top--right">
-                <div className="c-cart-item__detail__label">{props.t('dedication-note')}</div>
-                <div className="c-cart-item__detail__link">{props.t('preview-note')}</div>
-              </div>
+              {props.attributes.notes && (
+                <div className="c-cart-item__detail--top--right">
+                  <div className="c-cart-item__detail__label">{props.t('dedication-note')}</div>
+                  <Popover content={props.attributes.notes}>
+                    <div className="c-cart-item__detail__link">{props.t('preview-note')}</div>
+                  </Popover>
+                </div>
+              )}
             </div>
             <Divider style={{ borderColor: '#EDEDED', margin: '8px 0 18px' }} />
             <div className="c-cart-item__detail--bottom">

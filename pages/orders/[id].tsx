@@ -7,6 +7,7 @@ import dummyOrders from '_mocks/orders';
 import Card from 'components/atoms/Card';
 import NumberFormat from 'react-number-format';
 import Divider from 'components/atoms/Divider';
+import Popover from 'components/atoms/Popover';
 
 const OrderDetail = (props: any): any => {
   const dummyOrder = dummyOrders[0];
@@ -39,7 +40,9 @@ const OrderDetail = (props: any): any => {
                     </div>
                     <div className="c-detail__book__right">
                       <div className="c-detail__label">{props.t('form:dedication-note')}</div>
-                      <div className="c-detail__link">{props.t('form:preview-note')}</div>
+                      <Popover content={props.notes}>
+                        <div className="c-detail__link">{props.t('form:preview-note')}</div>
+                      </Popover>
                     </div>
                   </div>
                 </div>
