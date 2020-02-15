@@ -36,5 +36,7 @@
   "order-success": "Order placed, thank you!",
   "order-success-content": "Check your email for order details. You can track your order at My Orders menu, or just conveniently wait for our SMS and email updates.",
   "go-to-orders": "Go to My Orders",
-  "back-to-home": "Go to My Orders"
+  "back-to-home": "Back to Homepage",
+  "book-preferences": "Book Preferences",
+  "add-to-cart": "Add to Cart"
 }

@@ -35,8 +35,8 @@ const OrderSuccess = (props: any): any => {
         .c-login {
           @apply mx-auto w-full;
           &__container {
+            @apply text-center;
             padding: 42px;
-            text-align: center;
           }
           &__image {
             @apply mx-auto;
@@ -53,6 +53,13 @@ const OrderSuccess = (props: any): any => {
             @apply font-opensans mx-auto;
             line-height: 22px;
             max-width: 540px;
+          }
+          &__link {
+            @apply font-semibold cursor-pointer;
+            color: #445ca4;
+            span {
+              @apply font-normal;
+            }
           }
         }
       `}</style>

@@ -36,5 +36,7 @@
   "order-success": "Pesanan berhasil, terima kasih!",
   "order-success-content": "Cek emailmu untuk detail pemesanan. Kamu dapat melihat pesanan kamu di halaman 'Pesananku'.",
   "go-to-orders": "Lihat pesananku",
-  "back-to-home": "Kembali ke Halaman Utama"
+  "back-to-home": "Kembali ke Halaman Utama",
+  "book-preferences": "Preferensi Buku",
+  "add-to-cart": "Tambahkan ke Keranjang"
 }

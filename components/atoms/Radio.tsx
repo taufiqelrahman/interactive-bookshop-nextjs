@@ -27,6 +27,7 @@ const Radio = React.forwardRef((props: any, ref: any) => (
           input:checked + label > & {
             @apply text-white;
             background: ${!props.type && '#445ca4'};
+            box-shadow: ${props.type && 'inset 0 0 0px 2px white'};
             border: ${props.type && '8px solid #445ca4'};
           }
         }
