@@ -39,7 +39,8 @@ const FieldCover = React.forwardRef((props: any, ref: any) => {
             margin-right: 18px;
           }
           &__options {
-            @apply flex flex-wrap;
+            @apply flex flex-wrap items-center;
+            height: 64px;
           }
         }
       `}</style>

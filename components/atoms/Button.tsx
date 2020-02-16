@@ -16,7 +16,7 @@ const Button = (props: any) => {
         .c-button {
           @apply font-semibold bg-brand text-white;
           border-radius: 60px;
-          padding: 12px;
+          padding: ${props.width ? '12px 0' : '12px'};
           @apply w-full;
           @screen sm {
             width: ${props.width || '255px'};
