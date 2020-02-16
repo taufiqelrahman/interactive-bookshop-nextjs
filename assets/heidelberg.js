@@ -167,12 +167,32 @@ const init = function() {
       }
     };
 
+    Heidelberg.prototype.isLastPage = function() {
+      const el = this.el;
+      const els = {};
+      const index = {};
+      els.pages = $('.Heidelberg-Page', el);
+      els.pagesActive = $('.Heidelberg-Page.is-active', el);
+      index.activeLeft = els.pagesActive.eq(0).index(); // Note about fix: the double spread code above caused code to wrap to bottom of array . This is the fix for double spreads.
+      return els.pages.last().index() == index.activeLeft;
+    };
+
+    Heidelberg.prototype.isFirstPage = function() {
+      const el = this.el;
+      const els = {};
+      const index = {};
+      els.pages = $('.Heidelberg-Page', el);
+      els.pagesActive = $('.Heidelberg-Page.is-active', el);
+      index.activeRight = els.pagesActive.eq(0).index();
+      return els.pages.first().index() == index.activeRight;
+    };
+
     Heidelberg.prototype.turnPage = function(arg) {
       const el = this.el;
       const els = {};
       const options = this.options;
       const index = {};
-      const direction = arg;
+      let direction = arg;
 
       els.pages = $('.Heidelberg-Page', el);
       els.pagesActive = $('.Heidelberg-Page.is-active', el);
@@ -255,12 +275,15 @@ const init = function() {
         }.bind(document),
       );
 
-      options.onPageTurn(el, els);
+      // options.onPageTurn(el, els);
+      options.onPageTurn(this.isFirstPage(), this.isLastPage());
       $(this).trigger('pageTurn.heidelberg', [el, els]);
 
       if (direction == 'forwards' && els.pagesTarget.first().hasClass('last-page')) {
+        $('#Heidelberg').removeClass('at-front-cover');
         $('#Heidelberg').addClass('at-rear-cover');
       } else if (direction == 'back' && els.pagesTarget.first().hasClass('first-page')) {
+        $('#Heidelberg').removeClass('at-rear-cover');
         $('#Heidelberg').addClass('at-front-cover');
       } else {
         $('#Heidelberg').removeClass('at-rear-cover');

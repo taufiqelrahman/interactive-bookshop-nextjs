@@ -5,25 +5,37 @@ import debounce from 'lodash.debounce';
 // import CircleType from 'circletype';
 
 const BookPreview = () => {
-  const [, setBook] = useState(null);
-  const [height, setHeight] = useState(0);
-  const [loaded, setLoaded] = useState(false);
+  const [book, setBook] = useState(null);
+  const [state, setState] = useState({
+    height: 0,
+    loaded: false,
+  });
+  const [pageInfo, setPageInfo] = useState({
+    firstPage: true,
+    lastPage: false,
+  });
 
   const updateHeight = () => {
     const image: any = document.querySelector('.Heidelberg-Page img');
-    setHeight(image.height);
+    setState({ ...state, height: image.height, loaded: true });
     return Promise.resolve();
+  };
+
+  const updatePageInfo = () => {
+    setPageInfo({ ...pageInfo, firstPage: (book as any).isFirstPage(), lastPage: (book as any).isLastPage() });
   };
 
   const setupBook = async () => {
     await updateHeight();
-    setLoaded(true);
     const bookHeidelberg = new (window as any).Heidelberg($('#Heidelberg'), {
       initialActivePage: 1,
       canClose: true,
       arrowKeys: true,
       concurrentAnimations: 5,
       // hasSpreads: true,
+      onPageTurn: (isFirstPage: boolean, isLastPage: boolean) => {
+        setPageInfo({ firstPage: isFirstPage, lastPage: isLastPage });
+      },
     });
     setBook(bookHeidelberg);
   };
@@ -52,35 +64,131 @@ const BookPreview = () => {
     // 4. make it smooth with hammer etc maybe
   }, [false]);
 
+  useEffect(() => {
+    if (!book) return;
+    updatePageInfo();
+  }, [book]);
+
+  const firstPage = () => {
+    if (pageInfo.firstPage) return;
+    (book as any).turnPage(1);
+    updatePageInfo();
+  };
+
+  const prevPage = () => {
+    if (pageInfo.firstPage) return;
+    (book as any).turnPage('back');
+    updatePageInfo();
+  };
+
+  const nextPage = () => {
+    if (pageInfo.lastPage) return;
+    (book as any).turnPage('forwards');
+    updatePageInfo();
+  };
+
+  const lastPage = () => {
+    if (pageInfo.lastPage) return;
+    (book as any).turnPage(6);
+    updatePageInfo();
+  };
+
   return (
     <div className="c-book-preview">
-      {/* <div className="Heidelberg-Book with-Spreads" id="Heidelberg"> */}
-      <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
-        <div className="Heidelberg-Page first-page">
-          <img src="/static/images/pages/astronaut/1/girl_kid_light_hair.jpeg" />
+      <div className="c-book-preview__left">
+        <span
+          className={`c-book-preview__nav icon-chevron_left ${
+            pageInfo.firstPage ? 'c-book-preview__nav--disabled' : ''
+          }`}
+          onClick={firstPage}
+        />
+        <span
+          className={`c-book-preview__nav icon-chevron_left ${
+            pageInfo.firstPage ? 'c-book-preview__nav--disabled' : ''
+          }`}
+          onClick={prevPage}
+        />
+      </div>
+      <div className="c-book-preview__container">
+        {/* <div className="Heidelberg-Book with-Spreads" id="Heidelberg"> */}
+        <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
+          <div className="Heidelberg-Page first-page">
+            <img src="/static/images/pages/astronaut/1/girl_kid_light_hair.jpeg" />
+          </div>
+          <div className="Heidelberg-Page">
+            <img src="/static/images/pages/astronaut/3/girl_kid_light_hair.jpeg" />
+          </div>
+          <div className="Heidelberg-Page">
+            <img src="/static/images/pages/astronaut/2/girl_kid_light_hair.jpeg" />
+          </div>
+          <div className="Heidelberg-Page">
+            <img src="/static/images/pages/astronaut/1/girl_kid_light_hair.jpeg" />
+          </div>
+          <div className="Heidelberg-Page">
+            <img src="/static/images/pages/astronaut/2/girl_kid_light_hair.jpeg" />
+          </div>
+          <div className="Heidelberg-Page last-page">
+            <img src="/static/images/pages/astronaut/3/girl_kid_light_hair.jpeg" />
+          </div>
         </div>
-        <div className="Heidelberg-Page">
-          <img src="/static/images/pages/astronaut/3/girl_kid_light_hair.jpeg" />
-        </div>
-        <div className="Heidelberg-Page">
-          <img src="/static/images/pages/astronaut/2/girl_kid_light_hair.jpeg" />
-        </div>
-        <div className="Heidelberg-Page">
-          <img src="/static/images/pages/astronaut/1/girl_kid_light_hair.jpeg" />
-        </div>
-        <div className="Heidelberg-Page">
-          <img src="/static/images/pages/astronaut/2/girl_kid_light_hair.jpeg" />
-        </div>
-        <div className="Heidelberg-Page last-page">
-          <img src="/static/images/pages/astronaut/3/girl_kid_light_hair.jpeg" />
-        </div>
+      </div>
+      <div className="c-book-preview__right">
+        <span
+          className={`c-book-preview__nav icon-chevron_right ${
+            pageInfo.lastPage ? 'c-book-preview__nav--disabled' : ''
+          }`}
+          onClick={nextPage}
+        />
+        <span
+          className={`c-book-preview__nav icon-chevron_right ${
+            pageInfo.lastPage ? 'c-book-preview__nav--disabled' : ''
+          }`}
+          onClick={lastPage}
+        />
       </div>
       <style jsx>{`
         .c-book-preview {
-          @apply w-4/5 relative mt-4 mx-auto;
-          height: ${height}px;
-          transition: height 0.5s;
-          z-index: 1;
+          @apply flex items-center mt-4;
+          &__left {
+            @apply w-2/12 flex justify-end;
+            padding-right: 30px;
+            z-index: 2;
+          }
+          &__container {
+            @apply w-8/12 relative;
+            height: ${state.height}px;
+            transition: height 0.5s;
+            z-index: 1;
+          }
+          &__right {
+            @apply w-2/12 flex justify-start;
+            padding-left: 30px;
+            z-index: 2;
+          }
+          &__nav {
+            @apply text-white flex items-center justify-center font-bold cursor-pointer;
+            background: #e1e1e1;
+            border-radius: 50%;
+            height: 44px;
+            width: 44px;
+            .c-book-preview__left &:first-child {
+              margin-right: 12px;
+            }
+            .c-book-preview__right &:last-child {
+              margin-left: 12px;
+            }
+            &:hover {
+              background: #de6236;
+              transition: background 0.5s;
+            }
+            &--disabled {
+              @apply cursor-not-allowed;
+              background: #efeef4;
+              &:hover {
+                background: #efeef4;
+              }
+            }
+          }
         }
       `}</style>
       <style jsx global>{`
@@ -89,15 +197,7 @@ const BookPreview = () => {
           perspective: 2200px;
           -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
-          opacity: ${loaded ? 1 : 0};
-
-          .Heidelberg-Page {
-            -webkit-transition: -webkit-transform 0.9s ease;
-            transition: -webkit-transform 0.9s ease;
-            -o-transition: transform 0.9s ease;
-            transition: transform 0.9s ease;
-            transition: transform 0.9s ease, -webkit-transform 0.9s ease;
-          }
+          opacity: ${state.loaded ? 1 : 0};
 
           &:not(.is-ready) * {
             -webkit-transition: none !important;
@@ -113,18 +213,17 @@ const BookPreview = () => {
         }
 
         .Heidelberg-Page {
+          cursor: pointer;
           overflow: hidden;
           position: absolute;
           width: 50%;
           min-height: 100%;
           max-height: 100%;
           background: #000;
-          overflow: hidden;
           -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
           -webkit-transform: rotateY(0);
           transform: rotateY(0);
-          border: 3px solid #e1e0e7;
           background: #efeef4;
           -webkit-user-select: none;
           -moz-user-select: none;
@@ -134,6 +233,12 @@ const BookPreview = () => {
           -o-transition: none;
           transition: none;
           height: 100%;
+
+          -webkit-transition: -webkit-transform 0.9s ease;
+          transition: -webkit-transform 0.9s ease;
+          -o-transition: transform 0.9s ease;
+          transition: transform 0.9s ease;
+          transition: transform 0.9s ease, -webkit-transform 0.9s ease;
 
           &:nth-child(2n) {
             -webkit-transform-origin: 100%;

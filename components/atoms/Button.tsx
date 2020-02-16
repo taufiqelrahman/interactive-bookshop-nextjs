@@ -17,6 +17,7 @@ const Button = (props: any) => {
           @apply font-semibold bg-brand text-white;
           border-radius: 60px;
           padding: ${props.width ? '12px 0' : '12px'};
+          max-width: ${props.width ? '100%' : 'none'};
           @apply w-full;
           @screen sm {
             width: ${props.width || '255px'};
