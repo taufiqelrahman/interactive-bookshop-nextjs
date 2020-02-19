@@ -10,9 +10,9 @@ const BookPage = (props: any) => {
               color: 'white',
               width: '40%',
               bottom: '5%',
-              fontSize: '1vh',
+              fontSize: '0.1vw',
               left: '15%',
-              lineHeight: '1.5vh',
+              lineHeight: '0.55vw',
             }}
             dangerouslySetInnerHTML={{ __html: props.content.split('[name]').join('Roya') }}
           />
