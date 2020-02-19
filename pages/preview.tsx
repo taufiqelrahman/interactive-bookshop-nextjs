@@ -24,7 +24,7 @@ const Preview = (props: any): any => {
   useEffect(() => {
     if (!formState.isValid) {
       window.scrollTo(0, 0);
-      toast.error(props.t('form-error'));
+      toast.error(props.t('form:form-error'));
     }
   }, [errors]);
   return (

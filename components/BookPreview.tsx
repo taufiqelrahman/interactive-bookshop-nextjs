@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import $ from 'jquery';
 import initHeidelberg from 'assets/heidelberg.js';
 import debounce from 'lodash.debounce';
+import BookPage from './atoms/BookPage';
 // import CircleType from 'circletype';
 
 const BookPreview = () => {
@@ -28,7 +29,7 @@ const BookPreview = () => {
   const setupBook = async () => {
     await updateHeight();
     const bookHeidelberg = new (window as any).Heidelberg($('#Heidelberg'), {
-      initialActivePage: 1,
+      // initialActivePage: 1,
       canClose: true,
       arrowKeys: true,
       concurrentAnimations: 5,
@@ -62,7 +63,7 @@ const BookPreview = () => {
     // 1. add loading spinner
     // 3. link breadcrumbs
     // 4. make it smooth with hammer etc maybe
-  }, [false]);
+  }, []);
 
   useEffect(() => {
     if (!book) return;
@@ -93,6 +94,31 @@ const BookPreview = () => {
     updatePageInfo();
   };
 
+  const getImage = index => {
+    return `/static/images/pages/${'astronaut'}/${index + 1}/${'girl'}_${'kid'}_${'light'}_${'hair'}.jpeg`;
+  };
+
+  const contents: any = [
+    {
+      content: `"We are about to leave the station. Please climb aboard the train so you will not be left behind". Boys heard the old man with a long beard as a scarf's voice rom the train said.<br >The yellow-haired teacher thanked <strong>[name]</strong> for her hard work and off [name] went towards the train.`,
+    },
+    {
+      content: 'add lazy<br > loading images <strong>when</strong> near',
+    },
+    {
+      content: 'add lazy<br > loading images <strong>when</strong> near',
+    },
+    {
+      content: 'add lazy<br > loading images <strong>when</strong> near',
+    },
+  ];
+
+  const pageClass = index => {
+    if (index === 0) return 'first-page';
+    if (index === contents.length - 1) return 'last-page';
+    return '';
+  };
+
   return (
     <div className="c-book-preview">
       <div className="c-book-preview__left">
@@ -112,7 +138,16 @@ const BookPreview = () => {
       <div className="c-book-preview__container">
         {/* <div className="Heidelberg-Book with-Spreads" id="Heidelberg"> */}
         <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
-          <div className="Heidelberg-Page first-page">
+          {contents &&
+            contents.map((content, index) => (
+              <BookPage
+                key={index}
+                className={`Heidelberg-Page ${pageClass(index)}`}
+                image={getImage(index)}
+                {...content}
+              />
+            ))}
+          {/* <div className="Heidelberg-Page first-page">
             <img src="/static/images/pages/astronaut/1/girl_kid_light_hair.jpeg" />
           </div>
           <div className="Heidelberg-Page">
@@ -129,7 +164,7 @@ const BookPreview = () => {
           </div>
           <div className="Heidelberg-Page last-page">
             <img src="/static/images/pages/astronaut/3/girl_kid_light_hair.jpeg" />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="c-book-preview__right">

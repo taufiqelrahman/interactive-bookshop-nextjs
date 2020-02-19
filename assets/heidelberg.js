@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* global Hammer */
+// /* global Hammer */
+
 const init = function() {
   (function(factory) {
     // expose Heidelberg
@@ -126,19 +127,23 @@ const init = function() {
           swipe_velocity: 0.3,
         };
 
-        Hammer(els.pagesLeft, opts).on(
-          'dragright',
+        const hammerLeft = new Hammer(document.querySelector('.Heidelberg-Page:nth-child(2n)'), opts);
+        hammerLeft.on(
+          'swiperight',
           function(evt) {
             this.turnPage('back');
-            evt.gesture.stopDetect();
+            // evt.gesture.stopDetect();
+            evt.preventDefault();
           }.bind(this),
         );
 
-        Hammer(els.pagesRight, opts).on(
-          'dragleft',
+        const hammerRight = new Hammer(document.querySelector('.Heidelberg-Page:nth-child(odd)'), opts);
+        hammerRight.on(
+          'swipeleft',
           function(evt) {
             this.turnPage('forwards');
-            evt.gesture.stopDetect();
+            // evt.gesture.stopDetect();
+            evt.preventDefault();
           }.bind(this),
         );
       }
