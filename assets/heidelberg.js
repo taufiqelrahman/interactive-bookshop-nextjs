@@ -262,7 +262,8 @@ const init = function() {
 
       els.pagesAnimatingOut = direction == 'back' ? els.pagesActive.first() : els.pagesActive.last();
       els.pagesAnimatingIn = els.children.eq(index.target);
-      els.pagesTarget = els.pagesAnimatingIn.add(els.children.eq(index.targetSibling));
+      els.pagesTarget = els.pagesAnimatingIn;
+      if (index.targetSibling !== -1) els.pagesTarget = els.pagesTarget.add(els.children.eq(index.targetSibling));
       els.pagesAnimating = els.pagesAnimatingIn.add(els.pagesAnimatingOut);
 
       els.pagesActive.removeClass('is-active').addClass('was-active');

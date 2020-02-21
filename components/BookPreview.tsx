@@ -70,29 +70,29 @@ const BookPreview = () => {
     updatePageInfo();
   }, [book]);
 
-  const firstPage = () => {
-    if (pageInfo.firstPage) return;
-    (book as any).turnPage(1);
-    updatePageInfo();
-  };
+  // const firstPage = () => {
+  //   if (pageInfo.firstPage) return;
+  //   (book as any).turnPage(1);
+  //   updatePageInfo();
+  // };
 
-  const prevPage = () => {
-    if (pageInfo.firstPage) return;
-    (book as any).turnPage('back');
-    updatePageInfo();
-  };
+  // const prevPage = () => {
+  //   if (pageInfo.firstPage) return;
+  //   (book as any).turnPage('back');
+  //   updatePageInfo();
+  // };
 
-  const nextPage = () => {
-    if (pageInfo.lastPage) return;
-    (book as any).turnPage('forwards');
-    updatePageInfo();
-  };
+  // const nextPage = () => {
+  //   if (pageInfo.lastPage) return;
+  //   (book as any).turnPage('forwards');
+  //   updatePageInfo();
+  // };
 
-  const lastPage = () => {
-    if (pageInfo.lastPage) return;
-    (book as any).turnPage(6);
-    updatePageInfo();
-  };
+  // const lastPage = () => {
+  //   if (pageInfo.lastPage) return;
+  //   (book as any).turnPage(6);
+  //   updatePageInfo();
+  // };
 
   const getImage = index => {
     return `/static/images/pages/${'astronaut'}/${index + 1}/${'girl'}_${'kid'}_${'light'}_${'hair'}.jpeg`;
@@ -121,7 +121,7 @@ const BookPreview = () => {
 
   return (
     <div className="c-book-preview">
-      <div className="c-book-preview__left">
+      {/* <div className="c-book-preview__left">
         <span
           className={`c-book-preview__nav icon-chevron_left ${
             pageInfo.firstPage ? 'c-book-preview__nav--disabled' : ''
@@ -134,9 +134,8 @@ const BookPreview = () => {
           }`}
           onClick={prevPage}
         />
-      </div>
+      </div> */}
       <div className="c-book-preview__container">
-        {/* <div className="Heidelberg-Book with-Spreads" id="Heidelberg"> */}
         <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
           {contents &&
             contents.map((content, index) => (
@@ -147,27 +146,9 @@ const BookPreview = () => {
                 {...content}
               />
             ))}
-          {/* <div className="Heidelberg-Page first-page">
-            <img src="/static/images/pages/astronaut/1/girl_kid_light_hair.jpeg" />
-          </div>
-          <div className="Heidelberg-Page">
-            <img src="/static/images/pages/astronaut/3/girl_kid_light_hair.jpeg" />
-          </div>
-          <div className="Heidelberg-Page">
-            <img src="/static/images/pages/astronaut/2/girl_kid_light_hair.jpeg" />
-          </div>
-          <div className="Heidelberg-Page">
-            <img src="/static/images/pages/astronaut/1/girl_kid_light_hair.jpeg" />
-          </div>
-          <div className="Heidelberg-Page">
-            <img src="/static/images/pages/astronaut/2/girl_kid_light_hair.jpeg" />
-          </div>
-          <div className="Heidelberg-Page last-page">
-            <img src="/static/images/pages/astronaut/3/girl_kid_light_hair.jpeg" />
-          </div> */}
         </div>
       </div>
-      <div className="c-book-preview__right">
+      {/* <div className="c-book-preview__right">
         <span
           className={`c-book-preview__nav icon-chevron_right ${
             pageInfo.lastPage ? 'c-book-preview__nav--disabled' : ''
@@ -180,7 +161,7 @@ const BookPreview = () => {
           }`}
           onClick={lastPage}
         />
-      </div>
+      </div> */}
       <style jsx>{`
         .c-book-preview {
           @apply flex items-center mt-4;
@@ -190,7 +171,7 @@ const BookPreview = () => {
             z-index: 2;
           }
           &__container {
-            @apply w-8/12 relative;
+            @apply w-full relative;
             height: ${state.height}px;
             transition: height 0.5s;
             z-index: 1;
@@ -280,7 +261,7 @@ const BookPreview = () => {
             -ms-transform-origin: 100%;
             transform-origin: 100%;
             left: 0;
-            border-radius: 16px 0px 0px 16px;
+            border-radius: 6px 0px 0px 6px;
 
             &:not(.last-page) {
               border-right: none;
@@ -294,7 +275,7 @@ const BookPreview = () => {
             right: 0;
             -webkit-transform: rotateY(-180deg);
             transform: rotateY(-180deg);
-            border-radius: 0px 16px 16px 0px;
+            border-radius: 0px 6px 6px 0px;
 
             &:not(.first-page) {
               border-left: none;

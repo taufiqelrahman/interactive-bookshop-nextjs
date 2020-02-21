@@ -5,6 +5,7 @@ const Checkbox = React.forwardRef((props: any, ref: any) => (
     <input type="checkbox" name={props.name} ref={ref} value={props.value} id={`${props.name}-${props.value}`} />
     <label htmlFor={`${props.name}-${props.value}`}>
       <div className={`c-checkbox__box ${props.errors ? 'c-checkbox__box--error' : ''}`}>{props.value}</div>
+      {props.children}
     </label>
     <style jsx>{`
       .c-checkbox {
@@ -24,7 +25,8 @@ const Checkbox = React.forwardRef((props: any, ref: any) => (
             border: 2px solid #de3636;
           }
           input:checked + label > & {
-            border: 8px solid #445ca4;
+            border: ${props.inset ? '2px solid #445ca4' : '8px solid #445ca4'};
+            box-shadow: ${props.inset && 'inset 0 0 0px 8px #445ca4'};
           }
         }
       }
