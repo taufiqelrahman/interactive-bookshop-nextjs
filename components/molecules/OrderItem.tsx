@@ -9,7 +9,7 @@ import appConfig from 'config';
 const OrderItem = (props: any) => {
   const previewImg = () => {
     const filePath = '/static/images/preview/child';
-    const { gender, age, skin, hair } = props;
+    const { gender, age, skin, hair } = props.line_items[0];
     return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
   };
   return (
@@ -24,7 +24,7 @@ const OrderItem = (props: any) => {
           <div className="c-order-item__detail">
             <div className="c-order-item__detail--top">
               <div className="c-order-item__detail--top--left">
-                <h2>{props.name}</h2>
+                <h2>{props.line_items.map(item => item.name).join(', ')}</h2>
               </div>
               <div className="c-order-item__detail--top--right">
                 <Capsule color={appConfig.stateColor[props.state]}>
@@ -35,7 +35,9 @@ const OrderItem = (props: any) => {
                 </Capsule>
               </div>
             </div>
-            <div className="c-order-item__detail__occupation">{props.occupation}</div>
+            <div className="c-order-item__detail__occupation">
+              {props.line_items.length} {props.t('books')}
+            </div>
             <div className="c-order-item__detail--middle">
               <div style={{ marginRight: 100 }}>
                 <div className="c-order-item__detail__label">{props.t('order-id')}</div>

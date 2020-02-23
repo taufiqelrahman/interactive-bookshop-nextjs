@@ -17,6 +17,15 @@ export default {
       skin: 'light',
       hair: 'curly',
     },
+    {
+      cover: 'red',
+      name: 'Brock Lee',
+      occupation: 'Doctor, Chef, Musician',
+      gender: 'boy',
+      age: 'toddler',
+      skin: 'light',
+      hair: 'curly',
+    },
   ],
   shipping_address: {
     address1: '123 Amoebobacterieae St',

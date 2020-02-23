@@ -27,6 +27,7 @@ const FieldSkin = React.forwardRef((props: any, ref: any) => {
               errors={props.errors}
               style={{ height: 64, width: 64, background: skin.color, borderRadius: '50%' }}
               type="plain"
+              inset={true}
             />
           ))}
         </div>

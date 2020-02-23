@@ -12,9 +12,11 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => (
       </div>
       <div className="c-field-occupations__options">
         {/* dummy */}
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(job => (
+        {['Astronaut', 'Doctor', 'Ballerina', 4, 5, 6, 7, 8, 9].map(job => (
           <div key={job} className="c-field-occupations__options__box">
-            <Checkbox ref={ref} value={job} name="occupations" errors={props.errors} />
+            <Checkbox ref={ref} value={job} name="occupations" errors={props.errors} inset={true}>
+              <span>{job}</span>
+            </Checkbox>
           </div>
         ))}
       </div>
@@ -29,9 +31,19 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => (
           @apply flex flex-wrap;
           &__box {
             @apply mb-2;
-            margin-right: 2%;
+            margin-right: 4%;
+            span {
+              @apply flex justify-center font-bold text-xs;
+              margin-top: 4px;
+              line-height: 16px;
+            }
           }
         }
+      }
+    `}</style>
+    <style jsx global>{`
+      input:checked + label > span {
+        color: #445ca4;
       }
     `}</style>
   </div>

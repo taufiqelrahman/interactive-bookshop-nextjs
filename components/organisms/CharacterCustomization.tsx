@@ -54,7 +54,7 @@ const CharacterCustomization = (props: any) => {
             <FieldOccupations
               ref={register(schema.occupations)}
               errors={errors.occupations}
-              style={{ maxWidth: 450, marginBottom: 24 }}
+              style={{ maxWidth: 550, marginBottom: 24 }}
             />
             <Divider />
             <div className="flex">
