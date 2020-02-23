@@ -3,6 +3,7 @@ import * as types from './types';
 const initialState: types.CartState = {
   isFetching: false,
   cart: null,
+  selected: null,
 };
 
 const reducer = (state = initialState, action: types.CartActionTypes): types.CartState => {
@@ -26,6 +27,12 @@ const reducer = (state = initialState, action: types.CartActionTypes): types.Car
         ...state,
         isFetching: action.isFetching,
         cart: action.payload,
+      };
+    }
+    case types.SAVE_SELECTED: {
+      return {
+        ...state,
+        selected: action.payload,
       };
     }
     default:

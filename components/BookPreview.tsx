@@ -3,9 +3,10 @@ import $ from 'jquery';
 import initHeidelberg from 'assets/heidelberg.js';
 import debounce from 'lodash.debounce';
 import BookPage from './atoms/BookPage';
+import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
-const BookPreview = () => {
+const BookPreview = (props: any) => {
   const [book, setBook] = useState(null);
   const [state, setState] = useState({
     height: 0,
@@ -53,6 +54,9 @@ const BookPreview = () => {
     initHeidelberg();
     setupBook();
     window.addEventListener('resize', debouncedSetup);
+    return () => {
+      window.removeEventListener('resize', () => debouncedSetup);
+    };
     // setTimeout(() => {
     //   new CircleType(document.getElementById('title1')).radius(384);
     //   new CircleType(document.getElementById('title2')).radius(384);
@@ -94,28 +98,15 @@ const BookPreview = () => {
   //   updatePageInfo();
   // };
 
-  const getImage = index => {
-    return `/static/images/pages/${'astronaut'}/${index + 1}/${'girl'}_${'kid'}_${'light'}_${'hair'}.jpeg`;
+  const getImage = (job, order) => {
+    // const { gender, age, skin, hair } = props.selected;
+    // return `/static/images/pages/${job}/${order}/${gender}_${age}_${skin}_${hair}.jpeg`;
+    return `/static/images/pages/${job}/${order}/${'girl'}_${'kid'}_${'light'}_${'hair'}.jpeg`;
   };
-
-  const contents: any = [
-    {
-      content: `"We are about to leave the station. Please climb aboard the train so you will not be left behind". Boys heard the old man with a long beard as a scarf's voice rom the train said.<br >The yellow-haired teacher thanked <strong>[name]</strong> for her hard work and off [name] went towards the train.`,
-    },
-    {
-      content: 'add lazy<br > loading images <strong>when</strong> near',
-    },
-    {
-      content: 'add lazy<br > loading images <strong>when</strong> near',
-    },
-    {
-      content: 'add lazy<br > loading images <strong>when</strong> near',
-    },
-  ];
 
   const pageClass = index => {
     if (index === 0) return 'first-page';
-    if (index === contents.length - 1) return 'last-page';
+    if (index === dummyPages.length - 1) return 'last-page';
     return '';
   };
 
@@ -137,13 +128,14 @@ const BookPreview = () => {
       </div> */}
       <div className="c-book-preview__container">
         <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
-          {contents &&
-            contents.map((content, index) => (
+          {dummyPages &&
+            dummyPages.map((page, index) => (
               <BookPage
                 key={index}
                 className={`Heidelberg-Page ${pageClass(index)}`}
-                image={getImage(index)}
-                {...content}
+                image={getImage(page.job, page.order)}
+                name={props.selected.name}
+                {...page}
               />
             ))}
         </div>

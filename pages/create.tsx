@@ -10,17 +10,23 @@ const Create = (props: any): any => {
     <DefaultLayout {...props}>
       <div className="bg-light-grey h-min-screen">
         <div className="u-container u-container__page">
-          <Stepper step={1} totalSteps={2} title={props.t('character-customization')} />
-          <div className="flex w-full">
+          <Stepper step={1} totalSteps={2} title={props.t('character-customization')} style={{ marginBottom: 30 }} />
+          <div className="c-section">
             <div className="c-section__left">
-              <CharacterCustomization />
+              <CharacterCustomization saveSelected={props.saveSelected} />
             </div>
-            <div className="c-section__right"></div>
+            <div className="c-section__right">
+              <img src="/static/images/dummy.png" />
+            </div>
           </div>
         </div>
       </div>
       <style jsx>{`
         .c-section {
+          @apply flex w-full flex-col;
+          @screen lg {
+            @apply flex-row;
+          }
           &__left {
             @apply w-full;
             @screen lg {
@@ -31,12 +37,16 @@ const Create = (props: any): any => {
             }
           }
           &__right {
-            @apply w-0;
+            @apply w-full;
+            padding: 0 100px;
             @screen lg {
               @apply w-1/5;
             }
             @screen xl {
               @apply w-2/5;
+            }
+            img {
+              @apply w-full;
             }
           }
         }

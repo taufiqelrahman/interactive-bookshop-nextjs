@@ -2,7 +2,7 @@ import { withTranslation, Router } from 'i18n';
 
 const Stepper = (props: any) => {
   return (
-    <div className="c-stepper">
+    <div className="c-stepper" style={props.style}>
       <div className="c-stepper__back">
         <span className="icon-arrow_left" onClick={() => Router.back()} />
       </div>

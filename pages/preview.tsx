@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
+import { withTranslation, Link, Router } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Card from 'components/atoms/Card';
@@ -21,6 +21,21 @@ const Preview = (props: any): any => {
   const schema = {
     cover: { required: { value: true, message: `${props.t('cover-label')} ${props.t('form:required-error')}` } },
   };
+
+  const dummySelected = {
+    age: 'Toddler',
+    dedication: '',
+    dob: '05-01-2019',
+    gender: 'boy',
+    hair: 'straight',
+    languange: 'English',
+    name: 'asd',
+    occupations: ['astronaut', 'doctor', 'nurse'],
+    skin: 'light',
+  };
+  useEffect(() => {
+    // if (!props.state.cart.selected) Router.back();
+  }, []);
   useEffect(() => {
     if (!formState.isValid) {
       window.scrollTo(0, 0);
@@ -36,7 +51,8 @@ const Preview = (props: any): any => {
             <Card variant="border">
               <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
                 <div className="c-preview__book">
-                  <BookPreview />
+                  <BookPreview selected={dummySelected || {}} />
+                  {/* <BookPreview selected={props.state.cart.selected || {}} /> */}
                 </div>
                 <div className="c-preview__cover">
                   <FieldCover

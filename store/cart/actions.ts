@@ -67,3 +67,10 @@ export const thunkRemoveFromCart = (existingProduct: any): ThunkAction<void, typ
       captureException(err);
     });
 };
+
+export function saveSelected(selected = null): types.CartActionTypes {
+  return {
+    type: types.SAVE_SELECTED,
+    payload: selected,
+  };
+}

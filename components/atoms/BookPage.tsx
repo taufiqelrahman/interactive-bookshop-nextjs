@@ -1,21 +1,26 @@
 const BookPage = (props: any) => {
+  const styleGenerator = string => {
+    let style = {
+      width: '40%',
+      fontSize: '0.6vw',
+      lineHeight: '0.9vw',
+    };
+    if (string) style = { ...style, ...JSON.parse(string) };
+    return style;
+  };
   return (
     <div className={props.className}>
       <svg className="c-book-page">
         <foreignObject x="0" y="0" width="100%" height="100%">
           <img className="c-book-page__image" src={props.image} />
-          <div
-            className="c-book-page__content"
-            style={{
-              color: 'white',
-              width: '40%',
-              bottom: '5%',
-              fontSize: '0.1vw',
-              left: '15%',
-              lineHeight: '0.55vw',
-            }}
-            dangerouslySetInnerHTML={{ __html: props.content.split('[name]').join('Roya') }}
-          />
+          {props.contents.map((content, key) => (
+            <div
+              key={key}
+              className="c-book-page__content"
+              style={styleGenerator(content.style)}
+              dangerouslySetInnerHTML={{ __html: content.value.split('[name]').join(props.name) }}
+            />
+          ))}
         </foreignObject>
       </svg>
       <style jsx>{`

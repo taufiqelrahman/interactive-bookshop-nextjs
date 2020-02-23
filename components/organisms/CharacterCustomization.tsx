@@ -20,7 +20,7 @@ const CharacterCustomization = (props: any) => {
     mode: 'onChange',
   });
   const onSubmit = data => {
-    console.log(data);
+    props.saveSelected(data);
     Router.push('/preview');
   };
   const schema = {
@@ -35,7 +35,7 @@ const CharacterCustomization = (props: any) => {
     hair: { required: true },
     skin: { required: true },
     language: { required: true },
-    dedication: { required: true },
+    dedication: { required: false },
   };
   useEffect(() => {
     register({ name: 'dob' }, schema.dob);
@@ -105,7 +105,6 @@ const CharacterCustomization = (props: any) => {
       </div>
       <style jsx>{`
         .c-char-custom {
-          margin-top: 30px;
           &__container {
             padding: 36px;
           }

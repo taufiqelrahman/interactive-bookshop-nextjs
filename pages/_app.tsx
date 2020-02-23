@@ -36,6 +36,9 @@ const App: NextPage<any> = (props: any) => {
 
         body {
           @apply font-poppins text-dark-grey;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
         }
 
         .u-container {

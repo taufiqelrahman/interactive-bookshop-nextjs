@@ -50,8 +50,8 @@ const OrderItem = (props: any) => {
             </div>
             <div className="c-order-item__detail--bottom">
               <div className="c-order-item__detail__cover">
-                <Dot width="16px" color={props.cover} />
-                {props.cover}
+                <Dot width="16px" color={props.line_items[0].cover} />
+                {props.line_items[0].cover}
               </div>
               <div className="c-order-item__detail__price">
                 <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
