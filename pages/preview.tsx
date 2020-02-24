@@ -23,11 +23,11 @@ const Preview = (props: any): any => {
   };
 
   const dummySelected = {
-    age: 'Toddler',
+    age: 'Kid',
     dedication: '',
     dob: '05-01-2019',
-    gender: 'boy',
-    hair: 'straight',
+    gender: 'girl',
+    hair: 'hair',
     languange: 'English',
     name: 'asd',
     occupations: ['astronaut', 'doctor', 'nurse'],

@@ -7,15 +7,15 @@ import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
 const BookPreview = (props: any) => {
-  const [book, setBook] = useState(null);
+  const [, setBook] = useState(null);
   const [state, setState] = useState({
     height: 0,
     loaded: false,
   });
-  const [pageInfo, setPageInfo] = useState({
-    firstPage: true,
-    lastPage: false,
-  });
+  // const [pageInfo, setPageInfo] = useState({
+  //   firstPage: true,
+  //   lastPage: false,
+  // });
 
   const updateHeight = () => {
     const image: any = document.querySelector('.Heidelberg-Page img');
@@ -23,9 +23,9 @@ const BookPreview = (props: any) => {
     return Promise.resolve();
   };
 
-  const updatePageInfo = () => {
-    setPageInfo({ ...pageInfo, firstPage: (book as any).isFirstPage(), lastPage: (book as any).isLastPage() });
-  };
+  // const updatePageInfo = () => {
+  //   setPageInfo({ ...pageInfo, firstPage: (book as any).isFirstPage(), lastPage: (book as any).isLastPage() });
+  // };
 
   const setupBook = async () => {
     await updateHeight();
@@ -35,9 +35,9 @@ const BookPreview = (props: any) => {
       arrowKeys: true,
       concurrentAnimations: 5,
       // hasSpreads: true,
-      onPageTurn: (isFirstPage: boolean, isLastPage: boolean) => {
-        setPageInfo({ firstPage: isFirstPage, lastPage: isLastPage });
-      },
+      // onPageTurn: (isFirstPage: boolean, isLastPage: boolean) => {
+      //   setPageInfo({ firstPage: isFirstPage, lastPage: isLastPage });
+      // },
     });
     setBook(bookHeidelberg);
   };
@@ -62,17 +62,12 @@ const BookPreview = (props: any) => {
     //   new CircleType(document.getElementById('title2')).radius(384);
     //   new CircleType(document.getElementById('title3')).radius(384);
     // }, 1000);
-    // TODOS
-    // 1. add lazy loading images when near
-    // 1. add loading spinner
-    // 3. link breadcrumbs
-    // 4. make it smooth with hammer etc maybe
   }, []);
 
-  useEffect(() => {
-    if (!book) return;
-    updatePageInfo();
-  }, [book]);
+  // useEffect(() => {
+  //   if (!book) return;
+  //   updatePageInfo();
+  // }, [book]);
 
   // const firstPage = () => {
   //   if (pageInfo.firstPage) return;
@@ -99,9 +94,8 @@ const BookPreview = (props: any) => {
   // };
 
   const getImage = (job, order) => {
-    // const { gender, age, skin, hair } = props.selected;
-    // return `/static/images/pages/${job}/${order}/${gender}_${age}_${skin}_${hair}.jpeg`;
-    return `/static/images/pages/${job}/${order}/${'girl'}_${'kid'}_${'light'}_${'hair'}.jpeg`;
+    const { gender, age, skin, hair } = props.selected;
+    return `/static/images/pages/${job}/${order}/${gender}_${age}_${skin}_${hair}.jpeg`;
   };
 
   const pageClass = index => {
