@@ -6,6 +6,8 @@ import { NextPage } from 'next';
 import withReduxStore from 'lib/with-redux-store';
 import { appWithTranslation, i18n } from 'i18n';
 import * as dayjs from 'dayjs';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import debounce from 'lodash.debounce';
 import 'dayjs/locale/id';
 import actions from 'store/actions';
 import 'styles/tailwind.css';
@@ -27,9 +29,26 @@ import 'reset-css';
 
 const App: NextPage<any> = (props: any) => {
   const { Component, pageProps, reduxStore } = props;
+  const [width, setWidth] = useState(0);
+
+  const debouncedFunctionRef = useRef();
+  (debouncedFunctionRef.current as any) = () => {
+    setWidth(window.innerWidth);
+  };
+  const debouncedSetup = useCallback(
+    debounce(() => (debouncedFunctionRef.current as any)(), 200),
+    [],
+  );
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener('resize', debouncedSetup);
+    return () => {
+      window.removeEventListener('resize', () => debouncedSetup);
+    };
+  }, []);
   return (
     <Provider store={reduxStore}>
-      <Component {...pageProps} />
+      <Component isMobile={width <= 768} {...pageProps} />
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600|Poppins:400,600,700&display=swap');
         @import '/static/styles/ReactToastify.min.css';

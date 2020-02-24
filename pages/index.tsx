@@ -7,6 +7,8 @@ import { withTranslation } from 'i18n';
 import TestimonialSlider from 'components/organisms/TestimonialSlider';
 import BookForm from 'components/organisms/BookForm';
 import Button from 'components/atoms/Button';
+import Head from 'next/head';
+import NavBar from 'components/organisms/mobile/NavBar';
 // import actions from 'store/actions';
 
 const Index = (props: any): any => {
@@ -118,6 +120,10 @@ const Index = (props: any): any => {
 
   return (
     <DefaultLayout {...props}>
+      <Head>
+        <title>When I Grow Up</title>
+      </Head>
+      {props.isMobile && <NavBar icon="menu" />}
       <div className="c-section--top">
         <div className="c-section__create-now">
           <div className="u-container">
