@@ -123,28 +123,27 @@ const Index = (props: any): any => {
       <Head>
         <title>When I Grow Up</title>
       </Head>
-      {props.isMobile && <NavBar icon="menu" />}
-      <div className="c-section--top">
+      {props.isMobile && <NavBar icon="chevron_right" />}
+      {/* {props.isMobile && <NavBar icon="menu" />} */}
+      <div className="c-section--top" style={{ paddingTop: props.isMobile && 80 }}>
         <div className="c-section__create-now">
           <div className="u-container">
-            <div>
-              <div className="flex w-full items-center">
-                <div className="c-section--top__image">
-                  <img src="/static/images/airbaloon.png" alt="hot-airbaloon" />
-                </div>
-                <div className="c-section__content">
-                  <h1>{props.t('createnow-title')}</h1>
-                  <div className="c-section__content__content">{props.t('createnow-content')}</div>
-                  <a href="#create-book">
-                    <Button variant="outline" color="black">
-                      {props.t('createnow-button')}
-                    </Button>
-                  </a>
-                </div>
+            <div className="c-section--top__container">
+              <div className="c-section--top__image">
+                <img src="/static/images/airbaloon.png" alt="hot-airbaloon" />
               </div>
-              <div className="c-section__create-now__book">
-                <img src="/static/images/floating-book.png" alt="floating-book" />
+              <div className="c-section__content">
+                <h1>{props.t('createnow-title')}</h1>
+                <div className="c-section__content__content">{props.t('createnow-content')}</div>
+                <a href="#create-book">
+                  <Button variant="outline" color="black">
+                    {props.t('createnow-button')}
+                  </Button>
+                </a>
               </div>
+            </div>
+            <div className="c-section__create-now__book">
+              <img src="/static/images/floating-book.png" alt="floating-book" />
             </div>
           </div>
         </div>
@@ -221,11 +220,28 @@ const Index = (props: any): any => {
       <style jsx>{`
         .c-section {
           &--top {
-            @apply bg-contain;
-            background: url('/static/images/clouds.png') 0 80px no-repeat,
+            background: url('/static/images/clouds.png') 0 35vh no-repeat,
               linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
+            @apply bg-contain;
+            @screen md {
+              background: url('/static/images/clouds.png') 0 80px no-repeat,
+                linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
+            }
+            &__container {
+              @apply flex w-full items-center flex-col;
+              @screen md {
+                @apply flex-row;
+              }
+            }
             &__image {
-              @apply w-7/12 flex justify-end mr-6;
+              margin-left: -40vw;
+              margin-top: -200px;
+              width: 100vw;
+              @screen md {
+                @apply w-7/12 flex justify-end mr-6;
+                margin-left: 0;
+                margin-top: 0;
+              }
             }
           }
           &--middle {
@@ -252,11 +268,21 @@ const Index = (props: any): any => {
             }
           }
           &__content {
-            @apply w-5/12;
+            @apply w-full;
+            padding: 0 40px;
+            @screen md {
+              @apply w-5/12;
+              padding: 0;
+            }
             h1 {
-              @apply font-semibold mb-4;
-              font-size: 44px;
-              line-height: 55px;
+              @apply font-semibold mb-4 text-center;
+              font-size: 28px;
+              line-height: 42px;
+              @screen md {
+                @apply text-left;
+                font-size: 44px;
+                line-height: 55px;
+              }
             }
             h2 {
               @apply font-semibold mb-4;
@@ -264,9 +290,14 @@ const Index = (props: any): any => {
               line-height: 58px;
             }
             &__content {
-              @apply mb-6;
-              line-height: 22px;
-              width: 350px;
+              @apply mb-6 text-center;
+              font-size: 14px;
+              line-height: 19px;
+              @screen md {
+                @apply text-left;
+                line-height: 22px;
+                width: 350px;
+              }
             }
             &--middle {
               @apply text-center w-full;
