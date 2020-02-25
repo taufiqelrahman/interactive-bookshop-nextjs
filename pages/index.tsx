@@ -9,6 +9,7 @@ import BookForm from 'components/organisms/BookForm';
 import Button from 'components/atoms/Button';
 import Head from 'next/head';
 import NavBar from 'components/organisms/mobile/NavBar';
+import Footer from 'components/organisms/Footer';
 // import actions from 'store/actions';
 
 const Index = (props: any): any => {
@@ -209,6 +210,7 @@ const Index = (props: any): any => {
           <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} />
         </div>
       </div>
+      {props.isMobile && <Footer isMobile={props.isMobile} />}
       {/* <Features features={props.state.products.products} />
       <button onClick={getProducts}>get products</button>
       <button onClick={checkout}>checkout</button>
