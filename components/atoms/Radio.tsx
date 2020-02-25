@@ -2,7 +2,14 @@ import React from 'react';
 
 const Radio = React.forwardRef((props: any, ref: any) => (
   <div className="c-radio">
-    <input type="radio" name={props.name} ref={ref} value={props.value} id={`${props.name}-${props.value}`} />
+    <input
+      type="radio"
+      name={props.name}
+      ref={ref}
+      value={props.value}
+      id={`${props.name}-${props.value}`}
+      defaultChecked={props.defaultChecked}
+    />
     <label htmlFor={`${props.name}-${props.value}`}>
       <div className={`c-radio__button ${props.errors ? 'c-radio__button--error' : ''}`} style={props.style}>
         {props.type === 'image' ? <img src={props.imageUrl} /> : props.type !== 'plain' && props.value}

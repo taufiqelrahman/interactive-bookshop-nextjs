@@ -46,6 +46,12 @@ const CharacterCustomization = (props: any) => {
       toast.error(props.t('form-error'));
     }
   }, [errors]);
+  const dummy = {
+    name: 'asd',
+    age: 'Toddler',
+    occupations: [4, 5, 6],
+  };
+  const selected = props.state.cart.selected || dummy || {};
   return (
     <div>
       <div className="c-char-custom">
@@ -55,6 +61,7 @@ const CharacterCustomization = (props: any) => {
               ref={register(schema.occupations)}
               errors={errors.occupations}
               style={{ maxWidth: 550, marginBottom: 24 }}
+              defaultChecked={selected.occupations}
             />
             <Divider />
             <div className="flex">
@@ -65,8 +72,9 @@ const CharacterCustomization = (props: any) => {
                 ref={register(schema.name)}
                 errors={errors.name}
                 style={{ marginRight: 36 }}
+                defaultValue={selected.name}
               />
-              <FieldAge ref={register(schema.age)} errors={errors.age} />
+              <FieldAge ref={register(schema.age)} errors={errors.age} defaultChecked={selected.age} />
             </div>
             <FieldDob
               name="dob"

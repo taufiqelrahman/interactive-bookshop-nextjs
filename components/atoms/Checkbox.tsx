@@ -2,7 +2,14 @@ import React from 'react';
 
 const Checkbox = React.forwardRef((props: any, ref: any) => (
   <div className="c-checkbox">
-    <input type="checkbox" name={props.name} ref={ref} value={props.value} id={`${props.name}-${props.value}`} />
+    <input
+      type="checkbox"
+      name={props.name}
+      ref={ref}
+      value={props.value}
+      id={`${props.name}-${props.value}`}
+      defaultChecked={props.defaultChecked}
+    />
     <label htmlFor={`${props.name}-${props.value}`}>
       <div className={`c-checkbox__box ${props.errors ? 'c-checkbox__box--error' : ''}`}>
         <img src={`/static/images/jobs/${props.value}`} />

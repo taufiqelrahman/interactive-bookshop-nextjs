@@ -20,6 +20,7 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
             name="age"
             errors={props.errors}
             style={{ height: 44, minWidth: 92 }}
+            defaultChecked={props.defaultChecked === age}
           />
         ))}
       </div>

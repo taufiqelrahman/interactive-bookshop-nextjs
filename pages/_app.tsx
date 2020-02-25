@@ -13,6 +13,7 @@ import actions from 'store/actions';
 import 'styles/tailwind.css';
 import 'styles/icomoon/style.css';
 import 'reset-css';
+import { Router } from 'next/router';
 
 // disable when development
 // Sentry.init({
@@ -46,6 +47,13 @@ const App: NextPage<any> = (props: any) => {
       window.removeEventListener('resize', () => debouncedSetup);
     };
   }, []);
+  Router.events.on('routeChangeComplete', () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  });
   return (
     <Provider store={reduxStore}>
       <Component isMobile={width < 768} {...pageProps} />

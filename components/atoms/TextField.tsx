@@ -13,6 +13,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
           name={props.name}
           placeholder={props.placeholder}
           ref={ref}
+          defaultValue={props.defaultValue}
         />
       )}
       <div className="c-text-field__message">{props.errors ? props.errors.message : props.hint}</div>
