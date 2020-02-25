@@ -14,15 +14,17 @@ const Button = (props: any) => {
       </button>
       <style jsx>{`
         .c-button {
-          @apply font-semibold bg-brand text-white;
+          @apply font-semibold bg-brand text-white text-sm w-full;
           border-radius: 60px;
           padding: ${props.width ? '12px 0' : '12px'};
           max-width: ${props.width ? '100%' : 'none'};
-          @apply w-full;
+          line-height: 24px;
           @screen sm {
             width: ${props.width || '255px'};
           }
-          line-height: 24px;
+          @screen md {
+            @apply text-base;
+          }
           &--outline {
             @apply bg-transparent;
             border: 2px solid;

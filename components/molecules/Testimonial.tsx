@@ -23,21 +23,38 @@ const Testimonial = (props: any) => {
       </div>
       <style jsx>{`
         .c-testimonial {
-          width: 370px;
-          height: 346px;
+          width: 297px;
+          height: 216px;
+          @screen md {
+            width: 370px;
+            height: 346px;
+          }
           &__container {
-            padding: 40px;
+            padding: 20px;
+            @screen md {
+              padding: 40px;
+            }
           }
           &__content {
-            @apply italic text-lg flex items-center w-full text-dark-grey font-opensans mb-8;
-            line-height: 25px;
-            height: 174px;
+            @apply italic text-sm flex items-center w-full text-dark-grey font-opensans;
+            line-height: 19px;
+            height: 120px;
             opacity: 0.8;
+            margin-bottom: 12px;
+            @screen md {
+              @apply text-lg mb-8;
+              height: 174px;
+              line-height: 25px;
+            }
           }
           &__photo {
             @apply mr-3 text-xs;
-            width: 60px;
-            height: 60px;
+            width: 44px;
+            height: 44px;
+            @screen md {
+              width: 60px;
+              height: 60px;
+            }
             border-radius: 50%;
             background: #efeef4;
           }

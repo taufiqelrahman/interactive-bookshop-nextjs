@@ -150,8 +150,8 @@ const Index = (props: any): any => {
         <div className="c-section__start-story">
           <div className="u-container">
             <div>
-              <div className="flex w-full items-center">
-                <div className="c-section--top__image">
+              <div className="c-section--top__container">
+                <div className="c-section--top__image c-section--top__image--kid">
                   <img src="/static/images/bubblegum-kid.png" alt="hot-airbaloon" />
                 </div>
                 <div className="c-section__content text-white">
@@ -164,9 +164,11 @@ const Index = (props: any): any => {
                   </a>
                 </div>
               </div>
-              <div className="c-section__start-story__socks">
-                <img src="/static/images/socks.png" alt="socks" />
-              </div>
+              {!props.isMobile && (
+                <div className="c-section__start-story__socks">
+                  <img src="/static/images/socks.png" alt="socks" />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -174,15 +176,17 @@ const Index = (props: any): any => {
       <div className="c-section--middle">
         <div className="c-section__jobs--top">
           {/* dummy */}
-          {[1, 2, 3, 4, 5].map(job => (
-            <div key={job} className="c-section__jobs__circle"></div>
-          ))}
+          {props.isMobile ? (
+            <div className="c-section__jobs__circle"></div>
+          ) : (
+            [1, 2, 3, 4, 5].map(job => <div key={job} className="c-section__jobs__circle"></div>)
+          )}
         </div>
         <div className="c-section__jobs--bottom">
           {/* dummy */}
-          {[1, 2, 3, 4].map(job => (
-            <div key={job} className="c-section__jobs__circle"></div>
-          ))}
+          {props.isMobile
+            ? [1, 2].map(job => <div key={job} className="c-section__jobs__circle"></div>)
+            : [1, 2, 3, 4].map(job => <div key={job} className="c-section__jobs__circle"></div>)}
         </div>
         <div className="c-section__content text-white c-section__content--middle">
           <h2>{props.t('choosenow-title')}</h2>
@@ -197,12 +201,12 @@ const Index = (props: any): any => {
       <div className="c-section--bottom">
         <div className="c-section--bottom__testi">
           <div className="u-container">
-            <TestimonialSlider />
+            <TestimonialSlider isMobile={props.isMobile} />
           </div>
         </div>
         <div id="create-book" className="c-section--bottom__create-book">
           <h2>{props.t('createbook-header')}</h2>
-          <BookForm />
+          <BookForm isMobile={props.isMobile} />
         </div>
       </div>
       {/* <Features features={props.state.products.products} />
@@ -237,6 +241,10 @@ const Index = (props: any): any => {
               margin-left: -40vw;
               margin-top: -200px;
               width: 100vw;
+              &--kid {
+                margin: 0;
+                width: 80vw;
+              }
               @screen md {
                 @apply w-7/12 flex justify-end mr-6;
                 margin-left: 0;
@@ -251,19 +259,29 @@ const Index = (props: any): any => {
           &--bottom {
             @apply relative z-10;
             &__testi {
-              @apply overflow-hidden pb-64;
+              @apply overflow-hidden pb-4;
               background: linear-gradient(180deg, #3ba99c 0%, #f4c574 100%);
+              @screen md {
+                @apply pb-64;
+              }
             }
             &__create-book {
-              @apply bg-no-repeat bg-cover pt-24;
+              @apply bg-no-repeat bg-cover pt-40;
+              @screen md {
+                @apply pt-24;
+              }
               background-color: #f4c574;
               background-image: url('/static/images/create-book-bg.png');
               height: 1019px;
               background-position: center bottom;
               h2 {
                 @apply font-semibold mb-8 text-center text-white pt-56;
-                font-size: 40px;
-                line-height: 58px;
+                font-size: 28px;
+                line-height: 42px;
+                @screen md {
+                  font-size: 40px;
+                  line-height: 58px;
+                }
               }
             }
           }
@@ -285,9 +303,14 @@ const Index = (props: any): any => {
               }
             }
             h2 {
-              @apply font-semibold mb-4;
-              font-size: 40px;
-              line-height: 58px;
+              @apply font-semibold mb-4 text-center;
+              font-size: 28px;
+              line-height: 42px;
+              @screen md {
+                @apply text-left;
+                font-size: 40px;
+                line-height: 58px;
+              }
             }
             &__content {
               @apply mb-6 text-center;
@@ -302,9 +325,14 @@ const Index = (props: any): any => {
             &--middle {
               @apply text-center w-full;
               h2 {
-                @apply mb-0;
+                @apply text-center;
+                margin-bottom: 12px;
+                @screen md {
+                  @apply mb-0;
+                }
               }
               div {
+                @apply text-center;
                 width: auto;
               }
             }
@@ -313,13 +341,19 @@ const Index = (props: any): any => {
             &__book {
               @apply ml-auto w-5/12 mt-12;
               img {
-                width: 202px;
-                height: 162px;
+                width: 93px;
+                height: 75px;
+                @screen md {
+                  width: 202px;
+                  height: 162px;
+                }
               }
             }
           }
           &__start-story {
-            @apply mt-40;
+            @screen md {
+              @apply mt-40;
+            }
             &__socks {
               @apply ml-auto mt-16;
               width: 159px;

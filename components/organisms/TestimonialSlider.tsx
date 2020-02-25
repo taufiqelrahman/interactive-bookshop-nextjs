@@ -34,17 +34,19 @@ const TestimonialSlider = (props: any) => {
           <div className="c-testi-slider__title">
             <h2>{props.t('testi-header')}</h2>
           </div>
-          <div className="c-testi-slider__nav">
-            <div
-              className={`c-testi-slider__nav--left ${translationX === 0 ? 'c-testi-slider__nav--inactive' : ''}`}
-              onClick={onNavLeft}
-            >
-              <span className="icon-chevron_left" />
+          {!props.isMobile && (
+            <div className="c-testi-slider__nav">
+              <div
+                className={`c-testi-slider__nav--left ${translationX === 0 ? 'c-testi-slider__nav--inactive' : ''}`}
+                onClick={onNavLeft}
+              >
+                <span className="icon-chevron_left" />
+              </div>
+              <div className={`c-testi-slider__nav--right ${navRightClass}`} onClick={onNavRight}>
+                <span className="icon-chevron_right" />
+              </div>
             </div>
-            <div className={`c-testi-slider__nav--right ${navRightClass}`} onClick={onNavRight}>
-              <span className="icon-chevron_right" />
-            </div>
-          </div>
+          )}
         </div>
         <div className="c-testi-slider__slides">
           {/* dummy */}
@@ -60,15 +62,24 @@ const TestimonialSlider = (props: any) => {
           @apply mt-32;
           &__header {
             @apply flex justify-between mb-24;
+            margin-bottom: 24px;
+            @screen md {
+              @apply mb-24;
+            }
             h2 {
               @apply font-semibold text-white;
-              font-size: 40px;
-              line-height: 58px;
+              font-size: 20px;
+              line-height: 30px;
+              @screen md {
+                font-size: 40px;
+                line-height: 58px;
+              }
             }
           }
           &__title {
-            @apply w-2/3;
+            @apply w-2/3 text-center mx-auto;
             @screen md {
+              @apply mx-0 text-left;
               width: 445px;
             }
           }
@@ -90,12 +101,18 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__slides {
-            @apply flex inline-flex;
-            transform: translateX(${translationX}px);
-            transition: transform 0.5s ease-in;
+            @apply flex overflow-x-scroll;
+            @screen md {
+              @apply inline-flex;
+              transform: translateX(${translationX}px);
+              transition: transform 0.5s ease-in;
+            }
           }
           &__slide {
-            @apply mr-12;
+            margin-right: 16px;
+            @screen md {
+              @apply mr-12;
+            }
           }
         }
       `}</style>
