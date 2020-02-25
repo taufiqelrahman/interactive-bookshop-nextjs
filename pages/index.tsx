@@ -120,11 +120,13 @@ const Index = (props: any): any => {
   // };
 
   return (
-    <DefaultLayout {...props}>
+    <DefaultLayout
+      {...props}
+      navbar={props.isMobile && <NavBar icon="chevron_right" setSideNav={props.setSideNav} menuAction={true} />}
+    >
       <Head>
         <title>When I Grow Up</title>
       </Head>
-      {props.isMobile && <NavBar icon="chevron_right" />}
       {/* {props.isMobile && <NavBar icon="menu" />} */}
       <div className="c-section--top" style={{ paddingTop: props.isMobile && 80 }}>
         <div className="c-section__create-now">
