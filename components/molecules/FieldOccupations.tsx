@@ -25,13 +25,24 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => (
     <style jsx>{`
       .c-field-occupations {
         &__header {
-          @apply font-semibold mb-6 flex;
+          @apply font-semibold mb-6 flex justify-center;
+          @screen md {
+            @apply justify-start;
+          }
         }
         &__options {
           @apply flex flex-wrap;
+          margin-bottom: 30px;
+          @screen md {
+            @apply mb-0;
+          }
           &__box {
-            @apply mb-2;
-            margin-right: 4%;
+            @apply mb-2 flex justify-center;
+            flex: 1 0 33%;
+            @screen md {
+              margin-right: 3%;
+              flex: unset;
+            }
             span {
               @apply flex justify-center font-bold text-xs;
               margin-top: 4px;

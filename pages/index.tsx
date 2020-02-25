@@ -206,7 +206,7 @@ const Index = (props: any): any => {
         </div>
         <div id="create-book" className="c-section--bottom__create-book">
           <h2>{props.t('createbook-header')}</h2>
-          <BookForm isMobile={props.isMobile} />
+          <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} />
         </div>
       </div>
       {/* <Features features={props.state.products.products} />
