@@ -38,5 +38,9 @@
   "go-to-orders": "Go to My Orders",
   "back-to-home": "Back to Homepage",
   "book-preferences": "Book Preferences",
-  "add-to-cart": "Add to Cart"
+  "add-to-cart": "Add to Cart",
+  "home": "Homepage",
+  "site-language": "Site language",
+  "or": "or",
+  "signed-in-as": "Signed in as"
 }

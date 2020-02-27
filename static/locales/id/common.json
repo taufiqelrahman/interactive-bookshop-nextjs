@@ -38,5 +38,9 @@
   "go-to-orders": "Lihat pesananku",
   "back-to-home": "Kembali ke Halaman Utama",
   "book-preferences": "Preferensi Buku",
-  "add-to-cart": "Tambahkan ke Keranjang"
+  "add-to-cart": "Tambahkan ke Keranjang",
+  "home": "Utama",
+  "site-language": "Bahasa",
+  "or": "atau",
+  "signed-in-as": "Masuk sebagai"
 }

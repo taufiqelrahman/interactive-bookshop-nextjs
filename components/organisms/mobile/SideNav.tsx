@@ -17,8 +17,8 @@ const SideNav = (props: any) => {
             </button>
             {props.users.isLoggedIn ? (
               <div className="c-side-nav__header__user">
-                <div>{props.t('signed-in-as')}</div>
-                <div>{props.users.email}</div>
+                <div className="c-side-nav__header__user--top">{props.t('signed-in-as')}</div>
+                <div>{props.users.user && props.users.user.email}</div>
               </div>
             ) : (
               <div className="c-side-nav__header__guest">
@@ -29,7 +29,7 @@ const SideNav = (props: any) => {
                     </Button>
                   </a>
                 </Link>
-                <div className="c-side-nav__header__separator">or</div>
+                <div className="c-side-nav__header__separator">{props.t('or')}</div>
                 <Link href="/register">
                   <a className="c-side-nav__header__link">{props.t('register')}</a>
                 </Link>
@@ -41,7 +41,7 @@ const SideNav = (props: any) => {
               <a className="c-side-nav__menu__link">{props.t('home')}</a>
             </Link>
             <Link href="/">
-              <a className="c-side-nav__menu__link">{props.t('shopping-cart')}</a>
+              <a className="c-side-nav__menu__link">{props.t('cart-title')}</a>
             </Link>
             {props.users.isLoggedIn && (
               <Link href="/orders">
@@ -49,15 +49,19 @@ const SideNav = (props: any) => {
               </Link>
             )}
             <Link href="/help">
-              <a className="c-side-nav__menu__link">{props.t('help')}</a>
+              <a className="c-side-nav__menu__link">{props.t('help-title')}</a>
             </Link>
           </div>
         </div>
 
         <div className="c-side-nav__footer">
-          {props.t('site-languange')}
-          <TranslationToggle white={true} style={{ marginTop: 4 }} />
-          {props.users.isLoggedIn && <div onClick={signOut}>{props.t('sign-out')}</div>}
+          {props.t('site-language')}
+          <TranslationToggle white={true} style={{ marginTop: 6 }} />
+          {props.users.isLoggedIn && (
+            <div className="c-side-nav__footer__sign-out" onClick={signOut}>
+              {props.t('sign-out')}
+            </div>
+          )}
         </div>
       </div>
       <style jsx>{`
@@ -80,15 +84,18 @@ const SideNav = (props: any) => {
             &__separator {
               margin: 0 16px;
             }
-            &__link {
-              @apply font-bold;
+            &__user {
+              &--top {
+                @apply text-xs;
+                margin-bottom: 4px;
+              }
             }
           }
           &__button {
             &--close {
               @apply absolute;
               left: -38px;
-              transform: translateY(75%);
+              transform: translateY(${props.users.isLoggedIn ? '45%' : '75%'});
             }
           }
           &__menu {
@@ -106,7 +113,16 @@ const SideNav = (props: any) => {
           }
           &__footer {
             @apply text-white font-opensans text-sm;
+            &__sign-out {
+              @apply cursor-pointer font-semibold;
+              margin-top: 24px;
+            }
           }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-side-nav__header {
+          @apply font-opensans font-semibold;
         }
       `}</style>
     </div>
