@@ -1,12 +1,16 @@
 const Button = (props: any) => {
-  const variantClass = props.variant ? `c-button--${props.variant}` : '';
+  const variantClass = () => {
+    if (!props.variant) return '';
+    const variants = props.variant.split(',');
+    return variants.map(variant => `c-button--${variant}`).join(' ');
+  };
   const colorClass = props.color ? `c-button--${props.color}` : '';
   const disabledClass = props.disabled ? `c-button--disabled` : '';
   return (
     <div style={props.style}>
       <button
         type={props.type ? props.type : null}
-        className={`c-button ${variantClass} ${colorClass} ${disabledClass}`}
+        className={`c-button ${variantClass()} ${colorClass} ${disabledClass}`}
         onClick={props.onClick}
         disabled={props.disabled}
       >
@@ -14,10 +18,11 @@ const Button = (props: any) => {
       </button>
       <style jsx>{`
         .c-button {
-          @apply font-semibold bg-brand text-white text-sm w-full;
+          @apply font-semibold bg-brand text-white text-sm;
           border-radius: 60px;
           padding: ${props.width ? '12px 0' : '12px'};
           max-width: ${props.width ? '100%' : 'none'};
+          width: ${props.width || '100%'};
           line-height: 24px;
           @screen sm {
             width: ${props.width || '255px'};
@@ -35,6 +40,10 @@ const Button = (props: any) => {
             &.c-button--white {
               @apply border-white;
             }
+          }
+          &--rectangle {
+            border-radius: 6px;
+            padding: 8px 16px;
           }
           &--disabled {
             opacity: 0.3;

@@ -8,6 +8,26 @@ import { Router } from 'i18n';
 import * as types from './types';
 import api from '../../services/api';
 
+function setUser(user: types.User): types.UsersActionTypes {
+  return {
+    type: types.SET_USER,
+    payload: user,
+  };
+}
+
+export function loadUser(isFetching, state?: types.User): types.UsersActionTypes {
+  return {
+    type: types.LOAD_USER,
+    payload: state,
+    isFetching,
+  };
+}
+
+export const thunkLoadUser = (): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
+  dispatch(loadUser(true));
+  dispatch(loadUser(false, { email: 'taufiqelrahman65@gmail.com' }));
+};
+
 export function setLogin(state: boolean): types.UsersActionTypes {
   return {
     type: types.SET_LOGIN,
@@ -31,6 +51,7 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
       Cookies.set('user', token);
       dispatch(login(false, data));
       Router.push(`/${userData.from || ''}`);
+      dispatch(setUser({ email: userData.email }));
     })
     .catch(err => {
       dispatch(login(false));

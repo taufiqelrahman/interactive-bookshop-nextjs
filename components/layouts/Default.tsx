@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import SideNav from 'components/organisms/mobile/SideNav';
+import { useEffect } from 'react';
 
 const DefaultLayout = (props: any) => {
   const router = useRouter();
@@ -13,12 +14,24 @@ const DefaultLayout = (props: any) => {
     props.setSideNav(false);
     document.body.classList.remove('overlay-active');
   };
+  useEffect(() => {
+    props.setSideNav(false);
+    document.body.classList.remove('overlay-active');
+  }, []);
+
   return (
     <div>
       {props.navbar || (
         <NavBar isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart} thunkLogout={props.thunkLogout} />
       )}
-      {props.isMobile && <SideNav isOpen={props.state.default.isSideNavOpen} hide={hideSideNav} />}
+      {props.isMobile && (
+        <SideNav
+          isOpen={props.state.default.isSideNavOpen}
+          hide={hideSideNav}
+          users={props.state.users}
+          thunkLogout={props.thunkLogout}
+        />
+      )}
       <div className={`c-layout ${props.isMobile ? 'h-min-screen' : ''}`}>
         <ToastContainer
           className="c-toast__container"

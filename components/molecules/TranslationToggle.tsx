@@ -2,7 +2,7 @@ import Toggle from 'components/atoms/Toggle';
 import { i18n } from 'i18n';
 import { useEffect, useState } from 'react';
 
-const TranslationToggle = () => {
+const TranslationToggle = (props: any) => {
   const [isEnglish, setEnglish] = useState(true);
 
   const changeLanguage = () => {
@@ -15,7 +15,7 @@ const TranslationToggle = () => {
   }, []);
 
   return (
-    <div>
+    <div style={props.style}>
       <Toggle value={isEnglish} onChange={changeLanguage}>
         <div className="c-translate">
           <div className={`c-translate__option ${isEnglish ? '' : 'active'}`}>ID</div>
@@ -28,7 +28,7 @@ const TranslationToggle = () => {
           &__option {
             @apply w-2/4 text-center;
             line-height: 20px;
-            color: #898699;
+            color: ${props.white ? 'white' : '#898699'};
             -webkit-transition: 0.4s;
             transition: 0.4s;
 

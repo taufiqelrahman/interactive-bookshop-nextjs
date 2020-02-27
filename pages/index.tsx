@@ -290,14 +290,14 @@ const Index = (props: any): any => {
             }
           }
           &__content {
-            @apply w-full;
+            @apply w-full text-center;
             padding: 0 40px;
             @screen md {
-              @apply w-5/12;
+              @apply w-5/12 text-left;
               padding: 0;
             }
             h1 {
-              @apply font-semibold mb-4 text-center;
+              @apply font-semibold mb-4;
               font-size: 28px;
               line-height: 42px;
               @screen md {
@@ -307,7 +307,7 @@ const Index = (props: any): any => {
               }
             }
             h2 {
-              @apply font-semibold mb-4 text-center;
+              @apply font-semibold mb-4;
               font-size: 28px;
               line-height: 42px;
               @screen md {
@@ -317,7 +317,7 @@ const Index = (props: any): any => {
               }
             }
             &__content {
-              @apply mb-6 text-center;
+              @apply mb-6;
               font-size: 14px;
               line-height: 19px;
               @screen md {

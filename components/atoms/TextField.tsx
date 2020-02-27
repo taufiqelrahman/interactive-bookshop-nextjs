@@ -16,7 +16,9 @@ const TextField = React.forwardRef((props: any, ref: any) => {
           defaultValue={props.defaultValue}
         />
       )}
-      <div className="c-text-field__message">{props.errors ? props.errors.message : props.hint}</div>
+      {(props.errors || props.hint) && (
+        <div className="c-text-field__message">{props.errors ? props.errors.message : props.hint}</div>
+      )}
       <style jsx>{`
         .c-text-field {
           @apply mb-4;
