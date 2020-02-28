@@ -70,12 +70,18 @@ const DefaultLayout = (props: any) => {
           &__container,
           &__toast {
             min-height: 44px !important;
-            min-width: 480px !important;
+            @screen md {
+              min-width: 480px !important;
+            }
           }
           &__container {
-            top: 105px !important;
-            transform: translateX(-50%) !important;
-            margin: 0 !important;
+            top: 64px !important;
+            padding: 0 4px !important;
+            @screen md {
+              margin: 0 !important;
+              top: 105px !important;
+              transform: translateX(-50%) !important;
+            }
           }
           &__toast {
             @apply text-center font-poppins;
