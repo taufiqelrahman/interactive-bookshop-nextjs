@@ -8,16 +8,14 @@ import CharacterCustomization from 'components/organisms/CharacterCustomization'
 const Create = (props: any): any => {
   return (
     <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen">
-        <div className="u-container u-container__page">
-          <Stepper step={1} totalSteps={2} title={props.t('character-customization')} style={{ marginBottom: 30 }} />
-          <div className="c-section">
-            <div className="c-section__left">
-              <CharacterCustomization {...props} />
-            </div>
-            <div className="c-section__right">
-              <img src="/static/images/dummy.png" />
-            </div>
+      <div className="u-container u-container__page">
+        <Stepper step={1} totalSteps={2} title={props.t('character-customization')} style={{ marginBottom: 30 }} />
+        <div className="c-section">
+          <div className="c-section__left">
+            <CharacterCustomization {...props} />
+          </div>
+          <div className="c-section__right">
+            <img src="/static/images/dummy.png" />
           </div>
         </div>
       </div>

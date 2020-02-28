@@ -9,6 +9,7 @@ import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import Divider from 'components/atoms/Divider';
 import FormTextField from 'components/molecules/FormTextField';
+import NavBar from 'components/organisms/mobile/NavBar';
 
 const Login = (props: any): any => {
   const { register, handleSubmit, errors, formState } = useForm({
@@ -41,37 +42,44 @@ const Login = (props: any): any => {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
+  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const formClass = `c-login__form ${props.isMobile ? 'h-min-screen' : ''}`;
   return (
-    <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen" style={{ paddingTop: 61 }}>
-        <div className="u-container">
-          <div className="c-login">
-            <Card variant="border">
-              <div className="c-login__container">
-                {loginStep === stepEnum.WELCOME && (
-                  <div>
-                    <img className="c-login__image" src="/static/images/welcome.png" />
-                    <h1 className="c-login__title">{props.t('welcome-back')}</h1>
-                    <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {`${props.t('login-with')} Goggle`}
-                    </Button>
-                    <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {`${props.t('login-with')} Facebook`}
-                    </Button>
-                    <div onClick={loginEmail} className="c-login__link" style={{ marginBottom: 24, marginTop: 18 }}>
-                      {`${props.t('login-with')} Email`}
-                    </div>
-                    <Divider />
-                    <Link href="/register">
-                      <a className="c-login__link">
-                        <span>{props.t('no-account')}</span>
-                        {' ' + props.t('register')}
-                      </a>
-                    </Link>
+    <DefaultLayout
+      {...props}
+      navbar={
+        props.isMobile && <NavBar icon="chevron_right" setSideNav={props.setSideNav} menuAction={true} title="Login" />
+      }
+    >
+      <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
+        <div className="c-login">
+          <Wrapper variant="border">
+            <div className="c-login__container">
+              {loginStep === stepEnum.WELCOME && (
+                <div>
+                  <img className="c-login__image" src="/static/images/welcome.png" />
+                  <h1 className="c-login__title">{props.t('welcome-back')}</h1>
+                  <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
+                    {`${props.t('login-with')} Goggle`}
+                  </Button>
+                  <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
+                    {`${props.t('login-with')} Facebook`}
+                  </Button>
+                  <div onClick={loginEmail} className="c-login__link" style={{ marginBottom: 24, marginTop: 24 }}>
+                    {`${props.t('login-with')} Email`}
                   </div>
-                )}
-                {loginStep === stepEnum.EMAIL && (
-                  <form onSubmit={handleSubmit(onSubmit)}>
+                  <Divider />
+                  <Link href="/register">
+                    <a className="c-login__link">
+                      <span>{props.t('no-account')}</span>
+                      {' ' + props.t('register')}
+                    </a>
+                  </Link>
+                </div>
+              )}
+              {loginStep === stepEnum.EMAIL && (
+                <form className={formClass} onSubmit={handleSubmit(onSubmit)}>
+                  <div>
                     <h1 className="c-login__title">{`${props.t('login-with')} Email`}</h1>
                     <FormTextField
                       label={props.t('form:email-label')}
@@ -98,16 +106,20 @@ const Login = (props: any): any => {
                     >
                       {props.t('forgot-password')}
                     </div>
+                  </div>
+                  <div>
                     <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
                       {props.t('login')}
                     </Button>
                     <div onClick={goBack} className="c-login__link">
                       {props.t('go-back')}
                     </div>
-                  </form>
-                )}
-                {loginStep === stepEnum.RESET && (
-                  <form onSubmit={handleSubmit(onReset)}>
+                  </div>
+                </form>
+              )}
+              {loginStep === stepEnum.RESET && (
+                <form className={formClass} onSubmit={handleSubmit(onReset)}>
+                  <div>
                     <h1 className="c-login__title">{props.t('form:reset-title')}</h1>
                     <div className="c-login__subtitle">{props.t('form:reset-subtitle')}</div>
                     <FormTextField
@@ -119,39 +131,53 @@ const Login = (props: any): any => {
                       variant="full-width"
                       style={{ marginTop: 24 }}
                     />
+                  </div>
+                  <div>
                     <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
                       {props.t('form:reset-send')}
                     </Button>
                     <div onClick={goBack} className="c-login__link">
                       {props.t('go-back')}
                     </div>
-                  </form>
-                )}
-                {loginStep === stepEnum.SENT && (
+                  </div>
+                </form>
+              )}
+              {loginStep === stepEnum.SENT && (
+                <div className={formClass}>
                   <div>
                     <img className="c-login__image" src="/static/images/welcome.png" />
                     <h1 className="c-login__title">{props.t('form:email-sent-title')}</h1>
                     <div className="c-login__subtitle">{props.t('form:email-sent-subtitle')}</div>
+                  </div>
+                  <div>
                     <Button onClick={goBack} width="100%" style={{ margin: '30px 0' }}>
                       {props.t('go-back')}
                     </Button>
                   </div>
-                )}
-              </div>
-            </Card>
-          </div>
+                </div>
+              )}
+            </div>
+          </Wrapper>
         </div>
       </div>
       <style jsx>{`
         .c-login {
           @apply mx-auto w-full;
-          margin-bottom: 243px;
           @screen md {
+            padding-bottom: 243px;
             width: 445px;
           }
           &__container {
-            padding: 24px;
             text-align: center;
+            @screen md {
+              padding: 24px;
+            }
+          }
+          &__form {
+            @apply flex flex-col justify-between;
+            @screen md {
+              @apply relative;
+            }
           }
           &__image {
             @apply mx-auto;
@@ -159,20 +185,30 @@ const Login = (props: any): any => {
             margin-bottom: 24px;
           }
           &__title {
-            @apply font-bold;
+            @apply font-semibold;
             font-size: 28px;
             line-height: 42px;
-            margin: 12px 0;
+            margin: 4px 0 28px;
+            @screen md {
+              @apply font-bold;
+              margin: 12px 0;
+            }
           }
           &__subtitle {
             @apply font-opensans;
             line-height: 22px;
           }
           &__link {
-            @apply font-semibold cursor-pointer;
+            @apply font-semibold cursor-pointer text-sm;
+            margin-bottom: 18px;
+            @screen md {
+              @apply text-base;
+              margin-bottom: 0;
+            }
             color: #445ca4;
             span {
               @apply font-normal;
+              color: #333;
             }
           }
         }

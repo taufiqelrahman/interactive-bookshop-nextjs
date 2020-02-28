@@ -44,32 +44,30 @@ const Preview = (props: any): any => {
   }, [errors]);
   return (
     <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen">
-        <div className="u-container u-container__page">
-          <Stepper step={1} totalSteps={2} title={props.t('book-preferences')} />
-          <div className="c-preview">
-            <Card variant="border">
-              <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
-                <div className="c-preview__book">
-                  <BookPreview selected={dummySelected || {}} />
-                  {/* <BookPreview selected={props.state.cart.selected || {}} /> */}
-                </div>
-                <div className="c-preview__cover">
-                  <FieldCover
-                    ref={register(schema.cover)}
-                    errors={errors.cover}
-                    style={{ marginTop: 24, marginBottom: 12 }}
-                  />
-                </div>
-                <Button type="submit" width="648px" style={{ margin: '18px 0' }}>
-                  {props.t('add-to-cart')}
-                </Button>
-                <Link href="/">
-                  <a className="c-preview__link">{props.t('back-to-home')}</a>
-                </Link>
-              </form>
-            </Card>
-          </div>
+      <div className="u-container u-container__page">
+        <Stepper step={1} totalSteps={2} title={props.t('book-preferences')} />
+        <div className="c-preview">
+          <Card variant="border">
+            <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
+              <div className="c-preview__book">
+                <BookPreview selected={dummySelected || {}} />
+                {/* <BookPreview selected={props.state.cart.selected || {}} /> */}
+              </div>
+              <div className="c-preview__cover">
+                <FieldCover
+                  ref={register(schema.cover)}
+                  errors={errors.cover}
+                  style={{ marginTop: 24, marginBottom: 12 }}
+                />
+              </div>
+              <Button type="submit" width="648px" style={{ margin: '18px 0' }}>
+                {props.t('add-to-cart')}
+              </Button>
+              <Link href="/">
+                <a className="c-preview__link">{props.t('back-to-home')}</a>
+              </Link>
+            </form>
+          </Card>
         </div>
       </div>
       <style jsx>{`

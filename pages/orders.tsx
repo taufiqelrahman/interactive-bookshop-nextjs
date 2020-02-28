@@ -9,20 +9,18 @@ import dummyOrders from '_mocks/orders';
 const Orders = (props: any): any => {
   return (
     <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen">
-        <div className="u-container u-container__page">
-          <Stepper title={props.t('my-orders')} />
-          <div className="c-orders-section">
-            <div className="c-orders-section__left">
-              {dummyOrders &&
-                dummyOrders.map(item => (
-                  <Link key={item.id} href={`/orders/${item.id}`}>
-                    <a>
-                      <OrderItem key={item.id} {...item} style={{ marginBottom: 12 }} />
-                    </a>
-                  </Link>
-                ))}
-            </div>
+      <div className="u-container u-container__page">
+        <Stepper title={props.t('my-orders')} />
+        <div className="c-orders-section">
+          <div className="c-orders-section__left">
+            {dummyOrders &&
+              dummyOrders.map(item => (
+                <Link key={item.id} href={`/orders/${item.id}`}>
+                  <a>
+                    <OrderItem key={item.id} {...item} style={{ marginBottom: 12 }} />
+                  </a>
+                </Link>
+              ))}
           </div>
         </div>
       </div>

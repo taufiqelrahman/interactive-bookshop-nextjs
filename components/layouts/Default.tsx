@@ -32,7 +32,7 @@ const DefaultLayout = (props: any) => {
           thunkLogout={props.thunkLogout}
         />
       )}
-      <div className={`c-layout ${props.isMobile ? 'h-min-screen' : ''}`}>
+      <div className={`c-layout ${props.isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`}>
         <ToastContainer
           className="c-toast__container"
           toastClassName="c-toast__toast"
@@ -49,9 +49,10 @@ const DefaultLayout = (props: any) => {
           @apply hidden;
         }
         .c-layout {
+          @apply relative;
+          margin-top: 60px;
           @screen md {
-            @apply relative;
-            padding-top: ${isIndexPage ? 0 : 80};
+            margin-top: ${isIndexPage ? 0 : '80px'};
           }
         }
       `}</style>

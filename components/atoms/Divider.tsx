@@ -5,8 +5,11 @@ const Divider = (props: any) => (
     <hr className="c-divider" style={props.style} />
     <style jsx>{`
       .c-divider {
-        border: 1px solid #e1e0e7;
+        border: 1px solid #ededed;
         margin-bottom: 30px;
+        @screen md {
+          border-color: #e1e0e7;
+        }
       }
     `}</style>
   </div>

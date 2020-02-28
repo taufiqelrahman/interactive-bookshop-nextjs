@@ -128,7 +128,7 @@ const Index = (props: any): any => {
         <title>When I Grow Up</title>
       </Head>
       {/* {props.isMobile && <NavBar icon="menu" />} */}
-      <div className="c-section--top" style={{ paddingTop: props.isMobile && 80 }}>
+      <div className="c-section--top">
         <div className="c-section__create-now">
           <div className="u-container">
             <div className="c-section--top__container">

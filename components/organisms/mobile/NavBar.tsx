@@ -24,18 +24,19 @@ const NavBar = (props: any) => {
         ) : props.isSteps ? (
           <Stepper step={props.step} totalSteps={props.totalSteps} title={props.title} style={{}} />
         ) : (
-          <div className="c-navbar__text">{props.title}</div>
+          <div className="c-navbar__title__text">{props.title}</div>
         )}
       </div>
       <style jsx>{`
         .c-navbar {
-          @apply fixed top-0 bg-white flex w-full z-30;
-          height: 48px;
-          padding: 8px 16px;
+          @apply fixed top-0 bg-white flex w-full z-30 items-center;
+          padding: ${isIndexPage ? '14px' : '16px'};
+          border-bottom: ${isIndexPage ? 'none' : '1px solid #efeef4'};
           &__action {
             @apply flex justify-center items-center cursor-pointer;
             width: 22px;
             font-size: 20px;
+            margin-right: ${isIndexPage ? 0 : '16px'};
             &--index {
               @apply text-brand;
             }
@@ -46,6 +47,11 @@ const NavBar = (props: any) => {
               img {
                 width: 33px;
               }
+            }
+            &__text {
+              @apply font-semibold;
+              font-size: 18px;
+              line-height: 26px;
             }
           }
         }

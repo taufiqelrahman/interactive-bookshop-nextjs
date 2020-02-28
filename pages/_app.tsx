@@ -69,12 +69,26 @@ const App: NextPage<any> = (props: any) => {
         }
 
         .u-container {
-          @apply w-11/12 mx-auto;
+          padding-left: 16px;
+          padding-right: 16px;
+          @screen md {
+            @apply w-11/12 mx-auto;
+            padding-left: 0;
+            padding-right: 0;
+          }
           &__spread {
             @apply flex items-center justify-between;
           }
           &__page {
-            padding: 30px 0;
+            padding-top: 24px;
+            @screen md {
+              padding-top: 30px;
+              padding-bottom: 30px;
+            }
+            &--large {
+              padding-top: 61px;
+              padding-bottom: 61px;
+            }
           }
           @screen lg {
             @apply w-9/12;
@@ -82,7 +96,10 @@ const App: NextPage<any> = (props: any) => {
         }
 
         .h-min-screen {
-          min-height: calc(100vh - 239px);
+          min-height: calc(100vh - 59px - 24px);
+          @screen md {
+            min-height: calc(100vh - 239px);
+          }
         }
 
         /* icons */

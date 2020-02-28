@@ -21,14 +21,13 @@ const Accordion = (props: any) => {
         .c-accordion {
           padding: 24px;
           &__header {
-            @apply flex justify-between items-center;
+            @apply flex justify-between items-center cursor-pointer;
             h2 {
               @apply font-semibold;
               font-size: 20px;
               line-height: 30px;
             }
             span {
-              @apply cursor-pointer;
               font-size: 30px;
             }
           }

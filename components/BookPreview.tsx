@@ -42,12 +42,12 @@ const BookPreview = (props: any) => {
     setBook(bookHeidelberg);
   };
 
-  const debouncedFunctionRef = useRef();
+  let debouncedFunctionRef: any = useRef();
   (debouncedFunctionRef.current as any) = () => {
     setupBook();
   };
   const debouncedSetup = useCallback(
-    debounce(() => (debouncedFunctionRef.current as any)(), 300),
+    debounce(() => debouncedFunctionRef && (debouncedFunctionRef.current as any)(), 300),
     [],
   );
   useEffect(() => {
@@ -56,6 +56,7 @@ const BookPreview = (props: any) => {
     window.addEventListener('resize', debouncedSetup);
     return () => {
       window.removeEventListener('resize', () => debouncedSetup);
+      debouncedFunctionRef = null;
     };
     // setTimeout(() => {
     //   new CircleType(document.getElementById('title1')).radius(384);

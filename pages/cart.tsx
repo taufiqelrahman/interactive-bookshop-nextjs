@@ -17,47 +17,45 @@ const Cart = (props: any): any => {
   };
   return (
     <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen">
-        <div className="u-container u-container__page">
-          <Stepper title={props.t('cart-title')} />
-          <div className="c-cart-section">
-            <div className="c-cart-section__left">
-              {dummyCart &&
-                dummyCart.items.map(item => <CartItem key={item.id} {...item} style={{ marginBottom: 12 }} />)}
-            </div>
-            <div className="c-cart-section__right">
-              <Card variant="border">
-                <div className="c-cart__summary">
-                  <div className="c-cart__summary__header">
-                    <h1>{props.t('order-summary')}</h1>
-                    <Dot width="12px" color="red" />
-                  </div>
-                  <div className="flex justify-between">
-                    <div>
-                      <div className="c-cart__summary__title">When I Grow Up</div>
-                      <div className="c-cart__summary__quantity">
-                        {props.t('quantity')}: {dummyCart.quantity}
-                      </div>
-                    </div>
-                    <div className="c-cart__summary__total">
-                      <NumberFormat value={dummyCart.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+      <div className="u-container u-container__page">
+        <Stepper title={props.t('cart-title')} />
+        <div className="c-cart-section">
+          <div className="c-cart-section__left">
+            {dummyCart &&
+              dummyCart.items.map(item => <CartItem key={item.id} {...item} style={{ marginBottom: 12 }} />)}
+          </div>
+          <div className="c-cart-section__right">
+            <Card variant="border">
+              <div className="c-cart__summary">
+                <div className="c-cart__summary__header">
+                  <h1>{props.t('order-summary')}</h1>
+                  <Dot width="12px" color="red" />
+                </div>
+                <div className="flex justify-between">
+                  <div>
+                    <div className="c-cart__summary__title">When I Grow Up</div>
+                    <div className="c-cart__summary__quantity">
+                      {props.t('quantity')}: {dummyCart.quantity}
                     </div>
                   </div>
-                  <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
-                  <div className="c-cart__summary__subtotal">
-                    <div>Subtotal</div>
+                  <div className="c-cart__summary__total">
                     <NumberFormat value={dummyCart.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
                   </div>
-                  <div className="c-cart__summary__info">
-                    <span className="icon-info" />
-                    {props.t('shipping-not-included')}
-                  </div>
-                  <Button width="100%" color="black" style={{ marginTop: 30 }} onClick={continuePayment}>
-                    {props.t('continue-payment')}
-                  </Button>
                 </div>
-              </Card>
-            </div>
+                <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
+                <div className="c-cart__summary__subtotal">
+                  <div>Subtotal</div>
+                  <NumberFormat value={dummyCart.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                </div>
+                <div className="c-cart__summary__info">
+                  <span className="icon-info" />
+                  {props.t('shipping-not-included')}
+                </div>
+                <Button width="100%" color="black" style={{ marginTop: 30 }} onClick={continuePayment}>
+                  {props.t('continue-payment')}
+                </Button>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
