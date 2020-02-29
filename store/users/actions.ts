@@ -4,8 +4,8 @@ import { ThunkAction } from 'redux-thunk';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
 import { Router } from 'i18n';
-
 import * as types from './types';
+import { setErrorMessage } from '../actions';
 import api from '../../services/api';
 
 function setUser(user: types.User): types.UsersActionTypes {
@@ -55,6 +55,7 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
     })
     .catch(err => {
       dispatch(login(false));
+      dispatch(setErrorMessage(err.message));
       captureException(err);
     });
 };

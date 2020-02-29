@@ -3,17 +3,17 @@ import { Provider } from 'react-redux';
 import cookies from 'next-cookies';
 import { NextPage } from 'next';
 // import * as Sentry from '@sentry/browser'
-import withReduxStore from 'lib/with-redux-store';
 import { appWithTranslation, i18n } from 'i18n';
-import * as dayjs from 'dayjs';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import debounce from 'lodash.debounce';
+import { Router } from 'next/router';
+import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
+import debounce from 'lodash.debounce';
+import withReduxStore from 'lib/with-redux-store';
 import actions from 'store/actions';
 import 'styles/tailwind.css';
 import 'styles/icomoon/style.css';
 import 'reset-css';
-import { Router } from 'next/router';
 
 // disable when development
 // Sentry.init({

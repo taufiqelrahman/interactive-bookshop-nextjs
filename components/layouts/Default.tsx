@@ -16,11 +16,20 @@ const DefaultLayout = (props: any) => {
     document.body.classList.remove('overlay-active');
   };
   useEffect(() => {
+    // reset sidenav
     props.setSideNav(false);
     document.body.classList.remove('overlay-active');
+    // set top margin for fixed navbar
     const navbarDiv: any = document.querySelector('.c-navbar');
     setNavbarHeight(navbarDiv.clientHeight);
   }, []);
+  useEffect(() => {
+    // show toast for errors
+    const { errorMessage } = props.state.default;
+    if (errorMessage) {
+      toast.error(errorMessage);
+    }
+  }, [props.state.default.errorMessage]);
 
   return (
     <div>

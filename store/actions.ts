@@ -4,6 +4,13 @@ import * as productsActions from './products/actions';
 import * as usersActions from './users/actions';
 import * as types from './types';
 
+export const setErrorMessage = (message: string): types.ActionTypes => {
+  return {
+    type: types.SET_ERROR_MESSAGE,
+    payload: message,
+  };
+};
+
 export default {
   ...cartActions,
   ...ordersActions,
@@ -15,4 +22,5 @@ export default {
       payload: state,
     };
   },
+  setErrorMessage,
 };
