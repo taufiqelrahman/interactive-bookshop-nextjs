@@ -120,10 +120,7 @@ const Index = (props: any): any => {
   // };
 
   return (
-    <DefaultLayout
-      {...props}
-      navbar={props.isMobile && <NavBar icon="chevron_right" setSideNav={props.setSideNav} menuAction={true} />}
-    >
+    <DefaultLayout {...props} navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} />}>
       <Head>
         <title>When I Grow Up</title>
       </Head>

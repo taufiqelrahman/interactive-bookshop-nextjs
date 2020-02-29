@@ -44,11 +44,31 @@ const Login = (props: any): any => {
   }, [errors]);
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const formClass = `c-login__form ${props.isMobile ? 'h-min-screen' : ''}`;
+  const onBack = () => {
+    switch (loginStep) {
+      case stepEnum.EMAIL:
+        setLoginStep(stepEnum.WELCOME);
+        break;
+      case stepEnum.RESET:
+      case stepEnum.SENT:
+        setLoginStep(stepEnum.EMAIL);
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <DefaultLayout
       {...props}
       navbar={
-        props.isMobile && <NavBar icon="chevron_right" setSideNav={props.setSideNav} menuAction={true} title="Login" />
+        props.isMobile && (
+          <NavBar
+            onBack={onBack}
+            setSideNav={props.setSideNav}
+            menuAction={loginStep === stepEnum.WELCOME}
+            title={props.t('login')}
+          />
+        )
       }
     >
       <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
@@ -120,7 +140,9 @@ const Login = (props: any): any => {
               {loginStep === stepEnum.RESET && (
                 <form className={formClass} onSubmit={handleSubmit(onReset)}>
                   <div>
-                    <h1 className="c-login__title">{props.t('form:reset-title')}</h1>
+                    <h1 className="c-login__title" style={{ marginBottom: 12 }}>
+                      {props.t('form:reset-title')}
+                    </h1>
                     <div className="c-login__subtitle">{props.t('form:reset-subtitle')}</div>
                     <FormTextField
                       label={props.t('form:email-label')}
@@ -146,7 +168,9 @@ const Login = (props: any): any => {
                 <div className={formClass}>
                   <div>
                     <img className="c-login__image" src="/static/images/welcome.png" />
-                    <h1 className="c-login__title">{props.t('form:email-sent-title')}</h1>
+                    <h1 className="c-login__title" style={{ marginBottom: 12 }}>
+                      {props.t('form:email-sent-title')}
+                    </h1>
                     <div className="c-login__subtitle">{props.t('form:email-sent-subtitle')}</div>
                   </div>
                   <div>
@@ -186,26 +210,31 @@ const Login = (props: any): any => {
           }
           &__title {
             @apply font-semibold;
-            font-size: 28px;
-            line-height: 42px;
+            font-size: 20px;
+            line-height: 30px;
             margin: 4px 0 28px;
             @screen md {
               @apply font-bold;
+              font-size: 28px;
               margin: 12px 0;
             }
           }
           &__subtitle {
-            @apply font-opensans;
-            line-height: 22px;
+            @apply font-opensans text-sm;
+            line-height: 19px;
+            @screen md {
+              @apply text-base;
+              line-height: 22px;
+            }
           }
           &__link {
             @apply font-semibold cursor-pointer text-sm;
             margin-bottom: 18px;
+            color: #445ca4;
             @screen md {
               @apply text-base;
               margin-bottom: 0;
             }
-            color: #445ca4;
             span {
               @apply font-normal;
               color: #333;

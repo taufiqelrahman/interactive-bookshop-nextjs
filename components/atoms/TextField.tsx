@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import NumberFormat from 'react-number-format';
 
 const TextField = React.forwardRef((props: any, ref: any) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
   const variantClass = props.variant ? `c-text-field--${props.variant}` : '';
   return (
     <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass}`}>
       {props.name === 'phone' ? (
         <NumberFormat format="#### #### ####" name={props.name} placeholder={props.placeholder} getInputRef={ref} />
       ) : (
-        <input
-          type={props.isPassword ? 'password' : props.type || 'text'}
-          name={props.name}
-          placeholder={props.placeholder}
-          ref={ref}
-          defaultValue={props.defaultValue}
-        />
+        <Fragment>
+          <input
+            type={props.isPassword && !showPassword ? 'password' : props.type || 'text'}
+            name={props.name}
+            placeholder={props.placeholder}
+            ref={ref}
+            defaultValue={props.defaultValue}
+          />
+          {props.isPassword && (
+            <span
+              onClick={togglePassword}
+              className={`c-text-field__show-password ${showPassword ? 'icon-info' : 'icon-arrow_left'}`}
+            />
+          )}
+        </Fragment>
       )}
       {(props.errors || props.hint) && (
         <div className="c-text-field__message">{props.errors ? props.errors.message : props.hint}</div>
@@ -32,6 +44,11 @@ const TextField = React.forwardRef((props: any, ref: any) => {
               @apply text-red-600;
             }
           }
+          &__show-password {
+            @apply absolute cursor-pointer;
+            right: 30px;
+            transform: translateY(90%);
+          }
         }
       `}</style>
       <style jsx global>{`
@@ -42,12 +59,19 @@ const TextField = React.forwardRef((props: any, ref: any) => {
             }
           }
           input {
-            @apply px-3;
+            @apply px-3 text-sm;
             border-radius: 4px;
             height: 44px;
             border: 2px solid #e1e0e7;
+            @screen md {
+              @apply text-base;
+            }
             &::placeholder {
+              @apply text-sm;
               color: #e1e1e1;
+              @screen md {
+                @apply text-base;
+              }
             }
           }
           &--error input {

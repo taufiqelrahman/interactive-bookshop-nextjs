@@ -9,6 +9,7 @@ import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import Divider from 'components/atoms/Divider';
 import FormTextField from 'components/molecules/FormTextField';
+import NavBar from 'components/organisms/mobile/NavBar';
 
 const Register = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = useForm({
@@ -52,11 +53,38 @@ const Register = (props: any): any => {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
+  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const formClass = `c-register__form ${props.isMobile ? 'h-min-screen' : ''}`;
+  const onBack = () => {
+    switch (registerStep) {
+      case stepEnum.EMAIL:
+      case stepEnum.GOOGLE:
+        setRegisterStep(stepEnum.WELCOME);
+        break;
+      case stepEnum.DETAIL:
+        setRegisterStep(stepEnum.EMAIL);
+        break;
+      default:
+        break;
+    }
+  };
   return (
-    <DefaultLayout {...props}>
-      <div className="u-container u-container__page--large">
+    <DefaultLayout
+      {...props}
+      navbar={
+        props.isMobile && (
+          <NavBar
+            onBack={onBack}
+            setSideNav={props.setSideNav}
+            menuAction={registerStep === stepEnum.WELCOME}
+            title={props.t('register')}
+          />
+        )
+      }
+    >
+      <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-register">
-          <Card variant="border">
+          <Wrapper variant="border">
             <div className="c-register__container">
               {registerStep === stepEnum.WELCOME && (
                 <div>
@@ -81,79 +109,97 @@ const Register = (props: any): any => {
                 </div>
               )}
               {registerStep === stepEnum.EMAIL && (
-                <form onSubmit={handleSubmit(submitEmail)}>
-                  <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
-                  <FormTextField
-                    label={props.t('form:email-label')}
-                    name="email"
-                    placeholder="example@yourdomain.com"
-                    ref={register(schema.email)}
-                    errors={errors.email}
-                    variant="full-width"
-                    hint={props.t('form:email-hint')}
-                  />
-                  <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                    {props.t('form:continue-button')}
-                  </Button>
-                  <div onClick={goBack} className="c-register__link">
-                    {props.t('go-back')}
+                <form className={formClass} onSubmit={handleSubmit(submitEmail)}>
+                  <div>
+                    <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
+                    <FormTextField
+                      label={props.t('form:email-label')}
+                      name="email"
+                      placeholder="example@yourdomain.com"
+                      ref={register(schema.email)}
+                      errors={errors.email}
+                      variant="full-width"
+                      hint={props.t('form:email-hint')}
+                    />
+                  </div>
+                  <div>
+                    <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                      {props.t('form:continue-button')}
+                    </Button>
+                    <div onClick={goBack} className="c-register__link">
+                      {props.t('go-back')}
+                    </div>
                   </div>
                 </form>
               )}
               {registerStep === stepEnum.DETAIL && (
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
-                  <div className="c-register__saved-email">{savedEmail}</div>
-                  <FormTextField
-                    label={props.t('form:phone-label')}
-                    name="phone"
-                    placeholder={props.t('form:phone-placeholder')}
-                    ref={register(schema.phone)}
-                    errors={errors.phone}
-                    variant="full-width"
-                  />
-                  <FormTextField
-                    label={props.t('form:password-label')}
-                    name="password"
-                    placeholder={props.t('form:new-password-placeholder')}
-                    ref={register(schema.password)}
-                    errors={errors.password}
-                    variant="full-width"
-                    isPassword={true}
-                    style={{ marginTop: 24 }}
-                  />
-                  <FormTextField
-                    label={props.t('form:confirm-password-label')}
-                    name="confirmPassword"
-                    placeholder={props.t('form:confirm-password-placeholder')}
-                    ref={register(schema.confirmPassword)}
-                    errors={errors.confirmPassword}
-                    variant="full-width"
-                    isPassword={true}
-                    style={{ marginTop: 24 }}
-                  />
-                  <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                    {props.t('form:create-account-button')}
-                  </Button>
-                  <div onClick={goBack} className="c-register__link">
-                    {props.t('go-back')}
+                <form className={formClass} onSubmit={handleSubmit(onSubmit)}>
+                  <div>
+                    <h1 className="c-register__title" style={{ marginBottom: 8 }}>
+                      {`${props.t('register-with')} Email`}
+                    </h1>
+                    <div className="c-register__saved-email">{savedEmail}</div>
+                    <FormTextField
+                      label={props.t('form:phone-label')}
+                      name="phone"
+                      placeholder={props.t('form:phone-placeholder')}
+                      ref={register(schema.phone)}
+                      errors={errors.phone}
+                      variant="full-width"
+                    />
+                    <FormTextField
+                      label={props.t('form:password-label')}
+                      name="password"
+                      placeholder={props.t('form:new-password-placeholder')}
+                      ref={register(schema.password)}
+                      errors={errors.password}
+                      variant="full-width"
+                      isPassword={true}
+                      style={{ marginTop: 24 }}
+                    />
+                    <FormTextField
+                      label={props.t('form:confirm-password-label')}
+                      name="confirmPassword"
+                      placeholder={props.t('form:confirm-password-placeholder')}
+                      ref={register(schema.confirmPassword)}
+                      errors={errors.confirmPassword}
+                      variant="full-width"
+                      isPassword={true}
+                      style={{ marginTop: 24 }}
+                    />
+                  </div>
+                  <div>
+                    <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                      {props.t('form:create-account-button')}
+                    </Button>
+                    <div onClick={goBack} className="c-register__link">
+                      {props.t('go-back')}
+                    </div>
                   </div>
                 </form>
               )}
             </div>
-          </Card>
+          </Wrapper>
         </div>
       </div>
       <style jsx>{`
         .c-register {
           @apply mx-auto w-full;
-          margin-bottom: 243px;
           @screen md {
+            padding-bottom: 243px;
             width: 445px;
           }
           &__container {
-            padding: 24px;
             text-align: center;
+            @screen md {
+              padding: 24px;
+            }
+          }
+          &__form {
+            @apply flex flex-col justify-between;
+            @screen md {
+              @apply relative;
+            }
           }
           &__image {
             @apply mx-auto;
@@ -161,20 +207,31 @@ const Register = (props: any): any => {
             margin-bottom: 24px;
           }
           &__title {
-            @apply font-bold;
-            font-size: 28px;
-            line-height: 42px;
-            margin: 12px 0;
+            @apply font-semibold;
+            font-size: 20px;
+            line-height: 30px;
+            margin: 4px 0 28px;
+            @screen md {
+              @apply font-bold;
+              font-size: 28px;
+              margin: 12px 0;
+            }
           }
           &__subtitle {
             @apply font-opensans;
             line-height: 22px;
           }
           &__link {
-            @apply font-semibold cursor-pointer;
+            @apply font-semibold cursor-pointer text-sm;
+            margin-bottom: 18px;
             color: #445ca4;
+            @screen md {
+              @apply text-base;
+              margin-bottom: 0;
+            }
             span {
               @apply font-normal;
+              color: #333;
             }
           }
           &__saved-email {

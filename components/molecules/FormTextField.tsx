@@ -19,7 +19,10 @@ const FormTextField: any = React.forwardRef((props: any, ref: any) => (
           @apply mb-0;
         }
         &__label {
-          @apply font-semibold mb-3 flex;
+          @apply font-semibold mb-3 flex text-sm;
+          @screen md {
+            @apply text-base;
+          }
         }
       }
     `}</style>
