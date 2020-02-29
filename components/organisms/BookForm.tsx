@@ -9,8 +9,9 @@ import { useState, useEffect } from 'react';
 
 const BookForm = (props: any) => {
   const [isFormValid, setIsFormValid] = useState(false);
+  const stepEnum = { OCCUPATIONS: 0, DETAIL: 1 };
   const [state, setState] = useState({
-    step: 1,
+    step: stepEnum.OCCUPATIONS,
     occupations: [],
   });
   const { register, handleSubmit, errors, formState, watch } = useForm({
@@ -34,7 +35,7 @@ const BookForm = (props: any) => {
   }, [watch()]);
 
   const next = () => {
-    setState({ ...state, step: 2, occupations: watch('occupations') });
+    setState({ ...state, step: stepEnum.DETAIL, occupations: watch('occupations') });
   };
 
   return (
@@ -43,7 +44,7 @@ const BookForm = (props: any) => {
         {props.isMobile ? (
           <form onSubmit={handleSubmit(onSubmit)} style={{ overflow: 'hidden' }}>
             <Card variant="shadow--bold">
-              {state.step === 1 && (
+              {state.step === stepEnum.OCCUPATIONS && (
                 <div key={1} className="c-book-form__container c-book-form__container__mobile">
                   <FieldOccupations ref={register(schema.occupations)} errors={errors.occupations} />
                   <Button width="100%" disabled={!isFormValid} onClick={next}>
@@ -51,7 +52,7 @@ const BookForm = (props: any) => {
                   </Button>
                 </div>
               )}
-              {state.step === 2 && (
+              {state.step === stepEnum.DETAIL && (
                 <div key={2} className="c-book-form__container c-book-form__container__mobile">
                   <div>
                     <FormTextField

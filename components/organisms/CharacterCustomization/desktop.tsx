@@ -2,7 +2,6 @@ import Card from 'components/atoms/Card';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { toast } from 'react-toastify';
 import FieldOccupations from 'components/molecules/FieldOccupations';
 import FormTextField from 'components/molecules/FormTextField';
 import FieldAge from 'components/molecules/FieldAge';
@@ -14,6 +13,7 @@ import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
+import { schema, showError, dummy } from './helper';
 
 const CharacterCustomization = (props: any) => {
   const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
@@ -23,40 +23,20 @@ const CharacterCustomization = (props: any) => {
     props.saveSelected(data);
     Router.push('/preview');
   };
-  const schema = {
-    occupations: {
-      required: true,
-      validate: value => value.length === 3,
-    },
-    name: { required: true },
-    age: { required: true },
-    dob: { required: true },
-    gender: { required: true },
-    hair: { required: true },
-    skin: { required: true },
-    language: { required: true },
-    dedication: { required: false },
-  };
   useEffect(() => {
     register({ name: 'dob' }, schema.dob);
   }, []);
   useEffect(() => {
     if (!formState.isValid) {
-      window.scrollTo(0, 0);
-      toast.error(props.t('form-error'));
+      showError(props.t('form-error'));
     }
   }, [errors]);
-  const dummy = {
-    name: 'asd',
-    age: 'Toddler',
-    occupations: ['4', '5', '6'],
-  };
   const selected = props.state.cart.selected || dummy || {};
   return (
-    <div>
-      <div className="c-char-custom">
+    <div className="c-char-custom">
+      <div className="c-char-custom__left">
         <Card variant="border">
-          <form className="c-char-custom__container" onSubmit={handleSubmit(onSubmit)}>
+          <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
             <FieldOccupations
               ref={register(schema.occupations)}
               errors={errors.occupations}
@@ -111,10 +91,39 @@ const CharacterCustomization = (props: any) => {
           </form>
         </Card>
       </div>
+      <div className="c-char-custom__right">
+        <img src="/static/images/dummy.png" />
+      </div>
       <style jsx>{`
         .c-char-custom {
-          &__container {
-            padding: 36px;
+          @apply flex w-full flex-col;
+          @screen lg {
+            @apply flex-row;
+          }
+          &__left {
+            @apply w-full;
+            @screen lg {
+              @apply w-4/5;
+            }
+            @screen xl {
+              @apply w-3/5;
+            }
+            &__container {
+              padding: 36px;
+            }
+          }
+          &__right {
+            @apply w-full;
+            padding: 0 100px;
+            @screen lg {
+              @apply w-1/5;
+            }
+            @screen xl {
+              @apply w-2/5;
+            }
+            img {
+              @apply w-full;
+            }
           }
         }
       `}</style>

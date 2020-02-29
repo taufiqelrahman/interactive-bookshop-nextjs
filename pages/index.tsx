@@ -8,7 +8,7 @@ import TestimonialSlider from 'components/organisms/TestimonialSlider';
 import BookForm from 'components/organisms/BookForm';
 import Button from 'components/atoms/Button';
 import Head from 'next/head';
-import NavBar from 'components/organisms/mobile/NavBar';
+import NavBar from 'components/organisms/NavBar/mobile';
 import Footer from 'components/organisms/Footer';
 // import actions from 'store/actions';
 

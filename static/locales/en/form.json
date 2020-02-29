@@ -39,5 +39,6 @@
   "message-label": "Message",
   "message-placeholder": "Enter your message here",
   "cover-label": "Cover color",
-  "next-button": "Next"
+  "next-button": "Next",
+  "cancel-button": "Cancel"
 }

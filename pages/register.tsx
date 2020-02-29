@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link, Router } from 'i18n';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Card from 'components/atoms/Card';
@@ -9,7 +9,7 @@ import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import Divider from 'components/atoms/Divider';
 import FormTextField from 'components/molecules/FormTextField';
-import NavBar from 'components/organisms/mobile/NavBar';
+import NavBar from 'components/organisms/NavBar/mobile';
 
 const Register = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = useForm({
@@ -18,23 +18,12 @@ const Register = (props: any): any => {
   const stepEnum = { WELCOME: 0, EMAIL: 1, DETAIL: 2, GOOGLE: 3 };
   const [registerStep, setRegisterStep] = useState(stepEnum.WELCOME);
   const [savedEmail, setSavedEmail] = useState('');
-  const onSubmit = data => {
-    console.log({ ...data, email: savedEmail, from: Router.query.from });
-  };
-  const submitEmail = data => {
-    console.log(data);
-    setSavedEmail(data.email);
-    setRegisterStep(stepEnum.DETAIL);
-  };
   const registerEmail = () => {
     setRegisterStep(stepEnum.EMAIL);
   };
-  const registerGoogle = () => {
-    setRegisterStep(stepEnum.GOOGLE);
-  };
-  const goBack = () => {
-    setRegisterStep(stepEnum.WELCOME);
-  };
+  // const registerGoogle = () => {
+  //   setRegisterStep(stepEnum.GOOGLE);
+  // };
   const schema = {
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
@@ -53,8 +42,20 @@ const Register = (props: any): any => {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
-  const Wrapper: any = props.isMobile ? 'div' : Card;
-  const formClass = `c-register__form ${props.isMobile ? 'h-min-screen' : ''}`;
+  const onSubmit = data => {
+    switch (registerStep) {
+      case stepEnum.EMAIL:
+        console.log(data);
+        setSavedEmail(data.email);
+        setRegisterStep(stepEnum.DETAIL);
+        break;
+      case stepEnum.DETAIL:
+        console.log({ ...data, email: savedEmail, from: Router.query.from });
+        break;
+      default:
+        break;
+    }
+  };
   const onBack = () => {
     switch (registerStep) {
       case stepEnum.EMAIL:
@@ -68,6 +69,7 @@ const Register = (props: any): any => {
         break;
     }
   };
+  const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
       {...props}
@@ -86,8 +88,8 @@ const Register = (props: any): any => {
         <div className="c-register">
           <Wrapper variant="border">
             <div className="c-register__container">
-              {registerStep === stepEnum.WELCOME && (
-                <div>
+              {registerStep === stepEnum.WELCOME ? (
+                <Fragment>
                   <img className="c-register__image" src="/static/images/welcome.png" />
                   <h1 className="c-register__title">{props.t('lets-join')}</h1>
                   <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
@@ -106,76 +108,83 @@ const Register = (props: any): any => {
                       {' ' + props.t('login')}
                     </a>
                   </Link>
-                </div>
-              )}
-              {registerStep === stepEnum.EMAIL && (
-                <form className={formClass} onSubmit={handleSubmit(submitEmail)}>
-                  <div>
-                    <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
-                    <FormTextField
-                      label={props.t('form:email-label')}
-                      name="email"
-                      placeholder="example@yourdomain.com"
-                      ref={register(schema.email)}
-                      errors={errors.email}
-                      variant="full-width"
-                      hint={props.t('form:email-hint')}
-                    />
-                  </div>
-                  <div>
-                    <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                      {props.t('form:continue-button')}
-                    </Button>
-                    <div onClick={goBack} className="c-register__link">
-                      {props.t('go-back')}
-                    </div>
-                  </div>
-                </form>
-              )}
-              {registerStep === stepEnum.DETAIL && (
-                <form className={formClass} onSubmit={handleSubmit(onSubmit)}>
-                  <div>
-                    <h1 className="c-register__title" style={{ marginBottom: 8 }}>
-                      {`${props.t('register-with')} Email`}
-                    </h1>
-                    <div className="c-register__saved-email">{savedEmail}</div>
-                    <FormTextField
-                      label={props.t('form:phone-label')}
-                      name="phone"
-                      placeholder={props.t('form:phone-placeholder')}
-                      ref={register(schema.phone)}
-                      errors={errors.phone}
-                      variant="full-width"
-                    />
-                    <FormTextField
-                      label={props.t('form:password-label')}
-                      name="password"
-                      placeholder={props.t('form:new-password-placeholder')}
-                      ref={register(schema.password)}
-                      errors={errors.password}
-                      variant="full-width"
-                      isPassword={true}
-                      style={{ marginTop: 24 }}
-                    />
-                    <FormTextField
-                      label={props.t('form:confirm-password-label')}
-                      name="confirmPassword"
-                      placeholder={props.t('form:confirm-password-placeholder')}
-                      ref={register(schema.confirmPassword)}
-                      errors={errors.confirmPassword}
-                      variant="full-width"
-                      isPassword={true}
-                      style={{ marginTop: 24 }}
-                    />
-                  </div>
-                  <div>
-                    <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                      {props.t('form:create-account-button')}
-                    </Button>
-                    <div onClick={goBack} className="c-register__link">
-                      {props.t('go-back')}
-                    </div>
-                  </div>
+                </Fragment>
+              ) : (
+                <form
+                  className="c-register__form"
+                  style={{ minHeight: 'calc(100vh - 59px - 24px)' }}
+                  onSubmit={handleSubmit(onSubmit)}
+                >
+                  {registerStep === stepEnum.EMAIL && (
+                    <Fragment>
+                      <div>
+                        <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
+                        <FormTextField
+                          label={props.t('form:email-label')}
+                          name="email"
+                          placeholder="example@yourdomain.com"
+                          ref={register(schema.email)}
+                          errors={errors.email}
+                          variant="full-width"
+                          hint={props.t('form:email-hint')}
+                        />
+                      </div>
+                      <div>
+                        <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                          {props.t('form:continue-button')}
+                        </Button>
+                        <div onClick={onBack} className="c-register__link">
+                          {props.t('go-back')}
+                        </div>
+                      </div>
+                    </Fragment>
+                  )}
+                  {registerStep === stepEnum.DETAIL && (
+                    <Fragment>
+                      <div>
+                        <h1 className="c-register__title" style={{ marginBottom: 8 }}>
+                          {`${props.t('register-with')} Email`}
+                        </h1>
+                        <div className="c-register__saved-email">{savedEmail}</div>
+                        <FormTextField
+                          label={props.t('form:phone-label')}
+                          name="phone"
+                          placeholder={props.t('form:phone-placeholder')}
+                          ref={register(schema.phone)}
+                          errors={errors.phone}
+                          variant="full-width"
+                        />
+                        <FormTextField
+                          label={props.t('form:password-label')}
+                          name="password"
+                          placeholder={props.t('form:new-password-placeholder')}
+                          ref={register(schema.password)}
+                          errors={errors.password}
+                          variant="full-width"
+                          isPassword={true}
+                          style={{ marginTop: 24 }}
+                        />
+                        <FormTextField
+                          label={props.t('form:confirm-password-label')}
+                          name="confirmPassword"
+                          placeholder={props.t('form:confirm-password-placeholder')}
+                          ref={register(schema.confirmPassword)}
+                          errors={errors.confirmPassword}
+                          variant="full-width"
+                          isPassword={true}
+                          style={{ marginTop: 24 }}
+                        />
+                      </div>
+                      <div>
+                        <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                          {props.t('form:create-account-button')}
+                        </Button>
+                        <div onClick={onBack} className="c-register__link">
+                          {props.t('go-back')}
+                        </div>
+                      </div>
+                    </Fragment>
+                  )}
                 </form>
               )}
             </div>

@@ -39,5 +39,6 @@
   "message-label": "Pesan",
   "message-placeholder": "Ketik pesanmu di sini",
   "cover-label": "Warna sampul",
-  "next-button": "Lanjut"
+  "next-button": "Lanjut",
+  "cancel-button": "Batal"
 }

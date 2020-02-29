@@ -1,10 +1,10 @@
-import NavBar from 'components/organisms/NavBar';
-import Footer from 'components/organisms/Footer';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-import SideNav from 'components/organisms/mobile/SideNav';
 import { useEffect, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import Footer from 'components/organisms/Footer';
+import NavBar from 'components/organisms/NavBar/desktop';
+import SideNav from 'components/organisms/SideNav';
 
 const DefaultLayout = (props: any) => {
   const [navbarHeight, setNavbarHeight] = useState(60);

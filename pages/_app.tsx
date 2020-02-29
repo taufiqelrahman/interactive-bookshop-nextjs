@@ -96,7 +96,6 @@ const App: NextPage<any> = (props: any) => {
         }
 
         .h-min-screen {
-          min-height: calc(100vh - 59px - 24px);
           @screen md {
             min-height: calc(100vh - 239px);
           }
