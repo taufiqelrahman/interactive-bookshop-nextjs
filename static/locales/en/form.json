@@ -20,6 +20,7 @@
   "phone-label": "Phone Number",
   "phone-placeholder": "Enter your phone number here",
   "occupations-label": "Choose 3 dream occupations",
+  "occupations-invalid": "Please pick 3...",
   "age-label": "Portray me as a...",
   "age-toddler": "Toddler",
   "age-kid": "Kid",

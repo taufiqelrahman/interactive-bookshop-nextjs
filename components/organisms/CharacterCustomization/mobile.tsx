@@ -1,6 +1,6 @@
 import Card from 'components/atoms/Card';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { withTranslation, Router } from 'i18n';
 import { toast } from 'react-toastify';
 import FieldOccupations from 'components/molecules/FieldOccupations';
@@ -27,11 +27,15 @@ const CharacterCustomization = (props: any) => {
     LANGUAGE: 6,
     DEDICATION: 7,
   };
-  const [step, setStep] = useState(0);
+  const [charStep, setCharStep] = useState(0);
   const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
     mode: 'onChange',
   });
   const onSubmit = data => {
+    if (charStep !== stepEnum.DEDICATION) {
+      setCharStep(charStep + 1);
+      return;
+    }
     props.saveSelected(data);
     Router.push('/preview');
   };
@@ -55,12 +59,20 @@ const CharacterCustomization = (props: any) => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
-          <FieldOccupations
-            ref={register(schema.occupations)}
-            errors={errors.occupations}
-            style={{ maxWidth: 550, marginBottom: 24 }}
-            defaultChecked={selected.occupations}
-          />
+          {charStep === stepEnum.OCCUPATIONS && (
+            <Fragment>
+              <FieldOccupations
+                ref={register(schema.occupations)}
+                errors={errors.occupations}
+                defaultChecked={selected.occupations}
+              />
+              {watch('occupations') && (
+                <div className="c-char-custom__message">
+                  {errors.occupations ? props.t('occupations-invalid') : watch('occupations').join(',')}
+                </div>
+              )}
+            </Fragment>
+          )}
         </div>
         <div>
           <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
@@ -78,6 +90,9 @@ const CharacterCustomization = (props: any) => {
             @apply font-semibold cursor-pointer text-sm text-center;
             margin-bottom: 18px;
             color: #445ca4;
+          }
+          &__message {
+            @apply font-semibold text-sm text-center;
           }
         }
       `}</style>

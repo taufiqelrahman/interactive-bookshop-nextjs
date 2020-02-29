@@ -51,9 +51,12 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => (
               flex: unset;
             }
             span {
-              @apply flex justify-center font-bold text-xs;
-              margin-top: 4px;
-              line-height: 16px;
+              @apply hidden;
+              @screen md {
+                @apply flex justify-center font-bold text-xs;
+                margin-top: 4px;
+                line-height: 16px;
+              }
             }
           }
         }

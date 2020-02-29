@@ -20,6 +20,7 @@
   "phone-label": "Nomor Telepon",
   "phone-placeholder": "Ketik nomor telepon kamu",
   "occupations-label": "Pilih 3 pekerjaan impianmu",
+  "occupations-invalid": "Pilih 3 ya...",
   "age-label": "Umurku...",
   "age-toddler": "Balita",
   "age-kid": "Anak",

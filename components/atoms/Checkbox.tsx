@@ -26,10 +26,19 @@ const Checkbox = React.forwardRef((props: any, ref: any) => (
         }
         &__box {
           @apply flex items-center justify-center;
-          height: 64px;
-          width: 64px;
           border: 2px solid #e1e0e7;
-          border-radius: 50%;
+          height: 100px;
+          width: 100px;
+          border-radius: 6px;
+          box-shadow: inset 0 0 0px 8px #fff;
+          background: #e1e0e7;
+          @screen md {
+            @apply bg-transparent;
+            box-shadow: none;
+            height: 64px;
+            width: 64px;
+            border-radius: 50%;
+          }
           &--error {
             border: 2px solid #de3636;
           }
