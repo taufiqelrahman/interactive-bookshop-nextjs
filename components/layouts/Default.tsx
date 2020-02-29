@@ -4,9 +4,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import SideNav from 'components/organisms/mobile/SideNav';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const DefaultLayout = (props: any) => {
+  const [navbarHeight, setNavbarHeight] = useState(60);
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const hideSideNav = () => {
@@ -17,6 +18,8 @@ const DefaultLayout = (props: any) => {
   useEffect(() => {
     props.setSideNav(false);
     document.body.classList.remove('overlay-active');
+    const navbarDiv: any = document.querySelector('.c-navbar');
+    setNavbarHeight(navbarDiv.clientHeight);
   }, []);
 
   return (
@@ -50,7 +53,7 @@ const DefaultLayout = (props: any) => {
         }
         .c-layout {
           @apply relative;
-          margin-top: 60px;
+          margin-top: ${navbarHeight}px;
           @screen md {
             margin-top: ${isIndexPage ? 0 : '80px'};
           }

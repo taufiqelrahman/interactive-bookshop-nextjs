@@ -49,7 +49,7 @@ const CharacterCustomization = (props: any) => {
   const dummy = {
     name: 'asd',
     age: 'Toddler',
-    occupations: [4, 5, 6],
+    occupations: ['4', '5', '6'],
   };
   const selected = props.state.cart.selected || dummy || {};
   return (

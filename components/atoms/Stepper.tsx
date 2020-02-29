@@ -1,15 +1,17 @@
 import { withTranslation, Router } from 'i18n';
 
-const Stepper = (props: any) => {
+const Stepper = ({ backButton = true, isMobile = false, ...props }: any) => {
   return (
     <div className="c-stepper" style={props.style}>
-      <div className="c-stepper__back">
-        <span className="icon-arrow_left" onClick={() => Router.back()} />
-      </div>
+      {backButton && (
+        <div className="c-stepper__back">
+          <span className="icon-arrow_left" onClick={() => Router.back()} />
+        </div>
+      )}
       <div>
         {props.totalSteps && (
           <div className="c-stepper__steps">
-            {`${props.t('step')} ${props.step} ${props.t('of')} ${props.totalSteps}`}
+            {`${isMobile ? '' : `${props.t('step')} `}${props.step} ${props.t('of')} ${props.totalSteps}`}
           </div>
         )}
         <div className="c-stepper__title">
@@ -29,9 +31,13 @@ const Stepper = (props: any) => {
             @apply font-opensans text-xs;
           }
           &__title {
-            @apply font-bold;
-            font-size: 28px;
-            line-height: 42px;
+            font-size: 18px;
+            margin-top: 6px;
+            @screen md {
+              @apply font-bold mt-0;
+              font-size: 28px;
+              line-height: 42px;
+            }
           }
         }
       `}</style>

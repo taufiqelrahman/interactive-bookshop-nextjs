@@ -9,12 +9,15 @@ import { useState, useEffect } from 'react';
 
 const BookForm = (props: any) => {
   const [isFormValid, setIsFormValid] = useState(false);
-  const [step, setStep] = useState(1);
+  const [state, setState] = useState({
+    step: 1,
+    occupations: [],
+  });
   const { register, handleSubmit, errors, formState, watch } = useForm({
     mode: 'onChange',
   });
   const onSubmit = data => {
-    props.saveSelected(data);
+    props.saveSelected({ ...data, occupations: state.occupations });
     Router.push('/create');
   };
   const schema = {
@@ -31,7 +34,7 @@ const BookForm = (props: any) => {
   }, [watch()]);
 
   const next = () => {
-    setStep(2);
+    setState({ ...state, step: 2, occupations: watch('occupations') });
   };
 
   return (
@@ -40,7 +43,7 @@ const BookForm = (props: any) => {
         {props.isMobile ? (
           <form onSubmit={handleSubmit(onSubmit)} style={{ overflow: 'hidden' }}>
             <Card variant="shadow--bold">
-              {step === 1 && (
+              {state.step === 1 && (
                 <div key={1} className="c-book-form__container c-book-form__container__mobile">
                   <FieldOccupations ref={register(schema.occupations)} errors={errors.occupations} />
                   <Button width="100%" disabled={!isFormValid} onClick={next}>
@@ -48,7 +51,7 @@ const BookForm = (props: any) => {
                   </Button>
                 </div>
               )}
-              {step === 2 && (
+              {state.step === 2 && (
                 <div key={2} className="c-book-form__container c-book-form__container__mobile">
                   <div>
                     <FormTextField

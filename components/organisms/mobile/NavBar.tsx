@@ -22,7 +22,13 @@ const NavBar = (props: any) => {
         {isIndexPage ? (
           <img src="/static/images/logo.png" alt="logo" width="33" height="33" />
         ) : props.isSteps ? (
-          <Stepper step={props.step} totalSteps={props.totalSteps} title={props.title} style={{}} />
+          <Stepper
+            step={props.step}
+            totalSteps={props.totalSteps}
+            title={props.title}
+            backButton={false}
+            isMobile={true}
+          />
         ) : (
           <div className="c-navbar__title__text">{props.title}</div>
         )}

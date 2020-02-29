@@ -4,12 +4,32 @@ import { withTranslation } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import CharacterCustomization from 'components/organisms/CharacterCustomization';
+import NavBar from 'components/organisms/mobile/NavBar';
 
 const Create = (props: any): any => {
+  const onBack = () => {
+    console.log('onback');
+  };
   return (
-    <DefaultLayout {...props}>
-      <div className="u-container u-container__page">
-        <Stepper step={1} totalSteps={2} title={props.t('character-customization')} style={{ marginBottom: 30 }} />
+    <DefaultLayout
+      {...props}
+      navbar={
+        props.isMobile && (
+          <NavBar
+            onBack={onBack}
+            setSideNav={props.setSideNav}
+            isSteps={true}
+            title={props.t('character-customization')}
+            step={1}
+            totalSteps={2}
+          />
+        )
+      }
+    >
+      <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
+        {!props.isMobile && (
+          <Stepper step={1} totalSteps={2} title={props.t('character-customization')} style={{ marginBottom: 30 }} />
+        )}
         <div className="c-section">
           <div className="c-section__left">
             <CharacterCustomization {...props} />
