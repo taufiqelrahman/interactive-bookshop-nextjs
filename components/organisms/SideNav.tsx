@@ -1,4 +1,5 @@
 import { withTranslation, Link } from 'i18n';
+import { useEffect } from 'react';
 import TranslationToggle from 'components/molecules/TranslationToggle';
 import Button from 'components/atoms/Button';
 
@@ -7,6 +8,13 @@ const SideNav = (props: any) => {
     props.thunkLogout();
     props.hide();
   };
+  useEffect(() => {
+    if (props.isOpen) {
+      document.body.classList.add('overlay-active');
+    } else {
+      document.body.classList.remove('overlay-active');
+    }
+  }, [props.isOpen]);
   return (
     <div className="c-side-nav">
       <div className="c-side-nav__container">

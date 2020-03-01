@@ -22,5 +22,11 @@ export default {
       payload: state,
     };
   },
+  setSheet(state: boolean): types.ActionTypes {
+    return {
+      type: types.SET_SHEET,
+      payload: state,
+    };
+  },
   setErrorMessage,
 };

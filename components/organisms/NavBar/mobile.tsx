@@ -7,7 +7,6 @@ const NavBar = (props: any) => {
   const isIndexPage = router.pathname === '/';
   const showSideNav = () => {
     props.setSideNav(true);
-    document.body.classList.add('overlay-active');
   };
   return (
     <div className="c-nav-bar">

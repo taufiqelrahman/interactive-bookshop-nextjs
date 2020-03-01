@@ -11,14 +11,21 @@ const DefaultLayout = (props: any) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const hideSideNav = () => {
-    if (!props.isMobile) return;
     props.setSideNav(false);
-    document.body.classList.remove('overlay-active');
+  };
+  const hideSheet = () => {
+    props.setSheet(false);
+  };
+  const hideOverlay = () => {
+    if (!props.isMobile) return;
+    const { isSideNavOpen, isSheetOpen } = props.state.default;
+    if (isSideNavOpen) hideSideNav();
+    if (isSheetOpen) hideSheet();
   };
   useEffect(() => {
-    // reset sidenav
-    props.setSideNav(false);
-    document.body.classList.remove('overlay-active');
+    // reset overlay
+    hideSideNav();
+    hideSheet();
     // set top margin for fixed navbar
     const navbarDiv: any = document.querySelector('.c-nav-bar');
     setNavbarHeight(navbarDiv.clientHeight);
@@ -55,10 +62,10 @@ const DefaultLayout = (props: any) => {
         {props.children}
       </div>
       {!props.isMobile && <Footer />}
-      <div className="c-overlay" onClick={hideSideNav}></div>
+      <div className="c-overlay" onClick={hideOverlay}></div>
       <style jsx>{`
         .c-overlay {
-          @apply hidden;
+          @apply opacity-0;
         }
         .c-layout {
           @apply relative;
@@ -71,8 +78,10 @@ const DefaultLayout = (props: any) => {
       <style jsx global>{`
         .c-overlay {
           .overlay-active & {
-            @apply fixed top-0 left-0 block w-full h-full z-40;
+            @apply fixed top-0 left-0 w-full h-full z-40;
             background-color: rgba(51, 51, 51, 0.8);
+            opacity: 1 !important;
+            transition: opacity 0.3s ease-in;
             @screen md {
               background-color: rgba(51, 51, 51, 0.5);
             }

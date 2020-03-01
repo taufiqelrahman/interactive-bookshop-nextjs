@@ -16,7 +16,8 @@ import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
 import { schema, showError, dummy } from './helper';
 import DefaultLayout from 'components/layouts/Default';
-import NavBar from '../NavBar/mobile';
+import NavBar from 'components/organisms/NavBar/mobile';
+import Sheet from 'components/atoms/Sheet';
 
 const CharacterCustomization = (props: any) => {
   const stepEnum = {
@@ -42,7 +43,7 @@ const CharacterCustomization = (props: any) => {
     Router.push('/preview');
   };
   const cancel = () => {
-    console.log('cancel');
+    props.setSheet(true);
   };
   const onBack = () => {
     if (charStep === stepEnum.OCCUPATIONS) {
@@ -153,6 +154,17 @@ const CharacterCustomization = (props: any) => {
           </div>
         </div>
       </form>
+      <Sheet
+        isOpen={props.state.default.isSheetOpen}
+        content={<div>wew</div>}
+        actions={
+          <Fragment>
+            <Button width="100%" onClick={() => props.setSheet(false)}>
+              {props.t('cancel')}
+            </Button>
+          </Fragment>
+        }
+      />
       <style jsx>{`
         .c-char-custom {
           @apply flex flex-col justify-between;
