@@ -20,7 +20,7 @@ const DefaultLayout = (props: any) => {
     props.setSideNav(false);
     document.body.classList.remove('overlay-active');
     // set top margin for fixed navbar
-    const navbarDiv: any = document.querySelector('.c-navbar');
+    const navbarDiv: any = document.querySelector('.c-nav-bar');
     setNavbarHeight(navbarDiv.clientHeight);
   }, []);
   useEffect(() => {

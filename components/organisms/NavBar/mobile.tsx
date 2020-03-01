@@ -10,15 +10,15 @@ const NavBar = (props: any) => {
     document.body.classList.add('overlay-active');
   };
   return (
-    <div className="c-navbar">
-      <div className={`c-navbar__action ${isIndexPage ? 'c-navbar__action--index' : ''}`}>
+    <div className="c-nav-bar">
+      <div className={`c-nav-bar__action ${isIndexPage ? 'c-nav-bar__action--index' : ''}`}>
         {props.menuAction ? (
           <span className="icon-info" onClick={showSideNav} />
         ) : (
           <span className="icon-arrow_left" onClick={() => (props.onBack ? props.onBack() : Router.back())} />
         )}
       </div>
-      <div className={`c-navbar__title ${isIndexPage ? 'c-navbar__title--index' : ''}`}>
+      <div className={`c-nav-bar__title ${isIndexPage ? 'c-nav-bar__title--index' : ''}`}>
         {isIndexPage ? (
           <img src="/static/images/logo.png" alt="logo" width="33" height="33" />
         ) : props.isSteps ? (
@@ -30,11 +30,11 @@ const NavBar = (props: any) => {
             isMobile={true}
           />
         ) : (
-          <div className="c-navbar__title__text">{props.title}</div>
+          <div className="c-nav-bar__title__text">{props.title}</div>
         )}
       </div>
       <style jsx>{`
-        .c-navbar {
+        .c-nav-bar {
           @apply fixed top-0 bg-white flex w-full z-30 items-center;
           padding: ${isIndexPage ? '14px' : '16px'};
           border-bottom: ${isIndexPage ? 'none' : '1px solid #efeef4'};

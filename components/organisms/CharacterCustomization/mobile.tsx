@@ -15,6 +15,8 @@ import FormTextArea from 'components/molecules/FormTextArea';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
 import { schema, showError, dummy } from './helper';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from '../NavBar/mobile';
 
 const CharacterCustomization = (props: any) => {
   const stepEnum = {
@@ -28,7 +30,7 @@ const CharacterCustomization = (props: any) => {
     DEDICATION: 7,
   };
   const [charStep, setCharStep] = useState(0);
-  const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
+  const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
     mode: 'onChange',
   });
   const onSubmit = data => {
@@ -42,25 +44,42 @@ const CharacterCustomization = (props: any) => {
   const cancel = () => {
     console.log('cancel');
   };
+  const onBack = () => {
+    if (charStep === stepEnum.OCCUPATIONS) {
+      Router.back();
+      return;
+    }
+    if (charStep === stepEnum.NAME_DOB) unregister('dob');
+    setCharStep(charStep - 1);
+  };
   useEffect(() => {
-    register({ name: 'dob' }, schema.dob);
-  }, []);
+    if (charStep === stepEnum.NAME_DOB) register({ name: 'dob' }, schema.dob);
+  }, [charStep]);
   useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form-error'));
     }
   }, [errors]);
   const selected = props.state.cart.selected || dummy || {};
+  const screenHeight = '100vh - 69px';
   return (
-    <div>
-      <form
-        className="c-char-custom"
-        style={{ minHeight: 'calc(100vh - 69px - 24px)' }}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <DefaultLayout
+      {...props}
+      navbar={
+        <NavBar
+          onBack={onBack}
+          setSideNav={props.setSideNav}
+          isSteps={true}
+          title={props.t('character-customization')}
+          step={1}
+          totalSteps={2}
+        />
+      }
+    >
+      <form className="c-char-custom" style={{ minHeight: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
         <div>
-          {charStep === stepEnum.OCCUPATIONS && (
-            <Fragment>
+          {charStep === stepEnum.OCCUPATIONS ? (
+            <div className="u-container u-container__page">
               <FieldOccupations
                 ref={register(schema.occupations)}
                 errors={errors.occupations}
@@ -71,10 +90,40 @@ const CharacterCustomization = (props: any) => {
                   {errors.occupations ? props.t('occupations-invalid') : watch('occupations').join(',')}
                 </div>
               )}
-            </Fragment>
+            </div>
+          ) : (
+            <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
+              <div className="u-container c-char-custom__preview">
+                <div>
+                  <img src="/static/images/dummy.png" />
+                </div>
+              </div>
+              <div className="u-container c-char-custom__tab">
+                {charStep === stepEnum.NAME_DOB && (
+                  <Fragment>
+                    <FormTextField
+                      label={props.t('char-name-label')}
+                      name="name"
+                      placeholder={props.t('name-placeholder')}
+                      ref={register(schema.name)}
+                      errors={errors.name}
+                      defaultValue={selected.name}
+                      variant="full-width"
+                    />
+                    <FieldDob
+                      name="dob"
+                      setValue={setValue}
+                      triggerValidation={triggerValidation}
+                      errors={errors.dob}
+                      style={{ marginTop: 12, marginBottom: 26 }}
+                    />
+                  </Fragment>
+                )}
+              </div>
+            </div>
           )}
         </div>
-        <div>
+        <div className="u-container">
           <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
             {props.t('next-button')}
           </Button>
@@ -94,9 +143,28 @@ const CharacterCustomization = (props: any) => {
           &__message {
             @apply font-semibold text-sm text-center;
           }
+          &__with-preview {
+            @apply flex flex-col justify-between;
+          }
+          &__preview {
+            @apply bg-light-grey flex justify-center;
+            padding: 20px 0;
+            flex: 100%;
+            div {
+              @apply flex items-center;
+              img {
+                width: 100px;
+              }
+            }
+          }
+          &__tab {
+            border-top: 1px solid #efeef4;
+            border-radius: 24px 24px 0px 0px;
+            padding-top: 20px;
+          }
         }
       `}</style>
-    </div>
+    </DefaultLayout>
   );
 };
 
