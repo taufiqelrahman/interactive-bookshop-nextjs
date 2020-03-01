@@ -115,9 +115,30 @@ const CharacterCustomization = (props: any) => {
                       setValue={setValue}
                       triggerValidation={triggerValidation}
                       errors={errors.dob}
-                      style={{ marginTop: 12, marginBottom: 26 }}
+                      style={{ marginTop: 12 }}
                     />
                   </Fragment>
+                )}
+                {charStep === stepEnum.AGE && (
+                  <FieldAge ref={register(schema.age)} errors={errors.age} defaultChecked={selected.age} />
+                )}
+                {charStep === stepEnum.GENDER && <FieldGender ref={register(schema.gender)} errors={errors.gender} />}
+                {charStep === stepEnum.SKIN && (
+                  <FieldHair ref={register(schema.hair)} errors={errors.hair} type={watch('gender')} />
+                )}
+                {charStep === stepEnum.HAIR && <FieldSkin ref={register(schema.skin)} errors={errors.skin} />}
+                {charStep === stepEnum.LANGUAGE && (
+                  <FieldLanguage ref={register(schema.language)} errors={errors.language} />
+                )}
+                {charStep === stepEnum.DEDICATION && (
+                  <FormTextArea
+                    label={props.t('dedication-label')}
+                    hint={props.t('dedication-hint')}
+                    name="dedication"
+                    placeholder={props.t('dedication-placeholder')}
+                    ref={register(schema.dedication)}
+                    errors={errors.dedication}
+                  />
                 )}
               </div>
             </div>
@@ -161,6 +182,7 @@ const CharacterCustomization = (props: any) => {
             border-top: 1px solid #efeef4;
             border-radius: 24px 24px 0px 0px;
             padding-top: 20px;
+            min-height: 200px;
           }
         }
       `}</style>
