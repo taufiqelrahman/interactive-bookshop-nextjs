@@ -45,6 +45,10 @@ const CharacterCustomization = (props: any) => {
   const cancel = () => {
     props.setSheet(true);
   };
+  const quit = () => {
+    props.setSheet(false);
+    Router.push('/');
+  };
   const onBack = () => {
     if (charStep === stepEnum.OCCUPATIONS) {
       Router.back();
@@ -117,6 +121,7 @@ const CharacterCustomization = (props: any) => {
                       triggerValidation={triggerValidation}
                       errors={errors.dob}
                       style={{ marginTop: 12 }}
+                      {...props}
                     />
                   </Fragment>
                 )}
@@ -155,11 +160,20 @@ const CharacterCustomization = (props: any) => {
         </div>
       </form>
       <Sheet
+        name="quit-sheet"
         isOpen={props.state.default.isSheetOpen}
-        content={<div>wew</div>}
+        content={
+          <Fragment>
+            <h1 className="c-char-custom__sheet__title">{props.t('quit-customizing')}</h1>
+            <div className="c-char-custom__sheet__content">{props.t('quit-confirmation')}</div>
+          </Fragment>
+        }
         actions={
           <Fragment>
-            <Button width="100%" onClick={() => props.setSheet(false)}>
+            <Button width="100%" onClick={quit} style={{ marginBottom: 12 }}>
+              {props.t('yes-quit')}
+            </Button>
+            <Button width="100%" onClick={() => props.setSheet(false)} variant="outline" color="black">
               {props.t('cancel')}
             </Button>
           </Fragment>
@@ -195,6 +209,18 @@ const CharacterCustomization = (props: any) => {
             border-radius: 24px 24px 0px 0px;
             padding-top: 20px;
             min-height: 200px;
+          }
+          &__sheet {
+            &__title {
+              @apply font-semibold;
+              font-size: 27px;
+              line-height: 32px;
+            }
+            &__content {
+              @apply font-opensans text-sm;
+              line-height: 20px;
+              margin-top: 12px;
+            }
           }
         }
       `}</style>

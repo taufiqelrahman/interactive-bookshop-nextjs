@@ -9,7 +9,7 @@ const Sheet = (props: any) => {
     }
   }, [props.isOpen]);
   return (
-    <div className="c-sheet">
+    <div key={props.name} className="c-sheet">
       <div>{props.content}</div>
       {props.actions && <div className="c-sheet__action">{props.actions}</div>}
       <style jsx>{`
