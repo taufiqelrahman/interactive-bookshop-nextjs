@@ -2,7 +2,6 @@ import * as types from './types';
 
 const initState: types.State = {
   isSideNavOpen: false,
-  isSheetOpen: false,
   errorMessage: '',
 };
 
@@ -12,12 +11,6 @@ const reducer = (state: types.State = initState, action: types.ActionTypes): any
       return {
         ...state,
         isSideNavOpen: action.payload,
-      };
-    }
-    case types.SET_SHEET: {
-      return {
-        ...state,
-        isSheetOpen: action.payload,
       };
     }
     case types.SET_ERROR_MESSAGE: {

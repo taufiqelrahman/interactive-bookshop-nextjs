@@ -31,6 +31,7 @@ const CharacterCustomization = (props: any) => {
     DEDICATION: 7,
   };
   const [charStep, setCharStep] = useState(0);
+  const [showSheet, setShowSheet] = useState(false);
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
     mode: 'onChange',
   });
@@ -43,7 +44,7 @@ const CharacterCustomization = (props: any) => {
     Router.push('/preview');
   };
   const cancel = () => {
-    props.setSheet(true);
+    setShowSheet(true);
   };
   const quit = () => {
     props.setSheet(false);
@@ -161,7 +162,8 @@ const CharacterCustomization = (props: any) => {
       </form>
       <Sheet
         name="quit-sheet"
-        isOpen={props.state.default.isSheetOpen}
+        isOpen={showSheet}
+        closeSheet={() => setShowSheet(false)}
         content={
           <Fragment>
             <h1 className="c-char-custom__sheet__title">{props.t('quit-customizing')}</h1>
@@ -173,7 +175,7 @@ const CharacterCustomization = (props: any) => {
             <Button width="100%" onClick={quit} style={{ marginBottom: 12 }}>
               {props.t('yes-quit')}
             </Button>
-            <Button width="100%" onClick={() => props.setSheet(false)} variant="outline" color="black">
+            <Button width="100%" onClick={() => setShowSheet(false)} variant="outline" color="black">
               {props.t('cancel')}
             </Button>
           </Fragment>

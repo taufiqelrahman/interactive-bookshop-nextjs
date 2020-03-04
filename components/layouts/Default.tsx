@@ -13,19 +13,13 @@ const DefaultLayout = (props: any) => {
   const hideSideNav = () => {
     props.setSideNav(false);
   };
-  const hideSheet = () => {
-    props.setSheet(false);
-  };
   const hideOverlay = () => {
     if (!props.isMobile) return;
-    const { isSideNavOpen, isSheetOpen } = props.state.default;
-    if (isSideNavOpen) hideSideNav();
-    if (isSheetOpen) hideSheet();
+    if (props.state.default.isSideNavOpen) hideSideNav();
   };
   useEffect(() => {
     // reset overlay
     hideSideNav();
-    hideSheet();
     // set top margin for fixed navbar
     const navbarDiv: any = document.querySelector('.c-nav-bar');
     setNavbarHeight(navbarDiv.clientHeight);
@@ -68,7 +62,7 @@ const DefaultLayout = (props: any) => {
           @apply opacity-0;
         }
         .c-layout {
-          @apply relative;
+          @apply relative overflow-hidden;
           margin-top: ${navbarHeight}px;
           @screen md {
             margin-top: ${isIndexPage ? 0 : '80px'};
