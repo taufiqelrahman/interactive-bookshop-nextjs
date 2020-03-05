@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'i18n';
-import DateField from 'components/atoms/DateField';
+import DateField from 'components/atoms/DateField/desktop';
+import DateFieldMobile from 'components/atoms/DateField/mobile';
 import Badge from 'components/atoms/Badge';
 
 const FieldDob = (props: any) => {
@@ -10,7 +11,7 @@ const FieldDob = (props: any) => {
         {props.t('dob-label')}
         {props.errors && <Badge>!</Badge>}
       </div>
-      <DateField name="dob" {...props} />
+      {props.isMobile ? <DateFieldMobile name="dob" {...props} /> : <DateField name="dob" {...props} />}
       <style jsx>{`
         .c-field-dob {
           &__header {
