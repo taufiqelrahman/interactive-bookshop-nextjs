@@ -1,88 +1,85 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import Select from 'react-select';
 import Sheet from 'components/atoms/Sheet';
 import Button from 'components/atoms/Button';
-import { customStyles, dates, months, years } from './helper';
+import { dates, months, years } from './helper';
+import DatePicker from '../DatePicker';
 
 const DateField = (props: any) => {
-  const [date, setDate] = useState(null);
-  const [month, setMonth] = useState(null);
-  const [year, setYear] = useState(null);
+  const [picker, setPicker] = useState(null);
+  const [state, setState] = useState({
+    date: null,
+    month: null,
+    year: null,
+  });
   const [sheetData, setSheetData] = useState({
-    title: '',
-    options: [],
-    selected: null,
     show: false,
+    value: null,
   });
   const setFullDate = () => {
+    const { date, month, year } = state;
     if (!date || !month || !year) return;
     props.setValue(props.name, `${(date as any).value}-${(month as any).value}-${(year as any).value}`);
     props.triggerValidation(props.name);
   };
   useEffect(() => {
     setFullDate();
-  }, [date, month, year]);
-  const openSheet = (type, options) => {
+  }, [state]);
+  const openSheet = () => {
     setSheetData({
       ...sheetData,
-      title: props.t(`select-${type}`),
-      options,
       show: true,
+      value: null,
     });
   };
-  const select = () => {
-    const { title, selected } = sheetData;
-    switch (title) {
-      case 'date':
-        setDate(selected);
-        break;
-      case 'month':
-        setMonth(selected);
-        break;
-      case 'year':
-        setYear(selected);
-        break;
-      default:
-        break;
-    }
+  const onSelect = (event: any) => {
+    event.preventDefault();
+    const { day, month, year } = (picker as any).data;
+    setState({
+      ...state,
+      date: day.item.textContent,
+      month: month.item.textContent,
+      year: year.item.textContent,
+    });
+    setSheetData({ ...sheetData, show: false });
   };
   return (
     <div>
       <div className={`c-date-field ${props.errors ? 'c-date-field--error' : ''}`}>
-        <div className="c-date-field__child" onClick={() => openSheet('date', dates(month))}>
-          <div className="c-date-field__child__value">{date || 'DD'}</div>
+        <div className="c-date-field__child" onClick={() => openSheet()}>
+          <div className="c-date-field__child__value">{state.date || 'DD'}</div>
           <div className="c-date-field__child__arrow">&#9660;</div>
         </div>
-        <div className="c-date-field__child" onClick={() => openSheet('month', months)}>
-          <div className="c-date-field__child__value">{month || 'MM'}</div>
+        <div className="c-date-field__child" onClick={() => openSheet()}>
+          <div className="c-date-field__child__value">{state.month || 'MM'}</div>
           <div className="c-date-field__child__arrow">&#9660;</div>
         </div>
-        <div className="c-date-field__child" onClick={() => openSheet('year', years())} style={{ width: 102 }}>
-          <div className="c-date-field__child__value">{year || 'YYYY'}</div>
+        <div className="c-date-field__child" onClick={() => openSheet()} style={{ width: 102 }}>
+          <div className="c-date-field__child__value">{state.year || 'YYYY'}</div>
           <div className="c-date-field__child__arrow">&#9660;</div>
         </div>
       </div>
-      <Sheet
-        name="date-field-sheet"
-        isOpen={sheetData.show}
-        closeSheet={() => setSheetData({ ...sheetData, show: false })}
-        header={true}
-        title={sheetData.title}
-        variant="rounded"
-        content={
-          <Fragment>
-            <h1 className="c-char-custom__sheet__title">{props.t('quit-customizing')}</h1>
-            <div className="c-char-custom__sheet__content">{props.t('quit-confirmation')}</div>
-          </Fragment>
-        }
-        actions={
-          <Fragment>
-            <Button width="100%" onClick={select}>
-              {props.t('select')}
-            </Button>
-          </Fragment>
-        }
-      />
+      {sheetData.show && (
+        <Sheet
+          name="date-field-sheet"
+          isOpen={sheetData.show}
+          closeSheet={() => setSheetData({ ...sheetData, show: false })}
+          header={true}
+          title={props.t(`select-date`)}
+          variant="rounded"
+          content={
+            <Fragment>
+              <DatePicker value={sheetData.value} setPicker={setPicker} />
+            </Fragment>
+          }
+          actions={
+            <Fragment>
+              <Button width="100%" onClick={(event: any) => onSelect(event)}>
+                {props.t('select')}
+              </Button>
+            </Fragment>
+          }
+        />
+      )}
       <style jsx>{`
         .c-date-field {
           @apply mb-4 flex;

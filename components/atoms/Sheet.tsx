@@ -52,6 +52,9 @@ const Sheet = (props: any) => {
               margin-left: 17px;
             }
           }
+          &__action {
+            margin-top: 8px;
+          }
         }
       `}</style>
     </div>
