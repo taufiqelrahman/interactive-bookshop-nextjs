@@ -129,13 +129,17 @@ const CharacterCustomization = (props: any) => {
                 {charStep === stepEnum.AGE && (
                   <FieldAge ref={register(schema.age)} errors={errors.age} defaultChecked={selected.age} />
                 )}
-                {charStep === stepEnum.GENDER && <FieldGender ref={register(schema.gender)} errors={errors.gender} />}
-                {charStep === stepEnum.SKIN && (
-                  <FieldHair ref={register(schema.hair)} errors={errors.hair} type={watch('gender')} />
+                {charStep === stepEnum.GENDER && (
+                  <FieldGender ref={register(schema.gender)} errors={errors.gender} isMobile={true} />
                 )}
-                {charStep === stepEnum.HAIR && <FieldSkin ref={register(schema.skin)} errors={errors.skin} />}
+                {charStep === stepEnum.SKIN && (
+                  <FieldHair ref={register(schema.hair)} errors={errors.hair} type={watch('gender')} isMobile={true} />
+                )}
+                {charStep === stepEnum.HAIR && (
+                  <FieldSkin ref={register(schema.skin)} errors={errors.skin} isMobile={true} />
+                )}
                 {charStep === stepEnum.LANGUAGE && (
-                  <FieldLanguage ref={register(schema.language)} errors={errors.language} />
+                  <FieldLanguage ref={register(schema.language)} errors={errors.language} isMobile={true} />
                 )}
                 {charStep === stepEnum.DEDICATION && (
                   <FormTextArea

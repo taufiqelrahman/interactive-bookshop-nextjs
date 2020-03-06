@@ -20,11 +20,17 @@ const FormTextArea = React.forwardRef((props: any, ref: any) => (
           @apply mb-0;
         }
         &__label {
-          @apply font-semibold mb-2 flex;
+          @apply font-semibold mb-2 flex text-sm;
+          @screen md {
+            @apply text-base;
+          }
         }
         &__hint {
-          @apply text-xs mb-3;
+          @apply text-sm mb-3;
           line-height: 19px;
+          @screen md {
+            @apply text-xs;
+          }
         }
         &__options {
           @apply flex flex-wrap;

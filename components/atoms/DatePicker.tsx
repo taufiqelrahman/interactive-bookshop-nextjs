@@ -23,6 +23,11 @@ const DatePicker = (props: any) => {
   return (
     <div className="c-date-picker">
       <input type="text" id="c-date-picker__input" />
+      <style jsx>{`
+        .c-date-picker {
+          margin-top: 8px;
+        }
+      `}</style>
       <style jsx global>{`
         @import '/static/styles/picker.min.css';
         .picker {
@@ -32,6 +37,9 @@ const DatePicker = (props: any) => {
             &:before,
             &:after {
               background-image: none;
+              border: 0;
+            }
+            & + .picker-cell {
               border: 0;
             }
           }

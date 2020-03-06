@@ -19,7 +19,7 @@ const FieldLanguage = React.forwardRef((props: any, ref: any) => (
             value={language}
             name="language"
             errors={props.errors}
-            style={{ height: 44, minWidth: 219 }}
+            style={{ height: 44, minWidth: props.isMobile ? 165 : 219 }}
           />
         ))}
       </div>

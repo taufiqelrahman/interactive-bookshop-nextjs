@@ -29,9 +29,10 @@ const FieldHair = React.forwardRef((props: any, ref: any) => {
               value={hair.name}
               name="hair"
               errors={props.errors}
-              style={{ height: 84, width: 84 }}
+              style={props.isMobile ? {} : { height: 84, width: 84 }}
               imageUrl={hair.image}
               type="image"
+              variant={props.isMobile ? 'box' : ''}
             />
           ))}
         </div>

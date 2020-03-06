@@ -24,9 +24,10 @@ const FieldGender = React.forwardRef((props: any, ref: any) => {
               value={gender.name}
               name="gender"
               errors={props.errors}
-              style={{ height: 84, width: 84 }}
+              style={props.isMobile ? {} : { height: 84, width: 84 }}
               imageUrl={gender.image}
               type="image"
+              variant={props.isMobile ? 'box' : ''}
             />
           ))}
         </div>

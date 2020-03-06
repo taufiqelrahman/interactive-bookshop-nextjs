@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
 import Sheet from 'components/atoms/Sheet';
+import React, { useState, useEffect, Fragment } from 'react';
 import Button from 'components/atoms/Button';
-import { dates, months, years } from './helper';
 import DatePicker from '../DatePicker';
 
 const DateField = (props: any) => {
@@ -101,8 +100,6 @@ const DateField = (props: any) => {
               border: 2px solid #de3636;
             }
             &__value {
-              @apply font-semibold;
-              color: #cac8d5;
             }
             &__arrow {
               font-size: 10px;

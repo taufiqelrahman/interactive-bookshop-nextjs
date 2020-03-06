@@ -25,9 +25,14 @@ const FieldSkin = React.forwardRef((props: any, ref: any) => {
               value={skin.name}
               name="skin"
               errors={props.errors}
-              style={{ height: 64, width: 64, background: skin.color, borderRadius: '50%' }}
+              style={
+                props.isMobile
+                  ? { background: skin.color }
+                  : { height: 64, width: 64, background: skin.color, borderRadius: '50%' }
+              }
               type="plain"
-              inset={true}
+              inset={!props.isMobile}
+              variant={props.isMobile ? 'box' : ''}
             />
           ))}
         </div>

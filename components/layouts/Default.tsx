@@ -99,6 +99,7 @@ const DefaultLayout = (props: any) => {
             }
           }
           &__toast {
+            margin-bottom: 8px;
             @apply text-center font-poppins;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.32);
             border-radius: 6px;
