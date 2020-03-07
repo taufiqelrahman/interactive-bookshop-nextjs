@@ -4,18 +4,23 @@ import { withTranslation, Link } from 'i18n';
 import Card from 'components/atoms/Card';
 import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
+import NavBar from 'components/organisms/NavBar/mobile';
 
 const OrderSuccess = (props: any): any => {
+  const screenHeight = '100vh - 59px';
+  const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
-    <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen" style={{ paddingTop: 61 }}>
-        <div className="u-container">
-          <div className="c-login">
-            <Card variant="border">
-              <div className="c-login__container">
+    <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={props.t('checkout')} />}>
+      <div className="u-container" style={props.isMobile ? {} : { paddingTop: 61 }}>
+        <div className="c-login">
+          <Wrapper variant="border">
+            <div className="c-login__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+              <div>
                 <img className="c-login__image" src="/static/images/welcome.png" />
                 <h1 className="c-login__title">{props.t('order-success')}</h1>
                 <div className="c-login__subtitle">{props.t('order-success-content')}</div>
+              </div>
+              <div className="c-login__actions">
                 <Link href="/orders">
                   <a>
                     <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
@@ -27,16 +32,20 @@ const OrderSuccess = (props: any): any => {
                   <a className="c-login__link">{props.t('back-to-home')}</a>
                 </Link>
               </div>
-            </Card>
-          </div>
+            </div>
+          </Wrapper>
         </div>
       </div>
       <style jsx>{`
         .c-login {
           @apply mx-auto w-full;
           &__container {
-            @apply text-center;
-            padding: 42px;
+            @apply text-center flex flex-col justify-between;
+            padding: 29px 0 14px;
+            @screen md {
+              padding: 42px;
+              display: unset;
+            }
           }
           &__image {
             @apply mx-auto;
@@ -44,15 +53,24 @@ const OrderSuccess = (props: any): any => {
             margin-bottom: 24px;
           }
           &__title {
-            @apply font-bold;
-            font-size: 28px;
-            line-height: 42px;
+            @apply font-semibold;
+            font-size: 20px;
+            line-height: 30px;
             margin: 12px 0;
+            @screen md {
+              @apply font-bold;
+              font-size: 28px;
+              line-height: 42px;
+            }
           }
           &__subtitle {
-            @apply font-opensans mx-auto;
-            line-height: 22px;
+            @apply font-opensans mx-auto text-sm;
+            line-height: 20px;
             max-width: 540px;
+            @screen md {
+              @apply text-base;
+              line-height: 22px;
+            }
           }
           &__link {
             @apply font-semibold cursor-pointer;
