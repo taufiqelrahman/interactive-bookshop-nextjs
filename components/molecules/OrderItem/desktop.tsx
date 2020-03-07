@@ -5,20 +5,16 @@ import Card from 'components/atoms/Card';
 import Dot from 'components/atoms/Dot';
 import Capsule from 'components/atoms/Capsule';
 import appConfig from 'config';
+import { previewImg } from './helper';
 
 const OrderItem = (props: any) => {
-  const previewImg = () => {
-    const filePath = '/static/images/preview/child';
-    const { gender, age, skin, hair } = props.line_items[0];
-    return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
-  };
   return (
     <div style={props.style}>
       <Card variant="border">
         <div className="c-order-item">
           <div className="c-order-item__preview">
             <div className="c-order-item__preview__image">
-              <img src={previewImg()} />
+              <img src={previewImg(props.line_items[0])} />
             </div>
           </div>
           <div className="c-order-item__detail">

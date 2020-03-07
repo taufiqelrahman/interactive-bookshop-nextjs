@@ -19,6 +19,9 @@ const Card = (props: any) => {
           }
           &--square {
             border-radius: 0;
+            &--light {
+              border-radius: 12px;
+            }
           }
           &--border {
             border: 2px solid #e1e0e7;
