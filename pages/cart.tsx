@@ -3,7 +3,8 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
-import CartItem from 'components/molecules/CartItem';
+import CartItem from 'components/molecules/CartItem/desktop';
+import CartItemMobile from 'components/molecules/CartItem/mobile';
 import Card from 'components/atoms/Card';
 import dummyCart from '_mocks/cart';
 import Dot from 'components/atoms/Dot';
@@ -26,12 +27,18 @@ const Cart = (props: any): any => {
         props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('cart-title')} />
       }
     >
-      <div className={`u-container ${props.isMobile ? '' : 'u-container__page'}`}>
+      <div className={props.isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={props.t('cart-title')} />}
         <div className="c-cart-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
           <div className="c-cart-section__items">
             {dummyCart &&
-              dummyCart.items.map(item => <CartItem key={item.id} {...item} style={{ marginBottom: 12 }} />)}
+              dummyCart.items.map(item => {
+                return props.isMobile ? (
+                  <CartItemMobile key={item.id} {...item} style={{ marginBottom: 12 }} />
+                ) : (
+                  <CartItem key={item.id} {...item} style={{ marginBottom: 12 }} />
+                );
+              })}
           </div>
           <div className="c-cart-section__summary">
             <Wrapper variant="border">
@@ -62,7 +69,10 @@ const Cart = (props: any): any => {
                   </Fragment>
                 )}
                 <div className="c-cart__summary__subtotal">
-                  <div>Subtotal</div>
+                  <div className="c-cart__summary__subtotal__label">
+                    Subtotal
+                    {props.isMobile && <span className="icon-info" />}
+                  </div>
                   <NumberFormat value={dummyCart.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
                 </div>
                 {!props.isMobile && (
@@ -71,7 +81,12 @@ const Cart = (props: any): any => {
                     {props.t('shipping-not-included')}
                   </div>
                 )}
-                <Button width="100%" color="black" style={{ marginTop: 30 }} onClick={continuePayment}>
+                <Button
+                  width="100%"
+                  color="black"
+                  style={{ marginTop: props.isMobile ? 12 : 30 }}
+                  onClick={continuePayment}
+                >
                   {props.t('continue-payment')}
                 </Button>
               </div>
@@ -91,7 +106,9 @@ const Cart = (props: any): any => {
           &__items {
             @apply w-full overflow-y-auto;
             margin-right: 30px;
+            padding-top: 12px;
             @screen md {
+              padding-top: 0;
               overflow: unset;
             }
             @screen xl {
@@ -131,6 +148,12 @@ const Cart = (props: any): any => {
             }
             &__subtotal {
               @apply flex justify-between font-semibold;
+              &__label {
+                @apply flex;
+                span {
+                  margin-left: 6px;
+                }
+              }
             }
             &__title {
               @apply mb-1;

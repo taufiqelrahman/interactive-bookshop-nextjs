@@ -116,11 +116,9 @@ const App: NextPage<any> = (props: any) => {
         }
         .icon-edit:before {
           content: '\e908';
-          color: #e1e1e1;
         }
         .icon-trash:before {
           content: '\e909';
-          color: #e1e1e1;
         }
         .icon-arrow_left:before {
           content: '\e907';

@@ -6,19 +6,12 @@ import Card from 'components/atoms/Card';
 import Dot from 'components/atoms/Dot';
 import Divider from 'components/atoms/Divider';
 import Popover from 'components/atoms/Popover';
+import { previewImg, updateShopify } from './helper';
 
 const CartItem = (props: any) => {
   const [quantity, setQuantity] = useState(props.quantity);
-  const previewImg = () => {
-    const filePath = '/static/images/preview/child';
-    const { gender, age, skin, hair } = props.attributes;
-    return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
-  };
   const onDecrease = () => {
     if (quantity > 0) setQuantity(quantity - 1);
-  };
-  const updateShopify = () => {
-    console.log('updated');
   };
   const debouncedFunctionRef = useRef();
   (debouncedFunctionRef.current as any) = () => updateShopify();
@@ -41,7 +34,7 @@ const CartItem = (props: any) => {
         <div className="c-cart-item">
           <div className="c-cart-item__preview">
             <div className="c-cart-item__preview__image">
-              <img src={previewImg()} />
+              <img src={previewImg(props.attributes)} />
             </div>
             <div className="c-cart-item__preview__cover">
               <Dot width="16px" color={props.attributes.cover} />
@@ -153,10 +146,11 @@ const CartItem = (props: any) => {
                 @apply cursor-pointer;
                 margin-right: 24px;
                 font-size: 24px;
+                color: #e1e1e1;
               }
             }
             &__quantity {
-              @apply overflow-hidden;
+              @apply flex overflow-hidden;
               border: 1px solid #e1e1e1;
               border-radius: 5px;
               input {
@@ -174,9 +168,8 @@ const CartItem = (props: any) => {
                 -moz-appearance: textfield; /* Firefox */
               }
               &__button {
-                @apply text-white cursor-pointer;
-                padding: 6px 12px;
-                height: 36px;
+                @apply flex items-center justify-center text-white cursor-pointer;
+                width: 36px;
                 background: #e1e1e1;
                 border: 1px solid #e1e1e1;
               }
