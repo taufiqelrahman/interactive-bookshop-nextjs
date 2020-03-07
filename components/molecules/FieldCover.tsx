@@ -33,10 +33,17 @@ const FieldCover = React.forwardRef((props: any, ref: any) => {
       </div>
       <style jsx>{`
         .c-field-cover {
-          @apply flex items-center;
+          @apply flex items-center flex-col;
+          @screen md {
+            @apply flex-row;
+          }
           &__header {
             @apply font-semibold flex;
-            margin-right: 18px;
+            margin-bottom: 6px;
+            @screen md {
+              margin-right: 18px;
+              margin-bottom: 0;
+            }
           }
           &__options {
             @apply flex flex-wrap items-center;

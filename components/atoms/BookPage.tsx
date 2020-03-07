@@ -1,5 +1,5 @@
 const BookPage = (props: any) => {
-  const styleGenerator = string => {
+  const styleGenerator = (string: any) => {
     let style = {
       width: '40%',
       fontSize: '0.6vw',
@@ -9,7 +9,7 @@ const BookPage = (props: any) => {
     return style;
   };
   return (
-    <div className={props.className}>
+    <div className={props.className} style={props.style}>
       <svg className="c-book-page">
         <foreignObject x="0" y="0" width="100%" height="100%">
           <img className="c-book-page__image" src={props.image} />

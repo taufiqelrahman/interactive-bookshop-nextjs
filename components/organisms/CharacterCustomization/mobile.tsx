@@ -72,14 +72,7 @@ const CharacterCustomization = (props: any) => {
     <DefaultLayout
       {...props}
       navbar={
-        <NavBar
-          onBack={onBack}
-          setSideNav={props.setSideNav}
-          isSteps={true}
-          title={props.t('character-customization')}
-          step={1}
-          totalSteps={2}
-        />
+        <NavBar onBack={onBack} isSteps={true} title={props.t('character-customization')} step={1} totalSteps={2} />
       }
     >
       <form className="c-char-custom" style={{ minHeight: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>

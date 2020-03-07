@@ -51,6 +51,7 @@ const BookPreview = (props: any) => {
     [],
   );
   useEffect(() => {
+    if (props.isMobile) return;
     initHeidelberg();
     setupBook();
     window.addEventListener('resize', debouncedSetup);
@@ -121,20 +122,33 @@ const BookPreview = (props: any) => {
           onClick={prevPage}
         />
       </div> */}
-      <div className="c-book-preview__container">
-        <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
-          {dummyPages &&
-            dummyPages.map((page, index) => (
-              <BookPage
-                key={index}
-                className={`Heidelberg-Page ${pageClass(index)}`}
-                image={getImage(page.job, page.order)}
-                name={props.selected.name}
-                {...page}
-              />
-            ))}
+      {props.isMobile ? (
+        dummyPages &&
+        dummyPages.map((page, index) => (
+          <BookPage
+            key={index}
+            style={{ minWidth: 436 }}
+            image={getImage(page.job, page.order)}
+            name={props.selected.name}
+            {...page}
+          />
+        ))
+      ) : (
+        <div className="c-book-preview__container">
+          <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
+            {dummyPages &&
+              dummyPages.map((page, index) => (
+                <BookPage
+                  key={index}
+                  className={`Heidelberg-Page ${pageClass(index)}`}
+                  image={getImage(page.job, page.order)}
+                  name={props.selected.name}
+                  {...page}
+                />
+              ))}
+          </div>
         </div>
-      </div>
+      )}
       {/* <div className="c-book-preview__right">
         <span
           className={`c-book-preview__nav icon-chevron_right ${
@@ -151,17 +165,30 @@ const BookPreview = (props: any) => {
       </div> */}
       <style jsx>{`
         .c-book-preview {
-          @apply flex items-center mt-4;
+          @apply flex items-center overflow-x-auto;
+          padding: 20px 36px;
+          flex: 100%;
+          @screen md {
+            @apply mt-4;
+            padding: 0;
+            flex: unset;
+            overflow: unset;
+          }
           &__left {
             @apply w-2/12 flex justify-end;
             padding-right: 30px;
             z-index: 2;
           }
           &__container {
-            @apply w-full relative;
-            height: ${state.height}px;
-            transition: height 0.5s;
-            z-index: 1;
+            @apply flex flex-row;
+            @screen md {
+              @apply w-full relative;
+              height: ${state.height}px;
+              transition: height 0.5s;
+              z-index: 1;
+              display: unset;
+              flex-direction: unset;
+            }
           }
           &__right {
             @apply w-2/12 flex justify-start;
