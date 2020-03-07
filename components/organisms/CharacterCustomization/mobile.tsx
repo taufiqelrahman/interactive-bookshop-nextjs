@@ -1,8 +1,6 @@
-import Card from 'components/atoms/Card';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState, Fragment } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { toast } from 'react-toastify';
 import FieldOccupations from 'components/molecules/FieldOccupations';
 import FormTextField from 'components/molecules/FormTextField';
 import FieldAge from 'components/molecules/FieldAge';
@@ -12,7 +10,6 @@ import FieldHair from 'components/molecules/FieldHair';
 import FieldSkin from 'components/molecules/FieldSkin';
 import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
-import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
 import { schema, showError, dummy } from './helper';
 import DefaultLayout from 'components/layouts/Default';
@@ -75,7 +72,7 @@ const CharacterCustomization = (props: any) => {
         <NavBar onBack={onBack} isSteps={true} title={props.t('character-customization')} step={1} totalSteps={2} />
       }
     >
-      <form className="c-char-custom" style={{ minHeight: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
+      <form className="c-char-custom" style={{ height: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
         <div>
           {charStep === stepEnum.OCCUPATIONS ? (
             <div className="u-container u-container__page">

@@ -1,4 +1,4 @@
-import { withTranslation, Link, Router } from 'i18n';
+import { withTranslation, Router } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';
@@ -27,7 +27,7 @@ const PreviewMobile = (props: any): any => {
       {...props}
       navbar={<NavBar isSteps={true} title={props.t('book-preferences')} step={2} totalSteps={2} />}
     >
-      <div className="c-preview" style={{ minHeight: `calc(${screenHeight})` }}>
+      <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
         {/* <div className="c-preview__book u-container"> */}
         <BookPreview selected={selected || {}} isMobile={props.isMobile} />
         {/* </div> */}
