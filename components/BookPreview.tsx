@@ -105,6 +105,8 @@ const BookPreview = (props: any) => {
     if (index === dummyPages.length - 1) return 'last-page';
     return '';
   };
+  const bookHeight = '(100vh - 69px - 263px)';
+  const bookRatio = '300 / 210';
 
   return (
     <div className="c-book-preview">
@@ -127,7 +129,10 @@ const BookPreview = (props: any) => {
         dummyPages.map((page, index) => (
           <BookPage
             key={index}
-            style={{ minWidth: 436 }}
+            style={{
+              height: `calc(${bookHeight})`,
+              minWidth: `calc(${bookRatio}*${bookHeight})`,
+            }}
             image={getImage(page.job, page.order)}
             name={props.selected.name}
             {...page}

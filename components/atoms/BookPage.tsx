@@ -9,8 +9,8 @@ const BookPage = (props: any) => {
     return style;
   };
   return (
-    <div className={props.className} style={props.style}>
-      <svg className="c-book-page">
+    <div className={`c-book-page ${props.className || ''}`} style={props.style}>
+      <svg className="c-book-page__svg">
         <foreignObject x="0" y="0" width="100%" height="100%">
           <img className="c-book-page__image" src={props.image} />
           {props.contents.map((content, key) => (
@@ -25,7 +25,18 @@ const BookPage = (props: any) => {
       </svg>
       <style jsx>{`
         .c-book-page {
-          @apply w-full h-full;
+          &:first-child svg {
+            border-radius: 6px 0 0 6px;
+          }
+          &:last-child svg {
+            border-radius: 0 6px 6px 0;
+          }
+          &__svg {
+            @apply w-full h-full;
+            @screen md {
+              border-radius: 0;
+            }
+          }
           &__image {
             @apply w-full;
           }
