@@ -5,6 +5,7 @@
   "send-button": "Send",
   "form-error": "Please fill in required fields to continue",
   "required-error": "is required",
+  "char-name-label": "Character Name",
   "name-label": "Name",
   "name-placeholder": "Enter name here...",
   "email-label": "Email",

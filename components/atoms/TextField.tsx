@@ -23,7 +23,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
           {props.isPassword && (
             <span
               onClick={togglePassword}
-              className={`c-text-field__show-password ${showPassword ? 'icon-info' : 'icon-arrow_left'}`}
+              className={`c-text-field__show-password ${showPassword ? 'icon-eye-show' : 'icon-eye_hide'}`}
             />
           )}
         </Fragment>

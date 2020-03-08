@@ -12,7 +12,7 @@ const NavBar = (props: any) => {
     <div className="c-nav-bar">
       <div className={`c-nav-bar__action ${isIndexPage ? 'c-nav-bar__action--index' : ''}`}>
         {props.menuAction ? (
-          <span className="icon-info" onClick={showSideNav} />
+          <span className="icon-menu" onClick={showSideNav} />
         ) : (
           <span className="icon-arrow_left" onClick={() => (props.onBack ? props.onBack() : Router.back())} />
         )}

@@ -28,15 +28,13 @@ const PreviewMobile = (props: any): any => {
       navbar={<NavBar isSteps={true} title={props.t('book-preferences')} step={2} totalSteps={2} />}
     >
       <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
-        {/* <div className="c-preview__book u-container"> */}
         <BookPreview selected={selected || {}} isMobile={props.isMobile} />
-        {/* </div> */}
         <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="c-preview__cover">
             <FieldCover ref={register(schema(props).cover)} errors={errors.cover} />
           </div>
-          <Button type="submit" width="648px" style={{ margin: '18px 0' }}>
-            {props.t('continue')}
+          <Button type="submit" width="648px" style={{ margin: '12px 0 18px' }}>
+            {props.t('form:continue-button')}
           </Button>
           <div className="c-preview__link" onClick={() => Router.back()}>
             {props.t('go-back')}
@@ -51,11 +49,6 @@ const PreviewMobile = (props: any): any => {
             border-radius: 24px 24px 0px 0px;
             padding-top: 20px;
             min-height: 200px;
-          }
-          &__book {
-            @apply bg-light-grey flex justify-center;
-            padding: 20px 0;
-            flex: 100%;
           }
           &__cover {
             @apply flex justify-center;

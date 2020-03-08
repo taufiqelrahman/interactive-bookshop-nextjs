@@ -69,7 +69,13 @@ const CharacterCustomization = (props: any) => {
     <DefaultLayout
       {...props}
       navbar={
-        <NavBar onBack={onBack} isSteps={true} title={props.t('character-customization')} step={1} totalSteps={2} />
+        <NavBar
+          onBack={onBack}
+          isSteps={true}
+          title={props.t('common:character-customization')}
+          step={1}
+          totalSteps={2}
+        />
       }
     >
       <form className="c-char-custom" style={{ height: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
@@ -150,7 +156,7 @@ const CharacterCustomization = (props: any) => {
             {props.t('next-button')}
           </Button>
           <div onClick={cancel} className="c-char-custom__link">
-            {props.t('cancel')}
+            {props.t('cancel-button')}
           </div>
         </div>
       </form>
@@ -224,4 +230,4 @@ const CharacterCustomization = (props: any) => {
   );
 };
 
-export default withTranslation('form')(CharacterCustomization);
+export default withTranslation(['form', 'common'])(CharacterCustomization);

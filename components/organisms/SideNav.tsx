@@ -21,7 +21,7 @@ const SideNav = (props: any) => {
         <div>
           <div className="c-side-nav__header">
             <button className="c-side-nav__button--close" onClick={props.hide}>
-              <span className="icon-info" />
+              <span className="icon-menu" />
             </button>
             {props.users.isLoggedIn ? (
               <div className="c-side-nav__header__user">

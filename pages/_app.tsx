@@ -102,6 +102,17 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+        .icon-eye-show:before {
+          content: '\e90e';
+          color: #484e5c;
+        }
+        .icon-eye_hide:before {
+          content: '\e90f';
+          color: #484e5c;
+        }
+        .icon-menu:before {
+          content: '\e910';
+        }
         .icon-cross_check:before {
           content: '\e90d';
         }

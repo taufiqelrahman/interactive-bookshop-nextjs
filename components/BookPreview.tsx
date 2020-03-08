@@ -105,8 +105,8 @@ const BookPreview = (props: any) => {
     if (index === dummyPages.length - 1) return 'last-page';
     return '';
   };
-  const bookHeight = '(100vh - 69px - 263px)';
-  const bookRatio = '300 / 210';
+  const bookHeight = '(100vh - 69px - 257px)';
+  const bookRatio = '30 / 21';
 
   return (
     <div className="c-book-preview">
@@ -170,13 +170,11 @@ const BookPreview = (props: any) => {
       </div> */}
       <style jsx>{`
         .c-book-preview {
-          @apply flex items-center overflow-x-auto;
+          @apply flex items-center overflow-x-auto bg-light-grey;
           padding: 20px 36px;
-          flex: 100%;
           @screen md {
-            @apply mt-4;
+            @apply mt-4 bg-white;
             padding: 0;
-            flex: unset;
             overflow: unset;
           }
           &__left {

@@ -5,6 +5,7 @@
   "send-button": "Kirim",
   "form-error": "Mohon lengkapi untuk lanjut",
   "required-error": "perlu diisi",
+  "char-name-label": "Nama",
   "name-label": "Nama",
   "name-placeholder": "Ketik namamu disini...",
   "email-label": "Email",

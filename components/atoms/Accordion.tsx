@@ -6,9 +6,10 @@ const Accordion = (props: any) => {
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
+  const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
     <div style={props.style}>
-      <Card variant="border">
+      <Wrapper variant="border">
         <div className="c-accordion" onClick={toggleOpen}>
           <div className="c-accordion__header">
             <h2>{props.title}</h2>
@@ -16,26 +17,44 @@ const Accordion = (props: any) => {
           </div>
           {isOpen && <div className="c-accordion__body">{props.children}</div>}
         </div>
-      </Card>
+      </Wrapper>
       <style jsx>{`
         .c-accordion {
-          padding: 24px;
+          padding: 16px;
+          border-bottom: 1px solid #ededed;
+          @screen md {
+            padding: 24px;
+            border: 0;
+          }
           &__header {
             @apply flex justify-between items-center cursor-pointer;
             h2 {
-              @apply font-semibold;
-              font-size: 20px;
-              line-height: 30px;
+              @apply text-sm font-opensans;
+              line-height: 22px;
+              @screen md {
+                @apply font-semibold;
+                font-size: 20px;
+                line-height: 30px;
+              }
             }
             span {
-              font-size: 30px;
+              font-size: 24px;
+              @screen md {
+                font-size: 30px;
+              }
             }
           }
           &__body {
-            @apply font-opensans whitespace-pre-wrap;
-            line-height: 22px;
-            padding-bottom: 60px;
-            margin-top: 25px;
+            @apply font-opensans whitespace-pre-wrap text-xs;
+            color: #616161;
+            line-height: 24px;
+            padding-bottom: 20px;
+            margin-top: 20px;
+            @screen md {
+              @apply text-base text-dark-grey;
+              padding-bottom: 60px;
+              margin-top: 25px;
+            }
           }
         }
       `}</style>

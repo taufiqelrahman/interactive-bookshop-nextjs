@@ -12,6 +12,7 @@ import FormTextField from 'components/molecules/FormTextField';
 import FormTextArea from 'components/molecules/FormTextArea';
 import { useForm } from 'react-hook-form';
 import Divider from 'components/atoms/Divider';
+import NavBar from 'components/organisms/NavBar/mobile';
 
 const Help = (props: any): any => {
   const { register, handleSubmit, errors } = useForm({
@@ -30,22 +31,38 @@ const Help = (props: any): any => {
     },
   };
   const Marker = (props: any) => <div>{props.text}</div>;
+  const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
-    <DefaultLayout {...props}>
-      <div className="u-container u-container__page">
-        <Stepper title={props.t('help-title')} />
+    <DefaultLayout
+      {...props}
+      navbar={
+        props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('help-title')} />
+      }
+    >
+      <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
+        {props.isMobile ? (
+          <img className="c-help-section__image" src="/static/images/welcome.png" />
+        ) : (
+          <Stepper title={props.t('help-title')} />
+        )}
         <div className="c-help-section">
           <div className="c-help-section__left">
+            {props.isMobile && <div className="c-help-section__title">{props.t('faq')}</div>}
             {dummyContents &&
               dummyContents.map(content => (
-                <Accordion key={content.id} title={content.title} style={{ marginBottom: 12 }}>
+                <Accordion
+                  key={content.id}
+                  title={content.title}
+                  style={props.isMobile ? {} : { marginBottom: 12 }}
+                  isMobile={props.isMobile}
+                >
                   {content.content}
                 </Accordion>
               ))}
-            <Card variant="border">
+            <Wrapper variant="border">
               <div className="c-help-section__contact-us">
                 <h2>{props.t('contact-us')}</h2>
-                <div className="flex">
+                <div className={props.isMobile ? '' : 'flex'}>
                   <div className="c-help-section__map">
                     <GoogleMapReact
                       bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
@@ -61,14 +78,20 @@ const Help = (props: any): any => {
                     </GoogleMapReact>
                   </div>
                   <div className="c-help-section__info">
-                    <h2 style={{ marginBottom: 16 }}>PT. When I Grow Up Indonesia</h2>
+                    <h2 style={props.isMobile ? {} : { marginBottom: 16 }}>PT. When I Grow Up Indonesia</h2>
                     <div className="c-help-section__address">
                       Plaza City View, Lt. 2 Jalan Ampera 22. Kemang, Jakarta Selatan 19540
                     </div>
-                    <div>(+6221) 765 888 900</div>
+                    <div className="c-help-section__phone">(+6221) 765 888 900</div>
                   </div>
                 </div>
-                <Divider style={{ borderColor: '#ededed', borderWidth: 1, margin: '30px 0 24px' }} />
+                <Divider
+                  style={{
+                    borderColor: props.isMobile ? '#EFEEF4' : '#ededed',
+                    borderWidth: 1,
+                    margin: props.isMobile ? '18px 0 2px' : '30px 0 24px',
+                  }}
+                />
                 <h2>{props.t('got-question')}</h2>
                 <form className="c-help-section__form" onSubmit={handleSubmit(onSubmit)}>
                   <FormTextField
@@ -85,21 +108,24 @@ const Help = (props: any): any => {
                     placeholder={props.t('form:message-placeholder')}
                     ref={register(schema.message)}
                     errors={errors.message}
-                    style={{ marginTop: 24, marginBottom: 24 }}
+                    style={{ marginTop: props.isMobile ? 12 : 24, marginBottom: props.isMobile ? 16 : 24 }}
                   />
                   <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
                     {props.t('form:send-button')}
                   </Button>
                 </form>
               </div>
-            </Card>
+            </Wrapper>
           </div>
         </div>
       </div>
       <style jsx>{`
         .c-help-section {
           @apply flex w-full;
-          margin-top: 36px;
+          margin-top: 4px;
+          @screen md {
+            margin-top: 36px;
+          }
           &__left {
             @apply w-full;
             @screen lg {
@@ -110,9 +136,13 @@ const Help = (props: any): any => {
             }
             h2 {
               @apply font-semibold;
-              font-size: 20px;
-              line-height: 30px;
-              margin-bottom: 24px;
+              padding: 16px 0;
+              @screen md {
+                font-size: 20px;
+                line-height: 30px;
+                margin-bottom: 24px;
+                padding: 0;
+              }
             }
           }
           &__right {
@@ -121,33 +151,72 @@ const Help = (props: any): any => {
               @apply w-2/5;
             }
           }
+          &__image {
+            @apply mx-auto w-4/5;
+          }
+          &__title {
+            @apply font-semibold;
+            font-size: 16px;
+            line-height: 24px;
+            border-bottom: 1px solid #ededed;
+            padding: 16px;
+          }
           &__contact-us {
-            padding: 20px 24px;
+            padding: 16px;
+            @screen md {
+              padding: 20px 24px;
+            }
           }
           &__map {
-            @apply w-1/2;
+            @apply w-full;
             border: 2px solid #ededed;
             box-sizing: border-box;
-            border-radius: 12px;
             background: #efeef4;
             margin-right: 24px;
             height: 160px;
+            @screen md {
+              @apply w-1/2;
+            }
           }
           &__info {
-            @apply w-1/2;
+            @apply w-full;
+            @screen md {
+              @apply w-1/2 text-base;
+            }
           }
           &__address {
-            @apply font-opensans;
-            margin-bottom: 22px;
-            line-height: 22px;
+            @apply font-opensans text-sm;
+            margin-bottom: 8px;
+            line-height: 20px;
+            @screen md {
+              @apply text-base;
+              line-height: 22px;
+              margin-bottom: 22px;
+            }
+          }
+          &__phone {
+            @apply font-opensans text-sm;
+            margin-bottom: 8px;
+            @screen md {
+              @apply text-base;
+            }
           }
           &__form {
-            @apply w-3/5;
+            margin-top: 16px;
+            @screen md {
+              @apply w-3/5;
+              margin: 0;
+            }
           }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-help-section__map > div > div {
+          border-radius: 12px;
         }
       `}</style>
     </DefaultLayout>
   );
 };
 
-export default withTranslation(['common', 'send'])(connect(mapStateToProps, mapDispatchToProps)(Help));
+export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Help));
