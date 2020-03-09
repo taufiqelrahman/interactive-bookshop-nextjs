@@ -28,3 +28,27 @@ export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, nu
       captureException(err);
     });
 };
+
+function loadOccupations(isFetching, occupations = []): types.MasterActionTypes {
+  return {
+    type: types.LOAD_TESTIMONIALS,
+    payload: occupations,
+    isFetching,
+  };
+}
+export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, null, Action<string>> => (
+  dispatch,
+): any => {
+  dispatch(loadOccupations(true));
+  return api()
+    .master.getOccupations()
+    .then(({ data }) => {
+      dispatch(loadOccupations(false, data));
+    })
+    .catch(err => {
+      throw err;
+      dispatch(loadOccupations(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
