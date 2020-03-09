@@ -1,21 +1,18 @@
 import Card from 'components/atoms/Card';
 
 const Testimonial = (props: any) => {
+  const data = props.testi;
   return (
     <div>
       <div className="c-testimonial">
         <Card>
           <div className="c-testimonial__container">
-            {/* dummy */}
-            <div className="c-testimonial__content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget massa efficitur, suscipit nibh eu,
-              auctor neque. Suspendisse potenti.
-            </div>
+            <div className="c-testimonial__content">{data.message}</div>
             <div className="flex items-center">
-              <img alt="photo" className="c-testimonial__photo" width="44" height="44" />
+              <img alt="photo" className="c-testimonial__photo" width="44" height="44" src={data.image_url} />
               <div>
-                <div className="c-testimonial__name">Kristin Steward</div>
-                <div className="c-testimonial__instance">Starbucks</div>
+                <div className="c-testimonial__name">{data.name}</div>
+                <div className="c-testimonial__instance">{data.company}</div>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import Cart from './cart';
 import Orders from './orders';
 import Products from './products';
 import Users from './users';
+import Master from './master';
 
 export interface AdapterObject {
   default: AxiosInstance,
@@ -25,8 +26,14 @@ const decryptToken = (cryptedToken) => {
   return bytes.toString(CryptoJS.enc.Utf8);
 }
 
-const createSecureAdapter = (): AxiosAdapter => {
-  const cryptedToken = Cookies.get('user');
+const createSecureAdapter = (req = null): AxiosAdapter => {
+  let cryptedToken;
+  // if (req) {
+  //   const userCookie = req.headers.cookie.split(';').filter(cookie => cookie.includes('user='));
+  //   cryptedToken = userCookie[0].split('=')[1];
+  // } else {
+    cryptedToken = Cookies.get('user');
+  // }
   const token = cryptedToken ? decryptToken(cryptedToken) : '';
   const secureOptions = {
     ...options,
@@ -38,9 +45,9 @@ const createSecureAdapter = (): AxiosAdapter => {
   return axios.create(secureOptions);
 }
 
-export default () => {
+export default (req = null) => {
   const instance = createAdapter();
-  const secure = createSecureAdapter();
+  const secure = createSecureAdapter(req);
   const adapter = {
     default: instance,
     secure: secure,
@@ -50,5 +57,6 @@ export default () => {
     orders: new Orders(adapter),
     products: new Products(adapter),
     users: new Users(adapter),
+    master: new Master(adapter),
   }
 };

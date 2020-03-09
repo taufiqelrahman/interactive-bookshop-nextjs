@@ -5,6 +5,7 @@ import cartReducer from './cart/reducers';
 import ordersReducer from './orders/reducers';
 import productsReducer from './products/reducers';
 import usersReducer from './users/reducers';
+import masterReducer from './master/reducers';
 
 const rootReducer = combineReducers({
   default: reducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   orders: ordersReducer,
   products: productsReducer,
   users: usersReducer,
+  master: masterReducer,
 });
 
 const composeEnhancer =

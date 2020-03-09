@@ -19,7 +19,7 @@ export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, nu
   return api()
     .master.getTestimonials()
     .then(({ data }) => {
-      dispatch(loadTestimonials(false, data));
+      dispatch(loadTestimonials(false, data.data));
     })
     .catch(err => {
       throw err;
@@ -43,7 +43,7 @@ export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, nul
   return api()
     .master.getOccupations()
     .then(({ data }) => {
-      dispatch(loadOccupations(false, data));
+      dispatch(loadOccupations(false, data.data));
     })
     .catch(err => {
       throw err;

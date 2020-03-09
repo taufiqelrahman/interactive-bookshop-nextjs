@@ -10,7 +10,7 @@ import Button from 'components/atoms/Button';
 import Head from 'next/head';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Footer from 'components/organisms/Footer';
-// import actions from 'store/actions';
+import actions from 'store/actions';
 
 const Index = (props: any): any => {
   // const register = () => {
@@ -201,7 +201,7 @@ const Index = (props: any): any => {
       <div className="c-section--bottom">
         <div className="c-section--bottom__testi">
           <div className="u-container">
-            <TestimonialSlider isMobile={props.isMobile} />
+            <TestimonialSlider isMobile={props.isMobile} testimonials={props.state.master.testimonials} />
           </div>
         </div>
         <div id="create-book" className="c-section--bottom__create-book">
@@ -381,17 +381,15 @@ const Index = (props: any): any => {
   );
 };
 
-// Index.getInitialProps = async (ctx: any): Promise<any> => {
-//   try {
-//     await ctx.reduxStore.dispatch(actions.thunkLoadProducts());
-//   } catch (err) {
-//     console.log(err.message);
-//   }
-//   return {};
-// };
-
-Index.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'page-index', 'form'],
-});
+Index.getInitialProps = async (ctx: any): Promise<any> => {
+  try {
+    await ctx.reduxStore.dispatch(actions.thunkLoadTestimonials());
+  } catch (err) {
+    console.log(err.message);
+  }
+  return {
+    namespacesRequired: ['common', 'page-index', 'form'],
+  };
+};
 
 export default withTranslation('page-index')(connect(mapStateToProps, mapDispatchToProps)(Index));

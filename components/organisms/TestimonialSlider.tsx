@@ -50,8 +50,8 @@ const TestimonialSlider = (props: any) => {
         </div>
         <div className="c-testi-slider__slides">
           {/* dummy */}
-          {[1, 2, 3, 4, 5].map(testi => (
-            <div key={testi} className="c-testi-slider__slide">
+          {props.testimonials.map(testi => (
+            <div key={testi.id} className="c-testi-slider__slide">
               <Testimonial testi={testi} />
             </div>
           ))}
