@@ -99,6 +99,7 @@ export const thunkForgotPassword = (data): ThunkAction<void, types.UsersState, n
     })
     .catch(err => {
       dispatch(forgotPassword(false));
+      dispatch(setErrorMessage(err.message));
       captureException(err);
     });
 };
@@ -121,6 +122,7 @@ export const thunkResetPassword = (data): ThunkAction<void, types.UsersState, nu
     })
     .catch(err => {
       dispatch(resetPassword(false));
+      dispatch(setErrorMessage(err.message));
       captureException(err);
     });
 };
