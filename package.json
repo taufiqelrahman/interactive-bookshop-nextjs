@@ -7,9 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_OPTIONS=--inspect node server.ts",
-    "api": "cd api && php artisan serve",
     "lint": "eslint --ext .ts --fix --ignore-path .eslintignore .",
-    "tinker": "concurrently \"yarn api\" \"yarn lint\" \"yarn dev\"",
+    "tinker": "concurrently \"yarn lint\" \"yarn dev\"",
     "build": "next build",
     "start": "NODE_ENV=production node server.ts"
   },
