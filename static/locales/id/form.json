@@ -42,5 +42,6 @@
   "message-placeholder": "Ketik pesanmu di sini",
   "cover-label": "Warna sampul",
   "next-button": "Lanjut",
-  "cancel-button": "Batal"
+  "cancel-button": "Batal",
+  "reset-button": "Set Ulang"
 }

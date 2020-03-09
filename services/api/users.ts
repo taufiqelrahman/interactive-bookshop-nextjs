@@ -19,4 +19,12 @@ export default class Products {
   logout() {
     return this.adapter.secure.get('/logout');
   }
+
+  forgotPassword(data) {
+    return this.adapter.secure.post('/forgot-password', data);
+  }
+
+  resetPassword(data) {
+    return this.adapter.secure.post('/reset-password', data);
+  }
 }

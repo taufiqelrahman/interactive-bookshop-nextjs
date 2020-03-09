@@ -41,6 +41,18 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
         isFetching: action.isFetching,
       };
     }
+    case types.FORGOT_PASSWORD: {
+      return {
+        ...state,
+        isFetching: action,
+      };
+    }
+    case types.RESET_PASSWORD: {
+      return {
+        ...state,
+        isFetching: action,
+      };
+    }
     default:
       return state;
   }

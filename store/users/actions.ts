@@ -81,3 +81,46 @@ export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<
       captureException(err);
     });
 };
+
+function forgotPassword(isFetching): types.UsersActionTypes {
+  return {
+    type: types.FORGOT_PASSWORD,
+    isFetching,
+  };
+}
+export const thunkForgotPassword = (data): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+): any => {
+  dispatch(forgotPassword(true));
+  return api()
+    .users.forgotPassword(data)
+    .then(() => {
+      dispatch(forgotPassword(false));
+    })
+    .catch(err => {
+      dispatch(forgotPassword(false));
+      captureException(err);
+    });
+};
+
+function resetPassword(isFetching): types.UsersActionTypes {
+  return {
+    type: types.FORGOT_PASSWORD,
+    isFetching,
+  };
+}
+export const thunkResetPassword = (data): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+): any => {
+  dispatch(resetPassword(true));
+  return api()
+    .users.resetPassword(data)
+    .then(() => {
+      dispatch(resetPassword(false));
+      Router.push('/login');
+    })
+    .catch(err => {
+      dispatch(resetPassword(false));
+      captureException(err);
+    });
+};

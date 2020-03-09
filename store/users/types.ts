@@ -3,6 +3,8 @@ export const LOAD_USER = 'LOAD_USER';
 export const SET_LOGIN = 'SET_LOGIN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 export interface User {
   email: string;
@@ -41,4 +43,14 @@ interface Logout {
   isFetching: boolean;
 }
 
-export type UsersActionTypes = SetUser | LoadUser | SetLogin | Login | Logout;
+interface ForgotPassword {
+  type: typeof FORGOT_PASSWORD;
+  isFetching: boolean;
+}
+
+interface ResetPassword {
+  type: typeof RESET_PASSWORD;
+  isFetching: boolean;
+}
+
+export type UsersActionTypes = SetUser | LoadUser | SetLogin | Login | Logout | ForgotPassword | ResetPassword;

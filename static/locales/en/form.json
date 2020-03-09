@@ -42,5 +42,6 @@
   "message-placeholder": "Enter your message here",
   "cover-label": "Cover color",
   "next-button": "Next",
-  "cancel-button": "Cancel"
+  "cancel-button": "Cancel",
+  "reset-button": "Reset"
 }

@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link, Router } from 'i18n';
 import { useState, useEffect, Fragment } from 'react';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Card from 'components/atoms/Card';
@@ -12,34 +13,57 @@ import FormTextField from 'components/molecules/FormTextField';
 import NavBar from 'components/organisms/NavBar/mobile';
 
 const Login = (props: any): any => {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const router = useRouter();
+  const { register, handleSubmit, errors, formState, watch } = useForm({
     mode: 'onChange',
   });
-  const stepEnum = { WELCOME: 0, EMAIL: 1, RESET: 2, SENT: 3 };
+  const stepEnum = { WELCOME: 0, EMAIL: 1, FORGOT: 2, SENT: 3, RESET: 4 };
   const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
+  const [resetData, setResetData] = useState({
+    email: '',
+    token: '',
+  });
   const schema = {
     email: { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
     password: { required: true },
+    confirmPassword: {
+      required: { value: true, message: `Password ${props.t('form:required-error')}` },
+      validate: value => value === watch('password') || props.t('form:password-different'),
+    },
   };
   useEffect(() => {
     if (!formState.isValid) {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
+  useEffect(() => {
+    const { reset, token, email }: any = router.query;
+    if (reset === '1') {
+      setLoginStep(4);
+      setResetData({ email, token });
+    } else {
+      setLoginStep(0);
+      setResetData({ email: '', token: '' });
+    }
+  }, [router.query]);
   const loginEmail = () => {
     setLoginStep(stepEnum.EMAIL);
   };
   const forgotPassword = () => {
-    setLoginStep(stepEnum.RESET);
+    setLoginStep(stepEnum.FORGOT);
   };
   const onSubmit = data => {
     switch (loginStep) {
       case stepEnum.EMAIL:
         props.thunkLogin({ ...data, from: Router.query.from });
         break;
-      case stepEnum.RESET:
-        console.log(data);
+      case stepEnum.FORGOT:
+        props.thunkForgotPassword(data);
         setLoginStep(stepEnum.SENT);
+        break;
+      case stepEnum.RESET:
+        const { email, token } = resetData;
+        props.thunkResetPassword({ ...data, email, token });
         break;
       default:
         break;
@@ -50,9 +74,12 @@ const Login = (props: any): any => {
       case stepEnum.EMAIL:
         setLoginStep(stepEnum.WELCOME);
         break;
-      case stepEnum.RESET:
+      case stepEnum.FORGOT:
       case stepEnum.SENT:
         setLoginStep(stepEnum.EMAIL);
+        break;
+      case stepEnum.RESET:
+        Router.push('/');
         break;
       default:
         break;
@@ -99,10 +126,10 @@ const Login = (props: any): any => {
                   </Link>
                 </Fragment>
               )}
-              {[stepEnum.EMAIL, stepEnum.RESET].includes(loginStep) && (
+              {[stepEnum.EMAIL, stepEnum.FORGOT, stepEnum.RESET].includes(loginStep) && (
                 <form
                   className="c-login__form"
-                  style={{ minHeight: 'calc(100vh - 59px - 24px)' }}
+                  style={props.isMobile ? { minHeight: 'calc(100vh - 59px - 24px)' } : {}}
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   {loginStep === stepEnum.EMAIL && (
@@ -145,7 +172,7 @@ const Login = (props: any): any => {
                       </div>
                     </Fragment>
                   )}
-                  {loginStep === stepEnum.RESET && (
+                  {loginStep === stepEnum.FORGOT && (
                     <Fragment>
                       <div>
                         <h1 className="c-login__title" style={{ marginBottom: 12 }}>
@@ -165,6 +192,44 @@ const Login = (props: any): any => {
                       <div>
                         <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
                           {props.t('form:reset-send')}
+                        </Button>
+                        <div onClick={onBack} className="c-login__link">
+                          {props.t('go-back')}
+                        </div>
+                      </div>
+                    </Fragment>
+                  )}
+                  {loginStep === stepEnum.RESET && (
+                    <Fragment>
+                      <div>
+                        <h1 className="c-login__title" style={{ marginBottom: 12 }}>
+                          {props.t('form:reset-title')}
+                        </h1>
+                        <div className="c-login__saved-email">{resetData.email}</div>
+                        <FormTextField
+                          label={props.t('form:password-label')}
+                          name="password"
+                          placeholder={props.t('form:new-password-placeholder')}
+                          ref={register(schema.password)}
+                          errors={errors.password}
+                          variant="full-width"
+                          isPassword={true}
+                          style={{ marginTop: 24 }}
+                        />
+                        <FormTextField
+                          label={props.t('form:confirm-password-label')}
+                          name="password_confirmation"
+                          placeholder={props.t('form:confirm-password-placeholder')}
+                          ref={register(schema.confirmPassword)}
+                          errors={errors.password_confirmation}
+                          variant="full-width"
+                          isPassword={true}
+                          style={{ marginTop: 24 }}
+                        />
+                      </div>
+                      <div>
+                        <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                          {props.t('form:reset-button')}
                         </Button>
                         <div onClick={onBack} className="c-login__link">
                           {props.t('go-back')}
@@ -249,6 +314,13 @@ const Login = (props: any): any => {
               @apply font-normal;
               color: #333;
             }
+          }
+          &__saved-email {
+            @apply w-full;
+            border-radius: 60px;
+            background: #f5f5f8;
+            margin: 24px 0;
+            padding: 10px;
           }
         }
       `}</style>
