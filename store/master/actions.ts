@@ -50,3 +50,24 @@ export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, nul
       captureException(err);
     });
 };
+
+function loadBookPages(isFetching, bookPages = []): types.MasterActionTypes {
+  return {
+    type: types.LOAD_BOOK_PAGES,
+    payload: bookPages,
+    isFetching,
+  };
+}
+export const thunkLoadBookPages = (): ThunkAction<void, types.MasterState, null, Action<string>> => (dispatch): any => {
+  dispatch(loadBookPages(true));
+  return api()
+    .master.getBookPages()
+    .then(({ data }) => {
+      dispatch(loadBookPages(false, data.data));
+    })
+    .catch(err => {
+      dispatch(loadBookPages(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
