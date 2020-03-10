@@ -22,7 +22,6 @@ export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, nu
       dispatch(loadTestimonials(false, data.data));
     })
     .catch(err => {
-      throw err;
       dispatch(loadTestimonials(false));
       dispatch(setErrorMessage(err.message));
       captureException(err);
@@ -31,7 +30,7 @@ export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, nu
 
 function loadOccupations(isFetching, occupations = []): types.MasterActionTypes {
   return {
-    type: types.LOAD_TESTIMONIALS,
+    type: types.LOAD_OCCUPATIONS,
     payload: occupations,
     isFetching,
   };
@@ -46,7 +45,6 @@ export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, nul
       dispatch(loadOccupations(false, data.data));
     })
     .catch(err => {
-      throw err;
       dispatch(loadOccupations(false));
       dispatch(setErrorMessage(err.message));
       captureException(err);

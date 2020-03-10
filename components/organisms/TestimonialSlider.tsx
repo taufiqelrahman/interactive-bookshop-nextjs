@@ -7,7 +7,8 @@ const TestimonialSlider = (props: any) => {
   const [translationX, setTranslationX] = useState(0);
 
   const calculateRightBound = () => {
-    return (window as any).document.querySelector('.c-testi-slider__slide:last-child').getBoundingClientRect().right;
+    const lastChild = (window as any).document.querySelector('.c-testi-slider__slide:last-child');
+    return lastChild && lastChild.getBoundingClientRect().right;
   };
 
   const decideNavRightClass = (): any => {
@@ -49,7 +50,6 @@ const TestimonialSlider = (props: any) => {
           )}
         </div>
         <div className="c-testi-slider__slides">
-          {/* dummy */}
           {props.testimonials.map(testi => (
             <div key={testi.id} className="c-testi-slider__slide">
               <Testimonial testi={testi} />

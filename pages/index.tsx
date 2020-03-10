@@ -118,6 +118,9 @@ const Index = (props: any): any => {
   //       // });
   //     });
   // };
+  const { testimonials, occupations } = props.state.master;
+  const occupationsTop = props.isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
+  const occupationsBottom = props.isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
 
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} />}>
@@ -175,18 +178,18 @@ const Index = (props: any): any => {
       </div>
       <div className="c-section--middle">
         <div className="c-section__jobs--top">
-          {/* dummy */}
-          {props.isMobile ? (
-            <div className="c-section__jobs__circle"></div>
-          ) : (
-            [1, 2, 3, 4, 5].map(job => <div key={job} className="c-section__jobs__circle"></div>)
-          )}
+          {occupationsTop.map(job => (
+            <div key={job.id} className="c-section__jobs__circle">
+              <img src={job.image_url} alt={job.name} />
+            </div>
+          ))}
         </div>
         <div className="c-section__jobs--bottom">
-          {/* dummy */}
-          {props.isMobile
-            ? [1, 2].map(job => <div key={job} className="c-section__jobs__circle"></div>)
-            : [1, 2, 3, 4].map(job => <div key={job} className="c-section__jobs__circle"></div>)}
+          {occupationsBottom.map(job => (
+            <div key={job.id} className="c-section__jobs__circle">
+              <img src={job.image_url} alt={job.name} />
+            </div>
+          ))}
         </div>
         <div className="c-section__content text-white c-section__content--middle">
           <h2>{props.t('choosenow-title')}</h2>
@@ -201,7 +204,7 @@ const Index = (props: any): any => {
       <div className="c-section--bottom">
         <div className="c-section--bottom__testi">
           <div className="u-container">
-            <TestimonialSlider isMobile={props.isMobile} testimonials={props.state.master.testimonials} />
+            <TestimonialSlider isMobile={props.isMobile} testimonials={testimonials} />
           </div>
         </div>
         <div id="create-book" className="c-section--bottom__create-book">
@@ -210,18 +213,6 @@ const Index = (props: any): any => {
         </div>
       </div>
       {props.isMobile && <Footer isMobile={props.isMobile} />}
-      {/* <Features features={props.state.products.products} />
-      <button onClick={getProducts}>get products</button>
-      <button onClick={checkout}>checkout</button>
-      <button onClick={login}>Login</button>
-      <button onClick={loadProducts.bind(this)}>Get Products</button>
-      <button onClick={register}>Register</button>
-      <button onClick={logout}>Logout</button>
-      <button onClick={getCart}>Get Cart</button>
-      <button onClick={addToCart}>Add to Cart</button>
-      <button onClick={removeFromCart}>Remove from Cart</button>
-      <button onClick={checkout}>Checkout</button>
-      <button onClick={loadOrder}>Get Order</button> */}
       <style jsx>{`
         .c-section {
           &--top {
@@ -383,7 +374,10 @@ const Index = (props: any): any => {
 
 Index.getInitialProps = async (ctx: any): Promise<any> => {
   try {
-    await ctx.reduxStore.dispatch(actions.thunkLoadTestimonials());
+    await Promise.all([
+      ctx.reduxStore.dispatch(actions.thunkLoadTestimonials()),
+      ctx.reduxStore.dispatch(actions.thunkLoadOccupations()),
+    ]);
   } catch (err) {
     console.log(err.message);
   }
