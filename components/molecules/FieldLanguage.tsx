@@ -16,7 +16,8 @@ const FieldLanguage = React.forwardRef((props: any, ref: any) => (
           <Radio
             key={language}
             ref={ref}
-            value={language}
+            value={language.toLowerCase()}
+            label={language}
             name="language"
             errors={props.errors}
             style={{ height: 44, minWidth: props.isMobile ? 165 : 219 }}

@@ -13,7 +13,7 @@ import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
-import { schema, showError, dummy } from './helper';
+import { schema, showError } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 
@@ -33,7 +33,8 @@ const CharacterCustomization = (props: any) => {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected = props.state.cart.selected || dummy || {};
+  const selected = props.state.cart.selected || {};
+  const { occupations } = props.state.master;
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page--large">
@@ -47,6 +48,7 @@ const CharacterCustomization = (props: any) => {
                   errors={errors.occupations}
                   style={{ maxWidth: 550, marginBottom: 24 }}
                   defaultChecked={selected.occupations}
+                  occupations={occupations}
                 />
                 <Divider />
                 <div className="flex">
@@ -124,7 +126,7 @@ const CharacterCustomization = (props: any) => {
             }
           }
           &__right {
-            @apply w-full;
+            @apply hidden;
             padding: 0 100px;
             @screen lg {
               @apply w-1/5;

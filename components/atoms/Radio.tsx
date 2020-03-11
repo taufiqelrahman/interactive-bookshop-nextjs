@@ -15,7 +15,7 @@ const Radio = React.forwardRef((props: any, ref: any) => {
       />
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={`c-radio__button ${variantClass} ${errorClass}`} style={props.style}>
-          {props.type === 'image' ? <img src={props.imageUrl} /> : props.type !== 'plain' && props.value}
+          {props.type === 'image' ? <img src={props.imageUrl} /> : props.type !== 'plain' && props.label}
         </div>
       </label>
       <style jsx>{`

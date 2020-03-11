@@ -11,7 +11,7 @@ import FieldSkin from 'components/molecules/FieldSkin';
 import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Button from 'components/atoms/Button';
-import { schema, showError, dummy } from './helper';
+import { schema, showError } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Sheet from 'components/atoms/Sheet';
@@ -63,8 +63,9 @@ const CharacterCustomization = (props: any) => {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected = props.state.cart.selected || dummy || {};
+  const selected = props.state.cart.selected || {};
   const screenHeight = '100vh - 69px';
+  const { occupations } = props.state.master;
   return (
     <DefaultLayout
       {...props}
@@ -86,6 +87,7 @@ const CharacterCustomization = (props: any) => {
                 ref={register(schema.occupations)}
                 errors={errors.occupations}
                 defaultChecked={selected.occupations}
+                occupations={occupations}
               />
               {watch('occupations') && (
                 <div className="c-char-custom__message">

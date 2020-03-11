@@ -209,7 +209,7 @@ const Index = (props: any): any => {
         </div>
         <div id="create-book" className="c-section--bottom__create-book">
           <h2>{props.t('createbook-header')}</h2>
-          <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} />
+          <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} occupations={occupations} />
         </div>
       </div>
       {props.isMobile && <Footer isMobile={props.isMobile} />}

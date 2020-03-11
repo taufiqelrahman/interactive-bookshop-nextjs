@@ -46,7 +46,11 @@ const BookForm = (props: any) => {
             <Card variant="shadow--bold">
               {state.step === stepEnum.OCCUPATIONS && (
                 <div key={1} className="c-book-form__container c-book-form__container__mobile">
-                  <FieldOccupations ref={register(schema.occupations)} errors={errors.occupations} />
+                  <FieldOccupations
+                    ref={register(schema.occupations)}
+                    errors={errors.occupations}
+                    occupations={props.occupations}
+                  />
                   <Button width="100%" disabled={!isFormValid} onClick={next}>
                     {props.t('next-button')}
                   </Button>
@@ -79,6 +83,7 @@ const BookForm = (props: any) => {
                 ref={register(schema.occupations)}
                 errors={errors.occupations}
                 isMobile={props.isMobile}
+                occupations={props.occupations}
               />
               <div className="c-book-form__second-row">
                 <FormTextField

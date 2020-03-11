@@ -9,7 +9,7 @@ const FieldHair = React.forwardRef((props: any, ref: any) => {
     { name: 'curly', image: 'curly' },
   ];
   const girlHair = [
-    { name: 'straight', image: 'straight' },
+    { name: 'short', image: 'short' },
     { name: 'hijab', image: 'hijab' },
   ];
   const hair = props.type === 'boy' ? boyHair : girlHair;

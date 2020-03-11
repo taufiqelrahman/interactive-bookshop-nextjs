@@ -15,18 +15,17 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => {
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-occupations__options">
-          {/* dummy */}
-          {['Astronaut', 'Doctor', 'Ballerina', '4', '5', '6', '7', '8', '9'].map(job => (
-            <div key={job} className="c-field-occupations__options__box">
+          {props.occupations.map(job => (
+            <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
                 ref={ref}
-                value={job}
+                value={job.name}
                 name="occupations"
                 errors={props.errors}
                 inset={true}
-                defaultChecked={props.defaultChecked && props.defaultChecked.includes(job)}
+                defaultChecked={props.defaultChecked && props.defaultChecked.includes(job.name)}
               >
-                <span>{job}</span>
+                <span>{job.name}</span>
               </Checkbox>
             </div>
           ))}

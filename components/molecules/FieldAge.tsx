@@ -16,11 +16,12 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
           <Radio
             key={age}
             ref={ref}
-            value={age}
+            value={age.toLowerCase()}
+            label={age}
             name="age"
             errors={props.errors}
             style={{ height: 44, minWidth: 92 }}
-            defaultChecked={props.defaultChecked === age}
+            defaultChecked={props.defaultChecked === age.toLowerCase()}
           />
         ))}
       </div>

@@ -22,7 +22,7 @@ const Checkbox = React.forwardRef((props: any, ref: any) => {
       />
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={checkboxClass()}>
-          <img src={`/static/images/jobs/${props.value}`} />
+          <img src={`/static/images/jobs/${props.value}.png`} />
         </div>
         {props.children}
       </label>
