@@ -13,22 +13,20 @@ const PreviewMobile = (props: any): any => {
     mode: 'onChange',
   });
   useEffect(() => {
-    // if (!props.state.cart.selected) Router.back();
-  }, []);
-  useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form:form-error'));
     }
   }, [errors]);
   const selected = props.state.cart.selected || dummySelected || {};
   const screenHeight = '100vh - 69px';
+  const bookPages = props.state.master.bookPages;
   return (
     <DefaultLayout
       {...props}
       navbar={<NavBar isSteps={true} title={props.t('book-preferences')} step={2} totalSteps={2} />}
     >
       <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
-        <BookPreview selected={selected || {}} isMobile={props.isMobile} />
+        <BookPreview selected={selected || {}} isMobile={props.isMobile} bookPages={bookPages} />
         <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="c-preview__cover">
             <FieldCover ref={register(schema(props).cover)} errors={errors.cover} />

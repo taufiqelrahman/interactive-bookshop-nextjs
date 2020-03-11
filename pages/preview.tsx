@@ -3,13 +3,8 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import PreviewMobile from 'components/organisms/Preview/mobile';
 import PreviewDesktop from 'components/organisms/Preview/desktop';
 import actions from 'store/actions';
-import { useEffect } from 'react';
-import { Router } from 'i18n';
 
 const Preview = (props: any): any => {
-  useEffect(() => {
-    if (!props.state.cart.selected) Router.back();
-  }, []);
   if (props.isMobile) {
     return <PreviewMobile {...props} />;
   } else {
@@ -18,6 +13,14 @@ const Preview = (props: any): any => {
 };
 
 Preview.getInitialProps = async (ctx: any): Promise<any> => {
+  if (!ctx.reduxStore.getState().cart.selected) {
+    const { res } = ctx;
+    if (res) {
+      res.writeHead(302, { Location: 'create' });
+      res.end();
+    }
+    return {};
+  }
   try {
     await ctx.reduxStore.dispatch(actions.thunkLoadBookPages());
   } catch (err) {

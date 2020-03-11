@@ -17,7 +17,7 @@ const DateField = (props: any) => {
   const setFullDate = () => {
     const { date, month, year } = state;
     if (!date || !month || !year) return;
-    props.setValue(props.name, `${(date as any).value}-${(month as any).value}-${(year as any).value}`);
+    props.setValue(props.name, `${date}-${month}-${year}`);
     props.triggerValidation(props.name);
   };
   useEffect(() => {

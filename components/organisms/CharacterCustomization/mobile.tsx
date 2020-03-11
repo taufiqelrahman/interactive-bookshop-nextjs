@@ -33,11 +33,12 @@ const CharacterCustomization = (props: any) => {
     mode: 'onChange',
   });
   const onSubmit = data => {
+    const { selected } = props.state.cart;
+    props.saveSelected({ ...selected, ...data });
     if (charStep !== stepEnum.DEDICATION) {
       setCharStep(charStep + 1);
       return;
     }
-    props.saveSelected(data);
     Router.push('/preview');
   };
   const cancel = () => {
@@ -130,10 +131,10 @@ const CharacterCustomization = (props: any) => {
                 {charStep === stepEnum.GENDER && (
                   <FieldGender ref={register(schema.gender)} errors={errors.gender} isMobile={true} />
                 )}
-                {charStep === stepEnum.SKIN && (
+                {charStep === stepEnum.HAIR && (
                   <FieldHair ref={register(schema.hair)} errors={errors.hair} type={watch('gender')} isMobile={true} />
                 )}
-                {charStep === stepEnum.HAIR && (
+                {charStep === stepEnum.SKIN && (
                   <FieldSkin ref={register(schema.skin)} errors={errors.skin} isMobile={true} />
                 )}
                 {charStep === stepEnum.LANGUAGE && (
