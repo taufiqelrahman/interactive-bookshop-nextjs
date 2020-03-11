@@ -15,4 +15,8 @@ export default class Products {
     return this.adapter.default.get('/occupations')
   }
 
+  getBookPages() {
+    return this.adapter.default.get('/book-pages')
+  }
+
 }

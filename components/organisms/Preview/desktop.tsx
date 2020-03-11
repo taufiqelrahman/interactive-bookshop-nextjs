@@ -1,4 +1,4 @@
-import { withTranslation, Link } from 'i18n';
+import { withTranslation, Link, Router } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Card from 'components/atoms/Card';
@@ -14,14 +14,12 @@ const PreviewDesktop = (props: any): any => {
     mode: 'onChange',
   });
   useEffect(() => {
-    // if (!props.state.cart.selected) Router.back();
-  }, []);
-  useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form:form-error'));
     }
   }, [errors]);
   const selected = props.state.cart.selected || dummySelected || {};
+  const bookPages = props.state.master.bookPages;
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page">
@@ -30,7 +28,7 @@ const PreviewDesktop = (props: any): any => {
           <Card variant="border">
             <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
               <div className="c-preview__book">
-                <BookPreview selected={selected || {}} />
+                <BookPreview selected={selected || {}} bookPages={bookPages} />
               </div>
               <div className="c-preview__cover">
                 <FieldCover

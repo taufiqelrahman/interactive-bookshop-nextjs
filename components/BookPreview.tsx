@@ -3,7 +3,7 @@ import $ from 'jquery';
 import initHeidelberg from 'assets/heidelberg.js';
 import debounce from 'lodash.debounce';
 import BookPage from './atoms/BookPage';
-import dummyPages from '_mocks/bookPages';
+// import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
 const BookPreview = (props: any) => {
@@ -97,12 +97,12 @@ const BookPreview = (props: any) => {
 
   const getImage = (job, order) => {
     const { gender, age, skin, hair } = props.selected;
-    return `/static/images/pages/${job}/${order}/${gender}_${age}_${skin}_${hair}.jpeg`;
+    return `/static/images/pages/${job}/${order}/${gender}/${age}_${hair}_${skin}.jpeg`;
   };
 
   const pageClass = index => {
     if (index === 0) return 'first-page';
-    if (index === dummyPages.length - 1) return 'last-page';
+    if (index === props.bookPages.length - 1) return 'last-page';
     return '';
   };
   const bookHeight = '(100vh - 69px - 257px)';
@@ -125,30 +125,30 @@ const BookPreview = (props: any) => {
         />
       </div> */}
       {props.isMobile ? (
-        dummyPages &&
-        dummyPages.map((page, index) => (
+        props.bookPages &&
+        props.bookPages.map((page, index) => (
           <BookPage
             key={index}
             style={{
               height: `calc(${bookHeight})`,
               minWidth: `calc(${bookRatio}*${bookHeight})`,
             }}
-            image={getImage(page.job, page.order)}
+            image={getImage(page.occupation.name, page.order)}
             name={props.selected.name}
-            {...page}
+            contents={page.book_contents}
           />
         ))
       ) : (
         <div className="c-book-preview__container">
           <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
-            {dummyPages &&
-              dummyPages.map((page, index) => (
+            {props.bookPages &&
+              props.bookPages.map((page, index) => (
                 <BookPage
                   key={index}
                   className={`Heidelberg-Page ${pageClass(index)}`}
-                  image={getImage(page.job, page.order)}
+                  image={getImage(page.occupation.name, page.order)}
                   name={props.selected.name}
-                  {...page}
+                  contents={page.book_contents}
                 />
               ))}
           </div>

@@ -91,7 +91,7 @@ const CharacterCustomization = (props: any) => {
               />
               {watch('occupations') && (
                 <div className="c-char-custom__message">
-                  {errors.occupations ? props.t('occupations-invalid') : watch('occupations').join(',')}
+                  {errors.occupations ? props.t('occupations-invalid') : watch('occupations').join(', ')}
                 </div>
               )}
             </div>
