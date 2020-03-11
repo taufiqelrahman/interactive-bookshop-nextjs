@@ -13,14 +13,17 @@ const BookPage = (props: any) => {
       <svg className="c-book-page__svg">
         <foreignObject x="0" y="0" width="100%" height="100%">
           <img className="c-book-page__image" src={props.image} />
-          {props.contents.map((content, key) => (
-            <div
-              key={key}
-              className="c-book-page__content"
-              style={styleGenerator(content.style)}
-              dangerouslySetInnerHTML={{ __html: content.value.split('[name]').join(props.name) }}
-            />
-          ))}
+          {props.contents.map((content, key) => {
+            const value = props.languange === 'english' ? content.english : content.indonesia;
+            return (
+              <div
+                key={key}
+                className="c-book-page__content"
+                style={styleGenerator(content.style)}
+                dangerouslySetInnerHTML={{ __html: value.split('[name]').join(props.name) }}
+              />
+            );
+          })}
         </foreignObject>
       </svg>
       <style jsx>{`

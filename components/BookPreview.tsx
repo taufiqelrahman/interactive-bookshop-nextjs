@@ -136,6 +136,7 @@ const BookPreview = (props: any) => {
             image={getImage(page.occupation.name, page.order)}
             name={props.selected.name}
             contents={page.book_contents}
+            languange={props.selected.language}
           />
         ))
       ) : (
@@ -149,6 +150,7 @@ const BookPreview = (props: any) => {
                   image={getImage(page.occupation.name, page.order)}
                   name={props.selected.name}
                   contents={page.book_contents}
+                  languange={props.selected.language}
                 />
               ))}
           </div>
