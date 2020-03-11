@@ -1,7 +1,7 @@
 export const CHECKOUT = 'CHECKOUT';
 export const LOAD_ORDER = 'LOAD_ORDER';
 
-export interface Order {
+interface Order {
   id: number;
   order_number: string;
   shipping_number: string;
@@ -18,7 +18,7 @@ export interface Order {
   order_items: OrderItem[];
 }
 
-export interface OrderItem {
+interface OrderItem {
   id: number;
   order_id: number;
   product_id: number;

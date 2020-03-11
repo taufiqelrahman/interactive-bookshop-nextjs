@@ -3,7 +3,7 @@ export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
 
-export interface Cart {
+interface Cart {
   id: number;
   user_id: number;
   created_at: string;
@@ -12,7 +12,7 @@ export interface Cart {
   cart_items: CartItem[];
 }
 
-export interface CartItem {
+interface CartItem {
   id: number;
   cart_id: number;
   product_id: number;

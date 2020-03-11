@@ -1,7 +1,7 @@
 export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
 export const SHOW_PRODUCT = 'SHOW_PRODUCT';
 
-export interface Product {
+interface Product {
   id: number;
   name: string;
   description: string;
@@ -13,7 +13,7 @@ export interface Product {
   images: ProductImage[];
 }
 
-export interface ProductImage {
+interface ProductImage {
   id: number;
   product_id: number;
   description: string;
