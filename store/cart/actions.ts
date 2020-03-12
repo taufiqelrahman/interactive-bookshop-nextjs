@@ -3,6 +3,9 @@ import { ThunkAction } from 'redux-thunk';
 import { captureException } from '@sentry/browser';
 import * as types from './types';
 import api from '../../services/api';
+import graphql from '../../services/graphql';
+import { Router } from 'i18n';
+import { setErrorMessage } from '../actions';
 
 function loadCart(isFetching, cart = null): types.CartActionTypes {
   return {
@@ -31,17 +34,31 @@ function addToCart(isFetching, cart = null): types.CartActionTypes {
     isFetching,
   };
 }
-export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartState, null, Action<string>> => (
+export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartState, null, Action<string>> => async (
   dispatch,
-): any => {
+): Promise<any> => {
   dispatch(addToCart(true));
-  return api()
-    .cart.addToCart(newProduct)
-    .then(({ data }) => {
-      dispatch(addToCart(false, data.data));
+  const cart = await graphql().cart.create();
+  const customAttributes = Object.keys(newProduct).map(data => ({
+    key: data,
+    value: newProduct[data].toString(),
+  }));
+  const lineItemsToAdd = [
+    {
+      variantId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMjkwNDkwMjU3NDIxMw==',
+      quantity: 1,
+      customAttributes,
+    },
+  ];
+  return graphql()
+    .cart.addLineItems(cart.id, lineItemsToAdd)
+    .then(cart => {
+      dispatch(addToCart(false, cart));
+      Router.push('/cart');
     })
     .catch(err => {
       dispatch(addToCart(false));
+      dispatch(setErrorMessage(err.message));
       captureException(err);
     });
 };
@@ -64,6 +81,7 @@ export const thunkRemoveFromCart = (existingProduct: any): ThunkAction<void, typ
     })
     .catch(err => {
       dispatch(removeFromCart(false));
+      dispatch(setErrorMessage(err.message));
       captureException(err);
     });
 };

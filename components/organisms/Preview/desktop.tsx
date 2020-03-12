@@ -7,12 +7,15 @@ import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import BookPreview from 'components/BookPreview';
-import { onSubmit, dummySelected, schema, showError } from './helper';
+import { dummySelected, schema, showError } from './helper';
 
 const PreviewDesktop = (props: any): any => {
   const { register, handleSubmit, errors, formState } = useForm({
     mode: 'onChange',
   });
+  const onSubmit = data => {
+    props.thunkAddToCart(data);
+  };
   useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form:form-error'));

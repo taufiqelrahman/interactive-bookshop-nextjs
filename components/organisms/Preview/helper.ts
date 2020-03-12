@@ -1,9 +1,5 @@
 import { toast } from 'react-toastify';
 
-export const onSubmit = data => {
-  console.log(data);
-};
-
 export const schema = props => ({
   cover: {
     required: {
