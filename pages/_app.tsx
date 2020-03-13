@@ -165,8 +165,9 @@ const App: NextPage<any> = (props: any) => {
 
 App.getInitialProps = async ({ Component, ctx, router, language }: any): Promise<any> => {
   if (cookies(ctx).user) {
-    ctx.reduxStore.dispatch(actions.setLogin(true));
-    ctx.reduxStore.dispatch(actions.thunkLoadUser());
+    const { dispatch, getState } = ctx.reduxStore;
+    dispatch(actions.setLogin(true));
+    if (!getState().users.user) dispatch(actions.thunkLoadUser());
   } else {
     ctx.reduxStore.dispatch(actions.setLogin(false));
   }

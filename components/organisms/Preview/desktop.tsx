@@ -14,7 +14,8 @@ const PreviewDesktop = (props: any): any => {
     mode: 'onChange',
   });
   const onSubmit = data => {
-    props.thunkAddToCart(data);
+    const { selected } = props.state.cart;
+    props.thunkAddToCart({ ...selected, ...data });
   };
   useEffect(() => {
     if (!formState.isValid) {

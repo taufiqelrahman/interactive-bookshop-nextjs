@@ -50,11 +50,9 @@ function adapterGenerator(uri, token): ApolloClient<any> {
 
 const createAdapter = (): ApolloClient<any> => {
   return adapterGenerator(
-    'when-igrowup.myshopify.com',
-    // 'https://elrahman.myshopify.com/api/2019-07/graphql.json',
+    process.env.SHOPIFY_URL,
     // 'X-Shopify-Storefront-Access-Token',
-    'a57568f605b4341e023968f6266b18ed',
-    // 'b3d9600683d1798f52961907085264de',
+    process.env.STOREFRONT_API_KEY,
   );
 };
 
