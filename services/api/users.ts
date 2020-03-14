@@ -21,10 +21,14 @@ export default class Products {
   }
 
   forgotPassword(data) {
-    return this.adapter.secure.post('/forgot-password', data);
+    return this.adapter.default.post('/forgot-password', data);
   }
 
   resetPassword(data) {
-    return this.adapter.secure.post('/reset-password', data);
+    return this.adapter.default.post('/reset-password', data);
+  }
+
+  getMe() {
+    return this.adapter.secure.get('/me');
   }
 }

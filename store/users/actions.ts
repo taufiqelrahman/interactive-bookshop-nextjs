@@ -23,9 +23,20 @@ export function loadUser(isFetching, state?: types.User): types.UsersActionTypes
   };
 }
 
-export const thunkLoadUser = (): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
+export const thunkLoadUser = (req = null): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+): any => {
   dispatch(loadUser(true));
-  dispatch(loadUser(false, { email: 'taufiqelrahman65@gmail.com' }));
+  return api(req)
+    .users.getMe()
+    .then(({ data }) => {
+      dispatch(loadUser(false, data));
+    })
+    .catch(err => {
+      dispatch(loadUser(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
 };
 
 export function setLogin(state: boolean): types.UsersActionTypes {
@@ -42,12 +53,18 @@ function login(isFetching, state = null): types.UsersActionTypes {
     isFetching,
   };
 }
+function encrypt(token) {
+  const parsedKey = CryptoJS.enc.Hex.parse(process.env.SECRET_KEY);
+  const parsedIv = CryptoJS.enc.Hex.parse('0123456789abcdef');
+  const options = { mode: CryptoJS.mode.CBC, iv: parsedIv };
+  return CryptoJS.AES.encrypt(token, parsedKey, options).toString();
+}
 export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
   dispatch(login(true));
   return api()
     .users.login(userData)
     .then(({ data }) => {
-      const token = CryptoJS.AES.encrypt(data.token, process.env.SECRET_KEY).toString();
+      const token = encrypt(data.token);
       Cookies.set('user', token);
       dispatch(login(false, data));
       Router.push(`/${userData.from || ''}`);
