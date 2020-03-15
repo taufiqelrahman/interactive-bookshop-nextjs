@@ -1,11 +1,11 @@
 import axios, { AxiosAdapter, AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
-import CryptoJS from 'crypto-js';
 import Cart from './cart';
 import Orders from './orders';
 import Products from './products';
 import Users from './users';
 import Master from './master';
+import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
 
 export interface AdapterObject {
   default: AxiosInstance,
@@ -21,20 +21,21 @@ const options = {
 const createAdapter = (): AxiosAdapter => {
   return axios.create(options);
 }
-const decryptToken = (cryptedToken) => {
-  const bytes  = CryptoJS.AES.decrypt(cryptedToken, process.env.SECRET_KEY);
-  return bytes.toString(CryptoJS.enc.Utf8);
-}
 
 const createSecureAdapter = (req = null): AxiosAdapter => {
-  let cryptedToken;
-  // if (req) {
-  //   const userCookie = req.headers.cookie.split(';').filter(cookie => cookie.includes('user='));
-  //   cryptedToken = userCookie[0].split('=')[1];
-  // } else {
-    cryptedToken = Cookies.get('user');
-  // }
-  const token = cryptedToken ? decryptToken(cryptedToken) : '';
+  let token;
+  if (req) {
+    // if server-side
+    const userCookie = (req as any).headers.cookie.split(';').filter(cookie => cookie.includes('user='));
+    const cryptedToken = userCookie[0].split('=')[1];
+    token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
+  } else {
+    // if client-side
+    // debugger
+    console.log(Cookies.get())
+    const cryptedToken = Cookies.get('user');
+    token = !!cryptedToken ? decryptTokenClient(cryptedToken) : '';
+  }
   const secureOptions = {
     ...options,
     headers: {

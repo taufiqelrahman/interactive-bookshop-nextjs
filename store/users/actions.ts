@@ -2,11 +2,11 @@ import { captureException } from '@sentry/core';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import Cookies from 'js-cookie';
-import CryptoJS from 'crypto-js';
 import { Router } from 'i18n';
 import * as types from './types';
 import { setErrorMessage } from '../actions';
-import api from '../../services/api';
+import api from 'services/api';
+import { encryptTokenClient } from 'lib/crypto';
 
 function setUser(user: types.User): types.UsersActionTypes {
   return {
@@ -53,18 +53,12 @@ function login(isFetching, state = null): types.UsersActionTypes {
     isFetching,
   };
 }
-function encrypt(token) {
-  const parsedKey = CryptoJS.enc.Hex.parse(process.env.SECRET_KEY);
-  const parsedIv = CryptoJS.enc.Hex.parse('0123456789abcdef');
-  const options = { mode: CryptoJS.mode.CBC, iv: parsedIv };
-  return CryptoJS.AES.encrypt(token, parsedKey, options).toString();
-}
 export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
   dispatch(login(true));
   return api()
     .users.login(userData)
     .then(({ data }) => {
-      const token = encrypt(data.token);
+      const token = encryptTokenClient(data.token);
       Cookies.set('user', token);
       dispatch(login(false, data));
       Router.push(`/${userData.from || ''}`);
