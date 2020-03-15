@@ -1,8 +1,9 @@
-export const SET_USER = 'SET_USER';
+// export const SET_USER = 'SET_USER';
 export const LOAD_USER = 'LOAD_USER';
 export const SET_LOGIN = 'SET_LOGIN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const REGISTER = 'REGISTER';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 
@@ -16,10 +17,10 @@ export interface UsersState {
   user: User | null;
 }
 
-interface SetUser {
-  type: typeof SET_USER;
-  payload: User | null;
-}
+// interface SetUser {
+//   type: typeof SET_USER;
+//   payload: User | null;
+// }
 
 interface LoadUser {
   type: typeof LOAD_USER;
@@ -43,6 +44,11 @@ interface Logout {
   isFetching: boolean;
 }
 
+interface Register {
+  type: typeof REGISTER;
+  isFetching: boolean;
+}
+
 interface ForgotPassword {
   type: typeof FORGOT_PASSWORD;
   isFetching: boolean;
@@ -53,4 +59,4 @@ interface ResetPassword {
   isFetching: boolean;
 }
 
-export type UsersActionTypes = SetUser | LoadUser | SetLogin | Login | Logout | ForgotPassword | ResetPassword;
+export type UsersActionTypes = LoadUser | SetLogin | Login | Logout | Register | ForgotPassword | ResetPassword;

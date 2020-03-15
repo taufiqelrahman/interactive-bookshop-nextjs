@@ -31,8 +31,6 @@ const createSecureAdapter = (req = null): AxiosAdapter => {
     token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
   } else {
     // if client-side
-    // debugger
-    console.log(Cookies.get())
     const cryptedToken = Cookies.get('user');
     token = !!cryptedToken ? decryptTokenClient(cryptedToken) : '';
   }

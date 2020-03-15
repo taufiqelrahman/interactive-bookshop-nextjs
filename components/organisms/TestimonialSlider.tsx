@@ -16,7 +16,10 @@ const TestimonialSlider = (props: any) => {
   };
 
   useEffect(() => {
-    setTimeout(() => setNavRightClass(decideNavRightClass()), 500);
+    const setNavTimeout = setTimeout(() => setNavRightClass(decideNavRightClass()), 500);
+    return () => {
+      clearTimeout(setNavTimeout);
+    };
   }, [translationX]);
 
   const onNavRight = () => {

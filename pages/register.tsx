@@ -10,6 +10,7 @@ import Button from 'components/atoms/Button';
 import Divider from 'components/atoms/Divider';
 import FormTextField from 'components/molecules/FormTextField';
 import NavBar from 'components/organisms/NavBar/mobile';
+import api from 'services/api';
 
 const Register = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = useForm({
@@ -28,10 +29,17 @@ const Register = (props: any): any => {
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
       pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: props.t('form:email-invalid') },
-      // validate: async value => await fetch(url) // watch for duplicate email
+      validate: async value => {
+        const { data } = await api().users.checkEmail({ email: value });
+        return !data.exists || props.t('form:email-exists');
+      }, // watch for duplicate email
     },
+    name: { required: { value: true, message: `${props.t('form:name-label')} ${props.t('form:required-error')}` } },
     phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },
-    password: { required: { value: true, message: `Password ${props.t('form:required-error')}` } },
+    password: {
+      required: { value: true, message: `Password ${props.t('form:required-error')}` },
+      minLength: { value: 6, message: props.t('form:minlength-6-error') },
+    },
     confirmPassword: {
       required: { value: true, message: `Password ${props.t('form:required-error')}` },
       validate: value => value === watch('password') || props.t('form:password-different'),
@@ -42,15 +50,14 @@ const Register = (props: any): any => {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
-  const onSubmit = data => {
+  const onSubmit = async data => {
     switch (registerStep) {
       case stepEnum.EMAIL:
-        console.log(data);
         setSavedEmail(data.email);
         setRegisterStep(stepEnum.DETAIL);
         break;
       case stepEnum.DETAIL:
-        console.log({ ...data, email: savedEmail, from: Router.query.from });
+        props.thunkRegister({ ...data, email: savedEmail });
         break;
       default:
         break;
@@ -112,7 +119,7 @@ const Register = (props: any): any => {
               ) : (
                 <form
                   className="c-register__form"
-                  style={{ minHeight: 'calc(100vh - 59px - 24px)' }}
+                  style={props.isMobile ? { minHeight: 'calc(100vh - 59px - 24px)' } : {}}
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   {registerStep === stepEnum.EMAIL && (
@@ -147,12 +154,21 @@ const Register = (props: any): any => {
                         </h1>
                         <div className="c-register__saved-email">{savedEmail}</div>
                         <FormTextField
+                          label={props.t('form:name-label')}
+                          name="name"
+                          placeholder={props.t('form:name-placeholder')}
+                          ref={register(schema.name)}
+                          errors={errors.name}
+                          variant="full-width"
+                        />
+                        <FormTextField
                           label={props.t('form:phone-label')}
                           name="phone"
                           placeholder={props.t('form:phone-placeholder')}
                           ref={register(schema.phone)}
                           errors={errors.phone}
                           variant="full-width"
+                          style={{ marginTop: 24 }}
                         />
                         <FormTextField
                           label={props.t('form:password-label')}
@@ -166,7 +182,7 @@ const Register = (props: any): any => {
                         />
                         <FormTextField
                           label={props.t('form:confirm-password-label')}
-                          name="confirmPassword"
+                          name="password_confirmation"
                           placeholder={props.t('form:confirm-password-placeholder')}
                           ref={register(schema.confirmPassword)}
                           errors={errors.confirmPassword}

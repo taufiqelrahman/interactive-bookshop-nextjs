@@ -8,12 +8,6 @@ const initState: types.UsersState = {
 
 const reducer = (state: types.UsersState = initState, action: types.UsersActionTypes): any => {
   switch (action.type) {
-    case types.SET_USER: {
-      return {
-        ...state,
-        user: action.payload,
-      };
-    }
     case types.LOAD_USER: {
       return {
         ...state,
@@ -42,6 +36,12 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
       };
     }
     case types.FORGOT_PASSWORD: {
+      return {
+        ...state,
+        isFetching: action,
+      };
+    }
+    case types.REGISTER: {
       return {
         ...state,
         isFetching: action,

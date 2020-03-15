@@ -8,12 +8,12 @@ import { setErrorMessage } from '../actions';
 import api from 'services/api';
 import { encryptTokenClient } from 'lib/crypto';
 
-function setUser(user: types.User): types.UsersActionTypes {
-  return {
-    type: types.SET_USER,
-    payload: user,
-  };
-}
+// function setUser(user: types.User): types.UsersActionTypes {
+//   return {
+//     type: types.SET_USER,
+//     payload: user,
+//   };
+// };
 
 export function loadUser(isFetching, state?: types.User): types.UsersActionTypes {
   return {
@@ -62,7 +62,6 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
       Cookies.set('user', token);
       dispatch(login(false, data));
       Router.push(`/${userData.from || ''}`);
-      dispatch(setUser({ email: userData.email }));
     })
     .catch(err => {
       dispatch(login(false));
@@ -89,6 +88,29 @@ export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<
     })
     .catch(err => {
       dispatch(logout(false));
+      captureException(err);
+    });
+};
+
+function register(isFetching): types.UsersActionTypes {
+  return {
+    type: types.REGISTER,
+    isFetching,
+  };
+}
+export const thunkRegister = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+): any => {
+  dispatch(register(true));
+  return api()
+    .users.register(userData)
+    .then(() => {
+      dispatch(register(false));
+      Router.push('/');
+    })
+    .catch(err => {
+      dispatch(register(false));
+      dispatch(setErrorMessage(err.message));
       captureException(err);
     });
 };

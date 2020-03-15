@@ -17,7 +17,9 @@ const rootReducer = combineReducers({
 });
 
 const composeEnhancer =
-  (typeof window != 'undefined' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+  (typeof window != 'undefined' &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })) ||
+  compose;
 
 export type AppState = ReturnType<typeof rootReducer>;
 export function initializeStore(initialState?): Store {

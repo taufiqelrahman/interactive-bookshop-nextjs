@@ -12,6 +12,10 @@ export default class Products {
     return this.adapter.default.post('/register', data);
   }
 
+  checkEmail(data) {
+    return this.adapter.default.post('/check-email', data);
+  }
+
   login(data) {
     return this.adapter.default.post('/login', data);
   }

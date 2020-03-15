@@ -2,8 +2,8 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { captureException } from '@sentry/browser';
 import * as types from './types';
-import api from '../../services/api';
-import graphql from '../../services/graphql';
+import api from 'services/api';
+import graphql from 'services/graphql';
 import { Router } from 'i18n';
 import { setErrorMessage } from '../actions';
 
