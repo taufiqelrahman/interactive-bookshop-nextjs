@@ -6,6 +6,7 @@ import { Router } from 'i18n';
 import * as types from './types';
 import { setErrorMessage } from '../actions';
 import api from 'services/api';
+import graphql from 'services/graphql';
 import { encryptTokenClient } from 'lib/crypto';
 
 // function setUser(user: types.User): types.UsersActionTypes {
@@ -98,12 +99,16 @@ function register(isFetching): types.UsersActionTypes {
     isFetching,
   };
 }
-export const thunkRegister = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => (
+export const thunkRegister = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => async (
   dispatch,
-): any => {
+): Promise<any> => {
   dispatch(register(true));
+  const checkout = await graphql().checkout.create();
   return api()
-    .users.register(userData)
+    .users.register({
+      ...userData,
+      checkoutId: checkout.id,
+    })
     .then(() => {
       dispatch(register(false));
       Router.push('/');

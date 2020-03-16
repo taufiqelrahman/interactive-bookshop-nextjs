@@ -164,13 +164,14 @@ const App: NextPage<any> = (props: any) => {
 };
 
 App.getInitialProps = async ({ Component, ctx, router, language }: any): Promise<any> => {
+  const { dispatch, getState } = ctx.reduxStore;
   if (cookies(ctx).user) {
-    const { dispatch, getState } = ctx.reduxStore;
     dispatch(actions.setLogin(true));
     if (!getState().users.user) dispatch(actions.thunkLoadUser(ctx.req));
   } else {
-    ctx.reduxStore.dispatch(actions.setLogin(false));
+    dispatch(actions.setLogin(false));
   }
+  if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
   const currentLanguage = language || i18n.language;
   dayjs.locale(currentLanguage);
 

@@ -1,10 +1,9 @@
-export default class Products {
+export default class Checkout {
   adapter: any;
   basePath: string;
 
   constructor(adapter) {
     this.adapter = adapter;
-    this.basePath = '/products';
   }
 
   create(): Promise<any> {

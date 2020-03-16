@@ -28,7 +28,7 @@ const Register = (props: any): any => {
   const schema = {
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
-      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: props.t('form:email-invalid') },
+      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: props.t('form:email-invalid') },
       validate: async value => {
         const { data } = await api().users.checkEmail({ email: value });
         return !data.exists || props.t('form:email-exists');

@@ -7,7 +7,7 @@ import Client from 'shopify-buy';
 
 // import Cookies from 'js-cookie';
 // import CryptoJS from 'crypto-js';
-import Cart from './cart';
+import Checkout from './checkout';
 // import Orders from './orders';
 // import Products from './products';
 // import Users from './users';
@@ -76,7 +76,7 @@ export default (): any => {
   // };
   const adapter = createAdapter();
   return {
-    cart: new Cart(adapter),
+    checkout: new Checkout(adapter),
     // orders: new Orders(adapter),
     // products: new Products(adapter),
     // users: new Users(adapter),
