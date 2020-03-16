@@ -2,7 +2,7 @@ import { withTranslation } from 'i18n';
 import NumberFormat from 'react-number-format';
 import { date } from 'lib/format-date';
 import Card from 'components/atoms/Card';
-import Dot from 'components/atoms/Dot';
+// import Dot from 'components/atoms/Dot';
 import Capsule from 'components/atoms/Capsule';
 import appConfig from 'config';
 import { previewImg } from './helper';
@@ -45,10 +45,10 @@ const OrderItem = (props: any) => {
               </div>
             </div>
             <div className="c-order-item__detail--bottom">
-              <div className="c-order-item__detail__cover">
+              {/* <div className="c-order-item__detail__cover">
                 <Dot width="16px" color={props.line_items[0].cover} />
                 {props.line_items[0].cover}
-              </div>
+              </div> */}
               <div className="c-order-item__detail__price">
                 <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
               </div>
@@ -91,7 +91,7 @@ const OrderItem = (props: any) => {
               margin: 18px 0;
             }
             &--bottom {
-              @apply flex justify-between items-center;
+              @apply flex justify-end items-center;
             }
             &__cover {
               @apply flex text-xs items-center;

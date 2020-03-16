@@ -16,6 +16,7 @@ export default {
       age: 'toddler',
       skin: 'light',
       hair: 'curly',
+      message: 'Hai Lee',
     },
     {
       cover: 'red',
@@ -25,6 +26,7 @@ export default {
       age: 'toddler',
       skin: 'light',
       hair: 'curly',
+      message: 'Hai Brock',
     },
   ],
   shipping_address: {
@@ -44,4 +46,134 @@ export default {
     country_code: 'CA',
     province_code: 'ON',
   },
+  fulfillments: [
+    {
+      id: 1931124834437,
+      order_id: 2079230722181,
+      status: 'success',
+      created_at: '2020-03-17T01:12:44+07:00',
+      service: 'manual',
+      updated_at: '2020-03-17T01:12:44+07:00',
+      tracking_company: 'Other',
+      shipment_status: null,
+      location_id: 37571657861,
+      line_items: [
+        {
+          id: 4587278172293,
+          variant_id: 32904902574213,
+          title: 'Story book',
+          quantity: 1,
+          sku: '',
+          variant_title: '',
+          vendor: 'when.igrowup',
+          fulfillment_service: 'manual',
+          product_id: 4701377855621,
+          requires_shipping: true,
+          taxable: false,
+          gift_card: false,
+          name: 'Story book',
+          variant_inventory_management: null,
+          properties: [],
+          product_exists: true,
+          fulfillable_quantity: 0,
+          grams: 500,
+          price: '350000.00',
+          total_discount: '0.00',
+          fulfillment_status: 'fulfilled',
+          price_set: {
+            shop_money: {
+              amount: '350000.00',
+              currency_code: 'IDR',
+            },
+            presentment_money: {
+              amount: '350000.00',
+              currency_code: 'IDR',
+            },
+          },
+          total_discount_set: {
+            shop_money: {
+              amount: '0.00',
+              currency_code: 'IDR',
+            },
+            presentment_money: {
+              amount: '0.00',
+              currency_code: 'IDR',
+            },
+          },
+          discount_allocations: [],
+          admin_graphql_api_id: 'gid://shopify/LineItem/4587278172293',
+          tax_lines: [
+            {
+              title: 'VAT',
+              price: '0.00',
+              rate: 0.1,
+              price_set: {
+                shop_money: {
+                  amount: '0.00',
+                  currency_code: 'IDR',
+                },
+                presentment_money: {
+                  amount: '0.00',
+                  currency_code: 'IDR',
+                },
+              },
+            },
+          ],
+          origin_location: {
+            id: 1801799827589,
+            country_code: 'ID',
+            province_code: 'JK',
+            name: 'whenigrowup',
+            address1: 'Jl. Aselih Raya RT 12 RW 01, Cipedak, Jagakarsa',
+            address2: '',
+            city: 'Jakarta Selatan',
+            zip: '',
+          },
+        },
+      ],
+      tracking_number: 'CGK2079230722181',
+      tracking_numbers: ['CGK2079230722181'],
+      tracking_url: null,
+      tracking_urls: [],
+      receipt: {},
+      name: '#1002.1',
+      admin_graphql_api_id: 'gid://shopify/Fulfillment/1931124834437',
+    },
+  ],
+  shipping_lines: [
+    {
+      id: 1687279108229,
+      title: 'Standard',
+      price: '15000.00',
+      code: 'Standard',
+      source: 'shopify',
+      phone: null,
+      requested_fulfillment_service_id: null,
+      delivery_category: null,
+      carrier_identifier: null,
+      discounted_price: '15000.00',
+      price_set: {
+        shop_money: {
+          amount: '15000.00',
+          currency_code: 'IDR',
+        },
+        presentment_money: {
+          amount: '15000.00',
+          currency_code: 'IDR',
+        },
+      },
+      discounted_price_set: {
+        shop_money: {
+          amount: '15000.00',
+          currency_code: 'IDR',
+        },
+        presentment_money: {
+          amount: '15000.00',
+          currency_code: 'IDR',
+        },
+      },
+      discount_allocations: [],
+      tax_lines: [],
+    },
+  ],
 };

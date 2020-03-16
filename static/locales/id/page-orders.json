@@ -1,10 +1,12 @@
 {
   "my-orders": "Pesanan Saya",
   "orders-title": "Pesanan",
+  "order-title": "Pesanan",
   "sent": "dikirim",
   "pending": "menunggu pembayaran",
   "received": "selesai",
   "order-date": "Tanggal Pesan",
   "order-id": "ID Pesanan",
-  "books": "Buku"
+  "books": "Buku",
+  "book-details": "Detil Buku"
 }

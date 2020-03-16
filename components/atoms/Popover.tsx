@@ -15,10 +15,26 @@ const Popover = (props: any) => {
             @apply absolute left-0 bg-white font-opensans;
             transition: opacity 0.5s;
             border-radius: 12px;
-            padding: 24px;
-            width: 445px;
+            padding: 16px;
+            width: 360px;
             border: 2px solid #ededed;
             line-height: 22px;
+          }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-popover {
+          &__content {
+            @apply font-opensans text-sm;
+            h5 {
+              @apply font-semibold;
+            }
+            div {
+              @apply italic;
+              margin-top: 4px;
+              line-height: 19px;
+              margin-bottom: 16px;
+            }
           }
         }
       `}</style>

@@ -3,95 +3,119 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
-import dummyOrders from '_mocks/orders';
+import dummyOrder from '_mocks/orderDetail';
 import Card from 'components/atoms/Card';
 import NumberFormat from 'react-number-format';
 import Divider from 'components/atoms/Divider';
 import Popover from 'components/atoms/Popover';
+import appConfig from 'config';
+import { Fragment } from 'react';
+import Capsule from 'components/atoms/Capsule';
 
 const OrderDetail = (props: any): any => {
-  const dummyOrder = dummyOrders[0];
   const previewImg = () => {
     const filePath = '/static/images/preview/child';
     const { gender, age, skin, hair } = dummyOrder;
     return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
   };
+  const currentOrder = dummyOrder;
   return (
     <DefaultLayout {...props}>
-      <div className="bg-light-grey h-min-screen">
-        <div className="u-container u-container__page">
-          <Stepper title={props.t('orders-title')} />
-          <div className="c-detail-section">
-            <div className="c-detail-section__left">
-              <Card variant="border" style={{ marginBottom: 12 }}>
-                <div className="c-detail__container">
-                  <h2>{props.t('book-detail')}</h2>
-                  <div className="flex">
-                    <div className="c-detail__book__left">
-                      <div className="c-detail__book__image">
-                        <img src={previewImg()} />
-                      </div>
-                    </div>
-                    <div className="c-detail__book__middle">
-                      <div className="c-detail__label">{props.t('form:name-label')}</div>
-                      <div className="c-detail__value">{dummyOrder.name}</div>
-                      <div className="c-detail__label">{props.t('form:dream-occupation')}</div>
-                      <div className="c-detail__value">{dummyOrder.occupation}</div>
-                    </div>
-                    <div className="c-detail__book__right">
-                      <div className="c-detail__label">{props.t('form:dedication-note')}</div>
-                      <Popover content={props.notes}>
-                        <div className="c-detail__link">{props.t('form:preview-note')}</div>
-                      </Popover>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-              <Card variant="border">
-                <div className="c-detail__container">
-                  <h2>{props.t('shipping-address')}</h2>
-                  <div className="flex">
-                    <div className="c-detail__address__left">
-                      <div className="c-detail__label">{props.t('form:street-address')}</div>
-                      <div className="c-detail__value">{dummyOrder.name}</div>
-                      <div className="c-detail__label">{props.t('form:province')}</div>
-                      <div className="c-detail__value">{dummyOrder.occupation}</div>
-                    </div>
-                    <div className="c-detail__address__right">
-                      <div className="c-detail__label">{props.t('form:postal-code')}</div>
-                      <div className="c-detail__value">{dummyOrder.occupation}</div>
-                      <div className="c-detail__label">{props.t('form:city-district')}</div>
-                      <div className="c-detail__value">{dummyOrder.occupation}</div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
+      <div className="u-container u-container__page">
+        <Stepper
+          title={
+            <div className="flex items-center">
+              {`${props.t('order-title')}: ${currentOrder.orderId}`}
+              <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
+                {props.t(currentOrder.state)}
+                {props.state === 'received' && (
+                  <span className="icon-cross_check" style={{ marginLeft: 8, fontSize: 20 }} />
+                )}
+              </Capsule>
             </div>
-            <div className="c-detail-section__right">
-              <Card variant="border">
-                <div className="c-detail__container">
-                  <h2>{props.t('order-summary')}</h2>
-                  <div className="flex justify-between">
-                    <div>
-                      <div className="c-detail__summary__title">When I Grow Up</div>
-                      <div className="c-detail__summary__quantity">{props.t('quantity')}: 3</div>
-                    </div>
-                    <div className="c-detail__summary__total">
-                      <NumberFormat value={300000} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+          }
+        />
+        <div className="c-detail-section">
+          <div className="c-detail-section__left">
+            <Card variant="border" style={{ marginBottom: 12 }}>
+              <div className="c-detail__container">
+                <h2>{props.t('book-details')}</h2>
+                <div className="flex">
+                  <div className="c-detail__book__left">
+                    <div className="c-detail__book__image">
+                      <img src={previewImg()} />
                     </div>
                   </div>
-                  <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
-                  <div className="c-detail__summary__subtotal">
-                    <div>Subtotal</div>
-                    <NumberFormat value={900000} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  <div className="c-detail__book__middle">
+                    <div className="c-detail__label">{props.t('form:name-label')}</div>
+                    <div className="c-detail__value">{currentOrder.line_items.map(item => item.name).join(', ')}</div>
+                    <div className="c-detail__label" style={{ marginTop: 30 }}>
+                      {props.t('common:dedication-note')}
+                    </div>
+                    <Popover
+                      content={currentOrder.line_items.map(item => (
+                        <Fragment key={item.name}>
+                          <h5>{item.name}</h5>
+                          <div>{item.message}</div>
+                        </Fragment>
+                      ))}
+                    >
+                      <div className="c-detail__link">{props.t('common:preview-note')}</div>
+                    </Popover>
                   </div>
-                  <div className="c-detail__summary__info">
-                    <span className="icon-info" />
-                    {props.t('shipping-not-included')}
+                  <div className="c-detail__book__right">
+                    <div className="c-detail__label">{props.t('common:quantity')}</div>
+                    <div className="c-detail__value">
+                      {currentOrder.line_items.length} {props.t('books')}
+                    </div>
                   </div>
                 </div>
-              </Card>
-            </div>
+              </div>
+            </Card>
+            <Card variant="border">
+              <div className="c-detail__container">
+                <h2>{props.t('shipping-address')}</h2>
+                <div className="flex">
+                  <div className="c-detail__address__left">
+                    <div className="c-detail__label">{props.t('form:street-address')}</div>
+                    <div className="c-detail__value">{dummyOrder.name}</div>
+                    <div className="c-detail__label">{props.t('form:province')}</div>
+                    <div className="c-detail__value">{dummyOrder.occupation}</div>
+                  </div>
+                  <div className="c-detail__address__right">
+                    <div className="c-detail__label">{props.t('form:postal-code')}</div>
+                    <div className="c-detail__value">{dummyOrder.occupation}</div>
+                    <div className="c-detail__label">{props.t('form:city-district')}</div>
+                    <div className="c-detail__value">{dummyOrder.occupation}</div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+          <div className="c-detail-section__right">
+            <Card variant="border">
+              <div className="c-detail__container">
+                <h2>{props.t('common:order-summary')}</h2>
+                <div className="flex justify-between">
+                  <div>
+                    <div className="c-detail__summary__title">When I Grow Up</div>
+                    <div className="c-detail__summary__quantity">{props.t('quantity')}: 3</div>
+                  </div>
+                  <div className="c-detail__summary__total">
+                    <NumberFormat value={300000} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  </div>
+                </div>
+                <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
+                <div className="c-detail__summary__subtotal">
+                  <div>Subtotal</div>
+                  <NumberFormat value={900000} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                </div>
+                <div className="c-detail__summary__info">
+                  <span className="icon-info" />
+                  {props.t('shipping-not-included')}
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </div>
@@ -103,14 +127,14 @@ const OrderDetail = (props: any): any => {
             &__left {
               @apply w-full;
               @screen xl {
-                @apply w-2/3;
+                @apply w-3/5;
                 margin-right: 30px;
               }
             }
             &__right {
               @apply w-full;
               @screen xl {
-                @apply w-1/3;
+                @apply w-2/5;
               }
             }
           }
@@ -196,4 +220,6 @@ const OrderDetail = (props: any): any => {
   );
 };
 
-export default withTranslation(['page-orders', 'form'])(connect(mapStateToProps, mapDispatchToProps)(OrderDetail));
+export default withTranslation(['page-orders', 'form', 'common'])(
+  connect(mapStateToProps, mapDispatchToProps)(OrderDetail),
+);
