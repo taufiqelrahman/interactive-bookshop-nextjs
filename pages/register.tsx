@@ -57,7 +57,11 @@ const Register = (props: any): any => {
         setRegisterStep(stepEnum.DETAIL);
         break;
       case stepEnum.DETAIL:
-        props.thunkRegister({ ...data, email: savedEmail });
+        props.thunkRegister({
+          ...data,
+          email: savedEmail,
+          phone: data.phone.replace(/\s/g, ''),
+        });
         break;
       default:
         break;
