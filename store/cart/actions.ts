@@ -45,7 +45,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
   }));
   const lineItemsToAdd = [
     {
-      variantId: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMjkwNDkwMjU3NDIxMw==',
+      variantId: process.env.SHOPIFY_VARIANT_ID,
       quantity: 1,
       customAttributes,
     },
