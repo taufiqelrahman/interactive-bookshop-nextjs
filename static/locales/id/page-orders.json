@@ -16,5 +16,8 @@
   "province": "Provinsi",
   "postal-code": "Kodepos",
   "city": "Kota",
-  "shipping-address": "Alamat Pengiriman"
+  "shipping-address": "Alamat Pengiriman",
+  "shipping-cost": "Biaya Pengiriman",
+  "view-payment": "Lihat Pembayaran",
+  "continue-payment": "Lanjut Pembayaran?"
 }

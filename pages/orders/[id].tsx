@@ -15,11 +15,14 @@ import { fullDate } from 'lib/format-date';
 
 const OrderDetail = (props: any): any => {
   const currentOrder = dummyOrder;
-  const { shipping_address: shippingAddress, state, fulfillments } = currentOrder;
+  const { shipping_address: shippingAddress, state, fulfillments, shipping_lines: shippingLines } = currentOrder;
   const orderState = state && state.name;
   const shipping = fulfillments.length > 0 ? fulfillments[0] : null;
   const shippingDate = shipping ? shipping.created_at : null;
   const trackingNumber = shipping ? shipping.tracking_number : '';
+  const shippingLine = shippingLines.length > 0 ? shippingLines[0] : null;
+  const shippingName = shippingLine ? shippingLine.title : '';
+  const shippingCost = shippingLine ? shippingLine.price : 0;
   const previewImg = () => {
     const filePath = '/static/images/preview/child';
     const { gender, age, skin, hair } = currentOrder.line_items[0];
@@ -124,20 +127,44 @@ const OrderDetail = (props: any): any => {
                 <div className="flex justify-between">
                   <div>
                     <div className="c-detail__summary__title">When I Grow Up</div>
-                    <div className="c-detail__summary__quantity">{props.t('quantity')}: 3</div>
+                    <div className="c-detail__summary__label">
+                      {props.t('common:quantity')}: {currentOrder.line_items.length}
+                    </div>
                   </div>
                   <div className="c-detail__summary__total">
-                    <NumberFormat value={300000} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                    <NumberFormat
+                      value={currentOrder.total_line_items_price}
+                      thousandSeparator={true}
+                      prefix={'Rp'}
+                      displayType="text"
+                    />
                   </div>
                 </div>
+                {shippingLine && (
+                  <div className="flex justify-between" style={{ marginTop: 16 }}>
+                    <div>
+                      <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
+                      <div className="c-detail__summary__label">{shippingName}</div>
+                    </div>
+                    <div className="c-detail__summary__total">
+                      <NumberFormat value={shippingCost} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                    </div>
+                  </div>
+                )}
                 <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
                 <div className="c-detail__summary__subtotal">
                   <div>Subtotal</div>
-                  <NumberFormat value={900000} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  <NumberFormat
+                    value={currentOrder.total_price}
+                    thousandSeparator={true}
+                    prefix={'Rp'}
+                    displayType="text"
+                  />
                 </div>
                 <div className="c-detail__summary__info">
-                  <span className="icon-info" />
-                  {props.t('shipping-not-included')}
+                  <a href={currentOrder.order_status_url}>
+                    {currentOrder.financial_status === 'paid' ? props.t('view-payment') : props.t('continue-payment')}
+                  </a>
                 </div>
               </div>
             </Card>
@@ -199,7 +226,7 @@ const OrderDetail = (props: any): any => {
             }
           }
           &__summary {
-            &__quantity {
+            &__label {
               @apply text-xs;
               color: #8c89a6;
             }
@@ -211,16 +238,10 @@ const OrderDetail = (props: any): any => {
               line-height: 24px;
             }
             &__info {
-              @apply text-sm flex items-center;
+              @apply text-sm font-semibold;
+              color: #445ca4;
               margin-top: 12px;
-              padding: 12px;
-              line-height: 18px;
-              background: #f6f5f8;
-              border-radius: 12px;
-              span {
-                font-size: 20px;
-                margin-right: 8px;
-              }
+              line-height: 24px;
             }
           }
           &__label {

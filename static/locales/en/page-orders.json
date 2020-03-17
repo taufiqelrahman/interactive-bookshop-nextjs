@@ -16,5 +16,8 @@
   "province": "Province",
   "postal-code": "Postal Code",
   "city": "City",
-  "shipping-address": "Shipping Address"
+  "shipping-address": "Shipping Address",
+  "shipping-cost": "Shipping Cost",
+  "view-payment": "View Payment",
+  "continue-payment": "Continue Payment?"
 }

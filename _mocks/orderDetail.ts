@@ -2,10 +2,14 @@
 export default {
   id: 1,
   orderId: 'WIGO-00001',
-  price: 399000,
+  total_line_items_price: '350000.00',
+  total_price: '365000.00',
   created_at: '2008-01-10T11:00:00-05:00',
   sent_at: '2008-01-10T11:00:00-05:00',
   shipping_number: 'JT772817192901',
+  financial_status: 'paid',
+  order_status_url:
+    'https://when-igrowup.myshopify.com/30247846021/orders/1449737097afc161c3963f051c54f0c7/authenticate?key=20f425ba8649c646199898423a3672ea',
   line_items: [
     {
       cover: 'blue',
