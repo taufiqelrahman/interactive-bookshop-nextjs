@@ -14,16 +14,17 @@ import Capsule from 'components/atoms/Capsule';
 import { fullDate } from 'lib/format-date';
 
 const OrderDetail = (props: any): any => {
-  const previewImg = () => {
-    const filePath = '/static/images/preview/child';
-    const { gender, age, skin, hair } = dummyOrder;
-    return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
-  };
   const currentOrder = dummyOrder;
-  const orderState = currentOrder.state && currentOrder.state.name;
-  const shipping = currentOrder.fulfillments.length > 0 ? currentOrder.fulfillments[0] : null;
+  const { shipping_address: shippingAddress, state, fulfillments } = currentOrder;
+  const orderState = state && state.name;
+  const shipping = fulfillments.length > 0 ? fulfillments[0] : null;
   const shippingDate = shipping ? shipping.created_at : null;
   const trackingNumber = shipping ? shipping.tracking_number : '';
+  const previewImg = () => {
+    const filePath = '/static/images/preview/child';
+    const { gender, age, skin, hair } = currentOrder.line_items[0];
+    return `${filePath}/${gender}/${age}_${skin}_${hair}.JPG`;
+  };
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page">
@@ -101,16 +102,16 @@ const OrderDetail = (props: any): any => {
                 <h2>{props.t('shipping-address')}</h2>
                 <div className="flex">
                   <div className="c-detail__address__left">
-                    <div className="c-detail__label">{props.t('form:street-address')}</div>
-                    <div className="c-detail__value">{dummyOrder.name}</div>
-                    <div className="c-detail__label">{props.t('form:province')}</div>
-                    <div className="c-detail__value">{dummyOrder.occupation}</div>
+                    <div className="c-detail__label">{props.t('street-address')}</div>
+                    <div className="c-detail__value">{shippingAddress.address1}</div>
+                    <div className="c-detail__label">{props.t('province')}</div>
+                    <div className="c-detail__value">{shippingAddress.province}</div>
                   </div>
                   <div className="c-detail__address__right">
-                    <div className="c-detail__label">{props.t('form:postal-code')}</div>
-                    <div className="c-detail__value">{dummyOrder.occupation}</div>
-                    <div className="c-detail__label">{props.t('form:city-district')}</div>
-                    <div className="c-detail__value">{dummyOrder.occupation}</div>
+                    <div className="c-detail__label">{props.t('postal-code')}</div>
+                    <div className="c-detail__value">{shippingAddress.zip}</div>
+                    <div className="c-detail__label">{props.t('city')}</div>
+                    <div className="c-detail__value">{shippingAddress.city}</div>
                   </div>
                 </div>
               </div>

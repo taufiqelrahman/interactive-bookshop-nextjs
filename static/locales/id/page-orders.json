@@ -11,5 +11,10 @@
   "book-details": "Detil Buku",
   "order-state": "Status Pesanan",
   "shipping-date": "Tanggal Pengiriman",
-  "tracking-number": "Nomor Pengiriman"
+  "tracking-number": "Nomor Pengiriman",
+  "street-address": "Alamat",
+  "province": "Provinsi",
+  "postal-code": "Kodepos",
+  "city": "Kota",
+  "shipping-address": "Alamat Pengiriman"
 }

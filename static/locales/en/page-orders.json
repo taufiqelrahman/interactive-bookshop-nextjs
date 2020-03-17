@@ -11,5 +11,10 @@
   "book-details": "Book Details",
   "order-state": "Order State",
   "shipping-date": "Shipping Date",
-  "tracking-number": "Tracking Number"
+  "tracking-number": "Tracking Number",
+  "street-address": "Street Address",
+  "province": "Province",
+  "postal-code": "Postal Code",
+  "city": "City",
+  "shipping-address": "Shipping Address"
 }
