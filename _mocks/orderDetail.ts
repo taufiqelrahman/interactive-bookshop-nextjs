@@ -5,7 +5,6 @@ export default {
   price: 399000,
   created_at: '2008-01-10T11:00:00-05:00',
   sent_at: '2008-01-10T11:00:00-05:00',
-  state: 'sent',
   shipping_number: 'JT772817192901',
   line_items: [
     {
@@ -176,4 +175,11 @@ export default {
       tax_lines: [],
     },
   ],
+  state: {
+    id: 4,
+    name: 'sent',
+    created_at: '2020-03-17 07:13:43',
+    updated_at: null,
+    deleted_at: null,
+  },
 };

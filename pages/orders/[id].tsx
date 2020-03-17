@@ -11,6 +11,7 @@ import Popover from 'components/atoms/Popover';
 import appConfig from 'config';
 import { Fragment } from 'react';
 import Capsule from 'components/atoms/Capsule';
+import { fullDate } from 'lib/format-date';
 
 const OrderDetail = (props: any): any => {
   const previewImg = () => {
@@ -19,6 +20,10 @@ const OrderDetail = (props: any): any => {
     return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
   };
   const currentOrder = dummyOrder;
+  const orderState = currentOrder.state && currentOrder.state.name;
+  const shipping = currentOrder.fulfillments.length > 0 ? currentOrder.fulfillments[0] : null;
+  const shippingDate = shipping ? shipping.created_at : null;
+  const trackingNumber = shipping ? shipping.tracking_number : '';
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page">
@@ -26,8 +31,8 @@ const OrderDetail = (props: any): any => {
           title={
             <div className="flex items-center">
               {`${props.t('order-title')}: ${currentOrder.orderId}`}
-              <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
-                {props.t(currentOrder.state)}
+              <Capsule color={appConfig.stateColor[orderState]} style={{ height: 30, marginLeft: 18 }}>
+                {props.t(orderState)}
                 {props.state === 'received' && (
                   <span className="icon-cross_check" style={{ marginLeft: 8, fontSize: 20 }} />
                 )}
@@ -68,6 +73,25 @@ const OrderDetail = (props: any): any => {
                     <div className="c-detail__value">
                       {currentOrder.line_items.length} {props.t('books')}
                     </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+            <Card variant="border" style={{ marginBottom: 12 }}>
+              <div className="c-detail__container">
+                <h2>{props.t('order-state')}</h2>
+                <div className="flex">
+                  <div className="c-detail__address__left">
+                    <div className="c-detail__label">{props.t('order-date')}</div>
+                    <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
+                    <div className="c-detail__label">{props.t('order-state')}</div>
+                    <div className="c-detail__value capitalize">{props.t(orderState)}</div>
+                  </div>
+                  <div className="c-detail__address__right">
+                    <div className="c-detail__label">{props.t('shipping-date')}</div>
+                    <div className="c-detail__value">{fullDate(shippingDate)}</div>
+                    <div className="c-detail__label">{props.t('tracking-number')}</div>
+                    <div className="c-detail__value">{trackingNumber}</div>
                   </div>
                 </div>
               </div>

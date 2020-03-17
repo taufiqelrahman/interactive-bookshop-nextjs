@@ -8,5 +8,8 @@
   "order-date": "Order Date",
   "order-id": "Order ID",
   "books": "Book(s)",
-  "book-details": "Book Details"
+  "book-details": "Book Details",
+  "order-state": "Order State",
+  "shipping-date": "Shipping Date",
+  "tracking-number": "Tracking Number"
 }

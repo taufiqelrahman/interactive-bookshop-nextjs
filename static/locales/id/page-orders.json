@@ -8,5 +8,8 @@
   "order-date": "Tanggal Pesan",
   "order-id": "ID Pesanan",
   "books": "Buku",
-  "book-details": "Detil Buku"
+  "book-details": "Detil Buku",
+  "order-state": "Status Pesanan",
+  "shipping-date": "Tanggal Pengiriman",
+  "tracking-number": "Nomor Pengiriman"
 }
