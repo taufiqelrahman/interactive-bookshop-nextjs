@@ -18,7 +18,10 @@ const rootReducer = combineReducers({
 
 const isBrowser = typeof window != 'undefined';
 const reduxOption = { trace: true, traceLimit: 25 };
-const composeEnhancer = (isBrowser && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(reduxOption)) || compose;
+const composeEnhancer =
+  isBrowser && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(reduxOption)
+    : compose;
 
 export type AppState = ReturnType<typeof rootReducer>;
 export function initializeStore(initialState?): Store {

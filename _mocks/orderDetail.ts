@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 export default {
   id: 1,
-  orderId: 'WIGO-00001',
+  name: '#WIGO-1005',
   total_line_items_price: '350000.00',
   total_price: '365000.00',
   created_at: '2008-01-10T11:00:00-05:00',

@@ -34,7 +34,7 @@ const OrderDetail = (props: any): any => {
         <Stepper
           title={
             <div className="flex items-center">
-              {`${props.t('order-title')}: ${currentOrder.orderId}`}
+              {`${props.t('order-title')}: ${currentOrder.name.replace('#', '')}`}
               <Capsule color={appConfig.stateColor[orderState]} style={{ height: 30, marginLeft: 18 }}>
                 {props.t(orderState)}
                 {props.state === 'received' && (
@@ -174,18 +174,21 @@ const OrderDetail = (props: any): any => {
       <style jsx>{`
         .c-detail {
           &-section {
-            @apply flex w-full;
+            @apply flex w-full flex-col;
+            @screen lg {
+              @apply flex-row;
+            }
             padding: 31px 0;
             &__left {
               @apply w-full;
-              @screen xl {
+              @screen lg {
                 @apply w-3/5;
                 margin-right: 30px;
               }
             }
             &__right {
               @apply w-full;
-              @screen xl {
+              @screen lg {
                 @apply w-2/5;
               }
             }
@@ -201,19 +204,39 @@ const OrderDetail = (props: any): any => {
           }
           &__book {
             &__left {
-              @apply w-3/12;
+              @apply w-3/12 opacity-100;
+              @screen lg {
+                @apply w-0 opacity-0;
+              }
+              @screen xl {
+                @apply w-3/12 opacity-100;
+              }
             }
             &__middle {
               @apply w-4/12;
+              @screen lg {
+                @apply w-6/12;
+              }
+              @screen xl {
+                @apply w-4/12;
+              }
+              @apply w-4/12;
             }
             &__right {
+              @apply w-5/12;
+              @screen lg {
+                @apply w-6/12;
+              }
+              @screen xl {
+                @apply w-4/12;
+              }
               @apply w-5/12;
             }
             &__image {
               background: #f3bf45;
               border-radius: 12px;
               height: 136px;
-              width: 136px;
+              max-width: 136px;
               border: 2px solid #ededed;
             }
           }
