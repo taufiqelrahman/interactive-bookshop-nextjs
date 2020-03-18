@@ -25,9 +25,7 @@ const OrderItem = (props: any) => {
               <div className="c-order-item__detail--top--right">
                 <Capsule color={appConfig.stateColor[props.state]}>
                   {props.t(props.state)}
-                  {props.state === 'received' && (
-                    <span className="icon-cross_check" style={{ marginLeft: 8, fontSize: 20 }} />
-                  )}
+                  {props.state === 'received' && <span className="icon-cross_check" />}
                 </Capsule>
               </div>
             </div>

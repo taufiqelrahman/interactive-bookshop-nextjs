@@ -32,6 +32,9 @@ const Sheet = (props: any) => {
           &--rounded {
             border-radius: 6px 6px 0px 0px;
           }
+          &--rounded-large {
+            border-radius: 12px 12px 0px 0px;
+          }
           &__head {
             &__handler {
               @apply mx-auto;
