@@ -1,20 +1,23 @@
 import { withTranslation, Router } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import dummyOrder from '_mocks/orderDetail';
-import Card from 'components/atoms/Card';
 import NumberFormat from 'react-number-format';
 import Divider from 'components/atoms/Divider';
-import Popover from 'components/atoms/Popover';
 import appConfig from 'config';
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Capsule from 'components/atoms/Capsule';
 import { fullDate } from 'lib/format-date';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { retrieveInfo, previewImg } from './helper';
+import { retrieveInfo } from './helper';
 import Sheet from 'components/atoms/Sheet';
+import { Swipeable } from 'react-swipeable';
+import Dot from 'components/atoms/Dot';
 
 const OrderDetailMobile = (props: any): any => {
-  const [showPreview, setShowPreview] = useState(false);
+  const [state, setState] = useState({
+    showPreview: false,
+    extend: false,
+  });
   const {
     currentOrder,
     shippingAddress,
@@ -27,56 +30,143 @@ const OrderDetailMobile = (props: any): any => {
     orderNumber,
   } = retrieveInfo(dummyOrder);
   useEffect(() => {
-    setShowPreview(true);
+    setState({ ...state, showPreview: true });
   }, []);
   const onExit = () => {
-    setShowPreview(false);
+    setState({ ...state, showPreview: false });
     Router.push('/orders');
   };
+  const screenHeight = '100vh - 59px';
   return (
     <DefaultLayout {...props} navbar={<NavBar setSideNav={props.setSideNav} menuAction={false} title={orderNumber} />}>
       <div
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
-        style={{ minHeight: 'calc(100vh - 59px)' }}
+        style={{ minHeight: `calc(${screenHeight})` }}
       >
         <Capsule color={appConfig.stateColor[orderState]} variant="bar">
           {props.t(orderState)}
           {props.state === 'received' && <span className="icon-cross_check" />}
         </Capsule>
       </div>
-      <Sheet
-        name="preview-sheet"
-        isOpen={showPreview}
-        closeSheet={onExit}
-        variant="rounded-large"
-        content={
-          <Fragment>
-            <div className="c-detail__container">
-              <h2>{props.t('book-details')}</h2>
-              <div className="c-detail__book">
-                <div className="c-detail__label">{props.t('form:name-label')}</div>
-                <div className="c-detail__value" style={{ marginBottom: 16 }}>
-                  {currentOrder.line_items.map(item => item.name).join(', ')}
+      <Swipeable
+        onSwipedUp={() => setState({ ...state, extend: true })}
+        onSwipedRight={() => setState({ ...state, extend: true })}
+        onSwipedDown={() => setState({ ...state, extend: false })}
+        onSwipedLeft={() => setState({ ...state, extend: false })}
+      >
+        <Sheet
+          name="preview-sheet"
+          isOpen={state.showPreview}
+          closeSheet={onExit}
+          variant="rounded-large,bleed"
+          style={{ top: 50, overflow: 'auto' }}
+          onClick={() => setState({ ...state, extend: true })}
+          content={
+            <div className="c-detail">
+              <div className="c-detail__container">
+                <h2>{props.t('book-details')}</h2>
+                <div className="c-detail__book">
+                  <div className="c-detail__label">{props.t('form:name-label')}</div>
+                  <div className="c-detail__value">{currentOrder.line_items.map(item => item.name).join(', ')}</div>
+                  <div className="c-detail__label">{props.t('common:quantity')}</div>
+                  <div className="c-detail__value">
+                    {currentOrder.line_items.length} {props.t('books')}
+                  </div>
+                  <div className="c-detail__label">{props.t('common:dedication-note')}</div>
+                  <div className="c-detail__link">{props.t('common:preview-note')}</div>
                 </div>
-                <div className="c-detail__label">{props.t('common:quantity')}</div>
-                <div className="c-detail__value" style={{ marginBottom: 16 }}>
-                  {currentOrder.line_items.length} {props.t('books')}
+              </div>
+              <div className="c-detail__container">
+                <h2>{props.t('order-state')}</h2>
+                <div className="c-detail__order">
+                  <div className="c-detail__label">{props.t('order-date')}</div>
+                  <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
+                  <div className="c-detail__label">{props.t('order-state')}</div>
+                  <div className="c-detail__value capitalize">{props.t(orderState)}</div>
+                  <div className="c-detail__label">{props.t('shipping-date')}</div>
+                  <div className="c-detail__value">{fullDate(shippingDate)}</div>
+                  <div className="c-detail__label">{props.t('tracking-number')}</div>
+                  <div className="c-detail__value">{trackingNumber}</div>
                 </div>
-                <div className="c-detail__label">{props.t('common:dedication-note')}</div>
-                <div className="c-detail__link">{props.t('common:preview-note')}</div>
+              </div>
+              <div className="c-detail__container">
+                <h2>{props.t('shipping-address')}</h2>
+                <div className="c-detail__address">
+                  <div className="c-detail__label">{props.t('street-address')}</div>
+                  <div className="c-detail__value">{shippingAddress.address1}</div>
+                  <div className="c-detail__label">{props.t('province')}</div>
+                  <div className="c-detail__value">{shippingAddress.province}</div>
+                  <div className="c-detail__label">{props.t('postal-code')}</div>
+                  <div className="c-detail__value">{shippingAddress.zip}</div>
+                  <div className="c-detail__label">{props.t('city')}</div>
+                  <div className="c-detail__value">{shippingAddress.city}</div>
+                </div>
+              </div>
+              <div className="c-detail__container">
+                <div className="c-detail__summary__header">
+                  <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
+                  <Dot width="12px" color="red" />
+                </div>
+                <div className="flex justify-between">
+                  <div>
+                    <div className="c-detail__summary__title">When I Grow Up</div>
+                    <div className="c-detail__summary__label">
+                      {props.t('common:quantity')}: {currentOrder.line_items.length}
+                    </div>
+                  </div>
+                  <div className="c-detail__summary__total">
+                    <NumberFormat
+                      value={currentOrder.total_line_items_price}
+                      thousandSeparator={true}
+                      prefix={'Rp'}
+                      displayType="text"
+                    />
+                  </div>
+                </div>
+                {shippingLine && (
+                  <div className="flex justify-between" style={{ marginTop: 16 }}>
+                    <div>
+                      <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
+                      <div className="c-detail__summary__label">{shippingName}</div>
+                    </div>
+                    <div className="c-detail__summary__total">
+                      <NumberFormat value={shippingCost} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                    </div>
+                  </div>
+                )}
+                <Divider style={{ borderColor: '#EDEDED', margin: '20px 0 20px' }} />
+                <div className="c-detail__summary__subtotal">
+                  <div>Subtotal</div>
+                  <NumberFormat
+                    value={currentOrder.total_price}
+                    thousandSeparator={true}
+                    prefix={'Rp'}
+                    displayType="text"
+                  />
+                </div>
+                <div className="c-detail__summary__info">
+                  <a href={currentOrder.order_status_url}>
+                    {currentOrder.financial_status === 'paid' ? props.t('view-payment') : props.t('continue-payment')}
+                  </a>
+                </div>
               </div>
             </div>
-          </Fragment>
-        }
-      />
+          }
+        />
+      </Swipeable>
       <style jsx>{`
         .c-detail {
+          @apply w-full;
+          background: #e5e5e5;
+          max-height: calc(${screenHeight} - 45px);
+          ${state.extend ? 'overflow: auto' : 'position: absolute'}
           &__container {
-            padding: 8px 0;
+            @apply bg-white;
+            padding: 24px 16px;
+            margin-bottom: 12px;
             h2 {
               @apply font-semibold;
-              font-size: 20px;
-              line-height: 30px;
+              line-height: 24px;
               margin-bottom: 24px;
             }
           }
@@ -102,35 +192,48 @@ const OrderDetailMobile = (props: any): any => {
               @apply text-xs;
               color: #8c89a6;
             }
+            &__header {
+              @apply flex items-center;
+              margin-bottom: 24px;
+              h2 {
+                margin-right: 8px;
+              }
+            }
             &__subtotal {
-              @apply flex justify-between font-semibold;
+              @apply flex justify-between font-semibold text-sm;
             }
             &__title {
-              @apply mb-1;
-              line-height: 24px;
+              @apply mb-1 text-sm;
+              line-height: 19px;
             }
             &__info {
               @apply text-sm font-semibold;
               color: #445ca4;
-              margin-top: 12px;
+              margin-top: 20px;
               line-height: 24px;
+            }
+            &__total {
+              @apply text-sm;
             }
           }
           &__label {
             @apply text-xs font-semibold;
             line-height: 18px;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             color: #999;
           }
           &__value {
-            @apply font-opensans;
-            line-height: 22px;
-            margin-bottom: 13px;
+            @apply font-opensans text-sm;
+            line-height: 19px;
+            margin-bottom: 16px;
+            &:last-child {
+              @apply mb-0;
+            }
           }
           &__link {
-            @apply font-semibold cursor-pointer;
+            @apply font-semibold cursor-pointer text-sm;
             color: #445ca4;
-            line-height: 24px;
+            line-height: 21px;
           }
         }
       `}</style>

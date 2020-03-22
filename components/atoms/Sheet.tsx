@@ -1,8 +1,12 @@
 const Sheet = (props: any) => {
-  const variantClass = props.variant ? ` c-sheet--${props.variant}` : '';
+  const variantClass = () => {
+    if (!props.variant) return '';
+    const variants = props.variant.split(',');
+    return variants.map(variant => `c-sheet--${variant}`).join(' ');
+  };
   return (
-    <div key={props.name}>
-      <div className={`c-sheet${variantClass}`}>
+    <div key={props.name} style={props.style}>
+      <div onClick={props.onClick} className={`c-sheet ${variantClass()}`}>
         {props.header && (
           <div className="c-sheet__head">
             <div className="c-sheet__head__handler"></div>
@@ -34,6 +38,9 @@ const Sheet = (props: any) => {
           }
           &--rounded-large {
             border-radius: 12px 12px 0px 0px;
+          }
+          &--bleed {
+            padding: 0;
           }
           &__head {
             &__handler {

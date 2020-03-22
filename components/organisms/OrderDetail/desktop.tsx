@@ -79,13 +79,13 @@ const OrderDetailDesktop = (props: any): any => {
               <div className="c-detail__container">
                 <h2>{props.t('order-state')}</h2>
                 <div className="flex">
-                  <div className="c-detail__address__left">
+                  <div className="c-detail__order__left">
                     <div className="c-detail__label">{props.t('order-date')}</div>
                     <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
                     <div className="c-detail__label">{props.t('order-state')}</div>
                     <div className="c-detail__value capitalize">{props.t(orderState)}</div>
                   </div>
-                  <div className="c-detail__address__right">
+                  <div className="c-detail__order__right">
                     <div className="c-detail__label">{props.t('shipping-date')}</div>
                     <div className="c-detail__value">{fullDate(shippingDate)}</div>
                     <div className="c-detail__label">{props.t('tracking-number')}</div>
@@ -232,6 +232,14 @@ const OrderDetailDesktop = (props: any): any => {
               height: 136px;
               max-width: 136px;
               border: 2px solid #ededed;
+            }
+          }
+          &__order {
+            &__left {
+              @apply w-7/12;
+            }
+            &__right {
+              @apply w-5/12;
             }
           }
           &__address {
