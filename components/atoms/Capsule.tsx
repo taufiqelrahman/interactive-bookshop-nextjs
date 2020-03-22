@@ -6,7 +6,7 @@ const Capsule = (props: any) => {
       {props.children}
       <style jsx>{`
         .c-capsule {
-          @apply bg-black font-bold text-sm flex items-center;
+          @apply bg-black font-bold text-sm flex items-center relative;
           border-radius: 60px;
           padding: 6px 28px;
           color: white;

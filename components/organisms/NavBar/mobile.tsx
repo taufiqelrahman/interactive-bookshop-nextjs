@@ -9,7 +9,7 @@ const NavBar = (props: any) => {
     props.setSideNav(true);
   };
   return (
-    <div className="c-nav-bar">
+    <div className="c-nav-bar" style={props.style}>
       <div className={`c-nav-bar__action ${isIndexPage ? 'c-nav-bar__action--index' : ''}`}>
         {props.menuAction ? (
           <span className="icon-menu" onClick={showSideNav} />

@@ -35,15 +35,15 @@ const Sheet = (props: any) => {
           transition: transform 0.2s ease-in;
           min-height: 268px;
           padding: 16px;
-          z-index: 50 + ${zIndexMultiplier};
+          z-index: ${50 + zIndexMultiplier};
           &__overlay {
             @apply fixed top-0 left-0 w-full h-full;
             background-color: rgba(51, 51, 51, 0.8);
             opacity: ${props.isOpen ? 1 : 0};
             transition: opacity 0.3s ease-in;
-            z-index: 40 + ${zIndexMultiplier};
+            z-index: ${40 + zIndexMultiplier};
             &--light {
-              background-color: rgba(51, 51, 51, 0.3);
+              background-color: rgba(51, 51, 51, 0.5);
             }
           }
           &--rounded {

@@ -44,12 +44,15 @@ const OrderDetailMobile = (props: any): any => {
     setState({ ...state, showNote: true });
   };
   return (
-    <DefaultLayout {...props} navbar={<NavBar setSideNav={props.setSideNav} menuAction={false} title={orderNumber} />}>
+    <DefaultLayout
+      {...props}
+      navbar={<NavBar setSideNav={props.setSideNav} menuAction={false} title={orderNumber} style={{ zIndex: 42 }} />}
+    >
       <div
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
         style={{ minHeight: `calc(${screenHeight})` }}
       >
-        <Capsule color={appConfig.stateColor[orderState]} variant="bar">
+        <Capsule color={appConfig.stateColor[orderState]} variant="bar" style={{ zIndex: 42 }}>
           {props.t(orderState)}
           {props.state === 'received' && <span className="icon-cross_check" />}
         </Capsule>
@@ -207,7 +210,7 @@ const OrderDetailMobile = (props: any): any => {
         .c-detail {
           @apply w-full;
           background: #e5e5e5;
-          max-height: calc(${screenHeight} - 45px);
+          max-height: calc(${screenHeight} - 65px);
           ${state.extendPreview ? 'overflow: auto;' : 'position: absolute;'}
           &__container {
             @apply bg-white;
@@ -221,7 +224,7 @@ const OrderDetailMobile = (props: any): any => {
           }
           &__note {
             @apply w-full;
-            max-height: calc(${screenHeight} - 45px);
+            max-height: calc(${screenHeight} - 65px);
             ${state.extendNote ? 'overflow: auto;' : 'position: absolute;'}
             padding: 16px 0;
             h5 {
