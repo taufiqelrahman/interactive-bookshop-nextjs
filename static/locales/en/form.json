@@ -45,5 +45,6 @@
   "cover-label": "Cover color",
   "next-button": "Next",
   "cancel-button": "Cancel",
-  "reset-button": "Reset"
+  "reset-button": "Reset",
+  "select-date": "Select Date"
 }

@@ -102,6 +102,9 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+        .icon-ui_cross:before {
+          content: '\e911';
+        }
         .icon-eye-show:before {
           content: '\e90e';
           color: #484e5c;

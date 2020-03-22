@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'whenigrowup';
-  src:  url('/static/fonts/whenigrowup.eot?mr3a63');
-  src:  url('/static/fonts/whenigrowup.eot?mr3a63#iefix') format('embedded-opentype'),
-    url('/static/fonts/whenigrowup.ttf?mr3a63') format('truetype'),
-    url('/static/fonts/whenigrowup.woff?mr3a63') format('woff'),
-    url('/static/fonts/whenigrowup.svg?mr3a63#whenigrowup') format('svg');
+  src:  url('/static/fonts/whenigrowup.eot?213jxa');
+  src:  url('/static/fonts/whenigrowup.eot?213jxa#iefix') format('embedded-opentype'),
+    url('/static/fonts/whenigrowup.ttf?213jxa') format('truetype'),
+    url('/static/fonts/whenigrowup.woff?213jxa') format('woff'),
+    url('/static/fonts/whenigrowup.svg?213jxa#whenigrowup') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-ui_cross:before {
+  content: "\e911";
+}
 .icon-eye-show:before {
   content: "\e90e";
   color: #484e5c;

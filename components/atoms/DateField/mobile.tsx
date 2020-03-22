@@ -1,3 +1,4 @@
+import { withTranslation } from 'i18n';
 import Sheet from 'components/atoms/Sheet';
 import React, { useState, useEffect, Fragment } from 'react';
 import Button from 'components/atoms/Button';
@@ -112,4 +113,4 @@ const DateField = (props: any) => {
 };
 DateField.displayName = 'DateFieldMobile';
 
-export default DateField;
+export default withTranslation('form')(DateField);

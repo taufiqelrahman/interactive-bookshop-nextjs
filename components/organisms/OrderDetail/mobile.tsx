@@ -4,7 +4,7 @@ import dummyOrder from '_mocks/orderDetail';
 import NumberFormat from 'react-number-format';
 import Divider from 'components/atoms/Divider';
 import appConfig from 'config';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import Capsule from 'components/atoms/Capsule';
 import { fullDate } from 'lib/format-date';
 import NavBar from 'components/organisms/NavBar/mobile';
@@ -16,7 +16,9 @@ import Dot from 'components/atoms/Dot';
 const OrderDetailMobile = (props: any): any => {
   const [state, setState] = useState({
     showPreview: false,
-    extend: false,
+    extendPreview: false,
+    showNote: false,
+    extendNote: false,
   });
   const {
     currentOrder,
@@ -37,6 +39,10 @@ const OrderDetailMobile = (props: any): any => {
     Router.push('/orders');
   };
   const screenHeight = '100vh - 59px';
+  const showNote = event => {
+    event.stopPropagation();
+    setState({ ...state, showNote: true });
+  };
   return (
     <DefaultLayout {...props} navbar={<NavBar setSideNav={props.setSideNav} menuAction={false} title={orderNumber} />}>
       <div
@@ -49,18 +55,17 @@ const OrderDetailMobile = (props: any): any => {
         </Capsule>
       </div>
       <Swipeable
-        onSwipedUp={() => setState({ ...state, extend: true })}
-        onSwipedRight={() => setState({ ...state, extend: true })}
-        onSwipedDown={() => setState({ ...state, extend: false })}
-        onSwipedLeft={() => setState({ ...state, extend: false })}
+        onSwipedUp={() => setState({ ...state, extendPreview: true })}
+        onSwipedRight={() => setState({ ...state, extendPreview: true })}
+        onSwipedDown={() => (state.extendPreview ? setState({ ...state, extendPreview: false }) : onExit())}
+        onSwipedLeft={() => setState({ ...state, extendPreview: false })}
       >
         <Sheet
           name="preview-sheet"
           isOpen={state.showPreview}
           closeSheet={onExit}
           variant="rounded-large,bleed"
-          style={{ top: 50, overflow: 'auto' }}
-          onClick={() => setState({ ...state, extend: true })}
+          onClick={() => setState({ ...state, extendPreview: true })}
           content={
             <div className="c-detail">
               <div className="c-detail__container">
@@ -73,7 +78,9 @@ const OrderDetailMobile = (props: any): any => {
                     {currentOrder.line_items.length} {props.t('books')}
                   </div>
                   <div className="c-detail__label">{props.t('common:dedication-note')}</div>
-                  <div className="c-detail__link">{props.t('common:preview-note')}</div>
+                  <div className="c-detail__link" onClick={showNote}>
+                    {props.t('common:preview-note')}
+                  </div>
                 </div>
               </div>
               <div className="c-detail__container">
@@ -154,12 +161,54 @@ const OrderDetailMobile = (props: any): any => {
           }
         />
       </Swipeable>
+      <Swipeable
+        onSwipedUp={() => setState({ ...state, extendNote: true })}
+        onSwipedRight={() => setState({ ...state, extendNote: true })}
+        onSwipedDown={() =>
+          state.extendNote ? setState({ ...state, extendNote: false }) : setState({ ...state, showNote: false })
+        }
+        onSwipedLeft={() => setState({ ...state, extendNote: false })}
+      >
+        <Sheet
+          name="preview-sheet"
+          isOpen={state.showNote}
+          closeSheet={() => setState({ ...state, showNote: false })}
+          variant="rounded-large"
+          overlay="light"
+          onClick={() => setState({ ...state, extendNote: true })}
+          zIndexLevel={2}
+          header={true}
+          title={props.t(`common:note-preview`)}
+          content={
+            <div className="c-detail__note">
+              {currentOrder.line_items.map(item => (
+                <Fragment key={item.name}>
+                  <h5>{item.name}</h5>
+                  <div>
+                    {item.message +
+                      'asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd '}
+                  </div>
+                </Fragment>
+              ))}
+              {currentOrder.line_items.map(item => (
+                <Fragment key={item.name}>
+                  <h5>{item.name}</h5>
+                  <div>
+                    {item.message +
+                      'asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd '}
+                  </div>
+                </Fragment>
+              ))}
+            </div>
+          }
+        />
+      </Swipeable>
       <style jsx>{`
         .c-detail {
           @apply w-full;
           background: #e5e5e5;
           max-height: calc(${screenHeight} - 45px);
-          ${state.extend ? 'overflow: auto' : 'position: absolute'}
+          ${state.extendPreview ? 'overflow: auto;' : 'position: absolute;'}
           &__container {
             @apply bg-white;
             padding: 24px 16px;
@@ -168,6 +217,22 @@ const OrderDetailMobile = (props: any): any => {
               @apply font-semibold;
               line-height: 24px;
               margin-bottom: 24px;
+            }
+          }
+          &__note {
+            @apply w-full;
+            max-height: calc(${screenHeight} - 45px);
+            ${state.extendNote ? 'overflow: auto;' : 'position: absolute;'}
+            padding: 16px 0;
+            h5 {
+              @apply text-sm font-opensans font-bold;
+              line-height: 19px;
+              margin-bottom: 4px;
+            }
+            div {
+              @apply font-opensans text-sm italic;
+              line-height: 19px;
+              margin-bottom: 16px;
             }
           }
           &__book {
