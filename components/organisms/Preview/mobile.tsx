@@ -24,6 +24,7 @@ const PreviewMobile = (props: any): any => {
   const selected = props.state.cart.selected || dummySelected || {};
   const screenHeight = '100vh - 69px';
   const bookPages = props.state.master.bookPages;
+  const dontHaveCart = !props.state.users.user.cart;
   return (
     <DefaultLayout
       {...props}
@@ -35,7 +36,7 @@ const PreviewMobile = (props: any): any => {
           <div className="c-preview__cover">
             <FieldCover ref={register(schema(props).cover)} errors={errors.cover} />
           </div>
-          <Button type="submit" width="648px" style={{ margin: '12px 0 18px' }}>
+          <Button type="submit" width="648px" disabled={dontHaveCart} style={{ margin: '12px 0 18px' }}>
             {props.t('form:continue-button')}
           </Button>
           <div className="c-preview__link" onClick={() => Router.back()}>

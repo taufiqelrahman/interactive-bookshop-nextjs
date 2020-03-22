@@ -40,7 +40,14 @@ const App: NextPage<any> = (props: any) => {
     debounce(() => (debouncedFunctionRef.current as any)(), 200),
     [],
   );
+  const createCartForUser = () => {
+    const { dispatch, getState } = reduxStore;
+    const { user } = getState().users;
+    if (user && !user.cart) dispatch(actions.thunkCreateCart());
+  };
   useEffect(() => {
+    createCartForUser();
+
     setWidth(window.innerWidth);
     window.addEventListener('resize', debouncedSetup);
     return () => {
@@ -174,6 +181,7 @@ App.getInitialProps = async ({ Component, ctx, router, language }: any): Promise
   } else {
     dispatch(actions.setLogin(false));
   }
+  // [TODO] protect user-routes
   if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
   const currentLanguage = language || i18n.language;
   dayjs.locale(currentLanguage);

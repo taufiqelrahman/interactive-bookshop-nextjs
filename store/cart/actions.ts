@@ -6,23 +6,50 @@ import api from 'services/api';
 import graphql from 'services/graphql';
 import { Router } from 'i18n';
 import { setErrorMessage } from '../actions';
+import { thunkLoadUser } from '../users/actions';
 
-function loadCart(isFetching, cart = null): types.CartActionTypes {
+// function loadCart(isFetching, cart = null): types.CartActionTypes {
+//   return {
+//     type: types.LOAD_CART,
+//     payload: cart,
+//     isFetching,
+//   };
+// }
+// export const thunkLoadCart = (): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
+//   dispatch(loadCart(true));
+//   return api()
+//     .cart.get()
+//     .then(({ data }) => {
+//       dispatch(loadCart(false, data.data));
+//     })
+//     .catch(err => {
+//       dispatch(loadCart(false));
+//       captureException(err);
+//     });
+// };
+
+function createCart(isFetching): types.CartActionTypes {
   return {
-    type: types.LOAD_CART,
-    payload: cart,
+    type: types.CREATE_CART,
     isFetching,
   };
 }
-export const thunkLoadCart = (): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
-  dispatch(loadCart(true));
+export const thunkCreateCart = (): ThunkAction<void, types.CartState, null, Action<string>> => async (
+  dispatch,
+): Promise<any> => {
+  dispatch(createCart(true));
+  const cart = await graphql().checkout.create();
   return api()
-    .cart.get()
-    .then(({ data }) => {
-      dispatch(loadCart(false, data.data));
+    .cart.createCart({ checkoutId: cart.id })
+    .then(() => {
+      dispatch(createCart(false));
+      setTimeout(() => {
+        dispatch(thunkLoadUser());
+      }, 1000);
     })
     .catch(err => {
-      dispatch(loadCart(false));
+      dispatch(createCart(false));
+      dispatch(setErrorMessage(err.message));
       captureException(err);
     });
 };
@@ -36,9 +63,10 @@ function addToCart(isFetching, cart = null): types.CartActionTypes {
 }
 export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartState, null, Action<string>> => async (
   dispatch,
+  getState,
 ): Promise<any> => {
   dispatch(addToCart(true));
-  const cart = await graphql().cart.create();
+  const { cart } = (getState() as any).users.user;
   const customAttributes = Object.keys(newProduct).map(data => ({
     key: data,
     value: newProduct[data].toString(),
@@ -51,7 +79,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
     },
   ];
   return graphql()
-    .cart.addLineItems(cart.id, lineItemsToAdd)
+    .checkout.addLineItems(cart.checkout_id, lineItemsToAdd)
     .then(cart => {
       dispatch(addToCart(false, cart));
       Router.push('/cart');
@@ -63,28 +91,28 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
     });
 };
 
-function removeFromCart(isFetching, cart = null): types.CartActionTypes {
-  return {
-    type: types.REMOVE_FROM_CART,
-    payload: cart,
-    isFetching,
-  };
-}
-export const thunkRemoveFromCart = (existingProduct: any): ThunkAction<void, types.CartState, null, Action<string>> => (
-  dispatch,
-): any => {
-  dispatch(removeFromCart(true));
-  return api()
-    .cart.removeFromCart(existingProduct)
-    .then(({ data }) => {
-      dispatch(removeFromCart(false, data.data));
-    })
-    .catch(err => {
-      dispatch(removeFromCart(false));
-      dispatch(setErrorMessage(err.message));
-      captureException(err);
-    });
-};
+// function removeFromCart(isFetching, cart = null): types.CartActionTypes {
+//   return {
+//     type: types.REMOVE_FROM_CART,
+//     payload: cart,
+//     isFetching,
+//   };
+// }
+// export const thunkRemoveFromCart = (existingProduct: any): ThunkAction<void, types.CartState, null, Action<string>> => (
+//   dispatch,
+// ): any => {
+//   dispatch(removeFromCart(true));
+//   return api()
+//     .cart.removeFromCart(existingProduct)
+//     .then(({ data }) => {
+//       dispatch(removeFromCart(false, data.data));
+//     })
+//     .catch(err => {
+//       dispatch(removeFromCart(false));
+//       dispatch(setErrorMessage(err.message));
+//       captureException(err);
+//     });
+// };
 
 export function saveSelected(selected = null): types.CartActionTypes {
   return {

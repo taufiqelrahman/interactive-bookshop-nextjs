@@ -24,9 +24,7 @@ export function loadUser(isFetching, state?: types.User): types.UsersActionTypes
   };
 }
 
-export const thunkLoadUser = (req = null): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLoadUser = (req?): any => (dispatch): any => {
   dispatch(loadUser(true));
   return api(req)
     .users.getMe()
