@@ -8,25 +8,28 @@ import { Router } from 'i18n';
 import { setErrorMessage } from '../actions';
 import { thunkLoadUser } from '../users/actions';
 
-// function loadCart(isFetching, cart = null): types.CartActionTypes {
-//   return {
-//     type: types.LOAD_CART,
-//     payload: cart,
-//     isFetching,
-//   };
-// }
-// export const thunkLoadCart = (): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
-//   dispatch(loadCart(true));
-//   return api()
-//     .cart.get()
-//     .then(({ data }) => {
-//       dispatch(loadCart(false, data.data));
-//     })
-//     .catch(err => {
-//       dispatch(loadCart(false));
-//       captureException(err);
-//     });
-// };
+function loadCart(isFetching, cart = null): types.CartActionTypes {
+  return {
+    type: types.LOAD_CART,
+    payload: cart,
+    isFetching,
+  };
+}
+export const thunkLoadCart = (id): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
+  dispatch(loadCart(true));
+  return graphql()
+    .checkout.get(id)
+    .then(data => {
+      debugger;
+      dispatch(loadCart(false, data));
+    })
+    .catch(err => {
+      debugger;
+      dispatch(loadCart(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
 
 function createCart(isFetching): types.CartActionTypes {
   return {

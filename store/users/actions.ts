@@ -16,10 +16,10 @@ import { encryptTokenClient } from 'lib/crypto';
 //   };
 // };
 
-export function loadUser(isFetching, state?: types.User): types.UsersActionTypes {
+export function loadUser(isFetching, user?: types.User): types.UsersActionTypes {
   return {
     type: types.LOAD_USER,
-    payload: state,
+    payload: user,
     isFetching,
   };
 }

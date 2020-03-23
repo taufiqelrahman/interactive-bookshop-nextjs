@@ -26,8 +26,10 @@ const NavBar = (props: any) => {
 
   useEffect(() => {
     if (!isIndexPage) return;
-    window.addEventListener('scroll', handleScroll);
+    const { user } = props.users;
+    if (user) props.thunkLoadCart(user.cart.checkout_id);
 
+    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', () => handleScroll);
     };
@@ -65,7 +67,7 @@ const NavBar = (props: any) => {
             </Link>
             <div className="c-nav-bar__menu">
               {(isSticky || !isIndexPage) && <TranslationToggle />}
-              <Link href={props.isLoggedIn ? '/cart' : '/login?from=cart'}>
+              <Link href={props.users.isLoggedIn ? '/cart' : '/login?from=cart'}>
                 <div
                   className="c-nav-bar__menu__cart"
                   onMouseEnter={() => toggleShow(true, setShowCart)}
@@ -81,7 +83,7 @@ const NavBar = (props: any) => {
                   {showCart && <CartDropdown cart={props.cart.cart} />}
                 </div>
               </Link>
-              {props.isLoggedIn ? (
+              {props.users.isLoggedIn ? (
                 <Link href="/account">
                   <div
                     className="c-nav-bar__menu__account"

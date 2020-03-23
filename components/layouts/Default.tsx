@@ -35,7 +35,12 @@ const DefaultLayout = (props: any) => {
   return (
     <div>
       {props.navbar || (
-        <NavBar isLoggedIn={props.state.users.isLoggedIn} cart={props.state.cart} thunkLogout={props.thunkLogout} />
+        <NavBar
+          users={props.state.users}
+          cart={props.state.cart}
+          thunkLogout={props.thunkLogout}
+          thunkLoadCart={props.thunkLoadCart}
+        />
       )}
       {props.isMobile && (
         <SideNav
