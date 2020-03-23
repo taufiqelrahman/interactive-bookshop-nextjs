@@ -22,7 +22,7 @@ const createAdapter = (): AxiosAdapter => {
   return axios.create(options);
 }
 
-const createSecureAdapter = (req = null): AxiosAdapter => {
+const createSecureAdapter = (req?): AxiosAdapter => {
   let token;
   if (req) {
     // if server-side
@@ -44,7 +44,7 @@ const createSecureAdapter = (req = null): AxiosAdapter => {
   return axios.create(secureOptions);
 }
 
-export default (req = null) => {
+export default (req?) => {
   const instance = createAdapter();
   const secure = createSecureAdapter(req);
   const adapter = {

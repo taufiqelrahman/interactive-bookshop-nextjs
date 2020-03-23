@@ -11,6 +11,10 @@ export default class Checkout {
     return this.adapter.checkout.create();
   }
 
+  get(id): Promise<any> {
+    return this.adapter.checkout.fetch(id);
+  }
+
   addLineItems(id, data): Promise<any> {
     return this.adapter.checkout.addLineItems(id, data);
   }
