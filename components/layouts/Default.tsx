@@ -37,7 +37,7 @@ const DefaultLayout = (props: any) => {
       {props.navbar || (
         <NavBar
           users={props.state.users}
-          cart={props.state.cart}
+          cartItems={props.state.cart.cart && props.state.cart.cart.lineItems}
           thunkLogout={props.thunkLogout}
           thunkLoadCart={props.thunkLoadCart}
         />

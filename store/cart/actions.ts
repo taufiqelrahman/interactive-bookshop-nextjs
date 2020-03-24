@@ -20,7 +20,6 @@ export const thunkLoadCart = (id): ThunkAction<void, types.CartState, null, Acti
   return graphql()
     .checkout.get(id)
     .then(data => {
-      debugger;
       dispatch(loadCart(false, data));
     })
     .catch(err => {

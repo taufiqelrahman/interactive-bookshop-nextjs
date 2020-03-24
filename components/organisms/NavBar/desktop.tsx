@@ -39,7 +39,7 @@ const NavBar = (props: any) => {
     return isSticky ? 'c-nav-bar--sticky' : '';
   };
 
-  const cartNotEmpty = !!props.cart.cart && props.cart.cart.length > 0;
+  const cartNotEmpty = !!props.cartItems && props.cartItems.length > 0;
 
   const toggleShow = (state, action) => {
     action(state);
@@ -80,7 +80,7 @@ const NavBar = (props: any) => {
                       {cartNotEmpty && <Dot color="red" />}
                     </div>
                   </a>
-                  {showCart && <CartDropdown cart={props.cart.cart} />}
+                  {showCart && <CartDropdown items={props.cartItems} />}
                 </div>
               </Link>
               {props.users.isLoggedIn ? (

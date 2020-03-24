@@ -1,32 +1,57 @@
 import { withTranslation, Link } from 'i18n';
+import { previewImg } from 'components/molecules/CartItem/helper';
+import NumberFormat from 'react-number-format';
 
 const CartDropdown = (props: any) => {
-  const cartNotEmpty = !!props.cart && props.cart.length > 0;
+  const cartNotEmpty = !!props.items && props.items.length > 0;
   return (
     <div onClick={e => e.stopPropagation()}>
       <div className={`c-cart-dropdown ${!cartNotEmpty ? 'c-cart-dropdown--empty' : ''}`}>
         {cartNotEmpty ? (
           <div className="c-cart-dropdown__container">
             <div className="c-cart-dropdown__header">
-              <div className="c-cart-dropdown__quantity">4 item(s)</div>
+              <div className="c-cart-dropdown__quantity">{props.items.length} item(s)</div>
               <Link href="/cart">
                 <a>{props.t('cart-link')}</a>
               </Link>
             </div>
             <div className="c-cart-dropdown__content">
               {/* dummy */}
-              {[1, 2, 3].map(item => (
-                <div key={item} className="c-cart-dropdown__item">
-                  <div className="flex items-center">
-                    <img alt="item" className="c-cart-dropdown__item__image" width="44" height="44" />
-                    <div>
-                      <div className="c-cart-dropdown__item__name">WIGO book for Rivandi Anjas</div>
-                      <div className="c-cart-dropdown__item__quantity">1 item</div>
+              {props.items.map(item => {
+                const attributes = item.customAttributes.reduce(function(map, obj) {
+                  map[obj.key] = obj.value;
+                  return map;
+                }, {});
+                return (
+                  <div key={item} className="c-cart-dropdown__item">
+                    <div className="flex items-center">
+                      <img
+                        src={previewImg(attributes)}
+                        alt="item"
+                        className="c-cart-dropdown__item__image"
+                        width="44"
+                        height="44"
+                      />
+                      <div>
+                        <div className="c-cart-dropdown__item__name">
+                          {props.t('for')} {attributes.name}
+                        </div>
+                        <div className="c-cart-dropdown__item__quantity">
+                          {item.quantity} {props.t('page-orders:books')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="c-cart-dropdown__item__total">
+                      <NumberFormat
+                        value={item.variant.price}
+                        thousandSeparator={true}
+                        prefix={'Rp'}
+                        displayType="text"
+                      />
                     </div>
                   </div>
-                  <div className="c-cart-dropdown__item__total">Rp65.444</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ) : (
@@ -92,4 +117,4 @@ const CartDropdown = (props: any) => {
   );
 };
 
-export default withTranslation('common')(CartDropdown);
+export default withTranslation(['common', 'page-orders'])(CartDropdown);

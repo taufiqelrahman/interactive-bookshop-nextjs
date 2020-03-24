@@ -40,6 +40,13 @@ const App: NextPage<any> = (props: any) => {
     debounce(() => (debouncedFunctionRef.current as any)(), 200),
     [],
   );
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    window.addEventListener('resize', debouncedSetup);
+    return () => {
+      window.removeEventListener('resize', () => debouncedSetup);
+    };
+  }, []);
   const createCartForUser = () => {
     const { dispatch, getState } = reduxStore;
     const { user } = getState().users;
@@ -47,13 +54,7 @@ const App: NextPage<any> = (props: any) => {
   };
   useEffect(() => {
     createCartForUser();
-
-    setWidth(window.innerWidth);
-    window.addEventListener('resize', debouncedSetup);
-    return () => {
-      window.removeEventListener('resize', () => debouncedSetup);
-    };
-  }, []);
+  }, [reduxStore.getState().users]);
   Router.events.on('routeChangeComplete', () => {
     window.scroll({
       top: 0,
