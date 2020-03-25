@@ -40,22 +40,22 @@ const CartItemMobile = (props: any) => {
           <div className="c-cart-item__detail">
             <div className="c-cart-item__detail--top">
               <div className="c-cart-item__detail--top--left">
-                <div className="c-cart-item__detail__name">{props.attributes.name}</div>
-                <div className="c-cart-item__detail__jobs">{props.attributes.occupation}</div>
+                <div className="c-cart-item__detail__name">{props.customAttributes.name}</div>
+                <div className="c-cart-item__detail__jobs">{props.customAttributes.occupation}</div>
                 <div className="c-cart-item__detail__notes">
-                  {props.attributes.cover} cover{props.attributes.notes ? ' with notes' : ''}
+                  {props.customAttributes.cover} cover{props.customAttributes.notes ? ' with notes' : ''}
                 </div>
               </div>
               <div className="c-cart-item__detail--top--right">
                 <div className="c-cart-item__detail__image">
-                  <img src={previewImg(props.attributes)} />
+                  <img src={previewImg(props.customAttributes)} />
                 </div>
               </div>
             </div>
             <Divider style={{ borderColor: '#EFEEF4', margin: '13px 0 12px' }} />
             <div className="c-cart-item__detail--bottom">
               <div className="c-cart-item__detail__price">
-                <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                <NumberFormat value={props.variant.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
               </div>
               <div className="c-cart-item__detail__actions">
                 <span className="c-cart-item__detail__actions__icon icon-edit" />

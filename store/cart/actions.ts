@@ -20,7 +20,19 @@ export const thunkLoadCart = (id): ThunkAction<void, types.CartState, null, Acti
   return graphql()
     .checkout.get(id)
     .then(data => {
-      dispatch(loadCart(false, data));
+      const lineItems = data.lineItems.map(item => {
+        const customAttributes = item.customAttributes.reduce(function(map, obj) {
+          map[obj.key] = obj.value;
+          return map;
+        }, {});
+        return { ...item, customAttributes };
+      });
+      dispatch(
+        loadCart(false, {
+          ...data,
+          lineItems,
+        }),
+      );
     })
     .catch(err => {
       debugger;

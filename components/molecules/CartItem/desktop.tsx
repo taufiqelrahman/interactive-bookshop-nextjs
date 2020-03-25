@@ -34,25 +34,25 @@ const CartItem = (props: any) => {
         <div className="c-cart-item">
           <div className="c-cart-item__preview">
             <div className="c-cart-item__preview__image">
-              <img src={previewImg(props.attributes)} />
+              <img src={previewImg(props.customAttributes)} />
             </div>
             <div className="c-cart-item__preview__cover">
-              <Dot width="16px" color={props.attributes.cover} />
-              {props.attributes.cover}
+              <Dot width="16px" color={props.customAttributes.cover} />
+              {props.customAttributes.cover}
             </div>
           </div>
           <div className="c-cart-item__detail">
             <div className="c-cart-item__detail--top">
               <div className="c-cart-item__detail--top--left">
-                <div className="c-cart-item__detail__label">{props.t('name-label')}</div>
-                <div className="c-cart-item__detail__value">{props.attributes.name}</div>
+                <div className="c-cart-item__detail__label">{props.t('form:name-label')}</div>
+                <div className="c-cart-item__detail__value">{props.customAttributes.name}</div>
                 <div className="c-cart-item__detail__label">{props.t('dream-occupation')}</div>
-                <div className="c-cart-item__detail__value">{props.attributes.occupation}</div>
+                <div className="c-cart-item__detail__value">{props.customAttributes.occupations}</div>
               </div>
-              {props.attributes.notes && (
+              {props.customAttributes.notes && (
                 <div className="c-cart-item__detail--top--right">
                   <div className="c-cart-item__detail__label">{props.t('dedication-note')}</div>
-                  <Popover content={props.attributes.notes}>
+                  <Popover content={props.customAttributes.notes}>
                     <div className="c-cart-item__detail__link">{props.t('preview-note')}</div>
                   </Popover>
                 </div>
@@ -61,7 +61,7 @@ const CartItem = (props: any) => {
             <Divider style={{ borderColor: '#EDEDED', margin: '8px 0 18px' }} />
             <div className="c-cart-item__detail--bottom">
               <div className="c-cart-item__detail__price">
-                <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                <NumberFormat value={props.variant.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
               </div>
               <div className="c-cart-item__detail__actions">
                 {/* <span className="c-cart-item__detail__actions__icon icon-edit" /> */}
@@ -181,4 +181,4 @@ const CartItem = (props: any) => {
   );
 };
 
-export default withTranslation('common')(CartItem);
+export default withTranslation(['common', 'form'])(CartItem);

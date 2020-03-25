@@ -6,15 +6,20 @@ import Stepper from 'components/atoms/Stepper';
 import CartItem from 'components/molecules/CartItem/desktop';
 import CartItemMobile from 'components/molecules/CartItem/mobile';
 import Card from 'components/atoms/Card';
-import dummyCart from '_mocks/cart';
 import Dot from 'components/atoms/Dot';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
 import NumberFormat from 'react-number-format';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 const Cart = (props: any): any => {
+  const { users, cart } = props.state;
+  const items = cart.cart ? cart.cart.lineItems : [];
+  useEffect(() => {
+    const { user } = users;
+    if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
+  }, []);
   const continuePayment = () => {
     console.log('continuePayment');
   };
@@ -30,16 +35,19 @@ const Cart = (props: any): any => {
       <div className={props.isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={props.t('cart-title')} />}
         <div className="c-cart-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
-          <div className="c-cart-section__items">
-            {dummyCart &&
-              dummyCart.items.map(item => {
+          {cart.isFetching ? (
+            <div>loading</div>
+          ) : (
+            <div className="c-cart-section__items">
+              {items.map(item => {
                 return props.isMobile ? (
                   <CartItemMobile key={item.id} {...item} style={{ marginBottom: 12 }} />
                 ) : (
                   <CartItem key={item.id} {...item} style={{ marginBottom: 12 }} />
                 );
               })}
-          </div>
+            </div>
+          )}
           <div className="c-cart-section__summary">
             <Wrapper variant="border">
               <div className="c-cart__summary">
@@ -53,12 +61,12 @@ const Cart = (props: any): any => {
                       <div>
                         <div className="c-cart__summary__title">When I Grow Up</div>
                         <div className="c-cart__summary__quantity">
-                          {props.t('quantity')}: {dummyCart.quantity}
+                          {props.t('quantity')}: {items.length}
                         </div>
                       </div>
                       <div className="c-cart__summary__total">
                         <NumberFormat
-                          value={dummyCart.price}
+                          value={cart.totalPrice}
                           thousandSeparator={true}
                           prefix={'Rp'}
                           displayType="text"
@@ -73,7 +81,7 @@ const Cart = (props: any): any => {
                     Subtotal
                     {props.isMobile && <span className="icon-info" />}
                   </div>
-                  <NumberFormat value={dummyCart.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  <NumberFormat value={cart.totalPrice} thousandSeparator={true} prefix={'Rp'} displayType="text" />
                 </div>
                 {!props.isMobile && (
                   <div className="c-cart__summary__info">

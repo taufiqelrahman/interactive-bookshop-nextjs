@@ -16,17 +16,12 @@ const CartDropdown = (props: any) => {
               </Link>
             </div>
             <div className="c-cart-dropdown__content">
-              {/* dummy */}
               {props.items.map(item => {
-                const attributes = item.customAttributes.reduce(function(map, obj) {
-                  map[obj.key] = obj.value;
-                  return map;
-                }, {});
                 return (
                   <div key={item} className="c-cart-dropdown__item">
                     <div className="flex items-center">
                       <img
-                        src={previewImg(attributes)}
+                        src={previewImg(item.customAttributes)}
                         alt="item"
                         className="c-cart-dropdown__item__image"
                         width="44"
@@ -34,7 +29,7 @@ const CartDropdown = (props: any) => {
                       />
                       <div>
                         <div className="c-cart-dropdown__item__name">
-                          {props.t('for')} {attributes.name}
+                          {props.t('for')} {item.customAttributes.name}
                         </div>
                         <div className="c-cart-dropdown__item__quantity">
                           {item.quantity} {props.t('page-orders:books')}
