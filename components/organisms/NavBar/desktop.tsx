@@ -27,7 +27,7 @@ const NavBar = (props: any) => {
   useEffect(() => {
     if (!isIndexPage) return;
     const { user } = props.users;
-    if (user) props.thunkLoadCart(user.cart.checkout_id);
+    if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
 
     window.addEventListener('scroll', handleScroll);
     return () => {

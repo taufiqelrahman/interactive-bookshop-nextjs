@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { checkUser } from 'lib/page-middleware';
 // import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import { withTranslation } from 'i18n';
@@ -12,6 +11,7 @@ import Head from 'next/head';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Footer from 'components/organisms/Footer';
 import actions from 'store/actions';
+import api from 'services/api';
 
 const Index = (props: any): any => {
   // const register = () => {
@@ -374,12 +374,13 @@ const Index = (props: any): any => {
 };
 
 Index.getInitialProps = async (ctx: any): Promise<any> => {
-  checkUser(ctx);
   try {
-    await Promise.all([
-      ctx.reduxStore.dispatch(actions.thunkLoadTestimonials()),
-      ctx.reduxStore.dispatch(actions.thunkLoadOccupations()),
+    const [{ data: testi }, { data: occupations }] = await Promise.all([
+      api().master.getTestimonials(),
+      api().master.getOccupations(),
     ]);
+    ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi.data));
+    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
   } catch (err) {
     console.log(err.message);
   }

@@ -16,7 +16,7 @@ import { encryptTokenClient } from 'lib/crypto';
 //   };
 // };
 
-export function loadUser(isFetching, user?: types.User): types.UsersActionTypes {
+export function loadUser(isFetching, user: types.User | object): types.UsersActionTypes {
   return {
     type: types.LOAD_USER,
     payload: user,
@@ -25,14 +25,14 @@ export function loadUser(isFetching, user?: types.User): types.UsersActionTypes 
 }
 
 export const thunkLoadUser = (req?): any => (dispatch): any => {
-  dispatch(loadUser(true));
+  dispatch(loadUser(true, {}));
   return api(req)
     .users.getMe()
     .then(({ data }) => {
       dispatch(loadUser(false, data));
     })
     .catch(err => {
-      dispatch(loadUser(false));
+      dispatch(loadUser(false, {}));
       dispatch(setErrorMessage(err.message));
       captureException(err);
     });

@@ -24,7 +24,7 @@ export interface UsersState {
 
 interface LoadUser {
   type: typeof LOAD_USER;
-  payload: User | undefined;
+  payload: User | object;
   isFetching: boolean;
 }
 

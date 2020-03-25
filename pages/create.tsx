@@ -4,6 +4,7 @@ import { withTranslation } from 'i18n';
 import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
 import actions from 'store/actions';
+import api from 'services/api';
 
 const Create = (props: any): any => {
   if (props.isMobile) {
@@ -15,7 +16,8 @@ const Create = (props: any): any => {
 
 Create.getInitialProps = async (ctx: any): Promise<any> => {
   try {
-    await ctx.reduxStore.dispatch(actions.thunkLoadOccupations());
+    const { data: occupations } = await api().master.getOccupations();
+    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
   } catch (err) {
     console.log(err.message);
   }

@@ -3,6 +3,7 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import PreviewMobile from 'components/organisms/Preview/mobile';
 import PreviewDesktop from 'components/organisms/Preview/desktop';
 import actions from 'store/actions';
+import api from 'services/api';
 
 const Preview = (props: any): any => {
   if (props.isMobile) {
@@ -22,7 +23,8 @@ Preview.getInitialProps = async (ctx: any): Promise<any> => {
     return {};
   }
   try {
-    await ctx.reduxStore.dispatch(actions.thunkLoadBookPages());
+    const { data } = await api().master.getBookPages();
+    ctx.reduxStore.dispatch(actions.loadBookPages(false, data.data));
   } catch (err) {
     console.log(err.message);
   }

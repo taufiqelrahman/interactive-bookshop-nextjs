@@ -10,7 +10,11 @@ import 'dayjs/locale/id';
 import debounce from 'lodash.debounce';
 import withReduxStore from 'lib/with-redux-store';
 import actions from 'store/actions';
+import cookies from 'next-cookies';
+import NProgress from 'nprogress';
+import api from 'services/api';
 import 'styles/tailwind.css';
+import 'styles/nprogress.css';
 import 'styles/icomoon/style.css';
 import 'reset-css';
 
@@ -26,6 +30,9 @@ import 'reset-css';
 //     return event;
 //    }
 // });
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 const App: NextPage<any> = (props: any) => {
   const { Component, pageProps, reduxStore } = props;
@@ -175,9 +182,18 @@ const App: NextPage<any> = (props: any) => {
 };
 
 App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
+  const { dispatch, getState } = ctx.reduxStore;
+  if (cookies(ctx).user) {
+    dispatch(actions.setLogin(true));
+    if (!getState().users.user) {
+      const { data: me } = await api(ctx.req).users.getMe();
+      dispatch(actions.loadUser(false, me));
+    }
+  } else {
+    dispatch(actions.setLogin(false));
+  }
   // [TODO] protect user-routes
 
-  const { dispatch, getState } = ctx.reduxStore;
   if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
   return {
     pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},

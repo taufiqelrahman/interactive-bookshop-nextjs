@@ -53,7 +53,7 @@ const BookPreview = (props: any) => {
   useEffect(() => {
     if (props.isMobile) return;
     initHeidelberg();
-    setupBook();
+    setTimeout(() => setupBook(), 500);
     window.addEventListener('resize', debouncedSetup);
     return () => {
       window.removeEventListener('resize', () => debouncedSetup);
