@@ -13,6 +13,7 @@ import Button from 'components/atoms/Button';
 import NumberFormat from 'react-number-format';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { Fragment } from 'react';
+import { checkUser } from 'lib/page-middleware';
 
 const Cart = (props: any): any => {
   const continuePayment = () => {
@@ -176,6 +177,11 @@ const Cart = (props: any): any => {
       `}</style>
     </DefaultLayout>
   );
+};
+
+Cart.getInitialProps = ctx => {
+  checkUser(ctx);
+  return { namespacesRequired: ['common'] };
 };
 
 export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Cart));

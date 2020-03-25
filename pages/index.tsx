@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { checkUser } from 'lib/page-middleware';
 // import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import { withTranslation } from 'i18n';
@@ -373,6 +374,7 @@ const Index = (props: any): any => {
 };
 
 Index.getInitialProps = async (ctx: any): Promise<any> => {
+  checkUser(ctx);
   try {
     await Promise.all([
       ctx.reduxStore.dispatch(actions.thunkLoadTestimonials()),
@@ -381,9 +383,7 @@ Index.getInitialProps = async (ctx: any): Promise<any> => {
   } catch (err) {
     console.log(err.message);
   }
-  return {
-    namespacesRequired: ['common', 'page-index', 'form'],
-  };
+  return { namespacesRequired: ['page-index'] };
 };
 
 export default withTranslation('page-index')(connect(mapStateToProps, mapDispatchToProps)(Index));

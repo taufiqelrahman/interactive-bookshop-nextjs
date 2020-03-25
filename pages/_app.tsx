@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import cookies from 'next-cookies';
 import { NextPage } from 'next';
 // import * as Sentry from '@sentry/browser'
 import { appWithTranslation, i18n } from 'i18n';
@@ -41,6 +40,7 @@ const App: NextPage<any> = (props: any) => {
     [],
   );
   useEffect(() => {
+    dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
     window.addEventListener('resize', debouncedSetup);
     return () => {
@@ -174,19 +174,11 @@ const App: NextPage<any> = (props: any) => {
   );
 };
 
-App.getInitialProps = async ({ Component, ctx, router, language }: any): Promise<any> => {
-  const { dispatch, getState } = ctx.reduxStore;
-  if (cookies(ctx).user) {
-    dispatch(actions.setLogin(true));
-    if (!getState().users.user) dispatch(actions.thunkLoadUser(ctx.req));
-  } else {
-    dispatch(actions.setLogin(false));
-  }
+App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
   // [TODO] protect user-routes
-  if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
-  const currentLanguage = language || i18n.language;
-  dayjs.locale(currentLanguage);
 
+  const { dispatch, getState } = ctx.reduxStore;
+  if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
   return {
     pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},
   };
