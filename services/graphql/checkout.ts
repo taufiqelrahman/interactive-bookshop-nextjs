@@ -18,4 +18,8 @@ export default class Checkout {
   addLineItems(id, data): Promise<any> {
     return this.adapter.checkout.addLineItems(id, data);
   }
+
+  removeLineItems(id, itemId): Promise<any> {
+    return this.adapter.checkout.removeLineItems(id, itemId);
+  }
 }

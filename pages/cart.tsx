@@ -15,7 +15,7 @@ import { Fragment, useEffect } from 'react';
 
 const Cart = (props: any): any => {
   const { users, cart } = props.state;
-  const items = cart.cart ? cart.cart.lineItems : [];
+  const items = cart.cart ? cart.cart.lineItems : cart.isFetching ? [1, 2] : [];
   useEffect(() => {
     const { user } = users;
     if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
@@ -34,73 +34,87 @@ const Cart = (props: any): any => {
     >
       <div className={props.isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={props.t('cart-title')} />}
-        <div className="c-cart-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
-          {cart.isFetching ? (
-            <div>loading</div>
-          ) : (
+        {items.length > 0 ? (
+          <div className="c-cart-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
             <div className="c-cart-section__items">
               {items.map(item => {
                 return props.isMobile ? (
-                  <CartItemMobile key={item.id} {...item} style={{ marginBottom: 12 }} />
+                  <CartItemMobile
+                    key={item.id || item}
+                    {...item}
+                    style={{ marginBottom: 12 }}
+                    isSkeleton={cart.isFetching}
+                    cartId={cart.cart && cart.cart.id}
+                    removeFromCart={props.thunkRemoveFromCart}
+                  />
                 ) : (
-                  <CartItem key={item.id} {...item} style={{ marginBottom: 12 }} />
+                  <CartItem
+                    key={item.id || item}
+                    {...item}
+                    style={{ marginBottom: 12 }}
+                    isSkeleton={cart.isFetching}
+                    cartId={cart.cart && cart.cart.id}
+                    removeFromCart={props.thunkRemoveFromCart}
+                  />
                 );
               })}
             </div>
-          )}
-          <div className="c-cart-section__summary">
-            <Wrapper variant="border">
-              <div className="c-cart__summary">
-                {!props.isMobile && (
-                  <Fragment>
-                    <div className="c-cart__summary__header">
-                      <h1>{props.t('order-summary')}</h1>
-                      <Dot width="12px" color="red" />
-                    </div>
-                    <div className="flex justify-between">
-                      <div>
-                        <div className="c-cart__summary__title">When I Grow Up</div>
-                        <div className="c-cart__summary__quantity">
-                          {props.t('quantity')}: {items.length}
+            <div className="c-cart-section__summary">
+              <Wrapper variant="border">
+                <div className="c-cart__summary">
+                  {!props.isMobile && (
+                    <Fragment>
+                      <div className="c-cart__summary__header">
+                        <h1>{props.t('order-summary')}</h1>
+                        <Dot width="12px" color="red" />
+                      </div>
+                      <div className="flex justify-between">
+                        <div>
+                          <div className="c-cart__summary__title">When I Grow Up</div>
+                          <div className="c-cart__summary__quantity">
+                            {props.t('quantity')}: {items.length}
+                          </div>
+                        </div>
+                        <div className="c-cart__summary__total">
+                          <NumberFormat
+                            value={cart.totalPrice}
+                            thousandSeparator={true}
+                            prefix={'Rp'}
+                            displayType="text"
+                          />
                         </div>
                       </div>
-                      <div className="c-cart__summary__total">
-                        <NumberFormat
-                          value={cart.totalPrice}
-                          thousandSeparator={true}
-                          prefix={'Rp'}
-                          displayType="text"
-                        />
-                      </div>
+                      <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
+                    </Fragment>
+                  )}
+                  <div className="c-cart__summary__subtotal">
+                    <div className="c-cart__summary__subtotal__label">
+                      Subtotal
+                      {props.isMobile && <span className="icon-info" />}
                     </div>
-                    <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
-                  </Fragment>
-                )}
-                <div className="c-cart__summary__subtotal">
-                  <div className="c-cart__summary__subtotal__label">
-                    Subtotal
-                    {props.isMobile && <span className="icon-info" />}
+                    <NumberFormat value={cart.totalPrice} thousandSeparator={true} prefix={'Rp'} displayType="text" />
                   </div>
-                  <NumberFormat value={cart.totalPrice} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  {!props.isMobile && (
+                    <div className="c-cart__summary__info">
+                      <span className="icon-info" />
+                      {props.t('shipping-not-included')}
+                    </div>
+                  )}
+                  <Button
+                    width="100%"
+                    color="black"
+                    style={{ marginTop: props.isMobile ? 12 : 30 }}
+                    onClick={continuePayment}
+                  >
+                    {props.t('continue-payment')}
+                  </Button>
                 </div>
-                {!props.isMobile && (
-                  <div className="c-cart__summary__info">
-                    <span className="icon-info" />
-                    {props.t('shipping-not-included')}
-                  </div>
-                )}
-                <Button
-                  width="100%"
-                  color="black"
-                  style={{ marginTop: props.isMobile ? 12 : 30 }}
-                  onClick={continuePayment}
-                >
-                  {props.t('continue-payment')}
-                </Button>
-              </div>
-            </Wrapper>
+              </Wrapper>
+            </div>
           </div>
-        </div>
+        ) : (
+          <h1>kosoong</h1>
+        )}
       </div>
       <style jsx>{`
         .c-cart-section {

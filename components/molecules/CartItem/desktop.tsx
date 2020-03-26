@@ -7,6 +7,7 @@ import Dot from 'components/atoms/Dot';
 import Divider from 'components/atoms/Divider';
 import Popover from 'components/atoms/Popover';
 import { previewImg, updateShopify } from './helper';
+import Skeleton from 'react-loading-skeleton';
 
 const CartItem = (props: any) => {
   const [quantity, setQuantity] = useState(props.quantity);
@@ -33,26 +34,44 @@ const CartItem = (props: any) => {
       <Card variant="border">
         <div className="c-cart-item">
           <div className="c-cart-item__preview">
-            <div className="c-cart-item__preview__image">
-              <img src={previewImg(props.customAttributes)} />
-            </div>
-            <div className="c-cart-item__preview__cover">
-              <Dot width="16px" color={props.customAttributes.cover} />
-              {props.customAttributes.cover}
-            </div>
+            {props.isSkeleton ? (
+              <Skeleton height={100} width={100} />
+            ) : (
+              <div className="c-cart-item__preview__image">
+                <img src={previewImg(props.customAttributes)} />
+              </div>
+            )}
+            {props.isSkeleton ? (
+              <div style={{ marginTop: 8 }}>
+                <Skeleton width={100} />
+              </div>
+            ) : (
+              <div className="c-cart-item__preview__cover">
+                <Dot width="16px" color={props.customAttributes.cover} />
+                {props.customAttributes.cover}
+              </div>
+            )}
           </div>
           <div className="c-cart-item__detail">
             <div className="c-cart-item__detail--top">
               <div className="c-cart-item__detail--top--left">
-                <div className="c-cart-item__detail__label">{props.t('form:name-label')}</div>
-                <div className="c-cart-item__detail__value">{props.customAttributes.name}</div>
-                <div className="c-cart-item__detail__label">{props.t('dream-occupation')}</div>
-                <div className="c-cart-item__detail__value">{props.customAttributes.occupations}</div>
+                <div className="c-cart-item__detail__label">
+                  {props.isSkeleton ? <Skeleton /> : props.t('form:name-label')}
+                </div>
+                <div className="c-cart-item__detail__value">
+                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.name}
+                </div>
+                <div className="c-cart-item__detail__label">
+                  {props.isSkeleton ? <Skeleton /> : props.t('dream-occupation')}
+                </div>
+                <div className="c-cart-item__detail__value">
+                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.occupations}
+                </div>
               </div>
-              {props.customAttributes.notes && (
+              {!props.isSkeleton && props.customAttributes.dedication && (
                 <div className="c-cart-item__detail--top--right">
                   <div className="c-cart-item__detail__label">{props.t('dedication-note')}</div>
-                  <Popover content={props.customAttributes.notes}>
+                  <Popover content={props.customAttributes.dedication}>
                     <div className="c-cart-item__detail__link">{props.t('preview-note')}</div>
                   </Popover>
                 </div>
@@ -61,26 +80,49 @@ const CartItem = (props: any) => {
             <Divider style={{ borderColor: '#EDEDED', margin: '8px 0 18px' }} />
             <div className="c-cart-item__detail--bottom">
               <div className="c-cart-item__detail__price">
-                <NumberFormat value={props.variant.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                {props.isSkeleton ? (
+                  <Skeleton width={200} />
+                ) : (
+                  <NumberFormat value={props.variant.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                )}
               </div>
               <div className="c-cart-item__detail__actions">
-                {/* <span className="c-cart-item__detail__actions__icon icon-edit" /> */}
-                <span className="c-cart-item__detail__actions__icon icon-trash" />
-                <div className="c-cart-item__detail__quantity">
+                {props.isSkeleton ? (
+                  <div style={{ marginRight: 22 }}>
+                    <Skeleton width={24} />
+                  </div>
+                ) : (
+                  <span className="c-cart-item__detail__actions__icon icon-edit" />
+                )}
+                {props.isSkeleton ? (
+                  <div style={{ marginRight: 22 }}>
+                    <Skeleton width={20} />
+                  </div>
+                ) : (
                   <span
-                    onClick={onDecrease}
-                    className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__minus"
-                  >
-                    -
-                  </span>
-                  <input type="number" value={quantity} onChange={e => setQuantity(parseInt(e.target.value, 10))} />
-                  <span
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__plus"
-                  >
-                    +
-                  </span>
-                </div>
+                    onClick={() => props.removeFromCart(props.cartId, props.id)}
+                    className="c-cart-item__detail__actions__icon icon-trash"
+                  />
+                )}
+                {props.isSkeleton ? (
+                  <Skeleton width={140} />
+                ) : (
+                  <div className="c-cart-item__detail__quantity">
+                    <span
+                      onClick={onDecrease}
+                      className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__minus"
+                    >
+                      -
+                    </span>
+                    <input type="number" value={quantity} onChange={e => setQuantity(parseInt(e.target.value, 10))} />
+                    <span
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__plus"
+                    >
+                      +
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

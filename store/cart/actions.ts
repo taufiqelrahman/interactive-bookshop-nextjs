@@ -8,6 +8,16 @@ import { Router } from 'i18n';
 import { setErrorMessage } from '../actions';
 import { thunkLoadUser } from '../users/actions';
 
+function mapItems(items) {
+  return items.map(item => {
+    const customAttributes = item.customAttributes.reduce(function(map, obj) {
+      map[obj.key] = obj.value;
+      return map;
+    }, {});
+    return { ...item, customAttributes };
+  });
+}
+
 function loadCart(isFetching, cart = null): types.CartActionTypes {
   return {
     type: types.LOAD_CART,
@@ -20,17 +30,10 @@ export const thunkLoadCart = (id): ThunkAction<void, types.CartState, null, Acti
   return graphql()
     .checkout.get(id)
     .then(data => {
-      const lineItems = data.lineItems.map(item => {
-        const customAttributes = item.customAttributes.reduce(function(map, obj) {
-          map[obj.key] = obj.value;
-          return map;
-        }, {});
-        return { ...item, customAttributes };
-      });
       dispatch(
         loadCart(false, {
           ...data,
-          lineItems,
+          lineItems: mapItems(data.lineItems),
         }),
       );
     })
@@ -105,28 +108,29 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
     });
 };
 
-// function removeFromCart(isFetching, cart = null): types.CartActionTypes {
-//   return {
-//     type: types.REMOVE_FROM_CART,
-//     payload: cart,
-//     isFetching,
-//   };
-// }
-// export const thunkRemoveFromCart = (existingProduct: any): ThunkAction<void, types.CartState, null, Action<string>> => (
-//   dispatch,
-// ): any => {
-//   dispatch(removeFromCart(true));
-//   return api()
-//     .cart.removeFromCart(existingProduct)
-//     .then(({ data }) => {
-//       dispatch(removeFromCart(false, data.data));
-//     })
-//     .catch(err => {
-//       dispatch(removeFromCart(false));
-//       dispatch(setErrorMessage(err.message));
-//       captureException(err);
-//     });
-// };
+function removeFromCart(isFetching, cart = null): types.CartActionTypes {
+  return {
+    type: types.REMOVE_FROM_CART,
+    payload: cart,
+    isFetching,
+  };
+}
+export const thunkRemoveFromCart = (id, itemId): ThunkAction<void, types.CartState, null, Action<string>> => (
+  dispatch,
+): any => {
+  dispatch(removeFromCart(true));
+  return graphql()
+    .checkout.removeLineItems(id, itemId)
+    .then(data => {
+      const lineItems = mapItems(data.lineItems);
+      dispatch(removeFromCart(false, { ...data, lineItems }));
+    })
+    .catch(err => {
+      dispatch(removeFromCart(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
 
 export function saveSelected(selected = null): types.CartActionTypes {
   return {
