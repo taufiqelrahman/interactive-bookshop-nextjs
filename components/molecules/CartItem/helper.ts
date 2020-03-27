@@ -4,6 +4,7 @@ export const previewImg = attributes => {
   return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
 };
 
-export const updateShopify = () => {
-  console.log('updated');
+export const updateQuantity = (props, quantity) => {
+  const { id, customAttributes } = props;
+  props.updateCart({ id, quantity, ...customAttributes });
 };

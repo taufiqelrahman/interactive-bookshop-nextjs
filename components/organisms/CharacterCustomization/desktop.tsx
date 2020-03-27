@@ -21,10 +21,6 @@ const CharacterCustomization = (props: any) => {
   const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
     mode: 'onChange',
   });
-  const onSubmit = data => {
-    props.saveSelected(data);
-    Router.push('/preview');
-  };
   useEffect(() => {
     register({ name: 'dob' }, schema.dob);
   }, []);
@@ -33,7 +29,24 @@ const CharacterCustomization = (props: any) => {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected = props.state.cart.selected || {};
+  const selected =
+    props.state.cart.selected ||
+    {
+      // occupations: ['Astronaut', 'Teacher', 'Librarian'],
+      // name: 'asd',
+      // age: 'kid',
+      // gender: 'girl',
+      // skin: 'light',
+      // language: 'english',
+      // dedication: 'asdasd',
+      // dob: '03-01-2019',
+      // hair: 'short',
+    };
+  const onSubmit = data => {
+    const PARAMS = selected && selected.id ? { ...selected, ...data } : data;
+    props.saveSelected(PARAMS);
+    Router.push('/preview');
+  };
   const { occupations } = props.state.master;
   return (
     <DefaultLayout {...props}>
@@ -69,23 +82,36 @@ const CharacterCustomization = (props: any) => {
                   triggerValidation={triggerValidation}
                   errors={errors.dob}
                   style={{ marginTop: 24 }}
+                  defaultValue={selected.dob}
                 />
-                <FieldGender ref={register(schema.gender)} errors={errors.gender} style={{ marginTop: 24 }} />
+                <FieldGender
+                  ref={register(schema.gender)}
+                  errors={errors.gender}
+                  style={{ marginTop: 24 }}
+                  defaultChecked={selected.gender}
+                />
                 {!!watch('gender') && (
                   <FieldHair
                     ref={register(schema.hair)}
                     errors={errors.hair}
                     style={{ marginTop: 24 }}
                     type={watch('gender')}
+                    defaultChecked={selected.hair}
                   />
                 )}
                 <FieldSkin
                   ref={register(schema.skin)}
                   errors={errors.skin}
                   style={{ marginTop: 24, marginBottom: 24 }}
+                  defaultChecked={selected.skin}
                 />
                 <Divider />
-                <FieldLanguage ref={register(schema.language)} errors={errors.language} style={{ marginTop: 24 }} />
+                <FieldLanguage
+                  ref={register(schema.language)}
+                  errors={errors.language}
+                  style={{ marginTop: 24 }}
+                  defaultChecked={selected.language}
+                />
                 <FormTextArea
                   label={props.t('dedication-label')}
                   hint={props.t('dedication-hint')}
@@ -94,6 +120,7 @@ const CharacterCustomization = (props: any) => {
                   ref={register(schema.dedication)}
                   errors={errors.dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}
+                  defaultValue={selected.dedication}
                 />
                 <Divider />
                 <Button type="submit" width="100%" style={{ marginTop: 24 }}>

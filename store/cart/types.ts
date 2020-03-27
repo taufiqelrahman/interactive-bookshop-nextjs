@@ -1,5 +1,6 @@
 export const LOAD_CART = 'LOAD_CART';
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const UPDATE_CART = 'UPDATE_CART';
 export const CREATE_CART = 'CREATE_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
@@ -41,6 +42,12 @@ interface AddToCart {
   isFetching: boolean;
 }
 
+interface UpdateCart {
+  type: typeof UPDATE_CART;
+  payload: Cart | null;
+  isFetching: boolean;
+}
+
 interface CreateCart {
   type: typeof CREATE_CART;
   isFetching: boolean;
@@ -57,4 +64,4 @@ interface SaveSelected {
   payload: CartItem | null;
 }
 
-export type CartActionTypes = LoadCart | AddToCart | CreateCart | RemoveFromCart | SaveSelected;
+export type CartActionTypes = LoadCart | AddToCart | UpdateCart | CreateCart | RemoveFromCart | SaveSelected;

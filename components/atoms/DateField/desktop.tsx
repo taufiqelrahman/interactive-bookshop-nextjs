@@ -3,13 +3,20 @@ import Select from 'react-select';
 import { customStyles, dates, months, years } from './helper';
 
 const DateField = (props: any) => {
-  const [date, setDate] = useState(null);
-  const [month, setMonth] = useState(null);
-  const [year, setYear] = useState(null);
+  const [date, setDate] = useState({});
+  const [month, setMonth] = useState({});
+  const [year, setYear] = useState({});
   const setFullDate = () => {
     if (!date || !month || !year) return;
     props.setValue(props.name, `${(date as any).value}-${(month as any).value}-${(year as any).value}`);
     props.triggerValidation(props.name);
+  };
+  const setDefaultDate = () => {
+    const parsed = props.defaultValue.split('-');
+    if (parsed.length !== 3) return;
+    setDate({ label: parsed[0], value: parsed[0] });
+    setMonth({ label: parsed[1], value: parsed[1] });
+    setYear({ label: parsed[2], value: parsed[2] });
   };
   const handleChange = (selectedOption, setter) => {
     setter(selectedOption);
@@ -17,6 +24,9 @@ const DateField = (props: any) => {
   useEffect(() => {
     setFullDate();
   }, [date, month, year]);
+  useEffect(() => {
+    if (props.defaultValue) setDefaultDate();
+  }, []);
   return (
     <div className={`c-date-field ${props.errors ? 'c-date-field--error' : ''}`}>
       <Select

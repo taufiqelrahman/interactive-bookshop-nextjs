@@ -15,7 +15,12 @@ const PreviewDesktop = (props: any): any => {
   });
   const onSubmit = data => {
     const { selected } = props.state.cart;
-    props.thunkAddToCart({ ...selected, ...data });
+    const cart = { ...selected, ...data };
+    if (selected.id) {
+      props.thunkUpdateCart(cart);
+    } else {
+      props.thunkAddToCart(cart);
+    }
   };
   useEffect(() => {
     if (!formState.isValid) {
@@ -42,7 +47,7 @@ const PreviewDesktop = (props: any): any => {
                 />
               </div>
               <Button type="submit" width="648px" style={{ margin: '18px 0' }}>
-                {props.t('add-to-cart')}
+                {selected.id ? props.t('update-cart') : props.t('add-to-cart')}
               </Button>
               <Link href="/">
                 <a className="c-preview__link">{props.t('back-to-home')}</a>

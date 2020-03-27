@@ -22,6 +22,13 @@ const reducer = (state = initialState, action: types.CartActionTypes): types.Car
         cart: action.payload,
       };
     }
+    case types.UPDATE_CART: {
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        cart: action.payload,
+      };
+    }
     case types.REMOVE_FROM_CART: {
       return {
         ...state,

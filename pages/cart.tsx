@@ -21,7 +21,7 @@ const Cart = (props: any): any => {
     if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
   }, []);
   const continuePayment = () => {
-    console.log('continuePayment');
+    window.location.href = cart.cart ? cart.cart.webUrl : '';
   };
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
@@ -46,6 +46,8 @@ const Cart = (props: any): any => {
                     isSkeleton={cart.isFetching}
                     cartId={cart.cart && cart.cart.id}
                     removeFromCart={props.thunkRemoveFromCart}
+                    saveSelected={props.saveSelected}
+                    updateCart={props.thunkUpdateCart}
                   />
                 ) : (
                   <CartItem
@@ -55,6 +57,8 @@ const Cart = (props: any): any => {
                     isSkeleton={cart.isFetching}
                     cartId={cart.cart && cart.cart.id}
                     removeFromCart={props.thunkRemoveFromCart}
+                    saveSelected={props.saveSelected}
+                    updateCart={props.thunkUpdateCart}
                   />
                 );
               })}

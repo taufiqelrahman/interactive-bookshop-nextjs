@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 import debounce from 'lodash.debounce';
 import Card from 'components/atoms/Card';
 import Divider from 'components/atoms/Divider';
-import { previewImg, updateShopify } from './helper';
+import { previewImg, updateQuantity } from './helper';
 import Sheet from 'components/atoms/Sheet';
 import Button from 'components/atoms/Button';
 
@@ -15,7 +15,7 @@ const CartItemMobile = (props: any) => {
     if (quantity > 0) setQuantity(quantity - 1);
   };
   const debouncedFunctionRef = useRef();
-  (debouncedFunctionRef.current as any) = () => updateShopify();
+  (debouncedFunctionRef.current as any) = () => updateQuantity(props, quantity);
   const debouncedChange = useCallback(
     debounce(() => (debouncedFunctionRef.current as any)(), 2000),
     [],
@@ -43,7 +43,7 @@ const CartItemMobile = (props: any) => {
                 <div className="c-cart-item__detail__name">{props.customAttributes.name}</div>
                 <div className="c-cart-item__detail__jobs">{props.customAttributes.occupation}</div>
                 <div className="c-cart-item__detail__notes">
-                  {props.customAttributes.cover} cover{props.customAttributes.notes ? ' with notes' : ''}
+                  {props.customAttributes.cover} cover{props.customAttributes.dedication ? ' with notes' : ''}
                 </div>
               </div>
               <div className="c-cart-item__detail--top--right">

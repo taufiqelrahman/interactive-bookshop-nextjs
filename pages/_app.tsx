@@ -2,9 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { NextPage } from 'next';
 // import * as Sentry from '@sentry/browser'
-import { appWithTranslation, i18n } from 'i18n';
+import { appWithTranslation, i18n, Router } from 'i18n';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Router } from 'next/router';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import debounce from 'lodash.debounce';

@@ -33,6 +33,7 @@ const FieldHair = React.forwardRef((props: any, ref: any) => {
               imageUrl={hair.image}
               type="image"
               variant={props.isMobile ? 'box' : ''}
+              defaultChecked={props.defaultChecked === hair.name.toLowerCase()}
             />
           ))}
         </div>

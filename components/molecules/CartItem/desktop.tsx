@@ -1,4 +1,4 @@
-import { withTranslation } from 'i18n';
+import { withTranslation, Router } from 'i18n';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import NumberFormat from 'react-number-format';
 import debounce from 'lodash.debounce';
@@ -6,7 +6,7 @@ import Card from 'components/atoms/Card';
 import Dot from 'components/atoms/Dot';
 import Divider from 'components/atoms/Divider';
 import Popover from 'components/atoms/Popover';
-import { previewImg, updateShopify } from './helper';
+import { previewImg, updateQuantity } from './helper';
 import Skeleton from 'react-loading-skeleton';
 
 const CartItem = (props: any) => {
@@ -15,9 +15,9 @@ const CartItem = (props: any) => {
     if (quantity > 0) setQuantity(quantity - 1);
   };
   const debouncedFunctionRef = useRef();
-  (debouncedFunctionRef.current as any) = () => updateShopify();
+  (debouncedFunctionRef.current as any) = () => updateQuantity(props, quantity);
   const debouncedChange = useCallback(
-    debounce(() => (debouncedFunctionRef.current as any)(), 2000),
+    debounce(() => (debouncedFunctionRef.current as any)(), 1000),
     [],
   );
   const isFirstRun = useRef(true);
@@ -28,6 +28,14 @@ const CartItem = (props: any) => {
     }
     debouncedChange();
   }, [quantity]);
+  const editItem = () => {
+    props.saveSelected({
+      id: props.id,
+      quantity: props.quantity,
+      ...props.customAttributes,
+    });
+    Router.push('/create');
+  };
 
   return (
     <div style={props.style}>
@@ -92,7 +100,7 @@ const CartItem = (props: any) => {
                     <Skeleton width={24} />
                   </div>
                 ) : (
-                  <span className="c-cart-item__detail__actions__icon icon-edit" />
+                  <span onClick={editItem} className="c-cart-item__detail__actions__icon icon-edit" />
                 )}
                 {props.isSkeleton ? (
                   <div style={{ marginRight: 22 }}>

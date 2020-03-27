@@ -25,10 +25,11 @@ const NavBar = (props: any) => {
   };
 
   useEffect(() => {
-    if (!isIndexPage) return;
     const { user } = props.users;
     if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
+    document.body.classList.remove('overlay-active');
 
+    if (!isIndexPage) return;
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', () => handleScroll);

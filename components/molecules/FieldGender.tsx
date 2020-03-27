@@ -28,6 +28,7 @@ const FieldGender = React.forwardRef((props: any, ref: any) => {
               imageUrl={gender.image}
               type="image"
               variant={props.isMobile ? 'box' : ''}
+              defaultChecked={props.defaultChecked === gender.name.toLowerCase()}
             />
           ))}
         </div>

@@ -11,7 +11,13 @@ const FormTextArea = React.forwardRef((props: any, ref: any) => (
         {props.errors && <Badge>!</Badge>}
       </div>
       <div className="c-form-text-area__hint">{props.hint}</div>
-      <TextArea name={props.name} placeholder={props.placeholder} ref={ref} errors={props.errors} />
+      <TextArea
+        name={props.name}
+        placeholder={props.placeholder}
+        ref={ref}
+        errors={props.errors}
+        defaultValue={props.defaultValue}
+      />
     </div>
     <style jsx>{`
       .c-form-text-area {

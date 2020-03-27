@@ -108,6 +108,42 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
     });
 };
 
+function updateCart(isFetching, cart = null): types.CartActionTypes {
+  return {
+    type: types.UPDATE_CART,
+    payload: cart,
+    isFetching,
+  };
+}
+export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState, null, Action<string>> => async (
+  dispatch,
+  getState,
+): Promise<any> => {
+  dispatch(updateCart(true));
+  const { cart } = (getState() as any).users.user;
+  const { id, quantity } = product;
+  delete product.id;
+  delete product.quantity;
+
+  const customAttributes = Object.keys(product).map(data => ({
+    key: data,
+    value: product[data].toString(),
+  }));
+  const lineItemsToUpdate = [{ id, quantity, customAttributes }];
+  return graphql()
+    .checkout.updateLineItems(cart.checkout_id, lineItemsToUpdate)
+    .then(data => {
+      const lineItems = mapItems(data.lineItems);
+      dispatch(updateCart(false, { ...data, lineItems }));
+      if (Router.pathname !== '/cart') Router.push('/cart');
+    })
+    .catch(err => {
+      dispatch(updateCart(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
+
 function removeFromCart(isFetching, cart = null): types.CartActionTypes {
   return {
     type: types.REMOVE_FROM_CART,

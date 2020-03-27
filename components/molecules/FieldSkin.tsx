@@ -33,6 +33,7 @@ const FieldSkin = React.forwardRef((props: any, ref: any) => {
               type="plain"
               inset={!props.isMobile}
               variant={props.isMobile ? 'box' : ''}
+              defaultChecked={props.defaultChecked === skin.name.toLowerCase()}
             />
           ))}
         </div>

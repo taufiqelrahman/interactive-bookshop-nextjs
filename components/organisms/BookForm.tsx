@@ -18,7 +18,9 @@ const BookForm = (props: any) => {
     mode: 'onChange',
   });
   const onSubmit = data => {
-    props.saveSelected({ ...data, occupations: state.occupations });
+    let PARAMS = data;
+    if (props.isMobile) PARAMS = { ...PARAMS, occupations: state.occupations };
+    props.saveSelected(PARAMS);
     Router.push('/create');
   };
   const schema = {
