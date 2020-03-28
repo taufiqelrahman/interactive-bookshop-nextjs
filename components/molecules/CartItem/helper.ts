@@ -1,7 +1,7 @@
 export const previewImg = attributes => {
   const filePath = '/static/images/preview/child';
-  const { gender, age, skin, hair } = attributes;
-  return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
+  const { Gender, Age, Skin, Hair } = attributes;
+  return `${filePath}/${Gender}_${Age}_${Skin}_${Hair}.JPG`;
 };
 
 export const updateQuantity = (props, quantity) => {

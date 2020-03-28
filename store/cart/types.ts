@@ -1,4 +1,6 @@
 export const LOAD_CART = 'LOAD_CART';
+// export const ADD_DISCOUNT = 'ADD_DISCOUNT';
+// export const REMOVE_DISCOUNT = 'REMOVE_DISCOUNT';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const UPDATE_CART = 'UPDATE_CART';
 export const CREATE_CART = 'CREATE_CART';
@@ -36,6 +38,18 @@ interface LoadCart {
   isFetching: boolean;
 }
 
+// interface AddDiscount {
+//   type: typeof ADD_DISCOUNT;
+//   payload: Cart | null;
+//   isFetching: boolean;
+// }
+
+// interface RemoveDiscount {
+//   type: typeof REMOVE_DISCOUNT;
+//   payload: Cart | null;
+//   isFetching: boolean;
+// }
+
 interface AddToCart {
   type: typeof ADD_TO_CART;
   payload: Cart | null;
@@ -64,4 +78,12 @@ interface SaveSelected {
   payload: CartItem | null;
 }
 
-export type CartActionTypes = LoadCart | AddToCart | UpdateCart | CreateCart | RemoveFromCart | SaveSelected;
+export type CartActionTypes =
+  | LoadCart
+  // | RemoveDiscount
+  // | AddDiscount
+  | AddToCart
+  | UpdateCart
+  | CreateCart
+  | RemoveFromCart
+  | SaveSelected;

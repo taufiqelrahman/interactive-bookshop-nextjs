@@ -16,6 +16,9 @@ import { Fragment, useEffect } from 'react';
 const Cart = (props: any): any => {
   const { users, cart } = props.state;
   const items = cart.cart ? cart.cart.lineItems : cart.isFetching ? [1, 2] : [];
+  const itemsAmount = cart.cart ? cart.cart.lineItemsSubtotalPrice.amount : 0;
+  const hasShippingLine = cart.cart && cart.cart.shippingLine;
+  const discounts = cart.cart ? cart.cart.discountApplications : [];
   useEffect(() => {
     const { user } = users;
     if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
@@ -81,13 +84,44 @@ const Cart = (props: any): any => {
                         </div>
                         <div className="c-cart__summary__total">
                           <NumberFormat
-                            value={cart.totalPrice}
+                            value={cart.cart && itemsAmount}
                             thousandSeparator={true}
                             prefix={'Rp'}
                             displayType="text"
                           />
                         </div>
                       </div>
+                      {hasShippingLine && (
+                        <div className="flex justify-between" style={{ marginTop: 18 }}>
+                          <div>
+                            <div className="c-cart__summary__title">{props.t('standard-shipping')}</div>
+                          </div>
+                          <div className="c-cart__summary__total">
+                            <NumberFormat
+                              value={cart.cart.shippingLine.price}
+                              thousandSeparator={true}
+                              prefix={'Rp'}
+                              displayType="text"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {discounts.map(discount => (
+                        <div key={discount.code} className="flex justify-between" style={{ marginTop: 18 }}>
+                          <div>
+                            <div className="c-cart__summary__title">{props.t('discount-code')}</div>
+                            <div className="c-cart__summary__quantity">{discount.code}</div>
+                          </div>
+                          <div className="c-cart__summary__total">
+                            <NumberFormat
+                              value={-(itemsAmount * (discount.value.percentage / 100))}
+                              thousandSeparator={true}
+                              prefix={'Rp'}
+                              displayType="text"
+                            />
+                          </div>
+                        </div>
+                      ))}
                       <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
                     </Fragment>
                   )}
@@ -96,14 +130,22 @@ const Cart = (props: any): any => {
                       Subtotal
                       {props.isMobile && <span className="icon-info" />}
                     </div>
-                    <NumberFormat value={cart.totalPrice} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                    <NumberFormat
+                      value={cart.cart && cart.cart.totalPrice}
+                      thousandSeparator={true}
+                      prefix={'Rp'}
+                      displayType="text"
+                    />
                   </div>
-                  {!props.isMobile && (
+                  {!props.isMobile && !hasShippingLine && (
                     <div className="c-cart__summary__info">
                       <span className="icon-info" />
                       {props.t('shipping-not-included')}
                     </div>
                   )}
+                  {/* dummy */}
+                  {/* <Button onClick={() => props.thunkAddDiscount('NEWMEMBER')}>add discount</Button>
+                  <Button onClick={() => props.thunkRemoveDiscount('NEWMEMBER')}>remove discount</Button> */}
                   <Button
                     width="100%"
                     color="black"

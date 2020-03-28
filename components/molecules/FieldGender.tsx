@@ -22,7 +22,7 @@ const FieldGender = React.forwardRef((props: any, ref: any) => {
               key={gender.name}
               ref={ref}
               value={gender.name}
-              name="gender"
+              name="Gender"
               errors={props.errors}
               style={props.isMobile ? {} : { height: 84, width: 84 }}
               imageUrl={gender.image}

@@ -47,5 +47,7 @@
   "signed-in-as": "Signed in as",
   "checkout": "Checkout",
   "faq": "Frequently Asked Questions",
-  "for": "For"
+  "for": "For",
+  "standard-shipping": "Standard Shipping",
+  "discount-code": "Discount Code"
 }

@@ -27,7 +27,7 @@ const FieldHair = React.forwardRef((props: any, ref: any) => {
               key={hair.name}
               ref={ref}
               value={hair.name}
-              name="hair"
+              name="Hair"
               errors={props.errors}
               style={props.isMobile ? {} : { height: 84, width: 84 }}
               imageUrl={hair.image}

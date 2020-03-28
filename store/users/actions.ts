@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { Router } from 'i18n';
 import * as types from './types';
 import { setErrorMessage } from '../actions';
+import { thunkLoadCart } from '../cart/actions';
 import api from 'services/api';
 import graphql from 'services/graphql';
 import { encryptTokenClient } from 'lib/crypto';
@@ -30,6 +31,7 @@ export const thunkLoadUser = (req?): any => (dispatch): any => {
     .users.getMe()
     .then(({ data }) => {
       dispatch(loadUser(false, data));
+      if (data.cart) dispatch(thunkLoadCart(data.cart.checkout_id));
     })
     .catch(err => {
       dispatch(loadUser(false, {}));

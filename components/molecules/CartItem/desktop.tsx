@@ -12,6 +12,11 @@ import Skeleton from 'react-loading-skeleton';
 const CartItem = (props: any) => {
   const [quantity, setQuantity] = useState(props.quantity);
   const onDecrease = () => {
+    if (quantity === 1) {
+      // dummy
+      const sure = confirm('are you sure?');
+      if (!sure) return;
+    }
     if (quantity > 0) setQuantity(quantity - 1);
   };
   const debouncedFunctionRef = useRef();
@@ -55,8 +60,8 @@ const CartItem = (props: any) => {
               </div>
             ) : (
               <div className="c-cart-item__preview__cover">
-                <Dot width="16px" color={props.customAttributes.cover} />
-                {props.customAttributes.cover}
+                <Dot width="16px" color={props.customAttributes.Cover} />
+                {props.customAttributes.Cover}
               </div>
             )}
           </div>
@@ -67,19 +72,19 @@ const CartItem = (props: any) => {
                   {props.isSkeleton ? <Skeleton /> : props.t('form:name-label')}
                 </div>
                 <div className="c-cart-item__detail__value">
-                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.name}
+                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Name}
                 </div>
                 <div className="c-cart-item__detail__label">
                   {props.isSkeleton ? <Skeleton /> : props.t('dream-occupation')}
                 </div>
                 <div className="c-cart-item__detail__value">
-                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.occupations}
+                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Occupations}
                 </div>
               </div>
-              {!props.isSkeleton && props.customAttributes.dedication && (
+              {!props.isSkeleton && props.customAttributes.Dedication && (
                 <div className="c-cart-item__detail--top--right">
                   <div className="c-cart-item__detail__label">{props.t('dedication-note')}</div>
-                  <Popover content={props.customAttributes.dedication}>
+                  <Popover content={props.customAttributes.Dedication}>
                     <div className="c-cart-item__detail__link">{props.t('preview-note')}</div>
                   </Popover>
                 </div>

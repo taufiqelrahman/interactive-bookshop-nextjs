@@ -6,9 +6,9 @@ export default class Checkout {
     this.adapter = adapter;
   }
 
-  create(): Promise<any> {
+  create(data): Promise<any> {
     // return this.adapter.product.fetchAll();
-    return this.adapter.checkout.create();
+    return this.adapter.checkout.create(data);
   }
 
   get(id): Promise<any> {
@@ -26,4 +26,12 @@ export default class Checkout {
   removeLineItems(id, itemId): Promise<any> {
     return this.adapter.checkout.removeLineItems(id, itemId);
   }
+
+  // addDiscount(id, code): Promise<any> {
+  //   return this.adapter.checkout.addDiscount(id, code);
+  // }
+
+  // removeDiscount(id): Promise<any> {
+  //   return this.adapter.checkout.removeDiscount(id);
+  // }
 }

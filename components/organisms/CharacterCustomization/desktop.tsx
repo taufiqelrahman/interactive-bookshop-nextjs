@@ -22,7 +22,7 @@ const CharacterCustomization = (props: any) => {
     mode: 'onChange',
   });
   useEffect(() => {
-    register({ name: 'dob' }, schema.dob);
+    register({ name: 'Date of Birth' }, schema.dob);
   }, []);
   useEffect(() => {
     if (!formState.isValid) {
@@ -67,7 +67,7 @@ const CharacterCustomization = (props: any) => {
                 <div className="flex">
                   <FormTextField
                     label={props.t('name-label')}
-                    name="name"
+                    name="Name"
                     placeholder={props.t('name-placeholder')}
                     ref={register(schema.name)}
                     errors={errors.name}
@@ -77,7 +77,7 @@ const CharacterCustomization = (props: any) => {
                   <FieldAge ref={register(schema.age)} errors={errors.age} defaultChecked={selected.age} />
                 </div>
                 <FieldDob
-                  name="dob"
+                  name="Date of Birth"
                   setValue={setValue}
                   triggerValidation={triggerValidation}
                   errors={errors.dob}
@@ -115,7 +115,7 @@ const CharacterCustomization = (props: any) => {
                 <FormTextArea
                   label={props.t('dedication-label')}
                   hint={props.t('dedication-hint')}
-                  name="dedication"
+                  name="Dedication"
                   placeholder={props.t('dedication-placeholder')}
                   ref={register(schema.dedication)}
                   errors={errors.dedication}

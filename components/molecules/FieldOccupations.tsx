@@ -20,7 +20,7 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => {
               <Checkbox
                 ref={ref}
                 value={job.name}
-                name="occupations"
+                name="Occupations"
                 errors={props.errors}
                 inset={true}
                 defaultChecked={props.defaultChecked && props.defaultChecked.includes(job.name)}

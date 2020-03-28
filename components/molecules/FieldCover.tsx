@@ -23,7 +23,7 @@ const FieldCover = React.forwardRef((props: any, ref: any) => {
               key={cover.name}
               ref={ref}
               value={cover.name}
-              name="cover"
+              name="Cover"
               errors={props.errors}
               style={{ height: 48, width: 48, background: cover.color, borderRadius: '50%', marginRight: 12 }}
               type="plain"

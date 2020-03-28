@@ -23,7 +23,7 @@ const FieldSkin = React.forwardRef((props: any, ref: any) => {
               key={skin.name}
               ref={ref}
               value={skin.name}
-              name="skin"
+              name="Skin"
               errors={props.errors}
               style={
                 props.isMobile

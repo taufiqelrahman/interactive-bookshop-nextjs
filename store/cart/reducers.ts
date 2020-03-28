@@ -8,34 +8,17 @@ const initialState: types.CartState = {
 
 const reducer = (state = initialState, action: types.CartActionTypes): types.CartState => {
   switch (action.type) {
-    case types.LOAD_CART: {
+    case types.LOAD_CART:
+    // case types.ADD_DISCOUNT:
+    // case types.REMOVE_DISCOUNT:
+    case types.ADD_TO_CART:
+    case types.UPDATE_CART:
+    case types.REMOVE_FROM_CART:
       return {
         ...state,
         isFetching: action.isFetching,
         cart: action.payload,
       };
-    }
-    case types.ADD_TO_CART: {
-      return {
-        ...state,
-        isFetching: action.isFetching,
-        cart: action.payload,
-      };
-    }
-    case types.UPDATE_CART: {
-      return {
-        ...state,
-        isFetching: action.isFetching,
-        cart: action.payload,
-      };
-    }
-    case types.REMOVE_FROM_CART: {
-      return {
-        ...state,
-        isFetching: action.isFetching,
-        cart: action.payload,
-      };
-    }
     case types.SAVE_SELECTED: {
       return {
         ...state,

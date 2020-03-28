@@ -18,7 +18,7 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
             ref={ref}
             value={age.toLowerCase()}
             label={age}
-            name="age"
+            name="Age"
             errors={props.errors}
             style={{ height: 44, minWidth: 92 }}
             defaultChecked={props.defaultChecked === age.toLowerCase()}

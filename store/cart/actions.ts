@@ -51,11 +51,26 @@ function createCart(isFetching): types.CartActionTypes {
     isFetching,
   };
 }
+function createCheckout(user) {
+  const { email, address } = user;
+  let PARAMS: any = { email };
+  if (address) {
+    const shippingAddress = { ...address };
+    delete shippingAddress.id;
+    delete shippingAddress.created_at;
+    delete shippingAddress.updated_at;
+    delete shippingAddress.deleted_at;
+    PARAMS = { ...PARAMS, shippingAddress };
+  }
+  return graphql().checkout.create(PARAMS);
+}
 export const thunkCreateCart = (): ThunkAction<void, types.CartState, null, Action<string>> => async (
   dispatch,
+  getState,
 ): Promise<any> => {
   dispatch(createCart(true));
-  const cart = await graphql().checkout.create();
+  const { user } = (getState() as any).users;
+  const cart = await createCheckout(user);
   return api()
     .cart.createCart({ checkoutId: cart.id })
     .then(() => {
@@ -70,6 +85,56 @@ export const thunkCreateCart = (): ThunkAction<void, types.CartState, null, Acti
       captureException(err);
     });
 };
+
+// function removeDiscount(isFetching, cart = null): types.CartActionTypes {
+//   return {
+//     type: types.ADD_DISCOUNT,
+//     payload: cart,
+//     isFetching,
+//   };
+// }
+// export const thunkRemoveDiscount = (): ThunkAction<void, types.CartState, null, Action<string>> => async (
+//   dispatch,
+//   getState,
+// ): Promise<any> => {
+//   dispatch(removeDiscount(true));
+//   const { cart } = (getState() as any).users.user;
+//   return graphql()
+//     .checkout.removeDiscount(cart.checkout_id)
+//     .then(cart => {
+//       dispatch(removeDiscount(false, cart));
+//     })
+//     .catch(err => {
+//       dispatch(removeDiscount(false));
+//       dispatch(setErrorMessage(err.message));
+//       captureException(err);
+//     });
+// };
+
+// function addDiscount(isFetching, cart = null): types.CartActionTypes {
+//   return {
+//     type: types.ADD_DISCOUNT,
+//     payload: cart,
+//     isFetching,
+//   };
+// }
+// export const thunkAddDiscount = (code): ThunkAction<void, types.CartState, null, Action<string>> => async (
+//   dispatch,
+//   getState,
+// ): Promise<any> => {
+//   dispatch(addDiscount(true));
+//   const { cart } = (getState() as any).users.user;
+//   return graphql()
+//     .checkout.addDiscount(cart.checkout_id, code)
+//     .then(cart => {
+//       dispatch(addDiscount(false, cart));
+//     })
+//     .catch(err => {
+//       dispatch(addDiscount(false));
+//       dispatch(setErrorMessage(err.message));
+//       captureException(err);
+//     });
+// };
 
 function addToCart(isFetching, cart = null): types.CartActionTypes {
   return {
