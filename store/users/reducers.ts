@@ -21,38 +21,20 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
         isLoggedIn: action.payload,
       };
     }
-    case types.LOGIN: {
+    case types.LOGIN:
+    case types.LOGOUT:
       return {
         ...state,
         isLoggedIn: action.payload,
         isFetching: action.isFetching,
       };
-    }
-    case types.LOGOUT: {
-      return {
-        ...state,
-        isLoggedIn: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    case types.FORGOT_PASSWORD: {
+    case types.FORGOT_PASSWORD:
+    case types.REGISTER:
+    case types.RESET_PASSWORD:
       return {
         ...state,
         isFetching: action,
       };
-    }
-    case types.REGISTER: {
-      return {
-        ...state,
-        isFetching: action,
-      };
-    }
-    case types.RESET_PASSWORD: {
-      return {
-        ...state,
-        isFetching: action,
-      };
-    }
     default:
       return state;
   }
