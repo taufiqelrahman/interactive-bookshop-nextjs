@@ -90,12 +90,12 @@ const CharacterCustomization = (props: any) => {
                   style={{ marginTop: 24 }}
                   defaultChecked={selected.gender}
                 />
-                {!!watch('gender') && (
+                {!!watch('Gender') && (
                   <FieldHair
                     ref={register(schema.hair)}
                     errors={errors.hair}
                     style={{ marginTop: 24 }}
-                    type={watch('gender')}
+                    type={watch('Gender')}
                     defaultChecked={selected.hair}
                   />
                 )}

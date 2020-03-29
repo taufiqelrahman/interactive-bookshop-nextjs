@@ -137,13 +137,20 @@ const Cart = (props: any): any => {
                       displayType="text"
                     />
                   </div>
-                  {!props.isMobile && !hasShippingLine && (
+                  {!props.isMobile && (
                     <div className="c-cart__summary__info">
-                      <span className="icon-info" />
-                      {props.t('shipping-not-included')}
+                      {!hasShippingLine && (
+                        <div className="c-cart__summary__info__item" style={{ marginBottom: 8 }}>
+                          <span className="icon-info" />
+                          {props.t('shipping-not-included')}
+                        </div>
+                      )}
+                      <div className="c-cart__summary__info__item">
+                        <span className="icon-tag_label" />
+                        {props.t('discount-next-step')}
+                      </div>
                     </div>
                   )}
-                  {/* dummy */}
                   {/* <Button onClick={() => props.thunkAddDiscount('NEWMEMBER')}>add discount</Button>
                   <Button onClick={() => props.thunkRemoveDiscount('NEWMEMBER')}>remove discount</Button> */}
                   <Button
@@ -228,15 +235,18 @@ const Cart = (props: any): any => {
               line-height: 24px;
             }
             &__info {
-              @apply text-sm flex items-center;
+              @apply text-sm;
               margin-top: 12px;
               padding: 12px;
               line-height: 18px;
               background: #f6f5f8;
               border-radius: 12px;
-              span {
-                font-size: 20px;
-                margin-right: 8px;
+              &__item {
+                @apply flex items-center;
+                span {
+                  font-size: 20px;
+                  margin-right: 8px;
+                }
               }
             }
           }

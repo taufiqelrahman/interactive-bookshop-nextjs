@@ -1,5 +1,5 @@
 import { withTranslation, Router } from 'i18n';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import NumberFormat from 'react-number-format';
 import debounce from 'lodash.debounce';
 import Card from 'components/atoms/Card';
@@ -8,16 +8,18 @@ import Divider from 'components/atoms/Divider';
 import Popover from 'components/atoms/Popover';
 import { previewImg, updateQuantity } from './helper';
 import Skeleton from 'react-loading-skeleton';
+import Modal from 'components/atoms/Modal';
+import Button from 'components/atoms/Button';
 
 const CartItem = (props: any) => {
   const [quantity, setQuantity] = useState(props.quantity);
+  const [showModal, setShowModal] = useState(false);
   const onDecrease = () => {
     if (quantity === 1) {
-      // dummy
-      const sure = confirm('are you sure?');
-      if (!sure) return;
+      setShowModal(true);
+    } else if (quantity > 0) {
+      setQuantity(quantity - 1);
     }
-    if (quantity > 0) setQuantity(quantity - 1);
   };
   const debouncedFunctionRef = useRef();
   (debouncedFunctionRef.current as any) = () => updateQuantity(props, quantity);
@@ -141,6 +143,22 @@ const CartItem = (props: any) => {
           </div>
         </div>
       </Card>
+      <Modal
+        title={props.t('form:are-you-sure')}
+        isOpen={showModal}
+        closeModal={() => setShowModal(false)}
+        actions={
+          <Fragment>
+            <Button width="100%" onClick={() => setQuantity(0)} style={{ marginBottom: 12 }}>
+              {props.t('form:continue-button')}
+            </Button>
+            <Button width="100%" onClick={() => setShowModal(false)} variant="outline" color="black">
+              {props.t('form:cancel-button')}
+            </Button>
+          </Fragment>
+        }
+        content={props.t('form:want-to-remove')}
+      />
       <style jsx>{`
         .c-cart-item {
           @apply flex;

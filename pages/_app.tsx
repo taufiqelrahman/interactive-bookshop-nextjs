@@ -116,6 +116,10 @@ const App: NextPage<any> = (props: any) => {
         }
 
         /* icons */
+
+        .icon-tag_label:before {
+          content: '\e912';
+        }
         .icon-ui_cross:before {
           content: '\e911';
         }

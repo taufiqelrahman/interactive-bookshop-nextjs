@@ -96,8 +96,8 @@ const BookPreview = (props: any) => {
   // };
 
   const getImage = (job, order) => {
-    const { gender, age, skin, hair } = props.selected;
-    return `/static/images/pages/${job}/${order}/${gender}/${age}_${hair}_${skin}.jpeg`;
+    const { Gender, Age, Skin, Hair } = props.selected;
+    return `/static/images/pages/${job}/${order}/${Gender}/${Age}_${Hair}_${Skin}.jpeg`;
   };
 
   const pageClass = index => {

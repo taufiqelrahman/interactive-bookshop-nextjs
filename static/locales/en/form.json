@@ -46,5 +46,7 @@
   "next-button": "Next",
   "cancel-button": "Cancel",
   "reset-button": "Reset",
-  "select-date": "Select Date"
+  "select-date": "Select Date",
+  "are-you-sure": "Are you sure?",
+  "want-to-remove": "Do you want to remove this item?"
 }

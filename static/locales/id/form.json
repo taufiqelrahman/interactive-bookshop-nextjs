@@ -46,5 +46,7 @@
   "next-button": "Lanjut",
   "cancel-button": "Batal",
   "reset-button": "Set Ulang",
-  "select-date": "Pilih Tanggal"
+  "select-date": "Pilih Tanggal",
+  "are-you-sure": "Yakin?",
+  "want-to-remove": "Apakah kamu ingin menghapus ini?"
 }
