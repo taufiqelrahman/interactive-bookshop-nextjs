@@ -13,7 +13,7 @@ import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
-import { schema, showError } from './helper';
+import { schema, showError, previewImg } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 
@@ -51,7 +51,12 @@ const CharacterCustomization = (props: any) => {
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page--large">
-        <Stepper step={1} totalSteps={2} title={props.t('character-customization')} style={{ marginBottom: 30 }} />
+        <Stepper
+          step={1}
+          totalSteps={2}
+          title={props.t('common:character-customization')}
+          style={{ marginBottom: 30 }}
+        />
         <div className="c-char-custom">
           <div className="c-char-custom__left">
             <Card variant="border">
@@ -130,7 +135,7 @@ const CharacterCustomization = (props: any) => {
             </Card>
           </div>
           <div className="c-char-custom__right">
-            <img src="/static/images/dummy.png" />
+            <img src={previewImg(selected, watch)} />
           </div>
         </div>
       </div>
@@ -153,7 +158,6 @@ const CharacterCustomization = (props: any) => {
             }
           }
           &__right {
-            @apply hidden;
             padding: 0 100px;
             @screen lg {
               @apply w-1/5;
@@ -171,4 +175,4 @@ const CharacterCustomization = (props: any) => {
   );
 };
 
-export default withTranslation('form')(CharacterCustomization);
+export default withTranslation(['form', 'common'])(CharacterCustomization);

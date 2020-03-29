@@ -25,3 +25,13 @@ export const dummy = {
   age: 'Toddler',
   occupations: ['4', '5', '6'],
 };
+
+export const previewImg = (data, watch) => {
+  const filePath = '/static/images/preview/child';
+  const { Gender, Age, Skin, Hair } = data;
+  const pickedGender = watch('Gender') || Gender || 'boy';
+  const pickedAge = watch('Age') || Age || 'kid';
+  const pickedSkin = watch('Skin') || Skin || 'light';
+  const pickedHair = watch('Hair') || Hair || 'short';
+  return `${filePath}/${pickedGender}_${pickedAge}_${pickedSkin}_${pickedHair}.JPG`;
+};

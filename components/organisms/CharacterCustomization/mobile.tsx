@@ -11,7 +11,7 @@ import FieldSkin from 'components/molecules/FieldSkin';
 import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Button from 'components/atoms/Button';
-import { schema, showError } from './helper';
+import { schema, showError, previewImg } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Sheet from 'components/atoms/Sheet';
@@ -111,7 +111,7 @@ const CharacterCustomization = (props: any) => {
             <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
               <div className="u-container c-char-custom__preview">
                 <div>
-                  <img src="/static/images/dummy.png" />
+                  <img src={previewImg(selected, watch)} />
                 </div>
               </div>
               <div className="u-container c-char-custom__tab">
