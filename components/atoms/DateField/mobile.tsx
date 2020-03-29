@@ -24,6 +24,18 @@ const DateField = (props: any) => {
   useEffect(() => {
     setFullDate();
   }, [state]);
+  const setDefaultDate = () => {
+    const parsed = props.defaultValue.split('-');
+    if (parsed.length !== 3) return;
+    setState({
+      date: parsed[0],
+      month: parsed[1],
+      year: parsed[2],
+    });
+  };
+  useEffect(() => {
+    if (props.defaultValue) setDefaultDate();
+  }, []);
   const openSheet = () => {
     setSheetData({
       ...sheetData,

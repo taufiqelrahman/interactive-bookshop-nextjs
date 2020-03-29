@@ -144,7 +144,7 @@ const CartItem = (props: any) => {
         </div>
       </Card>
       <Modal
-        title={props.t('form:are-you-sure')}
+        title={props.t('form:delete-item')}
         isOpen={showModal}
         closeModal={() => setShowModal(false)}
         actions={
@@ -157,7 +157,7 @@ const CartItem = (props: any) => {
             </Button>
           </Fragment>
         }
-        content={props.t('form:want-to-remove')}
+        content={props.t('form:delete-confirmation')}
       />
       <style jsx>{`
         .c-cart-item {

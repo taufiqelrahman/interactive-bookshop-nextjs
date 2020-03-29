@@ -16,7 +16,7 @@ const Modal = (props: any) => {
         <div className="c-modal__head">
           <div className="c-modal__head__title">{props.title}</div>
         </div>
-        <div>{props.content}</div>
+        <div className="c-modal__content">{props.content}</div>
         {props.actions && <div className="c-modal__action">{props.actions}</div>}
       </div>
       {props.isOpen && <div className={`c-modal__overlay ${overlayClass}`} onClick={onClose}></div>}
@@ -31,7 +31,7 @@ const Modal = (props: any) => {
           transition: opacity 0.2s ease-in;
           min-height: 268px;
           padding: 16px;
-          z-index: ${50 + zIndexMultiplier};
+          z-index: ${props.isOpen ? 50 + zIndexMultiplier : -99};
           border-radius: 24px;
           border: 2px solid #e1e0e7;
           &__overlay {
@@ -59,8 +59,12 @@ const Modal = (props: any) => {
               @apply font-bold;
               font-size: 28px;
               line-height: 42px;
-              margin-bottom: 24px;
+              margin-bottom: 12px;
             }
+          }
+          &__content {
+            @apply text-sm;
+            line-height: 20px;
           }
           &__action {
             margin-top: 24px;

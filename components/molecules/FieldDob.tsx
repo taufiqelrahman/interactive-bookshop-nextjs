@@ -15,7 +15,10 @@ const FieldDob = (props: any) => {
       <style jsx>{`
         .c-field-dob {
           &__header {
-            @apply font-semibold mb-3 flex;
+            @apply font-semibold mb-3 flex text-sm;
+            @screen md {
+              @apply text-base;
+            }
           }
         }
       `}</style>

@@ -14,7 +14,12 @@ const PreviewMobile = (props: any): any => {
   });
   const onSubmit = data => {
     const { selected } = props.state.cart;
-    props.thunkAddToCart({ ...selected, ...data });
+    const cart = { ...selected, ...data };
+    if (selected.id) {
+      props.thunkUpdateCart(cart);
+    } else {
+      props.thunkAddToCart(cart);
+    }
   };
   useEffect(() => {
     if (!formState.isValid) {
@@ -37,7 +42,7 @@ const PreviewMobile = (props: any): any => {
             <FieldCover ref={register(schema(props).cover)} errors={errors.cover} />
           </div>
           <Button type="submit" width="648px" disabled={dontHaveCart} style={{ margin: '12px 0 18px' }}>
-            {props.t('form:continue-button')}
+            {selected.id ? props.t('update-cart') : props.t('form:continue-button')}
           </Button>
           <div className="c-preview__link" onClick={() => Router.back()}>
             {props.t('go-back')}

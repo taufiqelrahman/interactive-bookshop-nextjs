@@ -58,9 +58,9 @@ const CharacterCustomization = (props: any) => {
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
                 <FieldOccupations
                   ref={register(schema.occupations)}
-                  errors={errors.occupations}
+                  errors={errors.Occupations}
                   style={{ maxWidth: 550, marginBottom: 24 }}
-                  defaultChecked={selected.occupations}
+                  defaultChecked={selected.Occupations}
                   occupations={occupations}
                 />
                 <Divider />
@@ -70,47 +70,47 @@ const CharacterCustomization = (props: any) => {
                     name="Name"
                     placeholder={props.t('name-placeholder')}
                     ref={register(schema.name)}
-                    errors={errors.name}
+                    errors={errors.Name}
                     style={{ marginRight: 36 }}
-                    defaultValue={selected.name}
+                    defaultValue={selected.Name}
                   />
-                  <FieldAge ref={register(schema.age)} errors={errors.age} defaultChecked={selected.age} />
+                  <FieldAge ref={register(schema.age)} errors={errors.Age} defaultChecked={selected.Age} />
                 </div>
                 <FieldDob
                   name="Date of Birth"
                   setValue={setValue}
                   triggerValidation={triggerValidation}
-                  errors={errors.dob}
+                  errors={errors['Date of Birth']}
                   style={{ marginTop: 24 }}
-                  defaultValue={selected.dob}
+                  defaultValue={selected['Date of Birth']}
                 />
                 <FieldGender
                   ref={register(schema.gender)}
-                  errors={errors.gender}
+                  errors={errors.Gender}
                   style={{ marginTop: 24 }}
-                  defaultChecked={selected.gender}
+                  defaultChecked={selected.Gender}
                 />
                 {!!watch('Gender') && (
                   <FieldHair
                     ref={register(schema.hair)}
-                    errors={errors.hair}
+                    errors={errors.Hair}
                     style={{ marginTop: 24 }}
                     type={watch('Gender')}
-                    defaultChecked={selected.hair}
+                    defaultChecked={selected.Hair}
                   />
                 )}
                 <FieldSkin
                   ref={register(schema.skin)}
-                  errors={errors.skin}
+                  errors={errors.Skin}
                   style={{ marginTop: 24, marginBottom: 24 }}
-                  defaultChecked={selected.skin}
+                  defaultChecked={selected.Skin}
                 />
                 <Divider />
                 <FieldLanguage
                   ref={register(schema.language)}
-                  errors={errors.language}
+                  errors={errors.Language}
                   style={{ marginTop: 24 }}
-                  defaultChecked={selected.language}
+                  defaultChecked={selected.Language}
                 />
                 <FormTextArea
                   label={props.t('dedication-label')}
@@ -118,9 +118,9 @@ const CharacterCustomization = (props: any) => {
                   name="Dedication"
                   placeholder={props.t('dedication-placeholder')}
                   ref={register(schema.dedication)}
-                  errors={errors.dedication}
+                  errors={errors.Dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}
-                  defaultValue={selected.dedication}
+                  defaultValue={selected.Dedication}
                 />
                 <Divider />
                 <Button type="submit" width="100%" style={{ marginTop: 24 }}>

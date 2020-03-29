@@ -32,15 +32,6 @@ const CharacterCustomization = (props: any) => {
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
     mode: 'onChange',
   });
-  const onSubmit = data => {
-    const { selected } = props.state.cart;
-    props.saveSelected({ ...selected, ...data });
-    if (charStep !== stepEnum.DEDICATION) {
-      setCharStep(charStep + 1);
-      return;
-    }
-    Router.push('/preview');
-  };
   const cancel = () => {
     setShowSheet(true);
   };
@@ -53,18 +44,38 @@ const CharacterCustomization = (props: any) => {
       Router.back();
       return;
     }
-    if (charStep === stepEnum.NAME_DOB) unregister('dob');
+    if (charStep === stepEnum.NAME_DOB) unregister('Date of Birth');
     setCharStep(charStep - 1);
   };
   useEffect(() => {
-    if (charStep === stepEnum.NAME_DOB) register({ name: 'dob' }, schema.dob);
+    if (charStep === stepEnum.NAME_DOB) register({ name: 'Date of Birth' }, schema.dob);
   }, [charStep]);
   useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected = props.state.cart.selected || {};
+  const selected =
+    props.state.cart.selected ||
+    {
+      // occupations: ['Astronaut', 'Teacher', 'Librarian'],
+      // name: 'asd',
+      // age: 'kid',
+      // gender: 'girl',
+      // skin: 'light',
+      // language: 'english',
+      // dedication: 'asdasd',
+      // dob: '03-01-2019',
+      // hair: 'short',
+    };
+  const onSubmit = data => {
+    props.saveSelected({ ...selected, ...data });
+    if (charStep !== stepEnum.DEDICATION) {
+      setCharStep(charStep + 1);
+      return;
+    }
+    Router.push('/preview');
+  };
   const screenHeight = '100vh - 69px';
   const { occupations } = props.state.master;
   return (
@@ -86,13 +97,13 @@ const CharacterCustomization = (props: any) => {
             <div className="u-container u-container__page">
               <FieldOccupations
                 ref={register(schema.occupations)}
-                errors={errors.occupations}
-                defaultChecked={selected.occupations}
+                errors={errors.Occupations}
+                defaultChecked={selected.Occupations}
                 occupations={occupations}
               />
-              {watch('occupations') && (
+              {watch('Occupations') && (
                 <div className="c-char-custom__message">
-                  {errors.occupations ? props.t('occupations-invalid') : watch('occupations').join(', ')}
+                  {errors.Occupations ? props.t('occupations-invalid') : watch('Occupations').join(', ')}
                 </div>
               )}
             </div>
@@ -108,46 +119,69 @@ const CharacterCustomization = (props: any) => {
                   <Fragment>
                     <FormTextField
                       label={props.t('char-name-label')}
-                      name="name"
+                      name="Name"
                       placeholder={props.t('name-placeholder')}
                       ref={register(schema.name)}
-                      errors={errors.name}
-                      defaultValue={selected.name}
+                      errors={errors.Name}
+                      defaultValue={selected.Name}
                       variant="full-width"
                     />
                     <FieldDob
-                      name="dob"
+                      name="Date of Birth"
                       setValue={setValue}
                       triggerValidation={triggerValidation}
-                      errors={errors.dob}
+                      errors={errors['Date of Birth']}
                       style={{ marginTop: 12 }}
+                      defaultValue={selected['Date of Birth']}
                       {...props}
                     />
                   </Fragment>
                 )}
                 {charStep === stepEnum.AGE && (
-                  <FieldAge ref={register(schema.age)} errors={errors.age} defaultChecked={selected.age} />
+                  <FieldAge ref={register(schema.age)} errors={errors.Age} defaultChecked={selected.Age} />
                 )}
                 {charStep === stepEnum.GENDER && (
-                  <FieldGender ref={register(schema.gender)} errors={errors.gender} isMobile={true} />
+                  <FieldGender
+                    ref={register(schema.gender)}
+                    errors={errors.Gender}
+                    isMobile={true}
+                    defaultChecked={selected.Gender}
+                  />
                 )}
                 {charStep === stepEnum.HAIR && (
-                  <FieldHair ref={register(schema.hair)} errors={errors.hair} type={watch('gender')} isMobile={true} />
+                  <FieldHair
+                    ref={register(schema.hair)}
+                    errors={errors.Hair}
+                    type={watch('Gender')}
+                    isMobile={true}
+                    defaultChecked={selected.Hair}
+                  />
                 )}
                 {charStep === stepEnum.SKIN && (
-                  <FieldSkin ref={register(schema.skin)} errors={errors.skin} isMobile={true} />
+                  <FieldSkin
+                    ref={register(schema.skin)}
+                    errors={errors.Skin}
+                    isMobile={true}
+                    defaultChecked={selected.Skin}
+                  />
                 )}
                 {charStep === stepEnum.LANGUAGE && (
-                  <FieldLanguage ref={register(schema.language)} errors={errors.language} isMobile={true} />
+                  <FieldLanguage
+                    ref={register(schema.language)}
+                    errors={errors.Language}
+                    isMobile={true}
+                    defaultChecked={selected.Language}
+                  />
                 )}
                 {charStep === stepEnum.DEDICATION && (
                   <FormTextArea
                     label={props.t('dedication-label')}
                     hint={props.t('dedication-hint')}
-                    name="dedication"
+                    name="Dedication"
                     placeholder={props.t('dedication-placeholder')}
                     ref={register(schema.dedication)}
-                    errors={errors.dedication}
+                    errors={errors.Dedication}
+                    defaultValue={selected.Dedication}
                   />
                 )}
               </div>
