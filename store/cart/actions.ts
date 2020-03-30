@@ -55,11 +55,17 @@ function createCheckout(user) {
   const { email, address } = user;
   let PARAMS: any = { email };
   if (address) {
-    const shippingAddress = { ...address };
+    const shippingAddress = {
+      ...address,
+      firstName: address.first_name,
+      lastName: address.last_name,
+    };
     delete shippingAddress.id;
     delete shippingAddress.created_at;
     delete shippingAddress.updated_at;
     delete shippingAddress.deleted_at;
+    delete shippingAddress.first_name;
+    delete shippingAddress.last_name;
     PARAMS = { ...PARAMS, shippingAddress };
   }
   return graphql().checkout.create(PARAMS);
