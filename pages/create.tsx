@@ -16,6 +16,7 @@ const Create = (props: any): any => {
 
 Create.getInitialProps = async (ctx: any): Promise<any> => {
   try {
+    ctx.reduxStore.dispatch(actions.loadOccupations(true));
     const { data: occupations } = await api().master.getOccupations();
     ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
   } catch (err) {

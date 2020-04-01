@@ -23,6 +23,7 @@ Preview.getInitialProps = async (ctx: any): Promise<any> => {
     return {};
   }
   try {
+    ctx.reduxStore.dispatch(actions.loadBookPages(true));
     const { data } = await api().master.getBookPages();
     ctx.reduxStore.dispatch(actions.loadBookPages(false, data.data));
   } catch (err) {

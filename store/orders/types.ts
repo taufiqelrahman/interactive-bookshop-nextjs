@@ -15,7 +15,7 @@ interface Order {
 
 export interface OrdersState {
   isFetching: boolean;
-  orders: Order[] | null;
+  orders: Order[];
   currentOrder: Order | null;
 }
 

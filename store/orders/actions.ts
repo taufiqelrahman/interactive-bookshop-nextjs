@@ -49,10 +49,10 @@ export const thunkLoadOrder = (chargeData): ThunkAction<void, types.OrdersState,
     });
 };
 
-function loadOrders(isFetching, order = null): types.OrdersActionTypes {
+export function loadOrders(isFetching, orders: any = []): types.OrdersActionTypes {
   return {
-    type: types.LOAD_ORDER,
-    payload: order,
+    type: types.LOAD_ORDERS,
+    payload: orders,
     isFetching,
   };
 }

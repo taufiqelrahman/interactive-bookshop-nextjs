@@ -6,6 +6,7 @@ import Card from 'components/atoms/Card';
 import Capsule from 'components/atoms/Capsule';
 import appConfig from 'config';
 import { previewImg } from './helper';
+import Skeleton from 'react-loading-skeleton';
 
 const OrderItem = (props: any) => {
   return (
@@ -13,33 +14,57 @@ const OrderItem = (props: any) => {
       <Card variant="border">
         <div className="c-order-item">
           <div className="c-order-item__preview">
-            <div className="c-order-item__preview__image">
-              <img src={previewImg(props.line_items[0])} />
-            </div>
+            {props.isSkeleton ? (
+              <Skeleton height={180} width={142} />
+            ) : (
+              <div className="c-order-item__preview__image">
+                <img src={previewImg(props.line_items[0])} />
+              </div>
+            )}
           </div>
           <div className="c-order-item__detail">
             <div className="c-order-item__detail--top">
               <div className="c-order-item__detail--top--left">
-                <h2>{props.line_items.map(item => item.name).join(', ')}</h2>
+                {props.isSkeleton ? (
+                  <Skeleton height={30} width={350} />
+                ) : (
+                  <h2>{props.line_items.map(item => item.name).join(', ')}</h2>
+                )}
               </div>
               <div className="c-order-item__detail--top--right">
-                <Capsule color={appConfig.stateColor[props.state]}>
-                  {props.t(props.state)}
-                  {props.state === 'received' && <span className="icon-cross_check" />}
-                </Capsule>
+                {props.isSkeleton ? (
+                  <Skeleton height={30} width={135} />
+                ) : (
+                  <Capsule color={appConfig.stateColor[props.state]}>
+                    {props.t(props.state)}
+                    {props.state === 'received' && <span className="icon-cross_check" />}
+                  </Capsule>
+                )}
               </div>
             </div>
             <div className="c-order-item__detail__occupation">
-              {props.line_items.length} {props.t('books')}
+              {props.isSkeleton ? (
+                <Skeleton height={22} width={80} />
+              ) : (
+                `${props.line_items.length} ${props.t('books')}`
+              )}
             </div>
             <div className="c-order-item__detail--middle">
               <div style={{ marginRight: 100 }}>
-                <div className="c-order-item__detail__label">{props.t('order-id')}</div>
-                <div className="c-order-item__detail__value">{props.order_id}</div>
+                <div className="c-order-item__detail__label">
+                  {props.isSkeleton ? <Skeleton height={20} width={60} /> : props.t('order-id')}
+                </div>
+                <div className="c-order-item__detail__value">
+                  {props.isSkeleton ? <Skeleton height={25} width={150} /> : props.order_id}
+                </div>
               </div>
               <div>
-                <div className="c-order-item__detail__label">{props.t('order-date')}</div>
-                <div className="c-order-item__detail__value">{date(props.created_at)}</div>
+                <div className="c-order-item__detail__label">
+                  {props.isSkeleton ? <Skeleton height={20} width={75} /> : props.t('order-date')}
+                </div>
+                <div className="c-order-item__detail__value">
+                  {props.isSkeleton ? <Skeleton height={25} width={250} /> : date(props.created_at)}
+                </div>
               </div>
             </div>
             <div className="c-order-item__detail--bottom">
@@ -48,7 +73,11 @@ const OrderItem = (props: any) => {
                 {props.line_items[0].cover}
               </div> */}
               <div className="c-order-item__detail__price">
-                <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                {props.isSkeleton ? (
+                  <Skeleton height={30} width={120} />
+                ) : (
+                  <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                )}
               </div>
             </div>
           </div>
