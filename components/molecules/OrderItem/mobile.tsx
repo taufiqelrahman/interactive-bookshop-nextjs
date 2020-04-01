@@ -3,6 +3,7 @@ import NumberFormat from 'react-number-format';
 import { date } from 'lib/format-date';
 import Card from 'components/atoms/Card';
 import { previewImg } from './helper';
+import Skeleton from 'react-loading-skeleton';
 import Divider from 'components/atoms/Divider';
 
 const OrderItem = (props: any) => {
@@ -12,26 +13,46 @@ const OrderItem = (props: any) => {
         <div className="c-order-item">
           <div className="c-order-item__detail">
             <div className="c-order-item__detail--top">
-              <div className="c-order-item__detail--top--left">{props.order_id}</div>
-              <div className="c-order-item__detail--top--right">{date(props.created_at, 'DD/MM/YYYY')}</div>
+              <div className="c-order-item__detail--top--left">
+                {props.isSkeleton ? <Skeleton height={16} width={80} /> : props.order_id}
+              </div>
+              <div className="c-order-item__detail--top--right">
+                {props.isSkeleton ? <Skeleton height={16} width={70} /> : date(props.created_at, 'DD/MM/YYYY')}
+              </div>
             </div>
             <div className="c-order-item__detail--middle">
               <div>
                 <div className="c-order-item__detail__occupation">
-                  {props.line_items.map(item => item.name).join(', ')}
+                  {props.isSkeleton ? (
+                    <Skeleton height={24} width={180} />
+                  ) : (
+                    props.line_items.map(item => item.name).join(', ')
+                  )}
                 </div>
                 <div className="c-order-item__detail__books">
-                  {props.line_items.length} {props.t('books')}
+                  {props.isSkeleton ? (
+                    <Skeleton height={19} width={70} />
+                  ) : (
+                    `${props.line_items.length} ${props.t('books')}`
+                  )}
                 </div>
               </div>
-              <div className="c-order-item__detail__image">
-                <img src={previewImg(props.line_items[0])} />
-              </div>
+              {props.isSkeleton ? (
+                <Skeleton height={47} width={47} />
+              ) : (
+                <div className="c-order-item__detail__image">
+                  <img src={previewImg(props.line_items[0])} />
+                </div>
+              )}
             </div>
             <Divider style={{ borderColor: '#EFEEF4', margin: '3px 0 9px' }} />
             <div className="c-order-item__detail--bottom">
               <div className="c-order-item__detail__price">
-                <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                {props.isSkeleton ? (
+                  <Skeleton height={24} width={80} />
+                ) : (
+                  <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                )}
               </div>
             </div>
           </div>
