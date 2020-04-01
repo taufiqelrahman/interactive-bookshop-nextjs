@@ -60,8 +60,14 @@ const Orders = (props: any): any => {
 Orders.getInitialProps = async (ctx: any): Promise<any> => {
   try {
     ctx.reduxStore.dispatch(actions.loadOrders(true));
-    const { data: orders } = await api(ctx.req).orders.loadOrders();
-    ctx.reduxStore.dispatch(actions.loadOrders(false, [...orders.data.orders, ...orders.data.checkouts]));
+    const { data: orderData } = await api(ctx.req).orders.loadOrders();
+    const { order_states: orderStates, orders: rawOrders } = orderData.data;
+    const states = orderStates.reduce((acc, cur) => {
+      acc[cur.shopify_order_id] = cur.state.name;
+      return acc;
+    }, {});
+    const orders = rawOrders.map(order => ({ ...order, state: states[order.id] }));
+    ctx.reduxStore.dispatch(actions.loadOrders(false, orders));
   } catch (err) {
     console.log(err.message);
   }

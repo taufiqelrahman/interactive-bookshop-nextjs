@@ -1,3 +1,5 @@
+import { getPreviewUrl } from 'lib/format-image';
+
 export const retrieveInfo = order => {
   const currentOrder = order;
   const { shipping_address: shippingAddress, state, fulfillments, shipping_lines: shippingLines } = currentOrder;
@@ -22,8 +24,4 @@ export const retrieveInfo = order => {
   };
 };
 
-export const previewImg = item => {
-  const filePath = '/static/images/preview/child';
-  const { gender, age, skin, hair } = item;
-  return `${filePath}/${gender}/${age}_${skin}_${hair}.JPG`;
-};
+export const previewImg = item => getPreviewUrl(item);

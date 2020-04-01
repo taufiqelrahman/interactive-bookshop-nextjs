@@ -1,8 +1,6 @@
-export const previewImg = attributes => {
-  const filePath = '/static/images/preview/child';
-  const { Gender, Age, Skin, Hair } = attributes;
-  return `${filePath}/${Gender}_${Age}_${Skin}_${Hair}.JPG`;
-};
+import { getPreviewUrl } from 'lib/format-image';
+
+export const previewImg = attributes => getPreviewUrl(attributes);
 
 export const updateQuantity = (props, quantity) => {
   const { id, customAttributes } = props;

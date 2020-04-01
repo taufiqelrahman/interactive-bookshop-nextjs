@@ -7,15 +7,13 @@ import graphql from 'services/graphql';
 import { Router } from 'i18n';
 import { setErrorMessage } from '../actions';
 import { thunkLoadUser } from '../users/actions';
+import { mapKeyValue } from 'lib/format-array';
 
 function mapItems(items) {
-  return items.map(item => {
-    const customAttributes = item.customAttributes.reduce(function(map, obj) {
-      map[obj.key] = obj.value;
-      return map;
-    }, {});
-    return { ...item, customAttributes };
-  });
+  return items.map(item => ({
+    ...item,
+    customAttributes: mapKeyValue(item.customAttributes),
+  }));
 }
 
 function loadCart(isFetching, cart = null): types.CartActionTypes {

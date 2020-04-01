@@ -1,5 +1,6 @@
+import { getPreviewUrl } from 'lib/format-image';
+
 export const previewImg = item => {
-  const filePath = '/static/images/preview/child';
-  const { gender, age, skin, hair } = item;
-  return `${filePath}/${gender}_${age}_${skin}_${hair}.JPG`;
+  if (!item.customAttributes) return '';
+  return getPreviewUrl(item.customAttributes);
 };

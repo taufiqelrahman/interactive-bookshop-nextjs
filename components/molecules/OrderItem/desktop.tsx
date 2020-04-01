@@ -7,8 +7,13 @@ import Capsule from 'components/atoms/Capsule';
 import appConfig from 'config';
 import { previewImg } from './helper';
 import Skeleton from 'react-loading-skeleton';
+import { mapKeyValue } from 'lib/format-array';
 
 const OrderItem = (props: any) => {
+  const lineItems = props.line_items.map(item => ({
+    ...item,
+    customAttributes: mapKeyValue(item.properties || []),
+  }));
   return (
     <div style={props.style}>
       <Card variant="border">
@@ -18,7 +23,7 @@ const OrderItem = (props: any) => {
               <Skeleton height={180} width={142} />
             ) : (
               <div className="c-order-item__preview__image">
-                <img src={previewImg(props.line_items[0])} />
+                <img src={previewImg(lineItems[0])} />
               </div>
             )}
           </div>
@@ -28,7 +33,7 @@ const OrderItem = (props: any) => {
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={350} />
                 ) : (
-                  <h2>{props.line_items.map(item => item.name).join(', ')}</h2>
+                  <h2>{lineItems.map(item => item.customAttributes.Name).join(', ')}</h2>
                 )}
               </div>
               <div className="c-order-item__detail--top--right">
@@ -37,17 +42,13 @@ const OrderItem = (props: any) => {
                 ) : (
                   <Capsule color={appConfig.stateColor[props.state]}>
                     {props.t(props.state)}
-                    {props.state === 'received' && <span className="icon-cross_check" />}
+                    {props.state === 'done' && <span className="icon-cross_check" />}
                   </Capsule>
                 )}
               </div>
             </div>
             <div className="c-order-item__detail__occupation">
-              {props.isSkeleton ? (
-                <Skeleton height={22} width={80} />
-              ) : (
-                `${props.line_items.length} ${props.t('books')}`
-              )}
+              {props.isSkeleton ? <Skeleton height={22} width={80} /> : `${lineItems.length} ${props.t('books')}`}
             </div>
             <div className="c-order-item__detail--middle">
               <div style={{ marginRight: 100 }}>
@@ -55,7 +56,7 @@ const OrderItem = (props: any) => {
                   {props.isSkeleton ? <Skeleton height={20} width={60} /> : props.t('order-id')}
                 </div>
                 <div className="c-order-item__detail__value">
-                  {props.isSkeleton ? <Skeleton height={25} width={150} /> : props.order_id}
+                  {props.isSkeleton ? <Skeleton height={25} width={150} /> : props.name.replace('#', '')}
                 </div>
               </div>
               <div>
@@ -76,7 +77,7 @@ const OrderItem = (props: any) => {
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={120} />
                 ) : (
-                  <NumberFormat value={props.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  <NumberFormat value={props.total_price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
                 )}
               </div>
             </div>

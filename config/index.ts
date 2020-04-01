@@ -1,7 +1,12 @@
 export default {
   stateColor: {
-    pending: 'yellow',
+    created: 'yellow',
+    paid: 'blue',
     sent: 'blue',
-    received: 'grey',
+    done: 'grey',
+    expired: 'grey',
+    cancelled: 'grey',
+    'partially-refunded': 'grey',
+    refunded: 'grey',
   },
 };
