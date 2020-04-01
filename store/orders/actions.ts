@@ -4,28 +4,28 @@ import { captureException } from '@sentry/browser';
 import * as types from './types';
 import api from '../../services/api';
 
-function checkout(isFetching, order = null): types.OrdersActionTypes {
-  return {
-    type: types.CHECKOUT,
-    payload: order,
-    isFetching,
-  };
-}
+// function checkout(isFetching, order = null): types.OrdersActionTypes {
+//   return {
+//     type: types.CHECKOUT,
+//     payload: order,
+//     isFetching,
+//   };
+// }
 
-export const thunkCheckout = (newOrder): ThunkAction<void, types.OrdersState, null, Action<string>> => (
-  dispatch,
-): any => {
-  dispatch(checkout(true));
-  return api()
-    .orders.checkout(newOrder)
-    .then(({ data }) => {
-      dispatch(checkout(false, data.data));
-    })
-    .catch(err => {
-      dispatch(checkout(false));
-      captureException(err);
-    });
-};
+// export const thunkCheckout = (newOrder): ThunkAction<void, types.OrdersState, null, Action<string>> => (
+//   dispatch,
+// ): any => {
+//   dispatch(checkout(true));
+//   return api()
+//     .orders.checkout(newOrder)
+//     .then(({ data }) => {
+//       dispatch(checkout(false, data.data));
+//     })
+//     .catch(err => {
+//       dispatch(checkout(false));
+//       captureException(err);
+//     });
+// };
 
 function loadOrder(isFetching, order = null): types.OrdersActionTypes {
   return {
@@ -45,6 +45,26 @@ export const thunkLoadOrder = (chargeData): ThunkAction<void, types.OrdersState,
     })
     .catch(err => {
       dispatch(loadOrder(false));
+      captureException(err);
+    });
+};
+
+function loadOrders(isFetching, order = null): types.OrdersActionTypes {
+  return {
+    type: types.LOAD_ORDER,
+    payload: order,
+    isFetching,
+  };
+}
+export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Action<string>> => (dispatch): any => {
+  dispatch(loadOrders(true));
+  return api()
+    .orders.loadOrders()
+    .then(({ data }) => {
+      dispatch(loadOrders(false, data.data));
+    })
+    .catch(err => {
+      dispatch(loadOrders(false));
       captureException(err);
     });
 };

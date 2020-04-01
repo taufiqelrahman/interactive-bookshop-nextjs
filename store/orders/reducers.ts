@@ -8,17 +8,17 @@ const initialState: types.OrdersState = {
 
 const reducer = (state = initialState, action: types.OrdersActionTypes): types.OrdersState => {
   switch (action.type) {
-    case types.CHECKOUT: {
+    case types.LOAD_ORDER: {
       return {
         ...state,
         currentOrder: action.payload,
         isFetching: action.isFetching,
       };
     }
-    case types.LOAD_ORDER: {
+    case types.LOAD_ORDERS: {
       return {
         ...state,
-        currentOrder: action.payload,
+        orders: action.payload,
         isFetching: action.isFetching,
       };
     }

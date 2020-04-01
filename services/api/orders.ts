@@ -9,11 +9,15 @@ export default class Orders {
     this.basePath = '/orders';
   }
 
-  checkout(data) {
-    return this.adapter.secure.post(`${this.basePath}`, data)
-  }
+  // checkout(data) {
+  //   return this.adapter.secure.post(`${this.basePath}`, data)
+  // }
 
   loadOrder(orderNumber) {
     return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`)
+  }
+
+  loadOrders() {
+    return this.adapter.secure.get(this.basePath)
   }
 }

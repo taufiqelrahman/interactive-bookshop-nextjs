@@ -32,15 +32,15 @@ const CharacterCustomization = (props: any) => {
   const selected =
     props.state.cart.selected ||
     {
-      // occupations: ['Astronaut', 'Teacher', 'Librarian'],
-      // name: 'asd',
-      // age: 'kid',
-      // gender: 'girl',
-      // skin: 'light',
-      // language: 'english',
-      // dedication: 'asdasd',
-      // dob: '03-01-2019',
-      // hair: 'short',
+      // Occupations: ['Astronaut', 'Teacher', 'Librarian'],
+      // Name: 'asd',
+      // Age: 'kid',
+      // Gender: 'girl',
+      // Skin: 'light',
+      // Language: 'english',
+      // Dedication: 'asdasd',
+      // 'Date of Birth': '03-01-2019',
+      // Hair: 'short',
     };
   const onSubmit = data => {
     const PARAMS = selected && selected.id ? { ...selected, ...data } : data;
