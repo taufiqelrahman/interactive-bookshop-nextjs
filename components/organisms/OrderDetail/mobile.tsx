@@ -23,13 +23,16 @@ const OrderDetailMobile = (props: any): any => {
   const {
     currentOrder,
     shippingAddress,
-    orderState,
     shippingDate,
     trackingNumber,
     shippingLine,
     shippingName,
     shippingCost,
     orderNumber,
+    // lineItems,
+    // hasDedication,
+    // discounts,
+    // totalDiscounts,
   } = retrieveInfo(dummyOrder);
   useEffect(() => {
     setState({ ...state, showPreview: true });
@@ -52,8 +55,8 @@ const OrderDetailMobile = (props: any): any => {
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
         style={{ minHeight: `calc(${screenHeight})` }}
       >
-        <Capsule color={appConfig.stateColor[orderState]} variant="bar" style={{ zIndex: 42 }}>
-          {props.t(orderState)}
+        <Capsule color={appConfig.stateColor[currentOrder.state]} variant="bar" style={{ zIndex: 42 }}>
+          {props.t(currentOrder.state)}
           {props.state === 'received' && <span className="icon-cross_check" />}
         </Capsule>
       </div>
@@ -92,7 +95,7 @@ const OrderDetailMobile = (props: any): any => {
                   <div className="c-detail__label">{props.t('order-date')}</div>
                   <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
                   <div className="c-detail__label">{props.t('order-state')}</div>
-                  <div className="c-detail__value capitalize">{props.t(orderState)}</div>
+                  <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
                   <div className="c-detail__label">{props.t('shipping-date')}</div>
                   <div className="c-detail__value">{fullDate(shippingDate)}</div>
                   <div className="c-detail__label">{props.t('tracking-number')}</div>

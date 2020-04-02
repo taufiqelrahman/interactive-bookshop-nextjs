@@ -1,7 +1,7 @@
 import { withTranslation } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
-import dummyOrder from '_mocks/orderDetail';
+// import dummyOrder from '_mocks/orderDetail';
 import Card from 'components/atoms/Card';
 import NumberFormat from 'react-number-format';
 import Divider from 'components/atoms/Divider';
@@ -11,30 +11,41 @@ import { Fragment } from 'react';
 import Capsule from 'components/atoms/Capsule';
 import { fullDate } from 'lib/format-date';
 import { retrieveInfo, previewImg } from './helper';
+import Skeleton from 'react-loading-skeleton';
 
 const OrderDetailDesktop = (props: any): any => {
+  const { isFetching, currentOrder: order } = props.state.orders;
   const {
     currentOrder,
     shippingAddress,
-    orderState,
     shippingDate,
     trackingNumber,
     shippingLine,
     shippingName,
     shippingCost,
     orderNumber,
-  } = retrieveInfo(dummyOrder);
+    lineItems,
+    hasDedication,
+    discounts,
+    totalDiscounts,
+  } = retrieveInfo(order || {});
   return (
     <DefaultLayout {...props}>
       <div className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}>
         <Stepper
           title={
             <div className="flex items-center">
-              {`${props.t('order-title')}: ${orderNumber}`}
-              <Capsule color={appConfig.stateColor[orderState]} style={{ height: 30, marginLeft: 18 }}>
-                {props.t(orderState)}
-                {props.state === 'received' && <span className="icon-cross_check" />}
-              </Capsule>
+              {isFetching ? (
+                <Skeleton height={42} width={500} />
+              ) : (
+                <Fragment>
+                  {props.t('order-title')}: {orderNumber}
+                  <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
+                    {props.t(currentOrder.state)}
+                    {props.state === 'received' && <span className="icon-cross_check" />}
+                  </Capsule>
+                </Fragment>
+              )}
             </div>
           }
         />
@@ -46,30 +57,42 @@ const OrderDetailDesktop = (props: any): any => {
                 <div className="flex">
                   <div className="c-detail__book__left">
                     <div className="c-detail__book__image">
-                      <img src={previewImg(currentOrder.line_items[0])} />
+                      {isFetching ? <Skeleton height={136} width={136} /> : <img src={previewImg(lineItems[0])} />}
                     </div>
                   </div>
                   <div className="c-detail__book__middle">
                     <div className="c-detail__label">{props.t('form:name-label')}</div>
-                    <div className="c-detail__value">{currentOrder.line_items.map(item => item.name).join(', ')}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? (
+                        <Skeleton height={22} width={250} />
+                      ) : (
+                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                      )}
+                    </div>
                     <div className="c-detail__label" style={{ marginTop: 30 }}>
                       {props.t('common:dedication-note')}
                     </div>
-                    <Popover
-                      content={currentOrder.line_items.map(item => (
-                        <Fragment key={item.name}>
-                          <h5>{item.name}</h5>
-                          <div>{item.message}</div>
-                        </Fragment>
-                      ))}
-                    >
-                      <div className="c-detail__link">{props.t('common:preview-note')}</div>
-                    </Popover>
+                    {isFetching ? (
+                      <Skeleton height={24} width={115} />
+                    ) : hasDedication ? (
+                      <Popover
+                        content={lineItems.map(item => (
+                          <Fragment key={item.id}>
+                            <h5>{item.customAttributes.Name}</h5>
+                            <div>{item.customAttributes.Dedication}</div>
+                          </Fragment>
+                        ))}
+                      >
+                        <div className="c-detail__link">{props.t('common:preview-note')}</div>
+                      </Popover>
+                    ) : (
+                      '-'
+                    )}
                   </div>
                   <div className="c-detail__book__right">
                     <div className="c-detail__label">{props.t('common:quantity')}</div>
                     <div className="c-detail__value">
-                      {currentOrder.line_items.length} {props.t('books')}
+                      {isFetching ? <Skeleton height={22} width={60} /> : `${lineItems.length} ${props.t('books')}`}
                     </div>
                   </div>
                 </div>
@@ -81,34 +104,50 @@ const OrderDetailDesktop = (props: any): any => {
                 <div className="flex">
                   <div className="c-detail__order__left">
                     <div className="c-detail__label">{props.t('order-date')}</div>
-                    <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(currentOrder.created_at)}
+                    </div>
                     <div className="c-detail__label">{props.t('order-state')}</div>
-                    <div className="c-detail__value capitalize">{props.t(orderState)}</div>
+                    <div className="c-detail__value capitalize">
+                      {isFetching ? <Skeleton height={22} width={170} /> : props.t(currentOrder.state)}
+                    </div>
                   </div>
                   <div className="c-detail__order__right">
                     <div className="c-detail__label">{props.t('shipping-date')}</div>
-                    <div className="c-detail__value">{fullDate(shippingDate)}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(shippingDate) || '-'}
+                    </div>
                     <div className="c-detail__label">{props.t('tracking-number')}</div>
-                    <div className="c-detail__value">{trackingNumber}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={22} width={170} /> : trackingNumber}
+                    </div>
                   </div>
                 </div>
               </div>
             </Card>
-            <Card variant="border">
+            <Card variant="border" style={{ marginBottom: 12 }}>
               <div className="c-detail__container">
                 <h2>{props.t('shipping-address')}</h2>
                 <div className="flex">
                   <div className="c-detail__address__left">
                     <div className="c-detail__label">{props.t('street-address')}</div>
-                    <div className="c-detail__value">{shippingAddress.address1}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.address1}
+                    </div>
                     <div className="c-detail__label">{props.t('province')}</div>
-                    <div className="c-detail__value">{shippingAddress.province}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.province}
+                    </div>
                   </div>
                   <div className="c-detail__address__right">
                     <div className="c-detail__label">{props.t('postal-code')}</div>
-                    <div className="c-detail__value">{shippingAddress.zip}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.zip}
+                    </div>
                     <div className="c-detail__label">{props.t('city')}</div>
-                    <div className="c-detail__value">{shippingAddress.city}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.city}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -118,24 +157,34 @@ const OrderDetailDesktop = (props: any): any => {
             <Card variant="border">
               <div className="c-detail__container">
                 <h2>{props.t('common:order-summary')}</h2>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-baseline">
                   <div>
-                    <div className="c-detail__summary__title">When I Grow Up</div>
+                    <div className="c-detail__summary__title">
+                      {isFetching ? <Skeleton height={24} width={190} /> : 'When I Grow Up'}
+                    </div>
                     <div className="c-detail__summary__label">
-                      {props.t('common:quantity')}: {currentOrder.line_items.length}
+                      {isFetching ? (
+                        <Skeleton height={18} width={72} />
+                      ) : (
+                        `${props.t('common:quantity')}: ${lineItems.length}`
+                      )}
                     </div>
                   </div>
                   <div className="c-detail__summary__total">
-                    <NumberFormat
-                      value={currentOrder.total_line_items_price}
-                      thousandSeparator={true}
-                      prefix={'Rp'}
-                      displayType="text"
-                    />
+                    {isFetching ? (
+                      <Skeleton height={24} width={120} />
+                    ) : (
+                      <NumberFormat
+                        value={currentOrder.total_line_items_price}
+                        thousandSeparator={true}
+                        prefix={'Rp'}
+                        displayType="text"
+                      />
+                    )}
                   </div>
                 </div>
                 {shippingLine && (
-                  <div className="flex justify-between" style={{ marginTop: 16 }}>
+                  <div className="flex justify-between items-baseline" style={{ marginTop: 16 }}>
                     <div>
                       <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
                       <div className="c-detail__summary__label">{shippingName}</div>
@@ -145,20 +194,45 @@ const OrderDetailDesktop = (props: any): any => {
                     </div>
                   </div>
                 )}
+                {discounts &&
+                  discounts.map(discount => (
+                    <div key={discount.code} className="flex justify-between items-baseline" style={{ marginTop: 18 }}>
+                      <div>
+                        <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>
+                        <div className="c-detail__summary__label">{discount.code}</div>
+                      </div>
+                      <div className="c-detail__summary__total">
+                        <NumberFormat
+                          value={-totalDiscounts}
+                          thousandSeparator={true}
+                          prefix={'Rp'}
+                          displayType="text"
+                        />
+                      </div>
+                    </div>
+                  ))}
                 <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
                 <div className="c-detail__summary__subtotal">
                   <div>Subtotal</div>
-                  <NumberFormat
-                    value={currentOrder.total_price}
-                    thousandSeparator={true}
-                    prefix={'Rp'}
-                    displayType="text"
-                  />
+                  {isFetching ? (
+                    <Skeleton height={24} width={120} />
+                  ) : (
+                    <NumberFormat
+                      value={currentOrder.total_price}
+                      thousandSeparator={true}
+                      prefix={'Rp'}
+                      displayType="text"
+                    />
+                  )}
                 </div>
                 <div className="c-detail__summary__info">
-                  <a href={currentOrder.order_status_url}>
-                    {currentOrder.financial_status === 'paid' ? props.t('view-payment') : props.t('continue-payment')}
-                  </a>
+                  {isFetching ? (
+                    <Skeleton height={24} width={120} />
+                  ) : (
+                    <a href={currentOrder.order_status_url}>
+                      {currentOrder.financial_status === 'paid' ? props.t('view-payment') : props.t('continue-payment')}
+                    </a>
+                  )}
                 </div>
               </div>
             </Card>
@@ -199,15 +273,19 @@ const OrderDetailDesktop = (props: any): any => {
           &__book {
             &__left {
               @apply w-3/12 opacity-100;
+              margin-right: 12px;
               @screen lg {
                 @apply w-0 opacity-0;
+                margin-right: 0;
               }
               @screen xl {
                 @apply w-3/12 opacity-100;
+                margin-right: 12px;
               }
             }
             &__middle {
-              @apply w-4/12;
+              @apply w-4/12 overflow-hidden;
+              margin-right: 12px;
               @screen lg {
                 @apply w-6/12;
               }
@@ -227,6 +305,7 @@ const OrderDetailDesktop = (props: any): any => {
               @apply w-5/12;
             }
             &__image {
+              @apply overflow-hidden;
               background: #f3bf45;
               border-radius: 12px;
               height: 136px;

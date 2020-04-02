@@ -27,19 +27,19 @@ import api from '../../services/api';
 //     });
 // };
 
-function loadOrder(isFetching, order = null): types.OrdersActionTypes {
+export function loadOrder(isFetching, order = null): types.OrdersActionTypes {
   return {
     type: types.LOAD_ORDER,
     payload: order,
     isFetching,
   };
 }
-export const thunkLoadOrder = (chargeData): ThunkAction<void, types.OrdersState, null, Action<string>> => (
+export const thunkLoadOrder = (orderNumber): ThunkAction<void, types.OrdersState, null, Action<string>> => (
   dispatch,
 ): any => {
   dispatch(loadOrder(true));
   return api()
-    .orders.loadOrder(chargeData)
+    .orders.loadOrder(orderNumber)
     .then(({ data }) => {
       dispatch(loadOrder(false, data.data));
     })

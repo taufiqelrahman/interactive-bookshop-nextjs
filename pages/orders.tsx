@@ -25,7 +25,7 @@ const Orders = (props: any): any => {
         <div className="c-orders-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
           <div className="c-orders-section__left">
             {orderList.map(item => (
-              <Link key={item.id || item} href={item.id ? `/orders/${item.id}` : ''}>
+              <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
                 <a>
                   {props.isMobile ? (
                     <OrderItemMobile {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />

@@ -5,6 +5,7 @@ export const date = (date, format = 'dddd, DD MMMM YYYY') => {
 };
 
 export const fullDate = (date, format = 'DD MMM YYYY, HH:mm WIB') => {
+  if (!date) return '';
   return dayjs(date).format(format);
 };
 

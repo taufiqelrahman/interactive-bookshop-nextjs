@@ -75,7 +75,7 @@ const Cart = (props: any): any => {
                         <h1>{props.t('order-summary')}</h1>
                         <Dot width="12px" color="red" />
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-baseline">
                         <div>
                           <div className="c-cart__summary__title">When I Grow Up</div>
                           <div className="c-cart__summary__quantity">
@@ -92,7 +92,7 @@ const Cart = (props: any): any => {
                         </div>
                       </div>
                       {hasShippingLine && (
-                        <div className="flex justify-between" style={{ marginTop: 18 }}>
+                        <div className="flex justify-between items-baseline" style={{ marginTop: 18 }}>
                           <div>
                             <div className="c-cart__summary__title">{props.t('standard-shipping')}</div>
                           </div>
@@ -107,7 +107,11 @@ const Cart = (props: any): any => {
                         </div>
                       )}
                       {discounts.map(discount => (
-                        <div key={discount.code} className="flex justify-between" style={{ marginTop: 18 }}>
+                        <div
+                          key={discount.code}
+                          className="flex justify-between items-baseline"
+                          style={{ marginTop: 18 }}
+                        >
                           <div>
                             <div className="c-cart__summary__title">{props.t('discount-code')}</div>
                             <div className="c-cart__summary__quantity">{discount.code}</div>
