@@ -1,6 +1,6 @@
 import { withTranslation, Router } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
-import dummyOrder from '_mocks/orderDetail';
+// import dummyOrder from '_mocks/orderDetail';
 import NumberFormat from 'react-number-format';
 import Divider from 'components/atoms/Divider';
 import appConfig from 'config';
@@ -33,8 +33,8 @@ const OrderDetailMobile = (props: any): any => {
     orderNumber,
     lineItems,
     hasDedication,
-    // discounts,
-    // totalDiscounts,
+    discounts,
+    totalDiscounts,
   } = retrieveInfo(order || {});
   useEffect(() => {
     setState({ ...state, showPreview: true });
@@ -117,7 +117,7 @@ const OrderDetailMobile = (props: any): any => {
                       <div className="c-detail__label">{props.t('order-state')}</div>
                       <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
                       <div className="c-detail__label">{props.t('shipping-date')}</div>
-                      <div className="c-detail__value">{fullDate(shippingDate)}</div>
+                      <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
                       <div className="c-detail__label">{props.t('tracking-number')}</div>
                       <div className="c-detail__value">{trackingNumber}</div>
                     </div>
@@ -140,11 +140,11 @@ const OrderDetailMobile = (props: any): any => {
                       <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
                       <Dot width="12px" color="red" />
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-baseline">
                       <div>
                         <div className="c-detail__summary__title">When I Grow Up</div>
                         <div className="c-detail__summary__label">
-                          {props.t('common:quantity')}: {currentOrder.line_items.length}
+                          {props.t('common:quantity')}: {lineItems.length}
                         </div>
                       </div>
                       <div className="c-detail__summary__total">
@@ -157,7 +157,7 @@ const OrderDetailMobile = (props: any): any => {
                       </div>
                     </div>
                     {shippingLine && (
-                      <div className="flex justify-between" style={{ marginTop: 16 }}>
+                      <div className="flex justify-between items-baseline" style={{ marginTop: 16 }}>
                         <div>
                           <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
                           <div className="c-detail__summary__label">{shippingName}</div>
@@ -172,6 +172,27 @@ const OrderDetailMobile = (props: any): any => {
                         </div>
                       </div>
                     )}
+                    {discounts &&
+                      discounts.map(discount => (
+                        <div
+                          key={discount.code}
+                          className="flex justify-between items-baseline"
+                          style={{ marginTop: 18 }}
+                        >
+                          <div>
+                            <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>
+                            <div className="c-detail__summary__label">{discount.code}</div>
+                          </div>
+                          <div className="c-detail__summary__total">
+                            <NumberFormat
+                              value={-totalDiscounts}
+                              thousandSeparator={true}
+                              prefix={'Rp'}
+                              displayType="text"
+                            />
+                          </div>
+                        </div>
+                      ))}
                     <Divider style={{ borderColor: '#EDEDED', margin: '20px 0 20px' }} />
                     <div className="c-detail__summary__subtotal">
                       <div>Subtotal</div>
@@ -217,16 +238,10 @@ const OrderDetailMobile = (props: any): any => {
             title={props.t(`common:note-preview`)}
             content={
               <div className="c-detail__note">
-                {currentOrder.line_items.map(item => (
-                  <Fragment key={item.name}>
-                    <h5>{item.name}</h5>
-                    <div>{item.message}</div>
-                  </Fragment>
-                ))}
-                {currentOrder.line_items.map(item => (
-                  <Fragment key={item.name}>
-                    <h5>{item.name}</h5>
-                    <div>{item.message}</div>
+                {lineItems.map(item => (
+                  <Fragment key={item.id}>
+                    <h5>{item.customAttributes.Name}</h5>
+                    <div>{item.customAttributes.Dedication}</div>
                   </Fragment>
                 ))}
               </div>
