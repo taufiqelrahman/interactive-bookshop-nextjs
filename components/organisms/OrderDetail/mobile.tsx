@@ -12,8 +12,10 @@ import { retrieveInfo } from './helper';
 import Sheet from 'components/atoms/Sheet';
 import { Swipeable } from 'react-swipeable';
 import Dot from 'components/atoms/Dot';
+import Skeleton from 'react-loading-skeleton';
 
 const OrderDetailMobile = (props: any): any => {
+  const { isFetching, currentOrder: order } = props.state.orders;
   const [state, setState] = useState({
     showPreview: false,
     extendPreview: false,
@@ -29,11 +31,11 @@ const OrderDetailMobile = (props: any): any => {
     shippingName,
     shippingCost,
     orderNumber,
-    // lineItems,
-    // hasDedication,
+    lineItems,
+    hasDedication,
     // discounts,
     // totalDiscounts,
-  } = retrieveInfo(dummyOrder);
+  } = retrieveInfo(order || {});
   useEffect(() => {
     setState({ ...state, showPreview: true });
   }, []);
@@ -55,10 +57,14 @@ const OrderDetailMobile = (props: any): any => {
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
         style={{ minHeight: `calc(${screenHeight})` }}
       >
-        <Capsule color={appConfig.stateColor[currentOrder.state]} variant="bar" style={{ zIndex: 42 }}>
-          {props.t(currentOrder.state)}
-          {props.state === 'received' && <span className="icon-cross_check" />}
-        </Capsule>
+        {isFetching ? (
+          <Skeleton height={30} width={'100%'} />
+        ) : (
+          <Capsule color={appConfig.stateColor[currentOrder.state]} variant="bar" style={{ zIndex: 42 }}>
+            {props.t(currentOrder.state)}
+            {props.state === 'received' && <span className="icon-cross_check" />}
+          </Capsule>
+        )}
       </div>
       <Swipeable
         onSwipedUp={() => setState({ ...state, extendPreview: true })}
@@ -78,143 +84,162 @@ const OrderDetailMobile = (props: any): any => {
                 <h2>{props.t('book-details')}</h2>
                 <div className="c-detail__book">
                   <div className="c-detail__label">{props.t('form:name-label')}</div>
-                  <div className="c-detail__value">{currentOrder.line_items.map(item => item.name).join(', ')}</div>
+                  <div className="c-detail__value">
+                    {isFetching ? (
+                      <Skeleton height={19} width={280} />
+                    ) : (
+                      lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                    )}
+                  </div>
                   <div className="c-detail__label">{props.t('common:quantity')}</div>
                   <div className="c-detail__value">
-                    {currentOrder.line_items.length} {props.t('books')}
+                    {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems.length} ${props.t('books')}`}
                   </div>
                   <div className="c-detail__label">{props.t('common:dedication-note')}</div>
-                  <div className="c-detail__link" onClick={showNote}>
-                    {props.t('common:preview-note')}
-                  </div>
+                  {isFetching ? (
+                    <Skeleton height={21} width={100} />
+                  ) : hasDedication ? (
+                    <div className="c-detail__link" onClick={showNote}>
+                      {props.t('common:preview-note')}
+                    </div>
+                  ) : (
+                    '-'
+                  )}
                 </div>
               </div>
-              <div className="c-detail__container">
-                <h2>{props.t('order-state')}</h2>
-                <div className="c-detail__order">
-                  <div className="c-detail__label">{props.t('order-date')}</div>
-                  <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
-                  <div className="c-detail__label">{props.t('order-state')}</div>
-                  <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
-                  <div className="c-detail__label">{props.t('shipping-date')}</div>
-                  <div className="c-detail__value">{fullDate(shippingDate)}</div>
-                  <div className="c-detail__label">{props.t('tracking-number')}</div>
-                  <div className="c-detail__value">{trackingNumber}</div>
-                </div>
-              </div>
-              <div className="c-detail__container">
-                <h2>{props.t('shipping-address')}</h2>
-                <div className="c-detail__address">
-                  <div className="c-detail__label">{props.t('street-address')}</div>
-                  <div className="c-detail__value">{shippingAddress.address1}</div>
-                  <div className="c-detail__label">{props.t('province')}</div>
-                  <div className="c-detail__value">{shippingAddress.province}</div>
-                  <div className="c-detail__label">{props.t('postal-code')}</div>
-                  <div className="c-detail__value">{shippingAddress.zip}</div>
-                  <div className="c-detail__label">{props.t('city')}</div>
-                  <div className="c-detail__value">{shippingAddress.city}</div>
-                </div>
-              </div>
-              <div className="c-detail__container">
-                <div className="c-detail__summary__header">
-                  <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
-                  <Dot width="12px" color="red" />
-                </div>
-                <div className="flex justify-between">
-                  <div>
-                    <div className="c-detail__summary__title">When I Grow Up</div>
-                    <div className="c-detail__summary__label">
-                      {props.t('common:quantity')}: {currentOrder.line_items.length}
+              {!isFetching && (
+                <Fragment>
+                  <div className="c-detail__container">
+                    <h2>{props.t('order-state')}</h2>
+                    <div className="c-detail__order">
+                      <div className="c-detail__label">{props.t('order-date')}</div>
+                      <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
+                      <div className="c-detail__label">{props.t('order-state')}</div>
+                      <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
+                      <div className="c-detail__label">{props.t('shipping-date')}</div>
+                      <div className="c-detail__value">{fullDate(shippingDate)}</div>
+                      <div className="c-detail__label">{props.t('tracking-number')}</div>
+                      <div className="c-detail__value">{trackingNumber}</div>
                     </div>
                   </div>
-                  <div className="c-detail__summary__total">
-                    <NumberFormat
-                      value={currentOrder.total_line_items_price}
-                      thousandSeparator={true}
-                      prefix={'Rp'}
-                      displayType="text"
-                    />
-                  </div>
-                </div>
-                {shippingLine && (
-                  <div className="flex justify-between" style={{ marginTop: 16 }}>
-                    <div>
-                      <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
-                      <div className="c-detail__summary__label">{shippingName}</div>
-                    </div>
-                    <div className="c-detail__summary__total">
-                      <NumberFormat value={shippingCost} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  <div className="c-detail__container">
+                    <h2>{props.t('shipping-address')}</h2>
+                    <div className="c-detail__address">
+                      <div className="c-detail__label">{props.t('street-address')}</div>
+                      <div className="c-detail__value">{shippingAddress.address1}</div>
+                      <div className="c-detail__label">{props.t('province')}</div>
+                      <div className="c-detail__value">{shippingAddress.province}</div>
+                      <div className="c-detail__label">{props.t('postal-code')}</div>
+                      <div className="c-detail__value">{shippingAddress.zip}</div>
+                      <div className="c-detail__label">{props.t('city')}</div>
+                      <div className="c-detail__value">{shippingAddress.city}</div>
                     </div>
                   </div>
-                )}
-                <Divider style={{ borderColor: '#EDEDED', margin: '20px 0 20px' }} />
-                <div className="c-detail__summary__subtotal">
-                  <div>Subtotal</div>
-                  <NumberFormat
-                    value={currentOrder.total_price}
-                    thousandSeparator={true}
-                    prefix={'Rp'}
-                    displayType="text"
-                  />
-                </div>
-                <div className="c-detail__summary__info">
-                  <a href={currentOrder.order_status_url}>
-                    {currentOrder.financial_status === 'paid' ? props.t('view-payment') : props.t('continue-payment')}
-                  </a>
-                </div>
-              </div>
+                  <div className="c-detail__container">
+                    <div className="c-detail__summary__header">
+                      <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
+                      <Dot width="12px" color="red" />
+                    </div>
+                    <div className="flex justify-between">
+                      <div>
+                        <div className="c-detail__summary__title">When I Grow Up</div>
+                        <div className="c-detail__summary__label">
+                          {props.t('common:quantity')}: {currentOrder.line_items.length}
+                        </div>
+                      </div>
+                      <div className="c-detail__summary__total">
+                        <NumberFormat
+                          value={currentOrder.total_line_items_price}
+                          thousandSeparator={true}
+                          prefix={'Rp'}
+                          displayType="text"
+                        />
+                      </div>
+                    </div>
+                    {shippingLine && (
+                      <div className="flex justify-between" style={{ marginTop: 16 }}>
+                        <div>
+                          <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
+                          <div className="c-detail__summary__label">{shippingName}</div>
+                        </div>
+                        <div className="c-detail__summary__total">
+                          <NumberFormat
+                            value={shippingCost}
+                            thousandSeparator={true}
+                            prefix={'Rp'}
+                            displayType="text"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <Divider style={{ borderColor: '#EDEDED', margin: '20px 0 20px' }} />
+                    <div className="c-detail__summary__subtotal">
+                      <div>Subtotal</div>
+                      <NumberFormat
+                        value={currentOrder.total_price}
+                        thousandSeparator={true}
+                        prefix={'Rp'}
+                        displayType="text"
+                      />
+                    </div>
+                    <div className="c-detail__summary__info">
+                      <a href={currentOrder.order_status_url}>
+                        {currentOrder.financial_status === 'paid'
+                          ? props.t('view-payment')
+                          : props.t('continue-payment')}
+                      </a>
+                    </div>
+                  </div>
+                </Fragment>
+              )}
             </div>
           }
         />
       </Swipeable>
-      <Swipeable
-        onSwipedUp={() => setState({ ...state, extendNote: true })}
-        onSwipedRight={() => setState({ ...state, extendNote: true })}
-        onSwipedDown={() =>
-          state.extendNote ? setState({ ...state, extendNote: false }) : setState({ ...state, showNote: false })
-        }
-        onSwipedLeft={() => setState({ ...state, extendNote: false })}
-      >
-        <Sheet
-          name="preview-sheet"
-          isOpen={state.showNote}
-          closeSheet={() => setState({ ...state, showNote: false })}
-          variant="rounded-large"
-          overlay="light"
-          onClick={() => setState({ ...state, extendNote: true })}
-          zIndexLevel={2}
-          header={true}
-          title={props.t(`common:note-preview`)}
-          content={
-            <div className="c-detail__note">
-              {currentOrder.line_items.map(item => (
-                <Fragment key={item.name}>
-                  <h5>{item.name}</h5>
-                  <div>
-                    {item.message +
-                      'asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd '}
-                  </div>
-                </Fragment>
-              ))}
-              {currentOrder.line_items.map(item => (
-                <Fragment key={item.name}>
-                  <h5>{item.name}</h5>
-                  <div>
-                    {item.message +
-                      'asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd asdasdasdasd '}
-                  </div>
-                </Fragment>
-              ))}
-            </div>
+      {!isFetching && (
+        <Swipeable
+          onSwipedUp={() => setState({ ...state, extendNote: true })}
+          onSwipedRight={() => setState({ ...state, extendNote: true })}
+          onSwipedDown={() =>
+            state.extendNote ? setState({ ...state, extendNote: false }) : setState({ ...state, showNote: false })
           }
-        />
-      </Swipeable>
+          onSwipedLeft={() => setState({ ...state, extendNote: false })}
+        >
+          <Sheet
+            name="preview-sheet"
+            isOpen={state.showNote}
+            closeSheet={() => setState({ ...state, showNote: false })}
+            variant="rounded-large"
+            overlay="light"
+            onClick={() => setState({ ...state, extendNote: true })}
+            zIndexLevel={2}
+            header={true}
+            title={props.t(`common:note-preview`)}
+            content={
+              <div className="c-detail__note">
+                {currentOrder.line_items.map(item => (
+                  <Fragment key={item.name}>
+                    <h5>{item.name}</h5>
+                    <div>{item.message}</div>
+                  </Fragment>
+                ))}
+                {currentOrder.line_items.map(item => (
+                  <Fragment key={item.name}>
+                    <h5>{item.name}</h5>
+                    <div>{item.message}</div>
+                  </Fragment>
+                ))}
+              </div>
+            }
+          />
+        </Swipeable>
+      )}
       <style jsx>{`
         .c-detail {
           @apply w-full;
           background: #e5e5e5;
           max-height: calc(${screenHeight} - 65px);
-          ${state.extendPreview ? 'overflow: auto;' : 'position: absolute;'}
+          ${state.extendPreview && !isFetching ? 'overflow: auto;' : 'position: absolute;'}
           &__container {
             @apply bg-white;
             padding: 24px 16px;
