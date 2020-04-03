@@ -11,117 +11,43 @@ import Head from 'next/head';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Footer from 'components/organisms/Footer';
 import actions from 'store/actions';
+// import graphql from 'services/graphql';
 import api from 'services/api';
 
 const Index = (props: any): any => {
-  // const register = () => {
-  //   api().users.register({
-  //     name: 'taufiq',
-  //     email: 'taufiqelrahman65@gmail.com',
-  //     password: 'password',
-  //     password_confirmation: 'password',
-  //   });
-  // };
-
-  // const login = () => {
-  //   props.thunkLogin({
-  //     email: 'taufiqelrahman65@gmail.com',
-  //     password: 'password',
-  //   });
-  // };
-
-  // const logout = () => {
-  //   props.thunkLogout();
-  // };
-
-  // const loadProducts = () => {
-  //   props.thunkLoadProducts();
-  // };
-
-  // const getCart = () => {
-  //   props.thunkLoadCart();
-  // };
-
-  // const addToCart = () => {
-  //   props.thunkAddToCart({
-  //     'product_id':	2,
-  //     quantity: 5,
-  //     price: 3400
-  //   });
-  // };
-
-  // const removeFromCart = () => {
-  //   props.thunkRemoveFromCart({
-  //     'product_id':	2
-  //   });
-  // };
-
-  // const checkout = () => {
-  //   props.thunkCheckout({
-  //     address: {
-  //       address: 'jalan cinta',
-  //       city: 'kota parakan',
-  //       province: 'jawa sini',
-  //       post_code: '12342',
-  //       phone: '085743657123'
-  //     },
-  //     order: {
-  //       total: 450000,
-  //       shipping_method: 'JNE',
-  //       shipping_rate: 29000
-  //     }
-  //   });
-  // }
-
-  // const loadOrder = () => {
-  //   props.thunkLoadOrder(201900000001);
-  // }
-
-  // const getProducts = (): any => {
-  //   props.thunkLoadProducts();
-  //   // props.client.product.fetchAll().then(() => {
-  //   //   // Do something with the products
-  //   //   // console.log(products);
-  //   //   // console.log(products[0].variants[0].id);
-  //   // });
-  //   // // Build a custom products query using the unoptimized version of the SDK
-  //   // const productsQuery = props.client.graphQLClient.query(root => {
-  //   //   root.addConnection('order', { args: { first: 10 } }, () => {
-  //   //     // product.add('title');
-  //   //   });
-  //   // });
-
-  //   // // Call the send method with the custom products query
-  //   // props.client.graphQLClient.send(productsQuery).then(({ model }) => {
-  //   //   // Do something with the products
-  //   //   console.log(model);
-  //   // });
-  // };
-
-  // const checkout = (): any => {
-  //   // const variantId = 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMTM5OTAxOTkwNTE2NA==';
-  //   props.client.checkout
-  //     .create({
-  //       email: 'asd@asd.com',
-  //     })
-  //     .then(checkout => {
-  //       console.log(checkout);
-  //       // Do something with the checkout
-  //       // const lineItemsToAdd = [
-  //       //   {
-  //       //     variantId,
-  //       //     quantity: 1,
-  //       //     customAttributes: [{ key: 'MyKey', value: 'MyValue' }],
-  //       //   },
-  //       // ];
-  //       // props.client.checkout.addLineItems(checkout.id, lineItemsToAdd).then(res => {
-  //       //   console.log(res.webUrl);
-  //       // });
-  //     });
-  // };
   const { testimonials, occupations } = props.state.master;
   const occupationsTop = props.isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
   const occupationsBottom = props.isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
+
+  // const createCheckout = async () => {
+  //   let checkout = await graphql().checkout.create({
+  //     email: 'asd@asd.com',
+  //     shippingAddress: {
+  //       // firstName: '',
+  //       lastName: 'asdasd',
+  //       address1: 'jl. aselih',
+  //       address2: 'cipedak',
+  //       city: 'jakarta selatan',
+  //       province: 'dki jakarta',
+  //       zip: '54321',
+  //       phone: '085747977734',
+  //       country: 'indonesia',
+  //     },
+  //   });
+  //   const lineItemsToAdd = [
+  //     {
+  //       variantId: process.env.SHOPIFY_VARIANT_ID,
+  //       quantity: 1,
+  //     },
+  //   ];
+  //   checkout = await graphql().checkout.addLineItems(checkout.id, lineItemsToAdd);
+  //   console.log(checkout);
+  //   console.log(checkout.webUrl);
+  // };
+
+  // useEffect(() => {
+  //   createCheckout();
+  // }, []);
 
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} />}>
@@ -133,9 +59,6 @@ const Index = (props: any): any => {
         <div className="c-section__create-now">
           <div className="u-container">
             <div className="c-section--top__container">
-              <div className="c-section--top__image">
-                <img src="/static/images/airbaloon.png" alt="hot-airbaloon" />
-              </div>
               <div className="c-section__content">
                 <h1>{props.t('createnow-title')}</h1>
                 <div className="c-section__content__content">{props.t('createnow-content')}</div>
@@ -145,10 +68,13 @@ const Index = (props: any): any => {
                   </Button>
                 </a>
               </div>
+              <div className="c-section--top__image">
+                <img src="/static/images/guitars.png" alt="guitars" />
+              </div>
             </div>
-            <div className="c-section__create-now__book">
+            {/* <div className="c-section__create-now__book">
               <img src="/static/images/floating-book.png" alt="floating-book" />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="c-section__start-story">
@@ -156,10 +82,10 @@ const Index = (props: any): any => {
             <div>
               <div className="c-section--top__container">
                 <div className="c-section--top__image c-section--top__image--kid">
-                  <img src="/static/images/bubblegum-kid.png" alt="hot-airbaloon" />
+                  <img src="/static/images/pilots.png" alt="pilots" />
                 </div>
                 <div className="c-section__content text-white">
-                  <h2>{props.t('startstory-title')}</h2>
+                  <h1 className="mb-4">{props.t('startstory-title')}</h1>
                   <div className="c-section__content__content">{props.t('startstory-content')}</div>
                   <a href="#create-book">
                     <Button variant="outline" color="white">
@@ -168,11 +94,11 @@ const Index = (props: any): any => {
                   </a>
                 </div>
               </div>
-              {!props.isMobile && (
+              {/* {!props.isMobile && (
                 <div className="c-section__start-story__socks">
                   <img src="/static/images/socks.png" alt="socks" />
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -193,7 +119,7 @@ const Index = (props: any): any => {
           ))}
         </div>
         <div className="c-section__content text-white c-section__content--middle">
-          <h2>{props.t('choosenow-title')}</h2>
+          <h1>{props.t('choosenow-title')}</h1>
           <div className="c-section__content__content">{props.t('choosenow-content')}</div>
           <a href="#create-book">
             <Button variant="outline" color="white">
@@ -217,13 +143,14 @@ const Index = (props: any): any => {
       <style jsx>{`
         .c-section {
           &--top {
-            background: url('/static/images/clouds.png') 0 35vh no-repeat,
-              linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
+            /* background: url('/static/images/clouds.png') 0 35vh no-repeat,
+              linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%); */
+            background: linear-gradient(180deg, #f7d8a2 0%, #ffc4b3 33.41%, #3d77c7 70.5%);
             @apply bg-contain;
-            @screen md {
+            /* @screen md {
               background: url('/static/images/clouds.png') 0 80px no-repeat,
                 linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
-            }
+            } */
             &__container {
               @apply flex w-full items-center flex-col;
               @screen md {
@@ -239,41 +166,50 @@ const Index = (props: any): any => {
                 width: 80vw;
               }
               @screen md {
-                @apply w-7/12 flex justify-end mr-6;
+                @apply w-7/12 flex justify-end;
                 margin-left: 0;
                 margin-top: 0;
               }
             }
           }
           &--middle {
-            @apply w-full py-48;
-            background: linear-gradient(180deg, #536390 0%, #3ba99c 100%);
+            @apply w-full;
+            padding-bottom: 240px;
+            /* background: linear-gradient(180deg, #536390 0%, #3ba99c 100%); */
+            background: linear-gradient(180deg, #3d77c7 0%, #228e79 100%);
           }
           &--bottom {
             @apply relative z-10;
             &__testi {
               @apply overflow-hidden pb-4;
-              background: linear-gradient(180deg, #3ba99c 0%, #f4c574 100%);
+              /* background: linear-gradient(180deg, #3ba99c 0%, #f4c574 100%); */
+              background: linear-gradient(180deg, #228e7a 0%, #bcb776 100%);
               @screen md {
-                @apply pb-64;
+                padding-bottom: 300px;
               }
             }
             &__create-book {
               @apply bg-no-repeat bg-cover pt-40;
+              background-size: 170vw;
               @screen md {
-                @apply pt-24;
+                @apply pt-0;
               }
-              background-color: #f4c574;
-              background-image: url('/static/images/create-book-bg.png');
-              height: 1019px;
+              @screen lg {
+                background-size: contain;
+              }
+              /* background-color: #f4c574;
+              background-image: url('/static/images/create-book-bg-small.png'); */
+              background: url('/static/images/create-book-bg-small.png') no-repeat,
+                linear-gradient(180deg, #bcb776 0%, #f4c574 100%);
+              height: 630px;
               background-position: center bottom;
               h2 {
-                @apply font-semibold mb-8 text-center text-white pt-56;
+                @apply font-semibold mb-8 text-center text-white;
                 font-size: 28px;
                 line-height: 42px;
                 @screen md {
                   font-size: 40px;
-                  line-height: 58px;
+                  line-height: 60px;
                 }
               }
             }
@@ -286,12 +222,12 @@ const Index = (props: any): any => {
               padding: 0;
             }
             h1 {
-              @apply font-semibold mb-4;
+              @apply font-semibold mb-3;
               font-size: 28px;
               line-height: 42px;
               @screen md {
                 @apply text-left;
-                font-size: 44px;
+                font-size: 48px;
                 line-height: 55px;
               }
             }
@@ -306,9 +242,8 @@ const Index = (props: any): any => {
               }
             }
             &__content {
-              @apply mb-6;
-              font-size: 14px;
-              line-height: 19px;
+              @apply mb-6 font-opensans;
+              line-height: 22px;
               @screen md {
                 @apply text-left;
                 line-height: 22px;
@@ -317,11 +252,12 @@ const Index = (props: any): any => {
             }
             &--middle {
               @apply text-center w-full;
+              h1,
               h2 {
                 @apply text-center;
                 margin-bottom: 12px;
                 @screen md {
-                  @apply mb-0;
+                  @apply mb-4;
                 }
               }
               div {
@@ -331,6 +267,7 @@ const Index = (props: any): any => {
             }
           }
           &__create-now {
+            padding-top: 157px;
             &__book {
               @apply ml-auto w-5/12 mt-12;
               img {
@@ -342,15 +279,23 @@ const Index = (props: any): any => {
                 }
               }
             }
+            & .c-section--top__image {
+              @apply pl-6;
+            }
           }
           &__start-story {
-            @screen md {
-              @apply mt-40;
-            }
+            padding-top: 240px;
+            padding-bottom: 194px;
             &__socks {
               @apply ml-auto mt-16;
               width: 159px;
               height: 138px;
+            }
+            & .c-section--top__image {
+              padding-right: 78px;
+            }
+            & .c-section__content {
+              padding-top: 100px;
             }
           }
           &__jobs {

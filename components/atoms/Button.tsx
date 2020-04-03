@@ -25,7 +25,7 @@ const Button = (props: any) => {
           width: ${props.width || '100%'};
           line-height: 24px;
           @screen sm {
-            width: ${props.width || '255px'};
+            width: ${props.width || '350px'};
           }
           @screen md {
             @apply text-base;

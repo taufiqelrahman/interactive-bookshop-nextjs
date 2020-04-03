@@ -62,20 +62,18 @@ const TestimonialSlider = (props: any) => {
       </div>
       <style jsx>{`
         .c-testi-slider {
-          @apply mt-32;
           &__header {
             @apply flex justify-between mb-24;
-            margin-bottom: 24px;
             @screen md {
-              @apply mb-24;
+              margin-bottom: 60px;
             }
             h2 {
               @apply font-semibold text-white;
               font-size: 20px;
               line-height: 30px;
               @screen md {
-                font-size: 40px;
-                line-height: 58px;
+                font-size: 48px;
+                line-height: 55px;
               }
             }
           }
@@ -83,7 +81,7 @@ const TestimonialSlider = (props: any) => {
             @apply w-2/3 text-center mx-auto;
             @screen md {
               @apply mx-0 text-left;
-              width: 445px;
+              width: 550px;
             }
           }
           &__nav {
