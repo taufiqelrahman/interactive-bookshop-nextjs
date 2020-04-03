@@ -152,15 +152,15 @@ const Index = (props: any): any => {
                 linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
             } */
             &__container {
-              @apply flex w-full items-center flex-col;
+              @apply flex w-full items-center flex-col-reverse;
+              .c-section__start-story & {
+                @apply flex-col;
+              }
               @screen md {
                 @apply flex-row;
               }
             }
             &__image {
-              margin-left: -40vw;
-              margin-top: -200px;
-              width: 100vw;
               &--kid {
                 margin: 0;
                 width: 80vw;
@@ -174,7 +174,10 @@ const Index = (props: any): any => {
           }
           &--middle {
             @apply w-full;
-            padding-bottom: 240px;
+            padding-bottom: 227px;
+            @screen md {
+              padding-bottom: 240px;
+            }
             /* background: linear-gradient(180deg, #536390 0%, #3ba99c 100%); */
             background: linear-gradient(180deg, #3d77c7 0%, #228e79 100%);
           }
@@ -189,20 +192,25 @@ const Index = (props: any): any => {
               }
             }
             &__create-book {
-              @apply bg-no-repeat bg-cover pt-40;
-              background-size: 170vw;
+              /* @apply bg-no-repeat bg-cover; */
+              padding-top: 246px;
+              padding-bottom: 60px;
+              /* background-color: #f4c574;
+              background-image: url('/static/images/create-book-bg-small.png'); */
+              background: url('/static/images/create-book-bg-mweb.png') no-repeat,
+                linear-gradient(180deg, #bcb776 0%, #ccba75 20%, #f4c574 100%);
+              background-size: cover;
+              min-height: 630px;
+              background-position: center top;
               @screen md {
-                @apply pt-0;
+                @apply pt-0 pb-0;
+                background: url('/static/images/create-book-bg-small.png') no-repeat,
+                  linear-gradient(180deg, #bcb776 0%, #ccba75 20%, #f4c574 100%);
+                background-position: center bottom;
               }
               @screen lg {
                 background-size: contain;
               }
-              /* background-color: #f4c574;
-              background-image: url('/static/images/create-book-bg-small.png'); */
-              background: url('/static/images/create-book-bg-small.png') no-repeat,
-                linear-gradient(180deg, #bcb776 0%, #f4c574 100%);
-              height: 630px;
-              background-position: center bottom;
               h2 {
                 @apply font-semibold mb-8 text-center text-white;
                 font-size: 28px;
@@ -267,7 +275,10 @@ const Index = (props: any): any => {
             }
           }
           &__create-now {
-            padding-top: 157px;
+            padding-top: 61px;
+            @screen md {
+              padding-top: 157px;
+            }
             &__book {
               @apply ml-auto w-5/12 mt-12;
               img {
@@ -284,18 +295,25 @@ const Index = (props: any): any => {
             }
           }
           &__start-story {
-            padding-top: 240px;
-            padding-bottom: 194px;
+            padding-top: 97px;
+            padding-bottom: 121px;
+            @screen md {
+              padding-top: 240px;
+              padding-bottom: 194px;
+              & .c-section--top__image {
+                padding-right: 78px;
+              }
+            }
+            & .c-section__content {
+              padding-top: 32px;
+              @screen md {
+                padding-top: 100px;
+              }
+            }
             &__socks {
               @apply ml-auto mt-16;
               width: 159px;
               height: 138px;
-            }
-            & .c-section--top__image {
-              padding-right: 78px;
-            }
-            & .c-section__content {
-              padding-top: 100px;
             }
           }
           &__jobs {

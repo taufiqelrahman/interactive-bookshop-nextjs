@@ -63,7 +63,8 @@ const TestimonialSlider = (props: any) => {
       <style jsx>{`
         .c-testi-slider {
           &__header {
-            @apply flex justify-between mb-24;
+            @apply flex justify-between;
+            margin-bottom: 24px;
             @screen md {
               margin-bottom: 60px;
             }
@@ -102,7 +103,7 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__slides {
-            @apply flex overflow-x-scroll;
+            @apply flex overflow-x-scroll overflow-visible;
             @screen md {
               @apply inline-flex;
               transform: translateX(${translationX}px);
