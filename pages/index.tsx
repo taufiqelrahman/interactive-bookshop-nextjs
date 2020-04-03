@@ -22,17 +22,17 @@ const Index = (props: any): any => {
   // const createCheckout = async () => {
   //   let checkout = await graphql().checkout.create({
   //     email: 'asd@asd.com',
-  //     shippingAddress: {
-  //       // firstName: '',
-  //       lastName: 'asdasd',
-  //       address1: 'jl. aselih',
-  //       address2: 'cipedak',
-  //       city: 'jakarta selatan',
-  //       province: 'dki jakarta',
-  //       zip: '54321',
-  //       phone: '085747977734',
-  //       country: 'indonesia',
-  //     },
+  //     // shippingAddress: {
+  //     //   // firstName: '',
+  //     //   lastName: 'asdasd',
+  //     //   address1: 'jl. aselih',
+  //     //   address2: 'cipedak',
+  //     //   city: 'jakarta selatan',
+  //     //   province: 'dki jakarta',
+  //     //   zip: '54321',
+  //     //   phone: '085747977734',
+  //     //   country: 'indonesia',
+  //     // },
   //   });
   //   const lineItemsToAdd = [
   //     {

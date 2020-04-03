@@ -48,5 +48,6 @@
   "reset-button": "Set Ulang",
   "select-date": "Pilih Tanggal",
   "delete-item": "Hapus buku?",
-  "delete-confirmation": "Setelah kamu hapus, data buku ini juga akan terhapus. Langkah ini tidak bisa dikembalikan lagi."
+  "delete-confirmation": "Setelah kamu hapus, data buku ini juga akan terhapus. Langkah ini tidak bisa dikembalikan lagi.",
+  "address-label": "Alamat"
 }

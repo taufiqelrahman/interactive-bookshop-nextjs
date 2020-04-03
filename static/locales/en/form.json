@@ -48,5 +48,6 @@
   "reset-button": "Reset",
   "select-date": "Select Date",
   "delete-item": "Remove item?",
-  "delete-confirmation": "Once you remove this item, its custom preferences will also be deleted. This action cannot be undone."
+  "delete-confirmation": "Once you remove this item, its custom preferences will also be deleted. This action cannot be undone.",
+  "address-label": "Address"
 }
