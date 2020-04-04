@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import NumberFormat from 'react-number-format';
-import isEmpty from 'lodash.isempty';
 
 const TextField = React.forwardRef((props: any, ref: any) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,9 +12,15 @@ const TextField = React.forwardRef((props: any, ref: any) => {
     return variants.map(variant => `c-text-field--${variant}`).join(' ');
   };
   return (
-    <div className={`c-text-field ${isEmpty(props.errors) ? '' : 'c-text-field--error'} ${variantClass()}`}>
+    <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass()}`} style={props.style}>
       {props.name === 'phone' ? (
-        <NumberFormat format="#### #### ####" name={props.name} placeholder={props.placeholder} getInputRef={ref} />
+        <NumberFormat
+          format="#### #### ####"
+          name={props.name}
+          placeholder={props.placeholder}
+          getInputRef={ref}
+          defaultValue={props.defaultValue}
+        />
       ) : (
         <Fragment>
           <input
@@ -38,7 +43,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
       )}
       <style jsx>{`
         .c-text-field {
-          @apply mb-4;
+          @apply mb-4 relative;
           @screen md {
             @apply mb-0;
           }
@@ -64,6 +69,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
             }
           }
           &--large {
+            width: 400px;
             input {
               width: 400px;
             }

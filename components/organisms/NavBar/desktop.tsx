@@ -136,8 +136,7 @@ const NavBar = (props: any) => {
             &__menu {
               @apply flex items-center text-dark-grey text-xs h-full;
               &__item {
-                @apply px-6 py-3 font-semibold;
-                @apply flex items-center;
+                @apply px-6 py-3 font-semibold cursor-pointer flex items-center;
               }
               &__icon {
                 @apply mr-3;

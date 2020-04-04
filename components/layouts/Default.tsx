@@ -108,7 +108,12 @@ const DefaultLayout = (props: any) => {
             @apply text-center font-poppins;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.32);
             border-radius: 6px;
-            background: #de3636 !important;
+            &.Toastify__toast--success {
+              background: #4aa8c6 !important;
+            }
+            &.Toastify__toast--error {
+              background: #de3636 !important;
+            }
           }
         }
       `}</style>
