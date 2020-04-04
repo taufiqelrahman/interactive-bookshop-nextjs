@@ -53,7 +53,9 @@ const Account = (props: any): any => {
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const onSubmit = data => {
-    console.log(data);
+    props.thunkUpdateUser(data);
+    const field = Object.keys(data)[0];
+    editField(field, true);
   };
   const showAddress = () => {
     if (!user.address) return '';
