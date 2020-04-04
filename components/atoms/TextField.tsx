@@ -6,9 +6,13 @@ const TextField = React.forwardRef((props: any, ref: any) => {
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
-  const variantClass = props.variant ? `c-text-field--${props.variant}` : '';
+  const variantClass = () => {
+    if (!props.variant) return '';
+    const variants = props.variant.split(',');
+    return variants.map(variant => `c-text-field--${variant}`).join(' ');
+  };
   return (
-    <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass}`}>
+    <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass()}`}>
       {props.name === 'phone' ? (
         <NumberFormat format="#### #### ####" name={props.name} placeholder={props.placeholder} getInputRef={ref} />
       ) : (
@@ -56,6 +60,16 @@ const TextField = React.forwardRef((props: any, ref: any) => {
           &--full-width {
             input {
               @apply w-full;
+            }
+          }
+          &--large {
+            input {
+              width: 400px;
+            }
+          }
+          &--open-sans {
+            input {
+              @apply font-opensans;
             }
           }
           input {

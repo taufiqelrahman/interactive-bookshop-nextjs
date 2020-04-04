@@ -40,6 +40,28 @@ export const thunkLoadUser = (req?): any => (dispatch): any => {
     });
 };
 
+function updateUser(isFetching, user: types.User | object): types.UsersActionTypes {
+  return {
+    type: types.LOAD_USER,
+    payload: user,
+    isFetching,
+  };
+}
+
+export const thunkUpdateUser = (data): any => (dispatch): any => {
+  dispatch(updateUser(true, {}));
+  return api()
+    .users.updateMe(data)
+    .then(({ data }) => {
+      dispatch(updateUser(false, data));
+    })
+    .catch(err => {
+      dispatch(updateUser(false, {}));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
+
 export function setLogin(state: boolean): types.UsersActionTypes {
   return {
     type: types.SET_LOGIN,

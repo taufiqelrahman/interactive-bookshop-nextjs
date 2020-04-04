@@ -45,6 +45,9 @@ const Button = (props: any) => {
             border-radius: 6px;
             padding: 8px 16px;
           }
+          &--small-text {
+            @apply text-sm;
+          }
           &--disabled {
             opacity: 0.3;
             cursor: not-allowed;

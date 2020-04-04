@@ -1,5 +1,6 @@
 // export const SET_USER = 'SET_USER';
 export const LOAD_USER = 'LOAD_USER';
+export const UPDATE_USER = 'UPDATE_USER';
 export const SET_LOGIN = 'SET_LOGIN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -24,6 +25,12 @@ export interface UsersState {
 
 interface LoadUser {
   type: typeof LOAD_USER;
+  payload: User | object;
+  isFetching: boolean;
+}
+
+interface UpdateUser {
+  type: typeof UPDATE_USER;
   payload: User | object;
   isFetching: boolean;
 }
@@ -59,4 +66,12 @@ interface ResetPassword {
   isFetching: boolean;
 }
 
-export type UsersActionTypes = LoadUser | SetLogin | Login | Logout | Register | ForgotPassword | ResetPassword;
+export type UsersActionTypes =
+  | LoadUser
+  | UpdateUser
+  | SetLogin
+  | Login
+  | Logout
+  | Register
+  | ForgotPassword
+  | ResetPassword;

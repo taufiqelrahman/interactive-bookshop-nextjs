@@ -35,4 +35,8 @@ export default class Products {
   getMe() {
     return this.adapter.secure.get('/me');
   }
+
+  updateMe(data) {
+    return this.adapter.secure.post('/me', data);
+  }
 }

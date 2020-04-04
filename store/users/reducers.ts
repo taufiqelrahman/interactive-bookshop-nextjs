@@ -8,19 +8,18 @@ const initState: types.UsersState = {
 
 const reducer = (state: types.UsersState = initState, action: types.UsersActionTypes): any => {
   switch (action.type) {
-    case types.LOAD_USER: {
+    case types.LOAD_USER:
+    case types.UPDATE_USER:
       return {
         ...state,
         user: action.payload,
         isFetching: action.isFetching,
       };
-    }
-    case types.SET_LOGIN: {
+    case types.SET_LOGIN:
       return {
         ...state,
         isLoggedIn: action.payload,
       };
-    }
     case types.LOGIN:
     case types.LOGOUT:
       return {
