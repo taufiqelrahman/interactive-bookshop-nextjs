@@ -5,10 +5,11 @@ import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Card from 'components/atoms/Card';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import TextField from 'components/atoms/TextField';
 import Button from 'components/atoms/Button';
 import { useForm } from 'react-hook-form';
+import api from 'services/api';
 
 const Account = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = useForm({
@@ -48,7 +49,14 @@ const Account = (props: any): any => {
   };
   const schema = {
     name: { required: true },
-    email: { required: true },
+    email: {
+      required: { value: true, message: `Email ${props.t('form:required-error')}` },
+      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: props.t('form:email-invalid') },
+      validate: async value => {
+        const { data } = await api().users.checkEmailChange({ email: value });
+        return !data.exists || props.t('form:email-exists');
+      }, // watch for duplicate email
+    },
   };
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
@@ -92,6 +100,7 @@ const Account = (props: any): any => {
                       defaultValue={state.name.value}
                       ref={register(schema.name)}
                       name="name"
+                      errors={errors}
                     />
                     <div className="flex items-center" style={{ marginTop: 6 }}>
                       <Button width="101px" variant="rectangle,small-text">
@@ -109,9 +118,34 @@ const Account = (props: any): any => {
               <div className="c-account__row">
                 <div className="c-account__header">
                   <div className="c-account__title">{props.t('email-label')}</div>
-                  <div className="c-account__action">Change</div>
+                  {!state.email.isEdit && (
+                    <div className="c-account__action" onClick={() => editField('email', false, user.email)}>
+                      Change
+                    </div>
+                  )}
                 </div>
-                <div className="c-account__value">{user.email}</div>
+
+                {state.email.isEdit ? (
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField
+                      variant="large,open-sans"
+                      defaultValue={state.email.value}
+                      ref={register(schema.email)}
+                      name="email"
+                      errors={errors}
+                    />
+                    <div className="flex items-center" style={{ marginTop: 6 }}>
+                      <Button width="101px" variant="rectangle,small-text">
+                        {props.t('form:update-button')}
+                      </Button>
+                      <div onClick={() => editField('email', true)} className="c-account__link">
+                        {props.t('form:cancel-button')}
+                      </div>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="c-account__value">{user.email}</div>
+                )}
               </div>
               <div className="c-account__row">
                 <div className="c-account__header">

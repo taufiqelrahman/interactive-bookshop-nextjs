@@ -16,6 +16,10 @@ export default class Products {
     return this.adapter.default.post('/check-email', data);
   }
 
+  checkEmailChange(data) {
+    return this.adapter.secure.post('/check-email-change', data);
+  }
+
   login(data) {
     return this.adapter.default.post('/login', data);
   }

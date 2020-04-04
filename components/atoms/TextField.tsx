@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import NumberFormat from 'react-number-format';
+import isEmpty from 'lodash.isempty';
 
 const TextField = React.forwardRef((props: any, ref: any) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,7 +13,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
     return variants.map(variant => `c-text-field--${variant}`).join(' ');
   };
   return (
-    <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass()}`}>
+    <div className={`c-text-field ${isEmpty(props.errors) ? '' : 'c-text-field--error'} ${variantClass()}`}>
       {props.name === 'phone' ? (
         <NumberFormat format="#### #### ####" name={props.name} placeholder={props.placeholder} getInputRef={ref} />
       ) : (
