@@ -103,7 +103,7 @@ const Account = (props: any): any => {
                       errors={errors}
                     />
                     <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button width="101px" variant="rectangle,small-text">
+                      <Button width="101px" variant="rectangle,small-text" disabled={errors.name}>
                         {props.t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('name', true)} className="c-account__link">
@@ -135,7 +135,7 @@ const Account = (props: any): any => {
                       errors={errors}
                     />
                     <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button width="101px" variant="rectangle,small-text">
+                      <Button width="101px" variant="rectangle,small-text" disabled={errors.email}>
                         {props.t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('email', true)} className="c-account__link">
