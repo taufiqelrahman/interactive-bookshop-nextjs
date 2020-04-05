@@ -19,6 +19,7 @@ const Account = (props: any): any => {
     mode: 'onChange',
   });
   const { user } = props.state.users;
+  const userAddress = user.address || {};
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState({
     name: {
@@ -43,8 +44,12 @@ const Account = (props: any): any => {
     },
   });
   const editField = (type, isClear, value?): any => {
+    const newState = { ...state };
+    Object.keys(newState).forEach(key => {
+      newState[key].isEdit = false;
+    });
     setState({
-      ...state,
+      ...newState,
       [type]: {
         isEdit: !isClear,
         value: isClear ? '' : value,
@@ -78,13 +83,19 @@ const Account = (props: any): any => {
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const onSubmit = data => {
-    props.thunkUpdateUser(data);
+    let PARAMS = data;
+    if (data.province) PARAMS = { ...data, province: data.province.value };
+    props.thunkUpdateUser(PARAMS);
     const field = Object.keys(data)[0];
-    editField(field, true);
+    if (['address1', 'address2', 'city', 'country', 'province', 'zip'].includes(field)) {
+      editField('address', true);
+    } else {
+      editField(field, true);
+    }
   };
   const showAddress = () => {
-    if (!user.address) return '';
-    const { address1, address2, city, country, province, zip } = user.address;
+    if (Object.keys(userAddress).length === 0) return '-';
+    const { address1, address2, city, country, province, zip } = userAddress;
     return `${address1} ${address2}, ${city}, ${province} ${country} ${zip}`;
   };
   const changePhone = () => {
@@ -137,7 +148,7 @@ const Account = (props: any): any => {
     }));
   };
   const setDefaultProvince = () => {
-    return { label: user.address.province, value: user.address.province };
+    return { label: userAddress.province, value: userAddress.province };
   };
   useEffect(() => {
     if (state.address.isEdit) {
@@ -157,12 +168,12 @@ const Account = (props: any): any => {
     errors.city ||
     errors.province ||
     errors.zip ||
-    (watch('address1') === user.address.address1 &&
-      watch('address2') === user.address.address2 &&
-      watch('city') === user.address.city &&
+    (watch('address1') === userAddress.address1 &&
+      watch('address2') === userAddress.address2 &&
+      watch('city') === userAddress.city &&
       watch('province') &&
-      watch('province').label === user.address.province &&
-      watch('zip') === user.address.zip);
+      watch('province').label === userAddress.province &&
+      watch('zip') === userAddress.zip);
   return (
     <DefaultLayout
       {...props}
@@ -368,7 +379,7 @@ const Account = (props: any): any => {
                     <div className="c-account__label">{props.t('address1')}</div>
                     <TextField
                       variant="large,open-sans"
-                      defaultValue={user.address.address1}
+                      defaultValue={userAddress.address1}
                       ref={register(schema.address)}
                       name="address1"
                       errors={errors.address1}
@@ -377,7 +388,7 @@ const Account = (props: any): any => {
                     <div className="c-account__label">{props.t('address2')}</div>
                     <TextField
                       variant="large,open-sans"
-                      defaultValue={user.address.address2}
+                      defaultValue={userAddress.address2}
                       ref={register(schema.address)}
                       name="address2"
                       errors={errors.address2}
@@ -386,7 +397,7 @@ const Account = (props: any): any => {
                     <div className="c-account__label">{props.t('city')}</div>
                     <TextField
                       variant="large,open-sans"
-                      defaultValue={user.address.city}
+                      defaultValue={userAddress.city}
                       ref={register(schema.address)}
                       name="city"
                       errors={errors.city}
@@ -406,7 +417,7 @@ const Account = (props: any): any => {
                     <div className="c-account__label">{props.t('zip')}</div>
                     <TextField
                       variant="large,open-sans"
-                      defaultValue={user.address.zip}
+                      defaultValue={userAddress.zip}
                       ref={register(schema.address)}
                       name="zip"
                       errors={errors.zip}

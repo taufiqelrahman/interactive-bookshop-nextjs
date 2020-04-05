@@ -104,6 +104,7 @@ const DefaultLayout = (props: any) => {
             }
           }
           &__toast {
+            line-height: 24px;
             margin-bottom: 8px;
             @apply text-center font-poppins;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.32);

@@ -54,8 +54,14 @@ export const thunkUpdateUser = (data): any => (dispatch): any => {
   return api()
     .users.updateMe(data)
     .then(({ data }) => {
-      dispatch(updateUser(false, data));
-      const message = i18n.language === 'en' ? 'Saved successfully' : 'Berhasil menyimpan';
+      dispatch(updateUser(false, data.user));
+      const isEnglish = i18n.language === 'en';
+      let message = isEnglish ? 'Saved successfully' : 'Berhasil menyimpan';
+      if (data.updated === 'email') {
+        message = isEnglish
+          ? `A confirmation email has been sent to ${data.user.email}`
+          : `Email konfirmasi untuk pengubahan telah dikirim ke ${data.user.email}`;
+      }
       toast.success(message);
     })
     .catch(err => {
