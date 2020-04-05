@@ -5,12 +5,14 @@ import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Card from 'components/atoms/Card';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import TextField from 'components/atoms/TextField';
 import Button from 'components/atoms/Button';
 import { useForm } from 'react-hook-form';
 import api from 'services/api';
 import Modal from 'components/atoms/Modal';
+import actions from 'store/actions';
+import Select from 'react-select';
 
 const Account = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = useForm({
@@ -65,6 +67,7 @@ const Account = (props: any): any => {
       required: { value: true, message: `Password ${props.t('form:required-error')}` },
       validate: value => value === watch('newPassword') || props.t('form:password-different'),
     },
+    address: { required: true },
   };
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
@@ -83,6 +86,53 @@ const Account = (props: any): any => {
     // props.thunkSendOtp();
     setShowModal(true);
   };
+  const customStyles = {
+    menu: provided => ({
+      ...provided,
+      marginTop: 0,
+      border: '2px solid #333',
+      borderTopRightRadius: 0,
+      borderTopLeftRadius: 0,
+      borderTop: 'none',
+      width: '400px',
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    option: provided => ({
+      ...provided,
+      '&:hover': {
+        background: '#333',
+        color: 'white',
+      },
+      width: '400px',
+    }),
+    control: (provided, state) => ({
+      ...provided,
+      borderWidth: 2,
+      borderType: 'solid',
+      borderColor: state.isFocused ? '#333' : '#e1e0e7',
+      borderBottomRightRadius: state.isFocused ? 0 : provided.borderBottomRightRadius,
+      borderBottomLeftRadius: state.isFocused ? 0 : provided.borderBottomLeftRadius,
+      paddingLeft: 6,
+      '.c-date-field--error &': {
+        border: '2px solid #de3636',
+      },
+      marginBottom: 12,
+      width: '400px',
+    }),
+  };
+  const provinces = () => {
+    const { provinces } = props.state.master;
+    if (provinces.length === 0) return [];
+    return provinces.map(prov => ({
+      value: prov.code,
+      label: prov.name,
+    }));
+  };
+  useEffect(() => {
+    // if (state.address.isEdit) register({ name: 'province', type: 'react-select' }, schema.address);
+  }, [state.address.isEdit]);
   return (
     <DefaultLayout
       {...props}
@@ -277,9 +327,88 @@ const Account = (props: any): any => {
               <div className="c-account__row">
                 <div className="c-account__header" style={{ marginBottom: props.isMobile ? 10 : 6 }}>
                   <div className="c-account__title">{props.t('address-label')}</div>
-                  <div className="c-account__action">Change</div>
+                  {!state.address.isEdit && (
+                    <div className="c-account__action" onClick={() => editField('address', false)}>
+                      Change
+                    </div>
+                  )}
                 </div>
-                <div className="c-account__value c-account__address">{showAddress()}</div>
+                {state.address.isEdit ? (
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="c-account__label">{props.t('address1')}</div>
+                    <TextField
+                      variant="large,open-sans"
+                      defaultValue={user.address.address1}
+                      ref={register(schema.address)}
+                      name="address1"
+                      errors={errors.address1}
+                      style={{ marginBottom: 12 }}
+                    />
+                    <div className="c-account__label">{props.t('address2')}</div>
+                    <TextField
+                      variant="large,open-sans"
+                      defaultValue={user.address.address2}
+                      ref={register(schema.address)}
+                      name="address2"
+                      errors={errors.address2}
+                      style={{ marginBottom: 12 }}
+                    />
+                    <div className="c-account__label">{props.t('city')}</div>
+                    <TextField
+                      variant="large,open-sans"
+                      defaultValue={user.address.city}
+                      ref={register(schema.address)}
+                      name="city"
+                      errors={errors.city}
+                      style={{ marginBottom: 12 }}
+                    />
+                    <div className="c-account__label">{props.t('province')}</div>
+                    <Select
+                      styles={customStyles}
+                      className="c-account_province"
+                      instanceId="province"
+                      placeholder={props.t('select-province')}
+                      defaultValue={user.address.province}
+                      options={provinces()}
+                      ref={e => register({ name: 'province', ...schema.address })}
+                      name="province"
+                    />
+                    {/* {errors.province} */}
+                    <div className="c-account__label">{props.t('zip')}</div>
+                    <TextField
+                      variant="large,open-sans"
+                      defaultValue={user.address.zip}
+                      ref={register(schema.address)}
+                      name="zip"
+                      errors={errors.zip}
+                    />
+                    <div className="flex items-center" style={{ marginTop: 6 }}>
+                      <Button
+                        width="101px"
+                        variant="rectangle,small-text"
+                        disabled={
+                          errors.address1 ||
+                          errors.address2 ||
+                          errors.city ||
+                          errors.province ||
+                          errors.zip ||
+                          watch('address1') === user.address.address1 ||
+                          watch('address2') === user.address.address2 ||
+                          watch('city') === user.address.city ||
+                          watch('province') === user.address.province ||
+                          watch('zip') === user.address.zip
+                        }
+                      >
+                        {props.t('form:update-button')}
+                      </Button>
+                      <div onClick={() => editField('address', true)} className="c-account__link">
+                        {props.t('form:cancel-button')}
+                      </div>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="c-account__value c-account__address">{showAddress()}</div>
+                )}
               </div>
             </div>
           </Wrapper>
@@ -386,6 +515,15 @@ const Account = (props: any): any => {
   );
 };
 
-Account.getInitialProps = () => ({ namespacesRequired: ['common'] });
+Account.getInitialProps = async (ctx: any): Promise<any> => {
+  try {
+    ctx.reduxStore.dispatch(actions.loadProvinces(true));
+    const { data: provinces } = await api().master.getProvinces();
+    ctx.reduxStore.dispatch(actions.loadProvinces(false, provinces.data));
+  } catch (err) {
+    console.log(err.message);
+  }
+  return { namespacesRequired: ['form', 'common'] };
+};
 
 export default withTranslation(['form', 'common'])(connect(mapStateToProps, mapDispatchToProps)(Account));
