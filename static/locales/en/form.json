@@ -49,5 +49,12 @@
   "select-date": "Select Date",
   "delete-item": "Remove item?",
   "delete-confirmation": "Once you remove this item, its custom preferences will also be deleted. This action cannot be undone.",
-  "address-label": "Address"
+  "address-label": "Address",
+  "update-button": "Update",
+  "old-number": "Old Number",
+  "new-number": "New Number",
+  "old-password": "Old Password",
+  "new-password": "New Password",
+  "confirm-new-password": "Confirm New Password",
+  "password-different": "Doesn't match with new password"
 }

@@ -61,7 +61,7 @@ const Account = (props: any): any => {
     },
     phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },
     password: { required: true },
-    confirmPassword: {
+    confirmNewPassword: {
       required: { value: true, message: `Password ${props.t('form:required-error')}` },
       validate: value => value === watch('newPassword') || props.t('form:password-different'),
     },
@@ -245,7 +245,7 @@ const Account = (props: any): any => {
                     <div className="c-account__label">{props.t('confirm-new-password')}</div>
                     <TextField
                       variant="large,open-sans"
-                      ref={register(schema.confirmPassword)}
+                      ref={register(schema.confirmNewPassword)}
                       name="confirmNewPassword"
                       errors={errors.confirmNewPassword}
                       isPassword={true}
@@ -301,7 +301,9 @@ const Account = (props: any): any => {
         }
         content={
           <Fragment>
-            {props.t('common:otp-verify-text')}
+            {props.t('common:otp-verify-text').replace('[phone]', user.phone)}
+            {props.t('common:otp-code')}
+            {props.t('common:otp-resend')}
             {/* TODO */}
           </Fragment>
         }

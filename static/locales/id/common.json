@@ -51,5 +51,9 @@
   "standard-shipping": "Pengiriman Standar",
   "discount-code": "Kode Diskon",
   "discount-next-step": "Diskon bisa digunakan di langkah selanjutnya",
-  "profile-title": "Profil"
+  "profile-title": "Profil",
+  "otp-verify": "Verifikasi OTP",
+  "otp-verify-text": "Masukan kode verifikasi yang telah dikirimkan ke [phone] untuk menperbaharui nomor anda",
+  "otp-code": "Kode Verifikasi",
+  "otp-resend": "Kirim Ulang Kode Verifikasi"
 }

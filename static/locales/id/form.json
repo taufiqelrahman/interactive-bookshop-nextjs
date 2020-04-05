@@ -49,5 +49,12 @@
   "select-date": "Pilih Tanggal",
   "delete-item": "Hapus buku?",
   "delete-confirmation": "Setelah kamu hapus, data buku ini juga akan terhapus. Langkah ini tidak bisa dikembalikan lagi.",
-  "address-label": "Alamat"
+  "address-label": "Alamat",
+  "update-button": "Simpan",
+  "old-number": "Old Number",
+  "new-number": "Nomor Baru",
+  "old-password": "Nomor Lama",
+  "new-password": "Sandi Baru",
+  "confirm-new-password": "Konfirmasi Sandi Baru",
+  "password-different": "Tidak sama dengan sandi baru"
 }

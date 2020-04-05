@@ -51,5 +51,9 @@
   "standard-shipping": "Standard Shipping",
   "discount-code": "Discount Code",
   "discount-next-step": "Discounts can applied in the next step",
-  "profile-title": "Profile"
+  "profile-title": "Profile",
+  "otp-verify": "OTP Verification",
+  "otp-verify-text": "Enter the 6-digit verification code we’ve sent to [phone] to change your phone number.",
+  "otp-code": "Verification Code",
+  "otp-resend": "Resend Verification Code"
 }
