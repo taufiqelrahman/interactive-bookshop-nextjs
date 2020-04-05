@@ -56,5 +56,10 @@
   "old-password": "Nomor Lama",
   "new-password": "Sandi Baru",
   "confirm-new-password": "Konfirmasi Sandi Baru",
-  "password-different": "Tidak sama dengan sandi baru"
+  "password-different": "Tidak sama dengan sandi baru",
+  "address1": "Alamat 1",
+  "address2": "Alamat 2",
+  "city": "Kota",
+  "province": "Provinsi",
+  "zip": "Kodepos"
 }

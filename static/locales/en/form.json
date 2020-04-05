@@ -56,5 +56,10 @@
   "old-password": "Old Password",
   "new-password": "New Password",
   "confirm-new-password": "Confirm New Password",
-  "password-different": "Doesn't match with new password"
+  "password-different": "Doesn't match with new password",
+  "address1": "Address 1",
+  "address2": "Address 2",
+  "city": "City",
+  "province": "Province",
+  "zip": "Postcode"
 }
