@@ -2,13 +2,14 @@ import { captureException } from '@sentry/core';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import Cookies from 'js-cookie';
-import { Router } from 'i18n';
+import { Router, i18n } from 'i18n';
 import * as types from './types';
 import { setErrorMessage } from '../actions';
 import { thunkLoadCart } from '../cart/actions';
 import api from 'services/api';
 import graphql from 'services/graphql';
 import { encryptTokenClient } from 'lib/crypto';
+import { toast } from 'react-toastify';
 
 // function setUser(user: types.User): types.UsersActionTypes {
 //   return {
@@ -54,6 +55,8 @@ export const thunkUpdateUser = (data): any => (dispatch): any => {
     .users.updateMe(data)
     .then(({ data }) => {
       dispatch(updateUser(false, data));
+      const message = i18n.language === 'en' ? 'Saved successfully' : 'Berhasil menyimpan';
+      toast.success(message);
     })
     .catch(err => {
       dispatch(updateUser(false, {}));

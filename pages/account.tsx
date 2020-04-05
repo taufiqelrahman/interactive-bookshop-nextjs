@@ -15,7 +15,7 @@ import actions from 'store/actions';
 import Select from 'react-select';
 
 const Account = (props: any): any => {
-  const { register, handleSubmit, errors, formState, watch } = useForm({
+  const { register, handleSubmit, errors, formState, setValue, watch, triggerValidation, unregister } = useForm({
     mode: 'onChange',
   });
   const { user } = props.state.users;
@@ -52,7 +52,9 @@ const Account = (props: any): any => {
     });
   };
   const schema = {
-    name: { required: true },
+    name: {
+      required: { value: true, message: `${props.t('name-label')} ${props.t('form:required-error')}` },
+    },
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
       pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: props.t('form:email-invalid') },
@@ -62,12 +64,16 @@ const Account = (props: any): any => {
       }, // watch for duplicate email
     },
     phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },
-    password: { required: true },
+    password: {
+      required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
+    },
     confirmNewPassword: {
-      required: { value: true, message: `Password ${props.t('form:required-error')}` },
+      required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
       validate: value => value === watch('newPassword') || props.t('form:password-different'),
     },
-    address: { required: true },
+    address: {
+      required: { value: true, message: `${props.t('address-label')} ${props.t('form:required-error')}` },
+    },
   };
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
@@ -126,13 +132,37 @@ const Account = (props: any): any => {
     const { provinces } = props.state.master;
     if (provinces.length === 0) return [];
     return provinces.map(prov => ({
-      value: prov.code,
+      value: prov.name,
       label: prov.name,
     }));
   };
+  const setDefaultProvince = () => {
+    return { label: user.address.province, value: user.address.province };
+  };
   useEffect(() => {
-    // if (state.address.isEdit) register({ name: 'province', type: 'react-select' }, schema.address);
+    if (state.address.isEdit) {
+      register({ name: 'province' }, schema.address);
+      setValue('province', setDefaultProvince());
+    } else {
+      unregister('province');
+    }
   }, [state.address.isEdit]);
+  const onChangeProvince = e => {
+    triggerValidation('province');
+    setValue('province', e);
+  };
+  const disabledUpdateAddress = () =>
+    errors.address1 ||
+    errors.address2 ||
+    errors.city ||
+    errors.province ||
+    errors.zip ||
+    (watch('address1') === user.address.address1 &&
+      watch('address2') === user.address.address2 &&
+      watch('city') === user.address.city &&
+      watch('province') &&
+      watch('province').label === user.address.province &&
+      watch('zip') === user.address.zip);
   return (
     <DefaultLayout
       {...props}
@@ -368,10 +398,9 @@ const Account = (props: any): any => {
                       className="c-account_province"
                       instanceId="province"
                       placeholder={props.t('select-province')}
-                      defaultValue={user.address.province}
+                      defaultValue={setDefaultProvince()}
                       options={provinces()}
-                      ref={e => register({ name: 'province', ...schema.address })}
-                      name="province"
+                      onChange={onChangeProvince}
                     />
                     {/* {errors.province} */}
                     <div className="c-account__label">{props.t('zip')}</div>
@@ -383,22 +412,7 @@ const Account = (props: any): any => {
                       errors={errors.zip}
                     />
                     <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button
-                        width="101px"
-                        variant="rectangle,small-text"
-                        disabled={
-                          errors.address1 ||
-                          errors.address2 ||
-                          errors.city ||
-                          errors.province ||
-                          errors.zip ||
-                          watch('address1') === user.address.address1 ||
-                          watch('address2') === user.address.address2 ||
-                          watch('city') === user.address.city ||
-                          watch('province') === user.address.province ||
-                          watch('zip') === user.address.zip
-                        }
-                      >
+                      <Button width="101px" variant="rectangle,small-text" disabled={disabledUpdateAddress()}>
                         {props.t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('address', true)} className="c-account__link">

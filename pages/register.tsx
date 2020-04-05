@@ -37,11 +37,11 @@ const Register = (props: any): any => {
     name: { required: { value: true, message: `${props.t('form:name-label')} ${props.t('form:required-error')}` } },
     phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },
     password: {
-      required: { value: true, message: `Password ${props.t('form:required-error')}` },
+      required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
       minLength: { value: 6, message: props.t('form:minlength-6-error') },
     },
     confirmPassword: {
-      required: { value: true, message: `Password ${props.t('form:required-error')}` },
+      required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
       validate: value => value === watch('password') || props.t('form:password-different'),
     },
   };
