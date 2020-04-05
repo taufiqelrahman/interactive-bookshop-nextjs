@@ -98,9 +98,9 @@ const Account = (props: any): any => {
     const { address1, address2, city, country, province, zip } = userAddress;
     return `${address1} ${address2}, ${city}, ${province} ${country} ${zip}`;
   };
-  const changePhone = () => {
+  const onChangePhone = () => {
     // TODO
-    // props.thunkSendOtp();
+    props.thunkSendOtp();
     setShowModal(true);
   };
   const customStyles = {
@@ -291,7 +291,7 @@ const Account = (props: any): any => {
                         variant="rectangle,small-text"
                         disabled={errors.phone || errors.newPhone || !watch('newPhone')}
                         type="button"
-                        onClick={changePhone}
+                        onClick={onChangePhone}
                       >
                         {props.t('form:update-button')}
                       </Button>

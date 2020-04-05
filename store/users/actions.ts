@@ -195,3 +195,23 @@ export const thunkResetPassword = (data): ThunkAction<void, types.UsersState, nu
       captureException(err);
     });
 };
+
+function sendOtp(isFetching): types.UsersActionTypes {
+  return {
+    type: types.FORGOT_PASSWORD,
+    isFetching,
+  };
+}
+export const thunkSendOtp = (): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
+  dispatch(sendOtp(true));
+  return api()
+    .users.sendOtp()
+    .then(() => {
+      dispatch(sendOtp(false));
+    })
+    .catch(err => {
+      dispatch(sendOtp(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};

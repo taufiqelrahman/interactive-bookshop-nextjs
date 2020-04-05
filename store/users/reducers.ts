@@ -30,6 +30,7 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
     case types.FORGOT_PASSWORD:
     case types.REGISTER:
     case types.RESET_PASSWORD:
+    case types.SEND_OTP:
       return {
         ...state,
         isFetching: action,

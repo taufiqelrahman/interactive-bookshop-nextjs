@@ -7,6 +7,7 @@ export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const SEND_OTP = 'SEND_OTP';
 
 export interface User {
   email: string;
@@ -66,6 +67,11 @@ interface ResetPassword {
   isFetching: boolean;
 }
 
+interface SendOtp {
+  type: typeof SEND_OTP;
+  isFetching: boolean;
+}
+
 export type UsersActionTypes =
   | LoadUser
   | UpdateUser
@@ -74,4 +80,5 @@ export type UsersActionTypes =
   | Logout
   | Register
   | ForgotPassword
-  | ResetPassword;
+  | ResetPassword
+  | SendOtp;

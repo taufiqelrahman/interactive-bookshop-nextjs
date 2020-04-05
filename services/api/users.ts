@@ -43,4 +43,8 @@ export default class Products {
   updateMe(data) {
     return this.adapter.secure.post('/me', data);
   }
+
+  sendOtp() {
+    return this.adapter.secure.post('/send-otp');
+  }
 }
