@@ -5,6 +5,7 @@ const initState: types.MasterState = {
   testimonials: [],
   occupations: [],
   bookPages: [],
+  provinces: [],
 };
 
 const reducer = (state: types.MasterState = initState, action: types.MasterActionTypes): any => {
@@ -27,6 +28,13 @@ const reducer = (state: types.MasterState = initState, action: types.MasterActio
       return {
         ...state,
         bookPages: action.payload,
+        isFetching: action.isFetching,
+      };
+    }
+    case types.LOAD_PROVINCES: {
+      return {
+        ...state,
+        provinces: action.payload,
         isFetching: action.isFetching,
       };
     }

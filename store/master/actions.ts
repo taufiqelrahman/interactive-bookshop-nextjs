@@ -71,3 +71,24 @@ export const thunkLoadBookPages = (): ThunkAction<void, types.MasterState, null,
       captureException(err);
     });
 };
+
+export function loadProvinces(isFetching, provinces = []): types.MasterActionTypes {
+  return {
+    type: types.LOAD_PROVINCES,
+    payload: provinces,
+    isFetching,
+  };
+}
+export const thunkLoadProvinces = (): ThunkAction<void, types.MasterState, null, Action<string>> => (dispatch): any => {
+  dispatch(loadProvinces(true));
+  return api()
+    .master.getProvinces()
+    .then(({ data }) => {
+      dispatch(loadProvinces(false, data.data));
+    })
+    .catch(err => {
+      dispatch(loadProvinces(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};

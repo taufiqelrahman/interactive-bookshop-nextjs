@@ -19,4 +19,8 @@ export default class Products {
     return this.adapter.default.get('/book-pages')
   }
 
+  getProvinces() {
+    return this.adapter.default.get('/provinces')
+  }
+
 }

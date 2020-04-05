@@ -1,6 +1,7 @@
 export const LOAD_OCCUPATIONS = 'LOAD_OCCUPATIONS';
 export const LOAD_TESTIMONIALS = 'LOAD_TESTIMONIALS';
 export const LOAD_BOOK_PAGES = 'LOAD_BOOK_PAGES';
+export const LOAD_PROVINCES = 'LOAD_PROVINCES';
 
 interface Testimonial {
   name: string;
@@ -26,11 +27,17 @@ interface BookPage {
   book_contens: BookContent[];
 }
 
+interface Province {
+  name: string;
+  code: string;
+}
+
 export interface MasterState {
   isFetching: boolean;
   testimonials: Testimonial[];
   occupations: Occupation[];
   bookPages: BookPage[];
+  provinces: Province[];
 }
 
 interface LoadTestimonials {
@@ -51,4 +58,10 @@ interface LoadBookPages {
   isFetching: boolean;
 }
 
-export type MasterActionTypes = LoadTestimonials | LoadOccupations | LoadBookPages;
+interface LoadProvinces {
+  type: typeof LOAD_PROVINCES;
+  payload: Province[] | undefined;
+  isFetching: boolean;
+}
+
+export type MasterActionTypes = LoadTestimonials | LoadOccupations | LoadBookPages | LoadProvinces;
