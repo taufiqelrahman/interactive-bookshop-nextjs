@@ -184,6 +184,24 @@ const App: NextPage<any> = (props: any) => {
   );
 };
 
+const redirectPrivateRoutes = ({ pathname, res }) => {
+  const privateRoutes = ['/orders/[id]', '/orders/success', '/account', '/create', '/orders', '/preview'];
+  if (privateRoutes.includes(pathname)) {
+    const redirectTo = pathname.split('/')[1];
+    const login = `/login?from=${redirectTo}`;
+    if (res) {
+      // server-side
+      res.writeHead(302, {
+        Location: login,
+      });
+      res.end();
+    } else {
+      // client-side
+      Router.replace(login);
+    }
+  }
+};
+
 App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
   const { dispatch, getState } = ctx.reduxStore;
   if (cookies(ctx).user) {
@@ -194,8 +212,8 @@ App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
     }
   } else {
     dispatch(actions.setLogin(false));
+    redirectPrivateRoutes(ctx);
   }
-  // [TODO] protect user-routes
 
   if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
   return {

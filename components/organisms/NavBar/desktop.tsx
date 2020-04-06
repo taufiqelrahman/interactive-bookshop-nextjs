@@ -69,7 +69,7 @@ const NavBar = (props: any) => {
             </Link>
             <div className="c-nav-bar__menu">
               {(isSticky || !isIndexPage) && <TranslationToggle />}
-              <Link href={props.users.isLoggedIn ? '/cart' : '/login?from=cart'}>
+              <Link href="/cart">
                 <div
                   className="c-nav-bar__menu__cart"
                   onMouseEnter={() => toggleShow(true, setShowCart)}
