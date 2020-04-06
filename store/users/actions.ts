@@ -41,16 +41,16 @@ export const thunkLoadUser = (req?): any => (dispatch): any => {
     });
 };
 
-function updateUser(isFetching, user: types.User | object): types.UsersActionTypes {
+function updateUser(isFetching, user?: types.User): types.UsersActionTypes {
   return {
-    type: types.LOAD_USER,
+    type: types.UPDATE_USER,
     payload: user,
     isFetching,
   };
 }
 
 export const thunkUpdateUser = (data): any => (dispatch): any => {
-  dispatch(updateUser(true, {}));
+  dispatch(updateUser(true));
   return api()
     .users.updateMe(data)
     .then(({ data }) => {
@@ -65,8 +65,16 @@ export const thunkUpdateUser = (data): any => (dispatch): any => {
       toast.success(message);
     })
     .catch(err => {
-      dispatch(updateUser(false, {}));
-      dispatch(setErrorMessage(err.message));
+      dispatch(updateUser(false));
+      let message = '';
+      if (err.response.data) {
+        if (err.response.data.error === 'DIFFERENT_PHONE') {
+          message = i18n.language === 'en' ? `Your old phone number did not match` : `Nomor telepon anda tidak sesuai`;
+        }
+      } else {
+        message = err.message;
+      }
+      dispatch(setErrorMessage(message));
       captureException(err);
     });
 };
@@ -202,12 +210,21 @@ function sendOtp(isFetching): types.UsersActionTypes {
     isFetching,
   };
 }
-export const thunkSendOtp = (): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
+export const thunkSendOtp = (): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+  getState,
+): any => {
   dispatch(sendOtp(true));
   return api()
     .users.sendOtp()
     .then(() => {
       dispatch(sendOtp(false));
+      const { user } = (getState() as any).users;
+      const message =
+        i18n.language === 'en'
+          ? `A verification code has been sent to ${user.phone}`
+          : `Kode verifikasi telah dikirim ke ${user.phone}`;
+      toast.success(message);
     })
     .catch(err => {
       dispatch(sendOtp(false));

@@ -43,32 +43,25 @@ const Account = (props: any): any => {
       value: '',
     },
   });
-  const editField = (type, isClear, value?): any => {
-    const newState = { ...state };
-    Object.keys(newState).forEach(key => {
-      newState[key].isEdit = false;
-    });
-    setState({
-      ...newState,
-      [type]: {
-        isEdit: !isClear,
-        value: isClear ? '' : value,
-      },
-    });
-  };
   const schema = {
     name: {
       required: { value: true, message: `${props.t('name-label')} ${props.t('form:required-error')}` },
     },
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
-      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: props.t('form:email-invalid') },
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i,
+        message: `Email ${props.t('form:invalid-error')}`,
+      },
       validate: async value => {
         const { data } = await api().users.checkEmailChange({ email: value });
         return !data.exists || props.t('form:email-exists');
       }, // watch for duplicate email
     },
-    phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },
+    phone: {
+      required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` },
+      minLength: { value: 7, message: `${props.t('form:phone-label')} ${props.t('form:invalid-error')}` },
+    },
     password: {
       required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
     },
@@ -80,29 +73,6 @@ const Account = (props: any): any => {
       required: { value: true, message: `${props.t('address-label')} ${props.t('form:required-error')}` },
     },
   };
-  const screenHeight = '100vh - 59px';
-  const Wrapper: any = props.isMobile ? 'div' : Card;
-  const onSubmit = data => {
-    let PARAMS = data;
-    if (data.province) PARAMS = { ...data, province: data.province.value };
-    props.thunkUpdateUser(PARAMS);
-    const field = Object.keys(data)[0];
-    if (['address1', 'address2', 'city', 'country', 'province', 'zip'].includes(field)) {
-      editField('address', true);
-    } else {
-      editField(field, true);
-    }
-  };
-  const showAddress = () => {
-    if (Object.keys(userAddress).length === 0) return '-';
-    const { address1, address2, city, country, province, zip } = userAddress;
-    return `${address1} ${address2}, ${city}, ${province} ${country} ${zip}`;
-  };
-  const onChangePhone = () => {
-    // TODO
-    props.thunkSendOtp();
-    setShowModal(true);
-  };
   const customStyles = {
     menu: provided => ({
       ...provided,
@@ -111,7 +81,7 @@ const Account = (props: any): any => {
       borderTopRightRadius: 0,
       borderTopLeftRadius: 0,
       borderTop: 'none',
-      width: '400px',
+      width: props.isMobile ? '100%' : '400px',
     }),
     indicatorSeparator: () => ({
       display: 'none',
@@ -122,7 +92,7 @@ const Account = (props: any): any => {
         background: '#333',
         color: 'white',
       },
-      width: '400px',
+      width: props.isMobile ? '100%' : '400px',
     }),
     control: (provided, state) => ({
       ...provided,
@@ -136,32 +106,11 @@ const Account = (props: any): any => {
         border: '2px solid #de3636',
       },
       marginBottom: 12,
-      width: '400px',
+      width: props.isMobile ? '100%' : '400px',
     }),
   };
-  const provinces = () => {
-    const { provinces } = props.state.master;
-    if (provinces.length === 0) return [];
-    return provinces.map(prov => ({
-      value: prov.name,
-      label: prov.name,
-    }));
-  };
-  const setDefaultProvince = () => {
-    return { label: userAddress.province, value: userAddress.province };
-  };
-  useEffect(() => {
-    if (state.address.isEdit) {
-      register({ name: 'province' }, schema.address);
-      setValue('province', setDefaultProvince());
-    } else {
-      unregister('province');
-    }
-  }, [state.address.isEdit]);
-  const onChangeProvince = e => {
-    triggerValidation('province');
-    setValue('province', e);
-  };
+  const screenHeight = '100vh - 59px';
+  const Wrapper: any = props.isMobile ? 'div' : Card;
   const disabledUpdateAddress = () =>
     errors.address1 ||
     errors.address2 ||
@@ -174,6 +123,64 @@ const Account = (props: any): any => {
       watch('province') &&
       watch('province').label === userAddress.province &&
       watch('zip') === userAddress.zip);
+  const editField = (type, isClear, value?): any => {
+    const newState = { ...state };
+    Object.keys(newState).forEach(key => {
+      newState[key].isEdit = false;
+    });
+    setState({
+      ...newState,
+      [type]: {
+        isEdit: !isClear,
+        value: isClear ? '' : value,
+      },
+    });
+  };
+  const showAddress = () => {
+    if (Object.keys(userAddress).length === 0) return '-';
+    const { address1, address2, city, country, province, zip } = userAddress;
+    return `${address1} ${address2}, ${city}, ${province} ${country} ${zip}`;
+  };
+  const provinces = () => {
+    const { provinces } = props.state.master;
+    if (provinces.length === 0) return [];
+    return provinces.map(prov => ({
+      value: prov.name,
+      label: prov.name,
+    }));
+  };
+  const setDefaultProvince = () => {
+    return { label: userAddress.province, value: userAddress.province };
+  };
+  const onChangePhone = () => {
+    props.thunkSendOtp();
+    setShowModal(true);
+  };
+  const onChangeProvince = e => {
+    triggerValidation('province');
+    setValue('province', e);
+  };
+  const onSubmit = data => {
+    let PARAMS = data;
+    if (data.province) PARAMS = { ...data, province: data.province.value };
+    if (data.phone) PARAMS = { ...data, phone: data.phone.replace(/^\s+|\s+$/gm, '') };
+    props.thunkUpdateUser(PARAMS);
+    if (showModal) setShowModal(false);
+    const field = Object.keys(data)[0];
+    if (['address1', 'address2', 'city', 'country', 'province', 'zip'].includes(field)) {
+      editField('address', true);
+    } else {
+      editField(field, true);
+    }
+  };
+  useEffect(() => {
+    if (state.address.isEdit) {
+      register({ name: 'province' }, schema.address);
+      setValue('province', setDefaultProvince());
+    } else {
+      unregister('province');
+    }
+  }, [state.address.isEdit]);
   return (
     <DefaultLayout
       {...props}
@@ -200,7 +207,8 @@ const Account = (props: any): any => {
                 {state.name.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : {}}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.name.value}
                       ref={register(schema.name)}
                       name="name"
@@ -236,7 +244,8 @@ const Account = (props: any): any => {
                 {state.email.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : {}}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.email.value}
                       ref={register(schema.email)}
                       name="email"
@@ -270,26 +279,28 @@ const Account = (props: any): any => {
                 </div>
                 {state.phone.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="c-account__label">{props.t('old-number')}</div>
+                    {/* <div className="c-account__label">{props.t('old-number')}</div> */}
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : {}}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.phone.value}
                       ref={register(schema.phone)}
-                      name="phone"
+                      name="newPhone"
                       errors={errors.phone}
                     />
-                    <div className="c-account__label">{props.t('new-number')}</div>
+                    {/* <div className="c-account__label">{props.t('new-number')}</div>
                     <TextField
-                      variant="large,open-sans"
+                    style={props.isMobile ? { marginBottom: 6 } : {}}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       ref={register(schema.phone)}
                       name="newPhone"
                       errors={errors.newPhone}
-                    />
+                    /> */}
                     <div className="flex items-center" style={{ marginTop: 6 }}>
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.phone || errors.newPhone || !watch('newPhone')}
+                        disabled={errors.phone || watch('newPhone') === user.phone}
                         type="button"
                         onClick={onChangePhone}
                       >
@@ -301,6 +312,7 @@ const Account = (props: any): any => {
                     </div>
                   </form>
                 ) : (
+                  // <div className="c-account__value">{`*****${user.phone.slice(5)}`}</div>
                   <div className="c-account__value">{user.phone}</div>
                 )}
               </div>
@@ -317,25 +329,26 @@ const Account = (props: any): any => {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="c-account__label">{props.t('old-password')}</div>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       ref={register(schema.password)}
                       name="password"
                       errors={errors.password}
                       isPassword={true}
-                      style={{ marginBottom: 12 }}
                     />
                     <div className="c-account__label">{props.t('new-password')}</div>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       ref={register(schema.password)}
                       name="newPassword"
                       errors={errors.newPassword}
                       isPassword={true}
-                      style={{ marginBottom: 12 }}
                     />
                     <div className="c-account__label">{props.t('confirm-new-password')}</div>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : {}}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       ref={register(schema.confirmNewPassword)}
                       name="confirmNewPassword"
                       errors={errors.confirmNewPassword}
@@ -378,30 +391,30 @@ const Account = (props: any): any => {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="c-account__label">{props.t('address1')}</div>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.address1}
                       ref={register(schema.address)}
                       name="address1"
                       errors={errors.address1}
-                      style={{ marginBottom: 12 }}
                     />
                     <div className="c-account__label">{props.t('address2')}</div>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.address2}
                       ref={register(schema.address)}
                       name="address2"
                       errors={errors.address2}
-                      style={{ marginBottom: 12 }}
                     />
                     <div className="c-account__label">{props.t('city')}</div>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.city}
                       ref={register(schema.address)}
                       name="city"
                       errors={errors.city}
-                      style={{ marginBottom: 12 }}
                     />
                     <div className="c-account__label">{props.t('province')}</div>
                     <Select
@@ -416,7 +429,8 @@ const Account = (props: any): any => {
                     {/* {errors.province} */}
                     <div className="c-account__label">{props.t('zip')}</div>
                     <TextField
-                      variant="large,open-sans"
+                      style={props.isMobile ? { marginBottom: 6 } : {}}
+                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.zip}
                       ref={register(schema.address)}
                       name="zip"
@@ -445,7 +459,7 @@ const Account = (props: any): any => {
         closeModal={() => setShowModal(false)}
         actions={
           <Fragment>
-            <Button width="100%" onClick={handleSubmit(onSubmit)} style={{ marginBottom: 12 }}>
+            <Button width="100%" onClick={handleSubmit(onSubmit)} disabled={!watch('otp')} style={{ marginBottom: 12 }}>
               {props.t('continue-button')}
             </Button>
             <Button width="100%" onClick={() => setShowModal(false)} variant="outline" color="black">
@@ -455,15 +469,28 @@ const Account = (props: any): any => {
         }
         content={
           <Fragment>
-            {props.t('common:otp-verify-text').replace('[phone]', user.phone)}
-            {props.t('common:otp-code')}
-            {props.t('common:otp-resend')}
-            {/* TODO */}
+            <div
+              className="font-opensans"
+              // dangerouslySetInnerHTML={{
+              //   __html: props
+              //     .t('common:otp-verify-text')
+              //     .replace('[phone]', `<div className="font-semibold">${user.phone}</strong>`),
+              // }}
+              style={{ marginBottom: 18 }}
+            >
+              {props.t('common:otp-verify-text')}
+            </div>
+            <div className="font-semibold">{props.t('common:otp-code')}</div>
+            <TextField variant="full-width" ref={register} name="otp" style={{ margin: '6px 0 24px' }} />
+            <div className="c-account__action" onClick={() => props.thunkSendOtp()}>
+              {props.t('common:otp-resend')}
+            </div>
           </Fragment>
         }
       />
       <style jsx>{`
         .c-account {
+          @apply overflow-y-auto;
           @screen md {
             margin-bottom: 100px;
             margin-top: 36px;

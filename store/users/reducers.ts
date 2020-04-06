@@ -12,7 +12,7 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
     case types.UPDATE_USER:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload || state.user,
         isFetching: action.isFetching,
       };
     case types.SET_LOGIN:

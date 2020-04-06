@@ -30,9 +30,9 @@ interface LoadUser {
   isFetching: boolean;
 }
 
-interface UpdateUser {
+export interface UpdateUser {
   type: typeof UPDATE_USER;
-  payload: User | object;
+  payload: User | undefined;
   isFetching: boolean;
 }
 

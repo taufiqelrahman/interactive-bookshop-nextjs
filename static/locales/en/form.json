@@ -5,6 +5,7 @@
   "send-button": "Send",
   "form-error": "Please fill in fields correctly to continue",
   "required-error": "is required",
+  "invalid-error": "is invalid",
   "minlength-6-error": "The minimum length is 6 characters",
   "char-name-label": "Character Name",
   "name-label": "Name",
