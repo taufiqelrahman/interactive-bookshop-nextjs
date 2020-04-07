@@ -21,6 +21,8 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
         isLoggedIn: action.payload,
       };
     case types.LOGIN:
+    case types.LOGIN_FACEBOOK:
+    case types.LOGIN_GOOGLE:
     case types.LOGOUT:
       return {
         ...state,

@@ -86,6 +86,9 @@ const Login = (props: any): any => {
     }
   };
   const Wrapper: any = props.isMobile ? 'div' : Card;
+  const loginFacebook = () => {
+    window.location.href = 'http://localhost:8000/redirect-facebook';
+  };
   return (
     <DefaultLayout
       {...props}
@@ -111,7 +114,13 @@ const Login = (props: any): any => {
                   <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
                     {`${props.t('login-with')} Goggle`}
                   </Button>
-                  <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
+                  <Button
+                    onClick={loginFacebook}
+                    variant="outline"
+                    width="100%"
+                    color="black"
+                    style={{ margin: '12px 0' }}
+                  >
                     {`${props.t('login-with')} Facebook`}
                   </Button>
                   <div onClick={loginEmail} className="c-login__link" style={{ marginBottom: 24, marginTop: 24 }}>

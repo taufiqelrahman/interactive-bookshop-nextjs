@@ -47,4 +47,8 @@ export default class Products {
   sendOtp() {
     return this.adapter.secure.post('/send-otp');
   }
+
+  loginFacebook(data) {
+    return this.adapter.default.post('/login-facebook', data);
+  }
 }

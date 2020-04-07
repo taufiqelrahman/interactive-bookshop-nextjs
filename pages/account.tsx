@@ -557,7 +557,7 @@ const Account = (props: any): any => {
             line-height: 16px;
             padding: 8px 8px 24px;
             @screen md {
-              @apply text-base bg-transparent border-0 rounded-none p-0 text-dark-grey;
+              @apply text-base bg-transparent border-0 rounded-none p-0 text-dark-grey w-4/5;
               line-height: 22px;
             }
           }

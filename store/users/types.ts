@@ -3,6 +3,8 @@ export const LOAD_USER = 'LOAD_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SET_LOGIN = 'SET_LOGIN';
 export const LOGIN = 'LOGIN';
+export const LOGIN_FACEBOOK = 'LOGIN_FACEBOOK';
+export const LOGIN_GOOGLE = 'LOGIN_GOOGLE';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
@@ -46,6 +48,16 @@ interface Login {
   payload: boolean | null;
   isFetching: boolean;
 }
+interface LoginFacebook {
+  type: typeof LOGIN_FACEBOOK;
+  payload: boolean | null;
+  isFetching: boolean;
+}
+interface LoginGoogle {
+  type: typeof LOGIN_GOOGLE;
+  payload: boolean | null;
+  isFetching: boolean;
+}
 interface Logout {
   type: typeof LOGOUT;
   payload: boolean | null;
@@ -77,6 +89,8 @@ export type UsersActionTypes =
   | UpdateUser
   | SetLogin
   | Login
+  | LoginFacebook
+  | LoginGoogle
   | Logout
   | Register
   | ForgotPassword
