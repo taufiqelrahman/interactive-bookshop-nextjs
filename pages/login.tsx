@@ -112,7 +112,7 @@ const Login = (props: any): any => {
                   <img className="c-login__image" src="/static/images/welcome.png" />
                   <h1 className="c-login__title">{props.t('welcome-back')}</h1>
                   <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                    {`${props.t('login-with')} Goggle`}
+                    {`${props.t('login-with')} Google`}
                   </Button>
                   <Button
                     onClick={loginFacebook}
@@ -300,7 +300,7 @@ const Login = (props: any): any => {
             @screen md {
               @apply font-bold;
               font-size: 28px;
-              margin: 12px 0;
+              margin: 12px 0 24px;
             }
           }
           &__subtitle {

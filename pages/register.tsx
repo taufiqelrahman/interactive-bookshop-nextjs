@@ -16,15 +16,12 @@ const Register = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = useForm({
     mode: 'onChange',
   });
-  const stepEnum = { WELCOME: 0, EMAIL: 1, DETAIL: 2, GOOGLE: 3 };
+  const stepEnum = { WELCOME: 0, EMAIL: 1, DETAIL: 2 };
   const [registerStep, setRegisterStep] = useState(stepEnum.WELCOME);
   const [savedEmail, setSavedEmail] = useState('');
   const registerEmail = () => {
     setRegisterStep(stepEnum.EMAIL);
   };
-  // const registerGoogle = () => {
-  //   setRegisterStep(stepEnum.GOOGLE);
-  // };
   const schema = {
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
@@ -70,7 +67,6 @@ const Register = (props: any): any => {
   const onBack = () => {
     switch (registerStep) {
       case stepEnum.EMAIL:
-      case stepEnum.GOOGLE:
         setRegisterStep(stepEnum.WELCOME);
         break;
       case stepEnum.DETAIL:
@@ -103,15 +99,15 @@ const Register = (props: any): any => {
                 <Fragment>
                   <img className="c-register__image" src="/static/images/welcome.png" />
                   <h1 className="c-register__title">{props.t('lets-join')}</h1>
-                  <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                    {`${props.t('register-with')} Goggle`}
-                  </Button>
-                  <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                    {`${props.t('register-with')} Facebook`}
-                  </Button>
-                  <div onClick={registerEmail} className="c-register__link" style={{ marginBottom: 24, marginTop: 18 }}>
+                  <Button
+                    onClick={registerEmail}
+                    variant="outline"
+                    width="100%"
+                    color="black"
+                    style={{ margin: '30px 0' }}
+                  >
                     {`${props.t('register-with')} Email`}
-                  </div>
+                  </Button>
                   <Divider />
                   <Link href="/login">
                     <a className="c-register__link">
