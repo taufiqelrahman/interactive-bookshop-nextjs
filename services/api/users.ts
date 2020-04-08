@@ -51,4 +51,8 @@ export default class Products {
   loginFacebook(data) {
     return this.adapter.default.post('/login-facebook', data);
   }
+
+  loginGoogle(data) {
+    return this.adapter.default.post('/login-google', data);
+  }
 }

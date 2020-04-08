@@ -89,6 +89,9 @@ const Login = (props: any): any => {
   const loginFacebook = () => {
     window.location.href = 'http://localhost:8000/redirect-facebook';
   };
+  const loginGoogle = () => {
+    window.location.href = 'http://localhost:8000/redirect-google';
+  };
   return (
     <DefaultLayout
       {...props}
@@ -111,7 +114,13 @@ const Login = (props: any): any => {
                 <Fragment>
                   <img className="c-login__image" src="/static/images/welcome.png" />
                   <h1 className="c-login__title">{props.t('welcome-back')}</h1>
-                  <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
+                  <Button
+                    onClick={loginGoogle}
+                    variant="outline"
+                    width="100%"
+                    color="black"
+                    style={{ margin: '12px 0' }}
+                  >
                     {`${props.t('login-with')} Google`}
                   </Button>
                   <Button

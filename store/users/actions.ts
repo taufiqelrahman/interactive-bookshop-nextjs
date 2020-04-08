@@ -112,6 +112,32 @@ export const thunkLoginFacebook = (data): ThunkAction<void, types.UsersState, nu
     });
 };
 
+function loginGoogle(isFetching, state = null): types.UsersActionTypes {
+  return {
+    type: types.LOGIN_FACEBOOK,
+    payload: !!state,
+    isFetching,
+  };
+}
+export const thunkLoginGoogle = (data): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+): any => {
+  dispatch(loginGoogle(true));
+  return api()
+    .users.loginGoogle(data)
+    .then(({ data }) => {
+      const token = encryptTokenClient(data.token);
+      Cookies.set('user', token);
+      dispatch(loginGoogle(false, data));
+      Router.push('/');
+    })
+    .catch(err => {
+      dispatch(loginGoogle(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
+
 function logout(isFetching, state = null): types.UsersActionTypes {
   return {
     type: types.LOGOUT,
