@@ -13,6 +13,11 @@ deploy_production:
     - docker:dind  
   tags:
     - production
+  only:
+    refs:
+    - tags
+    - triggers
+    - master
   when: manual
   before_script:
     - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
