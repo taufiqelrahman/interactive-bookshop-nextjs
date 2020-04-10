@@ -1,0 +1,14 @@
+deploy_production:
+  stage: deploy
+  tags:
+    - production
+  when: manual
+  before_script:
+    - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
+    - export SECRET_IV="$SECRET_IV"
+    - export SECRET_KEY="$SECRET_KEY"
+    - export SHOPIFY_URL="$SHOPIFY_URL"
+    - export SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID"
+    - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
+  script:
+    - docker-compose up -d
