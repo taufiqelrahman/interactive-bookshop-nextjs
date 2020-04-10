@@ -1,0 +1,24 @@
+version: "3"
+services:
+  web:
+    container_name: whenigrowup
+    build: .
+    working_dir: "/usr/src/wigu" # Where to container will assume it should run commands and where you will start out if you go inside the container
+    ports:
+      - "3000:80" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
+    depends_on:
+      - api
+    expose: # production
+      - 80
+      - 443
+    environment: # Pass environment variables to the service
+      VIRTUAL_HOST: wigu.taufiqelrahman.com # production
+      LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
+      API_HOST: default:api:5120
+    
+networks:
+  default:
+    external:
+      name: nginx-proxy
+  db_mysql_net:
+    external: true
