@@ -19,8 +19,7 @@ deploy_production:
     - master
   when: manual
   before_script:
-    - apk add --no-cache py-pip
-    - pip install docker-compose
+    - apk add --no-cache docker-compose
     - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
     - export SECRET_IV="$SECRET_IV"
     - export SECRET_KEY="$SECRET_KEY"
