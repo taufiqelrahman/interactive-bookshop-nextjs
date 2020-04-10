@@ -8,6 +8,9 @@ test:
 
 deploy_production:
   stage: deploy
+  image: docker
+  services:
+    - docker:dind  
   tags:
     - production
   when: manual
