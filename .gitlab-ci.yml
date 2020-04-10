@@ -19,6 +19,8 @@ deploy_production:
     - master
   when: manual
   before_script:
+    - yum install --no-cache py-pip
+    - pip install docker-compose
     - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
     - export SECRET_IV="$SECRET_IV"
     - export SECRET_KEY="$SECRET_KEY"
