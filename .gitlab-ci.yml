@@ -8,10 +8,8 @@ test:
 deploy_production:
   stage: deploy
   image: docker
-  variables:
-    DOCKER_HOST: tcp://localhost:2378
   services:
-    - docker:19.03.0-dind
+    - docker:dind  
   tags:
     - production
   only:
