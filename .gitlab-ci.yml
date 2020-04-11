@@ -7,9 +7,9 @@ test:
 
 deploy_production:
   stage: deploy
-  image: jonaskello/docker-and-compose:1.12.1-1.8.0
+  image: docker
   services:
-    - docker:1.12.1-dind
+    - docker:dind  
   tags:
     - production
   only:
@@ -19,6 +19,8 @@ deploy_production:
     - master
   when: manual
   before_script:
+    - docker info
+    - apk add --no-cache docker-compose
     - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
     - export SECRET_IV="$SECRET_IV"
     - export SECRET_KEY="$SECRET_KEY"
