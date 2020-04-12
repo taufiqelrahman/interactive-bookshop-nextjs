@@ -19,6 +19,7 @@ COPY . ./
 RUN npm run build
 
 # Running the app production
-CMD [ "npm", "run", "start" ]
+# CMD [ "npm", "run", "start" ]
 # Running the app development
 # CMD [ "npm", "run", "dev" ]
+ENTRYPOINT ["npm", "run", "start"]
