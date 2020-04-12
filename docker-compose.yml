@@ -6,11 +6,11 @@ services:
     working_dir: "/usr/src/wigu" # Where to container will assume it should run commands and where you will start out if you go inside the container
     ports:
       - "3000:80" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
-    depends_on:
-      - allgrownup
     expose: # production
       - 80
       - 443
+    external_links:
+      - allgrownup
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
@@ -21,5 +21,3 @@ networks:
     external:
       name: nginx-proxy
 
-external_links:
-  - allgrownup
