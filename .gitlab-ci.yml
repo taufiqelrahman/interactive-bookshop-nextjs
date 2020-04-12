@@ -1,19 +1,18 @@
-test:
-  stage: test
-  image: mhart/alpine-node:12
-  script:
-    - yarn
-    - npm run lint
+# test:
+#   stage: test
+#   image: mhart/alpine-node:12
+#   script:
+#     - yarn
+#     - npm run lint
 
 deploy_production:
   stage: deploy
-  image: docker:19.03.8
-  variables:
-    DOCKER_DRIVER: overlay2
-    DOCKER_HOST: tcp://localhost:2375
-    DOCKER_TLS_CERTDIR: ""
+  image: docker:stable
+  # variables:
+  #   DOCKER_HOST: tcp://localhost:2375
+  #   DOCKER_TLS_CERTDIR: ""
   services:
-    - docker:19.03.8-dind
+    - docker:dind
   tags:
     - production
   only:
@@ -23,6 +22,8 @@ deploy_production:
     - master
   when: manual
   before_script:
+    - docker info
+    - apk add --no-cache docker-compose
     - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
     - export SECRET_IV="$SECRET_IV"
     - export SECRET_KEY="$SECRET_KEY"
@@ -30,5 +31,4 @@ deploy_production:
     - export SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID"
     - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
   script:
-    - docker build -t whenigrowup .
-    - docker run --name web_whenigrowup -p 3000:80 -w /usr/src/wigu --expose 80 --expose 443 -e VIRTUAL_HOST=wigu.taufiqelrahman.com -e LETSENCRYPT_HOST=wigu.taufiqelrahman.com whenigrowup
+    - docker-compose up -d
