@@ -19,7 +19,6 @@ deploy_production:
     - master
   when: manual
   before_script:
-    - docker info
     - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
     - export SECRET_IV="$SECRET_IV"
     - export SECRET_KEY="$SECRET_KEY"
@@ -27,4 +26,4 @@ deploy_production:
     - export SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID"
     - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
   script:
-    - docker-compose up -d
+    - sudo docker-compose up -d
