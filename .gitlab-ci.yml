@@ -1,9 +1,9 @@
-# test:
-#   stage: test
-#   image: mhart/alpine-node:12
-#   script:
-#     - yarn
-#     - npm run lint
+test:
+  stage: test
+  image: mhart/alpine-node:12
+  script:
+    - yarn
+    - npm run lint
 
 deploy_production:
   stage: deploy
@@ -32,3 +32,4 @@ deploy_production:
     - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
   script:
     - docker-compose up -d
+    - docker run whenigrowup_web
