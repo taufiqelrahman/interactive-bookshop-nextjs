@@ -7,12 +7,13 @@ test:
 
 deploy_production:
   stage: deploy
-  image: docker:19.03.1
+  image: docker:19.03.8
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://localhost:2375
+    DOCKER_TLS_CERTDIR: ""
   services:
-    - docker:19.03.1-dind
+    - docker:19.03.8-dind
   tags:
     - production
   only:
