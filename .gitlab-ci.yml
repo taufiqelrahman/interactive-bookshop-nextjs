@@ -7,9 +7,7 @@ test:
 
 deploy_production:
   stage: deploy
-  image: jonaskello/docker-and-compose:latest
-  services:
-    - docker:dind
+  image: docker
   tags:
     - production
   only:
@@ -26,4 +24,8 @@ deploy_production:
     - export SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID"
     - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
   script:
-    - sudo docker-compose up -d
+    - docker run --name whenigrowup \
+                -p 3000:80 -w /usr/src/wigu \
+                --expose 80 --expose 443 \
+                -e VIRTUAL_HOST=wigu.taufiqelrahman.com \
+                -e LETSENCRYPT_HOST=wigu.taufiqelrahman.com .
