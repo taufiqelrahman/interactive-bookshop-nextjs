@@ -7,7 +7,11 @@ test:
 
 deploy_production:
   stage: deploy
-  image: docker
+  image: docker:19.03.1
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  services:
+    - docker:19.03.1-dind
   tags:
     - production
   only:
