@@ -9,7 +9,8 @@ deploy_production:
   stage: deploy
   image: docker:19.03.1
   variables:
-    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://localhost:2375
   services:
     - docker:19.03.1-dind
   tags:
