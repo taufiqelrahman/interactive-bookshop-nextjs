@@ -24,8 +24,5 @@ deploy_production:
     - export SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID"
     - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
   script:
-    - docker run --name whenigrowup \
-                -p 3000:80 -w /usr/src/wigu \
-                --expose 80 --expose 443 \
-                -e VIRTUAL_HOST=wigu.taufiqelrahman.com \
-                -e LETSENCRYPT_HOST=wigu.taufiqelrahman.com .
+    - docker build -t whenigrowup .
+    - docker run --name web_whenigrowup -p 3000:80 -w /usr/src/wigu --expose 80 --expose 443 -e VIRTUAL_HOST=wigu.taufiqelrahman.com -e LETSENCRYPT_HOST=wigu.taufiqelrahman.com whenigrowup
