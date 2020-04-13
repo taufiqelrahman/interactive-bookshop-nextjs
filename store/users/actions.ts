@@ -86,6 +86,30 @@ export function setLogin(state: boolean): types.UsersActionTypes {
   };
 }
 
+function login(isFetching, state = null): types.UsersActionTypes {
+  return {
+    type: types.LOGIN,
+    payload: !!state,
+    isFetching,
+  };
+}
+export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
+  dispatch(login(true));
+  return api()
+    .users.login(userData)
+    .then(({ data }) => {
+      const token = encryptTokenClient(data.token);
+      Cookies.set('user', token);
+      dispatch(login(false, data));
+      Router.push(`/${userData.from || ''}`);
+    })
+    .catch(err => {
+      dispatch(login(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
+
 function loginFacebook(isFetching, state = null): types.UsersActionTypes {
   return {
     type: types.LOGIN_FACEBOOK,

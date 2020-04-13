@@ -202,14 +202,22 @@ const redirectPrivateRoutes = ({ pathname, res }) => {
   }
 };
 
+const retrieveUser = async ({ dispatch, getState }, request) => {
+  if (!getState().users.user) {
+    try {
+      const { data: me } = await api(request).users.getMe();
+      dispatch(actions.setLogin(true));
+      dispatch(actions.loadUser(false, me));
+    } catch {
+      return;
+    }
+  }
+}
+
 App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
   const { dispatch, getState } = ctx.reduxStore;
   if (cookies(ctx).user) {
-    dispatch(actions.setLogin(true));
-    if (!getState().users.user) {
-      const { data: me } = await api(ctx.req).users.getMe();
-      dispatch(actions.loadUser(false, me));
-    }
+    retrieveUser(ctx.reduxStore, ctx.req);
   } else {
     dispatch(actions.setLogin(false));
     redirectPrivateRoutes(ctx);
