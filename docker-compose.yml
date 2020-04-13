@@ -10,6 +10,8 @@ services:
     expose: # production
       - 80
       - 443
+    external_links:
+      - allgrownup
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
