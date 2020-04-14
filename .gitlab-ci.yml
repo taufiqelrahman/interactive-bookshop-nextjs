@@ -31,5 +31,4 @@ deploy_production:
     - export SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID"
     - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
   script:
-    - docker-compose up -d
-    # - docker run -d --name whenigrowup whenigrowup_web
+    - docker-compose up --build -d
