@@ -10,17 +10,28 @@ services:
     expose: # production
       - 80
       - 443
+    depends_on:
+      - api
+    environment: # Pass environment variables to the service
+      VIRTUAL_HOST: taufiqelrahman.com/wigu # production
+      LETSENCRYPT_HOST: taufiqelrahman.com/wigu # production
+      API_URL: default:api:5120
+  api:
+    container_name: allgrownup
+    build: ./allgrownup
+    working_dir: "/usr/src/wigu/api" # Where to container will assume it should run commands and where you will start out if you go inside the container
     networks:
       - default
-    # external_links:
-    #   - allgrownup
-    environment: # Pass environment variables to the service
-      VIRTUAL_HOST: wigu.taufiqelrahman.com # production
-      LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
-      API_URL: default:allgrownup:5120
+      - db_mysql_net
+    ports:
+      - "8000:5120"
+    environment:
+      DB_HOST: db_mysql
     
 networks:
   default:
     external:
       name: nginx-proxy
+  db_mysql_net:
+    external: true
 

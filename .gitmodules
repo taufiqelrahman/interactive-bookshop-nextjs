@@ -1,0 +1,3 @@
+[submodule "allgrownup"]
+	path = allgrownup
+	url = git@gitlab.com:taufiqelrahman/allgrownup.git
