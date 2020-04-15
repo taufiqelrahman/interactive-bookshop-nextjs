@@ -25,5 +25,4 @@ deploy_production:
     - apk add --no-cache docker-compose
   script:
     - export >> .env
-    - export >> /allgrownup/.env
     - docker-compose up --build -d
