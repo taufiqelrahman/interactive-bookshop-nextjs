@@ -13,8 +13,8 @@ services:
     depends_on:
       - api
     environment: # Pass environment variables to the service
-      VIRTUAL_HOST: nimalla.com # production
-      LETSENCRYPT_HOST: nimalla.com # production
+      VIRTUAL_HOST: wigu.taufiqelrahman.com # production
+      LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
       API_URL: default:api:5120
   api:
     container_name: allgrownup
