@@ -13,7 +13,7 @@ export interface AdapterObject {
 }
 
 const options = {
-  baseURL: `${process.env.API_URL}/api`,
+  baseURL: `http://${process.env.API_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
