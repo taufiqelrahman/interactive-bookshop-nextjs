@@ -21,7 +21,6 @@ services:
     container_name: allgrownup
     build: ./allgrownup
     working_dir: "/usr/src/wigu/api" # Where to container will assume it should run commands and where you will start out if you go inside the container
-    network_mode: default
     networks:
       - default
       - db_mysql_net
