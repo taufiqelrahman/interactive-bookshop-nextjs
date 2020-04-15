@@ -25,6 +25,8 @@ services:
       - db_mysql_net
     ports:
       - "8000:5120"
+    command:
+      - cp .env ./allgrownup/.env
     environment:
       DB_HOST: db_mysql
       APP_NAME: "When I Grow Up"
