@@ -23,7 +23,7 @@ deploy_production:
   before_script:
     - docker info
     - apk add --no-cache docker-compose
+  script:
     - export >> .env
     - export >> /allgrownup/.env
-  script:
     - docker-compose up --build -d
