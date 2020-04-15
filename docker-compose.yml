@@ -14,8 +14,8 @@ services:
     depends_on:
       - api
     environment: # Pass environment variables to the service
-      VIRTUAL_HOST: taufiqelrahman.com/wigu # production
-      LETSENCRYPT_HOST: taufiqelrahman.com/wigu # production
+      VIRTUAL_HOST: wigu.taufiqelrahman.com # production
+      LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
       API_URL: default:api:5120
   api:
     container_name: allgrownup
@@ -28,6 +28,17 @@ services:
       - "8000:5120"
     environment:
       DB_HOST: db_mysql
+      APP_NAME: "When I Grow Up"
+      CLIENT_URL: wigu.taufiqelrahman.com
+      DB_DATABASE: whenigrowup
+      DB_USERNAME: root
+      QUEUE_CONNECTION: database
+      MAIL_HOST: smtp.googlemail.com
+      MAIL_PORT: 465
+      MAIL_ENCRYPTION: ssl
+      MAIL_FROM_NAME: "When I Grow Up"
+      ADMIN_API_PATH: /admin/api/2020-01
+      GOOGLE_REDIRECT_URL: https://wigu.taufiqelrahman.com/google
     
 networks:
   default:
@@ -35,4 +46,3 @@ networks:
       name: nginx-proxy
   db_mysql_net:
     external: true
-
