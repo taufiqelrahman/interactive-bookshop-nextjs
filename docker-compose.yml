@@ -12,6 +12,7 @@ services:
       - 443
     depends_on:
       - api
+    network_mode: default
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
@@ -20,11 +21,12 @@ services:
     container_name: allgrownup
     build: ./allgrownup
     working_dir: "/usr/src/wigu/api" # Where to container will assume it should run commands and where you will start out if you go inside the container
+    network_mode: default
     networks:
       - default
       - db_mysql_net
     ports:
-      - "8000:5120"
+      - "5120"
     # command:
     #   - cp .env ./allgrownup/.env
     environment:
