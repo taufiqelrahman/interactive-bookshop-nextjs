@@ -25,4 +25,5 @@ deploy_production:
     - apk add --no-cache docker-compose
   script:
     - export >> .env
+    - cat .env
     - docker-compose up --build -d
