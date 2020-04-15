@@ -8,9 +8,6 @@ test:
 deploy_production:
   stage: deploy
   image: docker:stable
-  # variables:
-  #   DOCKER_HOST: tcp://localhost:2375
-  #   DOCKER_TLS_CERTDIR: ""
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   services:
@@ -26,11 +23,7 @@ deploy_production:
   before_script:
     - docker info
     - apk add --no-cache docker-compose
-    - export GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY"
-    - export SECRET_IV="$SECRET_IV"
-    - export SECRET_KEY="$SECRET_KEY"
-    - export SHOPIFY_URL="$SHOPIFY_URL"
-    - export SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID"
-    - export STOREFRONT_API_KEY="$STOREFRONT_API_KEY"
+    - export >> .env
+    - export >> /allgrownup/.env
   script:
     - docker-compose up --build -d
