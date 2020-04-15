@@ -345,6 +345,7 @@ Index.getInitialProps = async (ctx: any): Promise<any> => {
     ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi.data));
     ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
   } catch (err) {
+    console.log(err);
     console.log(err.message);
   }
   return { namespacesRequired: ['page-index'] };
