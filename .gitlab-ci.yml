@@ -8,8 +8,8 @@
 deploy_production:
   stage: deploy
   image: docker:stable
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
+  # variables:
+  #   GIT_SUBMODULE_STRATEGY: recursive
   services:
     - docker:dind
   tags:
@@ -23,7 +23,6 @@ deploy_production:
   before_script:
     - docker info
     - apk add --no-cache docker-compose
-  script:
     - echo GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY" >> .env
     - echo SECRET_IV="$SECRET_IV" >> .env
     - echo SECRET_KEY="$SECRET_KEY" >> .env
@@ -42,5 +41,9 @@ deploy_production:
     - echo GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID" >> .env
     - echo GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET" >> .env
     - cat .env
+  script:
     - source .env
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+    - cp .env ./allgrownup/.env
     - docker-compose up --build -d
