@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { NextPage } from 'next';
-// import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/browser';
 import { appWithTranslation, i18n, Router } from 'i18n';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import * as dayjs from 'dayjs';
@@ -18,17 +18,17 @@ import 'styles/icomoon/style.css';
 import 'reset-css';
 
 // disable when development
-// Sentry.init({
-//   dsn: "https://b7bfe45fb4e74521a03bae1650ed525c@sentry.io/1810105",
-//   beforeSend: (event, hint: any) => {
-//     if (process.env.NODE_ENV === 'development') {
-//       console.error(hint.originalException || hint.syntheticException);
-//       console.error('Error Object:', hint.originalException && hint.originalException.toJSON());
-//       return null; // this drops the event and nothing will be sent to sentry
-//     }
-//     return event;
-//    }
-// });
+Sentry.init({
+  dsn: 'https://b7bfe45fb4e74521a03bae1650ed525c@sentry.io/1810105',
+  beforeSend: (event, hint: any) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.error(hint.originalException || hint.syntheticException);
+      console.error('Error Object:', hint.originalException && hint.originalException.toJSON());
+      return null; // this drops the event and nothing will be sent to sentry
+    }
+    return event;
+  },
+});
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
@@ -212,7 +212,7 @@ const retrieveUser = async ({ dispatch, getState }, request) => {
       return;
     }
   }
-}
+};
 
 App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
   const { dispatch, getState } = ctx.reduxStore;
