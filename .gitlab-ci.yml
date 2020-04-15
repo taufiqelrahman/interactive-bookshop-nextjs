@@ -24,6 +24,11 @@ deploy_production:
     - docker info
     - apk add --no-cache docker-compose
   script:
-    - export >> .env
+    - echo GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY" >> .env
+    - echo SECRET_IV="$SECRET_IV" >> .env
+    - echo SECRET_KEY="$SECRET_KEY" >> .env
+    - echo SHOPIFY_URL="$SHOPIFY_URL" >> .env
+    - echo SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID" >> .env
+    - echo STOREFRONT_API_KEY="$STOREFRONT_API_KEY" >> .env
     - cat .env
     - docker-compose up --build -d
