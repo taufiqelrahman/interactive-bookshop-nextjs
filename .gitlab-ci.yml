@@ -30,6 +30,17 @@ deploy_production:
     - echo SHOPIFY_URL="$SHOPIFY_URL" >> .env
     - echo SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID" >> .env
     - echo STOREFRONT_API_KEY="$STOREFRONT_API_KEY" >> .env
+    - echo APP_KEY="$APP_KEY" >> .env
+    - echo DB_PASSWORD="$DB_PASSWORD" >> .env
+    - echo MAIL_USERNAME="$MAIL_USERNAME" >> .env
+    - echo MAIL_PASSWORD="$MAIL_PASSWORD" >> .env
+    - echo MAIL_FROM_ADDRESS="$MAIL_FROM_ADDRESS" >> .env
+    - echo OTP_KEY="$OTP_KEY" >> .env
+    - echo MIDTRANS_CLIENT_KEY="$MIDTRANS_CLIENT_KEY" >> .env
+    - echo MIDTRANS_SERVER_KEY="$MIDTRANS_SERVER_KEY" >> .env
+    - echo SHOPIFY_ACCESS_TOKEN="$SHOPIFY_ACCESS_TOKEN" >> .env
+    - echo GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID" >> .env
+    - echo GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET" >> .env
     - cat .env
     - source .env
     - docker-compose up --build -d
