@@ -10,12 +10,17 @@ services:
     expose: # production
       - 80
       - 443
-    depends_on:
-      - api
+    # depends_on:
+    #   - api
+    networks:
+      - default
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
-      API_URL: default:api:5120
+      API_URL: allgrownup # same as api container name
+      # API_URL: http://localhost:5120 # same as api port
+    # links:
+    #   - api
   api:
     container_name: allgrownup
     build: ./allgrownup
@@ -25,8 +30,6 @@ services:
       - db_mysql_net
     ports:
       - "5120:5120"
-    # command:
-    #   - cp .env ./allgrownup/.env
     environment:
       DB_HOST: db_mysql
       APP_NAME: "When I Grow Up"
