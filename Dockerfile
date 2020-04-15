@@ -16,7 +16,6 @@ RUN npm install
 COPY . ./
 
 # Building app
-RUN env >> .env 
 RUN npm run build
 
 # Running the app production
