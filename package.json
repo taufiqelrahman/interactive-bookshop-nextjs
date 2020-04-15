@@ -10,7 +10,8 @@
     "lint": "eslint --ext .ts --fix --ignore-path .eslintignore .",
     "tinker": "concurrently \"yarn lint\" \"yarn dev\"",
     "build": "next build",
-    "start": "NODE_ENV=production node server.ts"
+    "start": "NODE_ENV=production node server.ts",
+    "deploy": "concurrently \"yarn build\" \"yarn start\""
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",

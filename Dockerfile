@@ -16,10 +16,10 @@ RUN npm install
 COPY . ./
 
 # Building app
-RUN npm run build
+# RUN npm run build
 
 # Running the app production
 # CMD [ "npm", "run", "start" ]
 # Running the app development
 # CMD [ "npm", "run", "dev" ]
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "deploy"]
