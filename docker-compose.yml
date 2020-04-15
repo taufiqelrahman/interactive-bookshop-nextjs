@@ -12,7 +12,6 @@ services:
       - 443
     depends_on:
       - api
-    network_mode: default
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
