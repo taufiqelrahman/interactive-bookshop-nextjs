@@ -46,4 +46,5 @@ deploy_production:
     - git submodule sync --recursive
     - git submodule update --init --recursive
     - cp .env ./allgrownup/.env
-    - docker-compose up --build -d
+    # - docker-compose up --build -d
+    - docker-compose up -d
