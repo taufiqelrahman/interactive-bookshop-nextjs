@@ -24,7 +24,7 @@ services:
       - default
       - db_mysql_net
     ports:
-      - "5120"
+      - "5120:5120"
     # command:
     #   - cp .env ./allgrownup/.env
     environment:
