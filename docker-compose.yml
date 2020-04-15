@@ -4,8 +4,8 @@ services:
     container_name: whenigrowup
     build: .
     working_dir: "/usr/src/wigu" # Where to container will assume it should run commands and where you will start out if you go inside the container
-    ports:
-      - "3000:80" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
+    # ports:
+    #   - "3000:80" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
       # - "3000:3000" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
     expose: # production
       - 80
