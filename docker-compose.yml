@@ -10,7 +10,7 @@ services:
     # ports:
     #   - "5120:5120"
     expose:
-      - 5120
+      - 80
     environment:
       DB_HOST: db_mysql
       APP_NAME: "When I Grow Up"
@@ -41,7 +41,7 @@ services:
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
-      API_URL: api:5120 # same as api container name
+      API_URL: api # same as api container name
       # API_URL: http://localhost:5120 # same as api port
     links:
       - api
