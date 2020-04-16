@@ -9,9 +9,12 @@ services:
       - db_mysql_net
     # ports:
     #   - "5120:5120"
-    expose:
+    expose: # production
       - 80
+      - 443
     environment:
+      VIRTUAL_HOST: api.taufiqelrahman.com # production
+      LETSENCRYPT_HOST: api.taufiqelrahman.com # production
       DB_HOST: db_mysql
       APP_NAME: "When I Grow Up"
       CLIENT_URL: wigu.taufiqelrahman.com
@@ -41,7 +44,7 @@ services:
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
-      API_URL: api # same as api container name
+      API_URL: api.taufiqelrahman.com # same as api container name
       # API_URL: http://localhost:5120 # same as api port
     links:
       - api
