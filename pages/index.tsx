@@ -338,12 +338,15 @@ const Index = (props: any): any => {
 
 Index.getInitialProps = async (ctx: any): Promise<any> => {
   try {
-    const [{ data: testi }, { data: occupations }] = await Promise.all([
-      api().master.getTestimonials(),
-      api().master.getOccupations(),
-    ]);
-    ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi.data));
-    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
+    Promise.all([api().master.getTestimonials(), api().master.getOccupations()])
+      .then(([{ data: testi }, { data: occupations }]) => {
+        ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi.data));
+        ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
+      })
+      .catch(err => {
+        console.log(err);
+        console.log(err.message);
+      });
   } catch (err) {
     console.log(err);
     console.log(err.message);
