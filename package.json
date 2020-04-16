@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_OPTIONS=--inspect-brk node server.ts",
+    "debug": "node server.ts",
     "lint": "eslint --ext .ts --fix --ignore-path .eslintignore .",
     "tinker": "concurrently \"yarn lint\" \"yarn dev\"",
     "build": "next build",

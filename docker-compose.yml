@@ -1,32 +1,5 @@
 version: "3"
 services:
-  api:
-    container_name: allgrownup
-    build: ./allgrownup
-    working_dir: "/usr/src/wigu/api" # Where to container will assume it should run commands and where you will start out if you go inside the container
-    networks:
-      - default
-      - db_mysql_net
-    ports:
-      - "80"
-    expose: # production
-      - 80
-      - 443
-    environment:
-      VIRTUAL_HOST: api.taufiqelrahman.com # production
-      LETSENCRYPT_HOST: api.taufiqelrahman.com # production
-      DB_HOST: db_mysql
-      APP_NAME: "When I Grow Up"
-      CLIENT_URL: wigu.taufiqelrahman.com
-      DB_DATABASE: whenigrowup
-      DB_USERNAME: root
-      QUEUE_CONNECTION: database
-      MAIL_HOST: smtp.googlemail.com
-      MAIL_PORT: 465
-      MAIL_ENCRYPTION: ssl
-      MAIL_FROM_NAME: "When I Grow Up"
-      ADMIN_API_PATH: /admin/api/2020-01
-      GOOGLE_REDIRECT_URL: https://wigu.taufiqelrahman.com/google
   web:
     container_name: whenigrowup
     build: .
@@ -37,21 +10,14 @@ services:
     expose: # production
       - 80
       - 443
-    depends_on:
-      - api
     networks:
       - default
     environment: # Pass environment variables to the service
       VIRTUAL_HOST: wigu.taufiqelrahman.com # production
       LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
-      API_URL: api.taufiqelrahman.com # same as api container name
-      # API_URL: http://localhost:5120 # same as api port
-    links:
-      - api
+      # INTERNAL_URL: http://localhost:5120 # same as api port
     
 networks:
   default:
     external:
       name: nginx-proxy
-  db_mysql_net:
-    external: true
