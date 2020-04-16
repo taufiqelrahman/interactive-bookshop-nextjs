@@ -9,6 +9,8 @@ services:
       - db_mysql_net
     ports:
       - "5120:5120"
+    expose:
+      - 5120
     environment:
       DB_HOST: db_mysql
       APP_NAME: "When I Grow Up"
