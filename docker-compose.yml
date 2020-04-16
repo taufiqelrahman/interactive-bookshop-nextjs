@@ -1,26 +1,5 @@
 version: "3"
 services:
-  web:
-    container_name: whenigrowup
-    build: .
-    working_dir: "/usr/src/wigu" # Where to container will assume it should run commands and where you will start out if you go inside the container
-    # ports:
-    #   - "3000:80" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
-      # - "3000:3000" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
-    expose: # production
-      - 80
-      - 443
-    depends_on:
-      - api
-    networks:
-      - default
-    environment: # Pass environment variables to the service
-      VIRTUAL_HOST: wigu.taufiqelrahman.com # production
-      LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
-      API_URL: api:5120 # same as api container name
-      # API_URL: http://localhost:5120 # same as api port
-    links:
-      - api
   api:
     container_name: allgrownup
     build: ./allgrownup
@@ -43,6 +22,27 @@ services:
       MAIL_FROM_NAME: "When I Grow Up"
       ADMIN_API_PATH: /admin/api/2020-01
       GOOGLE_REDIRECT_URL: https://wigu.taufiqelrahman.com/google
+  web:
+    container_name: whenigrowup
+    build: .
+    working_dir: "/usr/src/wigu" # Where to container will assume it should run commands and where you will start out if you go inside the container
+    # ports:
+    #   - "3000:80" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
+      # - "3000:3000" # <host-port>:<container-port> to listen to, so anything running on port 3000 of the container will map to port 3000 on our localhost
+    expose: # production
+      - 80
+      - 443
+    depends_on:
+      - api
+    networks:
+      - default
+    environment: # Pass environment variables to the service
+      VIRTUAL_HOST: wigu.taufiqelrahman.com # production
+      LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
+      API_URL: api:5120 # same as api container name
+      # API_URL: http://localhost:5120 # same as api port
+    links:
+      - api
     
 networks:
   default:
