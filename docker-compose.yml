@@ -7,8 +7,9 @@ services:
     networks:
       - default
       - db_mysql_net
-    # ports:
-    #   - "5120:5120"
+    ports:
+      # - "5120:5120"
+      - "5120:80"
     expose: # production
       - 80
       - 443
