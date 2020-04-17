@@ -22,4 +22,4 @@ COPY . ./
 # CMD [ "npm", "run", "start" ]
 # Running the app development
 # CMD [ "npm", "run", "dev" ]
-ENTRYPOINT ["npm", "run", "debug"]
+ENTRYPOINT ["npm", "run", "deploy"]
