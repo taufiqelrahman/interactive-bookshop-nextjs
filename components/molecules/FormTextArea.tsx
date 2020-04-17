@@ -3,7 +3,7 @@ import TextArea from 'components/atoms/TextArea';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
 
-const FormTextArea = React.forwardRef((props: any, ref: any) => (
+const FormTextArea = (props: any) => (
   <div style={props.style}>
     <div className="c-form-text-area">
       <div className="c-form-text-area__label">
@@ -14,7 +14,7 @@ const FormTextArea = React.forwardRef((props: any, ref: any) => (
       <TextArea
         name={props.name}
         placeholder={props.placeholder}
-        ref={ref}
+        schema={props.schema}
         errors={props.errors}
         defaultValue={props.defaultValue}
       />
@@ -44,7 +44,7 @@ const FormTextArea = React.forwardRef((props: any, ref: any) => (
       }
     `}</style>
   </div>
-));
+);
 FormTextArea.displayName = 'FormTextArea';
 
 export default withTranslation('form', { withRef: true })<any>(FormTextArea);

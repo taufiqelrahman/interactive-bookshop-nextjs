@@ -210,7 +210,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.name.value}
-                      ref={register(schema.name)}
+                      schema={schema.name}
                       name="name"
                       errors={errors.name}
                     />
@@ -247,7 +247,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.email.value}
-                      ref={register(schema.email)}
+                      schema={schema.email}
                       name="email"
                       errors={errors.email}
                     />
@@ -284,7 +284,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.phone.value}
-                      ref={register(schema.phone)}
+                      schema={schema.phone}
                       name="newPhone"
                       errors={errors.phone}
                     />
@@ -292,7 +292,7 @@ const Account = (props: any): any => {
                     <TextField
                     style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={register(schema.phone)}
+                      schema={schema.phone}
                       name="newPhone"
                       errors={errors.newPhone}
                     /> */}
@@ -331,7 +331,7 @@ const Account = (props: any): any => {
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={register(schema.password)}
+                      schema={schema.password}
                       name="password"
                       errors={errors.password}
                       isPassword={true}
@@ -340,7 +340,7 @@ const Account = (props: any): any => {
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={register(schema.password)}
+                      schema={schema.password}
                       name="newPassword"
                       errors={errors.newPassword}
                       isPassword={true}
@@ -349,7 +349,7 @@ const Account = (props: any): any => {
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={register(schema.confirmNewPassword)}
+                      schema={schema.confirmNewPassword}
                       name="confirmNewPassword"
                       errors={errors.confirmNewPassword}
                       isPassword={true}
@@ -394,7 +394,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.address1}
-                      ref={register(schema.address)}
+                      schema={schema.address}
                       name="address1"
                       errors={errors.address1}
                     />
@@ -403,7 +403,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.address2}
-                      ref={register(schema.address)}
+                      schema={schema.address}
                       name="address2"
                       errors={errors.address2}
                     />
@@ -412,7 +412,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.city}
-                      ref={register(schema.address)}
+                      schema={schema.address}
                       name="city"
                       errors={errors.city}
                     />
@@ -432,7 +432,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.zip}
-                      ref={register(schema.address)}
+                      schema={schema.address}
                       name="zip"
                       errors={errors.zip}
                     />
@@ -481,7 +481,7 @@ const Account = (props: any): any => {
               {props.t('common:otp-verify-text')}
             </div>
             <div className="font-semibold">{props.t('common:otp-code')}</div>
-            <TextField variant="full-width" ref={register} name="otp" style={{ margin: '6px 0 24px' }} />
+            <TextField variant="full-width" name="otp" style={{ margin: '6px 0 24px' }} />
             <div className="c-account__action" onClick={() => props.thunkSendOtp()}>
               {props.t('common:otp-resend')}
             </div>

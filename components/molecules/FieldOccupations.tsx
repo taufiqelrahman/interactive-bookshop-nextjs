@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Checkbox from 'components/atoms/Checkbox';
 import Badge from 'components/atoms/Badge';
 
-const FieldOccupations = React.forwardRef((props: any, ref: any) => {
+const FieldOccupations = (props: any) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   return (
@@ -18,7 +18,7 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => {
           {props.occupations.map(job => (
             <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
-                ref={ref}
+                schema={props.schema}
                 value={job.name}
                 name="Occupations"
                 errors={props.errors}
@@ -73,7 +73,7 @@ const FieldOccupations = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 FieldOccupations.displayName = 'FieldOccupations';
 
 export default withTranslation('form', { withRef: true })<any>(FieldOccupations);

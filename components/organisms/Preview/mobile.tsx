@@ -39,7 +39,7 @@ const PreviewMobile = (props: any): any => {
         <BookPreview selected={selected || {}} isMobile={props.isMobile} bookPages={bookPages} />
         <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="c-preview__cover">
-            <FieldCover ref={register(schema(props).cover)} errors={errors.cover} />
+            <FieldCover schema={schema(props).cover} errors={errors.cover} />
           </div>
           <Button type="submit" width="648px" disabled={dontHaveCart} style={{ margin: '12px 0 18px' }}>
             {selected.id ? props.t('update-cart') : props.t('form:continue-button')}

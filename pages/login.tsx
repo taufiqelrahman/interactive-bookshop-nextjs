@@ -158,7 +158,7 @@ const Login = (props: any): any => {
                           label={props.t('form:email-label')}
                           name="email"
                           placeholder="example@yourdomain.com"
-                          ref={register(schema.email)}
+                          schema={schema.email}
                           errors={errors.email}
                           variant="full-width"
                         />
@@ -166,7 +166,7 @@ const Login = (props: any): any => {
                           label={props.t('form:password-label')}
                           name="password"
                           placeholder={props.t('form:password-placeholder')}
-                          ref={register(schema.password)}
+                          schema={schema.password}
                           errors={errors.password}
                           variant="full-width"
                           isPassword={true}
@@ -201,7 +201,7 @@ const Login = (props: any): any => {
                           label={props.t('form:email-label')}
                           name="email"
                           placeholder="example@yourdomain.com"
-                          ref={register(schema.email)}
+                          schema={schema.email}
                           errors={errors.email}
                           variant="full-width"
                           style={{ marginTop: 24 }}
@@ -228,7 +228,7 @@ const Login = (props: any): any => {
                           label={props.t('form:password-label')}
                           name="password"
                           placeholder={props.t('form:new-password-placeholder')}
-                          ref={register(schema.password)}
+                          schema={schema.password}
                           errors={errors.password}
                           variant="full-width"
                           isPassword={true}
@@ -238,7 +238,7 @@ const Login = (props: any): any => {
                           label={props.t('form:confirm-password-label')}
                           name="password_confirmation"
                           placeholder={props.t('form:confirm-password-placeholder')}
-                          ref={register(schema.confirmPassword)}
+                          schema={schema.confirmPassword}
                           errors={errors.password_confirmation}
                           variant="full-width"
                           isPassword={true}

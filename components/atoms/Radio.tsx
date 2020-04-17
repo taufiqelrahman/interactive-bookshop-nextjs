@@ -1,12 +1,5 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
-
-const ConnectForm = ({ children }) => {
-  const methods = useFormContext();
-  return children({
-    ...methods,
-  });
-};
+import { ConnectForm } from 'lib/form-connect';
 
 const Radio = (props: any) => {
   const errorClass = props.errors ? 'c-radio__button--error' : '';

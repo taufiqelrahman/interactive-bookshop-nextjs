@@ -1,7 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { ConnectForm } from 'lib/form-connect';
 
-const Checkbox = React.forwardRef((props: any, ref: any) => {
+const Checkbox = (props: any) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const checkboxClass = () => {
@@ -12,14 +13,18 @@ const Checkbox = React.forwardRef((props: any, ref: any) => {
   };
   return (
     <div className="c-checkbox">
-      <input
-        type="checkbox"
-        name={props.name}
-        ref={ref}
-        value={props.value}
-        id={`${props.name}-${props.value}`}
-        defaultChecked={props.defaultChecked}
-      />
+      <ConnectForm>
+        {({ register }) => (
+          <input
+            type="checkbox"
+            name={props.name}
+            ref={register(props.schema)}
+            value={props.value}
+            id={`${props.name}-${props.value}`}
+            defaultChecked={props.defaultChecked}
+          />
+        )}
+      </ConnectForm>
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={checkboxClass()}>
           <img src={`/static/images/jobs/${props.value}.png`} />
@@ -68,7 +73,7 @@ const Checkbox = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;

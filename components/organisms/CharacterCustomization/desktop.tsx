@@ -62,7 +62,7 @@ const CharacterCustomization = (props: any) => {
             <Card variant="border">
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
                 <FieldOccupations
-                  ref={register(schema.occupations)}
+                  schema={schema.occupations}
                   errors={errors.Occupations}
                   style={{ maxWidth: 550, marginBottom: 24 }}
                   defaultChecked={selected.Occupations}
@@ -74,12 +74,12 @@ const CharacterCustomization = (props: any) => {
                     label={props.t('name-label')}
                     name="Name"
                     placeholder={props.t('name-placeholder')}
-                    ref={register(schema.name)}
+                    schema={schema.name}
                     errors={errors.Name}
                     style={{ marginRight: 36 }}
                     defaultValue={selected.Name}
                   />
-                  <FieldAge ref={register(schema.age)} errors={errors.Age} defaultChecked={selected.Age} />
+                  <FieldAge schema={schema.age} errors={errors.Age} defaultChecked={selected.Age} />
                 </div>
                 <FieldDob
                   name="Date of Birth"
@@ -90,14 +90,14 @@ const CharacterCustomization = (props: any) => {
                   defaultValue={selected['Date of Birth']}
                 />
                 <FieldGender
-                  ref={register(schema.gender)}
+                  schema={schema.gender}
                   errors={errors.Gender}
                   style={{ marginTop: 24 }}
                   defaultChecked={selected.Gender}
                 />
                 {!!watch('Gender') && (
                   <FieldHair
-                    ref={register(schema.hair)}
+                    schema={schema.hair}
                     errors={errors.Hair}
                     style={{ marginTop: 24 }}
                     type={watch('Gender')}
@@ -105,14 +105,14 @@ const CharacterCustomization = (props: any) => {
                   />
                 )}
                 <FieldSkin
-                  ref={register(schema.skin)}
+                  schema={schema.skin}
                   errors={errors.Skin}
                   style={{ marginTop: 24, marginBottom: 24 }}
                   defaultChecked={selected.Skin}
                 />
                 <Divider />
                 <FieldLanguage
-                  ref={register(schema.language)}
+                  schema={schema.language}
                   errors={errors.Language}
                   style={{ marginTop: 24 }}
                   defaultChecked={selected.Language}
@@ -122,7 +122,7 @@ const CharacterCustomization = (props: any) => {
                   hint={props.t('dedication-hint')}
                   name="Dedication"
                   placeholder={props.t('dedication-placeholder')}
-                  ref={register(schema.dedication)}
+                  schema={schema.dedication}
                   errors={errors.Dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}
                   defaultValue={selected.Dedication}

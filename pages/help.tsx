@@ -98,7 +98,7 @@ const Help = (props: any): any => {
                     label={props.t('form:your-email-label')}
                     name="email"
                     placeholder={props.t('form:email-placeholder')}
-                    ref={register(schema.email)}
+                    schema={schema.email}
                     errors={errors.email}
                     variant="full-width"
                   />
@@ -106,7 +106,7 @@ const Help = (props: any): any => {
                     label={props.t('form:message-label')}
                     name="message"
                     placeholder={props.t('form:message-placeholder')}
-                    ref={register(schema.message)}
+                    schema={schema.message}
                     errors={errors.message}
                     style={{ marginTop: props.isMobile ? 12 : 24, marginBottom: props.isMobile ? 16 : 24 }}
                   />

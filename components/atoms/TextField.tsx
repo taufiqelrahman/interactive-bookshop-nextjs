@@ -1,7 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import NumberFormat from 'react-number-format';
+import { ConnectForm } from 'lib/form-connect';
 
-const TextField = React.forwardRef((props: any, ref: any) => {
+const TextField = (props: any) => {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -14,22 +15,30 @@ const TextField = React.forwardRef((props: any, ref: any) => {
   return (
     <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass()}`} style={props.style}>
       {['phone', 'newPhones'].includes(props.name) ? (
-        <NumberFormat
-          format="#### #### ####"
-          name={props.name}
-          placeholder={props.placeholder}
-          getInputRef={ref}
-          defaultValue={props.defaultValue || ''}
-        />
+        <ConnectForm>
+          {({ register }) => (
+            <NumberFormat
+              format="#### #### ####"
+              name={props.name}
+              placeholder={props.placeholder}
+              getInputRef={register(props.schema)}
+              defaultValue={props.defaultValue || ''}
+            />
+          )}
+        </ConnectForm>
       ) : (
         <Fragment>
-          <input
-            type={props.isPassword && !showPassword ? 'password' : props.type || 'text'}
-            name={props.name}
-            placeholder={props.placeholder}
-            ref={ref}
-            defaultValue={props.defaultValue}
-          />
+          <ConnectForm>
+            {({ register }) => (
+              <input
+                type={props.isPassword && !showPassword ? 'password' : props.type || 'text'}
+                name={props.name}
+                placeholder={props.placeholder}
+                ref={props.schema ? register(props.schema) : register}
+                defaultValue={props.defaultValue}
+              />
+            )}
+          </ConnectForm>
           {props.isPassword && (
             <span
               onClick={togglePassword}
@@ -102,7 +111,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 TextField.displayName = 'TextField';
 
 export default TextField;

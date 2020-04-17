@@ -51,13 +51,11 @@ const BookForm = (props: any) => {
                 <Card variant="shadow--bold">
                   {state.step === stepEnum.OCCUPATIONS && (
                     <div key={1} className="c-book-form__container c-book-form__container__mobile">
-                      {props.occupations.length > 0 && (
-                        <FieldOccupations
-                          ref={register(schema.occupations)}
-                          errors={errors.occupations}
-                          occupations={props.occupations}
-                        />
-                      )}
+                      <FieldOccupations
+                        schema={schema.occupations}
+                        errors={errors.occupations}
+                        occupations={props.occupations}
+                      />
                       <Button width="100%" disabled={!isFormValid} onClick={next}>
                         {props.t('next-button')}
                       </Button>
@@ -70,7 +68,7 @@ const BookForm = (props: any) => {
                           label={props.t('name-label')}
                           name="name"
                           placeholder={props.t('name-placeholder')}
-                          ref={register(schema.name)}
+                          schema={schema.name}
                           errors={errors.name}
                           variant="full-width"
                         />
@@ -86,20 +84,18 @@ const BookForm = (props: any) => {
             ) : (
               <Card variant="shadow--bold">
                 <div className="c-book-form__container">
-                  {props.occupations.length > 0 && (
-                    <FieldOccupations
-                      ref={register(schema.occupations)}
-                      errors={errors.occupations}
-                      isMobile={props.isMobile}
-                      occupations={props.occupations}
-                    />
-                  )}
+                  <FieldOccupations
+                    schema={schema.occupations}
+                    errors={errors.occupations}
+                    isMobile={props.isMobile}
+                    occupations={props.occupations}
+                  />
                   <div className="c-book-form__second-row">
                     <FormTextField
                       label={props.t('name-label')}
                       name="name"
                       placeholder={props.t('name-placeholder')}
-                      ref={register(schema.name)}
+                      schema={schema.name}
                       errors={errors.name}
                     />
                     <FieldAge schema={schema.age} errors={errors.age} />
