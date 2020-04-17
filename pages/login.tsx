@@ -3,7 +3,7 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link, Router } from 'i18n';
 import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, FormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Card from 'components/atoms/Card';
 import DefaultLayout from 'components/layouts/Default';
@@ -14,9 +14,10 @@ import NavBar from 'components/organisms/NavBar/mobile';
 
 const Login = (props: any): any => {
   const router = useRouter();
-  const { register, handleSubmit, errors, formState, watch } = useForm({
+  const methods = useForm({
     mode: 'onChange',
   });
+  const { handleSubmit, errors, formState, watch } = methods;
   const stepEnum = { WELCOME: 0, EMAIL: 1, FORGOT: 2, SENT: 3, RESET: 4 };
   const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
   const [resetData, setResetData] = useState({
@@ -145,117 +146,119 @@ const Login = (props: any): any => {
                 </Fragment>
               )}
               {[stepEnum.EMAIL, stepEnum.FORGOT, stepEnum.RESET].includes(loginStep) && (
-                <form
-                  className="c-login__form"
-                  style={props.isMobile ? { minHeight: 'calc(100vh - 59px - 24px)' } : {}}
-                  onSubmit={handleSubmit(onSubmit)}
-                >
-                  {loginStep === stepEnum.EMAIL && (
-                    <Fragment>
-                      <div>
-                        <h1 className="c-login__title">{`${props.t('login-with')} Email`}</h1>
-                        <FormTextField
-                          label={props.t('form:email-label')}
-                          name="email"
-                          placeholder="example@yourdomain.com"
-                          schema={schema.email}
-                          errors={errors.email}
-                          variant="full-width"
-                        />
-                        <FormTextField
-                          label={props.t('form:password-label')}
-                          name="password"
-                          placeholder={props.t('form:password-placeholder')}
-                          schema={schema.password}
-                          errors={errors.password}
-                          variant="full-width"
-                          isPassword={true}
-                          style={{ marginTop: 24 }}
-                        />
-                        <div
-                          onClick={forgotPassword}
-                          className="c-login__link"
-                          style={{ margin: '12px 0', textAlign: 'left' }}
-                        >
-                          {props.t('forgot-password')}
+                <FormContext {...methods}>
+                  <form
+                    className="c-login__form"
+                    style={props.isMobile ? { minHeight: 'calc(100vh - 59px - 24px)' } : {}}
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
+                    {loginStep === stepEnum.EMAIL && (
+                      <Fragment>
+                        <div>
+                          <h1 className="c-login__title">{`${props.t('login-with')} Email`}</h1>
+                          <FormTextField
+                            label={props.t('form:email-label')}
+                            name="email"
+                            placeholder="example@yourdomain.com"
+                            schema={schema.email}
+                            errors={errors.email}
+                            variant="full-width"
+                          />
+                          <FormTextField
+                            label={props.t('form:password-label')}
+                            name="password"
+                            placeholder={props.t('form:password-placeholder')}
+                            schema={schema.password}
+                            errors={errors.password}
+                            variant="full-width"
+                            isPassword={true}
+                            style={{ marginTop: 24 }}
+                          />
+                          <div
+                            onClick={forgotPassword}
+                            className="c-login__link"
+                            style={{ margin: '12px 0', textAlign: 'left' }}
+                          >
+                            {props.t('forgot-password')}
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('login')}
-                        </Button>
-                        <div onClick={onBack} className="c-login__link">
-                          {props.t('go-back')}
+                        <div>
+                          <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                            {props.t('login')}
+                          </Button>
+                          <div onClick={onBack} className="c-login__link">
+                            {props.t('go-back')}
+                          </div>
                         </div>
-                      </div>
-                    </Fragment>
-                  )}
-                  {loginStep === stepEnum.FORGOT && (
-                    <Fragment>
-                      <div>
-                        <h1 className="c-login__title" style={{ marginBottom: 12 }}>
-                          {props.t('form:reset-title')}
-                        </h1>
-                        <div className="c-login__subtitle">{props.t('form:reset-subtitle')}</div>
-                        <FormTextField
-                          label={props.t('form:email-label')}
-                          name="email"
-                          placeholder="example@yourdomain.com"
-                          schema={schema.email}
-                          errors={errors.email}
-                          variant="full-width"
-                          style={{ marginTop: 24 }}
-                        />
-                      </div>
-                      <div>
-                        <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('form:reset-send')}
-                        </Button>
-                        <div onClick={onBack} className="c-login__link">
-                          {props.t('go-back')}
+                      </Fragment>
+                    )}
+                    {loginStep === stepEnum.FORGOT && (
+                      <Fragment>
+                        <div>
+                          <h1 className="c-login__title" style={{ marginBottom: 12 }}>
+                            {props.t('form:reset-title')}
+                          </h1>
+                          <div className="c-login__subtitle">{props.t('form:reset-subtitle')}</div>
+                          <FormTextField
+                            label={props.t('form:email-label')}
+                            name="email"
+                            placeholder="example@yourdomain.com"
+                            schema={schema.email}
+                            errors={errors.email}
+                            variant="full-width"
+                            style={{ marginTop: 24 }}
+                          />
                         </div>
-                      </div>
-                    </Fragment>
-                  )}
-                  {loginStep === stepEnum.RESET && (
-                    <Fragment>
-                      <div>
-                        <h1 className="c-login__title" style={{ marginBottom: 12 }}>
-                          {props.t('form:reset-title')}
-                        </h1>
-                        <div className="c-login__saved-email">{resetData.email}</div>
-                        <FormTextField
-                          label={props.t('form:password-label')}
-                          name="password"
-                          placeholder={props.t('form:new-password-placeholder')}
-                          schema={schema.password}
-                          errors={errors.password}
-                          variant="full-width"
-                          isPassword={true}
-                          style={{ marginTop: 24 }}
-                        />
-                        <FormTextField
-                          label={props.t('form:confirm-password-label')}
-                          name="password_confirmation"
-                          placeholder={props.t('form:confirm-password-placeholder')}
-                          schema={schema.confirmPassword}
-                          errors={errors.password_confirmation}
-                          variant="full-width"
-                          isPassword={true}
-                          style={{ marginTop: 24 }}
-                        />
-                      </div>
-                      <div>
-                        <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('form:reset-button')}
-                        </Button>
-                        <div onClick={onBack} className="c-login__link">
-                          {props.t('go-back')}
+                        <div>
+                          <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                            {props.t('form:reset-send')}
+                          </Button>
+                          <div onClick={onBack} className="c-login__link">
+                            {props.t('go-back')}
+                          </div>
                         </div>
-                      </div>
-                    </Fragment>
-                  )}
-                </form>
+                      </Fragment>
+                    )}
+                    {loginStep === stepEnum.RESET && (
+                      <Fragment>
+                        <div>
+                          <h1 className="c-login__title" style={{ marginBottom: 12 }}>
+                            {props.t('form:reset-title')}
+                          </h1>
+                          <div className="c-login__saved-email">{resetData.email}</div>
+                          <FormTextField
+                            label={props.t('form:password-label')}
+                            name="password"
+                            placeholder={props.t('form:new-password-placeholder')}
+                            schema={schema.password}
+                            errors={errors.password}
+                            variant="full-width"
+                            isPassword={true}
+                            style={{ marginTop: 24 }}
+                          />
+                          <FormTextField
+                            label={props.t('form:confirm-password-label')}
+                            name="password_confirmation"
+                            placeholder={props.t('form:confirm-password-placeholder')}
+                            schema={schema.confirmPassword}
+                            errors={errors.password_confirmation}
+                            variant="full-width"
+                            isPassword={true}
+                            style={{ marginTop: 24 }}
+                          />
+                        </div>
+                        <div>
+                          <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+                            {props.t('form:reset-button')}
+                          </Button>
+                          <div onClick={onBack} className="c-login__link">
+                            {props.t('go-back')}
+                          </div>
+                        </div>
+                      </Fragment>
+                    )}
+                  </form>
+                </FormContext>
               )}
               {loginStep === stepEnum.SENT && (
                 <div className="c-login__form">

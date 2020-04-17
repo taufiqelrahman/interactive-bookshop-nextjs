@@ -1,5 +1,5 @@
 import Card from 'components/atoms/Card';
-import { useForm } from 'react-hook-form';
+import { useForm, FormContext } from 'react-hook-form';
 import { useEffect } from 'react';
 import { withTranslation, Router } from 'i18n';
 import FieldOccupations from 'components/molecules/FieldOccupations';
@@ -18,9 +18,10 @@ import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 
 const CharacterCustomization = (props: any) => {
-  const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm({
+  const methods = useForm({
     mode: 'onChange',
   });
+  const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
     register({ name: 'Date of Birth' }, schema.dob);
   }, []);
@@ -60,78 +61,80 @@ const CharacterCustomization = (props: any) => {
         <div className="c-char-custom">
           <div className="c-char-custom__left">
             <Card variant="border">
-              <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
-                <FieldOccupations
-                  schema={schema.occupations}
-                  errors={errors.Occupations}
-                  style={{ maxWidth: 550, marginBottom: 24 }}
-                  defaultChecked={selected.Occupations}
-                  occupations={occupations}
-                />
-                <Divider />
-                <div className="flex">
-                  <FormTextField
-                    label={props.t('name-label')}
-                    name="Name"
-                    placeholder={props.t('name-placeholder')}
-                    schema={schema.name}
-                    errors={errors.Name}
-                    style={{ marginRight: 36 }}
-                    defaultValue={selected.Name}
+              <FormContext {...methods}>
+                <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
+                  <FieldOccupations
+                    schema={schema.occupations}
+                    errors={errors.Occupations}
+                    style={{ maxWidth: 550, marginBottom: 24 }}
+                    defaultChecked={selected.Occupations}
+                    occupations={occupations}
                   />
-                  <FieldAge schema={schema.age} errors={errors.Age} defaultChecked={selected.Age} />
-                </div>
-                <FieldDob
-                  name="Date of Birth"
-                  setValue={setValue}
-                  triggerValidation={triggerValidation}
-                  errors={errors['Date of Birth']}
-                  style={{ marginTop: 24 }}
-                  defaultValue={selected['Date of Birth']}
-                />
-                <FieldGender
-                  schema={schema.gender}
-                  errors={errors.Gender}
-                  style={{ marginTop: 24 }}
-                  defaultChecked={selected.Gender}
-                />
-                {!!watch('Gender') && (
-                  <FieldHair
-                    schema={schema.hair}
-                    errors={errors.Hair}
+                  <Divider />
+                  <div className="flex">
+                    <FormTextField
+                      label={props.t('name-label')}
+                      name="Name"
+                      placeholder={props.t('name-placeholder')}
+                      schema={schema.name}
+                      errors={errors.Name}
+                      style={{ marginRight: 36 }}
+                      defaultValue={selected.Name}
+                    />
+                    <FieldAge schema={schema.age} errors={errors.Age} defaultChecked={selected.Age} />
+                  </div>
+                  <FieldDob
+                    name="Date of Birth"
+                    setValue={setValue}
+                    triggerValidation={triggerValidation}
+                    errors={errors['Date of Birth']}
                     style={{ marginTop: 24 }}
-                    type={watch('Gender')}
-                    defaultChecked={selected.Hair}
+                    defaultValue={selected['Date of Birth']}
                   />
-                )}
-                <FieldSkin
-                  schema={schema.skin}
-                  errors={errors.Skin}
-                  style={{ marginTop: 24, marginBottom: 24 }}
-                  defaultChecked={selected.Skin}
-                />
-                <Divider />
-                <FieldLanguage
-                  schema={schema.language}
-                  errors={errors.Language}
-                  style={{ marginTop: 24 }}
-                  defaultChecked={selected.Language}
-                />
-                <FormTextArea
-                  label={props.t('dedication-label')}
-                  hint={props.t('dedication-hint')}
-                  name="Dedication"
-                  placeholder={props.t('dedication-placeholder')}
-                  schema={schema.dedication}
-                  errors={errors.Dedication}
-                  style={{ marginTop: 24, marginBottom: 24 }}
-                  defaultValue={selected.Dedication}
-                />
-                <Divider />
-                <Button type="submit" width="100%" style={{ marginTop: 24 }}>
-                  {props.t('save-button')}
-                </Button>
-              </form>
+                  <FieldGender
+                    schema={schema.gender}
+                    errors={errors.Gender}
+                    style={{ marginTop: 24 }}
+                    defaultChecked={selected.Gender}
+                  />
+                  {!!watch('Gender') && (
+                    <FieldHair
+                      schema={schema.hair}
+                      errors={errors.Hair}
+                      style={{ marginTop: 24 }}
+                      type={watch('Gender')}
+                      defaultChecked={selected.Hair}
+                    />
+                  )}
+                  <FieldSkin
+                    schema={schema.skin}
+                    errors={errors.Skin}
+                    style={{ marginTop: 24, marginBottom: 24 }}
+                    defaultChecked={selected.Skin}
+                  />
+                  <Divider />
+                  <FieldLanguage
+                    schema={schema.language}
+                    errors={errors.Language}
+                    style={{ marginTop: 24 }}
+                    defaultChecked={selected.Language}
+                  />
+                  <FormTextArea
+                    label={props.t('dedication-label')}
+                    hint={props.t('dedication-hint')}
+                    name="Dedication"
+                    placeholder={props.t('dedication-placeholder')}
+                    schema={schema.dedication}
+                    errors={errors.Dedication}
+                    style={{ marginTop: 24, marginBottom: 24 }}
+                    defaultValue={selected.Dedication}
+                  />
+                  <Divider />
+                  <Button type="submit" width="100%" style={{ marginTop: 24 }}>
+                    {props.t('save-button')}
+                  </Button>
+                </form>
+              </FormContext>
             </Card>
           </div>
           <div className="c-char-custom__right">

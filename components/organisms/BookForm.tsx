@@ -17,7 +17,7 @@ const BookForm = (props: any) => {
   const methods = useForm({
     mode: 'onChange',
   });
-  const { register, handleSubmit, errors, formState, watch } = methods;
+  const { handleSubmit, errors, formState, watch } = methods;
   const onSubmit = data => {
     let PARAMS = data;
     if (props.isMobile) PARAMS = { ...PARAMS, occupations: state.occupations };

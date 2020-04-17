@@ -2,16 +2,17 @@ import { withTranslation, Router } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';
-import { useForm } from 'react-hook-form';
+import { useForm, FormContext } from 'react-hook-form';
 import { useEffect } from 'react';
 import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError } from './helper';
 import NavBar from '../NavBar/mobile';
 
 const PreviewMobile = (props: any): any => {
-  const { register, handleSubmit, errors, formState } = useForm({
+  const methods = useForm({
     mode: 'onChange',
   });
+  const { handleSubmit, errors, formState } = methods;
   const onSubmit = data => {
     const { selected } = props.state.cart;
     const cart = { ...selected, ...data };
@@ -37,17 +38,19 @@ const PreviewMobile = (props: any): any => {
     >
       <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
         <BookPreview selected={selected || {}} isMobile={props.isMobile} bookPages={bookPages} />
-        <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
-          <div className="c-preview__cover">
-            <FieldCover schema={schema(props).cover} errors={errors.cover} />
-          </div>
-          <Button type="submit" width="648px" disabled={dontHaveCart} style={{ margin: '12px 0 18px' }}>
-            {selected.id ? props.t('update-cart') : props.t('form:continue-button')}
-          </Button>
-          <div className="c-preview__link" onClick={() => Router.back()}>
-            {props.t('go-back')}
-          </div>
-        </form>
+        <FormContext {...methods}>
+          <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
+            <div className="c-preview__cover">
+              <FieldCover schema={schema(props).cover} errors={errors.cover} />
+            </div>
+            <Button type="submit" width="648px" disabled={dontHaveCart} style={{ margin: '12px 0 18px' }}>
+              {selected.id ? props.t('update-cart') : props.t('form:continue-button')}
+            </Button>
+            <div className="c-preview__link" onClick={() => Router.back()}>
+              {props.t('go-back')}
+            </div>
+          </form>
+        </FormContext>
       </div>
       <style jsx>{`
         .c-preview {

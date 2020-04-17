@@ -8,16 +8,17 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import { useState, Fragment, useEffect } from 'react';
 import TextField from 'components/atoms/TextField';
 import Button from 'components/atoms/Button';
-import { useForm } from 'react-hook-form';
+import { useForm, FormContext } from 'react-hook-form';
 import api from 'services/api';
 import Modal from 'components/atoms/Modal';
 import actions from 'store/actions';
 import Select from 'react-select';
 
 const Account = (props: any): any => {
-  const { register, handleSubmit, errors, formState, setValue, watch, triggerValidation, unregister } = useForm({
+  const methods = useForm({
     mode: 'onChange',
   });
+  const { register, handleSubmit, errors, setValue, watch, triggerValidation, unregister } = methods;
   const { user } = props.state.users;
   const userAddress = user.address || {};
   const [showModal, setShowModal] = useState(false);
@@ -195,260 +196,262 @@ const Account = (props: any): any => {
         <div className="c-account" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
           <Wrapper variant="border">
             <div className="c-account__container">
-              <div className="c-account__row">
-                <div className="c-account__header">
-                  <div className="c-account__title">{props.t('name-label')}</div>
-                  {!state.name.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('name', false, user.name)}>
-                      Edit
-                    </div>
-                  )}
-                </div>
-                {state.name.isEdit ? (
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : {}}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      defaultValue={state.name.value}
-                      schema={schema.name}
-                      name="name"
-                      errors={errors.name}
-                    />
-                    <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button
-                        width="101px"
-                        variant="rectangle,small-text"
-                        disabled={errors.name || watch('name') === user.name}
-                      >
-                        {props.t('form:update-button')}
-                      </Button>
-                      <div onClick={() => editField('name', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+              <FormContext {...methods}>
+                <div className="c-account__row">
+                  <div className="c-account__header">
+                    <div className="c-account__title">{props.t('name-label')}</div>
+                    {!state.name.isEdit && (
+                      <div className="c-account__action" onClick={() => editField('name', false, user.name)}>
+                        Edit
                       </div>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="c-account__value">{user.name}</div>
-                )}
-              </div>
-              <div className="c-account__row">
-                <div className="c-account__header">
-                  <div className="c-account__title">{props.t('email-label')}</div>
-                  {!state.email.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('email', false, user.email)}>
-                      Change
-                    </div>
+                    )}
+                  </div>
+                  {state.name.isEdit ? (
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : {}}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        defaultValue={state.name.value}
+                        schema={schema.name}
+                        name="name"
+                        errors={errors.name}
+                      />
+                      <div className="flex items-center" style={{ marginTop: 6 }}>
+                        <Button
+                          width="101px"
+                          variant="rectangle,small-text"
+                          disabled={errors.name || watch('name') === user.name}
+                        >
+                          {props.t('form:update-button')}
+                        </Button>
+                        <div onClick={() => editField('name', true)} className="c-account__link">
+                          {props.t('form:cancel-button')}
+                        </div>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="c-account__value">{user.name}</div>
                   )}
                 </div>
+                <div className="c-account__row">
+                  <div className="c-account__header">
+                    <div className="c-account__title">{props.t('email-label')}</div>
+                    {!state.email.isEdit && (
+                      <div className="c-account__action" onClick={() => editField('email', false, user.email)}>
+                        Change
+                      </div>
+                    )}
+                  </div>
 
-                {state.email.isEdit ? (
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : {}}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      defaultValue={state.email.value}
-                      schema={schema.email}
-                      name="email"
-                      errors={errors.email}
-                    />
-                    <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button
-                        width="101px"
-                        variant="rectangle,small-text"
-                        disabled={errors.email || watch('email') === user.email}
-                      >
-                        {props.t('form:update-button')}
-                      </Button>
-                      <div onClick={() => editField('email', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                  {state.email.isEdit ? (
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : {}}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        defaultValue={state.email.value}
+                        schema={schema.email}
+                        name="email"
+                        errors={errors.email}
+                      />
+                      <div className="flex items-center" style={{ marginTop: 6 }}>
+                        <Button
+                          width="101px"
+                          variant="rectangle,small-text"
+                          disabled={errors.email || watch('email') === user.email}
+                        >
+                          {props.t('form:update-button')}
+                        </Button>
+                        <div onClick={() => editField('email', true)} className="c-account__link">
+                          {props.t('form:cancel-button')}
+                        </div>
                       </div>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="c-account__value">{user.email}</div>
-                )}
-              </div>
-              <div className="c-account__row">
-                <div className="c-account__header">
-                  <div className="c-account__title">{props.t('phone-label')}</div>
-                  {!state.phone.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('phone', false, user.phone)}>
-                      Change
-                    </div>
+                    </form>
+                  ) : (
+                    <div className="c-account__value">{user.email}</div>
                   )}
                 </div>
-                {state.phone.isEdit ? (
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    {/* <div className="c-account__label">{props.t('old-number')}</div> */}
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : {}}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      defaultValue={state.phone.value}
-                      schema={schema.phone}
-                      name="newPhone"
-                      errors={errors.phone}
-                    />
-                    {/* <div className="c-account__label">{props.t('new-number')}</div>
-                    <TextField
-                    style={props.isMobile ? { marginBottom: 6 } : {}}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      schema={schema.phone}
-                      name="newPhone"
-                      errors={errors.newPhone}
-                    /> */}
-                    <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button
-                        width="101px"
-                        variant="rectangle,small-text"
-                        disabled={errors.phone || watch('newPhone') === user.phone}
-                        type="button"
-                        onClick={onChangePhone}
-                      >
-                        {props.t('form:update-button')}
-                      </Button>
-                      <div onClick={() => editField('phone', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                <div className="c-account__row">
+                  <div className="c-account__header">
+                    <div className="c-account__title">{props.t('phone-label')}</div>
+                    {!state.phone.isEdit && (
+                      <div className="c-account__action" onClick={() => editField('phone', false, user.phone)}>
+                        Change
                       </div>
-                    </div>
-                  </form>
-                ) : (
-                  // <div className="c-account__value">{`*****${user.phone.slice(5)}`}</div>
-                  <div className="c-account__value">{user.phone}</div>
-                )}
-              </div>
-              <div className="c-account__row">
-                <div className="c-account__header">
-                  <div className="c-account__title">{props.t('password-label')}</div>
-                  {!state.password.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('password', false)}>
-                      Change
-                    </div>
+                    )}
+                  </div>
+                  {state.phone.isEdit ? (
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      {/* <div className="c-account__label">{props.t('old-number')}</div> */}
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : {}}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        defaultValue={state.phone.value}
+                        schema={schema.phone}
+                        name="newPhone"
+                        errors={errors.phone}
+                      />
+                      {/* <div className="c-account__label">{props.t('new-number')}</div>
+                      <TextField
+                      style={props.isMobile ? { marginBottom: 6 } : {}}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        schema={schema.phone}
+                        name="newPhone"
+                        errors={errors.newPhone}
+                      /> */}
+                      <div className="flex items-center" style={{ marginTop: 6 }}>
+                        <Button
+                          width="101px"
+                          variant="rectangle,small-text"
+                          disabled={errors.phone || watch('newPhone') === user.phone}
+                          type="button"
+                          onClick={onChangePhone}
+                        >
+                          {props.t('form:update-button')}
+                        </Button>
+                        <div onClick={() => editField('phone', true)} className="c-account__link">
+                          {props.t('form:cancel-button')}
+                        </div>
+                      </div>
+                    </form>
+                  ) : (
+                    // <div className="c-account__value">{`*****${user.phone.slice(5)}`}</div>
+                    <div className="c-account__value">{user.phone}</div>
                   )}
                 </div>
-                {state.password.isEdit ? (
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="c-account__label">{props.t('old-password')}</div>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      schema={schema.password}
-                      name="password"
-                      errors={errors.password}
-                      isPassword={true}
-                    />
-                    <div className="c-account__label">{props.t('new-password')}</div>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      schema={schema.password}
-                      name="newPassword"
-                      errors={errors.newPassword}
-                      isPassword={true}
-                    />
-                    <div className="c-account__label">{props.t('confirm-new-password')}</div>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : {}}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      schema={schema.confirmNewPassword}
-                      name="confirmNewPassword"
-                      errors={errors.confirmNewPassword}
-                      isPassword={true}
-                    />
-                    <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button
-                        width="101px"
-                        variant="rectangle,small-text"
-                        disabled={
-                          errors.password ||
-                          errors.newPassword ||
-                          errors.confirmNewPassword ||
-                          !watch('password') ||
-                          !watch('newPassword') ||
-                          !watch('confirmNewPassword')
-                        }
-                      >
-                        {props.t('form:update-button')}
-                      </Button>
-                      <div onClick={() => editField('password', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                <div className="c-account__row">
+                  <div className="c-account__header">
+                    <div className="c-account__title">{props.t('password-label')}</div>
+                    {!state.password.isEdit && (
+                      <div className="c-account__action" onClick={() => editField('password', false)}>
+                        Change
                       </div>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="c-account__value">************</div>
-                )}
-              </div>
-              <div className="c-account__row">
-                <div className="c-account__header" style={{ marginBottom: props.isMobile ? 10 : 6 }}>
-                  <div className="c-account__title">{props.t('address-label')}</div>
-                  {!state.address.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('address', false)}>
-                      Change
-                    </div>
+                    )}
+                  </div>
+                  {state.password.isEdit ? (
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <div className="c-account__label">{props.t('old-password')}</div>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        schema={schema.password}
+                        name="password"
+                        errors={errors.password}
+                        isPassword={true}
+                      />
+                      <div className="c-account__label">{props.t('new-password')}</div>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        schema={schema.password}
+                        name="newPassword"
+                        errors={errors.newPassword}
+                        isPassword={true}
+                      />
+                      <div className="c-account__label">{props.t('confirm-new-password')}</div>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : {}}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        schema={schema.confirmNewPassword}
+                        name="confirmNewPassword"
+                        errors={errors.confirmNewPassword}
+                        isPassword={true}
+                      />
+                      <div className="flex items-center" style={{ marginTop: 6 }}>
+                        <Button
+                          width="101px"
+                          variant="rectangle,small-text"
+                          disabled={
+                            errors.password ||
+                            errors.newPassword ||
+                            errors.confirmNewPassword ||
+                            !watch('password') ||
+                            !watch('newPassword') ||
+                            !watch('confirmNewPassword')
+                          }
+                        >
+                          {props.t('form:update-button')}
+                        </Button>
+                        <div onClick={() => editField('password', true)} className="c-account__link">
+                          {props.t('form:cancel-button')}
+                        </div>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="c-account__value">************</div>
                   )}
                 </div>
-                {state.address.isEdit ? (
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="c-account__label">{props.t('address1')}</div>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      defaultValue={userAddress.address1}
-                      schema={schema.address}
-                      name="address1"
-                      errors={errors.address1}
-                    />
-                    <div className="c-account__label">{props.t('address2')}</div>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      defaultValue={userAddress.address2}
-                      schema={schema.address}
-                      name="address2"
-                      errors={errors.address2}
-                    />
-                    <div className="c-account__label">{props.t('city')}</div>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      defaultValue={userAddress.city}
-                      schema={schema.address}
-                      name="city"
-                      errors={errors.city}
-                    />
-                    <div className="c-account__label">{props.t('province')}</div>
-                    <Select
-                      styles={customStyles}
-                      className="c-account_province"
-                      instanceId="province"
-                      placeholder={props.t('select-province')}
-                      defaultValue={setDefaultProvince()}
-                      options={provinces()}
-                      onChange={onChangeProvince}
-                    />
-                    {/* {errors.province} */}
-                    <div className="c-account__label">{props.t('zip')}</div>
-                    <TextField
-                      style={props.isMobile ? { marginBottom: 6 } : {}}
-                      variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      defaultValue={userAddress.zip}
-                      schema={schema.address}
-                      name="zip"
-                      errors={errors.zip}
-                    />
-                    <div className="flex items-center" style={{ marginTop: 6 }}>
-                      <Button width="101px" variant="rectangle,small-text" disabled={disabledUpdateAddress()}>
-                        {props.t('form:update-button')}
-                      </Button>
-                      <div onClick={() => editField('address', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                <div className="c-account__row">
+                  <div className="c-account__header" style={{ marginBottom: props.isMobile ? 10 : 6 }}>
+                    <div className="c-account__title">{props.t('address-label')}</div>
+                    {!state.address.isEdit && (
+                      <div className="c-account__action" onClick={() => editField('address', false)}>
+                        Change
                       </div>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="c-account__value c-account__address">{showAddress()}</div>
-                )}
-              </div>
+                    )}
+                  </div>
+                  {state.address.isEdit ? (
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <div className="c-account__label">{props.t('address1')}</div>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        defaultValue={userAddress.address1}
+                        schema={schema.address}
+                        name="address1"
+                        errors={errors.address1}
+                      />
+                      <div className="c-account__label">{props.t('address2')}</div>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        defaultValue={userAddress.address2}
+                        schema={schema.address}
+                        name="address2"
+                        errors={errors.address2}
+                      />
+                      <div className="c-account__label">{props.t('city')}</div>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        defaultValue={userAddress.city}
+                        schema={schema.address}
+                        name="city"
+                        errors={errors.city}
+                      />
+                      <div className="c-account__label">{props.t('province')}</div>
+                      <Select
+                        styles={customStyles}
+                        className="c-account_province"
+                        instanceId="province"
+                        placeholder={props.t('select-province')}
+                        defaultValue={setDefaultProvince()}
+                        options={provinces()}
+                        onChange={onChangeProvince}
+                      />
+                      {/* {errors.province} */}
+                      <div className="c-account__label">{props.t('zip')}</div>
+                      <TextField
+                        style={props.isMobile ? { marginBottom: 6 } : {}}
+                        variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
+                        defaultValue={userAddress.zip}
+                        schema={schema.address}
+                        name="zip"
+                        errors={errors.zip}
+                      />
+                      <div className="flex items-center" style={{ marginTop: 6 }}>
+                        <Button width="101px" variant="rectangle,small-text" disabled={disabledUpdateAddress()}>
+                          {props.t('form:update-button')}
+                        </Button>
+                        <div onClick={() => editField('address', true)} className="c-account__link">
+                          {props.t('form:cancel-button')}
+                        </div>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="c-account__value c-account__address">{showAddress()}</div>
+                  )}
+                </div>
+              </FormContext>
             </div>
           </Wrapper>
         </div>
