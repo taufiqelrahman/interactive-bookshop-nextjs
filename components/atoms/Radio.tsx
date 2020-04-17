@@ -5,14 +5,16 @@ const Radio = React.forwardRef((props: any, ref: any) => {
   const variantClass = props.variant ? `c-radio__button--${props.variant}` : '';
   return (
     <div className="c-radio">
-      <input
-        type="radio"
-        name={props.name}
-        ref={ref}
-        value={props.value}
-        id={`${props.name}-${props.value}`}
-        defaultChecked={props.defaultChecked}
-      />
+      {ref && (
+        <input
+          type="radio"
+          name={props.name}
+          ref={ref}
+          value={props.value}
+          id={`${props.name}-${props.value}`}
+          defaultChecked={props.defaultChecked}
+        />
+      )}
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={`c-radio__button ${variantClass} ${errorClass}`} style={props.style}>
           {props.type === 'image' ? <img src={props.imageUrl} /> : props.type !== 'plain' && props.label}
