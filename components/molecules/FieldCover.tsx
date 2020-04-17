@@ -3,7 +3,7 @@ import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
 
-const FieldCover = React.forwardRef((props: any, ref: any) => {
+const FieldCover = (props: any) => {
   const colors = [
     { name: 'blue', color: '#445ca4' },
     { name: 'white', color: '#efeef4' },
@@ -21,7 +21,7 @@ const FieldCover = React.forwardRef((props: any, ref: any) => {
           {colors.map(cover => (
             <Radio
               key={cover.name}
-              ref={ref}
+              schema={props.schema}
               value={cover.name}
               name="Cover"
               errors={props.errors}
@@ -53,7 +53,7 @@ const FieldCover = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 FieldCover.displayName = 'FieldCover';
 
 export default withTranslation('form', { withRef: true })<any>(FieldCover);

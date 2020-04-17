@@ -1,5 +1,5 @@
 import { withTranslation, Router } from 'i18n';
-import { useForm } from 'react-hook-form';
+import { FormContext, useForm } from 'react-hook-form';
 import Card from 'components/atoms/Card';
 import Button from 'components/atoms/Button';
 import FieldOccupations from 'components/molecules/FieldOccupations';
@@ -14,9 +14,10 @@ const BookForm = (props: any) => {
     step: stepEnum.OCCUPATIONS,
     occupations: [],
   });
-  const { register, handleSubmit, errors, formState, watch } = useForm({
+  const methods = useForm({
     mode: 'onChange',
   });
+  const { register, handleSubmit, errors, formState, watch } = methods;
   const onSubmit = data => {
     let PARAMS = data;
     if (props.isMobile) PARAMS = { ...PARAMS, occupations: state.occupations };
@@ -43,68 +44,74 @@ const BookForm = (props: any) => {
   return (
     <div>
       <div className="c-book-form">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {props.isMobile ? (
-            <div style={{ overflow: 'hidden' }}>
+        <FormContext {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {props.isMobile ? (
+              <div style={{ overflow: 'hidden' }}>
+                <Card variant="shadow--bold">
+                  {state.step === stepEnum.OCCUPATIONS && (
+                    <div key={1} className="c-book-form__container c-book-form__container__mobile">
+                      {props.occupations.length > 0 && (
+                        <FieldOccupations
+                          ref={register(schema.occupations)}
+                          errors={errors.occupations}
+                          occupations={props.occupations}
+                        />
+                      )}
+                      <Button width="100%" disabled={!isFormValid} onClick={next}>
+                        {props.t('next-button')}
+                      </Button>
+                    </div>
+                  )}
+                  {state.step === stepEnum.DETAIL && (
+                    <div key={2} className="c-book-form__container c-book-form__container__mobile">
+                      <div>
+                        <FormTextField
+                          label={props.t('name-label')}
+                          name="name"
+                          placeholder={props.t('name-placeholder')}
+                          ref={register(schema.name)}
+                          errors={errors.name}
+                          variant="full-width"
+                        />
+                        <FieldAge schema={schema.age} errors={errors.age} />
+                      </div>
+                      <Button type="submit" width="100%" disabled={!isFormValid}>
+                        {props.t('continue-button')}
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              </div>
+            ) : (
               <Card variant="shadow--bold">
-                {state.step === stepEnum.OCCUPATIONS && (
-                  <div key={1} className="c-book-form__container c-book-form__container__mobile">
+                <div className="c-book-form__container">
+                  {props.occupations.length > 0 && (
                     <FieldOccupations
                       ref={register(schema.occupations)}
                       errors={errors.occupations}
+                      isMobile={props.isMobile}
                       occupations={props.occupations}
                     />
-                    <Button width="100%" disabled={!isFormValid} onClick={next}>
-                      {props.t('next-button')}
-                    </Button>
-                  </div>
-                )}
-                {state.step === stepEnum.DETAIL && (
-                  <div key={2} className="c-book-form__container c-book-form__container__mobile">
-                    <div>
-                      <FormTextField
-                        label={props.t('name-label')}
-                        name="name"
-                        placeholder={props.t('name-placeholder')}
-                        ref={register(schema.name)}
-                        errors={errors.name}
-                        variant="full-width"
-                      />
-                      <FieldAge ref={register(schema.age)} errors={errors.age} />
-                    </div>
-                    <Button type="submit" width="100%" disabled={!isFormValid}>
+                  )}
+                  <div className="c-book-form__second-row">
+                    <FormTextField
+                      label={props.t('name-label')}
+                      name="name"
+                      placeholder={props.t('name-placeholder')}
+                      ref={register(schema.name)}
+                      errors={errors.name}
+                    />
+                    <FieldAge schema={schema.age} errors={errors.age} />
+                    <Button type="submit" width="308px" disabled={!isFormValid}>
                       {props.t('continue-button')}
                     </Button>
                   </div>
-                )}
-              </Card>
-            </div>
-          ) : (
-            <Card variant="shadow--bold">
-              <div className="c-book-form__container">
-                <FieldOccupations
-                  ref={register(schema.occupations)}
-                  errors={errors.occupations}
-                  isMobile={props.isMobile}
-                  occupations={props.occupations}
-                />
-                <div className="c-book-form__second-row">
-                  <FormTextField
-                    label={props.t('name-label')}
-                    name="name"
-                    placeholder={props.t('name-placeholder')}
-                    ref={register(schema.name)}
-                    errors={errors.name}
-                  />
-                  <FieldAge ref={register(schema.age)} errors={errors.age} />
-                  <Button type="submit" width="308px" disabled={!isFormValid}>
-                    {props.t('continue-button')}
-                  </Button>
                 </div>
-              </div>
-            </Card>
-          )}
-        </form>
+              </Card>
+            )}
+          </form>
+        </FormContext>
       </div>
       <style jsx>{`
         .c-book-form {

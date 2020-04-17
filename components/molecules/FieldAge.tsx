@@ -3,7 +3,7 @@ import { withTranslation } from 'i18n';
 import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 
-const FieldAge = React.forwardRef((props: any, ref: any) => {
+const FieldAge = (props: any) => {
   const TODDLER = props.t('age-toddler') || 'Toddler';
   const KID = props.t('age-kid') || 'Kid';
   return (
@@ -17,7 +17,7 @@ const FieldAge = React.forwardRef((props: any, ref: any) => {
           {[TODDLER, KID].map(age => (
             <Radio
               key={age}
-              ref={ref}
+              schema={props.schema}
               value={age.toLowerCase()}
               label={age}
               name="Age"
@@ -44,7 +44,7 @@ const FieldAge = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 FieldAge.displayName = 'FieldAge';
 
 export default withTranslation('form', { withRef: true })<any>(FieldAge);

@@ -3,7 +3,7 @@ import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
 
-const FieldSkin = React.forwardRef((props: any, ref: any) => {
+const FieldSkin = (props: any) => {
   const skins = [
     { name: 'light', color: '#ffdbb7' },
     { name: 'medium', color: '#c78d61' },
@@ -21,7 +21,7 @@ const FieldSkin = React.forwardRef((props: any, ref: any) => {
           {skins.map(skin => (
             <Radio
               key={skin.name}
-              ref={ref}
+              schema={props.schema}
               value={skin.name}
               name="Skin"
               errors={props.errors}
@@ -54,7 +54,7 @@ const FieldSkin = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 FieldSkin.displayName = 'FieldSkin';
 
 export default withTranslation('form', { withRef: true })<any>(FieldSkin);

@@ -3,7 +3,7 @@ import { withTranslation } from 'i18n';
 import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 
-const FieldLanguage = React.forwardRef((props: any, ref: any) => (
+const FieldLanguage = (props: any) => (
   <div>
     <div className="c-field-language">
       <div className="c-field-language__header">
@@ -15,7 +15,7 @@ const FieldLanguage = React.forwardRef((props: any, ref: any) => (
         {['English', 'Bahasa Indonesia'].map(language => (
           <Radio
             key={language}
-            ref={ref}
+            schema={props.schema}
             value={language.toLowerCase()}
             label={language}
             name="Language"
@@ -41,7 +41,7 @@ const FieldLanguage = React.forwardRef((props: any, ref: any) => (
       }
     `}</style>
   </div>
-));
+);
 FieldLanguage.displayName = 'FieldLanguage';
 
 export default withTranslation('form', { withRef: true })<any>(FieldLanguage);

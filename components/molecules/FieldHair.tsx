@@ -3,7 +3,7 @@ import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
 
-const FieldHair = React.forwardRef((props: any, ref: any) => {
+const FieldHair = (props: any) => {
   const boyHair = [
     { name: 'straight', image: 'straight' },
     { name: 'curly', image: 'curly' },
@@ -25,7 +25,7 @@ const FieldHair = React.forwardRef((props: any, ref: any) => {
           {hair.map(hair => (
             <Radio
               key={hair.name}
-              ref={ref}
+              schema={props.schema}
               value={hair.name}
               name="Hair"
               errors={props.errors}
@@ -54,7 +54,7 @@ const FieldHair = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 FieldHair.displayName = 'FieldHair';
 
 export default withTranslation('form', { withRef: true })<any>(FieldHair);

@@ -3,7 +3,7 @@ import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
 
-const FieldGender = React.forwardRef((props: any, ref: any) => {
+const FieldGender = (props: any) => {
   const genders = [
     { name: 'boy', image: 'boy' },
     { name: 'girl', image: 'girl' },
@@ -20,7 +20,7 @@ const FieldGender = React.forwardRef((props: any, ref: any) => {
           {genders.map(gender => (
             <Radio
               key={gender.name}
-              ref={ref}
+              schema={props.schema}
               value={gender.name}
               name="Gender"
               errors={props.errors}
@@ -49,7 +49,7 @@ const FieldGender = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 FieldGender.displayName = 'FieldGender';
 
 export default withTranslation('form', { withRef: true })<any>(FieldGender);
