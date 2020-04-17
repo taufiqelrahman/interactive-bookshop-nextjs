@@ -43,66 +43,68 @@ const BookForm = (props: any) => {
   return (
     <div>
       <div className="c-book-form">
-        {props.isMobile ? (
-          <form onSubmit={handleSubmit(onSubmit)} style={{ overflow: 'hidden' }}>
-            <Card variant="shadow--bold">
-              {state.step === stepEnum.OCCUPATIONS && (
-                <div key={1} className="c-book-form__container c-book-form__container__mobile">
-                  <FieldOccupations
-                    ref={register(schema.occupations)}
-                    errors={errors.occupations}
-                    occupations={props.occupations}
-                  />
-                  <Button width="100%" disabled={!isFormValid} onClick={next}>
-                    {props.t('next-button')}
-                  </Button>
-                </div>
-              )}
-              {state.step === stepEnum.DETAIL && (
-                <div key={2} className="c-book-form__container c-book-form__container__mobile">
-                  <div>
-                    <FormTextField
-                      label={props.t('name-label')}
-                      name="name"
-                      placeholder={props.t('name-placeholder')}
-                      ref={register(schema.name)}
-                      errors={errors.name}
-                      variant="full-width"
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {props.isMobile ? (
+            <div style={{ overflow: 'hidden' }}>
+              <Card variant="shadow--bold">
+                {state.step === stepEnum.OCCUPATIONS && (
+                  <div key={1} className="c-book-form__container c-book-form__container__mobile">
+                    <FieldOccupations
+                      ref={register(schema.occupations)}
+                      errors={errors.occupations}
+                      occupations={props.occupations}
                     />
-                    <FieldAge ref={register(schema.age)} errors={errors.age} />
+                    <Button width="100%" disabled={!isFormValid} onClick={next}>
+                      {props.t('next-button')}
+                    </Button>
                   </div>
-                  <Button type="submit" width="100%" disabled={!isFormValid}>
+                )}
+                {state.step === stepEnum.DETAIL && (
+                  <div key={2} className="c-book-form__container c-book-form__container__mobile">
+                    <div>
+                      <FormTextField
+                        label={props.t('name-label')}
+                        name="name"
+                        placeholder={props.t('name-placeholder')}
+                        ref={register(schema.name)}
+                        errors={errors.name}
+                        variant="full-width"
+                      />
+                      <FieldAge ref={register(schema.age)} errors={errors.age} />
+                    </div>
+                    <Button type="submit" width="100%" disabled={!isFormValid}>
+                      {props.t('continue-button')}
+                    </Button>
+                  </div>
+                )}
+              </Card>
+            </div>
+          ) : (
+            <Card variant="shadow--bold">
+              <div className="c-book-form__container">
+                <FieldOccupations
+                  ref={register(schema.occupations)}
+                  errors={errors.occupations}
+                  isMobile={props.isMobile}
+                  occupations={props.occupations}
+                />
+                <div className="c-book-form__second-row">
+                  <FormTextField
+                    label={props.t('name-label')}
+                    name="name"
+                    placeholder={props.t('name-placeholder')}
+                    ref={register(schema.name)}
+                    errors={errors.name}
+                  />
+                  <FieldAge ref={register(schema.age)} errors={errors.age} />
+                  <Button type="submit" width="308px" disabled={!isFormValid}>
                     {props.t('continue-button')}
                   </Button>
                 </div>
-              )}
-            </Card>
-          </form>
-        ) : (
-          <Card variant="shadow--bold">
-            <form className="c-book-form__container" onSubmit={handleSubmit(onSubmit)}>
-              <FieldOccupations
-                ref={register(schema.occupations)}
-                errors={errors.occupations}
-                isMobile={props.isMobile}
-                occupations={props.occupations}
-              />
-              <div className="c-book-form__second-row">
-                <FormTextField
-                  label={props.t('name-label')}
-                  name="name"
-                  placeholder={props.t('name-placeholder')}
-                  ref={register(schema.name)}
-                  errors={errors.name}
-                />
-                <FieldAge ref={register(schema.age)} errors={errors.age} />
-                <Button type="submit" width="308px" disabled={!isFormValid}>
-                  {props.t('continue-button')}
-                </Button>
               </div>
-            </form>
-          </Card>
-        )}
+            </Card>
+          )}
+        </form>
       </div>
       <style jsx>{`
         .c-book-form {

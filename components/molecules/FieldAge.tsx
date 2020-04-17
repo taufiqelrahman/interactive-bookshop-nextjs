@@ -12,18 +12,19 @@ const FieldAge = React.forwardRef((props: any, ref: any) => (
       </div>
       <div className="c-field-age__options">
         {/* dummy */}
-        {[props.t('age-toddler'), props.t('age-kid')].map(age => (
-          <Radio
-            key={age}
-            ref={ref}
-            value={age.toLowerCase()}
-            label={age}
-            name="Age"
-            errors={props.errors}
-            style={{ height: 44, minWidth: 92 }}
-            defaultChecked={props.defaultChecked === age.toLowerCase()}
-          />
-        ))}
+        {ref &&
+          [props.t('age-toddler'), props.t('age-kid')].map(age => (
+            <Radio
+              key={age}
+              ref={ref}
+              value={age.toLowerCase()}
+              label={age}
+              name="Age"
+              errors={props.errors}
+              style={{ height: 44, minWidth: 92 }}
+              defaultChecked={props.defaultChecked === age.toLowerCase()}
+            />
+          ))}
       </div>
     </div>
     <style jsx>{`
