@@ -22,6 +22,25 @@ const handle = app.getRequestHandler();
 
   server.get('*', (req, res) => handle(req, res));
 
+  process.on('uncaughtException', (error, origin) => {
+    console.log({
+      name: 'uncaughtException',
+      message: error.message,
+      stack: error.stack,
+      origin: `Exception origin: ${origin}`,
+      response: (error.response || {}).data,
+    });
+  });
+
+  process.on('unhandledRejection', error => {
+    console.log({
+      name: 'unhandledRejection',
+      message: error.message,
+      stack: error.stack,
+      response: (error.response || {}).data,
+    });
+  });
+
   await server.listen(port);
   console.log(`> Ready on http://localhost:${port}`); // eslint-disable-line no-console
 })();
