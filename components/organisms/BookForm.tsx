@@ -29,7 +29,7 @@ const BookForm = (props: any) => {
       validate: value => value.length === 3,
     },
     name: { required: true },
-    gender: { required: true },
+    age: { required: true },
   };
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const BookForm = (props: any) => {
                       errors={errors.name}
                       variant="full-width"
                     />
-                    <FieldAge ref={register(schema.gender)} errors={errors.gender} />
+                    <FieldAge ref={register(schema.age)} errors={errors.age} />
                   </div>
                   <Button type="submit" width="100%" disabled={!isFormValid}>
                     {props.t('continue-button')}
@@ -95,7 +95,7 @@ const BookForm = (props: any) => {
                   ref={register(schema.name)}
                   errors={errors.name}
                 />
-                <FieldAge ref={register(schema.gender)} errors={errors.gender} />
+                <FieldAge ref={register(schema.age)} errors={errors.age} />
                 <Button type="submit" width="308px" disabled={!isFormValid}>
                   {props.t('continue-button')}
                 </Button>
