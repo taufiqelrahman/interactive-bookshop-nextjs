@@ -161,7 +161,13 @@ const CharacterCustomization = (props: any) => {
                   />
                 )}
                 {charStep === stepEnum.SKIN && (
-                  <FieldSkin schema={schema.skin} errors={errors.Skin} isMobile={true} defaultChecked={selected.Skin} />
+                  <FieldSkin
+                    schema={schema.skin}
+                    errors={errors.Skin}
+                    isMobile={true}
+                    defaultChecked={selected.Skin}
+                    register={register}
+                  />
                 )}
                 {charStep === stepEnum.LANGUAGE && (
                   <FieldLanguage
