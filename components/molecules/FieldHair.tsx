@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
@@ -13,6 +13,11 @@ const FieldHair = (props: any) => {
     { name: 'hijab', image: 'hijab' },
   ];
   const hair = props.type === 'boy' ? boyHair : girlHair;
+  useEffect(() => {
+    return () => {
+      props.unregister('Hair');
+    };
+  }, [props.type]);
   return (
     <div style={props.style}>
       <div className="c-field-hair">

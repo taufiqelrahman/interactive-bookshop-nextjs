@@ -19,7 +19,7 @@ import Stepper from 'components/atoms/Stepper';
 
 const CharacterCustomization = (props: any) => {
   const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
+  const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
     register({ name: 'Date of Birth' }, schema.dob);
   }, []);
@@ -101,6 +101,7 @@ const CharacterCustomization = (props: any) => {
                   <FieldHair
                     schema={schema.hair}
                     register={register}
+                    unregister={unregister}
                     errors={errors.Hair}
                     style={{ marginTop: 24 }}
                     type={watch('Gender')}

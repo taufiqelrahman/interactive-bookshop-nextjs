@@ -154,6 +154,7 @@ const CharacterCustomization = (props: any) => {
                   <FieldHair
                     schema={schema.hair}
                     register={register}
+                    unregister={unregister}
                     errors={errors.Hair}
                     type={watch('Gender')}
                     isMobile={true}
