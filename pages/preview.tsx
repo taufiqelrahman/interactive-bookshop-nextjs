@@ -1,17 +1,20 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { withTranslation } from 'i18n';
 import PreviewMobile from 'components/organisms/Preview/mobile';
 import PreviewDesktop from 'components/organisms/Preview/desktop';
 import actions from 'store/actions';
 import api from 'services/api';
+import Head from 'next/head';
 
-const Preview = (props: any): any => {
-  if (props.isMobile) {
-    return <PreviewMobile {...props} />;
-  } else {
-    return <PreviewDesktop {...props} />;
-  }
-};
+const Preview = (props: any): any => (
+  <div>
+    <Head>
+      <title>When I Grow Up | {props.t('book-preferences')}</title>
+    </Head>
+    {props.isMobile ? <PreviewMobile {...props} /> : <PreviewDesktop {...props} />}
+  </div>
+);
 
 Preview.getInitialProps = async (ctx: any): Promise<any> => {
   if (!ctx.reduxStore.getState().cart.selected) {
@@ -34,4 +37,4 @@ Preview.getInitialProps = async (ctx: any): Promise<any> => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Preview);
+export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Preview));

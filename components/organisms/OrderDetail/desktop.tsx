@@ -12,6 +12,7 @@ import Capsule from 'components/atoms/Capsule';
 import { fullDate } from 'lib/format-date';
 import { retrieveInfo, previewImg } from './helper';
 import Skeleton from 'react-loading-skeleton';
+import Head from 'next/head';
 
 const OrderDetailDesktop = (props: any): any => {
   const { isFetching, currentOrder: order } = props.state.orders;
@@ -31,6 +32,11 @@ const OrderDetailDesktop = (props: any): any => {
   } = retrieveInfo(order || {});
   return (
     <DefaultLayout {...props}>
+      <Head>
+        <title>
+          When I Grow Up | {props.t('order-title')}: {orderNumber}
+        </title>
+      </Head>
       <div className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}>
         <Stepper
           title={

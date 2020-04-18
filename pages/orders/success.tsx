@@ -5,12 +5,16 @@ import Card from 'components/atoms/Card';
 import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import NavBar from 'components/organisms/NavBar/mobile';
+import Head from 'next/head';
 
 const OrderSuccess = (props: any): any => {
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={props.t('checkout')} />}>
+      <Head>
+        <title>When I Grow Up | {props.t('checkout')}</title>
+      </Head>
       <div className="u-container" style={props.isMobile ? {} : { paddingTop: 61 }}>
         <div className="c-login">
           <Wrapper variant="border">

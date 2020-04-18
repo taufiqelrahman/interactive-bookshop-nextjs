@@ -13,6 +13,7 @@ import Sheet from 'components/atoms/Sheet';
 import { Swipeable } from 'react-swipeable';
 import Dot from 'components/atoms/Dot';
 import Skeleton from 'react-loading-skeleton';
+import Head from 'next/head';
 
 const OrderDetailMobile = (props: any): any => {
   const { isFetching, currentOrder: order } = props.state.orders;
@@ -53,6 +54,9 @@ const OrderDetailMobile = (props: any): any => {
       {...props}
       navbar={<NavBar setSideNav={props.setSideNav} menuAction={false} title={orderNumber} style={{ zIndex: 42 }} />}
     >
+      <Head>
+        <title>When I Grow Up | {orderNumber}</title>
+      </Head>
       <div
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
         style={{ minHeight: `calc(${screenHeight})` }}

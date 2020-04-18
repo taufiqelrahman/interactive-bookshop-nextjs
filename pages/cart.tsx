@@ -12,6 +12,7 @@ import Button from 'components/atoms/Button';
 import NumberFormat from 'react-number-format';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { Fragment, useEffect } from 'react';
+import Head from 'next/head';
 
 const Cart = (props: any): any => {
   const { users, cart } = props.state;
@@ -35,6 +36,9 @@ const Cart = (props: any): any => {
         props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('cart-title')} />
       }
     >
+      <Head>
+        <title>When I Grow Up | {props.t('cart-title')}</title>
+      </Head>
       <div className={props.isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={props.t('cart-title')} />}
         {items.length > 0 ? (

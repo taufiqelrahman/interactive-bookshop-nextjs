@@ -9,6 +9,7 @@ import OrderItemMobile from 'components/molecules/OrderItem/mobile';
 import NavBar from 'components/organisms/NavBar/mobile';
 import actions from 'store/actions';
 import api from 'services/api';
+import Head from 'next/head';
 
 const Orders = (props: any): any => {
   const screenHeight = '100vh - 59px';
@@ -20,6 +21,9 @@ const Orders = (props: any): any => {
       {...props}
       navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('my-orders')} />}
     >
+      <Head>
+        <title>When I Grow Up | {props.t('my-orders')}</title>
+      </Head>
       <div className={`u-container ${props.isMobile ? 'bg-light-grey' : 'u-container__page'}`}>
         {!props.isMobile && <Stepper title={props.t('my-orders')} />}
         <div className="c-orders-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>

@@ -13,6 +13,7 @@ import FormTextArea from 'components/molecules/FormTextArea';
 import { useForm } from 'react-hook-form';
 import Divider from 'components/atoms/Divider';
 import NavBar from 'components/organisms/NavBar/mobile';
+import Head from 'next/head';
 
 const Help = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -38,6 +39,9 @@ const Help = (props: any): any => {
         props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('help-title')} />
       }
     >
+      <Head>
+        <title>When I Grow Up | {props.t('help-title')}</title>
+      </Head>
       <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
         {props.isMobile ? (
           <img className="c-help-section__image" src="/static/images/welcome.png" />

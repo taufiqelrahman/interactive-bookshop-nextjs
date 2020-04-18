@@ -71,7 +71,7 @@ const BookForm = (props: any) => {
                         errors={errors.Name}
                         variant="full-width"
                       />
-                      <FieldAge schema={schema.age} errors={errors.Age} />
+                      <FieldAge schema={schema.age} errors={errors.Age} register={register} />
                     </div>
                     <Button type="submit" width="100%" disabled={!isFormValid}>
                       {props.t('continue-button')}

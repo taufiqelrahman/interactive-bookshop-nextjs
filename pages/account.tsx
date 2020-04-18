@@ -13,6 +13,7 @@ import api from 'services/api';
 import Modal from 'components/atoms/Modal';
 import actions from 'store/actions';
 import Select from 'react-select';
+import Head from 'next/head';
 
 const Account = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -189,6 +190,9 @@ const Account = (props: any): any => {
         )
       }
     >
+      <Head>
+        <title>When I Grow Up | {props.t('common:profile-title')}</title>
+      </Head>
       <div className={props.isMobile ? '' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={props.t('common:profile-title')} />}
         <div className="c-account" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
