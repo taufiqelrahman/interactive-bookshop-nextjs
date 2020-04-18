@@ -88,7 +88,7 @@ const CharacterCustomization = (props: any) => {
                   triggerValidation={triggerValidation}
                   errors={errors['Date of Birth']}
                   style={{ marginTop: 24 }}
-                  defaultValue={selected['Date of Birth']}
+                  defaultValue={selected['Date of Birth'] || null}
                 />
                 <FieldGender
                   schema={schema.gender}
@@ -154,9 +154,6 @@ const CharacterCustomization = (props: any) => {
           &__left {
             @apply w-full;
             @screen lg {
-              @apply w-4/5;
-            }
-            @screen xl {
               @apply w-3/5;
             }
             &__container {
@@ -164,12 +161,11 @@ const CharacterCustomization = (props: any) => {
             }
           }
           &__right {
-            padding: 0 100px;
+            padding: 0 0 0 10%;
+            @apply hidden;
             @screen lg {
-              @apply w-1/5;
-            }
-            @screen xl {
               @apply w-2/5;
+              @apply block;
             }
             img {
               @apply w-full;
