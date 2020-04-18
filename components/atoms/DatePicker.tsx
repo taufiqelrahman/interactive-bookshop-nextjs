@@ -29,7 +29,6 @@ const DatePicker = (props: any) => {
         }
       `}</style>
       <style jsx global>{`
-        @import '/static/styles/picker.min.css';
         .picker {
           @apply bg-white;
           &-cell {

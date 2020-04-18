@@ -1,7 +1,6 @@
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';

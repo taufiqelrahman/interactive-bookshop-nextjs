@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { NextPage } from 'next';
-import * as Sentry from '@sentry/browser';
+// import * as Sentry from '@sentry/browser';
 import { appWithTranslation, i18n, Router } from 'i18n';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import * as dayjs from 'dayjs';
@@ -74,6 +74,7 @@ const App: NextPage<any> = (props: any) => {
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600|Poppins:400,600,700&display=swap');
         @import '/static/styles/ReactToastify.min.css';
+        @import '/static/styles/picker.min.css';
 
         body {
           @apply font-poppins text-dark-grey;
