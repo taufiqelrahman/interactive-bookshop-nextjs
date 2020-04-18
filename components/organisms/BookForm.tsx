@@ -51,7 +51,7 @@ const BookForm = (props: any) => {
                     <FieldOccupations
                       schema={schema.occupations}
                       register={register}
-                      errors={errors.occupations}
+                      errors={errors.Occupations}
                       occupations={props.occupations}
                     />
                     <Button width="100%" disabled={!isFormValid} onClick={next}>
@@ -68,10 +68,10 @@ const BookForm = (props: any) => {
                         placeholder={props.t('name-placeholder')}
                         schema={schema.name}
                         register={register}
-                        errors={errors.name}
+                        errors={errors.Name}
                         variant="full-width"
                       />
-                      <FieldAge schema={schema.age} errors={errors.age} />
+                      <FieldAge schema={schema.age} errors={errors.Age} />
                     </div>
                     <Button type="submit" width="100%" disabled={!isFormValid}>
                       {props.t('continue-button')}
@@ -85,7 +85,7 @@ const BookForm = (props: any) => {
               <div className="c-book-form__container">
                 <FieldOccupations
                   schema={schema.occupations}
-                  errors={errors.occupations}
+                  errors={errors.Occupations}
                   isMobile={props.isMobile}
                   register={register}
                   occupations={props.occupations}
@@ -97,9 +97,9 @@ const BookForm = (props: any) => {
                     placeholder={props.t('name-placeholder')}
                     schema={schema.name}
                     register={register}
-                    errors={errors.name}
+                    errors={errors.Name}
                   />
-                  <FieldAge schema={schema.age} errors={errors.age} register={register} />
+                  <FieldAge schema={schema.age} errors={errors.Age} register={register} />
                   <Button type="submit" width="308px" disabled={!isFormValid}>
                     {props.t('continue-button')}
                   </Button>

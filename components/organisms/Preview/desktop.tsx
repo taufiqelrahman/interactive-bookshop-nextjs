@@ -41,7 +41,7 @@ const PreviewDesktop = (props: any): any => {
               <div className="c-preview__cover">
                 <FieldCover
                   schema={schema(props).cover}
-                  errors={errors.cover}
+                  errors={errors.Cover}
                   register={register}
                   style={{ marginTop: 24, marginBottom: 12 }}
                 />

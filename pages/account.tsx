@@ -285,7 +285,7 @@ const Account = (props: any): any => {
                       defaultValue={state.phone.value}
                       ref={props.register(schema.phone)}
                       name="newPhone"
-                      errors={errors.phone}
+                      errors={errors.newPhone}
                     />
                     {/* <div className="c-account__label">{props.t('new-number')}</div>
                       <TextField
@@ -299,7 +299,7 @@ const Account = (props: any): any => {
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.phone || watch('newPhone') === user.phone}
+                        disabled={errors.newPhone || watch('newPhone') === user.phone}
                         type="button"
                         onClick={onChangePhone}
                       >
