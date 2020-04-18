@@ -86,10 +86,10 @@ const Login = (props: any): any => {
   };
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const loginFacebook = () => {
-    window.location.href = 'http://localhost:8000/redirect-facebook';
+    window.location.href = `${process.env.API_URL}/redirect-facebook`;
   };
   const loginGoogle = () => {
-    window.location.href = 'http://localhost:8000/redirect-google';
+    window.location.href = `${process.env.API_URL}/redirect-google`;
   };
   return (
     <DefaultLayout
