@@ -4,8 +4,10 @@ import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 
 const FieldAge = (props: any) => {
-  const TODDLER = props.t('age-toddler') || 'Toddler';
-  const KID = props.t('age-kid') || 'Kid';
+  const ages = [
+    { name: props.t('age-toddler'), code: 'toddler' },
+    { name: props.t('age-kid'), code: 'kid' },
+  ];
   return (
     <div>
       <div className="c-field-age">
@@ -14,14 +16,14 @@ const FieldAge = (props: any) => {
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-age__options">
-          {[TODDLER, KID].map(age => (
+          {ages.map(age => (
             <Radio
-              key={age}
-              value={age.toLowerCase()}
-              label={age}
+              key={age.code}
+              value={age.code}
+              label={age.name}
               name="Age"
               style={{ height: 44, minWidth: 92 }}
-              defaultChecked={props.defaultChecked === age.toLowerCase()}
+              defaultChecked={props.defaultChecked === age.code}
               ref={props.register(props.schema)}
               {...props}
             />
