@@ -21,7 +21,7 @@ const FieldCover = (props: any) => {
           {colors.map(cover => (
             <Radio
               key={cover.name}
-              schema={props.schema}
+              ref={props.register(props.schema)}
               value={cover.name}
               name="Cover"
               errors={props.errors}

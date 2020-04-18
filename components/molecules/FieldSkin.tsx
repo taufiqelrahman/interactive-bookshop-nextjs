@@ -21,7 +21,7 @@ const FieldSkin = (props: any) => {
           {skins.map(skin => (
             <Radio
               key={skin.name}
-              schema={props.schema}
+              ref={props.register(props.schema)}
               value={skin.name}
               name="Skin"
               errors={props.errors}

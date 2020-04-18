@@ -18,7 +18,7 @@ const FieldOccupations = (props: any) => {
           {props.occupations.map(job => (
             <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
-                schema={props.schema}
+                ref={props.register(props.schema)}
                 value={job.name}
                 name="Occupations"
                 errors={props.errors}

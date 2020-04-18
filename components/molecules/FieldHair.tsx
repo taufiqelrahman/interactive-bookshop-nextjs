@@ -25,7 +25,7 @@ const FieldHair = (props: any) => {
           {hair.map(hair => (
             <Radio
               key={hair.name}
-              schema={props.schema}
+              ref={props.register(props.schema)}
               value={hair.name}
               name="Hair"
               errors={props.errors}

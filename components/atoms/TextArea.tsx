@@ -1,15 +1,10 @@
 import React from 'react';
-import { ConnectForm } from 'lib/form-connect';
 
-const TextArea = (props: any) => (
+const TextArea = React.forwardRef((props: any, ref: any) => (
   <div className={`c-text-area ${props.errors ? 'c-text-area--error' : ''}`}>
-    <ConnectForm>
-      {({ register }) => (
-        <textarea name={props.name} placeholder={props.placeholder} rows={3} ref={register(props.schema)}>
-          {props.defaultValue}
-        </textarea>
-      )}
-    </ConnectForm>
+    <textarea name={props.name} placeholder={props.placeholder} rows={3} ref={ref}>
+      {props.defaultValue}
+    </textarea>
     <div className="c-text-area__message">{props.errors ? props.errors.message : props.hint}</div>
     <style jsx>{`
       .c-text-area {
@@ -41,7 +36,7 @@ const TextArea = (props: any) => (
       }
     `}</style>
   </div>
-);
+));
 TextArea.displayName = 'TextArea';
 
 export default TextArea;

@@ -14,7 +14,7 @@ const FormTextArea = (props: any) => (
       <TextArea
         name={props.name}
         placeholder={props.placeholder}
-        schema={props.schema}
+        ref={props.register(props.schema)}
         errors={props.errors}
         defaultValue={props.defaultValue}
       />

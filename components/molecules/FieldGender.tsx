@@ -20,7 +20,7 @@ const FieldGender = (props: any) => {
           {genders.map(gender => (
             <Radio
               key={gender.name}
-              schema={props.schema}
+              ref={props.register(props.schema)}
               value={gender.name}
               name="Gender"
               errors={props.errors}

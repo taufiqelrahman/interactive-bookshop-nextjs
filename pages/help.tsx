@@ -10,15 +10,13 @@ import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
 import FormTextField from 'components/molecules/FormTextField';
 import FormTextArea from 'components/molecules/FormTextArea';
-import { useForm, FormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Divider from 'components/atoms/Divider';
 import NavBar from 'components/organisms/NavBar/mobile';
 
 const Help = (props: any): any => {
-  const methods = useForm({
-    mode: 'onChange',
-  });
-  const { handleSubmit, errors } = methods;
+  const methods = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, errors } = methods;
   const onSubmit = data => {
     console.log(data);
   };
@@ -94,29 +92,29 @@ const Help = (props: any): any => {
                   }}
                 />
                 <h2>{props.t('got-question')}</h2>
-                <FormContext {...methods}>
-                  <form className="c-help-section__form" onSubmit={handleSubmit(onSubmit)}>
-                    <FormTextField
-                      label={props.t('form:your-email-label')}
-                      name="email"
-                      placeholder={props.t('form:email-placeholder')}
-                      schema={schema.email}
-                      errors={errors.email}
-                      variant="full-width"
-                    />
-                    <FormTextArea
-                      label={props.t('form:message-label')}
-                      name="message"
-                      placeholder={props.t('form:message-placeholder')}
-                      schema={schema.message}
-                      errors={errors.message}
-                      style={{ marginTop: props.isMobile ? 12 : 24, marginBottom: props.isMobile ? 16 : 24 }}
-                    />
-                    <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
-                      {props.t('form:send-button')}
-                    </Button>
-                  </form>
-                </FormContext>
+                <form className="c-help-section__form" onSubmit={handleSubmit(onSubmit)}>
+                  <FormTextField
+                    label={props.t('form:your-email-label')}
+                    name="email"
+                    placeholder={props.t('form:email-placeholder')}
+                    schema={schema.email}
+                    register={register}
+                    errors={errors.email}
+                    variant="full-width"
+                  />
+                  <FormTextArea
+                    label={props.t('form:message-label')}
+                    name="message"
+                    placeholder={props.t('form:message-placeholder')}
+                    schema={schema.message}
+                    register={register}
+                    errors={errors.message}
+                    style={{ marginTop: props.isMobile ? 12 : 24, marginBottom: props.isMobile ? 16 : 24 }}
+                  />
+                  <Button variant="outline" width="100%" color="black" style={{ margin: '12px 0' }}>
+                    {props.t('form:send-button')}
+                  </Button>
+                </form>
               </div>
             </Wrapper>
           </div>

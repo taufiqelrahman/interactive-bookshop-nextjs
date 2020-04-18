@@ -1,23 +1,21 @@
 import React from 'react';
-import { ConnectForm } from 'lib/form-connect';
+// import { ConnectForm } from 'lib/form-connect';
+// import { useFormContext } from 'react-hook-form';
 
-const Radio = (props: any) => {
+const Radio = React.forwardRef((props: any, ref: any) => {
+  // const { register } = useFormContext();
   const errorClass = props.errors ? 'c-radio__button--error' : '';
   const variantClass = props.variant ? `c-radio__button--${props.variant}` : '';
   return (
     <div className="c-radio">
-      <ConnectForm>
-        {({ register }) => (
-          <input
-            type="radio"
-            name={props.name}
-            ref={register(props.schema)}
-            value={props.value}
-            id={`${props.name}-${props.value}`}
-            defaultChecked={props.defaultChecked}
-          />
-        )}
-      </ConnectForm>
+      <input
+        type="radio"
+        name={props.name}
+        ref={ref}
+        value={props.value}
+        id={`${props.name}-${props.value}`}
+        defaultChecked={props.defaultChecked}
+      />
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={`c-radio__button ${variantClass} ${errorClass}`} style={props.style}>
           {props.type === 'image' ? <img src={props.imageUrl} /> : props.type !== 'plain' && props.label}
@@ -60,7 +58,7 @@ const Radio = (props: any) => {
       `}</style>
     </div>
   );
-};
+});
 Radio.displayName = 'Radio';
 
 export default Radio;

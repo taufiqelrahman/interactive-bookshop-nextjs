@@ -17,13 +17,13 @@ const FieldAge = (props: any) => {
           {[TODDLER, KID].map(age => (
             <Radio
               key={age}
-              schema={props.schema}
               value={age.toLowerCase()}
               label={age}
               name="Age"
-              errors={props.errors}
               style={{ height: 44, minWidth: 92 }}
               defaultChecked={props.defaultChecked === age.toLowerCase()}
+              ref={props.register(props.schema)}
+              {...props}
             />
           ))}
         </div>

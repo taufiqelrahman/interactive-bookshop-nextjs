@@ -1,4 +1,4 @@
-import { useForm, FormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useEffect, useState, Fragment } from 'react';
 import { withTranslation, Router } from 'i18n';
 import FieldOccupations from 'components/molecules/FieldOccupations';
@@ -29,9 +29,7 @@ const CharacterCustomization = (props: any) => {
   };
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
-  const methods = useForm({
-    mode: 'onChange',
-  });
+  const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   const cancel = () => {
     setShowSheet(true);
@@ -92,114 +90,113 @@ const CharacterCustomization = (props: any) => {
         />
       }
     >
-      <FormContext {...methods}>
-        <form className="c-char-custom" style={{ height: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            {charStep === stepEnum.OCCUPATIONS ? (
-              <div className="u-container u-container__page">
-                <FieldOccupations
-                  schema={schema.occupations}
-                  errors={errors.Occupations}
-                  defaultChecked={selected.Occupations}
-                  occupations={occupations}
-                />
-                {watch('Occupations') && (
-                  <div className="c-char-custom__message">
-                    {errors.Occupations ? props.t('occupations-invalid') : watch('Occupations').join(', ')}
-                  </div>
+      <form className="c-char-custom" style={{ height: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          {charStep === stepEnum.OCCUPATIONS ? (
+            <div className="u-container u-container__page">
+              <FieldOccupations
+                schema={schema.occupations}
+                register={register}
+                errors={errors.Occupations}
+                defaultChecked={selected.Occupations}
+                occupations={occupations}
+              />
+              {watch('Occupations') && (
+                <div className="c-char-custom__message">
+                  {errors.Occupations ? props.t('occupations-invalid') : watch('Occupations').join(', ')}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
+              <div className="u-container c-char-custom__preview">
+                <div>
+                  <img src={previewImg(selected, watch)} />
+                </div>
+              </div>
+              <div className="u-container c-char-custom__tab">
+                {charStep === stepEnum.NAME_DOB && (
+                  <Fragment>
+                    <FormTextField
+                      label={props.t('char-name-label')}
+                      name="Name"
+                      placeholder={props.t('name-placeholder')}
+                      schema={schema.name}
+                      register={register}
+                      errors={errors.Name}
+                      defaultValue={selected.Name}
+                      variant="full-width"
+                    />
+                    <FieldDob
+                      name="Date of Birth"
+                      setValue={setValue}
+                      triggerValidation={triggerValidation}
+                      errors={errors['Date of Birth']}
+                      style={{ marginTop: 12 }}
+                      defaultValue={selected['Date of Birth']}
+                      {...props}
+                    />
+                  </Fragment>
+                )}
+                {charStep === stepEnum.AGE && (
+                  <FieldAge schema={schema.age} register={register} errors={errors.Age} defaultChecked={selected.Age} />
+                )}
+                {charStep === stepEnum.GENDER && (
+                  <FieldGender
+                    schema={schema.gender}
+                    register={register}
+                    errors={errors.Gender}
+                    isMobile={true}
+                    defaultChecked={selected.Gender}
+                  />
+                )}
+                {charStep === stepEnum.HAIR && (
+                  <FieldHair
+                    schema={schema.hair}
+                    register={register}
+                    errors={errors.Hair}
+                    type={watch('Gender')}
+                    isMobile={true}
+                    defaultChecked={selected.Hair}
+                  />
+                )}
+                {charStep === stepEnum.SKIN && (
+                  <FieldSkin schema={schema.skin} errors={errors.Skin} isMobile={true} defaultChecked={selected.Skin} />
+                )}
+                {charStep === stepEnum.LANGUAGE && (
+                  <FieldLanguage
+                    schema={schema.language}
+                    register={register}
+                    errors={errors.Language}
+                    isMobile={true}
+                    defaultChecked={selected.Language}
+                  />
+                )}
+                {charStep === stepEnum.DEDICATION && (
+                  <FormTextArea
+                    label={props.t('dedication-label')}
+                    hint={props.t('dedication-hint')}
+                    name="Dedication"
+                    placeholder={props.t('dedication-placeholder')}
+                    schema={schema.dedication}
+                    register={register}
+                    errors={errors.Dedication}
+                    defaultValue={selected.Dedication}
+                  />
                 )}
               </div>
-            ) : (
-              <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
-                <div className="u-container c-char-custom__preview">
-                  <div>
-                    <img src={previewImg(selected, watch)} />
-                  </div>
-                </div>
-                <div className="u-container c-char-custom__tab">
-                  {charStep === stepEnum.NAME_DOB && (
-                    <Fragment>
-                      <FormTextField
-                        label={props.t('char-name-label')}
-                        name="Name"
-                        placeholder={props.t('name-placeholder')}
-                        schema={schema.name}
-                        errors={errors.Name}
-                        defaultValue={selected.Name}
-                        variant="full-width"
-                      />
-                      <FieldDob
-                        name="Date of Birth"
-                        setValue={setValue}
-                        triggerValidation={triggerValidation}
-                        errors={errors['Date of Birth']}
-                        style={{ marginTop: 12 }}
-                        defaultValue={selected['Date of Birth']}
-                        {...props}
-                      />
-                    </Fragment>
-                  )}
-                  {charStep === stepEnum.AGE && (
-                    <FieldAge schema={schema.age} errors={errors.Age} defaultChecked={selected.Age} />
-                  )}
-                  {charStep === stepEnum.GENDER && (
-                    <FieldGender
-                      schema={schema.gender}
-                      errors={errors.Gender}
-                      isMobile={true}
-                      defaultChecked={selected.Gender}
-                    />
-                  )}
-                  {charStep === stepEnum.HAIR && (
-                    <FieldHair
-                      schema={schema.hair}
-                      errors={errors.Hair}
-                      type={watch('Gender')}
-                      isMobile={true}
-                      defaultChecked={selected.Hair}
-                    />
-                  )}
-                  {charStep === stepEnum.SKIN && (
-                    <FieldSkin
-                      schema={schema.skin}
-                      errors={errors.Skin}
-                      isMobile={true}
-                      defaultChecked={selected.Skin}
-                    />
-                  )}
-                  {charStep === stepEnum.LANGUAGE && (
-                    <FieldLanguage
-                      schema={schema.language}
-                      errors={errors.Language}
-                      isMobile={true}
-                      defaultChecked={selected.Language}
-                    />
-                  )}
-                  {charStep === stepEnum.DEDICATION && (
-                    <FormTextArea
-                      label={props.t('dedication-label')}
-                      hint={props.t('dedication-hint')}
-                      name="Dedication"
-                      placeholder={props.t('dedication-placeholder')}
-                      schema={schema.dedication}
-                      errors={errors.Dedication}
-                      defaultValue={selected.Dedication}
-                    />
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="u-container">
-            <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-              {props.t('next-button')}
-            </Button>
-            <div onClick={cancel} className="c-char-custom__link">
-              {props.t('cancel-button')}
             </div>
+          )}
+        </div>
+        <div className="u-container">
+          <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
+            {props.t('next-button')}
+          </Button>
+          <div onClick={cancel} className="c-char-custom__link">
+            {props.t('cancel-button')}
           </div>
-        </form>
-      </FormContext>
+        </div>
+      </form>
       <Sheet
         name="quit-sheet"
         isOpen={showSheet}

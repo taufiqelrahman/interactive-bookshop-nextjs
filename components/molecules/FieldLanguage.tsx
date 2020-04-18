@@ -15,7 +15,7 @@ const FieldLanguage = (props: any) => (
         {['English', 'Bahasa Indonesia'].map(language => (
           <Radio
             key={language}
-            schema={props.schema}
+            ref={props.register(props.schema)}
             value={language.toLowerCase()}
             label={language}
             name="Language"
