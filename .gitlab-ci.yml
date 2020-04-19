@@ -8,8 +8,6 @@ test:
 deploy_production:
   stage: deploy
   image: docker:stable
-  # variables:
-  #   GIT_SUBMODULE_STRATEGY: recursive
   services:
     - docker:dind
   tags:
