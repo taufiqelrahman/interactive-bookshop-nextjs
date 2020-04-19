@@ -49,7 +49,10 @@ const DefaultLayout = (props: any) => {
           thunkLogout={props.thunkLogout}
         />
       )}
-      <div className={`c-layout ${props.isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`}>
+      <div
+        className={`c-layout ${props.isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`}
+        style={props.style}
+      >
         <ToastContainer
           className="c-toast__container"
           toastClassName="c-toast__toast"

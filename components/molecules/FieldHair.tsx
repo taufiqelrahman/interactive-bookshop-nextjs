@@ -5,7 +5,7 @@ import { withTranslation } from 'i18n';
 
 const FieldHair = (props: any) => {
   const boyHair = [
-    { name: 'straight', image: 'straight' },
+    { name: 'short', image: 'short' },
     { name: 'curly', image: 'curly' },
   ];
   const girlHair = [

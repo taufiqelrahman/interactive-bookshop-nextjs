@@ -157,7 +157,7 @@ const Index = (props: any): any => {
                 @apply flex-col;
               }
               @screen md {
-                @apply flex-row;
+                flex-direction: row !important;
               }
             }
             &__image {
@@ -225,6 +225,7 @@ const Index = (props: any): any => {
           &__content {
             @apply w-full text-center;
             padding: 0 40px;
+            z-index: 10;
             @screen md {
               @apply w-5/12 text-left;
               padding: 0;

@@ -1,9 +1,9 @@
-# test:
-#   stage: test
-#   image: mhart/alpine-node:12
-#   script:
-#     - yarn
-#     - npm run lint
+test:
+  stage: test
+  image: mhart/alpine-node:12
+  script:
+    - yarn
+    - npm run lint
 
 deploy_production:
   stage: deploy
