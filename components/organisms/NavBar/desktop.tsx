@@ -68,7 +68,7 @@ const NavBar = (props: any) => {
               </a>
             </Link>
             <div className="c-nav-bar__menu">
-              {(isSticky || !isIndexPage) && <TranslationToggle />}
+              <TranslationToggle isSticky={isSticky} />
               <Link href="/cart">
                 <div
                   className="c-nav-bar__menu__cart"

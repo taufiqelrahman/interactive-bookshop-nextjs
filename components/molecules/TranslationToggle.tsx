@@ -1,8 +1,11 @@
+import { useRouter } from 'next/router';
 import Toggle from 'components/atoms/Toggle';
 import { i18n } from 'i18n';
 import { useEffect, useState } from 'react';
 
 const TranslationToggle = (props: any) => {
+  const router = useRouter();
+  const isIndexPage = router.pathname === '/';
   const [isEnglish, setEnglish] = useState(true);
 
   const changeLanguage = () => {
@@ -16,7 +19,11 @@ const TranslationToggle = (props: any) => {
 
   return (
     <div style={props.style}>
-      <Toggle value={isEnglish} onChange={changeLanguage}>
+      <Toggle
+        value={isEnglish}
+        onChange={changeLanguage}
+        style={isIndexPage && !props.isSticky ? { borderColor: '#333' } : {}}
+      >
         <div className="c-translate">
           <div className={`c-translate__option ${isEnglish ? '' : 'active'}`}>ID</div>
           <div className={`c-translate__option ${isEnglish ? 'active' : ''}`}>EN</div>

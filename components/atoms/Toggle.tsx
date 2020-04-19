@@ -1,7 +1,7 @@
 const Toggle = (props: any) => {
   return (
     <div>
-      <label className="c-toggle">
+      <label className="c-toggle" style={props.style}>
         <input type="checkbox" checked={props.value} onChange={props.onChange} />
         <span className="c-toggle__slider">{props.children}</span>
       </label>
