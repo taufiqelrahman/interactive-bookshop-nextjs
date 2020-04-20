@@ -5,8 +5,11 @@ import { withTranslation, Link } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Button from 'components/atoms/Button';
+import { useRouter } from 'next/router';
 
 const Error: NextPage<any> = (props: any) => {
+  const router = useRouter();
+  const isIndexPage = router.pathname === '/';
   const title = () => {
     if (!props.statusCode) return props.t('whoops');
     return props.statusCode;
@@ -45,7 +48,7 @@ const Error: NextPage<any> = (props: any) => {
             linear-gradient(180deg, #0b094e 0%, #171763 100%);
           min-height: calc(100vh - 59px);
           @screen md {
-            min-height: calc(100vh - 80px);
+            min-height: ${isIndexPage ? '100vh' : 'calc(100vh - 80px)'};
           }
           &__title {
             @apply font-semibold;
@@ -71,7 +74,6 @@ const Error: NextPage<any> = (props: any) => {
               @screen md {
                 width: 270px;
                 left: 5%;
-                top: 5%;
               }
             }
             &--red {
