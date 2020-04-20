@@ -2,9 +2,7 @@ import React from 'react';
 
 const TextArea = React.forwardRef((props: any, ref: any) => (
   <div className={`c-text-area ${props.errors ? 'c-text-area--error' : ''}`}>
-    <textarea name={props.name} placeholder={props.placeholder} rows={3} ref={ref}>
-      {props.defaultValue}
-    </textarea>
+    <textarea name={props.name} placeholder={props.placeholder} rows={3} ref={ref} defaultValue={props.defaultValue} />
     <div className="c-text-area__message">{props.errors ? props.errors.message : props.hint}</div>
     <style jsx>{`
       .c-text-area {
