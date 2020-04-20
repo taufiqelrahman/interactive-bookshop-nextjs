@@ -55,5 +55,9 @@
   "otp-verify": "OTP Verification",
   "otp-verify-text": "Enter the 6-digit verification code we’ve sent to your old number to change your phone number.",
   "otp-code": "Verification Code",
-  "otp-resend": "Resend Verification Code"
+  "otp-resend": "Resend Verification Code",
+  "whoops": "Whoops",
+  "error-message-404": "We tried our best to find this page but looks like it’s gone :(",
+  "error-message-500": "An unexpected error seems to have occured. Why not retry refreshing your page? Or you can contact us if the problem persists.",
+  "error-message-general": "Something went terribly wrong :("
 }

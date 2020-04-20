@@ -7,6 +7,10 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import Button from 'components/atoms/Button';
 
 const Error: NextPage<any> = (props: any) => {
+  const title = () => {
+    if (!props.statusCode) return props.t('whoops');
+    return props.statusCode;
+  };
   const message = () => {
     switch (props.statusCode) {
       case 404:
@@ -24,7 +28,7 @@ const Error: NextPage<any> = (props: any) => {
       style={{ display: 'flex' }}
     >
       <div className="c-error">
-        {props.statusCode && <div className="c-error__title">{props.statusCode}</div>}
+        <div className="c-error__title">{title()}</div>
         <div className="c-error__message">{message()}</div>
         <Link href="/">
           <Button style={props.isMobile ? { width: '100%' } : {}} width={props.isMobile ? '100%' : null}>
