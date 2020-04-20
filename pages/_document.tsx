@@ -10,13 +10,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta
-            key="viewport"
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-          />
           <meta key="robots" name="robots" content="noimageindex" />
-          <meta key="httpEquiv" httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta key="theme-color" name="theme-color" content="#000000" />
           <link key="icon" rel="icon" href="/static/favicon.ico" />
           <link key="apple-touch-icon" rel="apple-touch-icon" href="/static/images/icons/pasfoto-icon.png" />
@@ -29,10 +23,100 @@ class MyDocument extends Document {
           />
           <link key="manifest" rel="manifest" href="/static/manifest.json" />
           <meta
-            key="Description"
-            name="Description"
+            key="description"
+            name="description"
             content="children books, custom books, parenting books, parenting, children, baby, creativity, growing up"
           />
+          {/* PWA */}
+          <meta key="charSet" charSet="utf-8" />
+          <meta key="httpEquiv" httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta
+            key="viewport"
+            name="viewport"
+            content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+          />
+          <meta
+            key="keyword"
+            name="keywords"
+            content="children books, custom books, parenting books, parenting, children, baby, creativity, growing up"
+          />
+          {/* <!-- Android  --> */}
+          <meta key="theme-color" name="theme-color" content="#de6236" />
+          <meta key="mobile-web-app-capable" name="mobile-web-app-capable" content="yes" />
+
+          {/* <!-- iOS --> */}
+          <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
+          <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
+          <meta
+            key="apple-mobile-web-app-status-bar-style"
+            name="apple-mobile-web-app-status-bar-style"
+            content="default"
+          />
+
+          {/* <!-- Windows  --> */}
+          <meta key="msapplication-navbutton-color" name="msapplication-navbutton-color" content="#de6236" />
+          <meta key="msapplication-TileColor" name="msapplication-TileColor" content="#de6236" />
+          <meta key="msapplication-TileImage" name="msapplication-TileImage" content="icon-144x144.png" />
+          <meta key="msapplication-config" name="msapplication-config" content="browserconfig.xml" />
+
+          {/* <!-- Pinned Sites  --> */}
+          <meta key="application-name" name="application-name" content="When I Grow Up" />
+          <meta key="msapplication-tooltip" name="msapplication-tooltip" content="When I Grow Up" />
+          <meta key="msapplication-starturl" name="msapplication-starturl" content="/" />
+
+          {/* <!-- Tap highlighting  --> */}
+          <meta key="msapplication-tap-highlight" name="msapplication-tap-highlight" content="no" />
+
+          {/* <!-- UC Mobile Browser  --> */}
+          <meta key="full-screen" name="full-screen" content="yes" />
+          <meta key="browsermode" name="browsermode" content="application" />
+
+          {/* <!-- Disable night mode for this page  --> */}
+          <meta key="nightmode" name="nightmode" content="enable/disable" />
+
+          {/* <!-- Fitscreen  --> */}
+          <meta key="viewport" name="viewport" content="uc-fitscreen=yes" />
+
+          {/* <!-- Layout mode --> */}
+          <meta key="layoutmode" name="layoutmode" content="fitscreen/standard" />
+
+          {/* <!-- imagemode - show image even in text only mode  --> */}
+          <meta key="imagemode" name="imagemode" content="force" />
+
+          {/* <!-- Orientation  --> */}
+          {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
+
+          {/* <!-- Main Link Tags  --> */}
+          <link href="favicon-16.png" rel="icon" type="image/png" sizes="16x16" />
+          <link href="favicon-32.png" rel="icon" type="image/png" sizes="32x32" />
+          <link href="favicon-48.png" rel="icon" type="image/png" sizes="48x48" />
+
+          {/* <!-- iOS  --> */}
+          <link href="touch-icon-iphone.png" rel="apple-touch-icon" />
+          <link href="touch-icon-ipad.png" rel="apple-touch-icon" sizes="76x76" />
+          <link href="touch-icon-iphone-retina.png" rel="apple-touch-icon" sizes="120x120" />
+          <link href="touch-icon-ipad-retina.png" rel="apple-touch-icon" sizes="152x152" />
+
+          {/* <!-- Startup Image  --> */}
+          <link href="touch-icon-start-up-320x480.png" rel="apple-touch-startup-image" />
+
+          {/* <!-- Pinned Tab  --> */}
+          {/* <link href="path/to/icon.svg" rel="mask-icon" size="any" color="red" /> */}
+          <link href="path/to/icon.svg" rel="mask-icon" color="red" />
+
+          {/* <!-- Android  --> */}
+          <link href="icon-192x192.png" rel="icon" sizes="192x192" />
+          <link href="icon-128x128.png" rel="icon" sizes="128x128" />
+
+          {/* <!-- Others --> */}
+          <link href="favicon.icon" rel="shortcut icon" type="image/x-icon" />
+
+          {/* <!-- UC Browser  --> */}
+          <link href="images/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
+          <link href="images/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
+
+          {/* <!-- Manifest.json  --> */}
+          <link href="/manifest.json" rel="manifest" />
         </Head>
         <body>
           <Main />

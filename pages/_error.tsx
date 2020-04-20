@@ -6,6 +6,7 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Button from 'components/atoms/Button';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const Error: NextPage<any> = (props: any) => {
   const router = useRouter();
@@ -30,6 +31,9 @@ const Error: NextPage<any> = (props: any) => {
       navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} />}
       style={{ display: 'flex' }}
     >
+      <Head>
+        <title>When I Grow Up | {title()}</title>
+      </Head>
       <div className="c-error">
         <div className="c-error__title">{title()}</div>
         <div className="c-error__message">{message()}</div>
