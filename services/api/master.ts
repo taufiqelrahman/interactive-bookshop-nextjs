@@ -1,4 +1,5 @@
 import { AdapterObject } from './index';
+import queryString from 'query-string';
 
 export default class Products {
   adapter: AdapterObject;
@@ -15,8 +16,8 @@ export default class Products {
     return this.adapter.default.get('/occupations')
   }
 
-  getBookPages() {
-    return this.adapter.default.get('/book-pages')
+  getBookPages(params) {
+    return this.adapter.secure.get(`/book-pages?${queryString.stringify(params)}`)
   }
 
   getProvinces() {

@@ -8,19 +8,32 @@ const BookPage = (props: any) => {
     if (string) style = { ...style, ...JSON.parse(string) };
     return style;
   };
+  const processContent = (content, languange) => {
+    const isEnglish = languange === 'english';
+    let processed = isEnglish ? content.english : content.indonesia;
+    processed = processed.split('[name]').join(props.name);
+    if (isEnglish) {
+      const isBoy = props.gender === 'boy';
+      processed = processed.split('[child]').join(isBoy ? 'boy' : 'girl');
+      processed = processed.split('[child:1]').join(isBoy ? 'he' : 'she');
+      processed = processed.split('[child:2]').join(isBoy ? 'his' : 'her');
+      processed = processed.split('[child:3]').join(isBoy ? 'him' : 'her');
+    }
+    return processed;
+  };
   return (
     <div className={`c-book-page ${props.className || ''}`} style={props.style}>
       <svg className="c-book-page__svg">
         <foreignObject x="0" y="0" width="100%" height="100%">
           <img className="c-book-page__image" src={props.image} />
-          {props.contents.map((content, key) => {
-            const value = props.languange === 'english' ? content.english : content.indonesia;
+          {props.pages.map((page, key) => {
+            const content = processContent(page, props.languange);
             return (
               <div
                 key={key}
                 className="c-book-page__content"
-                style={styleGenerator(content.style)}
-                dangerouslySetInnerHTML={{ __html: value.split('[name]').join(props.name) }}
+                style={styleGenerator(page.style)}
+                dangerouslySetInnerHTML={{ __html: content }}
               />
             );
           })}

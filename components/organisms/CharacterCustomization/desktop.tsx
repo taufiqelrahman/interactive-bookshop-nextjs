@@ -13,7 +13,7 @@ import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
-import { schema, showError, previewImg } from './helper';
+import { schema, showError, previewImg, getJobIds } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 
@@ -41,12 +41,12 @@ const CharacterCustomization = (props: any) => {
       // 'Date of Birth': '03-01-2019',
       // Hair: 'short',
     };
+  const { occupations } = props.state.master;
   const onSubmit = data => {
-    const PARAMS = selected && selected.id ? { ...selected, ...data } : data;
-    props.saveSelected(PARAMS);
+    const jobIds = getJobIds(data.Occupations, occupations);
+    props.saveSelected({ ...selected, ...data, jobIds });
     Router.push('/preview');
   };
-  const { occupations } = props.state.master;
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page--large">

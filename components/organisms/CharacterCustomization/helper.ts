@@ -35,3 +35,9 @@ export const previewImg = (data, watch) => {
   const pickedHair = watch('Hair') || Hair || 'short';
   return `${filePath}/${pickedGender}/${pickedAge}/${pickedHair}/${pickedSkin}.png`;
 };
+
+export const getJobIds = (names, list) => {
+  return names.map(job => {
+    return list.find(occ => occ.name === job).id;
+  });
+};

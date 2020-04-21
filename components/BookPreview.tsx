@@ -3,6 +3,7 @@ import $ from 'jquery';
 import initHeidelberg from 'assets/heidelberg.js';
 import debounce from 'lodash.debounce';
 import BookPage from './atoms/BookPage';
+import groupby from 'lodash.groupby';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
@@ -19,7 +20,7 @@ const BookPreview = (props: any) => {
 
   const updateHeight = () => {
     const image: any = document.querySelector('.Heidelberg-Page img');
-    setState({ ...state, height: image.height, loaded: true });
+    if (image) setState({ ...state, height: image.height, loaded: true });
     return Promise.resolve();
   };
 
@@ -95,9 +96,11 @@ const BookPreview = (props: any) => {
   //   updatePageInfo();
   // };
 
-  const getImage = (job, order) => {
+  const bookPages = props.bookPages.length > 0 ? groupby(props.bookPages, page => page.page_number) : {};
+
+  const getImage = (job, pageNumber) => {
     const { Gender, Age, Skin, Hair } = props.selected;
-    return `/static/images/pages/${job}/page-${order}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
+    return `/static/images/pages/${job}/page-${pageNumber}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
   };
 
   const pageClass = index => {
@@ -125,34 +128,34 @@ const BookPreview = (props: any) => {
         />
       </div> */}
       {props.isMobile ? (
-        props.bookPages &&
-        props.bookPages.map((page, index) => (
+        Object.keys(bookPages).map((pageNumber, index) => (
           <BookPage
             key={index}
             style={{
               height: `calc(${bookHeight})`,
               minWidth: `calc(${bookRatio}*${bookHeight})`,
             }}
-            image={getImage(page.occupation.name, page.order)}
-            name={props.selected.name}
-            contents={page.book_contents}
-            languange={props.selected.language}
+            image={getImage(bookPages[pageNumber][0].occupation.name, pageNumber)}
+            name={props.selected.Name}
+            languange={props.selected.Language}
+            gender={props.selected.Gender}
+            pages={bookPages[pageNumber]}
           />
         ))
       ) : (
         <div className="c-book-preview__container">
           <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
-            {props.bookPages &&
-              props.bookPages.map((page, index) => (
-                <BookPage
-                  key={index}
-                  className={`Heidelberg-Page ${pageClass(index)}`}
-                  image={getImage(page.occupation.name, page.order)}
-                  name={props.selected.name}
-                  contents={page.book_contents}
-                  languange={props.selected.language}
-                />
-              ))}
+            {Object.keys(bookPages).map((pageNumber, index) => (
+              <BookPage
+                key={index}
+                className={`Heidelberg-Page ${pageClass(index)}`}
+                image={getImage(bookPages[pageNumber][0].occupation.name, pageNumber)}
+                name={props.selected.Name}
+                languange={props.selected.Language}
+                gender={props.selected.Gender}
+                pages={bookPages[pageNumber]}
+              />
+            ))}
           </div>
         </div>
       )}

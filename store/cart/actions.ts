@@ -153,6 +153,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
 ): Promise<any> => {
   dispatch(addToCart(true));
   const { cart } = (getState() as any).users.user;
+  delete newProduct.jobIds;
   const customAttributes = Object.keys(newProduct).map(data => ({
     key: data,
     value: newProduct[data].toString(),

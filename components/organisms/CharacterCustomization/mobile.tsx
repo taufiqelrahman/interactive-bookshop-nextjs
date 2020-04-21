@@ -11,7 +11,7 @@ import FieldSkin from 'components/molecules/FieldSkin';
 import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Button from 'components/atoms/Button';
-import { schema, showError, previewImg } from './helper';
+import { schema, showError, previewImg, getJobIds } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Sheet from 'components/atoms/Sheet';
@@ -67,8 +67,10 @@ const CharacterCustomization = (props: any) => {
       // dob: '03-01-2019',
       // hair: 'short',
     };
+  const { occupations } = props.state.master;
   const onSubmit = data => {
-    props.saveSelected({ ...selected, ...data });
+    const jobIds = getJobIds(data.Occupations, occupations);
+    props.saveSelected({ ...selected, ...data, jobIds });
     if (charStep !== stepEnum.DEDICATION) {
       setCharStep(charStep + 1);
       return;
@@ -76,7 +78,6 @@ const CharacterCustomization = (props: any) => {
     Router.push('/preview');
   };
   const screenHeight = '100vh - 69px';
-  const { occupations } = props.state.master;
   return (
     <DefaultLayout
       {...props}

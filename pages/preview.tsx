@@ -17,7 +17,8 @@ const Preview = (props: any): any => (
 );
 
 Preview.getInitialProps = async (ctx: any): Promise<any> => {
-  if (!ctx.reduxStore.getState().cart.selected) {
+  const { selected } = ctx.reduxStore.getState().cart;
+  if (!selected) {
     const { res } = ctx;
     if (res) {
       res.writeHead(302, { Location: 'create' });
@@ -27,7 +28,8 @@ Preview.getInitialProps = async (ctx: any): Promise<any> => {
   }
   try {
     ctx.reduxStore.dispatch(actions.loadBookPages(true));
-    const { data } = await api().master.getBookPages();
+    const PARAMS = { jobs: selected.jobIds.toString() };
+    const { data } = await api().master.getBookPages(PARAMS);
     ctx.reduxStore.dispatch(actions.loadBookPages(false, data.data));
   } catch (err) {
     console.log(err.message);
