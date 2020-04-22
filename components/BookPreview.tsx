@@ -140,6 +140,7 @@ const BookPreview = (props: any) => {
             languange={props.selected.Language}
             gender={props.selected.Gender}
             pages={bookPages[pageNumber]}
+            isMobile={props.isMobile}
           />
         ))
       ) : (
@@ -154,6 +155,7 @@ const BookPreview = (props: any) => {
                 languange={props.selected.Language}
                 gender={props.selected.Gender}
                 pages={bookPages[pageNumber]}
+                isMobile={props.isMobile}
               />
             ))}
           </div>

@@ -1,9 +1,11 @@
 const BookPage = (props: any) => {
-  const styleGenerator = (string: any) => {
+  const styleGenerator = (string: any): any => {
     let style = {
-      width: '40%',
-      fontSize: '0.6vw',
-      lineHeight: '0.9vw',
+      width: props.isMobile ? '47vw' : '38%',
+      fontSize: props.isMobile ? '1.5vh' : '1vh',
+      lineHeight: props.isMobile ? '3.3vw' : '0.9vw',
+      fontFamily: 'Kameron',
+      textAlign: 'center',
     };
     if (string) style = { ...style, ...JSON.parse(string) };
     return style;
