@@ -1,7 +1,7 @@
 const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {
     let style = {
-      width: props.isMobile ? '47vw' : '38%',
+      width: '35%',
       fontSize: props.isMobile ? '1.5vh' : '1vh',
       lineHeight: props.isMobile ? '3.3vw' : '0.9vw',
       fontFamily: 'Kameron',
@@ -10,8 +10,8 @@ const BookPage = (props: any) => {
     if (string) style = { ...style, ...JSON.parse(string) };
     return style;
   };
-  const processContent = (content, languange) => {
-    const isEnglish = languange === 'english';
+  const processContent = (content, language) => {
+    const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
     processed = processed.split('[name]').join(props.name);
     if (isEnglish) {
@@ -28,14 +28,14 @@ const BookPage = (props: any) => {
       <svg className="c-book-page__svg">
         <foreignObject x="0" y="0" width="100%" height="100%">
           <img className="c-book-page__image" src={props.image} />
-          {props.pages.map((page, key) => {
-            const content = processContent(page, props.languange);
+          {props.contents.map((content, key) => {
+            const value = processContent(content, props.language);
             return (
               <div
                 key={key}
                 className="c-book-page__content"
-                style={styleGenerator(page.style)}
-                dangerouslySetInnerHTML={{ __html: content }}
+                style={styleGenerator(content.style)}
+                dangerouslySetInnerHTML={{ __html: value }}
               />
             );
           })}
@@ -66,6 +66,7 @@ const BookPage = (props: any) => {
       <style jsx global>{`
         strong {
           @apply font-bold;
+          font-size: ${props.isMobile ? '2vh' : '1.5vh'};
         }
       `}</style>
     </div>

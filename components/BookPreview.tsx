@@ -96,7 +96,18 @@ const BookPreview = (props: any) => {
   //   updatePageInfo();
   // };
 
-  const bookPages = props.bookPages.length > 0 ? groupby(props.bookPages, page => page.page_number) : {};
+  const pageByOccupations = props.bookPages.length > 0 ? groupby(props.bookPages, page => page.occupation_id) : {};
+  const bookPages = [];
+  Object.keys(pageByOccupations).forEach(occupation => {
+    bookPages[occupation] = groupby(pageByOccupations[occupation], page => page.page_number);
+  });
+  let jointPages: any = [];
+  bookPages.forEach((jobs: Array<any>) => {
+    Object.keys(jobs).forEach(pageNumber => {
+      jointPages = [...jointPages, jobs[pageNumber]];
+    });
+  });
+  // console.log(jointPages);
 
   const getImage = (job, pageNumber) => {
     const { Gender, Age, Skin, Hair } = props.selected;
@@ -105,7 +116,7 @@ const BookPreview = (props: any) => {
 
   const pageClass = index => {
     if (index === 0) return 'first-page';
-    if (index === props.bookPages.length - 1) return 'last-page';
+    if (index === jointPages.length - 1) return 'last-page';
     return '';
   };
   const bookHeight = '(100vh - 69px - 257px)';
@@ -128,33 +139,35 @@ const BookPreview = (props: any) => {
         />
       </div> */}
       {props.isMobile ? (
-        Object.keys(bookPages).map((pageNumber, index) => (
+        jointPages.map((page, index) => (
           <BookPage
             key={index}
             style={{
               height: `calc(${bookHeight})`,
               minWidth: `calc(${bookRatio}*${bookHeight})`,
             }}
-            image={getImage(bookPages[pageNumber][0].occupation.name, pageNumber)}
+            image={getImage(page[0].occupation.name, page[0].page_number)}
             name={props.selected.Name}
-            languange={props.selected.Language}
+            language={props.selected.Language}
+            // language="indo"
             gender={props.selected.Gender}
-            pages={bookPages[pageNumber]}
+            contents={page}
             isMobile={props.isMobile}
           />
         ))
       ) : (
         <div className="c-book-preview__container">
           <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
-            {Object.keys(bookPages).map((pageNumber, index) => (
+            {jointPages.map((page, index) => (
               <BookPage
                 key={index}
                 className={`Heidelberg-Page ${pageClass(index)}`}
-                image={getImage(bookPages[pageNumber][0].occupation.name, pageNumber)}
+                image={getImage(page[0].occupation.name, page[0].page_number)}
                 name={props.selected.Name}
-                languange={props.selected.Language}
+                language={props.selected.Language}
+                // language="indo"
                 gender={props.selected.Gender}
-                pages={bookPages[pageNumber]}
+                contents={page}
                 isMobile={props.isMobile}
               />
             ))}
