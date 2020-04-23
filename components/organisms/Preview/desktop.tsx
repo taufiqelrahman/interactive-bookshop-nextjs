@@ -11,7 +11,7 @@ import { dummySelected, schema, showError } from './helper';
 
 const PreviewDesktop = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, formState } = methods;
+  const { register, handleSubmit, errors, formState, watch } = methods;
   const onSubmit = data => {
     const { selected } = props.state.cart;
     const cart = { ...selected, ...data };
@@ -36,7 +36,7 @@ const PreviewDesktop = (props: any): any => {
           <Card variant="border">
             <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
               <div className="c-preview__book">
-                <BookPreview selected={selected || {}} bookPages={bookPages} />
+                <BookPreview selected={selected || {}} bookPages={bookPages} cover={watch('Cover')} />
               </div>
               <div className="c-preview__cover">
                 <FieldCover

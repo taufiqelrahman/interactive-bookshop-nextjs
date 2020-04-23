@@ -7,7 +7,7 @@ const FieldCover = (props: any) => {
   const colors = [
     { name: 'blue', color: '#445ca4' },
     { name: 'white', color: '#efeef4' },
-    { name: 'red', color: '#de3636' },
+    { name: 'magenta', color: '#de3636' },
   ];
   return (
     <div style={props.style}>
@@ -27,6 +27,7 @@ const FieldCover = (props: any) => {
               errors={props.errors}
               style={{ height: 48, width: 48, background: cover.color, borderRadius: '50%', marginRight: 12 }}
               type="plain"
+              defaultChecked={cover.name === 'blue'}
             />
           ))}
         </div>

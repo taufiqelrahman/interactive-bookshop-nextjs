@@ -10,7 +10,7 @@ import NavBar from '../NavBar/mobile';
 
 const PreviewMobile = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, formState } = methods;
+  const { register, handleSubmit, errors, formState, watch } = methods;
   const onSubmit = data => {
     const { selected } = props.state.cart;
     const cart = { ...selected, ...data };
@@ -35,7 +35,7 @@ const PreviewMobile = (props: any): any => {
       navbar={<NavBar isSteps={true} title={props.t('book-preferences')} step={2} totalSteps={2} />}
     >
       <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
-        <BookPreview selected={selected || {}} isMobile={props.isMobile} bookPages={bookPages} />
+        <BookPreview selected={selected || {}} isMobile={props.isMobile} bookPages={bookPages} cover={watch('Cover')} />
         <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="c-preview__cover">
             <FieldCover schema={schema(props).cover} register={register} errors={errors.cover} />

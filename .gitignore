@@ -5,4 +5,5 @@ api/Midtrans-Laravel5-master.zip
 server
 .env
 public/sw.js
+public/sw.js.map
 public/workbox-*

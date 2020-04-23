@@ -4,6 +4,7 @@ import initHeidelberg from 'assets/heidelberg.js';
 import debounce from 'lodash.debounce';
 import BookPage from './atoms/BookPage';
 import groupby from 'lodash.groupby';
+import sortby from 'lodash.sortby';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
@@ -96,7 +97,12 @@ const BookPreview = (props: any) => {
   //   updatePageInfo();
   // };
 
-  const pageByOccupations = props.bookPages.length > 0 ? groupby(props.bookPages, page => page.occupation_id) : {};
+  let pageByOccupations = {};
+  if (props.bookPages.length > 0) {
+    pageByOccupations = groupby(props.bookPages, page => page.occupation_id);
+    pageByOccupations = sortby(pageByOccupations, group => props.bookPages.indexOf(group[0]));
+  }
+  // console.log(pageByOccupations);
   const bookPages = [];
   Object.keys(pageByOccupations).forEach(occupation => {
     bookPages[occupation] = groupby(pageByOccupations[occupation], page => page.page_number);
@@ -111,7 +117,12 @@ const BookPreview = (props: any) => {
 
   const getImage = (job, pageNumber) => {
     const { Gender, Age, Skin, Hair } = props.selected;
-    return `/static/images/pages/${job}/page-${pageNumber}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
+    let jobPath = `${job}/page-${pageNumber}`;
+    if (job.includes('Cover')) {
+      jobPath = job.includes('Front') ? 'cover/front/' : 'cover/back/';
+      jobPath += props.cover;
+    }
+    return `/static/images/pages/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
   };
 
   const pageClass = index => {
@@ -153,6 +164,7 @@ const BookPreview = (props: any) => {
             gender={props.selected.Gender}
             contents={page}
             isMobile={props.isMobile}
+            isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
           />
         ))
       ) : (
@@ -169,6 +181,7 @@ const BookPreview = (props: any) => {
                 gender={props.selected.Gender}
                 contents={page}
                 isMobile={props.isMobile}
+                isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
               />
             ))}
           </div>

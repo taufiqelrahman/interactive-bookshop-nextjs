@@ -1,13 +1,21 @@
 const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {
-    let style = {
-      width: '35%',
-      fontSize: props.isMobile ? '1.5vh' : '1vh',
+    let style: any = {
+      width: '37%',
+      fontSize: props.isMobile ? '2.9vw' : '0.7vw',
       lineHeight: props.isMobile ? '3.3vw' : '0.9vw',
       fontFamily: 'Kameron',
       textAlign: 'center',
     };
     if (string) style = { ...style, ...JSON.parse(string) };
+    if (props.isWhiteCover) style = { ...style, color: 'black' };
+    if (props.contents[0].occupation.name === 'Front Cover') {
+      style = {
+        ...style,
+        fontSize: props.isMobile ? '9vw' : '3.5vw',
+        lineHeight: props.isMobile ? '9vw' : '3vw',
+      };
+    }
     return style;
   };
   const processContent = (content, language) => {
@@ -66,7 +74,7 @@ const BookPage = (props: any) => {
       <style jsx global>{`
         strong {
           @apply font-bold;
-          font-size: ${props.isMobile ? '2vh' : '1.5vh'};
+          font-size: ${props.isMobile ? '3.9vw' : '1vw'};
         }
       `}</style>
     </div>
