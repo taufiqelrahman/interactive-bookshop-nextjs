@@ -1,12 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import Checkbox from 'components/atoms/Checkbox';
 import Badge from 'components/atoms/Badge';
 
 const FieldOccupations = (props: any) => {
+  const [occupations, setOccupations]: any = useState([]);
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
+  const handleCheck = event => {
+    const { checked, value } = event.target;
+    let newValue: Array<string> = [...occupations];
+    if (checked) {
+      newValue = [...newValue, value];
+    } else {
+      const index = occupations.findIndex(job => job === value);
+      if (index === -1) return;
+      newValue.splice(index, 1);
+    }
+    setOccupations(newValue);
+    props.setValue('Occupations', newValue);
+    props.triggerValidation('Occupations');
+  };
+  useEffect(() => {
+    if (props.defaultValue) {
+      setOccupations(props.defaultValue);
+      setTimeout(() => {
+        props.setValue('Occupations', props.defaultValue);
+      }, 500);
+    }
+  }, []);
   return (
     <div style={props.style}>
       <div className="c-field-occupations">
@@ -18,12 +41,11 @@ const FieldOccupations = (props: any) => {
           {props.occupations.map(job => (
             <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
-                ref={props.register(props.schema)}
                 value={job.name}
-                name="Occupations"
                 errors={props.errors}
                 inset={true}
-                defaultChecked={props.defaultChecked && props.defaultChecked.includes(job.name)}
+                handleCheck={handleCheck}
+                checked={occupations.includes(job.name)}
               >
                 <span>{job.name}</span>
               </Checkbox>

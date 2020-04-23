@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-const Checkbox = React.forwardRef((props: any, ref: any) => {
+const Checkbox = (props: any) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const checkboxClass = () => {
@@ -15,10 +15,10 @@ const Checkbox = React.forwardRef((props: any, ref: any) => {
       <input
         type="checkbox"
         name={props.name}
-        ref={ref}
         value={props.value}
         id={`${props.name}-${props.value}`}
-        defaultChecked={props.defaultChecked}
+        checked={props.checked}
+        onChange={props.handleCheck}
       />
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={checkboxClass()}>
@@ -68,7 +68,7 @@ const Checkbox = React.forwardRef((props: any, ref: any) => {
       `}</style>
     </div>
   );
-});
+};
 Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;

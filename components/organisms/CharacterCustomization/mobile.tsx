@@ -44,11 +44,18 @@ const CharacterCustomization = (props: any) => {
       return;
     }
     if (charStep === stepEnum.NAME_DOB) unregister('Date of Birth');
+    if (charStep === stepEnum.OCCUPATIONS) unregister('Occupations');
     setCharStep(charStep - 1);
   };
   useEffect(() => {
-    if (charStep === stepEnum.NAME_DOB) register({ name: 'Date of Birth' }, schema.dob);
+    if (charStep === stepEnum.NAME_DOB) {
+      register({ name: 'Date of Birth' }, schema.dob);
+      unregister('Occupations');
+    }
   }, [charStep]);
+  useEffect(() => {
+    register({ name: 'Occupations' }, schema.occupations);
+  }, []);
   useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form-error'));
@@ -58,7 +65,7 @@ const CharacterCustomization = (props: any) => {
     props.state.cart.selected ||
     {
       // Occupations: ['Astronaut', 'Teacher', 'Librarian'],
-      // Name: 'asd',
+      // Name: 'Kalilist',
       // Age: 'kid',
       // Gender: 'girl',
       // Skin: 'light',
@@ -100,10 +107,11 @@ const CharacterCustomization = (props: any) => {
           {charStep === stepEnum.OCCUPATIONS ? (
             <div className="u-container u-container__page">
               <FieldOccupations
-                schema={schema.occupations}
+                setValue={setValue}
+                triggerValidation={triggerValidation}
                 register={register}
                 errors={errors.Occupations}
-                defaultChecked={selected.Occupations}
+                defaultValue={selected.Occupations}
                 occupations={occupations}
               />
               {watch('Occupations') && (

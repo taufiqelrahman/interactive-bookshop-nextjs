@@ -22,6 +22,7 @@ const CharacterCustomization = (props: any) => {
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
     register({ name: 'Date of Birth' }, schema.dob);
+    register({ name: 'Occupations' }, schema.occupations);
   }, []);
   useEffect(() => {
     if (!formState.isValid) {
@@ -32,7 +33,7 @@ const CharacterCustomization = (props: any) => {
     props.state.cart.selected ||
     {
       // Occupations: ['Astronaut', 'Teacher', 'Librarian'],
-      // Name: 'asd',
+      // Name: 'Kalilist',
       // Age: 'kid',
       // Gender: 'girl',
       // Skin: 'light',
@@ -62,10 +63,12 @@ const CharacterCustomization = (props: any) => {
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
                 <FieldOccupations
                   schema={schema.occupations}
+                  setValue={setValue}
+                  triggerValidation={triggerValidation}
                   register={register}
                   errors={errors.Occupations}
                   style={{ maxWidth: 550, marginBottom: 24 }}
-                  defaultChecked={selected.Occupations}
+                  defaultValue={selected.Occupations}
                   occupations={occupations}
                 />
                 <Divider />
