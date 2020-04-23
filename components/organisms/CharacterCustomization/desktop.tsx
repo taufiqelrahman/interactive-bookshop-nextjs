@@ -62,7 +62,6 @@ const CharacterCustomization = (props: any) => {
             <Card variant="border">
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
                 <FieldOccupations
-                  schema={schema.occupations}
                   setValue={setValue}
                   triggerValidation={triggerValidation}
                   register={register}

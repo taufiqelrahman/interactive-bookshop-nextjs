@@ -15,7 +15,7 @@ const BookForm = (props: any) => {
     occupations: [],
   });
   const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, formState, watch } = methods;
+  const { register, handleSubmit, errors, formState, setValue, triggerValidation, watch } = methods;
   const onSubmit = data => {
     let PARAMS = data;
     if (props.isMobile) PARAMS = { ...PARAMS, occupations: state.occupations };
@@ -49,7 +49,8 @@ const BookForm = (props: any) => {
                 {state.step === stepEnum.OCCUPATIONS && (
                   <div key={1} className="c-book-form__container c-book-form__container__mobile">
                     <FieldOccupations
-                      schema={schema.occupations}
+                      setValue={setValue}
+                      triggerValidation={triggerValidation}
                       register={register}
                       errors={errors.Occupations}
                       occupations={props.occupations}
