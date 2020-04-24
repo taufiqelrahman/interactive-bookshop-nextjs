@@ -64,7 +64,7 @@ const CharacterCustomization = (props: any) => {
   const selected =
     props.state.cart.selected ||
     {
-      // Occupations: ['Astronaut', 'Teacher', 'Librarian'],
+      // Occupations: ['Ballerina', 'Doctor', 'Librarian'],
       // Name: 'Kalilist',
       // Age: 'kid',
       // Gender: 'girl',
