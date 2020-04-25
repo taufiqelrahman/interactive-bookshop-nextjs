@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState, Fragment } from 'react';
-import { withTranslation, Router } from 'i18n';
+import { withTranslation, Router, i18n } from 'i18n';
 import FieldOccupations from 'components/molecules/FieldOccupations';
 import FormTextField from 'components/molecules/FormTextField';
 import FieldAge from 'components/molecules/FieldAge';
@@ -61,19 +61,17 @@ const CharacterCustomization = (props: any) => {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected =
-    props.state.cart.selected ||
-    {
-      // Occupations: ['Ballerina', 'Doctor', 'Librarian'],
-      // Name: 'Kalilist',
-      // Age: 'kid',
-      // Gender: 'girl',
-      // Skin: 'light',
-      // Language: 'english',
-      // Dedication: 'asdasd',
-      // 'Date of Birth': '03-01-2019',
-      // Hair: 'short',
-    };
+  const selected = props.state.cart.selected || {
+    // Occupations: ['Ballerina', 'Doctor', 'Chef'],
+    // Name: 'Kalilist',
+    // Age: 'kid',
+    // Gender: 'girl',
+    // Skin: 'light',
+    // Language: 'english',
+    // Dedication: 'asdasd',
+    // 'Date of Birth': '03-01-2019',
+    // Hair: 'short',
+  };
   const { occupations } = props.state.master;
   const onSubmit = data => {
     let PARAMS = { ...selected, ...data };
@@ -87,6 +85,10 @@ const CharacterCustomization = (props: any) => {
       return;
     }
     Router.push('/preview');
+  };
+  const pickedJobs = () => {
+    const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : props.t(`common:${job}`)));
+    return array.join(', ');
   };
   const screenHeight = '100vh - 69px';
   return (
@@ -116,7 +118,7 @@ const CharacterCustomization = (props: any) => {
               />
               {watch('Occupations') && (
                 <div className="c-char-custom__message">
-                  {errors.Occupations ? props.t('occupations-invalid') : watch('Occupations').join(', ')}
+                  {errors.Occupations ? props.t('occupations-invalid') : pickedJobs()}
                 </div>
               )}
             </div>

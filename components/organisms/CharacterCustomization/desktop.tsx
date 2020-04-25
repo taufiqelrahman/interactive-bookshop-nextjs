@@ -29,19 +29,17 @@ const CharacterCustomization = (props: any) => {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected =
-    props.state.cart.selected ||
-    {
-      // Occupations: ['Ballerina', 'Doctor', 'Librarian'],
-      // Name: 'Kalilist',
-      // Age: 'kid',
-      // Gender: 'girl',
-      // Skin: 'light',
-      // Language: 'english',
-      // Dedication: 'asdasd',
-      // 'Date of Birth': '03-01-2019',
-      // Hair: 'short',
-    };
+  const selected = props.state.cart.selected || {
+    // Occupations: ['Ballerina', 'Doctor', 'Chef'],
+    // Name: 'Kalilist',
+    // Age: 'kid',
+    // Gender: 'girl',
+    // Skin: 'light',
+    // Language: 'english',
+    // Dedication: 'asdasd',
+    // 'Date of Birth': '03-01-2019',
+    // Hair: 'short',
+  };
   const { occupations } = props.state.master;
   const onSubmit = data => {
     const jobIds = getJobIds(data.Occupations, occupations);

@@ -59,5 +59,14 @@
   "whoops": "Ups",
   "error-message-404": "Kita telah berusaha sekuat tenaga untuk mencari halaman ini, namun sepertinya telah tiada :(",
   "error-message-500": "Sebuah masalah yang tak terduga telah terjadi. Mungkin coba untuk refresh halaman ini? Atau bisa kontak kami jika masalah terus terjadi.",
-  "error-message-general": "Ada sesuatu yang salah :("
+  "error-message-general": "Ada sesuatu yang salah :(",
+  "Astronaut": "Astronot",
+  "Teacher": "Guru",
+  "President": "Presiden",
+  "Doctor": "Dokter",
+  "Musician": "Musisi",
+  "Chef": "Koki",
+  "Ballerina": "Balerina",
+  "Pilot": "Pilot",
+  "Police": "Polisi"
 }

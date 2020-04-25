@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withTranslation } from 'i18n';
+import { withTranslation, i18n } from 'i18n';
 import { useRouter } from 'next/router';
 import Checkbox from 'components/atoms/Checkbox';
 import Badge from 'components/atoms/Badge';
@@ -47,7 +47,7 @@ const FieldOccupations = (props: any) => {
                 handleCheck={handleCheck}
                 checked={occupations.includes(job.name)}
               >
-                <span>{job.name}</span>
+                <span>{i18n.language === 'en' ? job.name : job.indonesia}</span>
               </Checkbox>
             </div>
           ))}
