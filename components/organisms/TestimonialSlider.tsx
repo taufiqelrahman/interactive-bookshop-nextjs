@@ -32,9 +32,9 @@ const TestimonialSlider = (props: any) => {
   };
 
   return (
-    <div className="w-full">
+    <div>
       <div className="c-testi-slider">
-        <div className="c-testi-slider__header">
+        <div className={`c-testi-slider__header ${props.isMobile ? '' : 'u-container'}`}>
           <div className="c-testi-slider__title">
             <h2>{props.t('testi-header')}</h2>
           </div>
@@ -103,11 +103,14 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__slides {
-            @apply flex overflow-x-scroll overflow-visible;
+            @apply flex overflow-x-scroll;
+            margin-left: 16px;
+            margin-right: 16px;
             @screen md {
               @apply inline-flex;
               transform: translateX(${translationX}px);
               transition: transform 0.5s ease-in;
+              margin-left: 12.5%;
             }
           }
           &__slide {

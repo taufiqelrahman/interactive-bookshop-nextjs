@@ -133,9 +133,7 @@ const Index = (props: any): any => {
       </div>
       <div className="c-section--bottom">
         <div className="c-section--bottom__testi">
-          <div className="u-container">
-            <TestimonialSlider isMobile={props.isMobile} testimonials={testimonials} />
-          </div>
+          <TestimonialSlider isMobile={props.isMobile} testimonials={testimonials} />
         </div>
         <div id="create-book" className="c-section--bottom__create-book">
           <h2>{props.t('createbook-header')}</h2>
