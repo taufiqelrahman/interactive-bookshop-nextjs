@@ -70,7 +70,7 @@ const CharacterCustomization = (props: any) => {
                   occupations={occupations}
                 />
                 <Divider />
-                <div className="flex">
+                <div className="c-char-custom__name_dob">
                   <FormTextField
                     label={props.t('name-label')}
                     name="Name"
@@ -78,8 +78,8 @@ const CharacterCustomization = (props: any) => {
                     schema={schema.name}
                     register={register}
                     errors={errors.Name}
-                    style={{ marginRight: 36 }}
                     defaultValue={selected.Name}
+                    style={{ width: '50%' }}
                   />
                   <FieldAge schema={schema.age} register={register} errors={errors.Age} defaultChecked={selected.Age} />
                 </div>
@@ -150,27 +150,49 @@ const CharacterCustomization = (props: any) => {
       <style jsx>{`
         .c-char-custom {
           @apply flex w-full flex-col;
-          @screen lg {
+          @screen md {
             @apply flex-row;
           }
           &__left {
             @apply w-full;
-            @screen lg {
-              @apply w-3/5;
+            @screen md {
+              width: 70%;
             }
             &__container {
               padding: 36px;
             }
           }
           &__right {
-            padding: 0 0 0 10%;
             @apply hidden;
-            @screen lg {
-              @apply w-2/5;
+            @screen md {
+              padding: 0 0 0 5%;
+              width: 30%;
               @apply block;
+            }
+            @screen lg {
+              padding: 0 0 0 8%;
+            }
+            @screen xl {
+              padding: 0 0 0 10%;
             }
             img {
               @apply w-full;
+            }
+          }
+          &__name_dob {
+            @apply flex flex-col;
+            @screen lg {
+              @apply flex-row;
+            }
+          }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-char-custom__name_dob {
+          .c-field-age {
+            margin-top: 24px;
+            @screen lg {
+              @apply mt-0;
             }
           }
         }
