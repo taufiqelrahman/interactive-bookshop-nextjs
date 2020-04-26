@@ -11,15 +11,17 @@ const Checkbox = (props: any) => {
     return className;
   };
   return (
-    <div className="c-checkbox">
-      <input
-        type="checkbox"
-        name={props.name}
-        value={props.value}
-        id={`${props.name}-${props.value}`}
-        checked={props.checked}
-        onChange={props.handleCheck}
-      />
+    <div className="c-checkbox" style={props.value === 'President' ? { opacity: 0 } : {}}>
+      {props.value !== 'President' && (
+        <input
+          type="checkbox"
+          name={props.name}
+          value={props.value}
+          id={`${props.name}-${props.value}`}
+          checked={props.checked}
+          onChange={props.handleCheck}
+        />
+      )}
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={checkboxClass()}>
           <img src={`/static/images/jobs/${props.value}.png`} />

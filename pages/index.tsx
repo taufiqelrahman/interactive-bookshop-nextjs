@@ -112,11 +112,14 @@ const Index = (props: any): any => {
           ))}
         </div>
         <div className="c-section__jobs--bottom">
-          {occupationsBottom.map(job => (
-            <div key={job.id} className="c-section__jobs__circle">
-              <img src={job.image_url} alt={job.name} />
-            </div>
-          ))}
+          {occupationsBottom.map(
+            job =>
+              job.name !== 'President' && (
+                <div key={job.id} className="c-section__jobs__circle">
+                  <img src={job.image_url} alt={job.name} />
+                </div>
+              ),
+          )}
         </div>
         <div className="c-section__content text-white c-section__content--middle">
           <h1>{props.t('choosenow-title')}</h1>
