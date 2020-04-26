@@ -2,8 +2,8 @@ const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {
     let style: any = {
       width: '37%',
-      fontSize: props.isMobile ? '2.9vw' : '0.7vw',
-      lineHeight: props.isMobile ? '3.3vw' : '0.9vw',
+      fontSize: props.isMobile ? '2.3vw' : '0.7vw',
+      lineHeight: props.isMobile ? '3.2vw' : '0.9vw',
       fontFamily: 'Kameron',
       textAlign: 'center',
     };
@@ -28,6 +28,9 @@ const BookPage = (props: any) => {
       processed = processed.split('[child:1]').join(isBoy ? 'he' : 'she');
       processed = processed.split('[child:2]').join(isBoy ? 'his' : 'her');
       processed = processed.split('[child:3]').join(isBoy ? 'him' : 'her');
+    }
+    if (props.contents[0].occupation.name === 'Back Cover') {
+      processed = props.dedication;
     }
     return processed;
   };

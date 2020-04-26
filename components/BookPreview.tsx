@@ -162,6 +162,7 @@ const BookPreview = (props: any) => {
             language={props.selected.Language}
             // language="indo"
             gender={props.selected.Gender}
+            dedication={props.selected.Dedication}
             contents={page}
             isMobile={props.isMobile}
             isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
@@ -179,6 +180,7 @@ const BookPreview = (props: any) => {
                 language={props.selected.Language}
                 // language="indo"
                 gender={props.selected.Gender}
+                dedication={props.selected.Dedication}
                 contents={page}
                 isMobile={props.isMobile}
                 isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}

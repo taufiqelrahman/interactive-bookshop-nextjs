@@ -62,13 +62,14 @@ const CharacterCustomization = (props: any) => {
     }
   }, [errors]);
   const selected = props.state.cart.selected || {
-    // Occupations: ['Ballerina', 'Doctor', 'Chef'],
+    // Occupations: ['Teacher', 'Pilot', 'Police'],
     // Name: 'Kalilist',
     // Age: 'kid',
     // Gender: 'girl',
     // Skin: 'light',
     // Language: 'english',
-    // Dedication: 'asdasd',
+    // Dedication:
+    //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
     // 'Date of Birth': '03-01-2019',
     // Hair: 'short',
   };
@@ -118,7 +119,8 @@ const CharacterCustomization = (props: any) => {
               />
               {watch('Occupations') && (
                 <div className="c-char-custom__message">
-                  {errors.Occupations ? props.t('occupations-invalid') : pickedJobs()}
+                  <div className="c-char-custom__message__jobs">{pickedJobs()}</div>
+                  {errors.Occupations && props.t('occupations-invalid')}
                 </div>
               )}
             </div>
@@ -250,6 +252,9 @@ const CharacterCustomization = (props: any) => {
           }
           &__message {
             @apply font-semibold text-sm text-center;
+            &__jobs {
+              margin-bottom: 8px;
+            }
           }
           &__with-preview {
             @apply flex flex-col justify-between;

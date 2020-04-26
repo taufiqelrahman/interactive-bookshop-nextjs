@@ -30,13 +30,14 @@ const CharacterCustomization = (props: any) => {
     }
   }, [errors]);
   const selected = props.state.cart.selected || {
-    // Occupations: ['Ballerina', 'Doctor', 'Chef'],
+    // Occupations: ['Teacher', 'Pilot', 'Police'],
     // Name: 'Kalilist',
     // Age: 'kid',
     // Gender: 'girl',
     // Skin: 'light',
     // Language: 'english',
-    // Dedication: 'asdasd',
+    // Dedication:
+    //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
     // 'Date of Birth': '03-01-2019',
     // Hair: 'short',
   };
