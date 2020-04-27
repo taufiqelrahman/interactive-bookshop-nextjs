@@ -122,7 +122,8 @@ const BookPreview = (props: any) => {
       jobPath = job.includes('Front') ? 'cover/front/' : 'cover/back/';
       jobPath += props.cover;
     }
-    return `/static/images/pages/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
+    const imagePath = `/static/images/pages/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
+    return imagePath.toString();
   };
 
   const pageClass = index => {
