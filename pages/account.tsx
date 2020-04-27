@@ -280,7 +280,7 @@ const Account = (props: any): any => {
                     </div>
                   )}
                 </div>
-                <div className="c-account__subheader">{props.t('phone-warning')}</div>
+                {user.phone && <div className="c-account__subheader">{props.t('phone-warning')}</div>}
                 {state.phone.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
                     {/* <div className="c-account__label">{props.t('old-number')}</div> */}
