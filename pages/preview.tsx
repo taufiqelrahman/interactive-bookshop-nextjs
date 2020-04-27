@@ -6,6 +6,7 @@ import PreviewDesktop from 'components/organisms/Preview/desktop';
 import actions from 'store/actions';
 import api from 'services/api';
 import Head from 'next/head';
+import cookies from 'next-cookies';
 
 const Preview = (props: any): any => (
   <div>
@@ -17,7 +18,10 @@ const Preview = (props: any): any => (
 );
 
 Preview.getInitialProps = async (ctx: any): Promise<any> => {
-  const { selected } = ctx.reduxStore.getState().cart;
+  let selected: any = cookies(ctx).pendingTrx;
+  if (!selected) {
+    ({ selected } = ctx.reduxStore.getState().cart);
+  }
   if (!selected) {
     const { res } = ctx;
     if (res) {

@@ -1,4 +1,4 @@
-import { withTranslation, Link } from 'i18n';
+import { withTranslation, Link, Router } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Card from 'components/atoms/Card';
@@ -7,7 +7,8 @@ import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import BookPreview from 'components/BookPreview';
-import { dummySelected, schema, showError } from './helper';
+import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
+import Cookies from 'js-cookie';
 
 const PreviewDesktop = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -15,6 +16,10 @@ const PreviewDesktop = (props: any): any => {
   const onSubmit = data => {
     const { selected } = props.state.cart;
     const cart = { ...selected, ...data };
+    if (!props.state.users.isLoggedIn) {
+      saveToCookies(cart);
+      return;
+    }
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -26,6 +31,11 @@ const PreviewDesktop = (props: any): any => {
       showError(props.t('form:form-error'));
     }
   }, [errors]);
+  useEffect(() => {
+    const fromCookies = getFromCookies();
+    if (fromCookies) props.saveSelected(fromCookies);
+    Cookies.remove('pendingTrx');
+  }, []);
   const selected = props.state.cart.selected || dummySelected || {};
   const bookPages = props.state.master.bookPages;
   return (

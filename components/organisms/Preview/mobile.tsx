@@ -5,8 +5,9 @@ import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import BookPreview from 'components/BookPreview';
-import { dummySelected, schema, showError } from './helper';
+import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import NavBar from '../NavBar/mobile';
+import Cookies from 'js-cookie';
 
 const PreviewMobile = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -14,6 +15,10 @@ const PreviewMobile = (props: any): any => {
   const onSubmit = data => {
     const { selected } = props.state.cart;
     const cart = { ...selected, ...data };
+    if (!props.state.users.isLoggedIn) {
+      saveToCookies(cart);
+      return;
+    }
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -25,10 +30,15 @@ const PreviewMobile = (props: any): any => {
       showError(props.t('form:form-error'));
     }
   }, [errors]);
+  useEffect(() => {
+    const fromCookies = getFromCookies();
+    if (fromCookies) props.saveSelected(fromCookies);
+    Cookies.remove('pendingTrx');
+  }, []);
   const selected = props.state.cart.selected || dummySelected || {};
   const screenHeight = '100vh - 69px';
   const bookPages = props.state.master.bookPages;
-  const dontHaveCart = !props.state.users.user.cart;
+  // const dontHaveCart = !props.state.users.user.cart;
   return (
     <DefaultLayout
       {...props}
@@ -40,7 +50,7 @@ const PreviewMobile = (props: any): any => {
           <div className="c-preview__cover">
             <FieldCover schema={schema(props).cover} register={register} errors={errors.cover} />
           </div>
-          <Button type="submit" width="648px" disabled={dontHaveCart} style={{ margin: '12px 0 18px' }}>
+          <Button type="submit" width="648px" style={{ margin: '12px 0 18px' }}>
             {selected.id ? props.t('update-cart') : props.t('form:continue-button')}
           </Button>
           <div className="c-preview__link" onClick={() => Router.back()}>

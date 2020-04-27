@@ -17,7 +17,7 @@ export default class Products {
   }
 
   getBookPages(params) {
-    return this.adapter.secure.get(`/book-pages?${queryString.stringify(params)}`)
+    return this.adapter.default.get(`/book-pages?${queryString.stringify(params)}`)
   }
 
   getProvinces() {

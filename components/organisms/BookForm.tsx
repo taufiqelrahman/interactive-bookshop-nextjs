@@ -93,7 +93,8 @@ const BookForm = (props: any) => {
             <Card variant="shadow--bold">
               <div className="c-book-form__container">
                 <FieldOccupations
-                  schema={schema.occupations}
+                  setValue={setValue}
+                  triggerValidation={triggerValidation}
                   errors={errors.Occupations}
                   isMobile={props.isMobile}
                   register={register}

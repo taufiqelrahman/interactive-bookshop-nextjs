@@ -186,7 +186,7 @@ const App: NextPage<any> = (props: any) => {
 };
 
 const redirectPrivateRoutes = ({ pathname, res }) => {
-  const privateRoutes = ['/orders/[id]', '/orders/success', '/account', '/create', '/orders', '/preview'];
+  const privateRoutes = ['/orders/[id]', '/orders/success', '/account', '/orders'];
   if (privateRoutes.includes(pathname)) {
     const redirectTo = pathname.split('/')[1];
     const login = `/login?from=${redirectTo}`;
@@ -203,14 +203,19 @@ const redirectPrivateRoutes = ({ pathname, res }) => {
   }
 };
 
-const retrieveUser = async ({ dispatch, getState }, request) => {
-  if (!getState().users.user) {
-    try {
-      const { data: me } = await api(request).users.getMe();
-      dispatch(actions.setLogin(true));
-      dispatch(actions.loadUser(false, me));
-    } catch {
-      return;
+const redirectLoginRoutes = ({ pathname, res }) => {
+  const loginRoutes = ['/login', '/register'];
+  if (loginRoutes.includes(pathname)) {
+    const home = '/';
+    if (res) {
+      // server-side
+      res.writeHead(302, {
+        Location: home,
+      });
+      res.end();
+    } else {
+      // client-side
+      Router.replace(home);
     }
   }
 };
@@ -218,7 +223,14 @@ const retrieveUser = async ({ dispatch, getState }, request) => {
 App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
   const { dispatch, getState } = ctx.reduxStore;
   if (cookies(ctx).user) {
-    retrieveUser(ctx.reduxStore, ctx.req);
+    if (!getState().users.user) {
+      try {
+        const { data: me } = await api(ctx.req).users.getMe();
+        dispatch(actions.setLogin(true));
+        dispatch(actions.loadUser(false, me));
+      } catch {}
+    }
+    redirectLoginRoutes(ctx);
   } else {
     dispatch(actions.setLogin(false));
     redirectPrivateRoutes(ctx);

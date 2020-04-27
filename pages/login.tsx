@@ -87,9 +87,13 @@ const Login = (props: any): any => {
   };
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const loginFacebook = () => {
+    const { from }: any = Router.query;
+    if (from) localStorage.setItem('from', from);
     window.location.href = `${process.env.API_URL}/redirect-facebook`;
   };
   const loginGoogle = () => {
+    const { from }: any = Router.query;
+    if (from) localStorage.setItem('from', from);
     window.location.href = `${process.env.API_URL}/redirect-google`;
   };
   return (

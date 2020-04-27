@@ -110,6 +110,12 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
     });
 };
 
+function redirectSocialLogin() {
+  const fromQuery = localStorage.getItem('from');
+  if (fromQuery) localStorage.removeItem('from');
+  Router.push(`/${fromQuery || ''}`);
+}
+
 function loginFacebook(isFetching, state = null): types.UsersActionTypes {
   return {
     type: types.LOGIN_FACEBOOK,
@@ -127,7 +133,7 @@ export const thunkLoginFacebook = (data): ThunkAction<void, types.UsersState, nu
       const token = encryptTokenClient(data.token);
       Cookies.set('user', token);
       dispatch(loginFacebook(false, data));
-      Router.push('/');
+      redirectSocialLogin();
     })
     .catch(err => {
       dispatch(loginFacebook(false));
@@ -153,7 +159,7 @@ export const thunkLoginGoogle = (data): ThunkAction<void, types.UsersState, null
       const token = encryptTokenClient(data.token);
       Cookies.set('user', token);
       dispatch(loginGoogle(false, data));
-      Router.push('/');
+      redirectSocialLogin();
     })
     .catch(err => {
       dispatch(loginGoogle(false));
