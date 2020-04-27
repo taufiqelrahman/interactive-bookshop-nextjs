@@ -23,6 +23,7 @@
   "confirm-password-placeholder": "Ketik ulang sandi kamu",
   "phone-label": "Nomor Telepon",
   "phone-placeholder": "Ketik nomor telepon kamu",
+  "phone-warning": "Nomor telepon hanya bisa diubah melalui call center kami",
   "occupations-label": "Pilih 3 pekerjaan impianmu",
   "occupations-invalid": "Pilih 3 ya...",
   "age-label": "Umurku...",

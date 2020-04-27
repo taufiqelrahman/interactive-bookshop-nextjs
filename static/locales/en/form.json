@@ -23,6 +23,7 @@
   "confirm-password-placeholder": "Enter your password again here",
   "phone-label": "Phone Number",
   "phone-placeholder": "Enter your phone number here",
+  "phone-warning": "Phone number can only be changed through our call center",
   "occupations-label": "Choose 3 dream occupations",
   "occupations-invalid": "Please pick 3...",
   "age-label": "Portray me as a...",

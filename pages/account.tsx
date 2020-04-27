@@ -5,12 +5,12 @@ import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Card from 'components/atoms/Card';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { useState, Fragment, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from 'components/atoms/TextField';
 import Button from 'components/atoms/Button';
 import { useForm } from 'react-hook-form';
 import api from 'services/api';
-import Modal from 'components/atoms/Modal';
+// import Modal from 'components/atoms/Modal';
 import actions from 'store/actions';
 import Select from 'react-select';
 import Head from 'next/head';
@@ -152,10 +152,10 @@ const Account = (props: any): any => {
   const setDefaultProvince = () => {
     return { label: userAddress.province, value: userAddress.province };
   };
-  const onChangePhone = () => {
-    props.thunkSendOtp();
-    setShowModal(true);
-  };
+  // const onChangePhone = () => {
+  //   props.thunkSendOtp();
+  //   setShowModal(true);
+  // };
   const onChangeProvince = e => {
     triggerValidation('province');
     setValue('province', e);
@@ -163,7 +163,7 @@ const Account = (props: any): any => {
   const onSubmit = data => {
     let PARAMS = data;
     if (data.province) PARAMS = { ...data, province: data.province.value };
-    if (data.phone) PARAMS = { ...data, phone: data.phone.replace(/^\s+|\s+$/gm, '') };
+    if (data.newPhone) PARAMS = { ...data, phone: data.newPhone.replace(/^\s+|\s+$/gm, '') };
     props.thunkUpdateUser(PARAMS);
     if (showModal) setShowModal(false);
     const field = Object.keys(data)[0];
@@ -213,7 +213,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.name.value}
-                      ref={props.register(schema.name)}
+                      ref={register(schema.name)}
                       name="name"
                       errors={errors.name}
                     />
@@ -250,7 +250,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.email.value}
-                      ref={props.register(schema.email)}
+                      ref={register(schema.email)}
                       name="email"
                       errors={errors.email}
                     />
@@ -274,12 +274,13 @@ const Account = (props: any): any => {
               <div className="c-account__row">
                 <div className="c-account__header">
                   <div className="c-account__title">{props.t('phone-label')}</div>
-                  {!state.phone.isEdit && (
+                  {!user.phone && !state.phone.isEdit && (
                     <div className="c-account__action" onClick={() => editField('phone', false, user.phone)}>
-                      Change
+                      Add
                     </div>
                   )}
                 </div>
+                <div className="c-account__subheader">{props.t('phone-warning')}</div>
                 {state.phone.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
                     {/* <div className="c-account__label">{props.t('old-number')}</div> */}
@@ -287,7 +288,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.phone.value}
-                      ref={props.register(schema.phone)}
+                      ref={register(schema.phone)}
                       name="newPhone"
                       errors={errors.newPhone}
                     />
@@ -295,7 +296,7 @@ const Account = (props: any): any => {
                       <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                         variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                        ref={props.register(schema.phone)}
+                        ref={register(schema.phone)}
                         name="newPhone"
                         errors={errors.newPhone}
                       /> */}
@@ -304,8 +305,8 @@ const Account = (props: any): any => {
                         width="101px"
                         variant="rectangle,small-text"
                         disabled={errors.newPhone || watch('newPhone') === user.phone}
-                        type="button"
-                        onClick={onChangePhone}
+                        // type="button"
+                        // onClick={onChangePhone}
                       >
                         {props.t('form:update-button')}
                       </Button>
@@ -316,7 +317,7 @@ const Account = (props: any): any => {
                   </form>
                 ) : (
                   // <div className="c-account__value">{`*****${user.phone.slice(5)}`}</div>
-                  <div className="c-account__value">{user.phone}</div>
+                  <div className="c-account__value">{user.phone || '-'}</div>
                 )}
               </div>
               <div className="c-account__row">
@@ -334,7 +335,7 @@ const Account = (props: any): any => {
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={props.register(schema.password)}
+                      ref={register(schema.password)}
                       name="password"
                       errors={errors.password}
                       isPassword={true}
@@ -343,7 +344,7 @@ const Account = (props: any): any => {
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={props.register(schema.password)}
+                      ref={register(schema.password)}
                       name="newPassword"
                       errors={errors.newPassword}
                       isPassword={true}
@@ -352,7 +353,7 @@ const Account = (props: any): any => {
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={props.register(schema.confirmNewPassword)}
+                      ref={register(schema.confirmNewPassword)}
                       name="confirmNewPassword"
                       errors={errors.confirmNewPassword}
                       isPassword={true}
@@ -397,7 +398,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.address1}
-                      ref={props.register(schema.address)}
+                      ref={register(schema.address)}
                       name="address1"
                       errors={errors.address1}
                     />
@@ -406,7 +407,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.address2}
-                      ref={props.register(schema.address)}
+                      ref={register(schema.address)}
                       name="address2"
                       errors={errors.address2}
                     />
@@ -415,7 +416,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.city}
-                      ref={props.register(schema.address)}
+                      ref={register(schema.address)}
                       name="city"
                       errors={errors.city}
                     />
@@ -435,7 +436,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={userAddress.zip}
-                      ref={props.register(schema.address)}
+                      ref={register(schema.address)}
                       name="zip"
                       errors={errors.zip}
                     />
@@ -456,7 +457,7 @@ const Account = (props: any): any => {
           </Wrapper>
         </div>
       </div>
-      <Modal
+      {/* <Modal
         title={props.t('common:otp-verify')}
         isOpen={showModal}
         closeModal={() => setShowModal(false)}
@@ -490,7 +491,7 @@ const Account = (props: any): any => {
             </div>
           </Fragment>
         }
-      />
+      /> */}
       <style jsx>{`
         .c-account {
           @apply overflow-y-auto;
@@ -518,6 +519,16 @@ const Account = (props: any): any => {
             margin-bottom: 4px;
             @screen md {
               margin-bottom: 6px;
+            }
+          }
+          &__subheader {
+            @apply text-xs;
+            line-height: 14px;
+            margin-bottom: 4px;
+            margin-top: -4px;
+            @screen md {
+              margin-bottom: 6px;
+              margin-top: -6px;
             }
           }
           &__title {
