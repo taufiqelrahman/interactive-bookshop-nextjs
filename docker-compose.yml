@@ -13,8 +13,10 @@ services:
     networks:
       - default
     environment: # Pass environment variables to the service
-      VIRTUAL_HOST: wigu.taufiqelrahman.com # production
-      LETSENCRYPT_HOST: wigu.taufiqelrahman.com # production
+      # VIRTUAL_HOST: wigu.taufiqelrahman.com # staging
+      # LETSENCRYPT_HOST: wigu.taufiqelrahman.com # staging
+      VIRTUAL_HOST: whenigrowup.co.id # production
+      LETSENCRYPT_HOST: whenigrowup.co.id # production
       # INTERNAL_URL: http://localhost:5120 # same as api port
     
 networks:
