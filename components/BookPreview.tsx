@@ -123,7 +123,7 @@ const BookPreview = (props: any) => {
       jobPath += props.cover;
     }
     const imagePath = `/static/images/pages/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
-    return imagePath.toString();
+    return imagePath.toLowerCase();
   };
 
   const pageClass = index => {
