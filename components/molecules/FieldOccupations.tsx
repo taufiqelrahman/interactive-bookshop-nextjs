@@ -42,7 +42,6 @@ const FieldOccupations = (props: any) => {
           {props.t('occupations-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
-        {props.errors && <div className="c-field-occupations__error">{props.errors.message}</div>}
         <div className="c-field-occupations__options">
           {occupationsOpts.map(job => (
             <div key={job.id} className="c-field-occupations__options__box">
@@ -59,6 +58,7 @@ const FieldOccupations = (props: any) => {
             </div>
           ))}
         </div>
+        {props.errors && <div className="c-field-occupations__error">{props.errors.message}</div>}
       </div>
       <style jsx>{`
         .c-field-occupations {
@@ -69,15 +69,14 @@ const FieldOccupations = (props: any) => {
             }
           }
           &__error {
-            @apply -mt-4 mb-6 flex justify-center text-sm;
+            @apply mt-2 flex justify-center text-sm;
             color: #de3636;
             @screen md {
-              @apply justify-start mb-3;
+              @apply justify-start;
             }
           }
           &__options {
             @apply flex flex-wrap;
-            margin-bottom: 30px;
             @screen md {
               @apply mb-0;
             }

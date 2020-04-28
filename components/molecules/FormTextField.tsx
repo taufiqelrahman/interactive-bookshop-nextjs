@@ -5,7 +5,7 @@ import Badge from 'components/atoms/Badge';
 
 const FormTextField: any = (props: any) => {
   return (
-    <div style={props.style}>
+    <div style={props.formStyle}>
       <div className="c-form-text-field">
         <div className="c-form-text-field__label">
           {props.label}

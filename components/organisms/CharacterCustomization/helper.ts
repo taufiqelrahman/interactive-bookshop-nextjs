@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 export const schema = props => ({
   occupations: {
-    required: { value: true, message: `${props.t('occupations-label')} ${props.t('required-error')}` },
+    required: { value: true, message: props.t('occupations-invalid') },
     validate: value => value.length === 3 || props.t('occupations-invalid'),
   },
   name: { required: { value: true, message: `${props.t('name-label')} ${props.t('required-error')}` } },

@@ -15,13 +15,15 @@ import { schema, showError, previewImg, getJobIds } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Sheet from 'components/atoms/Sheet';
+import { useRouter } from 'next/router';
 
 const CharacterCustomization = (props: any) => {
+  const router = useRouter();
   const stepEnum = {
     OCCUPATIONS: 0,
-    NAME_DOB: 1,
+    NAME_GENDER: 1,
     AGE: 2,
-    GENDER: 3,
+    DOB: 3,
     HAIR: 4,
     SKIN: 5,
     LANGUAGE: 6,
@@ -43,19 +45,16 @@ const CharacterCustomization = (props: any) => {
       Router.back();
       return;
     }
-    if (charStep === stepEnum.NAME_DOB) unregister('Date of Birth');
+    if (charStep === stepEnum.DOB) unregister('Date of Birth');
     if (charStep === stepEnum.OCCUPATIONS) unregister('Occupations');
     setCharStep(charStep - 1);
   };
   useEffect(() => {
-    if (charStep === stepEnum.NAME_DOB) {
+    if (charStep === stepEnum.DOB) {
       register({ name: 'Date of Birth' }, schema(props).dob);
       unregister('Occupations');
     }
   }, [charStep]);
-  useEffect(() => {
-    register({ name: 'Occupations' }, schema(props).occupations);
-  }, []);
   useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form-error'));
@@ -75,6 +74,15 @@ const CharacterCustomization = (props: any) => {
       // 'Date of Birth': '03-01-2019',
       // Hair: 'short',
     };
+  useEffect(() => {
+    setTimeout(() => {
+      register({ name: 'Occupations' }, schema(props).occupations);
+    }, 500);
+    const { Occupations, Name, Gender } = selected;
+    if (!router.query.edit && Occupations && Occupations.length > 0 && Name && Gender) {
+      setCharStep(stepEnum.AGE);
+    }
+  }, []);
   const { occupations } = props.state.master;
   const onSubmit = data => {
     let PARAMS = { ...selected, ...data };
@@ -136,7 +144,7 @@ const CharacterCustomization = (props: any) => {
                 </div>
               </div>
               <div className="u-container c-char-custom__tab">
-                {charStep === stepEnum.NAME_DOB && (
+                {charStep === stepEnum.NAME_GENDER && (
                   <Fragment>
                     <FormTextField
                       label={props.t('char-name-label')}
@@ -148,14 +156,12 @@ const CharacterCustomization = (props: any) => {
                       defaultValue={selected.Name}
                       variant="full-width"
                     />
-                    <FieldDob
-                      name="Date of Birth"
-                      setValue={setValue}
-                      triggerValidation={triggerValidation}
-                      errors={errors['Date of Birth']}
-                      style={{ marginTop: 12 }}
-                      defaultValue={selected['Date of Birth']}
-                      {...props}
+                    <FieldGender
+                      schema={schema(props).gender}
+                      register={register}
+                      errors={errors.Gender}
+                      isMobile={true}
+                      defaultChecked={selected.Gender}
                     />
                   </Fragment>
                 )}
@@ -167,13 +173,15 @@ const CharacterCustomization = (props: any) => {
                     defaultChecked={selected.Age}
                   />
                 )}
-                {charStep === stepEnum.GENDER && (
-                  <FieldGender
-                    schema={schema(props).gender}
-                    register={register}
-                    errors={errors.Gender}
-                    isMobile={true}
-                    defaultChecked={selected.Gender}
+                {charStep === stepEnum.DOB && (
+                  <FieldDob
+                    name="Date of Birth"
+                    setValue={setValue}
+                    triggerValidation={triggerValidation}
+                    errors={errors['Date of Birth']}
+                    style={{ marginTop: 12 }}
+                    defaultValue={selected['Date of Birth']}
+                    {...props}
                   />
                 )}
                 {charStep === stepEnum.HAIR && (

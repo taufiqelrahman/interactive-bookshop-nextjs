@@ -29,6 +29,7 @@ const FieldAge = (props: any) => {
             />
           ))}
         </div>
+        {props.errors && <div className="c-field-age__error">{props.errors.message}</div>}
       </div>
       <style jsx>{`
         .c-field-age {
@@ -41,6 +42,10 @@ const FieldAge = (props: any) => {
           }
           &__options {
             @apply flex flex-wrap;
+          }
+          &__error {
+            @apply mt-2 flex justify-start text-sm;
+            color: #de3636;
           }
         }
       `}</style>

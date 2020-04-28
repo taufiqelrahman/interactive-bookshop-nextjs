@@ -25,6 +25,7 @@ const FieldLanguage = (props: any) => (
           />
         ))}
       </div>
+      {props.errors && <div className="c-field-language__error">{props.errors.message}</div>}
     </div>
     <style jsx>{`
       .c-field-language {
@@ -37,6 +38,10 @@ const FieldLanguage = (props: any) => (
         }
         &__options {
           @apply flex flex-wrap;
+        }
+        &__error {
+          @apply mt-2 flex justify-start text-sm;
+          color: #de3636;
         }
       }
     `}</style>

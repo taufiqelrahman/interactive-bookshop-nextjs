@@ -37,6 +37,7 @@ const FieldSkin = (props: any) => {
             />
           ))}
         </div>
+        {props.errors && <div className="c-field-skin__error">{props.errors.message}</div>}
       </div>
       <style jsx>{`
         .c-field-skin {
@@ -49,6 +50,10 @@ const FieldSkin = (props: any) => {
           }
           &__options {
             @apply flex flex-wrap;
+          }
+          &__error {
+            @apply mt-2 flex justify-start text-sm;
+            color: #de3636;
           }
         }
       `}</style>

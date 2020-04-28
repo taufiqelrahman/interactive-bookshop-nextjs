@@ -39,7 +39,7 @@ const CartItemMobile = (props: any) => {
       quantity: props.quantity,
       ...props.customAttributes,
     });
-    Router.push('/create');
+    Router.push('/create?edit=true');
   };
   const deleteItem = () => {
     setShowSheet(false);

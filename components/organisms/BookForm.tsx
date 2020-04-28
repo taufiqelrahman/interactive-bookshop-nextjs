@@ -19,7 +19,7 @@ const BookForm = (props: any) => {
   const { register, unregister, handleSubmit, errors, formState, setValue, triggerValidation, watch } = methods;
   const schema = {
     occupations: {
-      required: { value: true, message: `${props.t('occupations-label')} ${props.t('required-error')}` },
+      required: { value: true, message: props.t('occupations-invalid') },
       validate: value => value.length === 3 || props.t('occupations-invalid'),
     },
     name: { required: { value: true, message: `${props.t('name-label')} ${props.t('required-error')}` } },
@@ -144,7 +144,7 @@ const BookForm = (props: any) => {
             padding: 36px;
             &__mobile {
               @apply flex flex-col justify-between;
-              height: 466px;
+              height: 470px;
             }
           }
           &__second-row {

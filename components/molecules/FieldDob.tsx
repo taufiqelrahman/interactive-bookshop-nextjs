@@ -12,6 +12,7 @@ const FieldDob = (props: any) => {
         {props.errors && <Badge>!</Badge>}
       </div>
       {props.isMobile ? <DateFieldMobile name="dob" {...props} /> : <DateField name="dob" {...props} />}
+      {props.errors && <div className="c-field-dob__error">{props.errors.message}</div>}
       <style jsx>{`
         .c-field-dob {
           &__header {
@@ -19,6 +20,10 @@ const FieldDob = (props: any) => {
             @screen md {
               @apply text-base;
             }
+          }
+          &__error {
+            @apply mt-2 flex justify-start text-sm;
+            color: #de3636;
           }
         }
       `}</style>

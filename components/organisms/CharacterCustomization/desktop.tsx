@@ -21,8 +21,10 @@ const CharacterCustomization = (props: any) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
-    register({ name: 'Date of Birth' }, schema(props).dob);
-    register({ name: 'Occupations' }, schema(props).occupations);
+    setTimeout(() => {
+      register({ name: 'Date of Birth' }, schema(props).dob);
+      register({ name: 'Occupations' }, schema(props).occupations);
+    }, 500);
   }, []);
   useEffect(() => {
     if (!formState.isValid) {
@@ -68,6 +70,7 @@ const CharacterCustomization = (props: any) => {
                   style={{ maxWidth: 550, marginBottom: 24 }}
                   defaultValue={selected.Occupations}
                   occupations={occupations}
+                  formState={formState}
                 />
                 <Divider />
                 <div className="c-char-custom__name_dob">
@@ -79,7 +82,7 @@ const CharacterCustomization = (props: any) => {
                     register={register}
                     errors={errors.Name}
                     defaultValue={selected.Name}
-                    style={{ width: '50%' }}
+                    formStyle={{ width: '50%' }}
                   />
                   <FieldAge
                     schema={schema(props).age}
