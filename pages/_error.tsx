@@ -43,8 +43,8 @@ const Error: NextPage<any> = (props: any) => {
           </Button>
         </Link>
       </div>
-      <img src="/static/images/blue-planet.png" className="c-error__planet c-error__planet--blue" />
-      <img src="/static/images/red-planet.png" className="c-error__planet c-error__planet--red" />
+      <img alt="blue planet" src="/static/images/blue-planet.png" className="c-error__planet c-error__planet--blue" />
+      <img alt="red planet" src="/static/images/red-planet.png" className="c-error__planet c-error__planet--red" />
       <style jsx>{`
         .c-error {
           @apply flex items-center justify-center flex-grow flex-col text-white bg-cover px-4 overflow-hidden;

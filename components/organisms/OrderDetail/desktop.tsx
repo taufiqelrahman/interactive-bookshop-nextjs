@@ -63,7 +63,11 @@ const OrderDetailDesktop = (props: any): any => {
                 <div className="flex">
                   <div className="c-detail__book__left">
                     <div className="c-detail__book__image">
-                      {isFetching ? <Skeleton height={136} width={136} /> : <img src={previewImg(lineItems[0])} />}
+                      {isFetching ? (
+                        <Skeleton height={136} width={136} />
+                      ) : (
+                        <img src={previewImg(lineItems[0])} alt="item preview" />
+                      )}
                     </div>
                   </div>
                   <div className="c-detail__book__middle">

@@ -8,7 +8,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <meta key="robots" name="robots" content="noimageindex" />
           <meta key="theme-color" name="theme-color" content="#000000" />

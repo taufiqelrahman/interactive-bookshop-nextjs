@@ -171,7 +171,7 @@ const CharacterCustomization = (props: any) => {
           </div>
           <div className={`c-char-custom__right ${stickyClassName()}`} ref={ref}>
             <div className="c-char-custom__char">
-              <img src={previewImg(selected, watch)} />
+              <img src={previewImg(selected, watch)} alt="character preview" />
             </div>
           </div>
         </div>

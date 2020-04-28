@@ -119,7 +119,7 @@ const Login = (props: any): any => {
             <div className="c-login__container">
               {loginStep === stepEnum.WELCOME && (
                 <Fragment>
-                  <img className="c-login__image" src="/static/images/welcome.png" />
+                  <img alt="welcome" className="c-login__image" src="/static/images/welcome.png" />
                   <h1 className="c-login__title">{props.t('welcome-back')}</h1>
                   <Button
                     onClick={loginGoogle}
@@ -272,7 +272,7 @@ const Login = (props: any): any => {
               {loginStep === stepEnum.SENT && (
                 <div className="c-login__form">
                   <div>
-                    <img className="c-login__image" src="/static/images/welcome.png" />
+                    <img alt="welcome" className="c-login__image" src="/static/images/welcome.png" />
                     <h1 className="c-login__title" style={{ marginBottom: 12 }}>
                       {props.t('form:email-sent-title')}
                     </h1>

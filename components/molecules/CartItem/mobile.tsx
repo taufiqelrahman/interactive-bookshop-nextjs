@@ -72,7 +72,7 @@ const CartItemMobile = (props: any) => {
                   <Skeleton height={72} width={72} />
                 ) : (
                   <div className="c-cart-item__detail__image">
-                    <img src={previewImg(props.customAttributes)} />
+                    <img src={previewImg(props.customAttributes)} alt="item preview" />
                   </div>
                 )}
               </div>

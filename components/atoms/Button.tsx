@@ -9,6 +9,7 @@ const Button = (props: any) => {
   return (
     <div style={props.style}>
       <button
+        aria-label="button"
         type={props.type ? props.type : null}
         className={`c-button ${variantClass()} ${colorClass} ${disabledClass}`}
         onClick={props.onClick}

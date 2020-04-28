@@ -20,7 +20,7 @@ const OrderSuccess = (props: any): any => {
           <Wrapper variant="border">
             <div className="c-login__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
-                <img className="c-login__image" src="/static/images/welcome.png" />
+                <img alt="success" className="c-login__image" src="/static/images/welcome.png" />
                 <h1 className="c-login__title">{props.t('order-success')}</h1>
                 <div className="c-login__subtitle">{props.t('order-success-content')}</div>
               </div>

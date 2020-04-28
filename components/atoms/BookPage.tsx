@@ -38,7 +38,7 @@ const BookPage = (props: any) => {
     <div className={`c-book-page ${props.className || ''}`} style={props.style}>
       <svg className="c-book-page__svg">
         <foreignObject x="0" y="0" width="100%" height="100%">
-          <img className="c-book-page__image" src={props.image} />
+          <img className="c-book-page__image" src={props.image} alt="book page" />
           {props.contents.map((content, key) => {
             const value = processContent(content, props.language);
             return (

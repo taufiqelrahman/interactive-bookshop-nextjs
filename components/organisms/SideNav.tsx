@@ -20,7 +20,7 @@ const SideNav = (props: any) => {
       <div className="c-side-nav__container">
         <div>
           <div className="c-side-nav__header">
-            <button className="c-side-nav__button--close" onClick={props.hide}>
+            <button aria-label="close button" className="c-side-nav__button--close" onClick={props.hide}>
               <span className="icon-ui_cross" />
             </button>
             {props.users.isLoggedIn ? (

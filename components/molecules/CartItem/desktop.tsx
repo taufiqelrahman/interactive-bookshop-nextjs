@@ -53,7 +53,7 @@ const CartItem = (props: any) => {
               <Skeleton height={100} width={100} />
             ) : (
               <div className="c-cart-item__preview__image">
-                <img src={previewImg(props.customAttributes)} />
+                <img src={previewImg(props.customAttributes)} alt="item preview" />
               </div>
             )}
             {props.isSkeleton ? (

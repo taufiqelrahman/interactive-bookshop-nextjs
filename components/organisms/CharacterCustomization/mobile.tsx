@@ -146,7 +146,7 @@ const CharacterCustomization = (props: any) => {
             <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
               <div className="u-container c-char-custom__preview">
                 <div>
-                  <img src={previewImg(selected, watch)} />
+                  <img src={previewImg(selected, watch)} alt="character preview" />
                 </div>
               </div>
               <div className="u-container c-char-custom__tab">

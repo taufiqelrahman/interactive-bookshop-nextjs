@@ -44,7 +44,7 @@ const Help = (props: any): any => {
       </Head>
       <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
         {props.isMobile ? (
-          <img className="c-help-section__image" src="/static/images/welcome.png" />
+          <img className="c-help-section__image" src="/static/images/welcome.png" alt="welcome" />
         ) : (
           <Stepper title={props.t('help-title')} />
         )}

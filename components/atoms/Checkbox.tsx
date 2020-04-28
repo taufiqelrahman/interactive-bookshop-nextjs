@@ -24,7 +24,9 @@ const Checkbox = (props: any) => {
       )}
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={checkboxClass()}>
-          <img src={`/static/images/jobs/${(props.value || '').toLowerCase()}.png`} />
+          {props.value !== 'President' && (
+            <img src={`/static/images/jobs/${(props.value || '').toLowerCase()}.png`} alt="props.value" />
+          )}
         </div>
         {props.children}
       </label>

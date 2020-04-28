@@ -42,7 +42,7 @@ const OrderItem = (props: any) => {
                 <Skeleton height={47} width={47} />
               ) : (
                 <div className="c-order-item__detail__image">
-                  <img src={previewImg(lineItems[0])} />
+                  <img src={previewImg(lineItems[0])} alt="item preview" />
                 </div>
               )}
             </div>
