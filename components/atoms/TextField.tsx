@@ -84,15 +84,8 @@ const TextField = React.forwardRef((props: any, ref: any) => {
             border-radius: 4px;
             height: 44px;
             border: 2px solid #e1e0e7;
-            @screen md {
-              @apply text-base;
-            }
             &::placeholder {
-              @apply;
               color: #e1e1e1;
-              @screen md {
-                @apply text-base;
-              }
             }
           }
           &--error input {
