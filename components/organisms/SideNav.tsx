@@ -48,7 +48,7 @@ const SideNav = (props: any) => {
             <Link href="/">
               <a className="c-side-nav__menu__link">{props.t('home')}</a>
             </Link>
-            <Link href="/">
+            <Link href="/cart">
               <a className="c-side-nav__menu__link">{props.t('cart-title')}</a>
             </Link>
             {props.users.isLoggedIn && (
