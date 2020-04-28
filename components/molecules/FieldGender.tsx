@@ -5,8 +5,10 @@ import { withTranslation } from 'i18n';
 
 const FieldGender = (props: any) => {
   const genders = [
-    { name: 'boy', image: 'boy' },
-    { name: 'girl', image: 'girl' },
+    // { name: 'boy', image: 'boy' },
+    // { name: 'girl', image: 'girl' },
+    { name: props.t('gender-boy'), code: 'boy' },
+    { name: props.t('gender-girl'), code: 'girl' },
   ];
   return (
     <div style={props.style}>
@@ -21,13 +23,14 @@ const FieldGender = (props: any) => {
             <Radio
               key={gender.name}
               ref={props.register(props.schema)}
-              value={gender.name}
+              value={gender.code}
+              label={gender.name}
               name="Gender"
               errors={props.errors}
-              style={props.isMobile ? {} : { height: 84, width: 84 }}
-              imageUrl={gender.image}
-              type="image"
-              variant={props.isMobile ? 'box' : ''}
+              style={{ height: 44, width: 84 }}
+              // imageUrl={gender.image}
+              // type="image"
+              // variant={props.isMobile ? 'box' : ''}
               defaultChecked={props.defaultChecked === gender.name.toLowerCase()}
             />
           ))}

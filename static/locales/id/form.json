@@ -31,6 +31,8 @@
   "age-kid": "Anak",
   "dob-label": "Tanggal Lahir",
   "gender-label": "Jenis Kelamin",
+  "gender-boy": "Cowok",
+  "gender-girl": "Cewek",
   "hair-label": "Jenis Rambut",
   "skin-label": "Warna Kulit",
   "language-label": "Bahasa Buku",

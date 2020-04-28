@@ -20,7 +20,9 @@ const FieldOccupations = (props: any) => {
     }
     setOccupations(newValue);
     props.setValue('Occupations', newValue);
-    props.triggerValidation('Occupations');
+    if (props.formState.isSubmitted || newValue.length > 2) {
+      props.triggerValidation('Occupations');
+    }
   };
   useEffect(() => {
     if (props.defaultValue) {
@@ -30,6 +32,9 @@ const FieldOccupations = (props: any) => {
       }, 500);
     }
   }, []);
+  const occupationsOpts = props.isMobile
+    ? props.occupations
+    : props.occupations.filter(job => job.name !== 'President');
   return (
     <div style={props.style}>
       <div className="c-field-occupations">
@@ -37,8 +42,9 @@ const FieldOccupations = (props: any) => {
           {props.t('occupations-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
+        {props.errors && <div className="c-field-occupations__error">{props.errors.message}</div>}
         <div className="c-field-occupations__options">
-          {props.occupations.map(job => (
+          {occupationsOpts.map(job => (
             <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
                 value={job.name}
@@ -46,18 +52,25 @@ const FieldOccupations = (props: any) => {
                 inset={true}
                 handleCheck={handleCheck}
                 checked={occupations.includes(job.name)}
+                isMobile={props.isMobile}
               >
                 <span>{i18n.language === 'en' ? job.name : job.indonesia}</span>
               </Checkbox>
             </div>
           ))}
         </div>
-        {/* {props.errors && 'Requires 3 occupations'} */}
       </div>
       <style jsx>{`
         .c-field-occupations {
           &__header {
             @apply font-semibold mb-6 flex justify-center;
+            @screen md {
+              @apply justify-start;
+            }
+          }
+          &__error {
+            @apply -mt-4 mb-3 flex justify-center text-sm;
+            color: #de3636;
             @screen md {
               @apply justify-start;
             }

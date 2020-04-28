@@ -116,6 +116,8 @@ const CharacterCustomization = (props: any) => {
                 errors={errors.Occupations}
                 defaultValue={selected.Occupations}
                 occupations={occupations}
+                isMobile={props.isMobile}
+                formState={formState}
               />
               {watch('Occupations') && (
                 <div className="c-char-custom__message">

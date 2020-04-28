@@ -31,6 +31,8 @@
   "age-kid": "Kid",
   "dob-label": "Date of Birth",
   "gender-label": "Gender",
+  "gender-boy": "Boy",
+  "gender-girl": "Girl",
   "hair-label": "Hair Style",
   "skin-label": "Skin Color",
   "language-label": "Book Language",
