@@ -44,6 +44,7 @@ const Checkbox = (props: any) => {
             border-radius: 6px;
             box-shadow: inset 0 0 0px 8px #fff;
             background: #e1e0e7;
+            padding: 12px;
             @screen md {
               @apply bg-transparent;
               box-shadow: none;

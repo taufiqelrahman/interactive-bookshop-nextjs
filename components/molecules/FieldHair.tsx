@@ -5,11 +5,11 @@ import { withTranslation } from 'i18n';
 
 const FieldHair = (props: any) => {
   const boyHair = [
-    { name: 'short', image: 'short' },
+    { name: 'short', image: 'short-boy' },
     { name: 'curly', image: 'curly' },
   ];
   const girlHair = [
-    { name: 'short', image: 'short' },
+    { name: 'short', image: 'short-girl' },
     { name: 'hijab', image: 'hijab' },
   ];
   const hair = props.type === 'boy' ? boyHair : girlHair;
@@ -35,7 +35,7 @@ const FieldHair = (props: any) => {
               name="Hair"
               errors={props.errors}
               style={props.isMobile ? {} : { height: 84, width: 84 }}
-              imageUrl={hair.image}
+              imageUrl={`/static/images/hair/${hair.image}.png`}
               type="image"
               variant={props.isMobile ? 'box' : ''}
               defaultChecked={props.defaultChecked === hair.name.toLowerCase()}
