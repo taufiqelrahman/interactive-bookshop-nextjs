@@ -1,6 +1,6 @@
 import Card from 'components/atoms/Card';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { withTranslation, Router } from 'i18n';
 import FieldOccupations from 'components/molecules/FieldOccupations';
 import FormTextField from 'components/molecules/FormTextField';
@@ -18,6 +18,7 @@ import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 
 const CharacterCustomization = (props: any) => {
+  const [isSticky, setSticky] = useState(false);
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
@@ -37,19 +38,36 @@ const CharacterCustomization = (props: any) => {
     // 'Date of Birth': '03-01-2019',
     // Hair: 'short',
   };
-  useEffect(() => {
-    setTimeout(() => {
-      register({ name: 'Date of Birth' }, schema(props).dob);
-      register({ name: 'Occupations' }, schema(props).occupations);
-      if (selected.Occupations) setValue('Occupations', selected.Occupations);
-    }, 500);
-  }, []);
   const { occupations } = props.state.master;
   const onSubmit = data => {
     const jobIds = getJobIds(data.Occupations, occupations);
     props.saveSelected({ ...selected, ...data, jobIds });
     Router.push('/preview');
   };
+
+  const ref = useRef<HTMLInputElement>(null);
+  const handleScroll = () => {
+    if (ref && ref.current) {
+      setSticky(ref.current.getBoundingClientRect().top < 100);
+    }
+  };
+  const stickyClassName = () => {
+    return isSticky ? 'c-char-custom__char--sticky' : '';
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      register({ name: 'Date of Birth' }, schema(props).dob);
+      register({ name: 'Occupations' }, schema(props).occupations);
+      if (selected.Occupations) setValue('Occupations', selected.Occupations);
+    }, 500);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', () => handleScroll);
+    };
+  }, []);
+  const containerMargin = (window.innerWidth * 0.25) / 2;
+  const containerWidth = window.innerWidth * 0.75;
+  const charWidth = containerWidth * 0.3 - containerWidth * 0.08;
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page--large">
@@ -151,8 +169,10 @@ const CharacterCustomization = (props: any) => {
               </form>
             </Card>
           </div>
-          <div className="c-char-custom__right">
-            <img src={previewImg(selected, watch)} />
+          <div className={`c-char-custom__right ${stickyClassName()}`} ref={ref}>
+            <div className="c-char-custom__char">
+              <img src={previewImg(selected, watch)} />
+            </div>
           </div>
         </div>
       </div>
@@ -186,6 +206,14 @@ const CharacterCustomization = (props: any) => {
             }
             img {
               @apply w-full;
+            }
+          }
+          &__char {
+            .c-char-custom__char--sticky & {
+              @apply fixed;
+              top: 100px;
+              right: ${containerMargin}px;
+              width: ${charWidth}px;
             }
           }
           &__name_dob {

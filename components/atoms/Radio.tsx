@@ -39,6 +39,7 @@ const Radio = React.forwardRef((props: any, ref: any) => {
               height: 100px;
               width: 100px;
               box-shadow: inset 0 0 0px 8px #fff;
+              padding: 6px;
             }
             &--error {
               border: 2px solid #de3636;

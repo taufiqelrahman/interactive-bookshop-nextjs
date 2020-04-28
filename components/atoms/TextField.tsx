@@ -80,7 +80,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
             }
           }
           input {
-            @apply px-3 text-sm;
+            @apply px-3;
             border-radius: 4px;
             height: 44px;
             border: 2px solid #e1e0e7;
@@ -88,7 +88,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
               @apply text-base;
             }
             &::placeholder {
-              @apply text-sm;
+              @apply;
               color: #e1e1e1;
               @screen md {
                 @apply text-base;
