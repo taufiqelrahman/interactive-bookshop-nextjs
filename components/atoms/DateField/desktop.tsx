@@ -25,7 +25,9 @@ const DateField = (props: any) => {
     setFullDate();
   }, [date, month, year]);
   useEffect(() => {
-    if (props.defaultValue) setDefaultDate();
+    setTimeout(() => {
+      if (props.defaultValue) setDefaultDate();
+    }, 1000);
   }, []);
   return (
     <div className={`c-date-field ${props.errors ? 'c-date-field--error' : ''}`}>

@@ -21,12 +21,6 @@ const CharacterCustomization = (props: any) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
-    setTimeout(() => {
-      register({ name: 'Date of Birth' }, schema(props).dob);
-      register({ name: 'Occupations' }, schema(props).occupations);
-    }, 500);
-  }, []);
-  useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form-error'));
     }
@@ -43,6 +37,13 @@ const CharacterCustomization = (props: any) => {
     // 'Date of Birth': '03-01-2019',
     // Hair: 'short',
   };
+  useEffect(() => {
+    setTimeout(() => {
+      register({ name: 'Date of Birth' }, schema(props).dob);
+      register({ name: 'Occupations' }, schema(props).occupations);
+      if (selected.Occupations) setValue('Occupations', selected.Occupations);
+    }, 500);
+  }, []);
   const { occupations } = props.state.master;
   const onSubmit = data => {
     const jobIds = getJobIds(data.Occupations, occupations);

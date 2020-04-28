@@ -20,8 +20,12 @@ const BookPreview = (props: any) => {
   // });
 
   const updateHeight = () => {
-    const image: any = document.querySelector('.Heidelberg-Page img');
-    if (image) setState({ ...state, height: image.height, loaded: true });
+    // const image: any = document.querySelector('.Heidelberg-Page img');
+    const containerMargin = window.innerWidth * 0.25;
+    const padding = 60;
+    const bookRatio = 21 / 30;
+    const height = ((window.innerWidth - padding - containerMargin) / 2) * bookRatio;
+    setState({ ...state, height, loaded: true });
     return Promise.resolve();
   };
 
@@ -55,7 +59,7 @@ const BookPreview = (props: any) => {
   useEffect(() => {
     if (props.isMobile) return;
     initHeidelberg();
-    setTimeout(() => setupBook(), 500);
+    setupBook();
     window.addEventListener('resize', debouncedSetup);
     return () => {
       window.removeEventListener('resize', () => debouncedSetup);
@@ -131,6 +135,8 @@ const BookPreview = (props: any) => {
     if (index === jointPages.length - 1) return 'last-page';
     return '';
   };
+
+  // for mobile
   const bookHeight = '(100vh - 69px - 257px) * 0.7';
   const bookRatio = '30 / 21';
 

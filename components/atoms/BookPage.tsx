@@ -70,7 +70,6 @@ const BookPage = (props: any) => {
             @screen md {
               border-radius: 0;
               margin-right: 0;
-              width: unset;
             }
           }
           &__image {
