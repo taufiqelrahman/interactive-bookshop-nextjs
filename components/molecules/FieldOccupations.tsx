@@ -25,12 +25,7 @@ const FieldOccupations = (props: any) => {
     }
   };
   useEffect(() => {
-    if (props.defaultValue) {
-      setOccupations(props.defaultValue);
-      setTimeout(() => {
-        props.setValue('Occupations', props.defaultValue);
-      }, 500);
-    }
+    if (props.defaultValue) setOccupations(props.defaultValue);
   }, []);
   const occupationsOpts = props.isMobile
     ? props.occupations

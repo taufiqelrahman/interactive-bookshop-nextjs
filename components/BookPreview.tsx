@@ -131,7 +131,7 @@ const BookPreview = (props: any) => {
     if (index === jointPages.length - 1) return 'last-page';
     return '';
   };
-  const bookHeight = '(100vh - 69px - 257px)';
+  const bookHeight = '(100vh - 69px - 257px) * 0.7';
   const bookRatio = '30 / 21';
 
   return (
@@ -155,7 +155,7 @@ const BookPreview = (props: any) => {
           <BookPage
             key={index}
             style={{
-              height: `calc(${bookHeight})`,
+              height: `calc((${bookHeight}))`,
               minWidth: `calc(${bookRatio}*${bookHeight})`,
             }}
             image={getImage(page[0].occupation.name, page[0].page_number)}
@@ -206,12 +206,13 @@ const BookPreview = (props: any) => {
       </div> */}
       <style jsx>{`
         .c-book-preview {
-          @apply flex items-center overflow-x-auto bg-light-grey;
+          @apply flex items-center overflow-x-auto bg-light-grey h-full;
           padding: 20px 36px;
           @screen md {
             @apply mt-4 bg-white;
             padding: 0;
             overflow: unset;
+            height: unset;
           }
           &__left {
             @apply w-2/12 flex justify-end;

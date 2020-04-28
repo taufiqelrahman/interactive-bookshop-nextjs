@@ -2,8 +2,8 @@ const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {
     let style: any = {
       width: '37%',
-      fontSize: props.isMobile ? '2.3vw' : '0.7vw',
-      lineHeight: props.isMobile ? '3.2vw' : '0.9vw',
+      fontSize: props.isMobile ? '1.7vw' : '0.7vw',
+      lineHeight: props.isMobile ? '2.2vw' : '0.9vw',
       fontFamily: 'Kameron',
       textAlign: 'center',
     };
@@ -13,7 +13,7 @@ const BookPage = (props: any) => {
       style = {
         ...style,
         fontSize: props.isMobile ? '9vw' : '3.5vw',
-        lineHeight: props.isMobile ? '9vw' : '3vw',
+        lineHeight: props.isMobile ? '7.5vw' : '3vw',
       };
     }
     return style;
@@ -54,6 +54,10 @@ const BookPage = (props: any) => {
       </svg>
       <style jsx>{`
         .c-book-page {
+          margin-right: 10px;
+          @screen md {
+            margin-right: 0;
+          }
           &:first-child svg {
             border-radius: 6px 0 0 6px;
           }
@@ -61,9 +65,12 @@ const BookPage = (props: any) => {
             border-radius: 0 6px 6px 0;
           }
           &__svg {
-            @apply w-full h-full;
+            @apply h-full w-full;
+            margin-right: 10px;
             @screen md {
               border-radius: 0;
+              margin-right: 0;
+              width: unset;
             }
           }
           &__image {
@@ -77,7 +84,7 @@ const BookPage = (props: any) => {
       <style jsx global>{`
         strong {
           @apply font-bold;
-          font-size: ${props.isMobile ? '3.9vw' : '1vw'};
+          font-size: ${props.isMobile ? '2.5vw' : '1vw'};
         }
       `}</style>
     </div>

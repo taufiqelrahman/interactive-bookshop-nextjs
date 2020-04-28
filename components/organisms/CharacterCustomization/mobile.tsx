@@ -75,12 +75,14 @@ const CharacterCustomization = (props: any) => {
       // Hair: 'short',
     };
   useEffect(() => {
-    setTimeout(() => {
-      register({ name: 'Occupations' }, schema(props).occupations);
-    }, 500);
     const { Occupations, Name, Gender } = selected;
     if (!router.query.edit && Occupations && Occupations.length > 0 && Name && Gender) {
       setCharStep(stepEnum.AGE);
+    } else {
+      setTimeout(() => {
+        register({ name: 'Occupations' }, schema(props).occupations);
+        if (selected.Occupations) setValue('Occupations', selected.Occupations);
+      }, 500);
     }
   }, []);
   const { occupations } = props.state.master;
@@ -88,6 +90,10 @@ const CharacterCustomization = (props: any) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {
       const jobIds = getJobIds(data.Occupations, occupations);
+      PARAMS = { ...PARAMS, jobIds };
+    }
+    if (charStep === stepEnum.AGE && !router.query.edit) {
+      const jobIds = getJobIds(selected.Occupations, occupations);
       PARAMS = { ...PARAMS, jobIds };
     }
     props.saveSelected(PARAMS);
@@ -190,7 +196,7 @@ const CharacterCustomization = (props: any) => {
                     register={register}
                     unregister={unregister}
                     errors={errors.Hair}
-                    type={watch('Gender')}
+                    type={watch('Gender') || selected.Gender}
                     isMobile={true}
                     defaultChecked={selected.Hair}
                   />
