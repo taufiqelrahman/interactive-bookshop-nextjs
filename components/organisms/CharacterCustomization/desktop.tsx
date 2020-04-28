@@ -21,8 +21,8 @@ const CharacterCustomization = (props: any) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
-    register({ name: 'Date of Birth' }, schema.dob);
-    register({ name: 'Occupations' }, schema.occupations);
+    register({ name: 'Date of Birth' }, schema(props).dob);
+    register({ name: 'Occupations' }, schema(props).occupations);
   }, []);
   useEffect(() => {
     if (!formState.isValid) {
@@ -75,13 +75,18 @@ const CharacterCustomization = (props: any) => {
                     label={props.t('name-label')}
                     name="Name"
                     placeholder={props.t('name-placeholder')}
-                    schema={schema.name}
+                    schema={schema(props).name}
                     register={register}
                     errors={errors.Name}
                     defaultValue={selected.Name}
                     style={{ width: '50%' }}
                   />
-                  <FieldAge schema={schema.age} register={register} errors={errors.Age} defaultChecked={selected.Age} />
+                  <FieldAge
+                    schema={schema(props).age}
+                    register={register}
+                    errors={errors.Age}
+                    defaultChecked={selected.Age}
+                  />
                 </div>
                 <FieldDob
                   name="Date of Birth"
@@ -92,7 +97,7 @@ const CharacterCustomization = (props: any) => {
                   defaultValue={selected['Date of Birth'] || null}
                 />
                 <FieldGender
-                  schema={schema.gender}
+                  schema={schema(props).gender}
                   register={register}
                   errors={errors.Gender}
                   style={{ marginTop: 24 }}
@@ -100,7 +105,7 @@ const CharacterCustomization = (props: any) => {
                 />
                 {!!watch('Gender') && (
                   <FieldHair
-                    schema={schema.hair}
+                    schema={schema(props).hair}
                     register={register}
                     unregister={unregister}
                     errors={errors.Hair}
@@ -110,7 +115,7 @@ const CharacterCustomization = (props: any) => {
                   />
                 )}
                 <FieldSkin
-                  schema={schema.skin}
+                  schema={schema(props).skin}
                   register={register}
                   errors={errors.Skin}
                   style={{ marginTop: 24, marginBottom: 24 }}
@@ -118,7 +123,7 @@ const CharacterCustomization = (props: any) => {
                 />
                 <Divider />
                 <FieldLanguage
-                  schema={schema.language}
+                  schema={schema(props).language}
                   register={register}
                   errors={errors.Language}
                   style={{ marginTop: 24 }}
@@ -129,7 +134,7 @@ const CharacterCustomization = (props: any) => {
                   hint={props.t('dedication-hint')}
                   name="Dedication"
                   placeholder={props.t('dedication-placeholder')}
-                  schema={schema.dedication}
+                  schema={schema(props).dedication}
                   register={register}
                   errors={errors.Dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}

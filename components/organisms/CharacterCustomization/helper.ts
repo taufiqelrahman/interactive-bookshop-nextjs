@@ -1,19 +1,19 @@
 import { toast } from 'react-toastify';
 
-export const schema = {
+export const schema = props => ({
   occupations: {
-    required: true,
-    validate: value => value.length === 3,
+    required: { value: true, message: `${props.t('occupations-label')} ${props.t('required-error')}` },
+    validate: value => value.length === 3 || props.t('occupations-invalid'),
   },
-  name: { required: true },
-  age: { required: true },
-  dob: { required: true },
-  gender: { required: true },
-  hair: { required: true },
-  skin: { required: true },
-  language: { required: true },
+  name: { required: { value: true, message: `${props.t('name-label')} ${props.t('required-error')}` } },
+  age: { required: { value: true, message: `${props.t('age-label')} ${props.t('required-error')}` } },
+  dob: { required: { value: true, message: `${props.t('dob-label')} ${props.t('required-error')}` } },
+  gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
+  hair: { required: { value: true, message: `${props.t('hair-label')} ${props.t('required-error')}` } },
+  skin: { required: { value: true, message: `${props.t('skin-label')} ${props.t('required-error')}` } },
+  language: { required: { value: true, message: `${props.t('language-label')} ${props.t('required-error')}` } },
   dedication: { required: false },
-};
+});
 
 export const showError = error => {
   window.scrollTo(0, 0);

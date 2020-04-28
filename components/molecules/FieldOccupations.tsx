@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation, i18n } from 'i18n';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import Checkbox from 'components/atoms/Checkbox';
 import Badge from 'components/atoms/Badge';
 
 const FieldOccupations = (props: any) => {
   const [occupations, setOccupations]: any = useState([]);
-  const router = useRouter();
-  const isIndexPage = router.pathname === '/';
+  // const router = useRouter();
+  // const isIndexPage = router.pathname === '/';
   const handleCheck = event => {
     const { checked, value } = event.target;
     let newValue: Array<string> = [...occupations];
@@ -69,10 +69,10 @@ const FieldOccupations = (props: any) => {
             }
           }
           &__error {
-            @apply -mt-4 mb-3 flex justify-center text-sm;
+            @apply -mt-4 mb-6 flex justify-center text-sm;
             color: #de3636;
             @screen md {
-              @apply justify-start;
+              @apply justify-start mb-3;
             }
           }
           &__options {
@@ -90,7 +90,7 @@ const FieldOccupations = (props: any) => {
               }
               span {
                 @apply justify-center font-bold text-xs;
-                display: ${isIndexPage ? 'flex' : 'none'};
+                display: ${true ? 'flex' : 'none'};
                 margin-top: 4px;
                 line-height: 16px;
                 @screen md {

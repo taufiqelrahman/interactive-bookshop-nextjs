@@ -49,30 +49,32 @@ const CharacterCustomization = (props: any) => {
   };
   useEffect(() => {
     if (charStep === stepEnum.NAME_DOB) {
-      register({ name: 'Date of Birth' }, schema.dob);
+      register({ name: 'Date of Birth' }, schema(props).dob);
       unregister('Occupations');
     }
   }, [charStep]);
   useEffect(() => {
-    register({ name: 'Occupations' }, schema.occupations);
+    register({ name: 'Occupations' }, schema(props).occupations);
   }, []);
   useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected = props.state.cart.selected || {
-    // Occupations: ['Teacher', 'Pilot', 'Police'],
-    // Name: 'Kalilist',
-    // Age: 'kid',
-    // Gender: 'girl',
-    // Skin: 'light',
-    // Language: 'english',
-    // Dedication:
-    //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-    // 'Date of Birth': '03-01-2019',
-    // Hair: 'short',
-  };
+  const selected =
+    props.state.cart.selected ||
+    {
+      // Occupations: ['Teacher', 'Pilot', 'Police'],
+      // Name: 'Kalilist',
+      // Age: 'kid',
+      // Gender: 'girl',
+      // Skin: 'light',
+      // Language: 'english',
+      // Dedication:
+      //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
+      // 'Date of Birth': '03-01-2019',
+      // Hair: 'short',
+    };
   const { occupations } = props.state.master;
   const onSubmit = data => {
     let PARAMS = { ...selected, ...data };
@@ -87,10 +89,10 @@ const CharacterCustomization = (props: any) => {
     }
     Router.push('/preview');
   };
-  const pickedJobs = () => {
-    const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : props.t(`common:${job}`)));
-    return array.join(', ');
-  };
+  // const pickedJobs = () => {
+  //   const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : props.t(`common:${job}`)));
+  //   return array.join(', ');
+  // };
   const screenHeight = '100vh - 69px';
   return (
     <DefaultLayout
@@ -119,12 +121,12 @@ const CharacterCustomization = (props: any) => {
                 isMobile={props.isMobile}
                 formState={formState}
               />
-              {watch('Occupations') && (
+              {/* {watch('Occupations') && (
                 <div className="c-char-custom__message">
                   <div className="c-char-custom__message__jobs">{pickedJobs()}</div>
                   {errors.Occupations && props.t('occupations-invalid')}
                 </div>
-              )}
+              )} */}
             </div>
           ) : (
             <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
@@ -140,7 +142,7 @@ const CharacterCustomization = (props: any) => {
                       label={props.t('char-name-label')}
                       name="Name"
                       placeholder={props.t('name-placeholder')}
-                      schema={schema.name}
+                      schema={schema(props).name}
                       register={register}
                       errors={errors.Name}
                       defaultValue={selected.Name}
@@ -158,11 +160,16 @@ const CharacterCustomization = (props: any) => {
                   </Fragment>
                 )}
                 {charStep === stepEnum.AGE && (
-                  <FieldAge schema={schema.age} register={register} errors={errors.Age} defaultChecked={selected.Age} />
+                  <FieldAge
+                    schema={schema(props).age}
+                    register={register}
+                    errors={errors.Age}
+                    defaultChecked={selected.Age}
+                  />
                 )}
                 {charStep === stepEnum.GENDER && (
                   <FieldGender
-                    schema={schema.gender}
+                    schema={schema(props).gender}
                     register={register}
                     errors={errors.Gender}
                     isMobile={true}
@@ -171,7 +178,7 @@ const CharacterCustomization = (props: any) => {
                 )}
                 {charStep === stepEnum.HAIR && (
                   <FieldHair
-                    schema={schema.hair}
+                    schema={schema(props).hair}
                     register={register}
                     unregister={unregister}
                     errors={errors.Hair}
@@ -182,7 +189,7 @@ const CharacterCustomization = (props: any) => {
                 )}
                 {charStep === stepEnum.SKIN && (
                   <FieldSkin
-                    schema={schema.skin}
+                    schema={schema(props).skin}
                     errors={errors.Skin}
                     isMobile={true}
                     defaultChecked={selected.Skin}
@@ -191,7 +198,7 @@ const CharacterCustomization = (props: any) => {
                 )}
                 {charStep === stepEnum.LANGUAGE && (
                   <FieldLanguage
-                    schema={schema.language}
+                    schema={schema(props).language}
                     register={register}
                     errors={errors.Language}
                     isMobile={true}
@@ -204,7 +211,7 @@ const CharacterCustomization = (props: any) => {
                     hint={props.t('dedication-hint')}
                     name="Dedication"
                     placeholder={props.t('dedication-placeholder')}
-                    schema={schema.dedication}
+                    schema={schema(props).dedication}
                     register={register}
                     errors={errors.Dedication}
                     defaultValue={selected.Dedication}
