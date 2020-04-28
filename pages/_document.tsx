@@ -75,7 +75,7 @@ class MyDocument extends Document {
           <meta key="nightmode" name="nightmode" content="enable/disable" />
 
           {/* <!-- Fitscreen  --> */}
-          <meta key="viewport" name="viewport" content="uc-fitscreen=yes" />
+          {/* <meta key="viewport" name="viewport" content="uc-fitscreen=yes" /> */}
 
           {/* <!-- Layout mode --> */}
           <meta key="layoutmode" name="layoutmode" content="fitscreen/standard" />
@@ -92,28 +92,28 @@ class MyDocument extends Document {
           <link href="favicon-48.png" rel="icon" type="image/png" sizes="48x48" />
 
           {/* <!-- iOS  --> */}
-          <link href="touch-icon-iphone.png" rel="apple-touch-icon" />
-          <link href="touch-icon-ipad.png" rel="apple-touch-icon" sizes="76x76" />
-          <link href="touch-icon-iphone-retina.png" rel="apple-touch-icon" sizes="120x120" />
-          <link href="touch-icon-ipad-retina.png" rel="apple-touch-icon" sizes="152x152" />
+          <link href="static/images/icons/icon-72x72.png" rel="apple-touch-icon" />
+          <link href="static/images/icons/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
+          <link href="static/images/icons/icon-128x128.png" rel="apple-touch-icon" sizes="128x128" />
+          <link href="static/images/icons/icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
 
           {/* <!-- Startup Image  --> */}
-          <link href="touch-icon-start-up-320x480.png" rel="apple-touch-startup-image" />
+          {/* <link href="touch-icon-start-up-320x480.png" rel="apple-touch-startup-image" /> */}
 
           {/* <!-- Pinned Tab  --> */}
           {/* <link href="path/to/icon.svg" rel="mask-icon" size="any" color="red" /> */}
-          <link href="path/to/icon.svg" rel="mask-icon" color="red" />
+          <link href="static/images/icons/icon-72x72.png" rel="mask-icon" color="red" />
 
           {/* <!-- Android  --> */}
-          <link href="icon-192x192.png" rel="icon" sizes="192x192" />
-          <link href="icon-128x128.png" rel="icon" sizes="128x128" />
+          <link href="static/images/icons/icon-192x192.png" rel="icon" sizes="192x192" />
+          <link href="static/images/icons/icon-128x128.png" rel="icon" sizes="128x128" />
 
           {/* <!-- Others --> */}
           <link href="favicon.icon" rel="shortcut icon" type="image/x-icon" />
 
           {/* <!-- UC Browser  --> */}
-          <link href="images/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
-          <link href="images/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
+          <link href="static/images/icons/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
+          <link href="static/images/icons/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
 
           {/* <!-- Manifest.json  --> */}
           <link href="/manifest.json" rel="manifest" />
