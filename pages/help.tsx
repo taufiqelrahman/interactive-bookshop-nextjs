@@ -19,7 +19,7 @@ const Help = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors } = methods;
   const onSubmit = data => {
-    console.log(data);
+    props.thunkSendMessage(data);
   };
   const schema = {
     email: {
@@ -224,4 +224,4 @@ const Help = (props: any): any => {
   );
 };
 
-export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Help));
+export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Help));

@@ -1,9 +1,11 @@
 export const SET_SIDE_NAV = 'SET_SIDE_NAV';
 export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
 
 export interface State {
   isSideNavOpen: boolean;
   errorMessage: string;
+  isFetching: boolean;
 }
 
 interface SetSideNav {
@@ -14,4 +16,8 @@ interface SetErrorMessage {
   type: typeof SET_ERROR_MESSAGE;
   payload: string;
 }
-export type ActionTypes = SetSideNav | SetErrorMessage;
+interface SendMessage {
+  type: typeof SEND_MESSAGE;
+  payload: boolean;
+}
+export type ActionTypes = SetSideNav | SetErrorMessage | SendMessage;

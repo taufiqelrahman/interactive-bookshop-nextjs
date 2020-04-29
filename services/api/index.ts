@@ -5,6 +5,7 @@ import Orders from './orders';
 import Products from './products';
 import Users from './users';
 import Master from './master';
+import Message from './message';
 import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
 
 export interface AdapterObject {
@@ -57,5 +58,6 @@ export default (req?) => {
     products: new Products(adapter),
     users: new Users(adapter),
     master: new Master(adapter),
+    message: new Message(adapter),
   }
 };

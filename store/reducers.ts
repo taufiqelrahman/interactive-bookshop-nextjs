@@ -3,6 +3,7 @@ import * as types from './types';
 const initState: types.State = {
   isSideNavOpen: false,
   errorMessage: '',
+  isFetching: false,
 };
 
 const reducer = (state: types.State = initState, action: types.ActionTypes): any => {
@@ -17,6 +18,12 @@ const reducer = (state: types.State = initState, action: types.ActionTypes): any
       return {
         ...state,
         errorMessage: action.payload,
+      };
+    }
+    case types.SEND_MESSAGE: {
+      return {
+        ...state,
+        isFetching: action.payload,
       };
     }
     default:
