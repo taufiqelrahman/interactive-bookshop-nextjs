@@ -144,7 +144,7 @@ const BookForm = (props: any) => {
             padding: 36px;
             &__mobile {
               @apply flex flex-col justify-between;
-              height: 470px;
+              height: 505px;
             }
           }
           &__second-row {

@@ -46,19 +46,19 @@ const Checkbox = (props: any) => {
             border-radius: 6px;
             box-shadow: inset 0 0 0px 8px #fff;
             background: #e1e0e7;
-            padding: 12px;
+            padding: 8px;
             @screen md {
               @apply bg-transparent;
               box-shadow: none;
-              height: 64px;
-              width: 64px;
+              height: 74px;
+              width: 74px;
               border-radius: 50%;
             }
             &--desktop {
               @apply bg-transparent;
               box-shadow: none;
-              height: 64px;
-              width: 64px;
+              height: 74px;
+              width: 74px;
               border-radius: 50%;
             }
             &--error {
@@ -67,6 +67,7 @@ const Checkbox = (props: any) => {
             input:checked + label > & {
               box-shadow: ${props.inset && 'inset 0 0 0px 8px #445ca4'};
               border: ${props.inset ? '2px solid #445ca4' : '8px solid #445ca4'};
+              padding: 12px;
             }
           }
         }
