@@ -19,6 +19,7 @@ const Login = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = methods;
   const stepEnum = { WELCOME: 0, EMAIL: 1, FORGOT: 2, SENT: 3, RESET: 4 };
   const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
+  const [isTransit, setIsTransit] = useState(false); // only for facebook & google redirects
   const [resetData, setResetData] = useState({
     email: '',
     token: '',
@@ -37,10 +38,17 @@ const Login = (props: any): any => {
     }
   }, [errors]);
   useEffect(() => {
-    const { reset, token, email }: any = router.query;
+    const { reset, token, email, social, code, state }: any = router.query;
+    const DATA = { code, state };
     if (reset === '1') {
       setLoginStep(4);
       setResetData({ email, token });
+    } else if (social === 'google') {
+      setIsTransit(true);
+      props.thunkLoginGoogle(DATA);
+    } else if (social === 'facebook') {
+      setIsTransit(true);
+      props.thunkLoginFacebook(DATA);
     } else {
       setLoginStep(0);
       setResetData({ email: '', token: '' });
@@ -120,13 +128,14 @@ const Login = (props: any): any => {
               {loginStep === stepEnum.WELCOME && (
                 <Fragment>
                   <img alt="welcome" className="c-login__image" src="/static/images/welcome.png" />
-                  <h1 className="c-login__title">{props.t('welcome-back')}</h1>
+                  <h1 className="c-login__title">{isTransit ? props.t('please-wait') : props.t('welcome-back')}</h1>
                   <Button
                     onClick={loginGoogle}
                     variant="outline"
                     width="100%"
                     color="black"
                     style={{ margin: '12px 0' }}
+                    isLoading={isTransit && router.query.social === 'google'}
                   >
                     {`${props.t('login-with')} Google`}
                   </Button>
@@ -136,6 +145,7 @@ const Login = (props: any): any => {
                     width="100%"
                     color="black"
                     style={{ margin: '12px 0' }}
+                    isLoading={isTransit && router.query.social === 'facebook'}
                   >
                     {`${props.t('login-with')} Facebook`}
                   </Button>

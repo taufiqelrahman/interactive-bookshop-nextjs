@@ -1,3 +1,5 @@
+import Loader from './Loader';
+
 const Button = (props: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
@@ -5,7 +7,7 @@ const Button = (props: any) => {
     return variants.map(variant => `c-button--${variant}`).join(' ');
   };
   const colorClass = props.color ? `c-button--${props.color}` : '';
-  const disabledClass = props.disabled ? `c-button--disabled` : '';
+  const disabledClass = props.disabled || props.isLoading ? `c-button--disabled` : '';
   return (
     <div style={props.style}>
       <button
@@ -13,9 +15,9 @@ const Button = (props: any) => {
         type={props.type ? props.type : null}
         className={`c-button ${variantClass()} ${colorClass} ${disabledClass}`}
         onClick={props.onClick}
-        disabled={props.disabled}
+        disabled={props.disabled || props.isLoading}
       >
-        {props.children}
+        {props.isLoading ? <Loader /> : props.children}
       </button>
       <style jsx>{`
         .c-button {

@@ -59,5 +59,6 @@
   "whoops": "Whoops",
   "error-message-404": "We tried our best to find this page but looks like it’s gone :(",
   "error-message-500": "An unexpected error seems to have occured. Why not retry refreshing your page? Or you can contact us if the problem persists.",
-  "error-message-general": "Something went terribly wrong :("
+  "error-message-general": "Something went terribly wrong :(",
+  "please-wait": "Please wait"
 }

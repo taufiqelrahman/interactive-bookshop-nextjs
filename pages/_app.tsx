@@ -16,6 +16,7 @@ import 'styles/tailwind.css';
 import 'styles/nprogress.css';
 import 'styles/icomoon/style.css';
 import 'reset-css';
+import Cookies from 'js-cookie';
 
 // disable when development
 // Sentry.init({
@@ -46,6 +47,7 @@ const App: NextPage<any> = (props: any) => {
     [],
   );
   useEffect(() => {
+    if (!reduxStore.getState().users.isLoggedIn) Cookies.remove('user');
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
     window.addEventListener('resize', debouncedSetup);

@@ -138,6 +138,7 @@ export const thunkLoginFacebook = (data): ThunkAction<void, types.UsersState, nu
     .catch(err => {
       dispatch(loginFacebook(false));
       dispatch(setErrorMessage(err.message));
+      Router.push('/login');
       captureException(err);
     });
 };
@@ -164,6 +165,7 @@ export const thunkLoginGoogle = (data): ThunkAction<void, types.UsersState, null
     .catch(err => {
       dispatch(loginGoogle(false));
       dispatch(setErrorMessage(err.message));
+      Router.push('/login');
       captureException(err);
     });
 };
