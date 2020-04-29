@@ -92,6 +92,8 @@ const OrderItem = (props: any) => {
             @apply w-1/5;
             margin-right: 24px;
             &__image {
+              @apply overflow-hidden;
+              padding: 4px;
               background: #efeef4;
               width: 142px;
               height: 180px;

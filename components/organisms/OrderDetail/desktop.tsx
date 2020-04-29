@@ -62,13 +62,12 @@ const OrderDetailDesktop = (props: any): any => {
                 <h2>{props.t('book-details')}</h2>
                 <div className="flex">
                   <div className="c-detail__book__left">
-                    <div className="c-detail__book__image">
-                      {isFetching ? (
-                        <Skeleton height={136} width={136} />
-                      ) : (
-                        <img src={previewImg(lineItems[0])} alt="item preview" />
-                      )}
-                    </div>
+                    {isFetching ? (
+                      <Skeleton height={136} width={136} />
+                    ) : (
+                      <div className="c-detail__book__image"><img src={previewImg(lineItems[0])} alt="item preview" />
+                      </div>
+                    )}
                   </div>
                   <div className="c-detail__book__middle">
                     <div className="c-detail__label">{props.t('form:name-label')}</div>
@@ -316,6 +315,7 @@ const OrderDetailDesktop = (props: any): any => {
             }
             &__image {
               @apply overflow-hidden;
+              padding: 4px;
               background: #f3bf45;
               border-radius: 12px;
               height: 136px;

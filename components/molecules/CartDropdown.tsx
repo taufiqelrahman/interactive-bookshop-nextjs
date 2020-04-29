@@ -89,6 +89,8 @@ const CartDropdown = (props: any) => {
               border-radius: 4px;
               border: 2px solid #ededed;
               background: #efeef4;
+              object-fit: cover;
+              object-position: top;
             }
             &__name {
               @apply font-semibold;

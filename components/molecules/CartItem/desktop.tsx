@@ -167,6 +167,8 @@ const CartItem = (props: any) => {
             @apply w-1/5;
             margin-right: 18px;
             &__image {
+              @apply overflow-hidden;
+              padding: 4px;
               background: #f3bf45;
               width: 100px;
               height: 100px;

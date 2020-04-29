@@ -70,6 +70,8 @@ const OrderItem = (props: any) => {
               color: #898699;
             }
             &__image {
+              @apply overflow-hidden;
+              padding: 4px;
               background: #efeef4;
               width: 47px;
               height: 47px;

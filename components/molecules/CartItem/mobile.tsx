@@ -57,7 +57,7 @@ const CartItemMobile = (props: any) => {
                   {props.isSkeleton ? <Skeleton height={24} /> : props.customAttributes.Name}
                 </div>
                 <div className="c-cart-item__detail__jobs">
-                  {props.isSkeleton ? <Skeleton height={19} /> : props.customAttributes.Occupation}
+                  {props.isSkeleton ? <Skeleton height={19} /> : props.customAttributes.Occupations}
                 </div>
                 <div className="c-cart-item__detail__notes">
                   {props.isSkeleton ? (
@@ -138,7 +138,7 @@ const CartItemMobile = (props: any) => {
         actions={
           <Fragment>
             <Button width="100%" onClick={deleteItem} style={{ marginBottom: 12 }}>
-              {props.t('form:continue-buttom')}
+              {props.t('form:continue-button')}
             </Button>
             <Button width="100%" onClick={() => setShowSheet(false)} variant="outline" color="black">
               {props.t('form:cancel-button')}
@@ -161,10 +161,12 @@ const CartItemMobile = (props: any) => {
               @apply flex justify-between items-center;
             }
             &__image {
+              @apply overflow-hidden;
               background: #f3bf45;
               width: 72px;
               height: 72px;
               border-radius: 6px;
+              padding: 4px;
             }
             &__price {
               @apply font-semibold;
