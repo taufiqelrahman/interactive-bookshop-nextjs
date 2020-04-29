@@ -65,7 +65,8 @@ const OrderDetailDesktop = (props: any): any => {
                     {isFetching ? (
                       <Skeleton height={136} width={136} />
                     ) : (
-                      <div className="c-detail__book__image"><img src={previewImg(lineItems[0])} alt="item preview" />
+                      <div className="c-detail__book__image">
+                        <img src={previewImg(lineItems[0].customAttributes)} alt="item preview" />
                       </div>
                     )}
                   </div>

@@ -60,20 +60,18 @@ const CharacterCustomization = (props: any) => {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected =
-    props.state.cart.selected ||
-    {
-      // Occupations: ['Teacher', 'Pilot', 'Police'],
-      // Name: 'Kalilist',
-      // Age: 'kid',
-      // Gender: 'girl',
-      // Skin: 'light',
-      // Language: 'english',
-      // Dedication:
-      //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-      // 'Date of Birth': '03-01-2019',
-      // Hair: 'short',
-    };
+  const selected = props.state.cart.selected || {
+    // Occupations: ['Teacher', 'Pilot', 'Police'],
+    // Name: 'Kalilist',
+    // Age: 'kid',
+    // Gender: 'girl',
+    // Skin: 'light',
+    // Language: 'english',
+    // Dedication:
+    //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
+    // 'Date of Birth': '03-01-2019',
+    // Hair: 'short',
+  };
   useEffect(() => {
     const { Occupations, Name, Gender } = selected;
     if (!router.query.edit && Occupations && Occupations.length > 0 && Name && Gender) {
