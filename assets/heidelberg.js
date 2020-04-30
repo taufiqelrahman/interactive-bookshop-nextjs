@@ -281,8 +281,8 @@ const init = function() {
         }.bind(document),
       );
 
-      // options.onPageTurn(el, els);
-      options.onPageTurn(this.isFirstPage(), this.isLastPage());
+      options.onPageTurn(el, els);
+      // options.onPageTurn(this.isFirstPage(), this.isLastPage());
       $(this).trigger('pageTurn.heidelberg', [el, els]);
 
       if (direction == 'forwards' && els.pagesTarget.first().hasClass('last-page')) {

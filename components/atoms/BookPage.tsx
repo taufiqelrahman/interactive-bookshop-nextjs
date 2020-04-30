@@ -35,10 +35,14 @@ const BookPage = (props: any) => {
     return processed;
   };
   return (
-    <div className={`c-book-page ${props.className || ''}`} style={props.style}>
+    <div id={props.id} className={`c-book-page ${props.className || ''}`} style={props.style}>
       <svg className="c-book-page__svg">
         <foreignObject x="0" y="0" width="100%" height="100%">
-          <img className="c-book-page__image" src={props.image} alt="book page" />
+          <img
+            className="c-book-page__image"
+            src={props.mustLoad ? props.image : '/static/images/loading.gif'}
+            alt="book page"
+          />
           {props.contents.map((content, key) => {
             const value = processContent(content, props.language);
             return (

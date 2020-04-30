@@ -10,6 +10,7 @@ import sortby from 'lodash.sortby';
 
 const BookPreview = (props: any) => {
   const [, setBook] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [state, setState] = useState({
     height: 0,
     loaded: false,
@@ -44,6 +45,10 @@ const BookPreview = (props: any) => {
       // onPageTurn: (isFirstPage: boolean, isLastPage: boolean) => {
       //   setPageInfo({ firstPage: isFirstPage, lastPage: isLastPage });
       // },
+      onPageTurn: (_, els) => {
+        const currentPageId = els.pagesTarget[els.pagesTarget.length - 1].id;
+        setCurrentPage(parseInt(currentPageId, 10));
+      },
     });
     setBook(bookHeidelberg);
   };
@@ -124,7 +129,7 @@ const BookPreview = (props: any) => {
     let jobPath = `${job}/page-${pageNumber}`;
     if (job.includes('Cover')) {
       jobPath = job.includes('Front') ? 'cover/front/' : 'cover/back/';
-      jobPath += props.cover;
+      jobPath += props.cover || 'blue';
     }
     const imagePath = `/static/images/pages/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
     return imagePath.toLowerCase();
@@ -181,6 +186,7 @@ const BookPreview = (props: any) => {
             {jointPages.map((page, index) => (
               <BookPage
                 key={index}
+                id={index + 1}
                 className={`Heidelberg-Page ${pageClass(index)}`}
                 image={getImage(page[0].occupation.name, page[0].page_number)}
                 name={props.selected.Name}
@@ -191,6 +197,7 @@ const BookPreview = (props: any) => {
                 contents={page}
                 isMobile={props.isMobile}
                 isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
+                mustLoad={index + 1 < currentPage + 7}
               />
             ))}
           </div>
