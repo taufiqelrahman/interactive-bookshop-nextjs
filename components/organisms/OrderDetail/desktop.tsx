@@ -167,7 +167,7 @@ const OrderDetailDesktop = (props: any): any => {
             <Card variant="border">
               <div className="c-detail__container">
                 <h2>{props.t('common:order-summary')}</h2>
-                <div className="flex justify-between items-baseline">
+                <div className="flex justify-between items-baseline overflow-hidden">
                   <div>
                     <div className="c-detail__summary__title">
                       {isFetching ? <Skeleton height={24} width={190} /> : 'When I Grow Up'}
@@ -284,33 +284,33 @@ const OrderDetailDesktop = (props: any): any => {
             &__left {
               @apply w-3/12 opacity-100;
               margin-right: 12px;
-              @screen lg {
+              @screen md {
                 @apply w-0 opacity-0;
                 margin-right: 0;
               }
-              @screen xl {
-                @apply w-3/12 opacity-100;
+              @screen lg {
+                @apply w-4/12 opacity-100;
                 margin-right: 12px;
               }
             }
             &__middle {
-              @apply w-4/12 overflow-hidden;
+              @apply w-4/12;
               margin-right: 12px;
-              @screen lg {
+              @screen md {
                 @apply w-6/12;
               }
-              @screen xl {
+              @screen lg {
                 @apply w-4/12;
               }
               @apply w-4/12;
             }
             &__right {
               @apply w-5/12;
-              @screen lg {
+              @screen md {
                 @apply w-6/12;
               }
-              @screen xl {
-                @apply w-4/12;
+              @screen lg {
+                @apply w-3/12;
               }
               @apply w-5/12;
             }
@@ -366,7 +366,7 @@ const OrderDetailDesktop = (props: any): any => {
             color: #999;
           }
           &__value {
-            @apply font-opensans;
+            @apply font-opensans overflow-hidden;
             line-height: 22px;
             margin-bottom: 13px;
           }

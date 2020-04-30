@@ -210,7 +210,7 @@ const CharacterCustomization = (props: any) => {
             img {
               @apply w-full;
               background: url('/static/images/loading.gif') 50% no-repeat;
-              height: 330px;
+              min-height: 330px;
             }
           }
           &__char {
