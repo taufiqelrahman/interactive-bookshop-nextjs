@@ -11,7 +11,7 @@ import FieldSkin from 'components/molecules/FieldSkin';
 import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Button from 'components/atoms/Button';
-import { schema, showError, previewImg, getJobIds } from './helper';
+import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Sheet from 'components/atoms/Sheet';
@@ -72,15 +72,18 @@ const CharacterCustomization = (props: any) => {
     // 'Date of Birth': '03-01-2019',
     // Hair: 'short',
   };
+  const registerOccupations = () => {
+    setTimeout(() => {
+      register({ name: 'Occupations' }, schema(props).occupations);
+      if (selected.Occupations) setValue('Occupations', selected.Occupations);
+    }, 500);
+  };
   useEffect(() => {
     const { Occupations, Name, Gender } = selected;
     if (!router.query.edit && Occupations && Occupations.length > 0 && Name && Gender) {
       setCharStep(stepEnum.AGE);
     } else {
-      setTimeout(() => {
-        register({ name: 'Occupations' }, schema(props).occupations);
-        if (selected.Occupations) setValue('Occupations', selected.Occupations);
-      }, 500);
+      registerOccupations();
     }
   }, []);
   const { occupations } = props.state.master;
@@ -105,6 +108,14 @@ const CharacterCustomization = (props: any) => {
   //   const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : props.t(`common:${job}`)));
   //   return array.join(', ');
   // };
+  useEffect(() => {
+    if (charStep === stepEnum.OCCUPATIONS) return;
+    loadImg(previewImg(selected, watch));
+  }, [previewImg(selected, watch)]);
+  useEffect(() => {
+    if ([stepEnum.AGE, stepEnum.NAME_GENDER].includes(charStep)) loadImg(previewImg(selected, watch));
+    if (charStep === stepEnum.OCCUPATIONS) registerOccupations();
+  }, [charStep]);
   const screenHeight = '100vh - 69px';
   return (
     <DefaultLayout
@@ -144,7 +155,7 @@ const CharacterCustomization = (props: any) => {
             <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
               <div className="u-container c-char-custom__preview">
                 <div>
-                  <img src={previewImg(selected, watch)} alt="character preview" />
+                  <img id="preview-char" src="/static/images/empty.png" alt="character preview" />
                 </div>
               </div>
               <div className="u-container c-char-custom__tab">
@@ -288,6 +299,8 @@ const CharacterCustomization = (props: any) => {
               @apply flex items-center;
               img {
                 width: 100px;
+                background: url('/static/images/loading.gif') 50% no-repeat;
+                height: 185px;
               }
             }
           }

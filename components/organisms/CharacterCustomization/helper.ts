@@ -41,3 +41,14 @@ export const getJobIds = (names, list) => {
     return list.find(occ => occ.name === job).id;
   });
 };
+
+export const loadImg = source => {
+  const image: any = document.getElementById('preview-char');
+  if (!image) return;
+  image.src = '/static/images/empty.png';
+  const downloadingImage = new Image();
+  downloadingImage.onload = function downloadingImage() {
+    image.src = (this as any).src;
+  };
+  downloadingImage.src = source;
+};

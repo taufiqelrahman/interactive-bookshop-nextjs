@@ -13,7 +13,7 @@ import FieldLanguage from 'components/molecules/FieldLanguage';
 import FormTextArea from 'components/molecules/FormTextArea';
 import Divider from 'components/atoms/Divider';
 import Button from 'components/atoms/Button';
-import { schema, showError, previewImg, getJobIds } from './helper';
+import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 
@@ -65,8 +65,11 @@ const CharacterCustomization = (props: any) => {
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, []);
-  const containerMargin = (window.innerWidth * 0.25) / 2;
-  const containerWidth = window.innerWidth * 0.75;
+  useEffect(() => {
+    loadImg(previewImg(selected, watch));
+  }, [previewImg(selected, watch)]);
+  const containerWidth = window.innerWidth > 1024 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
+  const containerMargin = (window.innerWidth - containerWidth) / 2;
   const charWidth = containerWidth * 0.3 - containerWidth * 0.08;
   return (
     <DefaultLayout {...props}>
@@ -171,7 +174,7 @@ const CharacterCustomization = (props: any) => {
           </div>
           <div className={`c-char-custom__right ${stickyClassName()}`} ref={ref}>
             <div className="c-char-custom__char">
-              <img src={previewImg(selected, watch)} alt="character preview" />
+              <img id="preview-char" src="/static/images/empty.png" alt="character preview" />
             </div>
           </div>
         </div>
@@ -206,6 +209,8 @@ const CharacterCustomization = (props: any) => {
             }
             img {
               @apply w-full;
+              background: url('/static/images/loading.gif') 50% no-repeat;
+              height: 330px;
             }
           }
           &__char {
