@@ -22,10 +22,11 @@ const BookPreview = (props: any) => {
 
   const updateHeight = () => {
     // const image: any = document.querySelector('.Heidelberg-Page img');
-    const containerMargin = window.innerWidth * 0.25;
+    const containerWidth = window.innerWidth > 1024 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
+    // const containerMargin = (window.innerWidth - containerWidth) / 2;
     const padding = 60;
-    const bookRatio = 21 / 30;
-    const height = ((window.innerWidth - padding - containerMargin) / 2) * bookRatio;
+    const bookRatio = 495 / 700;
+    const height = ((containerWidth - padding) / 2) * bookRatio;
     setState({ ...state, height, loaded: true });
     return Promise.resolve();
   };
@@ -143,7 +144,7 @@ const BookPreview = (props: any) => {
 
   // for mobile
   const bookHeight = '(100vh - 69px - 257px) * 0.7';
-  const bookRatio = '30 / 21';
+  const bookRatio = '700 / 495';
 
   return (
     <div className="c-book-preview">

@@ -39,7 +39,7 @@ const BookPage = (props: any) => {
       <svg className="c-book-page__svg">
         <foreignObject x="0" y="0" width="100%" height="100%">
           <img
-            className="c-book-page__image"
+            className={`c-book-page__image ${props.mustLoad ? '' : 'c-book-page__loading'}`}
             src={props.mustLoad ? props.image : '/static/images/loading.gif'}
             alt="book page"
           />
@@ -78,6 +78,14 @@ const BookPage = (props: any) => {
           }
           &__image {
             @apply w-full;
+          }
+          &__loading {
+            width: 20px;
+            position: absolute;
+            left: 50%;
+            margin-left: -10px;
+            top: 50%;
+            margin-top: -10px;
           }
           &__content {
             position: absolute;
