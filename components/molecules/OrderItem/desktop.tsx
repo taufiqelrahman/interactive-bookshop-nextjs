@@ -10,7 +10,7 @@ import Skeleton from 'react-loading-skeleton';
 import { mapKeyValue } from 'lib/format-array';
 
 const OrderItem = (props: any) => {
-  const lineItems = props.line_items.map(item => ({
+  const lineItems = (props.line_items || []).map(item => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));

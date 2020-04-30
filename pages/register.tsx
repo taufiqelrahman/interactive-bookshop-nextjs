@@ -100,7 +100,7 @@ const Register = (props: any): any => {
             <div className="c-register__container">
               {registerStep === stepEnum.WELCOME ? (
                 <Fragment>
-                  <img alt="welcome" className="c-register__image" src="/static/images/welcome.png" />
+                  <img alt="welcome" className="c-register__image" src="/static/images/register-illus.png" />
                   <h1 className="c-register__title">{props.t('lets-join')}</h1>
                   <Button
                     onClick={registerEmail}
@@ -238,6 +238,7 @@ const Register = (props: any): any => {
             @apply mx-auto;
             margin-top: 12px;
             margin-bottom: 24px;
+            height: 164px;
           }
           &__title {
             @apply font-semibold;

@@ -127,7 +127,7 @@ const Login = (props: any): any => {
             <div className="c-login__container">
               {loginStep === stepEnum.WELCOME && (
                 <Fragment>
-                  <img alt="welcome" className="c-login__image" src="/static/images/welcome.png" />
+                  <img alt="welcome" className="c-login__image" src="/static/images/login-illus.png" />
                   <h1 className="c-login__title">{isTransit ? props.t('please-wait') : props.t('welcome-back')}</h1>
                   <Button
                     onClick={loginGoogle}
@@ -322,6 +322,7 @@ const Login = (props: any): any => {
             @apply mx-auto;
             margin-top: 12px;
             margin-bottom: 24px;
+            height: 164px;
           }
           &__title {
             @apply font-semibold;
