@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:12.16-alpine
 
 # Create app directory
 WORKDIR /usr/src/wigu
@@ -9,8 +9,8 @@ WORKDIR /usr/src/wigu
 COPY package*.json *yarn* ./
 
 # Install yarn from the local .tgz
-RUN npm install
-# RUN yarn
+# RUN npm install
+RUN yarn
 
 # Bundle app source
 COPY . ./
@@ -22,5 +22,5 @@ COPY . ./
 # CMD [ "npm", "run", "start" ]
 # Running the app development
 # CMD [ "npm", "run", "dev" ]
-ENTRYPOINT ["npm", "run", "deploy"]
+ENTRYPOINT ["yarn", "run", "deploy"]
 # ENTRYPOINT ["npm", "run", "start"]
