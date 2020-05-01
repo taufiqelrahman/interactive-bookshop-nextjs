@@ -10,7 +10,7 @@
     "debug": "node server.ts",
     "lint": "eslint --ext .ts --fix --ignore-path .eslintignore .",
     "tinker": "concurrently \"yarn lint\" \"yarn dev\"",
-    "build": "next build",
+    "build": "NODE_OPTIONS=\"--max_old_space_size=1024\" next build",
     "start": "NODE_ENV=production node server.ts",
     "deploy": "yarn build && yarn start"
   },
