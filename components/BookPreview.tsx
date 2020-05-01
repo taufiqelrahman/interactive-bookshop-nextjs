@@ -221,7 +221,7 @@ const BookPreview = (props: any) => {
       </div> */}
       <style jsx>{`
         .c-book-preview {
-          @apply flex items-center overflow-x-auto bg-light-grey h-full;
+          @apply flex items-center overflow-x-auto bg-light-grey h-full relative;
           padding: 20px 36px;
           @screen md {
             @apply mt-4 bg-white;
