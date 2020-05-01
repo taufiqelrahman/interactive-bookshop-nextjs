@@ -1,3 +1,5 @@
+import LazyLoad from 'react-lazyload';
+
 const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {
     let style: any = {
@@ -36,26 +38,24 @@ const BookPage = (props: any) => {
   };
   return (
     <div id={props.id} className={`c-book-page ${props.className || ''}`} style={props.style}>
-      <svg className="c-book-page__svg">
-        <foreignObject x="0" y="0" width="100%" height="100%">
-          <img
-            className={`c-book-page__image ${props.mustLoad ? '' : 'c-book-page__loading'}`}
-            src={props.mustLoad ? props.image : '/static/images/loading.gif'}
-            alt="book page"
-          />
-          {props.contents.map((content, key) => {
-            const value = processContent(content, props.language);
-            return (
-              <div
-                key={key}
-                className="c-book-page__content"
-                style={styleGenerator(content.style)}
-                dangerouslySetInnerHTML={{ __html: value }}
-              />
-            );
-          })}
-        </foreignObject>
-      </svg>
+      <LazyLoad overflow>
+        <svg className="c-book-page__svg">
+          <foreignObject x="0" y="0" width="100%" height="100%">
+            <img className="c-book-page__image" src={props.mustLoad ? props.image : ''} alt="book page" />
+            {props.contents.map((content, key) => {
+              const value = processContent(content, props.language);
+              return (
+                <div
+                  key={key}
+                  className="c-book-page__content"
+                  style={styleGenerator(content.style)}
+                  dangerouslySetInnerHTML={{ __html: value }}
+                />
+              );
+            })}
+          </foreignObject>
+        </svg>
+      </LazyLoad>
       <style jsx>{`
         .c-book-page {
           margin-right: 10px;
@@ -78,14 +78,8 @@ const BookPage = (props: any) => {
           }
           &__image {
             @apply w-full;
-          }
-          &__loading {
-            width: 20px;
-            position: absolute;
-            left: 50%;
-            margin-left: -10px;
-            top: 50%;
-            margin-top: -10px;
+            background: url('/static/images/loading.gif') 50% no-repeat;
+            height: 100%;
           }
           &__content {
             position: absolute;

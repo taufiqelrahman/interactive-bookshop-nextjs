@@ -179,6 +179,7 @@ const BookPreview = (props: any) => {
             contents={page}
             isMobile={props.isMobile}
             isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
+            mustLoad={true}
           />
         ))
       ) : (
