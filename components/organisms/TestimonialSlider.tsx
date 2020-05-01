@@ -79,7 +79,7 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__title {
-            @apply w-2/3 text-center mx-auto;
+            @apply w-3/4 text-center mx-auto;
             @screen md {
               @apply mx-0 text-left;
               width: 550px;

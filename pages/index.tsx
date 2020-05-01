@@ -72,9 +72,12 @@ const Index = (props: any): any => {
                 <img src="/static/images/guitars.png" alt="guitars" />
               </div>
             </div>
-            {/* <div className="c-section__create-now__book">
-              <img src="/static/images/floating-book.png" alt="floating-book" />
-            </div> */}
+            <div className="c-section__create-now__books">
+              <img src="/static/images/book-decoration.png" alt="books" />
+            </div>
+            <div className="c-section__create-now__dust">
+              <img src="/static/images/dust-decoration.png" alt="dust" />
+            </div>
           </div>
         </div>
         <div className="c-section__start-story">
@@ -153,7 +156,8 @@ const Index = (props: any): any => {
                 linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
             } */
             &__container {
-              @apply flex w-full items-center flex-col-reverse;
+              @apply flex w-full items-center flex-col-reverse relative;
+              z-index: 1;
               .c-section__start-story & {
                 @apply flex-col;
               }
@@ -225,7 +229,7 @@ const Index = (props: any): any => {
           }
           &__content {
             @apply w-full text-center;
-            padding: 0 40px;
+            padding: 0 30px;
             z-index: 10;
             @screen md {
               @apply w-5/12 text-left;
@@ -277,6 +281,7 @@ const Index = (props: any): any => {
             }
           }
           &__create-now {
+            @apply relative;
             padding-top: 61px;
             @screen md {
               padding-top: 157px;
@@ -292,8 +297,41 @@ const Index = (props: any): any => {
                 }
               }
             }
+            &__books {
+              @apply absolute hidden;
+              bottom: -20%;
+              width: 90vw;
+              left: 50%;
+              margin-left: -45vw;
+              right: 50%;
+              margin-right: -45vw;
+              @screen md {
+                @apply block;
+              }
+              @screen lg {
+                width: 70vw;
+                margin-left: -35vw;
+                margin-right: -35vw;
+              }
+            }
+            &__dust {
+              @apply absolute;
+              top: 38%;
+              width: 100vw;
+              left: 0;
+              z-index: 2;
+              @screen md {
+                @apply hidden;
+              }
+              img {
+                @apply w-full;
+              }
+            }
             & .c-section--top__image {
-              @apply pl-6;
+              @apply pl-6 mb-8;
+              @screen md {
+                @apply mb-0;
+              }
             }
           }
           &__start-story {
