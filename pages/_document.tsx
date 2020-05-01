@@ -13,7 +13,7 @@ class MyDocument extends Document {
           <meta key="robots" name="robots" content="noimageindex" />
           <meta key="theme-color" name="theme-color" content="#000000" />
           <link key="icon" rel="icon" href="/static/favicon.ico" />
-          <link key="apple-touch-icon" rel="apple-touch-icon" href="/static/images/icons/pasfoto-icon.png" />
+          <link key="apple-touch-icon" rel="apple-touch-icon" href="/static/images/icons/icon-144x144.png" />
           <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="Website Consultant" />
           <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
           <meta
@@ -92,31 +92,31 @@ class MyDocument extends Document {
           <link href="favicon-48.png" rel="icon" type="image/png" sizes="48x48" />
 
           {/* <!-- iOS  --> */}
-          <link href="static/images/icons/icon-72x72.png" rel="apple-touch-icon" />
-          <link href="static/images/icons/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
-          <link href="static/images/icons/icon-128x128.png" rel="apple-touch-icon" sizes="128x128" />
-          <link href="static/images/icons/icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+          <link href="/static/images/icons/icon-72x72.png" rel="apple-touch-icon" />
+          <link href="/static/images/icons/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
+          <link href="/static/images/icons/icon-128x128.png" rel="apple-touch-icon" sizes="128x128" />
+          <link href="/static/images/icons/icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
 
           {/* <!-- Startup Image  --> */}
           {/* <link href="touch-icon-start-up-320x480.png" rel="apple-touch-startup-image" /> */}
 
           {/* <!-- Pinned Tab  --> */}
           {/* <link href="path/to/icon.svg" rel="mask-icon" size="any" color="red" /> */}
-          <link href="static/images/icons/icon-72x72.png" rel="mask-icon" color="red" />
+          <link href="/static/images/icons/icon-72x72.png" rel="mask-icon" color="red" />
 
           {/* <!-- Android  --> */}
-          <link href="static/images/icons/icon-192x192.png" rel="icon" sizes="192x192" />
-          <link href="static/images/icons/icon-128x128.png" rel="icon" sizes="128x128" />
+          <link href="/static/images/icons/icon-192x192.png" rel="icon" sizes="192x192" />
+          <link href="/static/images/icons/icon-128x128.png" rel="icon" sizes="128x128" />
 
           {/* <!-- Others --> */}
           <link href="favicon.icon" rel="shortcut icon" type="image/x-icon" />
 
           {/* <!-- UC Browser  --> */}
-          <link href="static/images/icons/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
-          <link href="static/images/icons/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
+          <link href="/static/images/icons/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
+          <link href="/static/images/icons/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
 
           {/* <!-- Manifest.json  --> */}
-          <link href="/manifest.json" rel="manifest" />
+          <link href="/static/manifest.json" rel="manifest" />
         </Head>
         <body>
           <Main />
