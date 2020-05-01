@@ -18,6 +18,8 @@ services:
       VIRTUAL_HOST: whenigrowup.co.id # production
       LETSENCRYPT_HOST: whenigrowup.co.id # production
       # INTERNAL_URL: http://localhost:5120 # same as api port
+    volumes:
+      - /var/lib/wigu
     
 networks:
   default:
