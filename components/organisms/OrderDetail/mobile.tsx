@@ -57,22 +57,22 @@ const OrderDetailMobile = (props: any): any => {
       <Head>
         <title>When I Grow Up | {orderNumber}</title>
       </Head>
+      {isFetching ? (
+        <Skeleton height={30} width={'100%'} />
+      ) : (
+        <Capsule
+          color={appConfig.stateColor[currentOrder.state]}
+          variant="bar"
+          style={{ zIndex: 42, position: 'absolute', top: 0, left: 0, right: 0 }}
+        >
+          {props.t(currentOrder.state)}
+          {props.state === 'received' && <span className="icon-cross_check" />}
+        </Capsule>
+      )}
       <div
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
         style={{ height: `calc(${screenHeight})` }}
       >
-        {isFetching ? (
-          <Skeleton height={30} width={'100%'} />
-        ) : (
-          <Capsule
-            color={appConfig.stateColor[currentOrder.state]}
-            variant="bar"
-            style={{ zIndex: 42, position: 'absolute', top: 0, left: 0, right: 0 }}
-          >
-            {props.t(currentOrder.state)}
-            {props.state === 'received' && <span className="icon-cross_check" />}
-          </Capsule>
-        )}
         <Swipeable
           onSwipedUp={() => setState({ ...state, extendPreview: true })}
           onSwipedRight={() => setState({ ...state, extendPreview: true })}
