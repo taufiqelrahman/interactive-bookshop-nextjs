@@ -1,5 +1,5 @@
-import LazyLoad, { forceVisible } from 'react-lazyload';
-import { useEffect } from 'react';
+import LazyLoad from 'react-lazyload';
+// import { useEffect } from 'react';
 
 const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {
@@ -37,9 +37,9 @@ const BookPage = (props: any) => {
     }
     return processed;
   };
-  useEffect(() => {
-    if (!props.enableLazy) forceVisible();
-  }, [props.enableLazy]);
+  // useEffect(() => {
+  //   if (!props.enableLazy) forceVisible();
+  // }, [props.enableLazy]);
   return (
     <div id={props.id} className={`c-book-page ${props.className || ''}`} style={props.style}>
       <LazyLoad overflow>
