@@ -235,15 +235,15 @@ const OrderDetailDesktop = (props: any): any => {
                     />
                   )}
                 </div>
-                <div className="c-detail__summary__info">
-                  {isFetching ? (
-                    <Skeleton height={24} width={120} />
-                  ) : (
-                    <a href={currentOrder.order_status_url}>
-                      {currentOrder.financial_status === 'paid' ? props.t('view-payment') : props.t('continue-payment')}
-                    </a>
-                  )}
-                </div>
+                {currentOrder.financial_status !== 'paid' && (
+                  <div className="c-detail__summary__info">
+                    {isFetching ? (
+                      <Skeleton height={24} width={120} />
+                    ) : (
+                      <a href={currentOrder.order_status_url}>{props.t('continue-payment')}</a>
+                    )}
+                  </div>
+                )}
               </div>
             </Card>
           </div>

@@ -73,7 +73,7 @@ const OrderDetailMobile = (props: any): any => {
       <Swipeable
         onSwipedUp={() => setState({ ...state, extendPreview: true })}
         onSwipedRight={() => setState({ ...state, extendPreview: true })}
-        onSwipedDown={() => (state.extendPreview ? setState({ ...state, extendPreview: false }) : onExit())}
+        onSwipedDown={() => (state.extendPreview ? null : onExit())}
         onSwipedLeft={() => setState({ ...state, extendPreview: false })}
       >
         <Sheet
@@ -207,13 +207,11 @@ const OrderDetailMobile = (props: any): any => {
                         displayType="text"
                       />
                     </div>
-                    <div className="c-detail__summary__info">
-                      <a href={currentOrder.order_status_url}>
-                        {currentOrder.financial_status === 'paid'
-                          ? props.t('view-payment')
-                          : props.t('continue-payment')}
-                      </a>
-                    </div>
+                    {currentOrder.financial_status !== 'paid' && (
+                      <div className="c-detail__summary__info">
+                        <a href={currentOrder.order_status_url}>{props.t('continue-payment')}</a>
+                      </div>
+                    )}
                   </div>
                 </Fragment>
               )}

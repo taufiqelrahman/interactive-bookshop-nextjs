@@ -44,7 +44,7 @@ const Orders = (props: any): any => {
       </div>
       <style jsx>{`
         .c-orders-section {
-          @apply flex w-full;
+          @apply flex w-full overflow-scroll;
           padding: 16px 0;
           @screen md {
             padding: 31px 0;

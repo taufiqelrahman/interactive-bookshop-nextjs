@@ -180,7 +180,7 @@ const BookPreview = (props: any) => {
             isMobile={props.isMobile}
             isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
             mustLoad={true}
-            enableLazy={props.enableLazy}
+            // enableLazy={props.enableLazy}
           />
         ))
       ) : (

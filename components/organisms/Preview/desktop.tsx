@@ -5,13 +5,13 @@ import Card from 'components/atoms/Card';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
 
 const PreviewDesktop = (props: any): any => {
-  const [enableLazy, setEnableLazy] = useState(true);
+  // const [enableLazy, setEnableLazy] = useState(true);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const onSubmit = data => {
@@ -37,7 +37,7 @@ const PreviewDesktop = (props: any): any => {
     if (fromCookies) {
       props.saveSelected(fromCookies);
       Cookies.remove('pendingTrx');
-      setEnableLazy(false);
+      // setEnableLazy(false);
     }
   }, []);
   const selected = props.state.cart.selected || dummySelected || {};
@@ -54,7 +54,7 @@ const PreviewDesktop = (props: any): any => {
                   selected={selected || {}}
                   bookPages={bookPages}
                   cover={watch('Cover')}
-                  enableLazy={enableLazy}
+                  // enableLazy={enableLazy}
                 />
               </div>
               <div className="c-preview__cover">

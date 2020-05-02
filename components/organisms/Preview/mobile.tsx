@@ -3,14 +3,14 @@ import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import NavBar from '../NavBar/mobile';
 import Cookies from 'js-cookie';
 
 const PreviewMobile = (props: any): any => {
-  const [enableLazy, setEnableLazy] = useState(true);
+  // const [enableLazy, setEnableLazy] = useState(true);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const onSubmit = data => {
@@ -36,7 +36,7 @@ const PreviewMobile = (props: any): any => {
     if (fromCookies) {
       props.saveSelected(fromCookies);
       Cookies.remove('pendingTrx');
-      setEnableLazy(false);
+      // setEnableLazy(false);
     }
   }, []);
   const selected = props.state.cart.selected || dummySelected || {};
@@ -54,7 +54,7 @@ const PreviewMobile = (props: any): any => {
           isMobile={props.isMobile}
           bookPages={bookPages}
           cover={watch('Cover')}
-          enableLazy={enableLazy}
+          // enableLazy={enableLazy}
         />
         <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="c-preview__cover">
