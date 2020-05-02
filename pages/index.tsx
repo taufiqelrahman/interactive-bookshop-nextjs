@@ -69,7 +69,7 @@ const Index = (props: any): any => {
                 </a>
               </div>
               <div className="c-section--top__image">
-                <img src="/static/images/guitars.png" alt="guitars" />
+                <img src={`/static/images/guitars${props.isMobile ? '-sm' : ''}.png`} alt="guitars" />
               </div>
             </div>
             <div className="c-section__create-now__books">
@@ -85,7 +85,7 @@ const Index = (props: any): any => {
             <div>
               <div className="c-section--top__container">
                 <div className="c-section--top__image c-section--top__image--kid">
-                  <img src="/static/images/pilots.png" alt="pilots" />
+                  <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
                 </div>
                 <div className="c-section__content text-white">
                   <h1 className="mb-4">{props.t('startstory-title')}</h1>

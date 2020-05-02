@@ -7,7 +7,7 @@ export const schema = props => ({
   },
   name: { required: { value: true, message: `${props.t('name-label')} ${props.t('required-error')}` } },
   age: { required: { value: true, message: `${props.t('age-label')} ${props.t('required-error')}` } },
-  dob: { required: { value: true, message: `${props.t('dob-label')} ${props.t('required-error')}` } },
+  dob: { required: false },
   gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
   hair: { required: { value: true, message: `${props.t('hair-label')} ${props.t('required-error')}` } },
   skin: { required: { value: true, message: `${props.t('skin-label')} ${props.t('required-error')}` } },
