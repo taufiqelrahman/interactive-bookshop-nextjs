@@ -127,12 +127,13 @@ const BookPreview = (props: any) => {
 
   const getImage = (job, pageNumber) => {
     const { Gender, Age, Skin, Hair } = props.selected;
+    const pagePath = props.isMobile ? 'pages-sm' : 'pages';
     let jobPath = `${job}/page-${pageNumber}`;
     if (job.includes('Cover')) {
       jobPath = job.includes('Front') ? 'cover/front/' : 'cover/back/';
       jobPath += props.cover || 'blue';
     }
-    const imagePath = `/static/images/pages/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
+    const imagePath = `/static/images/${pagePath}/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
     return imagePath.toLowerCase();
   };
 
