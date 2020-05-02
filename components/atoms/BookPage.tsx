@@ -62,8 +62,10 @@ const BookPage = (props: any) => {
       </LazyLoad>
       <style jsx>{`
         .c-book-page {
+          @apply relative overflow-hidden;
           margin-right: 10px;
           @screen md {
+            position: inherit;
             margin-right: 0;
           }
           &:first-child svg {
