@@ -59,7 +59,7 @@ const OrderDetailMobile = (props: any): any => {
       </Head>
       <div
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
-        style={{ minHeight: `calc(${screenHeight})` }}
+        style={{ height: `calc(${screenHeight})` }}
       >
         {isFetching ? (
           <Skeleton height={30} width={'100%'} />
