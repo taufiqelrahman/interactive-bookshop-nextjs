@@ -64,193 +64,197 @@ const OrderDetailMobile = (props: any): any => {
         {isFetching ? (
           <Skeleton height={30} width={'100%'} />
         ) : (
-          <Capsule color={appConfig.stateColor[currentOrder.state]} variant="bar" style={{ zIndex: 42 }}>
+          <Capsule
+            color={appConfig.stateColor[currentOrder.state]}
+            variant="bar"
+            style={{ zIndex: 42, position: 'absolute', top: 0, left: 0, right: 0 }}
+          >
             {props.t(currentOrder.state)}
             {props.state === 'received' && <span className="icon-cross_check" />}
           </Capsule>
         )}
-      </div>
-      <Swipeable
-        onSwipedUp={() => setState({ ...state, extendPreview: true })}
-        onSwipedRight={() => setState({ ...state, extendPreview: true })}
-        onSwipedDown={() => (state.extendPreview ? null : onExit())}
-        onSwipedLeft={() => setState({ ...state, extendPreview: false })}
-      >
-        <Sheet
-          name="preview-sheet"
-          isOpen={state.showPreview}
-          closeSheet={onExit}
-          variant="rounded-large,bleed"
-          onClick={() => setState({ ...state, extendPreview: true })}
-          content={
-            <div className="c-detail">
-              <div className="c-detail__container">
-                <h2>{props.t('book-details')}</h2>
-                <div className="c-detail__book">
-                  <div className="c-detail__label">{props.t('form:name-label')}</div>
-                  <div className="c-detail__value">
+        <Swipeable
+          onSwipedUp={() => setState({ ...state, extendPreview: true })}
+          onSwipedRight={() => setState({ ...state, extendPreview: true })}
+          onSwipedDown={() => (state.extendPreview ? null : onExit())}
+          onSwipedLeft={() => setState({ ...state, extendPreview: false })}
+        >
+          <Sheet
+            name="preview-sheet"
+            isOpen={state.showPreview}
+            closeSheet={onExit}
+            variant="rounded-large,bleed"
+            onClick={() => setState({ ...state, extendPreview: true })}
+            content={
+              <div className="c-detail">
+                <div className="c-detail__container">
+                  <h2>{props.t('book-details')}</h2>
+                  <div className="c-detail__book">
+                    <div className="c-detail__label">{props.t('form:name-label')}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? (
+                        <Skeleton height={19} width={280} />
+                      ) : (
+                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                      )}
+                    </div>
+                    <div className="c-detail__label">{props.t('common:quantity')}</div>
+                    <div className="c-detail__value">
+                      {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems.length} ${props.t('books')}`}
+                    </div>
+                    <div className="c-detail__label">{props.t('common:dedication-note')}</div>
                     {isFetching ? (
-                      <Skeleton height={19} width={280} />
+                      <Skeleton height={21} width={100} />
+                    ) : hasDedication ? (
+                      <div className="c-detail__link" onClick={showNote}>
+                        {props.t('common:preview-note')}
+                      </div>
                     ) : (
-                      lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                      '-'
                     )}
                   </div>
-                  <div className="c-detail__label">{props.t('common:quantity')}</div>
-                  <div className="c-detail__value">
-                    {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems.length} ${props.t('books')}`}
-                  </div>
-                  <div className="c-detail__label">{props.t('common:dedication-note')}</div>
-                  {isFetching ? (
-                    <Skeleton height={21} width={100} />
-                  ) : hasDedication ? (
-                    <div className="c-detail__link" onClick={showNote}>
-                      {props.t('common:preview-note')}
-                    </div>
-                  ) : (
-                    '-'
-                  )}
                 </div>
-              </div>
-              {!isFetching && (
-                <Fragment>
-                  <div className="c-detail__container">
-                    <h2>{props.t('order-state')}</h2>
-                    <div className="c-detail__order">
-                      <div className="c-detail__label">{props.t('order-date')}</div>
-                      <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
-                      <div className="c-detail__label">{props.t('order-state')}</div>
-                      <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
-                      <div className="c-detail__label">{props.t('shipping-date')}</div>
-                      <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
-                      <div className="c-detail__label">{props.t('tracking-number')}</div>
-                      <div className="c-detail__value">{trackingNumber}</div>
-                    </div>
-                  </div>
-                  <div className="c-detail__container">
-                    <h2>{props.t('shipping-address')}</h2>
-                    <div className="c-detail__address">
-                      <div className="c-detail__label">{props.t('street-address')}</div>
-                      <div className="c-detail__value">{shippingAddress.address1}</div>
-                      <div className="c-detail__label">{props.t('province')}</div>
-                      <div className="c-detail__value">{shippingAddress.province}</div>
-                      <div className="c-detail__label">{props.t('postal-code')}</div>
-                      <div className="c-detail__value">{shippingAddress.zip}</div>
-                      <div className="c-detail__label">{props.t('city')}</div>
-                      <div className="c-detail__value">{shippingAddress.city}</div>
-                    </div>
-                  </div>
-                  <div className="c-detail__container">
-                    <div className="c-detail__summary__header">
-                      <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
-                      <Dot width="12px" color="red" />
-                    </div>
-                    <div className="flex justify-between items-baseline">
-                      <div>
-                        <div className="c-detail__summary__title">When I Grow Up</div>
-                        <div className="c-detail__summary__label">
-                          {props.t('common:quantity')}: {lineItems.length}
-                        </div>
-                      </div>
-                      <div className="c-detail__summary__total">
-                        <NumberFormat
-                          value={currentOrder.total_line_items_price}
-                          thousandSeparator={true}
-                          prefix={'Rp'}
-                          displayType="text"
-                        />
+                {!isFetching && (
+                  <Fragment>
+                    <div className="c-detail__container">
+                      <h2>{props.t('order-state')}</h2>
+                      <div className="c-detail__order">
+                        <div className="c-detail__label">{props.t('order-date')}</div>
+                        <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
+                        <div className="c-detail__label">{props.t('order-state')}</div>
+                        <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
+                        <div className="c-detail__label">{props.t('shipping-date')}</div>
+                        <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
+                        <div className="c-detail__label">{props.t('tracking-number')}</div>
+                        <div className="c-detail__value">{trackingNumber}</div>
                       </div>
                     </div>
-                    {shippingLine && (
-                      <div className="flex justify-between items-baseline" style={{ marginTop: 16 }}>
+                    <div className="c-detail__container">
+                      <h2>{props.t('shipping-address')}</h2>
+                      <div className="c-detail__address">
+                        <div className="c-detail__label">{props.t('street-address')}</div>
+                        <div className="c-detail__value">{shippingAddress.address1}</div>
+                        <div className="c-detail__label">{props.t('province')}</div>
+                        <div className="c-detail__value">{shippingAddress.province}</div>
+                        <div className="c-detail__label">{props.t('postal-code')}</div>
+                        <div className="c-detail__value">{shippingAddress.zip}</div>
+                        <div className="c-detail__label">{props.t('city')}</div>
+                        <div className="c-detail__value">{shippingAddress.city}</div>
+                      </div>
+                    </div>
+                    <div className="c-detail__container">
+                      <div className="c-detail__summary__header">
+                        <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
+                        <Dot width="12px" color="red" />
+                      </div>
+                      <div className="flex justify-between items-baseline">
                         <div>
-                          <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
-                          <div className="c-detail__summary__label">{shippingName}</div>
+                          <div className="c-detail__summary__title">When I Grow Up</div>
+                          <div className="c-detail__summary__label">
+                            {props.t('common:quantity')}: {lineItems.length}
+                          </div>
                         </div>
                         <div className="c-detail__summary__total">
                           <NumberFormat
-                            value={shippingCost}
+                            value={currentOrder.total_line_items_price}
                             thousandSeparator={true}
                             prefix={'Rp'}
                             displayType="text"
                           />
                         </div>
                       </div>
-                    )}
-                    {discounts &&
-                      discounts.map(discount => (
-                        <div
-                          key={discount.code}
-                          className="flex justify-between items-baseline"
-                          style={{ marginTop: 18 }}
-                        >
+                      {shippingLine && (
+                        <div className="flex justify-between items-baseline" style={{ marginTop: 16 }}>
                           <div>
-                            <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>
-                            <div className="c-detail__summary__label">{discount.code}</div>
+                            <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
+                            <div className="c-detail__summary__label">{shippingName}</div>
                           </div>
                           <div className="c-detail__summary__total">
                             <NumberFormat
-                              value={-totalDiscounts}
+                              value={shippingCost}
                               thousandSeparator={true}
                               prefix={'Rp'}
                               displayType="text"
                             />
                           </div>
                         </div>
-                      ))}
-                    <Divider style={{ borderColor: '#EDEDED', margin: '20px 0 20px' }} />
-                    <div className="c-detail__summary__subtotal">
-                      <div>Subtotal</div>
-                      <NumberFormat
-                        value={currentOrder.total_price}
-                        thousandSeparator={true}
-                        prefix={'Rp'}
-                        displayType="text"
-                      />
-                    </div>
-                    {currentOrder.financial_status !== 'paid' && (
-                      <div className="c-detail__summary__info">
-                        <a href={currentOrder.order_status_url}>{props.t('continue-payment')}</a>
+                      )}
+                      {discounts &&
+                        discounts.map(discount => (
+                          <div
+                            key={discount.code}
+                            className="flex justify-between items-baseline"
+                            style={{ marginTop: 18 }}
+                          >
+                            <div>
+                              <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>
+                              <div className="c-detail__summary__label">{discount.code}</div>
+                            </div>
+                            <div className="c-detail__summary__total">
+                              <NumberFormat
+                                value={-totalDiscounts}
+                                thousandSeparator={true}
+                                prefix={'Rp'}
+                                displayType="text"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      <Divider style={{ borderColor: '#EDEDED', margin: '20px 0 20px' }} />
+                      <div className="c-detail__summary__subtotal">
+                        <div>Subtotal</div>
+                        <NumberFormat
+                          value={currentOrder.total_price}
+                          thousandSeparator={true}
+                          prefix={'Rp'}
+                          displayType="text"
+                        />
                       </div>
-                    )}
-                  </div>
-                </Fragment>
-              )}
-            </div>
-          }
-        />
-      </Swipeable>
-      {!isFetching && (
-        <Swipeable
-          onSwipedUp={() => setState({ ...state, extendNote: true })}
-          onSwipedRight={() => setState({ ...state, extendNote: true })}
-          onSwipedDown={() =>
-            state.extendNote ? setState({ ...state, extendNote: false }) : setState({ ...state, showNote: false })
-          }
-          onSwipedLeft={() => setState({ ...state, extendNote: false })}
-        >
-          <Sheet
-            name="preview-sheet"
-            isOpen={state.showNote}
-            closeSheet={() => setState({ ...state, showNote: false })}
-            variant="rounded-large"
-            overlay="light"
-            onClick={() => setState({ ...state, extendNote: true })}
-            zIndexLevel={2}
-            header={true}
-            title={props.t(`common:note-preview`)}
-            content={
-              <div className="c-detail__note">
-                {lineItems.map(item => (
-                  <Fragment key={item.id}>
-                    <h5>{item.customAttributes.Name}</h5>
-                    <div>{item.customAttributes.Dedication}</div>
+                      {currentOrder.financial_status !== 'paid' && (
+                        <div className="c-detail__summary__info">
+                          <a href={currentOrder.order_status_url}>{props.t('continue-payment')}</a>
+                        </div>
+                      )}
+                    </div>
                   </Fragment>
-                ))}
+                )}
               </div>
             }
           />
         </Swipeable>
-      )}
+        {!isFetching && (
+          <Swipeable
+            onSwipedUp={() => setState({ ...state, extendNote: true })}
+            onSwipedRight={() => setState({ ...state, extendNote: true })}
+            onSwipedDown={() =>
+              state.extendNote ? setState({ ...state, extendNote: false }) : setState({ ...state, showNote: false })
+            }
+            onSwipedLeft={() => setState({ ...state, extendNote: false })}
+          >
+            <Sheet
+              name="preview-sheet"
+              isOpen={state.showNote}
+              closeSheet={() => setState({ ...state, showNote: false })}
+              variant="rounded-large"
+              overlay="light"
+              onClick={() => setState({ ...state, extendNote: true })}
+              zIndexLevel={2}
+              header={true}
+              title={props.t(`common:note-preview`)}
+              content={
+                <div className="c-detail__note">
+                  {lineItems.map(item => (
+                    <Fragment key={item.id}>
+                      <h5>{item.customAttributes.Name}</h5>
+                      <div>{item.customAttributes.Dedication}</div>
+                    </Fragment>
+                  ))}
+                </div>
+              }
+            />
+          </Swipeable>
+        )}
+      </div>
       <style jsx>{`
         .c-detail {
           @apply w-full;
