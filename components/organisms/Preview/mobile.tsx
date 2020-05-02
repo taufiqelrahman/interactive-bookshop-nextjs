@@ -3,14 +3,14 @@ import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import NavBar from '../NavBar/mobile';
 import Cookies from 'js-cookie';
-import { forceVisible } from 'react-lazyload';
 
 const PreviewMobile = (props: any): any => {
+  const [enableLazy, setEnableLazy] = useState(true);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const onSubmit = data => {
@@ -35,8 +35,8 @@ const PreviewMobile = (props: any): any => {
     const fromCookies = getFromCookies();
     if (fromCookies) {
       props.saveSelected(fromCookies);
-      forceVisible();
       Cookies.remove('pendingTrx');
+      setEnableLazy(false);
     }
   }, []);
   const selected = props.state.cart.selected || dummySelected || {};
@@ -49,7 +49,13 @@ const PreviewMobile = (props: any): any => {
       navbar={<NavBar isSteps={true} title={props.t('book-preferences')} step={2} totalSteps={2} />}
     >
       <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
-        <BookPreview selected={selected || {}} isMobile={props.isMobile} bookPages={bookPages} cover={watch('Cover')} />
+        <BookPreview
+          selected={selected || {}}
+          isMobile={props.isMobile}
+          bookPages={bookPages}
+          cover={watch('Cover')}
+          enableLazy={enableLazy}
+        />
         <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="c-preview__cover">
             <FieldCover schema={schema(props).cover} register={register} errors={errors.cover} />
