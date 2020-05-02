@@ -110,7 +110,7 @@ const Index = (props: any): any => {
         <div className="c-section__jobs--top">
           {occupationsTop.map(job => (
             <div key={job.id} className="c-section__jobs__circle">
-              <img src={`/static/images/jobs/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+              <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
             </div>
           ))}
         </div>
@@ -119,7 +119,7 @@ const Index = (props: any): any => {
             job =>
               job.name !== 'President' && (
                 <div key={job.id} className="c-section__jobs__circle">
-                  <img src={`/static/images/jobs/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                  <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
                 </div>
               ),
           )}

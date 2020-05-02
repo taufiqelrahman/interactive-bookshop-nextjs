@@ -110,10 +110,10 @@ const CharacterCustomization = (props: any) => {
   // };
   useEffect(() => {
     if (charStep === stepEnum.OCCUPATIONS) return;
-    loadImg(previewImg(selected, watch));
-  }, [previewImg(selected, watch)]);
+    loadImg(previewImg(selected, watch, true));
+  }, [previewImg(selected, watch, true)]);
   useEffect(() => {
-    if ([stepEnum.AGE, stepEnum.NAME_GENDER].includes(charStep)) loadImg(previewImg(selected, watch));
+    if ([stepEnum.AGE, stepEnum.NAME_GENDER].includes(charStep)) loadImg(previewImg(selected, watch, true));
     if (charStep === stepEnum.OCCUPATIONS) registerOccupations();
   }, [charStep]);
   const screenHeight = '100vh - 69px';
