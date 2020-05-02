@@ -45,7 +45,12 @@ const BookPage = (props: any) => {
       <LazyLoad overflow>
         <svg className="c-book-page__svg">
           <foreignObject x="0" y="0" width="100%" height="100%">
-            <img className="c-book-page__image" src={props.mustLoad ? props.image : ''} alt="book page" />
+            <img
+              className="c-book-page__image"
+              src={props.mustLoad ? props.image : ''}
+              alt="book page"
+              style={props.isMobile ? { height: `calc((${props.height}))` } : {}}
+            />
             {props.contents.map((content, key) => {
               const value = processContent(content, props.language);
               return (
