@@ -369,6 +369,9 @@ const Index = (props: any): any => {
               height: 120px;
               border-radius: 50%;
               padding: 12px;
+              img {
+                @apply w-full;
+              }
             }
           }
         }
