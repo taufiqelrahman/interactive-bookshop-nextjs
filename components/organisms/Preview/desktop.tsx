@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
+import { forceVisible } from 'react-lazyload';
 
 const PreviewDesktop = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -33,8 +34,11 @@ const PreviewDesktop = (props: any): any => {
   }, [errors]);
   useEffect(() => {
     const fromCookies = getFromCookies();
-    if (fromCookies) props.saveSelected(fromCookies);
-    Cookies.remove('pendingTrx');
+    if (fromCookies) {
+      props.saveSelected(fromCookies);
+      forceVisible();
+      Cookies.remove('pendingTrx');
+    }
   }, []);
   const selected = props.state.cart.selected || dummySelected || {};
   const bookPages = props.state.master.bookPages;

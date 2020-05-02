@@ -9,7 +9,7 @@ const FieldAge = (props: any) => {
     { name: props.t('age-kid'), code: 'kid' },
   ];
   return (
-    <div>
+    <div style={props.fieldStyle}>
       <div className="c-field-age">
         <div className="c-field-age__header">
           {props.t('age-label')}

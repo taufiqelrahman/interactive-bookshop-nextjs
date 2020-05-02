@@ -86,7 +86,7 @@ const DateField = (props: any) => {
           actions={
             <Fragment>
               <Button width="100%" onClick={(event: any) => onSelect(event)}>
-                {props.t('select')}
+                {props.t('select-button')}
               </Button>
             </Fragment>
           }

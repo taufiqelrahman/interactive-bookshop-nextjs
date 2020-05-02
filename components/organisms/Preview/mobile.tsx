@@ -8,6 +8,7 @@ import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import NavBar from '../NavBar/mobile';
 import Cookies from 'js-cookie';
+import { forceVisible } from 'react-lazyload';
 
 const PreviewMobile = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -32,8 +33,11 @@ const PreviewMobile = (props: any): any => {
   }, [errors]);
   useEffect(() => {
     const fromCookies = getFromCookies();
-    if (fromCookies) props.saveSelected(fromCookies);
-    Cookies.remove('pendingTrx');
+    if (fromCookies) {
+      props.saveSelected(fromCookies);
+      forceVisible();
+      Cookies.remove('pendingTrx');
+    }
   }, []);
   const selected = props.state.cart.selected || dummySelected || {};
   const screenHeight = '100vh - 69px';
@@ -65,7 +69,6 @@ const PreviewMobile = (props: any): any => {
             border-top: 1px solid #efeef4;
             border-radius: 24px 24px 0px 0px;
             padding-top: 20px;
-            min-height: 200px;
           }
           &__cover {
             @apply flex justify-center;

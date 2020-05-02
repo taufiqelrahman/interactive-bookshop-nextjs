@@ -269,7 +269,7 @@ const CharacterCustomization = (props: any) => {
               {props.t('yes-quit')}
             </Button>
             <Button width="100%" onClick={() => setShowSheet(false)} variant="outline" color="black">
-              {props.t('cancel')}
+              {props.t('cancel-button')}
             </Button>
           </Fragment>
         }

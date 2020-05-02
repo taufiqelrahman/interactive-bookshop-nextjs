@@ -51,6 +51,7 @@
   "cancel-button": "Cancel",
   "reset-button": "Reset",
   "select-date": "Select Date",
+  "select-button": "Select",
   "delete-item": "Remove item?",
   "delete-confirmation": "Once you remove this item, its custom preferences will also be deleted. This action cannot be undone.",
   "address-label": "Address",
@@ -65,5 +66,8 @@
   "address2": "Address 2",
   "city": "City",
   "province": "Province",
-  "zip": "Postcode"
+  "zip": "Postcode",
+  "quit-customizing": "Quit customizing?",
+  "quit-confirmation": "If you quit this page, all book preferences will be lost. This action cannot be undone.",
+  "yes-quit": "Yes, quit"
 }

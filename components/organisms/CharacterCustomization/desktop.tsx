@@ -106,13 +106,20 @@ const CharacterCustomization = (props: any) => {
                     defaultValue={selected.Name}
                     formStyle={{ width: '50%' }}
                   />
-                  <FieldAge
-                    schema={schema(props).age}
+                  <FieldGender
+                    schema={schema(props).gender}
                     register={register}
-                    errors={errors.Age}
-                    defaultChecked={selected.Age}
+                    errors={errors.Gender}
+                    defaultChecked={selected.Gender}
                   />
                 </div>
+                <FieldAge
+                  schema={schema(props).age}
+                  register={register}
+                  errors={errors.Age}
+                  fieldStyle={{ marginTop: 24 }}
+                  defaultChecked={selected.Age}
+                />
                 <FieldDob
                   name="Date of Birth"
                   setValue={setValue}
@@ -120,13 +127,6 @@ const CharacterCustomization = (props: any) => {
                   errors={errors['Date of Birth']}
                   style={{ marginTop: 24 }}
                   defaultValue={selected['Date of Birth'] || null}
-                />
-                <FieldGender
-                  schema={schema(props).gender}
-                  register={register}
-                  errors={errors.Gender}
-                  style={{ marginTop: 24 }}
-                  defaultChecked={selected.Gender}
                 />
                 {!!watch('Gender') && (
                   <FieldHair
