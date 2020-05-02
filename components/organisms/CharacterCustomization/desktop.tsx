@@ -136,6 +136,7 @@ const CharacterCustomization = (props: any) => {
                     errors={errors.Hair}
                     style={{ marginTop: 24 }}
                     type={watch('Gender')}
+                    age={watch('Age') || selected.Age}
                     defaultChecked={selected.Hair}
                   />
                 )}

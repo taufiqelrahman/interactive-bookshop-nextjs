@@ -206,6 +206,7 @@ const CharacterCustomization = (props: any) => {
                     unregister={unregister}
                     errors={errors.Hair}
                     type={watch('Gender') || selected.Gender}
+                    age={watch('Age') || selected.Age}
                     isMobile={true}
                     defaultChecked={selected.Hair}
                   />
@@ -298,6 +299,7 @@ const CharacterCustomization = (props: any) => {
             div {
               @apply flex items-center;
               img {
+                @apply object-contain;
                 width: 100px;
                 background: url('/static/images/loading.gif') 50% no-repeat;
                 height: 185px;

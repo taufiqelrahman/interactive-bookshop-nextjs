@@ -63,7 +63,7 @@ const OrderDetailMobile = (props: any): any => {
         <Capsule
           color={appConfig.stateColor[currentOrder.state]}
           variant="bar"
-          style={{ zIndex: 42, position: 'absolute', top: 0, left: 0, right: 0 }}
+          style={{ zIndex: 42, position: 'fixed', top: 59 }}
         >
           {props.t(currentOrder.state)}
           {props.state === 'received' && <span className="icon-cross_check" />}

@@ -4,15 +4,19 @@ import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
 
 const FieldHair = (props: any) => {
-  const boyHair = [
-    { name: 'short', image: 'short-boy' },
+  const toddlerBoyHair = [
+    { name: 'short', image: 'short-toddler-boy' },
+    { name: 'curly', image: 'curly' },
+  ];
+  const kidBoyHair = [
+    { name: 'short', image: 'short-kid-boy' },
     { name: 'curly', image: 'curly' },
   ];
   const girlHair = [
     { name: 'short', image: 'short-girl' },
     { name: 'hijab', image: 'hijab' },
   ];
-  const hair = props.type === 'boy' ? boyHair : girlHair;
+  const hair = props.type === 'boy' ? (props.age === 'kid' ? kidBoyHair : toddlerBoyHair) : girlHair;
   useEffect(() => {
     return () => {
       props.unregister('Hair');
