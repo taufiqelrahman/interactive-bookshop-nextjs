@@ -31,7 +31,7 @@ const FieldGender = (props: any) => {
               // imageUrl={gender.image}
               // type="image"
               // variant={props.isMobile ? 'box' : ''}
-              defaultChecked={props.defaultChecked === gender.name.toLowerCase()}
+              defaultChecked={props.defaultChecked === gender.code.toLowerCase()}
             />
           ))}
         </div>

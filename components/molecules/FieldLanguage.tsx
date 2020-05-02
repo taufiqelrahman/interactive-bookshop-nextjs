@@ -12,7 +12,7 @@ const FieldLanguage = (props: any) => (
       </div>
       <div className="c-field-language__options">
         {/* dummy */}
-        {['English', 'Bahasa Indonesia'].map(language => (
+        {['Bahasa Indonesia', 'English'].map(language => (
           <Radio
             key={language}
             ref={props.register(props.schema)}
