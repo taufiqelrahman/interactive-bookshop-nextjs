@@ -5,7 +5,7 @@ import { withTranslation, Router } from 'i18n';
 import FieldOccupations from 'components/molecules/FieldOccupations';
 import FormTextField from 'components/molecules/FormTextField';
 import FieldAge from 'components/molecules/FieldAge';
-import FieldDob from 'components/molecules/FieldDob';
+// import FieldDob from 'components/molecules/FieldDob';
 import FieldGender from 'components/molecules/FieldGender';
 import FieldHair from 'components/molecules/FieldHair';
 import FieldSkin from 'components/molecules/FieldSkin';
@@ -56,7 +56,7 @@ const CharacterCustomization = (props: any) => {
   };
   useEffect(() => {
     setTimeout(() => {
-      register({ name: 'Date of Birth' }, schema(props).dob);
+      // register({ name: 'Date of Birth' }, schema(props).dob);
       register({ name: 'Occupations' }, schema(props).occupations);
       if (selected.Occupations) setValue('Occupations', selected.Occupations);
     }, 500);
@@ -95,7 +95,7 @@ const CharacterCustomization = (props: any) => {
                   formState={formState}
                 />
                 <Divider />
-                <div className="c-char-custom__name_dob">
+                <div className="c-char-custom__name_gender">
                   <FormTextField
                     label={props.t('name-label')}
                     name="Name"
@@ -120,14 +120,14 @@ const CharacterCustomization = (props: any) => {
                   fieldStyle={{ marginTop: 24 }}
                   defaultChecked={selected.Age}
                 />
-                <FieldDob
+                {/* <FieldDob
                   name="Date of Birth"
                   setValue={setValue}
                   triggerValidation={triggerValidation}
                   errors={errors['Date of Birth']}
                   style={{ marginTop: 24 }}
                   defaultValue={selected['Date of Birth'] || null}
-                />
+                /> */}
                 {!!watch('Gender') && (
                   <FieldHair
                     schema={schema(props).hair}
@@ -222,7 +222,7 @@ const CharacterCustomization = (props: any) => {
               width: ${charWidth}px;
             }
           }
-          &__name_dob {
+          &__name_gender {
             @apply flex flex-col;
             @screen lg {
               @apply flex-row;
@@ -231,8 +231,8 @@ const CharacterCustomization = (props: any) => {
         }
       `}</style>
       <style jsx global>{`
-        .c-char-custom__name_dob {
-          .c-field-age {
+        .c-char-custom__name_gender {
+          .c-field-gender {
             margin-top: 24px;
             @screen lg {
               @apply mt-0;

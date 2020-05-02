@@ -41,10 +41,7 @@ const FieldGender = (props: any) => {
         .c-field-gender {
           @apply mb-4;
           @screen md {
-            @apply mb-0 mt-6;
-          }
-          @screen lg {
-            @apply mt-0;
+            @apply mb-0;
           }
           &__header {
             @apply font-semibold mb-3 flex;

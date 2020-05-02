@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState, Fragment } from 'react';
-import { withTranslation, Router, i18n } from 'i18n';
+import { withTranslation, Router } from 'i18n';
 import FieldOccupations from 'components/molecules/FieldOccupations';
 import FormTextField from 'components/molecules/FormTextField';
 import FieldAge from 'components/molecules/FieldAge';
-import FieldDob from 'components/molecules/FieldDob';
+// import FieldDob from 'components/molecules/FieldDob';
 import FieldGender from 'components/molecules/FieldGender';
 import FieldHair from 'components/molecules/FieldHair';
 import FieldSkin from 'components/molecules/FieldSkin';
@@ -23,11 +23,11 @@ const CharacterCustomization = (props: any) => {
     OCCUPATIONS: 0,
     NAME_GENDER: 1,
     AGE: 2,
-    DOB: 3,
-    HAIR: 4,
-    SKIN: 5,
-    LANGUAGE: 6,
-    DEDICATION: 7,
+    // DOB: 3,
+    HAIR: 3,
+    SKIN: 4,
+    LANGUAGE: 5,
+    DEDICATION: 6,
   };
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
@@ -45,13 +45,14 @@ const CharacterCustomization = (props: any) => {
       Router.back();
       return;
     }
-    if (charStep === stepEnum.DOB) unregister('Date of Birth');
+    // if (charStep === stepEnum.DOB) unregister('Date of Birth');
     if (charStep === stepEnum.OCCUPATIONS) unregister('Occupations');
     setCharStep(charStep - 1);
   };
   useEffect(() => {
-    if (charStep === stepEnum.DOB) {
-      register({ name: 'Date of Birth' }, schema(props).dob);
+    // if (charStep === stepEnum.DOB) {
+    //   register({ name: 'Date of Birth' }, schema(props).dob);
+    if (charStep === stepEnum.HAIR) {
       unregister('Occupations');
     }
   }, [charStep]);
@@ -188,7 +189,7 @@ const CharacterCustomization = (props: any) => {
                     defaultChecked={selected.Age}
                   />
                 )}
-                {charStep === stepEnum.DOB && (
+                {/* {charStep === stepEnum.DOB && (
                   <FieldDob
                     name="Date of Birth"
                     setValue={setValue}
@@ -198,7 +199,7 @@ const CharacterCustomization = (props: any) => {
                     defaultValue={selected['Date of Birth']}
                     {...props}
                   />
-                )}
+                )} */}
                 {charStep === stepEnum.HAIR && (
                   <FieldHair
                     schema={schema(props).hair}
