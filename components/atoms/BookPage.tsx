@@ -83,12 +83,11 @@ const BookPage = (props: any) => {
             }
           }
           &__image {
-            @apply w-full;
+            @apply w-full h-full object-fill;
             background: url('/static/images/loading.gif') 50% no-repeat;
-            height: 100%;
           }
           &__content {
-            position: absolute;
+            @apply absolute;
           }
         }
       `}</style>
