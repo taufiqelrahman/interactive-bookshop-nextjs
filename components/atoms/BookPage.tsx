@@ -24,7 +24,11 @@ const BookPage = (props: any) => {
   const processContent = (content, language) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
-    processed = processed.split('[name]').join(props.name);
+    if (props.contents[0].occupation.name === 'Front Cover') {
+      processed = processed.split('[name]').join((props.name || '').toUpperCase());
+    } else {
+      processed = processed.split('[name]').join(props.name);
+    }
     if (isEnglish) {
       const isBoy = props.gender === 'boy';
       processed = processed.split('[child]').join(isBoy ? 'boy' : 'girl');
