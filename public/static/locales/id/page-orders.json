@@ -1,0 +1,23 @@
+{
+  "my-orders": "Pesanan Saya",
+  "orders-title": "Pesanan",
+  "order-title": "Pesanan",
+  "sent": "telah dikirim",
+  "pending": "menunggu pembayaran",
+  "received": "selesai",
+  "order-date": "Tanggal Pesan",
+  "order-id": "ID Pesanan",
+  "books": "Buku",
+  "book-details": "Detil Buku",
+  "order-state": "Status Pesanan",
+  "shipping-date": "Tanggal Pengiriman",
+  "tracking-number": "Nomor Pengiriman",
+  "street-address": "Alamat",
+  "province": "Provinsi",
+  "postal-code": "Kodepos",
+  "city": "Kota",
+  "shipping-address": "Alamat Pengiriman",
+  "shipping-cost": "Biaya Pengiriman",
+  "view-payment": "Lihat Pembayaran",
+  "continue-payment": "Lanjut Pembayaran?"
+}

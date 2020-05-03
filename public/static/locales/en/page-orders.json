@@ -1,0 +1,23 @@
+{
+  "my-orders": "My Orders",
+  "orders-title": "Orders",
+  "order-title": "Order",
+  "sent": "sent",
+  "pending": "awaiting payment",
+  "received": "done",
+  "order-date": "Order Date",
+  "order-id": "Order ID",
+  "books": "Book(s)",
+  "book-details": "Book Details",
+  "order-state": "Order State",
+  "shipping-date": "Shipping Date",
+  "tracking-number": "Tracking Number",
+  "street-address": "Street Address",
+  "province": "Province",
+  "postal-code": "Postal Code",
+  "city": "City",
+  "shipping-address": "Shipping Address",
+  "shipping-cost": "Shipping Cost",
+  "view-payment": "View Payment",
+  "continue-payment": "Continue Payment?"
+}
