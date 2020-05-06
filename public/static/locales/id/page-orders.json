@@ -19,5 +19,6 @@
   "shipping-address": "Alamat Pengiriman",
   "shipping-cost": "Biaya Pengiriman",
   "view-payment": "Lihat Pembayaran",
-  "continue-payment": "Lanjut Pembayaran?"
+  "continue-payment": "Lanjut Pembayaran?",
+  "awaiting-payment": "Menunggu pembayaran"
 }

@@ -36,6 +36,7 @@ const OrderDetailMobile = (props: any): any => {
     hasDedication,
     discounts,
     totalDiscounts,
+    // payment,
   } = retrieveInfo(order || {});
   useEffect(() => {
     setState({ ...state, showPreview: true });

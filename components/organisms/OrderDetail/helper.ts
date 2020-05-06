@@ -21,7 +21,6 @@ export const retrieveInfo = order => {
     customAttributes: mapKeyValue(item.properties || []),
   }));
   const hasDedication = lineItems.some(item => !!item.customAttributes.Dedication);
-  const discounts = discountApps || [];
   return {
     currentOrder: order,
     shippingAddress,
@@ -33,8 +32,9 @@ export const retrieveInfo = order => {
     orderNumber: order.name.replace('#', ''),
     lineItems,
     hasDedication,
-    discounts,
+    discounts: discountApps || [],
     totalDiscounts,
+    payment: order.payment || {},
   };
 };
 

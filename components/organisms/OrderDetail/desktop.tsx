@@ -29,6 +29,7 @@ const OrderDetailDesktop = (props: any): any => {
     hasDedication,
     discounts,
     totalDiscounts,
+    payment,
   } = retrieveInfo(order || {});
   return (
     <DefaultLayout {...props}>
@@ -235,12 +236,36 @@ const OrderDetailDesktop = (props: any): any => {
                     />
                   )}
                 </div>
-                {currentOrder.financial_status !== 'paid' && (
+                {currentOrder && currentOrder.financial_status !== 'paid' && (
                   <div className="c-detail__summary__info">
-                    {isFetching ? (
-                      <Skeleton height={24} width={120} />
+                    <div className="c-detail__summary__info__item">
+                      {isFetching ? (
+                        <Skeleton height={24} width={120} />
+                      ) : (
+                        `${props.t('awaiting-payment')} ${payment.type}:`
+                      )}
+                    </div>
+                    {payment.url ? (
+                      <div className="c-detail__summary__info__link">
+                        {isFetching ? (
+                          <Skeleton height={24} width={120} />
+                        ) : (
+                          <a href={payment.url} target="_blank" rel="noopener noreferrer">
+                            {props.t('continue-payment')}
+                          </a>
+                        )}
+                      </div>
                     ) : (
-                      <a href={currentOrder.order_status_url}>{props.t('continue-payment')}</a>
+                      <div className="flex justify-between">
+                        {isFetching ? (
+                          <Skeleton height={24} width={120} />
+                        ) : (
+                          <Fragment>
+                            <div className="c-detail__summary__info__payment">{payment.instance}</div>
+                            <div className="c-detail__summary__info__payment">{payment.number}</div>
+                          </Fragment>
+                        )}
+                      </div>
                     )}
                   </div>
                 )}
@@ -353,10 +378,25 @@ const OrderDetailDesktop = (props: any): any => {
               line-height: 24px;
             }
             &__info {
-              @apply text-sm font-semibold;
-              color: #445ca4;
-              margin-top: 12px;
-              line-height: 24px;
+              @apply text-sm;
+              margin-top: 24px;
+              line-height: 18px;
+              background: #f6f5f8;
+              border-radius: 12px;
+              padding: 18px;
+              &__item {
+                @apply flex items-center;
+                line-height: 20px;
+                margin-bottom: 18px;
+              }
+              &__payment {
+                @apply font-semibold text-base;
+                line-height: 24px;
+              }
+              &__link {
+                @apply font-semibold;
+                color: #445ca4;
+              }
             }
           }
           &__label {

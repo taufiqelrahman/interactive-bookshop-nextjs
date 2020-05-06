@@ -6,8 +6,11 @@ import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const OrderSuccess = (props: any): any => {
+  const router = useRouter();
+  const { id } = router.query;
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
@@ -25,7 +28,7 @@ const OrderSuccess = (props: any): any => {
                 <div className="c-login__subtitle">{props.t('order-success-content')}</div>
               </div>
               <div className="c-login__actions">
-                <Link href="/orders">
+                <Link href={`/orders/${id}`}>
                   <a>
                     <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
                       {props.t('go-to-orders')}
