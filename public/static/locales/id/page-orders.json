@@ -21,5 +21,6 @@
   "view-payment": "Lihat Pembayaran",
   "continue-payment": "Lanjut Pembayaran?",
   "awaiting-payment": "Menunggu pembayaran",
-  "processing-payment": "Harap tunggu, kami sedang memproses pembayaranmu"
+  "processing-payment": "Harap tunggu, kami sedang memproses pembayaranmu",
+  "copy-success": "Berhasil disalin"
 }

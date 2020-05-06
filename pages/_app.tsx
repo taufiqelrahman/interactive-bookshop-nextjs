@@ -120,6 +120,9 @@ const App: NextPage<any> = (props: any) => {
 
         /* icons */
 
+        .icon-duplicate:before {
+          content: '\e913';
+        }
         .icon-tag_label:before {
           content: '\e912';
         }

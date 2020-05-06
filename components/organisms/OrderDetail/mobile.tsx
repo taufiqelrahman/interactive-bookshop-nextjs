@@ -14,6 +14,7 @@ import { Swipeable } from 'react-swipeable';
 import Dot from 'components/atoms/Dot';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
+import { toast } from 'react-toastify';
 
 const OrderDetailMobile = (props: any): any => {
   const { isFetching, currentOrder: order } = props.state.orders;
@@ -36,7 +37,7 @@ const OrderDetailMobile = (props: any): any => {
     hasDedication,
     discounts,
     totalDiscounts,
-    // payment,
+    payment,
   } = retrieveInfo(order || {});
   useEffect(() => {
     setState({ ...state, showPreview: true });
@@ -49,6 +50,12 @@ const OrderDetailMobile = (props: any): any => {
   const showNote = event => {
     event.stopPropagation();
     setState({ ...state, showNote: true });
+  };
+  const copyToClipboard = () => {
+    const element: any = document.getElementById('payment-number');
+    element.select();
+    document.execCommand('copy');
+    toast.success(props.t('copy-success'));
   };
   return (
     <DefaultLayout
@@ -213,7 +220,35 @@ const OrderDetailMobile = (props: any): any => {
                       </div>
                       {currentOrder.financial_status !== 'paid' && (
                         <div className="c-detail__summary__info">
-                          <a href={currentOrder.order_status_url}>{props.t('continue-payment')}</a>
+                          <div className="c-detail__summary__info__item">
+                            {props.t('awaiting-payment')} {payment.type}
+                          </div>
+                          {payment.instance ? (
+                            <div className="flex justify-between items-end">
+                              <div>
+                                <div className="c-detail__summary__info__payment">{payment.instance}</div>
+                                <div className="c-detail__summary__info__payment">{payment.number}</div>
+                              </div>
+                              <div className="c-detail__summary__info__copy" onClick={copyToClipboard}>
+                                {/* for copying to clipboard purpose */}
+                                <input
+                                  id="payment-number"
+                                  value={payment.number}
+                                  type="text"
+                                  style={{ position: 'absolute', left: 999 }}
+                                />
+                                <span className="icon-duplicate" />
+                              </div>
+                            </div>
+                          ) : payment.url ? (
+                            <div className="c-detail__summary__info__link">
+                              <a href={payment.url} target="_blank" rel="noopener noreferrer">
+                                {props.t('continue-payment')}
+                              </a>
+                            </div>
+                          ) : (
+                            props.t('processing-payment')
+                          )}
                         </div>
                       )}
                     </div>
@@ -325,10 +360,31 @@ const OrderDetailMobile = (props: any): any => {
               line-height: 19px;
             }
             &__info {
-              @apply text-sm font-semibold;
-              color: #445ca4;
+              @apply text-sm;
               margin-top: 20px;
-              line-height: 24px;
+              line-height: 20px;
+              background: #f6f5f8;
+              border-radius: 12px;
+              padding: 20px;
+              &__item {
+                @apply flex items-center;
+                line-height: 20px;
+                margin-bottom: 22px;
+              }
+              &__payment {
+                @apply font-semibold;
+                line-height: 21px;
+              }
+              &__link {
+                @apply font-semibold;
+                line-height: 21px;
+                color: #445ca4;
+              }
+              &__copy {
+                @apply cursor-pointer;
+                font-size: 18px;
+                padding-bottom: 3px;
+              }
             }
             &__total {
               @apply text-sm;

@@ -21,5 +21,6 @@
   "view-payment": "View Payment",
   "continue-payment": "Continue Payment?",
   "awaiting-payment": "Awaiting payment",
-  "processing-payment": "Please wait, while we process your payment"
+  "processing-payment": "Please wait, while we process your payment",
+  "copy-success": "Copied successfully"
 }
