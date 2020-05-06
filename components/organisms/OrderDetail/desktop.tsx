@@ -245,17 +245,7 @@ const OrderDetailDesktop = (props: any): any => {
                         `${props.t('awaiting-payment')} ${payment.type}:`
                       )}
                     </div>
-                    {payment.url ? (
-                      <div className="c-detail__summary__info__link">
-                        {isFetching ? (
-                          <Skeleton height={24} width={120} />
-                        ) : (
-                          <a href={payment.url} target="_blank" rel="noopener noreferrer">
-                            {props.t('continue-payment')}
-                          </a>
-                        )}
-                      </div>
-                    ) : (
+                    {payment.instance ? (
                       <div className="flex justify-between">
                         {isFetching ? (
                           <Skeleton height={24} width={120} />
@@ -266,6 +256,18 @@ const OrderDetailDesktop = (props: any): any => {
                           </Fragment>
                         )}
                       </div>
+                    ) : payment.url ? (
+                      <div className="c-detail__summary__info__link">
+                        {isFetching ? (
+                          <Skeleton height={24} width={120} />
+                        ) : (
+                          <a href={payment.url} target="_blank" rel="noopener noreferrer">
+                            {props.t('continue-payment')}
+                          </a>
+                        )}
+                      </div>
+                    ) : (
+                      props.t('processing-payment')
                     )}
                   </div>
                 )}

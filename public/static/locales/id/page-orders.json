@@ -20,5 +20,6 @@
   "shipping-cost": "Biaya Pengiriman",
   "view-payment": "Lihat Pembayaran",
   "continue-payment": "Lanjut Pembayaran?",
-  "awaiting-payment": "Menunggu pembayaran"
+  "awaiting-payment": "Menunggu pembayaran",
+  "processing-payment": "Harap tunggu, kami sedang memproses pembayaranmu"
 }
