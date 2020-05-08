@@ -3,28 +3,39 @@ import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import NavBar from '../NavBar/mobile';
 import Cookies from 'js-cookie';
+import Sheet from 'components/atoms/Sheet';
 
 const PreviewMobile = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
+  const [showSheet, setShowSheet] = useState(false);
+  const [tempData, setTempData] = useState(null);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const onSubmit = data => {
-    const { selected } = props.state.cart;
-    const cart = { ...selected, ...data };
-    if (!props.state.users.isLoggedIn) {
-      saveToCookies(cart);
-      return;
-    }
+  const selected = props.state.cart.selected || dummySelected || {};
+  const addToCart = cart => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
       props.thunkAddToCart(cart);
     }
+  };
+  const onSubmit = data => {
+    const cart = { ...selected, ...data };
+    if (!props.state.users.isLoggedIn) {
+      setTempData(cart);
+      setShowSheet(true);
+      // saveToCookies(cart);
+      return;
+    }
+    addToCart(cart);
+  };
+  const continueAsGuest = () => {
+    addToCart(tempData);
   };
   useEffect(() => {
     if (!formState.isValid) {
@@ -39,7 +50,6 @@ const PreviewMobile = (props: any): any => {
       // setEnableLazy(false);
     }
   }, []);
-  const selected = props.state.cart.selected || dummySelected || {};
   const screenHeight = '100vh - 69px';
   const bookPages = props.state.master.bookPages;
   // const dontHaveCart = !props.state.users.user.cart;
@@ -68,6 +78,27 @@ const PreviewMobile = (props: any): any => {
           </div>
         </form>
       </div>
+      <Sheet
+        name="guest-sheet"
+        isOpen={showSheet}
+        closeSheet={() => setShowSheet(false)}
+        content={
+          <Fragment>
+            <h1 className="c-preview__sheet__title">{props.t('guest-order-title')}</h1>
+            <div className="c-preview__sheet__content">{props.t('guest-order-info')}</div>
+          </Fragment>
+        }
+        actions={
+          <Fragment>
+            <Button width="100%" onClick={() => saveToCookies(tempData)} style={{ marginBottom: 12 }}>
+              {props.t('login')}
+            </Button>
+            <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
+              {props.t('continue-guest')}
+            </Button>
+          </Fragment>
+        }
+      />
       <style jsx>{`
         .c-preview {
           @apply flex flex-col justify-between;
@@ -83,6 +114,18 @@ const PreviewMobile = (props: any): any => {
             @apply font-semibold cursor-pointer text-sm text-center;
             color: #445ca4;
             margin-bottom: 18px;
+          }
+          &__sheet {
+            &__title {
+              @apply font-semibold;
+              font-size: 27px;
+              line-height: 32px;
+            }
+            &__content {
+              @apply font-opensans text-sm;
+              line-height: 20px;
+              margin-top: 12px;
+            }
           }
         }
       `}</style>

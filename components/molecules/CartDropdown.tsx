@@ -16,9 +16,9 @@ const CartDropdown = (props: any) => {
               </Link>
             </div>
             <div className="c-cart-dropdown__content">
-              {props.items.map(item => {
+              {props.items.map((item, i) => {
                 return (
-                  <div key={item} className="c-cart-dropdown__item">
+                  <div key={i} className="c-cart-dropdown__item">
                     <div className="flex items-center">
                       <img
                         src={previewImg(item.customAttributes)}

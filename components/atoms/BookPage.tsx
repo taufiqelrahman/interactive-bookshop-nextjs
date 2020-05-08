@@ -19,7 +19,7 @@ const BookPage = (props: any) => {
         lineHeight: props.isMobile ? '7.5vw' : '3vw',
       };
     }
-    if (props.name.length > 5) {
+    if (props.name && props.name.length > 5) {
       style = {
         ...style,
         width: '90%',

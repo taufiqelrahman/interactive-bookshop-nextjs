@@ -23,6 +23,14 @@ export function loadCart(isFetching, cart = null): types.CartActionTypes {
     isFetching,
   };
 }
+// export function loadCartFromStorage(): types.CartActionTypes {
+//   const cart = JSON.parse(localStorage.getItem('cart') as any);
+//   return {
+//     type: types.LOAD_CART,
+//     payload: { ...cart, lineItems: mapItems(cart.lineItems) },
+//     isFetching: false,
+//   };
+// }
 export const thunkLoadCart = (id): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
   dispatch(loadCart(true));
   return graphql()
@@ -68,13 +76,21 @@ function createCheckout(user) {
   }
   return graphql().checkout.create(PARAMS);
 }
+function createCheckoutGuest() {
+  return graphql().checkout.create();
+}
 export const thunkCreateCart = (): ThunkAction<void, types.CartState, null, Action<string>> => async (
   dispatch,
   getState,
 ): Promise<any> => {
   dispatch(createCart(true));
   const { user } = (getState() as any).users;
-  const cart = await createCheckout(user);
+  const cart = user ? await createCheckout(user) : await createCheckoutGuest();
+  if (!user) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    dispatch(createCart(false));
+    return;
+  }
   return api()
     .cart.createCart({ checkoutId: cart.id })
     .then(() => {
@@ -152,7 +168,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
   getState,
 ): Promise<any> => {
   dispatch(addToCart(true));
-  const { cart } = (getState() as any).users.user;
+  const { user } = (getState() as any).users;
   delete newProduct.jobIds;
   const customAttributes = Object.keys(newProduct).map(data => ({
     key: data,
@@ -165,8 +181,9 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
       customAttributes,
     },
   ];
+  const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') as any);
   return graphql()
-    .checkout.addLineItems(cart.checkout_id, lineItemsToAdd)
+    .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
     .then(cart => {
       dispatch(addToCart(false, cart));
       Router.push('/cart');
@@ -190,8 +207,8 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
   getState,
 ): Promise<any> => {
   dispatch(updateCart(true));
-  const { cart } = (getState() as any).users.user;
-  const { id, quantity } = product;
+  const { user } = (getState() as any).users;
+  const { id: productId, quantity } = product;
   delete product.id;
   delete product.quantity;
 
@@ -199,9 +216,10 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
     key: data,
     value: product[data].toString(),
   }));
-  const lineItemsToUpdate = [{ id, quantity, customAttributes }];
+  const lineItemsToUpdate = [{ productId, quantity, customAttributes }];
+  const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') as any);
   return graphql()
-    .checkout.updateLineItems(cart.checkout_id, lineItemsToUpdate)
+    .checkout.updateLineItems(user ? checkoutId : id, lineItemsToUpdate)
     .then(data => {
       const lineItems = mapItems(data.lineItems);
       dispatch(updateCart(false, { ...data, lineItems }));

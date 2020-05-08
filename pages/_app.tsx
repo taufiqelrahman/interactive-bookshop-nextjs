@@ -58,7 +58,9 @@ const App: NextPage<any> = (props: any) => {
   const createCartForUser = () => {
     const { dispatch, getState } = reduxStore;
     const { user } = getState().users;
-    if (user && !user.cart) dispatch(actions.thunkCreateCart());
+    if ((user && !user.cart) || (!user && !localStorage.getItem('cart'))) {
+      dispatch(actions.thunkCreateCart());
+    }
   };
   useEffect(() => {
     createCartForUser();

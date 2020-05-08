@@ -65,6 +65,7 @@ const Error: NextPage<any> = (props: any) => {
           }
           &__message {
             @apply text-sm mb-4;
+            line-height: 1.3rem;
             @screen md {
               @apply text-lg mb-6;
             }

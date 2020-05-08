@@ -11,7 +11,7 @@ const Floating = (props: any) => {
           bottom: 3vh;
           right: 5vw;
           font-size: 30px;
-          z-index: 1000;
+          z-index: 49;
           box-shadow: 0 0 0px 4px rgba(183, 183, 183, 0.3);
           &--green {
             @apply text-white;

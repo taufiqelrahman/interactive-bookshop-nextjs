@@ -5,27 +5,38 @@ import Card from 'components/atoms/Card';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
+import Modal from 'components/atoms/Modal';
 
 const PreviewDesktop = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
   const methods = useForm({ mode: 'onChange' });
+  const [showModal, setShowModal] = useState(false);
+  const [tempData, setTempData] = useState(null);
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const onSubmit = data => {
-    const { selected } = props.state.cart;
-    const cart = { ...selected, ...data };
-    if (!props.state.users.isLoggedIn) {
-      saveToCookies(cart);
-      return;
-    }
+  const selected = props.state.cart.selected || dummySelected || {};
+  const addToCart = cart => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
       props.thunkAddToCart(cart);
     }
+  };
+  const onSubmit = data => {
+    const cart = { ...selected, ...data };
+    if (!props.state.users.isLoggedIn) {
+      setTempData(cart);
+      setShowModal(true);
+      // saveToCookies(cart);
+      return;
+    }
+    addToCart(cart);
+  };
+  const continueAsGuest = () => {
+    addToCart(tempData);
   };
   useEffect(() => {
     if (!formState.isValid) {
@@ -40,7 +51,6 @@ const PreviewDesktop = (props: any): any => {
       // setEnableLazy(false);
     }
   }, []);
-  const selected = props.state.cart.selected || dummySelected || {};
   const bookPages = props.state.master.bookPages;
   return (
     <DefaultLayout {...props}>
@@ -75,6 +85,22 @@ const PreviewDesktop = (props: any): any => {
           </Card>
         </div>
       </div>
+      <Modal
+        title={props.t('guest-order-title')}
+        isOpen={showModal}
+        closeModal={() => setShowModal(false)}
+        actions={
+          <Fragment>
+            <Button width="100%" onClick={() => saveToCookies(tempData)} style={{ marginBottom: 12 }}>
+              {props.t('login')}
+            </Button>
+            <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
+              {props.t('continue-guest')}
+            </Button>
+          </Fragment>
+        }
+        content={props.t('guest-order-info')}
+      />
       <style jsx>{`
         .c-section {
           @apply w-full;

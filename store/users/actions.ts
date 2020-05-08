@@ -18,7 +18,7 @@ import { toast } from 'react-toastify';
 //   };
 // };
 
-export function loadUser(isFetching, user: types.User | object): types.UsersActionTypes {
+export function loadUser(isFetching, user: types.User | null): types.UsersActionTypes {
   return {
     type: types.LOAD_USER,
     payload: user,
@@ -27,7 +27,7 @@ export function loadUser(isFetching, user: types.User | object): types.UsersActi
 }
 
 export const thunkLoadUser = (req?): any => (dispatch): any => {
-  dispatch(loadUser(true, {}));
+  dispatch(loadUser(true, null));
   return api(req)
     .users.getMe()
     .then(({ data }) => {
@@ -35,7 +35,7 @@ export const thunkLoadUser = (req?): any => (dispatch): any => {
       if (data.cart) dispatch(thunkLoadCart(data.cart.checkout_id));
     })
     .catch(err => {
-      dispatch(loadUser(false, {}));
+      dispatch(loadUser(false, null));
       dispatch(setErrorMessage(err.message));
       captureException(err);
     });
@@ -184,7 +184,7 @@ export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<
     .then(({ data }) => {
       Cookies.remove('user');
       dispatch(logout(false, data));
-      dispatch(loadCart(false));
+      dispatch(loadCart(false, null));
       Router.push('/');
     })
     .catch(err => {

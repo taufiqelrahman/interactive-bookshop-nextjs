@@ -26,7 +26,11 @@ const NavBar = (props: any) => {
 
   useEffect(() => {
     const { user } = props.users;
-    if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
+    if (user && user.cart) {
+      props.thunkLoadCart(user.cart.checkout_id);
+    } else if (!user && localStorage.getItem('cart')) {
+      props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id);
+    }
     document.body.classList.remove('overlay-active');
 
     if (!isIndexPage) return;

@@ -22,7 +22,11 @@ const Cart = (props: any): any => {
   const discounts = cart.cart ? cart.cart.discountApplications : [];
   useEffect(() => {
     const { user } = users;
-    if (user && user.cart) props.thunkLoadCart(user.cart.checkout_id);
+    if (user && user.cart) {
+      props.thunkLoadCart(user.cart.checkout_id);
+    } else if (!user && localStorage.getItem('cart')) {
+      props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id);
+    }
   }, []);
   const continuePayment = () => {
     window.location.href = cart.cart ? cart.cart.webUrl : '';

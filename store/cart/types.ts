@@ -7,7 +7,7 @@ export const CREATE_CART = 'CREATE_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
 
-interface Cart {
+export interface Cart {
   id: number;
   user_id: number;
   created_at: string;
