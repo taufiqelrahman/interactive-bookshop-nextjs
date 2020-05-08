@@ -27,9 +27,16 @@ const FieldOccupations = (props: any) => {
   useEffect(() => {
     if (props.defaultValue) setOccupations(props.defaultValue);
   }, []);
-  const occupationsOpts = props.isMobile
-    ? props.occupations
-    : props.occupations.filter(job => job.name !== 'President');
+  const occupationsOpts = () => {
+    let occupations = [...props.occupations];
+    if (!props.isMobile) {
+      occupations = [...props.occupations.filter(job => job.name !== 'President')];
+    }
+    if (props.gender === 'boy') {
+      occupations = [...props.occupations.filter(job => job.name !== 'Ballerina')];
+    }
+    return occupations;
+  };
   return (
     <div style={props.style}>
       <div className="c-field-occupations">
@@ -38,7 +45,7 @@ const FieldOccupations = (props: any) => {
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-occupations__options">
-          {occupationsOpts.map(job => (
+          {occupationsOpts().map(job => (
             <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
                 value={job.name}

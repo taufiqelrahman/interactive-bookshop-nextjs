@@ -84,17 +84,6 @@ const CharacterCustomization = (props: any) => {
           <div className="c-char-custom__left">
             <Card variant="border">
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
-                <FieldOccupations
-                  setValue={setValue}
-                  triggerValidation={triggerValidation}
-                  register={register}
-                  errors={errors.Occupations}
-                  style={{ maxWidth: 550, marginBottom: 24 }}
-                  defaultValue={selected.Occupations}
-                  occupations={occupations}
-                  formState={formState}
-                />
-                <Divider />
                 <div className="c-char-custom__name_gender">
                   <FormTextField
                     label={props.t('name-label')}
@@ -146,6 +135,18 @@ const CharacterCustomization = (props: any) => {
                   errors={errors.Skin}
                   style={{ marginTop: 24, marginBottom: 24 }}
                   defaultChecked={selected.Skin}
+                />
+                <Divider />
+                <FieldOccupations
+                  setValue={setValue}
+                  triggerValidation={triggerValidation}
+                  register={register}
+                  errors={errors.Occupations}
+                  style={{ maxWidth: 550, marginBottom: 24 }}
+                  defaultValue={selected.Occupations}
+                  occupations={occupations}
+                  formState={formState}
+                  gender={watch('Gender')}
                 />
                 <Divider />
                 <FieldLanguage

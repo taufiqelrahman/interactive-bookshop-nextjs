@@ -20,12 +20,12 @@ import { useRouter } from 'next/router';
 const CharacterCustomization = (props: any) => {
   const router = useRouter();
   const stepEnum = {
-    OCCUPATIONS: 0,
-    NAME_GENDER: 1,
-    AGE: 2,
+    NAME_GENDER: 0,
+    AGE: 1,
     // DOB: 3,
-    HAIR: 3,
-    SKIN: 4,
+    HAIR: 2,
+    SKIN: 3,
+    OCCUPATIONS: 4,
     LANGUAGE: 5,
     DEDICATION: 6,
   };
@@ -41,7 +41,7 @@ const CharacterCustomization = (props: any) => {
     Router.push('/');
   };
   const onBack = () => {
-    if (charStep === stepEnum.OCCUPATIONS) {
+    if (charStep === stepEnum.NAME_GENDER) {
       Router.back();
       return;
     }
@@ -49,44 +49,26 @@ const CharacterCustomization = (props: any) => {
     if (charStep === stepEnum.OCCUPATIONS) unregister('Occupations');
     setCharStep(charStep - 1);
   };
-  useEffect(() => {
-    // if (charStep === stepEnum.DOB) {
-    //   register({ name: 'Date of Birth' }, schema(props).dob);
-    if (charStep === stepEnum.HAIR) {
-      unregister('Occupations');
-    }
-  }, [charStep]);
-  useEffect(() => {
-    if (!formState.isValid) {
-      showError(props.t('form-error'));
-    }
-  }, [errors]);
-  const selected = props.state.cart.selected || {
-    // Occupations: ['Teacher', 'Pilot', 'Police'],
-    // Name: 'Kalilist',
-    // Age: 'kid',
-    // Gender: 'girl',
-    // Skin: 'light',
-    // Language: 'english',
-    // Dedication:
-    //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-    // 'Date of Birth': '03-01-2019',
-    // Hair: 'short',
-  };
+  const selected =
+    props.state.cart.selected ||
+    {
+      // Occupations: ['Teacher', 'Pilot', 'Police'],
+      // Name: 'Kalilist',
+      // Age: 'kid',
+      // Gender: 'girl',
+      // Skin: 'light',
+      // Language: 'english',
+      // Dedication:
+      //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
+      // 'Date of Birth': '03-01-2019',
+      // Hair: 'short',
+    };
   const registerOccupations = () => {
     setTimeout(() => {
       register({ name: 'Occupations' }, schema(props).occupations);
       if (selected.Occupations) setValue('Occupations', selected.Occupations);
     }, 500);
   };
-  useEffect(() => {
-    const { Occupations, Name, Gender } = selected;
-    if (!router.query.edit && Occupations && Occupations.length > 0 && Name && Gender) {
-      setCharStep(stepEnum.AGE);
-    } else {
-      registerOccupations();
-    }
-  }, []);
   const { occupations } = props.state.master;
   const onSubmit = data => {
     let PARAMS = { ...selected, ...data };
@@ -94,10 +76,10 @@ const CharacterCustomization = (props: any) => {
       const jobIds = getJobIds(data.Occupations, occupations);
       PARAMS = { ...PARAMS, jobIds };
     }
-    if (charStep === stepEnum.AGE && !router.query.edit) {
-      const jobIds = getJobIds(selected.Occupations, occupations);
-      PARAMS = { ...PARAMS, jobIds };
-    }
+    // if (charStep === stepEnum.AGE && !router.query.edit) {
+    //   const jobIds = getJobIds(selected.Occupations, occupations);
+    //   PARAMS = { ...PARAMS, jobIds };
+    // }
     props.saveSelected(PARAMS);
     if (charStep !== stepEnum.DEDICATION) {
       setCharStep(charStep + 1);
@@ -110,13 +92,25 @@ const CharacterCustomization = (props: any) => {
   //   return array.join(', ');
   // };
   useEffect(() => {
-    if (charStep === stepEnum.OCCUPATIONS) return;
+    // if (charStep === stepEnum.OCCUPATIONS) return;
     loadImg(previewImg(selected, watch, true));
   }, [previewImg(selected, watch, true)]);
   useEffect(() => {
-    if ([stepEnum.AGE, stepEnum.NAME_GENDER].includes(charStep)) loadImg(previewImg(selected, watch, true));
+    if ([stepEnum.AGE, stepEnum.SKIN, stepEnum.LANGUAGE].includes(charStep)) {
+      loadImg(previewImg(selected, watch, true));
+    }
     if (charStep === stepEnum.OCCUPATIONS) registerOccupations();
+    if (charStep === stepEnum.LANGUAGE) unregister('Occupations');
   }, [charStep]);
+  useEffect(() => {
+    const { Name, Gender } = selected;
+    if (!router.query.edit && Name && Gender) {
+      setCharStep(stepEnum.AGE);
+    }
+  }, []);
+  useEffect(() => {
+    if (!formState.isValid) showError(props.t('form-error'));
+  }, [errors]);
   const screenHeight = '100vh - 69px';
   return (
     <DefaultLayout

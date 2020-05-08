@@ -9,7 +9,7 @@ const Button = (props: any) => {
   const colorClass = props.color ? `c-button--${props.color}` : '';
   const disabledClass = props.disabled || props.isLoading ? `c-button--disabled` : '';
   return (
-    <div style={props.style}>
+    <div style={props.style} className={props.className}>
       <button
         aria-label="button"
         type={props.type ? props.type : null}

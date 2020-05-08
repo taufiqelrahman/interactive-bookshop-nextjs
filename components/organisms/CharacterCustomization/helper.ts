@@ -32,7 +32,10 @@ export const previewImg = (data, watch, isMobile = false) => {
   const pickedGender = watch('Gender') || Gender || 'boy';
   const pickedAge = watch('Age') || Age || 'kid';
   const pickedSkin = watch('Skin') || Skin || 'light';
-  const pickedHair = watch('Hair') || Hair || 'short';
+  let pickedHair = watch('Hair') || Hair || 'short';
+  if ((pickedHair === 'hijab' && pickedGender === 'boy') || (pickedHair === 'curly' && pickedGender === 'girl')) {
+    pickedHair = 'short';
+  }
   return `${filePath}/${pickedGender}/${pickedAge}/${pickedHair}/${pickedSkin}.png`;
 };
 

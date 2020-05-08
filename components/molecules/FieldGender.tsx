@@ -11,7 +11,7 @@ const FieldGender = (props: any) => {
     { name: props.t('gender-girl'), code: 'girl' },
   ];
   return (
-    <div style={props.style}>
+    <div style={props.style} className={props.className}>
       <div className="c-field-gender">
         <div className="c-field-gender__header">
           {props.t('gender-label')}
@@ -27,7 +27,7 @@ const FieldGender = (props: any) => {
               label={gender.name}
               name="Gender"
               errors={props.errors}
-              style={{ height: 44, width: 84 }}
+              style={{ height: 44, width: 120 }}
               // imageUrl={gender.image}
               // type="image"
               // variant={props.isMobile ? 'box' : ''}
@@ -39,7 +39,7 @@ const FieldGender = (props: any) => {
       </div>
       <style jsx>{`
         .c-field-gender {
-          @apply mb-4;
+          @apply mb-5;
           @screen md {
             @apply mb-0;
           }
