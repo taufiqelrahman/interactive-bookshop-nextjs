@@ -19,6 +19,15 @@ const BookPage = (props: any) => {
         lineHeight: props.isMobile ? '7.5vw' : '3vw',
       };
     }
+    if (props.name.length > 5) {
+      style = {
+        ...style,
+        width: '90%',
+        left: '15%',
+        marginLeft: '-10%',
+        marginRight: '-10%',
+      };
+    }
     return style;
   };
   const processContent = (content, language) => {

@@ -28,7 +28,7 @@ const CharacterCustomization = (props: any) => {
   }, [errors]);
   const selected = props.state.cart.selected || {
     // Occupations: ['Teacher', 'Pilot', 'Police'],
-    // Name: 'Kalilist',
+    // Name: 'Kadhgihbkt',
     // Age: 'kid',
     // Gender: 'girl',
     // Skin: 'light',
@@ -55,11 +55,11 @@ const CharacterCustomization = (props: any) => {
     return isSticky ? 'c-char-custom__char--sticky' : '';
   };
   useEffect(() => {
-    setTimeout(() => {
-      // register({ name: 'Date of Birth' }, schema(props).dob);
-      register({ name: 'Occupations' }, schema(props).occupations);
-      if (selected.Occupations) setValue('Occupations', selected.Occupations);
-    }, 500);
+    // setTimeout(() => {
+    //   register({ name: 'Date of Birth' }, schema(props).dob);
+    register({ name: 'Occupations' }, schema(props).occupations);
+    if (selected.Occupations) setValue('Occupations', selected.Occupations);
+    // }, 500);
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', () => handleScroll);

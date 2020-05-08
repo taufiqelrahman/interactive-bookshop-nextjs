@@ -64,10 +64,10 @@ const CharacterCustomization = (props: any) => {
       // Hair: 'short',
     };
   const registerOccupations = () => {
-    setTimeout(() => {
-      register({ name: 'Occupations' }, schema(props).occupations);
-      if (selected.Occupations) setValue('Occupations', selected.Occupations);
-    }, 500);
+    // setTimeout(() => {
+    register({ name: 'Occupations' }, schema(props).occupations);
+    if (selected.Occupations) setValue('Occupations', selected.Occupations);
+    // }, 500);
   };
   const { occupations } = props.state.master;
   const onSubmit = data => {
