@@ -98,7 +98,7 @@ const OrderDetailMobile = (props: any): any => {
                 <div className="c-detail__container">
                   <h2>{props.t('book-details')}</h2>
                   <div className="c-detail__book">
-                    <div className="c-detail__label">{props.t('form:name-label')}</div>
+                    <div className="c-detail__label">{props.t('form:nickname-label')}</div>
                     <div className="c-detail__value">
                       {isFetching ? (
                         <Skeleton height={19} width={280} />

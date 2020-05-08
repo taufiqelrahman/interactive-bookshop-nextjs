@@ -11,6 +11,7 @@
   "minlength-6-error": "Harus lebih dari 6 karakter",
   "char-name-label": "Nama",
   "name-label": "Nama",
+  "nickname-label": "Nama",
   "name-placeholder": "Ketik namamu disini...",
   "email-label": "Email",
   "email-exists": "Email ini sudah digunakan",

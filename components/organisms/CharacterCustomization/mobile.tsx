@@ -49,20 +49,18 @@ const CharacterCustomization = (props: any) => {
     if (charStep === stepEnum.OCCUPATIONS) unregister('Occupations');
     setCharStep(charStep - 1);
   };
-  const selected =
-    props.state.cart.selected ||
-    {
-      // Occupations: ['Teacher', 'Pilot', 'Police'],
-      // Name: 'Kalilist',
-      // Age: 'kid',
-      // Gender: 'girl',
-      // Skin: 'light',
-      // Language: 'english',
-      // Dedication:
-      //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-      // 'Date of Birth': '03-01-2019',
-      // Hair: 'short',
-    };
+  const selected = props.state.cart.selected || {
+    // Occupations: ['Teacher', 'Pilot', 'Police'],
+    // Name: 'Kalilist',
+    // Age: 'kid',
+    // Gender: 'girl',
+    // Skin: 'light',
+    // Language: 'english',
+    // Dedication:
+    //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
+    // 'Date of Birth': '03-01-2019',
+    // Hair: 'short',
+  };
   const registerOccupations = () => {
     // setTimeout(() => {
     register({ name: 'Occupations' }, schema(props).occupations);
@@ -157,7 +155,7 @@ const CharacterCustomization = (props: any) => {
                 {charStep === stepEnum.NAME_GENDER && (
                   <Fragment>
                     <FormTextField
-                      label={props.t('char-name-label')}
+                      label={props.t('nickname-label')}
                       name="Name"
                       placeholder={props.t('name-placeholder')}
                       schema={schema(props).name}

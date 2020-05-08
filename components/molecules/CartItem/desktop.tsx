@@ -71,7 +71,7 @@ const CartItem = (props: any) => {
             <div className="c-cart-item__detail--top">
               <div className="c-cart-item__detail--top--left">
                 <div className="c-cart-item__detail__label">
-                  {props.isSkeleton ? <Skeleton /> : props.t('form:name-label')}
+                  {props.isSkeleton ? <Skeleton /> : props.t('form:nickname-label')}
                 </div>
                 <div className="c-cart-item__detail__value">
                   {props.isSkeleton ? <Skeleton /> : props.customAttributes.Name}

@@ -11,6 +11,7 @@
   "minlength-6-error": "The minimum length is 6 characters",
   "char-name-label": "Character Name",
   "name-label": "Name",
+  "nickname-label": "Nickname",
   "name-placeholder": "Enter name here...",
   "email-label": "Email",
   "email-exists": "This email already exists",

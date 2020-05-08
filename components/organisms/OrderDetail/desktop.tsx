@@ -72,7 +72,7 @@ const OrderDetailDesktop = (props: any): any => {
                     )}
                   </div>
                   <div className="c-detail__book__middle">
-                    <div className="c-detail__label">{props.t('form:name-label')}</div>
+                    <div className="c-detail__label">{props.t('form:nickname-label')}</div>
                     <div className="c-detail__value">
                       {isFetching ? (
                         <Skeleton height={22} width={250} />

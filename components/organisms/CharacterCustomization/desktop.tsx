@@ -86,7 +86,7 @@ const CharacterCustomization = (props: any) => {
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
                 <div className="c-char-custom__name_gender">
                   <FormTextField
-                    label={props.t('name-label')}
+                    label={props.t('nickname-label')}
                     name="Name"
                     placeholder={props.t('name-placeholder')}
                     schema={schema(props).name}
