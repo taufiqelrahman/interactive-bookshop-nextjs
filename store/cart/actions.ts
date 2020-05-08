@@ -16,7 +16,7 @@ function mapItems(items) {
   }));
 }
 
-function loadCart(isFetching, cart = null): types.CartActionTypes {
+export function loadCart(isFetching, cart = null): types.CartActionTypes {
   return {
     type: types.LOAD_CART,
     payload: cart,

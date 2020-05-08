@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { Router, i18n } from 'i18n';
 import * as types from './types';
 import { setErrorMessage } from '../actions';
-import { thunkLoadCart } from '../cart/actions';
+import { thunkLoadCart, loadCart } from '../cart/actions';
 import api from 'services/api';
 import graphql from 'services/graphql';
 import { encryptTokenClient } from 'lib/crypto';
@@ -184,6 +184,7 @@ export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<
     .then(({ data }) => {
       Cookies.remove('user');
       dispatch(logout(false, data));
+      dispatch(loadCart(false));
       Router.push('/');
     })
     .catch(err => {

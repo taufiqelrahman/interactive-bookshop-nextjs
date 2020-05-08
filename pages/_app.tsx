@@ -120,6 +120,9 @@ const App: NextPage<any> = (props: any) => {
 
         /* icons */
 
+        .icon-whatsapp:before {
+          content: '\ea93';
+        }
         .icon-duplicate:before {
           content: '\e913';
         }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';
+import Floating from 'components/atoms/Floating';
 
 const DefaultLayout = (props: any) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
@@ -64,6 +65,15 @@ const DefaultLayout = (props: any) => {
       </div>
       {!props.isMobile && <Footer />}
       <div className="c-overlay" onClick={hideOverlay}></div>
+      <a
+        href="https://wa.me/6285747977740?text=Saya%20tertarik%20mengenai%20buku%20When%20I%20Grow%20Up"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Floating color="green">
+          <span className="icon-whatsapp" />
+        </Floating>
+      </a>
       <style jsx>{`
         .c-overlay {
           @apply opacity-0;
