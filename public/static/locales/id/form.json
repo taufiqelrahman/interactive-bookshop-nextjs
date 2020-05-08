@@ -5,6 +5,8 @@
   "send-button": "Kirim",
   "form-error": "Mohon lengkapi dengan benar untuk lanjut",
   "required-error": "perlu diisi",
+  "less-than-error": "harus kurang dari",
+  "space-error": "tidak boleh memiliki spasi",
   "invalid-error": "tidak valid",
   "minlength-6-error": "Harus lebih dari 6 karakter",
   "char-name-label": "Nama",

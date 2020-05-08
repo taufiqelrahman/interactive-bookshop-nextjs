@@ -22,7 +22,11 @@ const BookForm = (props: any) => {
     //   required: { value: true, message: props.t('occupations-invalid') },
     //   validate: value => value.length === 3 || props.t('occupations-invalid'),
     // },
-    name: { required: { value: true, message: `${props.t('name-label')} ${props.t('required-error')}` } },
+    name: {
+      required: { value: true, message: `${props.t('name-label')} ${props.t('required-error')}` },
+      maxLength: { value: 10, message: `${props.t('name-label')} ${props.t('less-than-error')} 10` },
+      validate: value => !value.includes(' ') || `${props.t('name-label')} ${props.t('space-error')}`,
+    },
     // age: { required: true },
     gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
   };
