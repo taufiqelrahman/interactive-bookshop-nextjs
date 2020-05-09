@@ -13,6 +13,7 @@ const OrderSuccess = (props: any): any => {
   const { id } = router.query;
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
+  const { isLoggedIn } = props.state.users;
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={props.t('checkout')} />}>
       <Head>
@@ -25,13 +26,15 @@ const OrderSuccess = (props: any): any => {
               <div>
                 <img alt="success" className="c-login__image" src="/static/images/welcome.png" />
                 <h1 className="c-login__title">{props.t('order-success')}</h1>
-                <div className="c-login__subtitle">{props.t('order-success-content')}</div>
+                <div className="c-login__subtitle">
+                  {isLoggedIn ? props.t('order-success-content') : props.t('order-success-content-guest')}
+                </div>
               </div>
               <div className="c-login__actions">
-                <Link href={`/orders/${id}`}>
+                <Link href={isLoggedIn ? `/orders/${id}` : '/create'}>
                   <a>
                     <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
-                      {props.t('go-to-orders')}
+                      {isLoggedIn ? props.t('go-to-orders') : props.t('create-another')}
                     </Button>
                   </a>
                 </Link>

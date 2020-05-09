@@ -36,6 +36,7 @@
   "continue-payment": "Continue to Payment",
   "order-success": "Order placed, thank you!",
   "order-success-content": "Check your email for order details. You can track your order at My Orders menu, or just conveniently wait for our SMS and email updates.",
+  "order-success-content-guest": "Check your email for order details.",
   "go-to-orders": "Go to My Orders",
   "back-to-home": "Back to Homepage",
   "book-preferences": "Book Preferences",
@@ -63,5 +64,6 @@
   "please-wait": "Please wait",
   "guest-order-title": "Are you a member?",
   "guest-order-info": "Enjoy faster purchasing experience by logging in now.",
-  "continue-guest": "Continue as guest?"
+  "continue-guest": "Continue as guest?",
+  "create-another": "Create another"
 }

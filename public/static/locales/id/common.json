@@ -36,6 +36,7 @@
   "continue-payment": "Lanjut ke Pembayaran",
   "order-success": "Pesanan berhasil, terima kasih!",
   "order-success-content": "Cek emailmu untuk detail pemesanan. Kamu dapat melihat pesanan kamu di halaman 'Pesananku'.",
+  "order-success-content-guest": "Cek emailmu untuk detail pemesanan.",
   "go-to-orders": "Lihat pesananku",
   "back-to-home": "Kembali ke Halaman Utama",
   "book-preferences": "Preferensi Buku",
@@ -72,5 +73,6 @@
   "please-wait": "Mohon tunggu",
   "guest-order-title": "Masuk sebagai member?",
   "guest-order-info": "Nikmati pengalaman membeli buku yang lebih cepat dengan masuk sekarang juga",
-  "continue-guest": "Lanjut sebagai tamu?"
+  "continue-guest": "Lanjut sebagai tamu?",
+  "create-another": "Bikin lagi"
 }

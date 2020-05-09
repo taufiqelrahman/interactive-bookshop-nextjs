@@ -30,6 +30,8 @@ const Cart = (props: any): any => {
   }, []);
   const continuePayment = () => {
     window.location.href = cart.cart ? cart.cart.webUrl : '';
+    const { isLoggedIn } = props.state.users;
+    if (!isLoggedIn) localStorage.removeItem('cart');
   };
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
