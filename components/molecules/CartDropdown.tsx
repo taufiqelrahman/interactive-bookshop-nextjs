@@ -29,7 +29,7 @@ const CartDropdown = (props: any) => {
                       />
                       <div>
                         <div className="c-cart-dropdown__item__name">
-                          {props.t('for')} {item.customAttributes.name}
+                          {props.t('for')} {item.customAttributes.Name}
                         </div>
                         <div className="c-cart-dropdown__item__quantity">
                           {item.quantity} {props.t('page-orders:books')}

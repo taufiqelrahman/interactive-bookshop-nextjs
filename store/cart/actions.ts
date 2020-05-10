@@ -16,6 +16,40 @@ function mapItems(items) {
   }));
 }
 
+function transferCart(isFetching, cart = null): types.CartActionTypes {
+  return {
+    type: types.TRANSFER_CART,
+    payload: cart,
+    isFetching,
+  };
+}
+
+export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null, Action<string>> => async (
+  dispatch,
+): Promise<any> => {
+  dispatch(transferCart(true));
+  const localStorageCart = JSON.parse(localStorage.getItem('cart') as any);
+  localStorage.removeItem('cart');
+  const localCartResponse = await graphql().checkout.get(localStorageCart.id);
+  const localCartItems = JSON.parse(JSON.stringify(localCartResponse.lineItems)).map(item => ({
+    variantId: item.variant.id,
+    customAttributes: item.customAttributes.map(att => ({ key: att.key, value: att.value })),
+    quantity: item.quantity,
+  }));
+  if (localCartItems.length === 0) return;
+  return graphql()
+    .checkout.addLineItems(dbId, localCartItems)
+    .then(cart => {
+      const lineItems = mapItems(cart.lineItems);
+      dispatch(transferCart(false, { ...cart, lineItems }));
+    })
+    .catch(err => {
+      dispatch(transferCart(false));
+      dispatch(setErrorMessage(err.message));
+      captureException(err);
+    });
+};
+
 export function loadCart(isFetching, cart = null): types.CartActionTypes {
   return {
     type: types.LOAD_CART,
@@ -31,20 +65,19 @@ export function loadCart(isFetching, cart = null): types.CartActionTypes {
 //     isFetching: false,
 //   };
 // }
-export const thunkLoadCart = (id): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
+export const thunkLoadCart = (id, isLocal = false): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
   dispatch(loadCart(true));
+  if (!isLocal && localStorage.getItem('cart')) {
+    dispatch(thunkTransferCart(id));
+    return;
+  }
   return graphql()
     .checkout.get(id)
-    .then(data => {
-      dispatch(
-        loadCart(false, {
-          ...data,
-          lineItems: mapItems(data.lineItems),
-        }),
-      );
+    .then(cart => {
+      const lineItems = mapItems(cart.lineItems);
+      dispatch(loadCart(false, { ...cart, lineItems }));
     })
     .catch(err => {
-      debugger;
       dispatch(loadCart(false));
       dispatch(setErrorMessage(err.message));
       captureException(err);
@@ -185,7 +218,8 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
   return graphql()
     .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
     .then(cart => {
-      dispatch(addToCart(false, cart));
+      const lineItems = mapItems(cart.lineItems);
+      dispatch(addToCart(false, { ...cart, lineItems }));
       Router.push('/cart');
     })
     .catch(err => {
@@ -216,13 +250,13 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
     key: data,
     value: product[data].toString(),
   }));
-  const lineItemsToUpdate = [{ productId, quantity, customAttributes }];
+  const lineItemsToUpdate = [{ id: productId, quantity, customAttributes }];
   const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') as any);
   return graphql()
     .checkout.updateLineItems(user ? checkoutId : id, lineItemsToUpdate)
-    .then(data => {
-      const lineItems = mapItems(data.lineItems);
-      dispatch(updateCart(false, { ...data, lineItems }));
+    .then(cart => {
+      const lineItems = mapItems(cart.lineItems);
+      dispatch(updateCart(false, { ...cart, lineItems }));
       if (Router.pathname !== '/cart') Router.push('/cart');
     })
     .catch(err => {
@@ -245,9 +279,9 @@ export const thunkRemoveFromCart = (id, itemId): ThunkAction<void, types.CartSta
   dispatch(removeFromCart(true));
   return graphql()
     .checkout.removeLineItems(id, itemId)
-    .then(data => {
-      const lineItems = mapItems(data.lineItems);
-      dispatch(removeFromCart(false, { ...data, lineItems }));
+    .then(cart => {
+      const lineItems = mapItems(cart.lineItems);
+      dispatch(removeFromCart(false, { ...cart, lineItems }));
     })
     .catch(err => {
       dispatch(removeFromCart(false));

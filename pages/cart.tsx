@@ -25,7 +25,7 @@ const Cart = (props: any): any => {
     if (user && user.cart) {
       props.thunkLoadCart(user.cart.checkout_id);
     } else if (!user && localStorage.getItem('cart')) {
-      props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id);
+      props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true);
     }
   }, []);
   const continuePayment = () => {

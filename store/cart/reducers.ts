@@ -12,6 +12,7 @@ const reducer = (state = initialState, action: types.CartActionTypes): types.Car
     // case types.ADD_DISCOUNT:
     // case types.REMOVE_DISCOUNT:
     case types.ADD_TO_CART:
+    case types.TRANSFER_CART:
     case types.UPDATE_CART:
     case types.REMOVE_FROM_CART:
       return {
