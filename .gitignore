@@ -7,3 +7,4 @@ server
 public/sw.js
 public/sw.js.map
 public/workbox-*
+public/static/images/pages-xs
