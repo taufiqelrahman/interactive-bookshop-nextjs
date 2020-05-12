@@ -22,5 +22,8 @@
   "continue-payment": "Continue Payment?",
   "awaiting-payment": "Awaiting payment",
   "processing-payment": "Please wait, while we process your payment",
-  "copy-success": "Copied successfully"
+  "copy-success": "Copied successfully",
+  "orders-empty-title": "No Past Orders",
+  "orders-empty-subtitle": "Looks like you haven’t purchased any books yet",
+  "orders-empty-cta": "Create a book"
 }

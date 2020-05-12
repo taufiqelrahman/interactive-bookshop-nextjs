@@ -10,6 +10,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import actions from 'store/actions';
 import api from 'services/api';
 import Head from 'next/head';
+import Button from 'components/atoms/Button';
 
 const Orders = (props: any): any => {
   const screenHeight = '100vh - 59px';
@@ -28,17 +29,28 @@ const Orders = (props: any): any => {
         {!props.isMobile && <Stepper title={props.t('my-orders')} />}
         <div className="c-orders-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
           <div className="c-orders-section__left">
-            {orderList.map(item => (
-              <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
-                <a>
-                  {props.isMobile ? (
-                    <OrderItemMobile {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
-                  ) : (
-                    <OrderItem {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
-                  )}
-                </a>
-              </Link>
-            ))}
+            {orderList.length > 0 ? (
+              orderList.map(item => (
+                <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
+                  <a>
+                    {props.isMobile ? (
+                      <OrderItemMobile {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
+                    ) : (
+                      <OrderItem {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
+                    )}
+                  </a>
+                </Link>
+              ))
+            ) : (
+              <div className="c-orders__empty" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+                <img src={`/static/images/empty-asset${props.isMobile ? '-sm' : ''}.png`} alt="empty" />
+                <div className="c-orders__empty__title">{props.t('orders-empty-title')}</div>
+                <div className="c-orders__empty__subtitle">{props.t('orders-empty-subtitle')}</div>
+                <Link href="/create">
+                  <Button className={props.isMobile ? 'w-full' : ''}>{props.t('orders-empty-cta')}</Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -53,6 +65,26 @@ const Orders = (props: any): any => {
             @apply w-full;
             @screen xl {
               @apply w-3/4;
+            }
+          }
+        }
+        .c-orders {
+          &__empty {
+            @apply m-auto text-center pb-12 flex flex-col justify-center items-center;
+            width: 85vw;
+            @screen md {
+              width: 35vw;
+            }
+            &__title {
+              @apply text-xl font-semibold mt-2 mb-5;
+            }
+            &__subtitle {
+              @apply mb-5 text-sm;
+              line-height: 1.25rem;
+              @screen md {
+                @apply text-base;
+                width: 35vw;
+              }
             }
           }
         }

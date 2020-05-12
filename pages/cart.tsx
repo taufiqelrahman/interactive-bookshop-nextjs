@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation } from 'i18n';
+import { withTranslation, Link } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import CartItem from 'components/molecules/CartItem/desktop';
@@ -180,7 +180,14 @@ const Cart = (props: any): any => {
             </div>
           </div>
         ) : (
-          <h1>kosoong</h1>
+          <div className="c-cart__empty" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+            <img src={`/static/images/empty-asset${props.isMobile ? '-sm' : ''}.png`} alt="empty" />
+            <div className="c-cart__empty__title">{props.t('cart-empty-title')}</div>
+            <div className="c-cart__empty__subtitle">{props.t('cart-empty-subtitle')}</div>
+            <Link href="/create">
+              <Button className={props.isMobile ? 'w-full' : ''}>{props.t('cart-empty-cta')}</Button>
+            </Link>
+          </div>
         )}
       </div>
       <style jsx>{`
@@ -261,6 +268,24 @@ const Cart = (props: any): any => {
                   font-size: 20px;
                   margin-right: 8px;
                 }
+              }
+            }
+          }
+          &__empty {
+            @apply m-auto text-center pb-12 flex flex-col justify-center items-center;
+            width: 85vw;
+            @screen md {
+              width: 35vw;
+            }
+            &__title {
+              @apply text-xl font-semibold mt-2 mb-5;
+            }
+            &__subtitle {
+              @apply mb-5 text-sm;
+              line-height: 1.25rem;
+              @screen md {
+                @apply text-base;
+                width: 35vw;
               }
             }
           }

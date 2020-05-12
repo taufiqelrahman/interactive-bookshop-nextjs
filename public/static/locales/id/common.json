@@ -74,5 +74,8 @@
   "guest-order-title": "Masuk sebagai member?",
   "guest-order-info": "Nikmati pengalaman membeli buku yang lebih cepat dengan masuk sekarang juga",
   "continue-guest": "Lanjut sebagai tamu?",
-  "create-another": "Bikin lagi"
+  "create-another": "Bikin lagi",
+  "cart-empty-title": "Keranjangmu kosong",
+  "cart-empty-subtitle": "Sepertinya kamu belum menambahkan buku satupun",
+  "cart-empty-cta": "Bikin bukumu"
 }

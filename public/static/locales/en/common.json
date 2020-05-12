@@ -65,5 +65,8 @@
   "guest-order-title": "Are you a member?",
   "guest-order-info": "Enjoy faster purchasing experience by logging in now.",
   "continue-guest": "Continue as guest?",
-  "create-another": "Create another"
+  "create-another": "Create another",
+  "cart-empty-title": "Your Cart is Empty",
+  "cart-empty-subtitle": "Looks like you haven’t added any books to your cart yet",
+  "cart-empty-cta": "Create a book"
 }

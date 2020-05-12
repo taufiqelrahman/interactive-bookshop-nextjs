@@ -22,5 +22,8 @@
   "continue-payment": "Lanjut Pembayaran?",
   "awaiting-payment": "Menunggu pembayaran",
   "processing-payment": "Harap tunggu, kami sedang memproses pembayaranmu",
-  "copy-success": "Berhasil disalin"
+  "copy-success": "Berhasil disalin",
+  "orders-empty-title": "Riwayat pesananmu kosong",
+  "orders-empty-subtitle": "Sepertinya kamu belum beli buku satupun",
+  "orders-empty-cta": "Bikin bukumu"
 }
