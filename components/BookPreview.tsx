@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { i18n } from 'i18n';
 import $ from 'jquery';
 import initHeidelberg from 'assets/heidelberg.js';
 import debounce from 'lodash.debounce';
@@ -36,6 +37,7 @@ const BookPreview = (props: any) => {
   // };
 
   const setupBook = async () => {
+    setState({ ...state, loaded: false });
     await updateHeight();
     const bookHeidelberg = new (window as any).Heidelberg($('#Heidelberg'), {
       // initialActivePage: 1,
@@ -77,6 +79,12 @@ const BookPreview = (props: any) => {
     //   new CircleType(document.getElementById('title3')).radius(384);
     // }, 1000);
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setupBook();
+    }, 300);
+  }, [i18n.language]);
 
   // useEffect(() => {
   //   if (!book) return;

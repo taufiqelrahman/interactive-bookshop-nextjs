@@ -18,15 +18,15 @@ const BookPage = (props: any) => {
         fontSize: props.isMobile ? '9vw' : '3.5vw',
         lineHeight: props.isMobile ? '7.5vw' : '3vw',
       };
-    }
-    if (props.name && props.name.length > 5) {
-      style = {
-        ...style,
-        width: '90%',
-        left: '15%',
-        marginLeft: '-10%',
-        marginRight: '-10%',
-      };
+      if (props.name && props.name.length > 5) {
+        style = {
+          ...style,
+          width: '90%',
+          left: '15%',
+          marginLeft: '-10%',
+          marginRight: '-10%',
+        };
+      }
     }
     return style;
   };
