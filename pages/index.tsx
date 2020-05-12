@@ -90,11 +90,11 @@ const Index = (props: any): any => {
                 <div className="c-section__content text-white">
                   <h1 className="mb-4">{props.t('startstory-title')}</h1>
                   <div className="c-section__content__content">{props.t('startstory-content')}</div>
-                  <a href="#create-book">
+                  {/* <a href="#create-book">
                     <Button variant="outline" color="white">
                       {props.t('startstory-button')}
                     </Button>
-                  </a>
+                  </a> */}
                 </div>
               </div>
               {/* {!props.isMobile && (
@@ -127,11 +127,11 @@ const Index = (props: any): any => {
         <div className="c-section__content text-white c-section__content--middle">
           <h1>{props.t('choosenow-title')}</h1>
           <div className="c-section__content__content">{props.t('choosenow-content')}</div>
-          <a href="#create-book">
+          {/* <a href="#create-book">
             <Button variant="outline" color="white">
               {props.t('choosenow-button')}
             </Button>
-          </a>
+          </a> */}
         </div>
       </div>
       <div className="c-section--bottom">
@@ -169,6 +169,12 @@ const Index = (props: any): any => {
               &--kid {
                 margin: 0;
                 width: 80vw;
+                img {
+                  @apply m-auto;
+                  @screen md {
+                    @apply m-0;
+                  }
+                }
               }
               @screen md {
                 @apply w-7/12 flex justify-end;
