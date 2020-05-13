@@ -38,9 +38,11 @@ const Error: NextPage<any> = (props: any) => {
         <div className="c-error__title">{title()}</div>
         <div className="c-error__message">{message()}</div>
         <Link href="/">
-          <Button style={props.isMobile ? { width: '100%' } : {}} width={props.isMobile ? '100%' : null}>
-            {props.t('back-to-home')}
-          </Button>
+          <a>
+            <Button style={props.isMobile ? { width: '100%' } : {}} width={props.isMobile ? '100%' : null}>
+              {props.t('back-to-home')}
+            </Button>
+          </a>
         </Link>
       </div>
       <img alt="blue planet" src="/static/images/blue-planet.png" className="c-error__planet c-error__planet--blue" />

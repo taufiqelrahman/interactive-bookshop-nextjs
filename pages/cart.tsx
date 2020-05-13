@@ -185,7 +185,9 @@ const Cart = (props: any): any => {
             <div className="c-cart__empty__title">{props.t('cart-empty-title')}</div>
             <div className="c-cart__empty__subtitle">{props.t('cart-empty-subtitle')}</div>
             <Link href="/create">
-              <Button className={props.isMobile ? 'w-full' : ''}>{props.t('cart-empty-cta')}</Button>
+              <a>
+                <Button className={props.isMobile ? 'w-full' : ''}>{props.t('cart-empty-cta')}</Button>
+              </a>
             </Link>
           </div>
         )}

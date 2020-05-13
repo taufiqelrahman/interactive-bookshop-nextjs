@@ -8,6 +8,13 @@ const FieldOccupations = (props: any) => {
   const [occupations, setOccupations]: any = useState([]);
   // const router = useRouter();
   // const isIndexPage = router.pathname === '/';
+  const setValue = value => {
+    setOccupations(value);
+    props.setValue('Occupations', value);
+    if (props.formState.isSubmitted || value.length > 2) {
+      props.triggerValidation('Occupations');
+    }
+  };
   const handleCheck = event => {
     const { checked, value } = event.target;
     let newValue: Array<string> = [...occupations];
@@ -18,25 +25,26 @@ const FieldOccupations = (props: any) => {
       if (index === -1) return;
       newValue.splice(index, 1);
     }
-    setOccupations(newValue);
-    props.setValue('Occupations', newValue);
-    if (props.formState.isSubmitted || newValue.length > 2) {
-      props.triggerValidation('Occupations');
-    }
+    setValue(newValue);
   };
-  useEffect(() => {
-    if (props.defaultValue) setOccupations(props.defaultValue);
-  }, []);
   const occupationsOpts = () => {
-    let occupations = [...props.occupations];
+    let occupationsOpts = [...props.occupations];
     if (!props.isMobile) {
-      occupations = [...props.occupations.filter(job => job.name !== 'President')];
+      occupationsOpts = [...props.occupations.filter(job => job.name !== 'President')];
     }
     if (props.gender === 'boy') {
-      occupations = [...props.occupations.filter(job => job.name !== 'Ballerina')];
+      occupationsOpts = [...props.occupations.filter(job => job.name !== 'Ballerina')];
     }
-    return occupations;
+    return occupationsOpts;
   };
+  useEffect(() => {
+    if (props.defaultValue) setOccupations(props.defaultValue.split(','));
+  }, []);
+  useEffect(() => {
+    if (props.gender === 'boy' && occupations.includes('Ballerina')) {
+      setValue(occupations.filter(job => job !== 'Ballerina'));
+    }
+  }, [props.gender]);
   return (
     <div style={props.style}>
       <div className="c-field-occupations">

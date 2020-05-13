@@ -47,7 +47,9 @@ const Orders = (props: any): any => {
                 <div className="c-orders__empty__title">{props.t('orders-empty-title')}</div>
                 <div className="c-orders__empty__subtitle">{props.t('orders-empty-subtitle')}</div>
                 <Link href="/create">
-                  <Button className={props.isMobile ? 'w-full' : ''}>{props.t('orders-empty-cta')}</Button>
+                  <a>
+                    <Button className={props.isMobile ? 'w-full' : ''}>{props.t('orders-empty-cta')}</Button>
+                  </a>
                 </Link>
               </div>
             )}

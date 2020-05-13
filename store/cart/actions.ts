@@ -65,7 +65,9 @@ export function loadCart(isFetching, cart = null): types.CartActionTypes {
 //     isFetching: false,
 //   };
 // }
-export const thunkLoadCart = (id, isLocal = false): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
+export const thunkLoadCart = (id, isLocal = false): ThunkAction<void, types.CartState, null, Action<string>> => (
+  dispatch,
+): any => {
   dispatch(loadCart(true));
   if (!isLocal && localStorage.getItem('cart')) {
     dispatch(thunkTransferCart(id));
@@ -220,7 +222,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
     .then(cart => {
       const lineItems = mapItems(cart.lineItems);
       dispatch(addToCart(false, { ...cart, lineItems }));
-      Router.push('/cart');
+      Router.replace('/cart');
     })
     .catch(err => {
       dispatch(addToCart(false));
@@ -257,7 +259,7 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
     .then(cart => {
       const lineItems = mapItems(cart.lineItems);
       dispatch(updateCart(false, { ...cart, lineItems }));
-      if (Router.pathname !== '/cart') Router.push('/cart');
+      if (Router.pathname !== '/cart') Router.replace('/cart');
     })
     .catch(err => {
       dispatch(updateCart(false));

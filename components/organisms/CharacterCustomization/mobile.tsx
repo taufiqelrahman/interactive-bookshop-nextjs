@@ -105,6 +105,7 @@ const CharacterCustomization = (props: any) => {
     if (!router.query.edit && Name && Gender) {
       setCharStep(stepEnum.AGE);
     }
+    Router.prefetch('/preview');
   }, []);
   useEffect(() => {
     if (!formState.isValid) showError(props.t('form-error'));

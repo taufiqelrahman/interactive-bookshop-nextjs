@@ -30,6 +30,9 @@ const DefaultLayout = (props: any) => {
     const { errorMessage } = props.state.default;
     if (errorMessage) {
       toast.error(errorMessage);
+      setTimeout(() => {
+        props.setErrorMessage('');
+      }, 5000);
     }
   }, [props.state.default.errorMessage]);
 

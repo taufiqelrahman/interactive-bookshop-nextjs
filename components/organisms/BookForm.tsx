@@ -39,9 +39,10 @@ const BookForm = (props: any) => {
   //     unregister('Occupations');
   //   }
   // }, [state.step]);
-  // useEffect(() => {
-  //   register({ name: 'Occupations' }, schema.occupations);
-  // }, []);
+  useEffect(() => {
+    // register({ name: 'Occupations' }, schema.occupations);
+    Router.prefetch('/create');
+  }, []);
 
   // const next = async () => {
   //   const valid = await triggerValidation();
