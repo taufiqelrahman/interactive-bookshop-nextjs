@@ -23,6 +23,12 @@ const Footer = React.memo((props: any) => {
           </div>
           <div className="c-footer__right">
             <div className="c-footer__right__menu">
+              <Link href="/about">
+                <a>{props.t('about-us')}</a>
+              </Link>
+              <Link href="/policies">
+                <a>{props.t('policies')}</a>
+              </Link>
               <Link href="/help">
                 <a>{props.t('help-contact-us')}</a>
               </Link>
@@ -87,11 +93,13 @@ const Footer = React.memo((props: any) => {
               @apply flex-row;
             }
             &__menu {
-              @apply text-white text-center font-semibold underline;
-              margin-bottom: 30px;
+              @apply flex text-white text-center font-semibold underline flex-col;
+              margin-bottom: 40px;
+              height: 90px;
+              justify-content: space-evenly;
               @screen md {
-                @apply flex items-center font-semibold text-left mb-0 no-underline;
-                height: 60px;
+                @apply items-center font-semibold text-left mb-0 no-underline items-end;
+                height: 80px;
                 padding-right: 30px;
                 border-right: 1px solid white;
               }

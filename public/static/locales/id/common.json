@@ -16,7 +16,7 @@
   "cart-title": "Keranjang Belanja",
   "cart-link": "Lihat Keranjang",
   "cart-empty": "Keranjang kosong",
-  "help-contact-us": "Bantuan & Hubungi Kami",
+  "help-contact-us": "Bantuan",
   "help-title": "Bantuan",
   "contact-us": "Hubungi Kami",
   "got-question": "Punya pertanyaan? Kirim email ke kami",
@@ -77,5 +77,7 @@
   "create-another": "Bikin lagi",
   "cart-empty-title": "Keranjangmu kosong",
   "cart-empty-subtitle": "Sepertinya kamu belum menambahkan buku satupun",
-  "cart-empty-cta": "Bikin bukumu"
+  "cart-empty-cta": "Bikin bukumu",
+  "about-us": "Tentang Kami",
+  "policies": "Kebijakan"
 }

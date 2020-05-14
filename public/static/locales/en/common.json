@@ -16,7 +16,7 @@
   "cart-title": "Shopping Cart",
   "cart-link": "Go to Cart",
   "cart-empty": "Your cart is empty",
-  "help-contact-us": "Help & Contact Us",
+  "help-contact-us": "Help",
   "help-title": "Help",
   "contact-us": "Contact Us",
   "got-question": "Got questions? Send us an email",
@@ -68,5 +68,7 @@
   "create-another": "Create another",
   "cart-empty-title": "Your Cart is Empty",
   "cart-empty-subtitle": "Looks like you haven’t added any books to your cart yet",
-  "cart-empty-cta": "Create a book"
+  "cart-empty-cta": "Create a book",
+  "about-us": "About Us",
+  "policies": "Policies"
 }
