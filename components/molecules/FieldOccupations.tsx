@@ -38,7 +38,7 @@ const FieldOccupations = (props: any) => {
     return occupationsOpts;
   };
   useEffect(() => {
-    if (props.defaultValue) setOccupations(props.defaultValue.split(','));
+    if (props.defaultValue) setOccupations(props.defaultValue);
   }, []);
   useEffect(() => {
     if (props.gender === 'boy' && occupations.includes('Ballerina')) {

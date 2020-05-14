@@ -105,6 +105,9 @@ const CharacterCustomization = (props: any) => {
     if (!router.query.edit && Name && Gender) {
       setCharStep(stepEnum.AGE);
     }
+    if (typeof selected.Occupations === 'string') {
+      selected.Occupations = selected.Occupations.split(',');
+    }
     Router.prefetch('/preview');
   }, []);
   useEffect(() => {
