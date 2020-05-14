@@ -45,7 +45,7 @@ const Help = (props: any): any => {
       </Head>
       <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
         {props.isMobile ? (
-          <img className="c-help-section__image" src="/static/images/welcome.png" alt="welcome" />
+          <img className="c-help-section__image mb-2" src="/static/images/help.png" alt="help" />
         ) : (
           <Stepper title={props.t('help-title')} />
         )}
@@ -123,6 +123,9 @@ const Help = (props: any): any => {
               </div>
             </Wrapper>
           </div>
+          <div className="c-help-section__right">
+            <img id="preview-char" src="/static/images/help.png" alt="help" />
+          </div>
         </div>
       </div>
       {props.isMobile && <Footer isMobile={props.isMobile} />}
@@ -135,11 +138,8 @@ const Help = (props: any): any => {
           }
           &__left {
             @apply w-full;
-            @screen lg {
-              @apply w-4/5;
-            }
-            @screen xl {
-              @apply w-3/5;
+            @screen md {
+              width: 70%;
             }
             h2 {
               @apply font-semibold;
@@ -154,12 +154,14 @@ const Help = (props: any): any => {
           }
           &__right {
             @apply w-0;
-            @screen xl {
-              @apply w-2/5;
+            @screen md {
+              @apply pl-4;
+              width: 30%;
             }
           }
           &__image {
-            @apply mx-auto w-4/5;
+            @apply mx-auto;
+            height: 164px;
           }
           &__title {
             @apply font-semibold;
@@ -182,13 +184,13 @@ const Help = (props: any): any => {
             margin-right: 24px;
             height: 160px;
             @screen md {
-              @apply w-1/2;
+              @apply w-5/12;
             }
           }
           &__info {
             @apply w-full;
             @screen md {
-              @apply w-1/2 text-base;
+              @apply w-7/12 text-base;
             }
           }
           &__address {
