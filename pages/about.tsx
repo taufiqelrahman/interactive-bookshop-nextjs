@@ -58,12 +58,12 @@ const Help = (props: any): any => {
             @apply mb-24 p-0;
           }
           &--long {
-            @apply w-full my-8 leading-normal mx-auto;
+            @apply w-full my-8 leading-normal mx-auto text-sm;
             strong {
               @apply font-semibold leading-snug;
             }
             @screen md {
-              @apply w-11/12 my-10;
+              @apply w-11/12 my-10 text-base;
             }
             @screen lg {
               @apply w-10/12;
@@ -73,9 +73,9 @@ const Help = (props: any): any => {
             }
           }
           &--quote {
-            @apply w-10/12 my-10 text-center text-2xl leading-normal font-opensans font-bold mx-auto;
+            @apply w-10/12 my-10 text-center text-xl leading-normal font-opensans font-bold mx-auto;
             @screen md {
-              @apply w-7/12 my-12;
+              @apply w-7/12 my-12 text-2xl;
             }
             @screen xl {
               @apply w-6/12;

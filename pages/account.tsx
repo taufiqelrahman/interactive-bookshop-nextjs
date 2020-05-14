@@ -14,6 +14,7 @@ import api from 'services/api';
 import actions from 'store/actions';
 import Select from 'react-select';
 import Head from 'next/head';
+import Footer from 'components/organisms/Footer';
 
 const Account = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -109,7 +110,6 @@ const Account = (props: any): any => {
       width: props.isMobile ? '100%' : '400px',
     }),
   };
-  const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const disabledUpdateAddress = () =>
     errors.address1 ||
@@ -195,7 +195,7 @@ const Account = (props: any): any => {
       </Head>
       <div className={props.isMobile ? '' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={props.t('common:profile-title')} />}
-        <div className="c-account" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+        <div className="c-account">
           <Wrapper variant="border">
             <div className="c-account__container">
               <div className="c-account__row">
@@ -457,6 +457,7 @@ const Account = (props: any): any => {
           </Wrapper>
         </div>
       </div>
+      {props.isMobile && <Footer isMobile={props.isMobile} />}
       {/* <Modal
         title={props.t('common:otp-verify')}
         isOpen={showModal}

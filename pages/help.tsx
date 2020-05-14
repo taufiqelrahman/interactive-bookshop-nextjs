@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import Divider from 'components/atoms/Divider';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
+import Footer from 'components/organisms/Footer';
 
 const Help = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -124,6 +125,7 @@ const Help = (props: any): any => {
           </div>
         </div>
       </div>
+      {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
         .c-help-section {
           @apply flex w-full;

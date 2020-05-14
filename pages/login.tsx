@@ -12,6 +12,7 @@ import Divider from 'components/atoms/Divider';
 import FormTextField from 'components/molecules/FormTextField';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
+import Footer from 'components/organisms/Footer';
 
 const Login = (props: any): any => {
   const router = useRouter();
@@ -121,7 +122,7 @@ const Login = (props: any): any => {
       <Head>
         <title>When I Grow Up | {props.t('login')}</title>
       </Head>
-      <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
+      <div className={`u-container ${props.isMobile ? 'u-container__page mb-16' : 'u-container__page--large'}`}>
         <div className="c-login">
           <Wrapper variant="border">
             <div className="c-login__container">
@@ -299,6 +300,7 @@ const Login = (props: any): any => {
           </Wrapper>
         </div>
       </div>
+      {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
         .c-login {
           @apply mx-auto w-full;

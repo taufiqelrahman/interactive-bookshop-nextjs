@@ -12,6 +12,7 @@ import FormTextField from 'components/molecules/FormTextField';
 import NavBar from 'components/organisms/NavBar/mobile';
 import api from 'services/api';
 import Head from 'next/head';
+import Footer from 'components/organisms/Footer';
 
 const Register = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -94,7 +95,7 @@ const Register = (props: any): any => {
       <Head>
         <title>When I Grow Up | {props.t('register')}</title>
       </Head>
-      <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
+      <div className={`u-container ${props.isMobile ? 'u-container__page mb-16' : 'u-container__page--large'}`}>
         <div className="c-register">
           <Wrapper variant="border">
             <div className="c-register__container">
@@ -215,6 +216,7 @@ const Register = (props: any): any => {
           </Wrapper>
         </div>
       </div>
+      {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
         .c-register {
           @apply mx-auto w-full;

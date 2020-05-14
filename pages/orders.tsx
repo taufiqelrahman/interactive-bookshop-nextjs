@@ -11,9 +11,9 @@ import actions from 'store/actions';
 import api from 'services/api';
 import Head from 'next/head';
 import Button from 'components/atoms/Button';
+import Footer from 'components/organisms/Footer';
 
 const Orders = (props: any): any => {
-  const screenHeight = '100vh - 59px';
   const { orders } = props.state;
   const orderList = orders.isFetching ? [1, 2] : orders.orders;
   // const orderList = dummyOrders;
@@ -27,7 +27,7 @@ const Orders = (props: any): any => {
       </Head>
       <div className={`u-container ${props.isMobile ? 'bg-light-grey' : 'u-container__page'}`}>
         {!props.isMobile && <Stepper title={props.t('my-orders')} />}
-        <div className="c-orders-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+        <div className="c-orders-section">
           <div className="c-orders-section__left">
             {orderList.length > 0 ? (
               orderList.map(item => (
@@ -42,7 +42,7 @@ const Orders = (props: any): any => {
                 </Link>
               ))
             ) : (
-              <div className="c-orders__empty" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+              <div className="c-orders__empty">
                 <img src={`/static/images/empty-asset${props.isMobile ? '-sm' : ''}.png`} alt="empty" />
                 <div className="c-orders__empty__title">{props.t('orders-empty-title')}</div>
                 <div className="c-orders__empty__subtitle">{props.t('orders-empty-subtitle')}</div>
@@ -56,6 +56,7 @@ const Orders = (props: any): any => {
           </div>
         </div>
       </div>
+      {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
         .c-orders-section {
           @apply flex w-full overflow-scroll;

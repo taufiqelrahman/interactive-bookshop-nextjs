@@ -7,6 +7,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import Button from 'components/atoms/Button';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Footer from 'components/organisms/Footer';
 
 const Error: NextPage<any> = (props: any) => {
   const router = useRouter();
@@ -34,19 +35,26 @@ const Error: NextPage<any> = (props: any) => {
       <Head>
         <title>When I Grow Up | {title()}</title>
       </Head>
-      <div className="c-error">
-        <div className="c-error__title">{title()}</div>
-        <div className="c-error__message">{message()}</div>
-        <Link href="/">
-          <a>
-            <Button style={props.isMobile ? { width: '100%' } : {}} width={props.isMobile ? '100%' : null}>
-              {props.t('back-to-home')}
-            </Button>
-          </a>
-        </Link>
+      <div className="w-full">
+        <div className="relative">
+          <div className="c-error">
+            <div className="c-error__title">{title()}</div>
+            <div className="c-error__message">{message()}</div>
+            <Link href="/">
+              <a style={props.isMobile ? { width: '100%' } : {}}>
+                <Button width={props.isMobile ? '100%' : null}>{props.t('back-to-home')}</Button>
+              </a>
+            </Link>
+          </div>
+          <img
+            alt="blue planet"
+            src="/static/images/blue-planet.png"
+            className="c-error__planet c-error__planet--blue"
+          />
+          <img alt="red planet" src="/static/images/red-planet.png" className="c-error__planet c-error__planet--red" />
+        </div>
+        {props.isMobile && <Footer isMobile={props.isMobile} />}
       </div>
-      <img alt="blue planet" src="/static/images/blue-planet.png" className="c-error__planet c-error__planet--blue" />
-      <img alt="red planet" src="/static/images/red-planet.png" className="c-error__planet c-error__planet--red" />
       <style jsx>{`
         .c-error {
           @apply flex items-center justify-center flex-grow flex-col text-white bg-cover px-4 overflow-hidden;
@@ -66,7 +74,7 @@ const Error: NextPage<any> = (props: any) => {
             }
           }
           &__message {
-            @apply text-sm mb-4;
+            @apply text-sm mb-4 text-center;
             line-height: 1.3rem;
             @screen md {
               @apply text-lg mb-6;
