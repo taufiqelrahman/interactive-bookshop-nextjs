@@ -76,7 +76,7 @@ const App: NextPage<any> = (props: any) => {
     <Provider store={reduxStore}>
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600|Poppins:400,600,700|Kameron|Gochi+Hand&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Poppins:400,600,700|Kameron|Gochi+Hand&display=swap');
         @import '/static/styles/ReactToastify.min.css';
         @import '/static/styles/picker.min.css';
 
