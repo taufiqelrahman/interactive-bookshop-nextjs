@@ -124,7 +124,7 @@ const Help = (props: any): any => {
             </Wrapper>
           </div>
           <div className="c-help-section__right">
-            <img id="preview-char" src="/static/images/help.png" alt="help" />
+            <img src="/static/images/help-balloon.png" alt="help" />
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@ const Help = (props: any): any => {
           &__right {
             @apply w-0;
             @screen md {
-              @apply pl-4;
+              @apply pl-10;
               width: 30%;
             }
           }
