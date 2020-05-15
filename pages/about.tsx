@@ -6,6 +6,7 @@ import Stepper from 'components/atoms/Stepper';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
 import Button from 'components/atoms/Button';
+import Footer from 'components/organisms/Footer';
 
 const Help = (props: any): any => {
   return (
@@ -16,11 +17,9 @@ const Help = (props: any): any => {
       <Head>
         <title>When I Grow Up | {props.t('about-us')}</title>
       </Head>
-      <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
+      <div className={`u-container__page ${props.isMobile ? 'pt-0' : 'u-container pb-0'}`}>
         {!props.isMobile && <Stepper title={props.t('about-us')} />}
-        <img className="c-about-us__image c-about-us--long" src="https://picsum.photos/800/240" alt="about-us" />
         <div className="c-about-us">
-          {props.isMobile && <div className="c-about-us__title">{props.t('about-us')}</div>}
           <div className="c-about-us--long">
             <strong>When I Grow Up</strong> adalah personalized book publisher yang dimana sebagai pembeli dapat ikut
             terlibat dalam pembuatan alur cerita, nama dan karakter si anak dalam buku, semua itu dapat dikerjakan
@@ -45,7 +44,9 @@ const Help = (props: any): any => {
             </a>
           </Link>
         </div>
+        <img className="c-about-us__image c-about-us--long" src="/static/images/about-us.png" alt="about-us" />
       </div>
+      {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
         .c-about-us {
           &__title {
@@ -53,12 +54,12 @@ const Help = (props: any): any => {
             font-size: 16px;
             line-height: 24px;
           }
-          @apply mb-16 p-6;
+          @apply mb-5 p-6;
           @screen md {
-            @apply mb-24 p-0;
+            @apply mb-10 p-0;
           }
           &--long {
-            @apply w-full my-8 leading-normal mx-auto text-sm;
+            @apply w-full my-6 leading-normal mx-auto text-sm;
             strong {
               @apply font-semibold leading-snug;
             }
@@ -71,9 +72,15 @@ const Help = (props: any): any => {
             @screen xl {
               @apply w-9/12;
             }
+            &:first-child {
+              @apply mt-0;
+              @screen md {
+                @apply mt-8;
+              }
+            }
           }
           &--quote {
-            @apply w-10/12 my-10 text-center text-xl leading-normal font-opensans font-bold mx-auto;
+            @apply w-10/12 my-8 text-center text-xl leading-normal font-opensans font-bold mx-auto;
             @screen md {
               @apply w-7/12 my-12 text-2xl;
             }
@@ -87,11 +94,6 @@ const Help = (props: any): any => {
           &__image {
             @apply my-0;
             margin-top: -24px;
-            height: 180px;
-            @screen md {
-              @apply mt-8;
-              height: 240px;
-            }
           }
         }
       `}</style>
