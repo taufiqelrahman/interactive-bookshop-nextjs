@@ -101,4 +101,4 @@ const Help = (props: any): any => {
   );
 };
 
-export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Help));
+export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Help));

@@ -26,6 +26,7 @@ export const decryptTokenClient = cryptedToken => {
       options,
     );
     result = json.toString(CryptoJS.enc.Utf8);
+    // eslint-disable-next-line no-empty
   } catch {}
   return result;
 };
@@ -36,6 +37,7 @@ export const decryptTokenServer = cryptedToken => {
   const dec = decipher.update(cryptedToken, 'hex', 'utf8');
   try {
     result = dec + decipher.final('utf8');
+    // eslint-disable-next-line no-empty
   } catch {}
   return result;
 };

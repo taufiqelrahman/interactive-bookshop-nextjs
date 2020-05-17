@@ -148,8 +148,8 @@ const init = function() {
         );
       }
 
-      const forwardsKeycode = 37;
-      const backKeycode = 39;
+      let forwardsKeycode = 37;
+      let backKeycode = 39;
 
       if (!Modernizr.csstransforms3d) {
         forwardsKeycode = 39;
