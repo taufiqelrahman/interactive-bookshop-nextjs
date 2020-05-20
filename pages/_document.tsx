@@ -87,9 +87,9 @@ class MyDocument extends Document {
           {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
 
           {/* <!-- Main Link Tags  --> */}
-          <link href="favicon-16.png" rel="icon" type="image/png" sizes="16x16" />
-          <link href="favicon-32.png" rel="icon" type="image/png" sizes="32x32" />
-          <link href="favicon-48.png" rel="icon" type="image/png" sizes="48x48" />
+          <link href="/static/favicon-16.png" rel="icon" type="image/png" sizes="16x16" />
+          <link href="/static/favicon-32.png" rel="icon" type="image/png" sizes="32x32" />
+          <link href="/static/favicon-48.png" rel="icon" type="image/png" sizes="48x48" />
 
           {/* <!-- iOS  --> */}
           <link href="/static/images/icons/icon-72x72.png" rel="apple-touch-icon" />
@@ -109,7 +109,7 @@ class MyDocument extends Document {
           <link href="/static/images/icons/icon-128x128.png" rel="icon" sizes="128x128" />
 
           {/* <!-- Others --> */}
-          <link href="favicon.icon" rel="shortcut icon" type="image/x-icon" />
+          <link href="/static/fsavicon.icon" rel="shortcut icon" type="image/x-icon" />
 
           {/* <!-- UC Browser  --> */}
           <link href="/static/images/icons/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />

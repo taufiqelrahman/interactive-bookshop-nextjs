@@ -41,7 +41,7 @@ module.exports = withCSS(
       },
       pwa: {
         disable: process.env.NODE_ENV !== 'production',
-        dest: 'public',
+        dest: 'public/static',
       },
     }),
   ),

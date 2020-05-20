@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { NextPage } from 'next';
@@ -238,7 +239,8 @@ App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
         const { data: me } = await api(ctx.req).users.getMe();
         dispatch(actions.setLogin(true));
         dispatch(actions.loadUser(false, me));
-      } catch {}
+        // eslint-disable-next-line no-empty
+      } catch (error) {}
     }
     redirectLoginRoutes(ctx);
   } else {
