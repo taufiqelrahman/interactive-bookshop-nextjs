@@ -10,6 +10,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = withBundleAnalyzer(
   withCSS(
@@ -42,7 +43,9 @@ module.exports = withBundleAnalyzer(
               },
             },
           });
+          config.optimization.minimize = true;
           config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
+          config.optimization.minimizer.push(new TerserPlugin());
           return config;
         },
         pwa: {
