@@ -2,7 +2,7 @@
 const express = require('express');
 const next = require('next');
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
-
+const path = require('path');
 const nextI18next = require('./i18n');
 const config = require('./next.config');
 
@@ -19,8 +19,10 @@ const handle = app.getRequestHandler();
   const server = express();
 
   await nextI18next.initPromise;
-  server.use(nextI18NextMiddleware(nextI18next));
 
+  server.get('/sw.js', (_req, res) => res.sendFile(path.join(__dirname, 'public/static', 'sw.js')));
+  server.get('/workbox*', (req, res) => res.sendFile(path.join(__dirname, 'public/static', req.url.replace('/', ''))));
+  server.use(nextI18NextMiddleware(nextI18next));
   server.get('*', (req, res) => handle(req, res));
 
   process.on('uncaughtException', (error, origin) => {

@@ -109,7 +109,7 @@ class MyDocument extends Document {
           <link href="/static/images/icons/icon-128x128.png" rel="icon" sizes="128x128" />
 
           {/* <!-- Others --> */}
-          <link href="/static/fsavicon.icon" rel="shortcut icon" type="image/x-icon" />
+          <link href="/static/favicon.icon" rel="shortcut icon" type="image/x-icon" />
 
           {/* <!-- UC Browser  --> */}
           <link href="/static/images/icons/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
