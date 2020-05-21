@@ -80,10 +80,15 @@ const BookPreview = (props: any) => {
     // }, 1000);
   }, []);
 
+  const isFirstRun = useRef(true);
   useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
     setTimeout(() => {
       setupBook();
-    }, 300);
+    }, 500);
   }, [i18n.language]);
 
   // useEffect(() => {
@@ -246,7 +251,7 @@ const BookPreview = (props: any) => {
             z-index: 2;
           }
           &__container {
-            @apply flex flex-row;
+            @apply flex flex-row overflow-hidden;
             @screen md {
               @apply w-full relative;
               height: ${state.height}px;
