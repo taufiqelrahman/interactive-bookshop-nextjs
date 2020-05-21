@@ -106,7 +106,7 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
     .users.login(userData)
     .then(({ data }) => {
       const token = encryptTokenClient(data.token);
-      Cookies.set('user', token);
+      Cookies.set('user', token, { domain: process.env.DOMAIN });
       dispatch(setExpired(false));
       dispatch(login(false, data));
       Router.push(`/${userData.from || ''}`);
@@ -139,7 +139,7 @@ export const thunkLoginFacebook = (data): ThunkAction<void, types.UsersState, nu
     .users.loginFacebook(data)
     .then(({ data }) => {
       const token = encryptTokenClient(data.token);
-      Cookies.set('user', token);
+      Cookies.set('user', token, { domain: process.env.DOMAIN });
       dispatch(setExpired(false));
       dispatch(loginFacebook(false, data));
       redirectSocialLogin();
@@ -167,7 +167,7 @@ export const thunkLoginGoogle = (data): ThunkAction<void, types.UsersState, null
     .users.loginGoogle(data)
     .then(({ data }) => {
       const token = encryptTokenClient(data.token);
-      Cookies.set('user', token);
+      Cookies.set('user', token, { domain: process.env.DOMAIN });
       dispatch(setExpired(false));
       dispatch(loginGoogle(false, data));
       redirectSocialLogin();
@@ -192,7 +192,7 @@ export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<
   return api()
     .users.logout()
     .then(({ data }) => {
-      Cookies.remove('user');
+      Cookies.remove('user', { domain: process.env.DOMAIN });
       dispatch(logout(false, data));
       dispatch(loadCart(false, null));
       Router.push('/');

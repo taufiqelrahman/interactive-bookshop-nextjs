@@ -48,7 +48,7 @@ const App: NextPage<any> = (props: any) => {
     [],
   );
   useEffect(() => {
-    if (reduxStore.getState().users.isExpired) Cookies.remove('user');
+    if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
     window.addEventListener('resize', debouncedSetup);
