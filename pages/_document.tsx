@@ -98,7 +98,41 @@ class MyDocument extends Document {
           <link href="/static/images/icons/icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
 
           {/* <!-- Startup Image  --> */}
-          {/* <link href="touch-icon-start-up-320x480.png" rel="apple-touch-startup-image" /> */}
+          <link
+            rel="apple-touch-startup-image"
+            href="/static/images/logo-bg-white.png"
+            media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+          />
+          <link
+            rel="apple-touch-startup-image"
+            href="/static/images/logo-bg-white.png"
+            media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+          />
+          <link
+            rel="apple-touch-startup-image"
+            href="/static/images/logo-bg-white.png"
+            media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+          />
+          <link
+            rel="apple-touch-startup-image"
+            href="/static/images/logo-bg-white.png"
+            media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+          />
+          <link
+            rel="apple-touch-startup-image"
+            href="/static/images/logo-bg-white.png"
+            media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
+          />
+          <link
+            rel="apple-touch-startup-image"
+            href="/static/images/logo-bg-white.png"
+            media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
+          />
+          <link
+            rel="apple-touch-startup-image"
+            href="/static/images/logo-bg-white.png"
+            media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
+          />
 
           {/* <!-- Pinned Tab  --> */}
           {/* <link href="path/to/icon.svg" rel="mask-icon" size="any" color="red" /> */}
@@ -119,6 +153,7 @@ class MyDocument extends Document {
           <link href="/static/manifest.json" rel="manifest" />
         </Head>
         <body>
+          <noscript>You need to enable JavaScript to run this app.</noscript>
           <Main />
           <NextScript />
         </body>
