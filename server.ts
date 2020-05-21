@@ -47,9 +47,9 @@ const handle = app.getRequestHandler();
   process.on('unhandledRejection', error => {
     console.log({
       name: 'unhandledRejection',
-      message: (error as any).message,
-      stack: (error as any).stack,
-      response: ((error as any).response || {}).data,
+      message: error.message,
+      stack: error.stack,
+      response: (error.response || {}).data,
     });
   });
 
