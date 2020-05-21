@@ -3,6 +3,7 @@ const express = require('express');
 const next = require('next');
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const path = require('path');
+const { parse } = require('url');
 const nextI18next = require('./i18n');
 const config = require('./next.config');
 
@@ -20,8 +21,16 @@ const handle = app.getRequestHandler();
 
   await nextI18next.initPromise;
 
-  server.get('/sw.js', (_req, res) => res.sendFile(path.join(__dirname, 'public/static', 'sw.js')));
-  server.get('/workbox*', (req, res) => res.sendFile(path.join(__dirname, 'public/static', req.url.replace('/', ''))));
+  server.get('/sw.js', (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const filePath = path.join(__dirname, '.next', parsedUrl.pathname);
+    app.serveStatic(req, res, filePath);
+  });
+  server.get('/workbox*', (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    const filePath = path.join(__dirname, '.next', parsedUrl.pathname);
+    app.serveStatic(req, res, filePath);
+  });
   server.use(nextI18NextMiddleware(nextI18next));
   server.get('*', (req, res) => handle(req, res));
 
@@ -38,9 +47,9 @@ const handle = app.getRequestHandler();
   process.on('unhandledRejection', error => {
     console.log({
       name: 'unhandledRejection',
-      message: error.message,
-      stack: error.stack,
-      response: (error.response || {}).data,
+      message: (error as any).message,
+      stack: (error as any).stack,
+      response: ((error as any).response || {}).data,
     });
   });
 
