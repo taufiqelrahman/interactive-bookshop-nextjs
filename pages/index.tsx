@@ -176,6 +176,9 @@ const Index = (props: any): any => {
                   }
                 }
               }
+              img {
+                @apply object-contain;
+              }
               @screen md {
                 @apply w-7/12 flex justify-end;
                 margin-left: 0;
@@ -370,7 +373,7 @@ const Index = (props: any): any => {
               @apply mx-auto flex justify-center mb-12 mt-8;
             }
             &__circle {
-              @apply bg-white mx-4;
+              @apply bg-white mx-4 flex items-center justify-center;
               width: 120px;
               height: 120px;
               border-radius: 50%;

@@ -85,24 +85,22 @@ const CharacterCustomization = (props: any) => {
           <div className="c-char-custom__left">
             <Card variant="border">
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
-                <div className="c-char-custom__name_gender">
-                  <FormTextField
-                    label={props.t('nickname-label')}
-                    name="Name"
-                    placeholder={props.t('name-placeholder')}
-                    schema={schema(props).name}
-                    register={register}
-                    errors={errors.Name}
-                    defaultValue={selected.Name}
-                    formStyle={{ width: '50%' }}
-                  />
-                  <FieldGender
-                    schema={schema(props).gender}
-                    register={register}
-                    errors={errors.Gender}
-                    defaultChecked={selected.Gender}
-                  />
-                </div>
+                <FormTextField
+                  label={props.t('nickname-label')}
+                  name="Name"
+                  placeholder={props.t('name-placeholder')}
+                  schema={schema(props).name}
+                  register={register}
+                  errors={errors.Name}
+                  defaultValue={selected.Name}
+                />
+                <FieldGender
+                  schema={schema(props).gender}
+                  register={register}
+                  errors={errors.Gender}
+                  style={{ marginTop: 24 }}
+                  defaultChecked={selected.Gender}
+                />
                 <FieldAge
                   schema={schema(props).age}
                   register={register}
