@@ -48,7 +48,7 @@ const App: NextPage<any> = (props: any) => {
     [],
   );
   useEffect(() => {
-    if (!reduxStore.getState().users.isLoggedIn) Cookies.remove('user');
+    if (reduxStore.getState().users.isExpired) Cookies.remove('user');
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
     window.addEventListener('resize', debouncedSetup);
@@ -240,7 +240,11 @@ App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
         dispatch(actions.setLogin(true));
         dispatch(actions.loadUser(false, me));
         // eslint-disable-next-line no-empty
-      } catch (error) {}
+      } catch (error) {
+        // if (error.response && error.response.status === 401) {
+        dispatch(actions.setExpired(true));
+        // }
+      }
     }
     redirectLoginRoutes(ctx);
   } else {

@@ -6,7 +6,7 @@
   "author": "taufiqelrahman",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_OPTIONS=--inspect-brk node server.ts",
+    "dev": "node --inspect server.ts",
     "debug": "node server.ts",
     "lint": "eslint --ext js,ts --fix --ignore-path .eslintignore .",
     "tinker": "concurrently \"yarn lint\" \"yarn dev\"",

@@ -86,6 +86,13 @@ export function setLogin(state: boolean): types.UsersActionTypes {
   };
 }
 
+export function setExpired(state: boolean): types.UsersActionTypes {
+  return {
+    type: types.SET_EXPIRED,
+    payload: state,
+  };
+}
+
 function login(isFetching, state = null): types.UsersActionTypes {
   return {
     type: types.LOGIN,
@@ -100,6 +107,7 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
     .then(({ data }) => {
       const token = encryptTokenClient(data.token);
       Cookies.set('user', token);
+      dispatch(setExpired(false));
       dispatch(login(false, data));
       Router.push(`/${userData.from || ''}`);
     })
@@ -132,6 +140,7 @@ export const thunkLoginFacebook = (data): ThunkAction<void, types.UsersState, nu
     .then(({ data }) => {
       const token = encryptTokenClient(data.token);
       Cookies.set('user', token);
+      dispatch(setExpired(false));
       dispatch(loginFacebook(false, data));
       redirectSocialLogin();
     })
@@ -159,6 +168,7 @@ export const thunkLoginGoogle = (data): ThunkAction<void, types.UsersState, null
     .then(({ data }) => {
       const token = encryptTokenClient(data.token);
       Cookies.set('user', token);
+      dispatch(setExpired(false));
       dispatch(loginGoogle(false, data));
       redirectSocialLogin();
     })

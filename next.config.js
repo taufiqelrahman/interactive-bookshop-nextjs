@@ -16,7 +16,7 @@ module.exports = withBundleAnalyzer(
   withCSS(
     withPurgeCss(
       withPWA({
-        webpack: config => {
+        webpack: (config, { dev }) => {
           config.plugins.push(
             new Dotenv({
               path: path.join(__dirname, '.env'),
@@ -43,9 +43,11 @@ module.exports = withBundleAnalyzer(
               },
             },
           });
-          config.optimization.minimize = true;
-          config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
-          config.optimization.minimizer.push(new TerserPlugin());
+          if (!dev) {
+            config.optimization.minimize = true;
+            config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
+            config.optimization.minimizer.push(new TerserPlugin());
+          }
           return config;
         },
         pwa: {

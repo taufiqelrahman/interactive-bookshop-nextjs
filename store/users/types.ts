@@ -2,6 +2,7 @@
 export const LOAD_USER = 'LOAD_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SET_LOGIN = 'SET_LOGIN';
+export const SET_EXPIRED = 'SET_EXPIRED';
 export const LOGIN = 'LOGIN';
 export const LOGIN_FACEBOOK = 'LOGIN_FACEBOOK';
 export const LOGIN_GOOGLE = 'LOGIN_GOOGLE';
@@ -18,6 +19,7 @@ export interface User {
 export interface UsersState {
   isFetching: boolean;
   isLoggedIn: boolean;
+  isExpired: boolean;
   user: User | null;
 }
 
@@ -42,7 +44,10 @@ interface SetLogin {
   type: typeof SET_LOGIN;
   payload: boolean;
 }
-
+interface SetExpired {
+  type: typeof SET_EXPIRED;
+  payload: boolean;
+}
 interface Login {
   type: typeof LOGIN;
   payload: boolean | null;
@@ -88,6 +93,7 @@ export type UsersActionTypes =
   | LoadUser
   | UpdateUser
   | SetLogin
+  | SetExpired
   | Login
   | LoginFacebook
   | LoginGoogle

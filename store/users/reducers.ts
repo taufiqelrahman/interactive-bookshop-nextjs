@@ -3,6 +3,7 @@ import * as types from './types';
 const initState: types.UsersState = {
   isFetching: false,
   isLoggedIn: false,
+  isExpired: false,
   user: null,
 };
 
@@ -19,6 +20,11 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
       return {
         ...state,
         isLoggedIn: action.payload,
+      };
+    case types.SET_EXPIRED:
+      return {
+        ...state,
+        isExpired: action.payload,
       };
     case types.LOGIN:
     case types.LOGIN_FACEBOOK:
