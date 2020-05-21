@@ -40,7 +40,7 @@
   "skin-label": "Skin Color",
   "language-label": "Book Language",
   "dedication-label": "Write Dedication Page (Optional)",
-  "dedication-hint": "Write notes to be printed on the first page",
+  "dedication-hint": "Write notes to be printed on the last page",
   "dedication-placeholder": "Enter your dedication letter here...",
   "reset-title": "Reset Password",
   "reset-subtitle": "Enter your registered email so we can send you a link to reset your password. Don’t worry!",

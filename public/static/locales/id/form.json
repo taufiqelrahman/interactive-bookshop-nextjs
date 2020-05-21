@@ -40,7 +40,7 @@
   "skin-label": "Warna Kulit",
   "language-label": "Bahasa Buku",
   "dedication-label": "Tulis halaman dedikasi (opsional)",
-  "dedication-hint": "Pesan yang akan ditampilkan di halaman pertama",
+  "dedication-hint": "Pesan yang akan ditampilkan di halaman terakhir",
   "dedication-placeholder": "Tuliskan pesanmu disini...",
   "reset-title": "Set Ulang Sandi",
   "reset-subtitle": "Masukkan emailmu supaya kami bisa kirimkan cara set ulang sandimu. Jangan khawatir!",
