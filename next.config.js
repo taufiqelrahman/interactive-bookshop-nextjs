@@ -42,7 +42,6 @@ module.exports = withBundleAnalyzer(
               },
             },
           });
-          config.optimization.minimizer = [];
           config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
           return config;
         },
