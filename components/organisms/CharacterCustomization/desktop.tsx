@@ -16,8 +16,11 @@ import Button from 'components/atoms/Button';
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
+import { useRouter } from 'next/router';
+import * as gtag from 'lib/gtag';
 
 const CharacterCustomization = (props: any) => {
+  const router = useRouter();
   const [isSticky, setSticky] = useState(false);
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
@@ -40,6 +43,13 @@ const CharacterCustomization = (props: any) => {
   };
   const { occupations } = props.state.master;
   const onSubmit = data => {
+    if (!router.query.edit) {
+      gtag.event({
+        action: 'click_create',
+        category: 'engagement',
+        label: '/create',
+      });
+    }
     const jobIds = getJobIds(data.Occupations, occupations);
     props.saveSelected({ ...selected, ...data, jobIds });
     Router.push('/preview');

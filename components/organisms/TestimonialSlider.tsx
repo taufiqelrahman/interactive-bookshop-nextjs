@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { withTranslation } from 'i18n';
 import Testimonial from 'components/molecules/Testimonial';
+import * as gtag from 'lib/gtag';
 
 const TestimonialSlider = (props: any) => {
   const [navRightClass, setNavRightClass] = useState(0);
@@ -25,6 +26,11 @@ const TestimonialSlider = (props: any) => {
   const onNavRight = () => {
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!navRightClass) return;
+    gtag.event({
+      action: 'testimonials',
+      category: 'engagement',
+      label: 'desktop',
+    });
     setTranslationX(translationX - 418);
   };
   const onNavLeft = () => {

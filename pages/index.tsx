@@ -13,6 +13,7 @@ import Footer from 'components/organisms/Footer';
 import actions from 'store/actions';
 // import graphql from 'services/graphql';
 import api from 'services/api';
+import * as gtag from 'lib/gtag';
 
 const Index = (props: any): any => {
   const { testimonials, occupations } = props.state.master;
@@ -49,6 +50,14 @@ const Index = (props: any): any => {
   //   createCheckout();
   // }, []);
 
+  const landingTracker = () => {
+    gtag.event({
+      action: 'click_landing',
+      category: 'engagement',
+      label: props.isMobile ? 'mobile' : 'desktop',
+    });
+  };
+
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} />}>
       <Head>
@@ -62,7 +71,7 @@ const Index = (props: any): any => {
               <div className="c-section__content">
                 <h1>{props.t('createnow-title')}</h1>
                 <div className="c-section__content__content">{props.t('createnow-content')}</div>
-                <a href="#create-book">
+                <a href="#create-book" onClick={landingTracker}>
                   <Button variant="outline" color="black">
                     {props.t('createnow-button')}
                   </Button>

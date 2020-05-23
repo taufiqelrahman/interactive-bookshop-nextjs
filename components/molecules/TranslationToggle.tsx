@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Toggle from 'components/atoms/Toggle';
 import { i18n } from 'i18n';
 import { useEffect, useState } from 'react';
+import * as gtag from 'lib/gtag';
 
 const TranslationToggle = (props: any) => {
   const router = useRouter();
@@ -9,7 +10,13 @@ const TranslationToggle = (props: any) => {
   const [isEnglish, setEnglish] = useState(true);
 
   const changeLanguage = () => {
-    i18n.changeLanguage(isEnglish ? 'id' : 'en');
+    const lang = isEnglish ? 'id' : 'en';
+    i18n.changeLanguage(lang);
+    gtag.event({
+      action: 'toggle_lang',
+      category: 'engagement',
+      label: lang,
+    });
     setEnglish(!isEnglish);
   };
 

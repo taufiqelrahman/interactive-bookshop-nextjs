@@ -10,6 +10,7 @@ import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
 import Modal from 'components/atoms/Modal';
+import * as gtag from 'lib/gtag';
 
 const PreviewDesktop = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
@@ -22,6 +23,16 @@ const PreviewDesktop = (props: any): any => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
+      gtag.event({
+        action: 'click_create',
+        category: 'engagement',
+        label: '/preview',
+      });
+      gtag.event({
+        action: 'add_to_cart',
+        category: 'ecommerce',
+        label: 'desktop',
+      });
       props.thunkAddToCart(cart);
     }
   };

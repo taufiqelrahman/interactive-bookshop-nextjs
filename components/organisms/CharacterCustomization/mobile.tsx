@@ -16,6 +16,7 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Sheet from 'components/atoms/Sheet';
 import { useRouter } from 'next/router';
+import * as gtag from 'lib/gtag';
 
 const CharacterCustomization = (props: any) => {
   const router = useRouter();
@@ -82,6 +83,13 @@ const CharacterCustomization = (props: any) => {
     if (charStep !== stepEnum.DEDICATION) {
       setCharStep(charStep + 1);
       return;
+    }
+    if (!router.query.edit) {
+      gtag.event({
+        action: 'click_create',
+        category: 'engagement',
+        label: '/create',
+      });
     }
     Router.push('/preview');
   };

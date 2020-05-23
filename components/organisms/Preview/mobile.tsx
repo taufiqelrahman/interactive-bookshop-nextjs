@@ -9,6 +9,7 @@ import { dummySelected, schema, showError, saveToCookies, getFromCookies } from 
 import NavBar from '../NavBar/mobile';
 import Cookies from 'js-cookie';
 import Sheet from 'components/atoms/Sheet';
+import * as gtag from 'lib/gtag';
 
 const PreviewMobile = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
@@ -21,6 +22,16 @@ const PreviewMobile = (props: any): any => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
+      gtag.event({
+        action: 'click_create',
+        category: 'engagement',
+        label: '/preview',
+      });
+      gtag.event({
+        action: 'add_to_cart',
+        category: 'ecommerce',
+        label: 'mobile',
+      });
       props.thunkAddToCart(cart);
     }
   };

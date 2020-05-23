@@ -13,6 +13,7 @@ import FormTextField from 'components/molecules/FormTextField';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
 import Footer from 'components/organisms/Footer';
+import * as gtag from 'lib/gtag';
 
 const Login = (props: any): any => {
   const router = useRouter();
@@ -62,8 +63,14 @@ const Login = (props: any): any => {
     setLoginStep(stepEnum.FORGOT);
   };
   const onSubmit = data => {
+    const { email, token } = resetData;
     switch (loginStep) {
       case stepEnum.EMAIL:
+        gtag.event({
+          action: 'login',
+          category: 'engagement',
+          label: 'email',
+        });
         props.thunkLogin({ ...data, from: Router.query.from });
         break;
       case stepEnum.FORGOT:
@@ -71,7 +78,6 @@ const Login = (props: any): any => {
         setLoginStep(stepEnum.SENT);
         break;
       case stepEnum.RESET:
-        const { email, token } = resetData;
         props.thunkResetPassword({ ...data, email, token });
         break;
       default:
@@ -98,11 +104,21 @@ const Login = (props: any): any => {
   const loginFacebook = () => {
     const { from }: any = Router.query;
     if (from) localStorage.setItem('from', from);
+    gtag.event({
+      action: 'login',
+      category: 'engagement',
+      label: 'facebook',
+    });
     window.location.href = `${process.env.API_URL}/redirect-facebook`;
   };
   const loginGoogle = () => {
     const { from }: any = Router.query;
     if (from) localStorage.setItem('from', from);
+    gtag.event({
+      action: 'login',
+      category: 'engagement',
+      label: 'google',
+    });
     window.location.href = `${process.env.API_URL}/redirect-google`;
   };
   return (

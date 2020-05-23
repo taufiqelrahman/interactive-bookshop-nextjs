@@ -13,6 +13,7 @@ import NumberFormat from 'react-number-format';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { Fragment, useEffect } from 'react';
 import Head from 'next/head';
+import * as gtag from 'lib/gtag';
 
 const Cart = (props: any): any => {
   const { users, cart } = props.state;
@@ -30,6 +31,12 @@ const Cart = (props: any): any => {
   }, []);
   const continuePayment = () => {
     window.location.href = cart.cart ? cart.cart.webUrl : '';
+    gtag.event({
+      action: 'checkout',
+      category: 'ecommerce',
+      label: props.isMobile ? 'mobile' : 'desktop',
+      value: cart.cart && cart.cart.totalPrice,
+    });
     const { isLoggedIn } = props.state.users;
     if (!isLoggedIn) localStorage.removeItem('cart');
   };

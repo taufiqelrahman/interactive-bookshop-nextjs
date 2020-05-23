@@ -9,6 +9,7 @@ import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import debounce from 'lodash.debounce';
 import withReduxStore from 'lib/with-redux-store';
+import * as gtag from 'lib/gtag';
 import actions from 'store/actions';
 import cookies from 'next-cookies';
 import NProgress from 'nprogress';
@@ -47,12 +48,21 @@ const App: NextPage<any> = (props: any) => {
     debounce(() => (debouncedFunctionRef.current as any)(), 200),
     [],
   );
+  const handleRouteChange = url => {
+    gtag.pageview(url);
+  };
   useEffect(() => {
     if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
+    // google analytics
+    Router.events.on('routeChangeComplete', handleRouteChange);
+    // windows resize
     window.addEventListener('resize', debouncedSetup);
     return () => {
+      // google analytics
+      Router.events.off('routeChangeComplete', handleRouteChange);
+      // windows resize
       window.removeEventListener('resize', () => debouncedSetup);
     };
   }, []);

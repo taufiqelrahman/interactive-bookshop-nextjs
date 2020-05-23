@@ -6,6 +6,7 @@ import debounce from 'lodash.debounce';
 import BookPage from './atoms/BookPage';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
+import * as gtag from 'lib/gtag';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
@@ -49,6 +50,11 @@ const BookPreview = (props: any) => {
       //   setPageInfo({ firstPage: isFirstPage, lastPage: isLastPage });
       // },
       onPageTurn: (_, els) => {
+        gtag.event({
+          action: 'click_book_page',
+          category: 'engagement',
+          label: 'desktop',
+        });
         const currentPageId = els.pagesTarget[els.pagesTarget.length - 1].id;
         setCurrentPage(parseInt(currentPageId, 10));
       },
