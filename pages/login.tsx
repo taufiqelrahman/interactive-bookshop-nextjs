@@ -27,6 +27,7 @@ const Login = (props: any): any => {
     token: '',
   });
   const schema = {
+    // eslint-disable-next-line no-useless-escape
     email: { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
     password: { required: true },
     confirmPassword: {

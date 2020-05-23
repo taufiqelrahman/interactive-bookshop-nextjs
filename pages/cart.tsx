@@ -37,6 +37,7 @@ const Cart = (props: any): any => {
       label: props.isMobile ? 'mobile' : 'desktop',
       value: cart.cart && cart.cart.totalPrice,
     });
+    (window as any).fbq('track', 'InitiateCheckout');
     const { isLoggedIn } = props.state.users;
     if (!isLoggedIn) localStorage.removeItem('cart');
   };

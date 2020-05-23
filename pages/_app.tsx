@@ -19,6 +19,7 @@ import 'styles/nprogress.css';
 import 'styles/icomoon/style.css';
 import 'reset-css';
 import Cookies from 'js-cookie';
+import Pixel from 'components/atoms/Pixel';
 
 // disable when development
 // Sentry.init({
@@ -55,6 +56,7 @@ const App: NextPage<any> = (props: any) => {
     if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
+    (window as any).fbq('track', 'ViewContent');
     // google analytics
     Router.events.on('routeChangeComplete', handleRouteChange);
     // windows resize
@@ -85,6 +87,7 @@ const App: NextPage<any> = (props: any) => {
   });
   return (
     <Provider store={reduxStore}>
+      <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Poppins:400,600,700|Kameron|Gochi+Hand&display=swap');
