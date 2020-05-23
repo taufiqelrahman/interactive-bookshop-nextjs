@@ -23,6 +23,7 @@ const TestimonialSlider = (props: any) => {
   }, [translationX]);
 
   const onNavRight = () => {
+    // eslint-disable-next-line no-extra-boolean-cast
     if (!!navRightClass) return;
     setTranslationX(translationX - 418);
   };
@@ -103,7 +104,7 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__slides {
-            @apply flex overflow-x-scroll;
+            @apply flex;
             margin-left: 16px;
             margin-right: 16px;
             @screen md {

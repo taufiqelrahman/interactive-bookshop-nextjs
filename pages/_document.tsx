@@ -98,7 +98,7 @@ class MyDocument extends Document {
           <link href="/static/images/icons/icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
 
           {/* <!-- Startup Image  --> */}
-          <link
+          {/* <link
             rel="apple-touch-startup-image"
             href="/static/images/logo-bg-white.png"
             media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
@@ -132,7 +132,7 @@ class MyDocument extends Document {
             rel="apple-touch-startup-image"
             href="/static/images/logo-bg-white.png"
             media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)"
-          />
+          /> */}
 
           {/* <!-- Pinned Tab  --> */}
           {/* <link href="path/to/icon.svg" rel="mask-icon" size="any" color="red" /> */}
