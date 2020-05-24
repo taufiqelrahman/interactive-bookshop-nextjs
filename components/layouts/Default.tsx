@@ -24,6 +24,12 @@ const DefaultLayout = (props: any) => {
     // set top margin for fixed navbar
     const navbarDiv: any = document.querySelector('.c-nav-bar');
     setNavbarHeight(navbarDiv.clientHeight);
+    const { users, cart } = props.state;
+    (window as any).fbq('track', 'ViewContent', {
+      cartItems: cart.cart && cart.cart.lineItems.length,
+      isLoggedIn: users.isLoggedIn,
+      path: router.pathname,
+    });
   }, []);
   useEffect(() => {
     // show toast for errors

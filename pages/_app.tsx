@@ -56,7 +56,6 @@ const App: NextPage<any> = (props: any) => {
     if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
-    (window as any).fbq('track', 'ViewContent');
     // google analytics
     Router.events.on('routeChangeComplete', handleRouteChange);
     // windows resize

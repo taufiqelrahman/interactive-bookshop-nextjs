@@ -37,8 +37,12 @@ const Cart = (props: any): any => {
       label: props.isMobile ? 'mobile' : 'desktop',
       value: cart.cart && cart.cart.totalPrice,
     });
-    (window as any).fbq('track', 'InitiateCheckout');
     const { isLoggedIn } = props.state.users;
+    (window as any).fbq('track', 'InitiateCheckout', {
+      price: cart.cart && cart.cart.totalPrice,
+      cartItems: cart.cart && cart.cart.lineItems.length,
+      isLoggedIn,
+    });
     if (!isLoggedIn) localStorage.removeItem('cart');
   };
   const screenHeight = '100vh - 59px';

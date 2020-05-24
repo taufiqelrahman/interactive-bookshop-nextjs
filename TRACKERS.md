@@ -1,10 +1,10 @@
 # Trackers
 
-## 1. Pageview Tracker
+## 1. GA Pageview Tracker
 
 Tracker is sent everytime a user access a page.
 
-## 2. Event Tracker
+## 2. GA Event Tracker
 
 Here is list of action events:
 
@@ -41,4 +41,25 @@ checkout
   - event_category: ecommerce
   - event_label: 'desktop' | 'mobile'
   - value: price
+```
+
+## 3. Pixel Tracker
+
+```
+PageView
+
+ViewContent
+  - cartItems
+  - isLoggedIn
+  - path
+
+AddToCart
+  - cartItem
+  - isLoggedIn
+
+InitiateCheckout
+  - price
+  - cartItems
+  - isLoggedIn
+
 ```
