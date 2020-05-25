@@ -257,7 +257,7 @@ const BookPreview = (props: any) => {
             z-index: 2;
           }
           &__container {
-            @apply flex flex-row overflow-hidden;
+            @apply flex flex-row;
             @screen md {
               @apply w-full relative;
               height: ${state.height}px;

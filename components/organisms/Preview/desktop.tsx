@@ -124,6 +124,7 @@ const PreviewDesktop = (props: any): any => {
           @apply mx-auto w-full;
           margin-top: 30px;
           &__container {
+            @apply overflow-hidden;
             padding: 42px 30px 30px;
             text-align: center;
           }
