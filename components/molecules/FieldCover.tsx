@@ -25,7 +25,13 @@ const FieldCover = (props: any) => {
               value={cover.name}
               name="Cover"
               errors={props.errors}
-              style={{ height: 48, width: 48, background: cover.color, borderRadius: '50%', marginRight: 12 }}
+              style={{
+                height: 48,
+                width: 48,
+                background: cover.color,
+                borderRadius: '50%',
+                marginRight: 12,
+              }}
               type="plain"
               defaultChecked={cover.name === 'blue'}
             />

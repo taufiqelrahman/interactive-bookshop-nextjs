@@ -52,9 +52,9 @@ const Radio = React.forwardRef((props: any, ref: any) => {
               background: ${!props.type && '#445ca4'};
               box-shadow: none;
               border: ${props.type && (props.inset ? '2px solid #445ca4' : '10px solid #445ca4')};
+              box-shadow: ${props.type && (props.inset ? 'inset 0 0 0px 8px #445ca4' : 'inset 0 0 0px 2px white')};
               @screen md {
                 border: ${props.type && (props.inset ? '2px solid #445ca4' : '6px solid #445ca4')};
-                box-shadow: ${props.type && (props.inset ? 'inset 0 0 0px 8px #445ca4' : 'inset 0 0 0px 2px white')};
               }
             }
           }
