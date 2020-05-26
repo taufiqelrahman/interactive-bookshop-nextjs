@@ -219,7 +219,7 @@ const CharacterCustomization = (props: any) => {
               padding: 0 0 0 10%;
             }
             img {
-              @apply w-full;
+              @apply w-full object-contain;
               background: url('/static/images/loading.gif') 50% no-repeat;
               min-height: 330px;
             }
