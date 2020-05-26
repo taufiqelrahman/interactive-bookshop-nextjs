@@ -1,9 +1,10 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
 import { i18n } from 'i18n';
 import $ from 'jquery';
 import initHeidelberg from 'assets/heidelberg.js';
 import debounce from 'lodash.debounce';
 import BookPage from './atoms/BookPage';
+import Pagination from './atoms/Pagination';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import * as gtag from 'lib/gtag';
@@ -70,8 +71,20 @@ const BookPreview = (props: any) => {
     debounce(() => debouncedFunctionRef && (debouncedFunctionRef.current as any)(), 300),
     [],
   );
+
+  const ref = useRef<HTMLInputElement>(null);
+  const handleScroll = () => {
+    const imageWidth = document.getElementsByClassName('c-book-page__image')[0].getBoundingClientRect().width;
+    const currentScroll = Math.floor(ref.current.scrollLeft / imageWidth) + 1;
+    setCurrentPage(currentScroll);
+  };
   useEffect(() => {
-    if (props.isMobile) return;
+    if (props.isMobile) {
+      if (ref && ref.current) {
+        ref.current.addEventListener('scroll', handleScroll);
+      }
+      return;
+    }
     initHeidelberg();
     setupBook();
     window.addEventListener('resize', debouncedSetup);
@@ -183,28 +196,33 @@ const BookPreview = (props: any) => {
         />
       </div> */}
       {props.isMobile ? (
-        jointPages.map((page, index) => (
-          <BookPage
-            key={index}
-            style={{
-              height: `calc(80vw / (${bookRatio}))`,
-              minWidth: '80vw',
-              width: '80vw',
-            }}
-            image={getImage(page[0].occupation.name, page[0].page_number)}
-            name={props.selected.Name}
-            language={props.selected.Language}
-            // language="indo"
-            gender={props.selected.Gender}
-            dedication={props.selected.Dedication}
-            contents={page}
-            isMobile={props.isMobile}
-            isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
-            mustLoad={true}
-            height={bookHeight}
-            // enableLazy={props.enableLazy}
-          />
-        ))
+        <Fragment>
+          <div className="c-book-preview__pages" ref={ref}>
+            {jointPages.map((page, index) => (
+              <BookPage
+                key={index}
+                style={{
+                  height: `calc(80vw / (${bookRatio}))`,
+                  minWidth: '80vw',
+                  width: '80vw',
+                }}
+                image={getImage(page[0].occupation.name, page[0].page_number)}
+                name={props.selected.Name}
+                language={props.selected.Language}
+                // language="indo"
+                gender={props.selected.Gender}
+                dedication={props.selected.Dedication}
+                contents={page}
+                isMobile={props.isMobile}
+                isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
+                mustLoad={true}
+                height={bookHeight}
+                // enableLazy={props.enableLazy}
+              />
+            ))}
+          </div>
+          <Pagination current={currentPage} pages={jointPages} />
+        </Fragment>
       ) : (
         <div className="c-book-preview__container">
           <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
@@ -244,13 +262,18 @@ const BookPreview = (props: any) => {
       </div> */}
       <style jsx>{`
         .c-book-preview {
-          @apply flex items-center overflow-x-auto bg-light-grey h-full relative;
-          padding: 20px 36px;
+          @apply flex items-center bg-light-grey h-full relative flex-col justify-center;
           @screen md {
             @apply mt-4 bg-white;
+            flex-direction: unset;
+            justify-content: unset;
             padding: 0;
             overflow: unset;
             height: unset;
+          }
+          &__pages {
+            @apply flex overflow-x-auto w-full;
+            padding: 20px 36px;
           }
           &__left {
             @apply w-2/12 flex justify-end;
