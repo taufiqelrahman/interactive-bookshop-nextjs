@@ -9,16 +9,31 @@ const Pagination = (props: any) => {
   // };
   const renderClass = (order): string => {
     let className = 'c-pagination__dot';
-    if (order === props.current) className += ' c-pagination__dot--active';
-    if (props.pages.length - props.current < 2) {
-      if (order === props.pages.length - 8) className += ' c-pagination--micro c-pagination__dot--large';
-      if (order === props.pages.length - 7) className += ' c-pagination--tiny c-pagination__dot--medium';
-    } else if (props.current > 7) {
-      if (order === props.current - 6) className += ' c-pagination--micro c-pagination__dot--large';
-      if (order === props.current - 5) className += ' c-pagination--tiny c-pagination__dot--medium';
-      if (order === props.current + 2) className += ' c-pagination--micro';
-      if (order === props.current + 1) className += ' c-pagination--tiny c-pagination__dot--large';
-      if (order === props.current) className += ' c-pagination__dot--medium';
+    const { current, pages } = props;
+    if (order === current) className += ' c-pagination__dot--active';
+    if (pages.length - current < 2) {
+      if (order === pages.length - 8) className += ' c-pagination--micro c-pagination__dot--large';
+      if (order === pages.length - 7) className += ' c-pagination--tiny c-pagination__dot--medium';
+    } else if (current > 7) {
+      switch (order) {
+        case current - 6:
+          className += ' c-pagination--micro c-pagination__dot--large';
+          break;
+        case current - 5:
+          className += ' c-pagination--tiny c-pagination__dot--medium';
+          break;
+        case current + 2:
+          className += ' c-pagination--micro';
+          break;
+        case current + 1:
+          className += ' c-pagination--tiny c-pagination__dot--large';
+          break;
+        case current:
+          className += ' c-pagination__dot--medium';
+          break;
+        default:
+          break;
+      }
     } else {
       if (order === 9) className += ' c-pagination--micro';
       if (order === 8) className += ' c-pagination--tiny c-pagination__dot--small';
@@ -44,7 +59,7 @@ const Pagination = (props: any) => {
         .c-pagination {
           @apply overflow-hidden;
           width: 84px;
-          margin: 0 auto;
+          margin: 15px auto;
           &__container {
             @apply flex items-center;
             transform: translateX(${translation}px);

@@ -273,7 +273,7 @@ const BookPreview = (props: any) => {
           }
           &__pages {
             @apply flex overflow-x-auto w-full;
-            padding: 20px 36px;
+            padding: 15px 36px 0;
           }
           &__left {
             @apply w-2/12 flex justify-end;
