@@ -189,6 +189,7 @@ const BookPreview = (props: any) => {
             style={{
               height: `calc(80vw / (${bookRatio}))`,
               minWidth: '80vw',
+              width: '80vw',
             }}
             image={getImage(page[0].occupation.name, page[0].page_number)}
             name={props.selected.Name}

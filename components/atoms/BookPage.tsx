@@ -96,7 +96,7 @@ const BookPage = (props: any) => {
             }
           }
           &__image {
-            @apply w-full h-full object-fill;
+            @apply w-full h-full object-contain;
             background: url('/static/images/loading.gif') 50% no-repeat;
           }
           &__content {
