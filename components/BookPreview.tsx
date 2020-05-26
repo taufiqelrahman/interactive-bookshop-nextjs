@@ -319,6 +319,11 @@ const BookPreview = (props: any) => {
           }
         }
 
+        .is-calling {
+          -webkit-transform: rotateY(-20deg) !important;
+          transform: rotateY(-20deg) !important;
+        }
+
         .Heidelberg-Page {
           cursor: pointer;
           overflow: hidden;

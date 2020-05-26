@@ -77,6 +77,7 @@ const init = function() {
       const rightFunction = options.canClose ? 'odd' : 'even';
 
       els.pages = $('.Heidelberg-Page', this.el);
+      els.pageFirst = $('.Heidelberg-Page.first-page', this.el);
       els.pagesLeft = $('.Heidelberg-Page:nth-child(' + leftFunction + ')', el);
       els.pagesRight = $('.Heidelberg-Page:nth-child(' + rightFunction + ')', el);
 
@@ -104,6 +105,16 @@ const init = function() {
         }
       }
 
+      const setupCalls = () => {
+        els.pageFirst.addClass('is-calling');
+        setTimeout(() => {
+          els.pageFirst.removeClass('is-calling');
+        }, 900);
+      };
+
+      setTimeout(setupCalls, 500);
+      const initInterval = setInterval(setupCalls, 3000);
+
       els.previousTrigger = els.pagesLeft.add(options.previousButton);
       els.nextTrigger = els.pagesRight.add(options.nextButton);
 
@@ -117,6 +128,8 @@ const init = function() {
       els.nextTrigger.on(
         'click',
         function() {
+          els.pageFirst.removeClass('is-calling');
+          clearInterval(initInterval);
           this.turnPage('forwards');
         }.bind(this),
       );
