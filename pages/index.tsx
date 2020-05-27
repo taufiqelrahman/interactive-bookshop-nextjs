@@ -14,6 +14,7 @@ import actions from 'store/actions';
 // import graphql from 'services/graphql';
 import api from 'services/api';
 import * as gtag from 'lib/gtag';
+import LazyLoad from 'react-lazyload';
 
 const Index = (props: any): any => {
   const { testimonials, occupations } = props.state.master;
@@ -82,10 +83,14 @@ const Index = (props: any): any => {
               </div>
             </div>
             <div className="c-section__create-now__books">
-              <img src="/static/images/book-decoration.png" alt="books" />
+              <LazyLoad>
+                <img src="/static/images/book-decoration.png" alt="books" />
+              </LazyLoad>
             </div>
             <div className="c-section__create-now__dust">
-              <img src="/static/images/dust-decoration.png" alt="dust" />
+              <LazyLoad>
+                <img src="/static/images/dust-decoration.png" alt="dust" />
+              </LazyLoad>
             </div>
           </div>
         </div>
@@ -94,7 +99,9 @@ const Index = (props: any): any => {
             <div>
               <div className="c-section--top__container">
                 <div className="c-section--top__image c-section--top__image--kid">
-                  <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
+                  <LazyLoad>
+                    <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
+                  </LazyLoad>
                 </div>
                 <div className="c-section__content text-white">
                   <h1 className="mb-4">{props.t('startstory-title')}</h1>
@@ -119,7 +126,9 @@ const Index = (props: any): any => {
         <div className="c-section__jobs--top">
           {occupationsTop.map(job => (
             <div key={job.id} className="c-section__jobs__circle">
-              <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+              <LazyLoad>
+                <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+              </LazyLoad>
             </div>
           ))}
         </div>
@@ -128,7 +137,9 @@ const Index = (props: any): any => {
             job =>
               job.name !== 'President' && (
                 <div key={job.id} className="c-section__jobs__circle">
-                  <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                  <LazyLoad>
+                    <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                  </LazyLoad>
                 </div>
               ),
           )}

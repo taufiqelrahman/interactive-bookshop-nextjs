@@ -1,5 +1,6 @@
 import React from 'react';
 import { withTranslation, Link } from 'i18n';
+import LazyLoad from 'react-lazyload';
 
 const Footer = React.memo((props: any) => {
   const socialMedia = [
@@ -13,7 +14,9 @@ const Footer = React.memo((props: any) => {
       <div className="c-footer">
         <div className="u-container c-footer__container">
           <div className="c-footer__left">
-            <img alt="item" className="c-footer__left__logo" width="58" src="/static/images/logo-white.png" />
+            <LazyLoad>
+              <img alt="item" className="c-footer__left__logo" width="58" src="/static/images/logo-white.png" />
+            </LazyLoad>
             <div className="c-footer__left__info">
               <div className="c-footer__left__name">When I Grow Up</div>
               <div className="c-footer__left__address">
