@@ -136,7 +136,7 @@ const CharacterCustomization = (props: any) => {
       }
     >
       <form className="c-char-custom" style={{ height: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div className="c-char-custom__container">
           {charStep === stepEnum.OCCUPATIONS ? (
             <div className="u-container u-container__page">
               <FieldOccupations
@@ -283,6 +283,9 @@ const CharacterCustomization = (props: any) => {
       <style jsx>{`
         .c-char-custom {
           @apply flex flex-col justify-between;
+          &__container {
+            @apply overflow-auto;
+          }
           &__link {
             @apply font-semibold cursor-pointer text-sm text-center;
             margin-bottom: 18px;
