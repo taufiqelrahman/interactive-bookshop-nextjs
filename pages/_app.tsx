@@ -89,7 +89,6 @@ const App: NextPage<any> = (props: any) => {
       <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Jost:wght@400&family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap');
         @import '/static/styles/ReactToastify.min.css';
         @import '/static/styles/picker.min.css';
 
