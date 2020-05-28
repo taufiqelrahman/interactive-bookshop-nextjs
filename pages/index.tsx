@@ -15,6 +15,7 @@ import actions from 'store/actions';
 import api from 'services/api';
 import * as gtag from 'lib/gtag';
 import LazyLoad from 'react-lazyload';
+import { Link, Element } from 'react-scroll';
 
 const Index = (props: any): any => {
   const { testimonials, occupations } = props.state.master;
@@ -72,11 +73,11 @@ const Index = (props: any): any => {
               <div className="c-section__content">
                 <h1>{props.t('createnow-title')}</h1>
                 <div className="c-section__content__content">{props.t('createnow-content')}</div>
-                <a href="#create-book" onClick={landingTracker}>
+                <Link to="create-book" spy={true} smooth={true} offset={-150} duration={500} onClick={landingTracker}>
                   <Button variant="outline" color="black">
                     {props.t('createnow-button')}
                   </Button>
-                </a>
+                </Link>
               </div>
               <div className="c-section--top__image">
                 <img src={`/static/images/guitars${props.isMobile ? '-sm' : ''}.png`} alt="guitars" />
@@ -158,12 +159,14 @@ const Index = (props: any): any => {
         <div className="c-section--bottom__testi">
           <TestimonialSlider isMobile={props.isMobile} testimonials={testimonials} />
         </div>
-        <LazyLoad>
-          <div id="create-book" className="c-section--bottom__create-book">
-            <h2>{props.t('createbook-header')}</h2>
-            <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} occupations={occupations} />
-          </div>
-        </LazyLoad>
+        <Element name="create-book">
+          <LazyLoad>
+            <div id="create-book" className="c-section--bottom__create-book">
+              <h2>{props.t('createbook-header')}</h2>
+              <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} occupations={occupations} />
+            </div>
+          </LazyLoad>
+        </Element>
       </div>
       {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
