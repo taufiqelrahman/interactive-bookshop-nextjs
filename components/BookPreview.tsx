@@ -56,8 +56,8 @@ const BookPreview = (props: any) => {
           category: 'engagement',
           label: 'desktop',
         });
-        const currentPageId = els.pagesTarget[els.pagesTarget.length - 1].id;
-        setCurrentPage(parseInt(currentPageId, 10));
+        const currentPage = els.pagesTarget[els.pagesTarget.length - 1];
+        if (currentPage) setCurrentPage(parseInt(currentPage.id, 10));
       },
     });
     setBook(bookHeidelberg);
