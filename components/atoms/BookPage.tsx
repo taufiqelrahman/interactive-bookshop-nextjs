@@ -5,8 +5,8 @@ const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {
     let style: any = {
       width: '37%',
-      fontSize: props.isMobile ? '2.4vw' : '0.9vw',
-      lineHeight: props.isMobile ? '2.9vw' : '1.1vw',
+      fontSize: props.isMobile ? '2vw' : '0.8vw',
+      lineHeight: props.isMobile ? '2.5vw' : '1vw',
       fontFamily: 'Jost',
       textAlign: 'center',
     };
@@ -18,7 +18,7 @@ const BookPage = (props: any) => {
         fontSize: props.isMobile ? '9vw' : '3.5vw',
         lineHeight: props.isMobile ? '7.5vw' : '3vw',
       };
-      if (props.name && props.name.length > 5) {
+      if (props.name && props.name.length > 4) {
         style = {
           ...style,
           width: '90%',
