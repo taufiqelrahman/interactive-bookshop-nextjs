@@ -89,9 +89,6 @@ const App: NextPage<any> = (props: any) => {
       <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
-        @import '/static/styles/ReactToastify.min.css';
-        @import '/static/styles/picker.min.css';
-
         body {
           @apply font-poppins text-dark-grey;
           -webkit-box-sizing: border-box;
