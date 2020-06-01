@@ -34,20 +34,21 @@ const BookPage = (props: any) => {
   const processContent = (content, language) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
-    if (props.contents[0].occupation.name === 'Front Cover') {
-      processed = processed.split('[name]').join((props.name || '').toUpperCase());
+    const { contents, name, gender, dedication } = props;
+    if (contents[0].occupation.name === 'Front Cover') {
+      processed = processed.split('[name]').join((name || '').toUpperCase());
     } else {
-      processed = processed.split('[name]').join(props.name);
+      processed = processed.split('[name]').join(name.replace(/^./, name[0].toUpperCase()));
     }
     if (isEnglish) {
-      const isBoy = props.gender === 'boy';
+      const isBoy = gender === 'boy';
       processed = processed.split('[child]').join(isBoy ? 'boy' : 'girl');
       processed = processed.split('[child:1]').join(isBoy ? 'he' : 'she');
       processed = processed.split('[child:2]').join(isBoy ? 'his' : 'her');
       processed = processed.split('[child:3]').join(isBoy ? 'him' : 'her');
     }
-    if (props.contents[0].occupation.name === 'Back Cover') {
-      processed = props.dedication;
+    if (contents[0].occupation.name === 'Back Cover') {
+      processed = dedication;
     }
     return processed;
   };
