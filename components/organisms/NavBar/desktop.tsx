@@ -34,7 +34,7 @@ const NavBar = (props: any) => {
     document.body.classList.remove('overlay-active');
 
     if (!isIndexPage) return;
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', () => handleScroll);
     };

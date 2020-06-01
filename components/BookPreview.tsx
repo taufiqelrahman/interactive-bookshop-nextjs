@@ -81,7 +81,7 @@ const BookPreview = (props: any) => {
   useEffect(() => {
     if (props.isMobile) {
       if (ref && ref.current) {
-        ref.current.addEventListener('scroll', handleScroll);
+        ref.current.addEventListener('scroll', handleScroll, { passive: true });
       }
       return;
     }
