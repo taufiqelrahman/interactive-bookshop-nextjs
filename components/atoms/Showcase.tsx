@@ -4,7 +4,7 @@ import { Swipeable } from 'react-swipeable';
 
 const Showcase = (props: any) => {
   const [isActive, setIsActive] = useState(0);
-  const images = ['first-attempt.jpeg', 'bian-deva.jpeg', 'bian-shadow.jpeg', 'hook.jpeg'];
+  const images = ['first-attempt.jpg', 'bian-deva.jpeg', 'bian-shadow.jpeg', 'hook.jpeg'];
   const onClickLeft = () => {
     if (isActive === 0) return;
     setIsActive(isActive - 1);

@@ -16,8 +16,8 @@ import NProgress from 'nprogress';
 import api from 'services/api';
 import 'styles/tailwind.css';
 import 'styles/nprogress.css';
-import 'styles/fonts.css';
-import 'styles/icomoon/style.css';
+import 'styles/fonts.min.css';
+import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import Cookies from 'js-cookie';
 import Pixel from 'components/atoms/Pixel';
@@ -60,12 +60,12 @@ const App: NextPage<any> = (props: any) => {
     // google analytics
     Router.events.on('routeChangeComplete', handleRouteChange);
     // windows resize
-    window.addEventListener('resize', debouncedSetup);
+    window.addEventListener('resize', debouncedSetup, { passive: true });
     return () => {
       // google analytics
       Router.events.off('routeChangeComplete', handleRouteChange);
       // windows resize
-      window.removeEventListener('resize', () => debouncedSetup);
+      window.removeEventListener('resize', () => debouncedSetup, { passive: true });
     };
   }, []);
   const createCartForUser = () => {

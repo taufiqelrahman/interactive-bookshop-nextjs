@@ -87,9 +87,9 @@ const BookPreview = (props: any) => {
     }
     initHeidelberg();
     setupBook();
-    window.addEventListener('resize', debouncedSetup);
+    window.addEventListener('resize', debouncedSetup, { passive: true });
     return () => {
-      window.removeEventListener('resize', () => debouncedSetup);
+      window.removeEventListener('resize', () => debouncedSetup, { passive: true });
       debouncedFunctionRef = null;
     };
     // setTimeout(() => {
