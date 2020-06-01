@@ -4,7 +4,7 @@ import { Swipeable } from 'react-swipeable';
 
 const Showcase = (props: any) => {
   const [isActive, setIsActive] = useState(0);
-  const images = ['first-attempt.png', 'bian-deva.png', 'bian-shadow.png', 'hook.png'];
+  const images = ['first-attempt.jpeg', 'bian-deva.jpeg', 'bian-shadow.jpeg', 'hook.jpeg'];
   const onClickLeft = () => {
     if (isActive === 0) return;
     setIsActive(isActive - 1);
@@ -93,6 +93,7 @@ const Showcase = (props: any) => {
             &--right {
               @apply text-lg flex justify-center items-center cursor-pointer text-white;
               width: 44px;
+              min-width: 44px;
               height: 44px;
               border-radius: 50%;
               border: 2px solid #ffffff;
