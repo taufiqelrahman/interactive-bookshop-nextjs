@@ -49,13 +49,11 @@ const Showcase = (props: any) => {
           </div>
           {images.map((img, index) => (
             <div key={index} className={`c-showcase__thumb ${index === isActive ? 'c-showcase__thumb--active' : ''}`}>
-              <LazyLoad>
-                <img
-                  src={`/static/images/showcase-xs/${img}`}
-                  alt={`thumb-${index + 1}`}
-                  onClick={() => setIsActive(index)}
-                />
-              </LazyLoad>
+              <img
+                src={`/static/images/showcase-xs/${img}`}
+                alt={`thumb-${index + 1}`}
+                onClick={() => setIsActive(index)}
+              />
             </div>
           ))}
           <div
