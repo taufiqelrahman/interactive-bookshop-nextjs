@@ -15,7 +15,7 @@ class MyDocument extends Document {
           <meta key="theme-color" name="theme-color" content="#000000" />
           <link key="icon" rel="icon" href="/static/favicon.ico" />
           <link key="apple-touch-icon" rel="apple-touch-icon" href="/static/images/icons/icon-144x144.png" />
-          <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="Website Consultant" />
+          <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
           <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
           <meta
             key="apple-mobile-web-app-status-bar-style"
@@ -57,7 +57,11 @@ class MyDocument extends Document {
           {/* <!-- Windows  --> */}
           <meta key="msapplication-navbutton-color" name="msapplication-navbutton-color" content="#de6236" />
           <meta key="msapplication-TileColor" name="msapplication-TileColor" content="#de6236" />
-          <meta key="msapplication-TileImage" name="msapplication-TileImage" content="icon-144x144.png" />
+          <meta
+            key="msapplication-TileImage"
+            name="msapplication-TileImage"
+            content="/static/images/icons/icon-144x144.png"
+          />
           <meta key="msapplication-config" name="msapplication-config" content="browserconfig.xml" />
 
           {/* <!-- Pinned Sites  --> */}
@@ -147,14 +151,14 @@ class MyDocument extends Document {
           <link href="/static/favicon.icon" rel="shortcut icon" type="image/x-icon" />
 
           {/* <!-- UC Browser  --> */}
-          <link href="/static/images/icons/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
+          <link href="/static/images/icons/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="52x52" />
           <link href="/static/images/icons/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
 
           {/* <!-- Manifest.json  --> */}
           <link href="/static/manifest.json" rel="manifest" />
 
           <link
-            href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Jost:wght@400&family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap"
             rel="stylesheet"
           ></link>
           <link

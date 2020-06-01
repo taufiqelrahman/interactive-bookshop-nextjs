@@ -9,6 +9,7 @@ const BookPage = (props: any) => {
       lineHeight: props.isMobile ? '2.5vw' : '1vw',
       fontFamily: 'Jost',
       textAlign: 'center',
+      fontWeight: 300,
     };
     if (string) style = { ...style, ...JSON.parse(string) };
     if (props.isWhiteCover) style = { ...style, color: 'black' };
@@ -108,6 +109,10 @@ const BookPage = (props: any) => {
         strong {
           @apply font-bold;
           font-size: ${props.isMobile ? '2.5vw' : '1vw'};
+        }
+        .c-book-page__sub {
+          @apply mt-2;
+          font-size: ${props.isMobile ? '9.5vw' : '4vw'};
         }
       `}</style>
     </div>

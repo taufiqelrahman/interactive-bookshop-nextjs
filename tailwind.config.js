@@ -13,7 +13,7 @@ module.exports = {
       'dark-grey': '#333',
     }),
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif'],
+      poppins: ['Poppins', 'serif'],
       opensans: ['Open Sans', 'sans-serif'],
     },
     extend: {},
