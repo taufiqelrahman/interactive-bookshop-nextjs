@@ -40,14 +40,15 @@ const FieldCover = (props: any) => {
       </div>
       <style jsx>{`
         .c-field-cover {
-          @apply flex items-center flex-col;
+          @apply flex flex-col;
           @screen md {
-            @apply flex-row;
+            @apply items-center flex-row;
           }
           &__header {
-            @apply font-semibold flex;
+            @apply font-semibold flex text-sm;
             margin-bottom: 6px;
             @screen md {
+              @apply text-base;
               margin-right: 18px;
               margin-bottom: 0;
             }

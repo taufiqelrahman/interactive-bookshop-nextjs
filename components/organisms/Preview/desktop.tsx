@@ -82,20 +82,20 @@ const PreviewDesktop = (props: any): any => {
                   // enableLazy={enableLazy}
                 />
               </div>
-              <div className="c-preview__cover">
-                <FieldCover
-                  schema={schema(props).cover}
-                  errors={errors.Cover}
-                  register={register}
-                  style={{ marginTop: 24, marginBottom: 12 }}
-                />
+              <div className="c-preview__details">
+                <div className="c-preview__details--left">
+                  <h2>{props.t('book-specs')}</h2>
+                  <div className="c-preview__details__content">{props.t('book-specs-content')}</div>
+                </div>
+                <div className="c-preview__details--right">
+                  <div className="c-preview__cover">
+                    <FieldCover schema={schema(props).cover} errors={errors.Cover} register={register} />
+                  </div>
+                  <Button type="submit" width="320px">
+                    {selected.id ? props.t('update-cart') : props.t('add-to-cart')}
+                  </Button>
+                </div>
               </div>
-              <Button type="submit" width="648px" style={{ margin: '18px 0' }}>
-                {selected.id ? props.t('update-cart') : props.t('add-to-cart')}
-              </Button>
-              <Link href="/">
-                <a className="c-preview__link">{props.t('back-to-home')}</a>
-              </Link>
             </form>
           </Card>
         </div>
@@ -136,6 +136,31 @@ const PreviewDesktop = (props: any): any => {
             color: #445ca4;
             span {
               @apply font-normal;
+            }
+          }
+          &__details {
+            @apply flex;
+            margin-top: 30px;
+            &--left,
+            &--right {
+              @apply w-1/2;
+            }
+            &--left {
+              @apply text-left;
+              padding-right: 32px;
+            }
+            &--right {
+              @apply flex flex-col;
+              justify-content: space-evenly;
+            }
+            h2 {
+              @apply font-semibold;
+              line-height: 24px;
+              margin-bottom: 6px;
+            }
+            &__content {
+              @apply font-opensans;
+              line-height: 22px;
             }
           }
         }

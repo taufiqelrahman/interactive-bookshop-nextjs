@@ -14,6 +14,7 @@ import * as gtag from 'lib/gtag';
 const PreviewMobile = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
   const [showSheet, setShowSheet] = useState(false);
+  const [showSpecs, setShowSpecs] = useState(false);
   const [tempData, setTempData] = useState(null);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
@@ -82,15 +83,16 @@ const PreviewMobile = (props: any): any => {
           // enableLazy={enableLazy}
         />
         <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
+          <div className="c-preview__specs" onClick={() => setShowSpecs(true)}>
+            <div>{props.t('book-specs')}</div>
+            <span className="icon-chevron_right" />
+          </div>
           <div className="c-preview__cover">
             <FieldCover schema={schema(props).cover} register={register} errors={errors.cover} />
           </div>
           <Button type="submit" width="648px" style={{ margin: '12px 0 18px' }}>
             {selected.id ? props.t('update-cart') : props.t('form:continue-button')}
           </Button>
-          <div className="c-preview__link" onClick={() => Router.back()}>
-            {props.t('go-back')}
-          </div>
         </form>
       </div>
       <Sheet
@@ -114,6 +116,14 @@ const PreviewMobile = (props: any): any => {
           </Fragment>
         }
       />
+      <Sheet
+        name="specs-sheet"
+        isOpen={showSpecs}
+        closeSheet={() => setShowSpecs(false)}
+        content={<div className="c-sheet__content">{props.t('book-specs-content')}</div>}
+        header={true}
+        title={props.t(`book-specs`)}
+      />
       <style jsx>{`
         .c-preview {
           @apply flex flex-col justify-between;
@@ -123,7 +133,7 @@ const PreviewMobile = (props: any): any => {
             padding-top: 20px;
           }
           &__cover {
-            @apply flex justify-center;
+            @apply flex;
           }
           &__link {
             @apply font-semibold cursor-pointer text-sm text-center;
@@ -142,6 +152,26 @@ const PreviewMobile = (props: any): any => {
               margin-top: 12px;
             }
           }
+          &__specs {
+            @apply flex justify-between mb-6 text-sm items-center font-opensans cursor-pointer;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+            padding: 12px;
+            div {
+              line-height: 19px;
+            }
+            span {
+              @apply text-xl;
+            }
+          }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-sheet__content {
+          @apply font-opensans text-sm;
+          line-height: 22px;
+          padding-top: 16px;
+          padding-bottom: 16px;
         }
       `}</style>
     </DefaultLayout>

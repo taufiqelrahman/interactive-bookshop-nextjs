@@ -38,6 +38,9 @@ const Radio = React.forwardRef((props: any, ref: any) => {
             @apply flex items-center justify-center font-bold;
             border: 2px solid #e1e0e7;
             border-radius: 6px;
+            &:last-child {
+              margin-right: 0 !important;
+            }
             &--box {
               height: 100px;
               width: 100px;
