@@ -16,6 +16,7 @@ import api from 'services/api';
 import * as gtag from 'lib/gtag';
 import LazyLoad from 'react-lazyload';
 import { Link, Element } from 'react-scroll';
+import Showcase from 'components/atoms/Showcase';
 
 const Index = (props: any): any => {
   const { testimonials, occupations } = props.state.master;
@@ -74,7 +75,7 @@ const Index = (props: any): any => {
                 <h1>{props.t('createnow-title')}</h1>
                 <div className="c-section__content__content">{props.t('createnow-content')}</div>
                 <Link to="create-book" spy={true} smooth={true} offset={-150} duration={500} onClick={landingTracker}>
-                  <Button variant="outline" color="black">
+                  <Button variant="outline" color="black" style={{ marginTop: 24 }}>
                     {props.t('createnow-button')}
                   </Button>
                 </Link>
@@ -100,9 +101,10 @@ const Index = (props: any): any => {
             <div>
               <div className="c-section--top__container">
                 <div className="c-section--top__image c-section--top__image--kid">
-                  <LazyLoad>
+                  <Showcase isMobile={props.isMobile} />
+                  {/* <LazyLoad>
                     <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
-                  </LazyLoad>
+                  </LazyLoad> */}
                 </div>
                 <div className="c-section__content text-white">
                   <h1 className="mb-4">{props.t('startstory-title')}</h1>
@@ -290,7 +292,7 @@ const Index = (props: any): any => {
               }
             }
             &__content {
-              @apply mb-6 font-opensans;
+              @apply font-opensans;
               line-height: 22px;
               @screen md {
                 @apply text-left;
@@ -379,9 +381,8 @@ const Index = (props: any): any => {
               }
             }
             & .c-section__content {
-              padding-top: 32px;
               @screen md {
-                padding-top: 100px;
+                padding-bottom: 81px;
               }
             }
             &__socks {
