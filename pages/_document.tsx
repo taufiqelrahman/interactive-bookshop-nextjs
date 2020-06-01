@@ -166,7 +166,12 @@ class MyDocument extends Document {
             rel="stylesheet"
           ></link>
           {/* <link href="https://cdn.jsdelivr.net/npm/pickerjs@1.2.1/dist/picker.min.css" rel="stylesheet"></link> */}
-          <link href="/static/fonts/icons/whenigrowup.ttf?z42pcr" rel="preload" as="font"></link>
+          <link
+            href="/static/fonts/icons/whenigrowup.ttf?z42pcr"
+            rel="preload"
+            as="font"
+            crossOrigin="anonymous"
+          ></link>
 
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
