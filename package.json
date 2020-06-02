@@ -37,7 +37,6 @@
     "express": "^4.17.1",
     "google-map-react": "^1.1.6",
     "graphql": "^14.5.8",
-    "imagemin-gifsicle": "^7.0.0",
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^8.0.0",
