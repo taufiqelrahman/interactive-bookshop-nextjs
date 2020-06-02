@@ -8,6 +8,7 @@ import Pagination from './atoms/Pagination';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import * as gtag from 'lib/gtag';
+import detectIt from 'detect-it';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
@@ -78,29 +79,16 @@ const BookPreview = (props: any) => {
     const currentScroll = Math.floor(ref.current.scrollLeft / imageWidth) + 1;
     setCurrentPage(currentScroll);
   };
-  let supportsPassive = false;
-  try {
-    const opts = Object.defineProperty({}, 'passive', {
-      // eslint-disable-next-line getter-return
-      get: function() {
-        supportsPassive = true;
-      },
-    });
-    window.addEventListener('testPassive', null, opts);
-    window.removeEventListener('testPassive', null, opts);
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
-
   useEffect(() => {
     if (props.isMobile) {
       if (ref && ref.current) {
-        ref.current.addEventListener('scroll', handleScroll, supportsPassive ? { passive: true } : false);
+        ref.current.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
       }
       return;
     }
     initHeidelberg();
     setupBook();
-    window.addEventListener('resize', debouncedSetup, supportsPassive ? { passive: true } : false);
+    window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
     return () => {
       window.removeEventListener('resize', () => debouncedSetup);
       debouncedFunctionRef = null;

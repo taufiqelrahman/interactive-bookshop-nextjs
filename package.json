@@ -31,6 +31,7 @@
     "crypto": "^1.0.1",
     "crypto-js": "^3.1.9-1",
     "dayjs": "^1.8.20",
+    "detect-it": "^3.0.5",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^1.7.0",
     "express": "^4.17.1",

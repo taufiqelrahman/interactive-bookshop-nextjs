@@ -21,6 +21,7 @@ import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import Cookies from 'js-cookie';
 import Pixel from 'components/atoms/Pixel';
+import detectIt from 'detect-it';
 
 // disable when development
 // Sentry.init({
@@ -53,19 +54,6 @@ const App: NextPage<any> = (props: any) => {
   const handleRouteChange = url => {
     gtag.pageview(url);
   };
-  let supportsPassive = false;
-  try {
-    const opts = Object.defineProperty({}, 'passive', {
-      // eslint-disable-next-line getter-return
-      get: function() {
-        supportsPassive = true;
-      },
-    });
-    window.addEventListener('testPassive', null, opts);
-    window.removeEventListener('testPassive', null, opts);
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
-
   useEffect(() => {
     if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
@@ -73,7 +61,7 @@ const App: NextPage<any> = (props: any) => {
     // google analytics
     Router.events.on('routeChangeComplete', handleRouteChange);
     // windows resize
-    window.addEventListener('resize', debouncedSetup, supportsPassive ? { passive: true } : false);
+    window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
     return () => {
       // google analytics
       Router.events.off('routeChangeComplete', handleRouteChange);
