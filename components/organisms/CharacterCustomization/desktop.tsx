@@ -64,6 +64,19 @@ const CharacterCustomization = (props: any) => {
   const stickyClassName = () => {
     return isSticky ? 'c-char-custom__char--sticky' : '';
   };
+  let supportsPassive = false;
+  try {
+    const opts = Object.defineProperty({}, 'passive', {
+      // eslint-disable-next-line getter-return
+      get: function() {
+        supportsPassive = true;
+      },
+    });
+    (window as any).addEventListener('testPassive', null, opts);
+    (window as any).removeEventListener('testPassive', null, opts);
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
+
   useEffect(() => {
     // setTimeout(() => {
     //   register({ name: 'Date of Birth' }, schema(props).dob);
@@ -71,7 +84,7 @@ const CharacterCustomization = (props: any) => {
     register({ name: 'Occupations' }, schema(props).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, supportsPassive ? { passive: true } : false);
     return () => {
       window.removeEventListener('scroll', () => handleScroll);
     };

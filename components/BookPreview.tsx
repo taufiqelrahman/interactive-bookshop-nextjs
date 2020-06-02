@@ -78,18 +78,31 @@ const BookPreview = (props: any) => {
     const currentScroll = Math.floor(ref.current.scrollLeft / imageWidth) + 1;
     setCurrentPage(currentScroll);
   };
+  let supportsPassive = false;
+  try {
+    const opts = Object.defineProperty({}, 'passive', {
+      // eslint-disable-next-line getter-return
+      get: function() {
+        supportsPassive = true;
+      },
+    });
+    window.addEventListener('testPassive', null, opts);
+    window.removeEventListener('testPassive', null, opts);
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
+
   useEffect(() => {
     if (props.isMobile) {
       if (ref && ref.current) {
-        ref.current.addEventListener('scroll', handleScroll, { passive: true });
+        ref.current.addEventListener('scroll', handleScroll, supportsPassive ? { passive: true } : false);
       }
       return;
     }
     initHeidelberg();
     setupBook();
-    window.addEventListener('resize', debouncedSetup, { passive: true });
+    window.addEventListener('resize', debouncedSetup, supportsPassive ? { passive: true } : false);
     return () => {
-      window.removeEventListener('resize', () => debouncedSetup, { passive: true });
+      window.removeEventListener('resize', () => debouncedSetup);
       debouncedFunctionRef = null;
     };
     // setTimeout(() => {

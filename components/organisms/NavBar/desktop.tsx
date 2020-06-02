@@ -23,6 +23,18 @@ const NavBar = (props: any) => {
       setSticky(ref.current.getBoundingClientRect().top < -80);
     }
   };
+  let supportsPassive = false;
+  try {
+    const opts = Object.defineProperty({}, 'passive', {
+      // eslint-disable-next-line getter-return
+      get: function() {
+        supportsPassive = true;
+      },
+    });
+    (window as any).addEventListener('testPassive', null, opts);
+    (window as any).removeEventListener('testPassive', null, opts);
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
 
   useEffect(() => {
     const { user } = props.users;
@@ -34,7 +46,7 @@ const NavBar = (props: any) => {
     document.body.classList.remove('overlay-active');
 
     if (!isIndexPage) return;
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, supportsPassive ? { passive: true } : false);
     return () => {
       window.removeEventListener('scroll', () => handleScroll);
     };
