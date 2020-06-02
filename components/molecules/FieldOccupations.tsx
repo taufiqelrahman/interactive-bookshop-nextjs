@@ -29,11 +29,11 @@ const FieldOccupations = (props: any) => {
   };
   const occupationsOpts = () => {
     let occupationsOpts = [...props.occupations];
-    if (!props.isMobile) {
+    if ((props.isMobile && props.gender === 'boy') || !props.isMobile) {
       occupationsOpts = [...props.occupations.filter(job => job.name !== 'President')];
     }
     if (props.gender === 'boy') {
-      occupationsOpts = [...props.occupations.filter(job => job.name !== 'Ballerina')];
+      occupationsOpts = [...occupationsOpts.filter(job => job.name !== 'Ballerina')];
     }
     return occupationsOpts;
   };
