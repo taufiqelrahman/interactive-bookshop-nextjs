@@ -1,4 +1,5 @@
 import LazyLoad from 'react-lazyload';
+import 'styles/fonts.min.css';
 // import { useEffect } from 'react';
 
 const BookPage = (props: any) => {

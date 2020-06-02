@@ -16,7 +16,6 @@ import NProgress from 'nprogress';
 import api from 'services/api';
 import 'styles/tailwind.css';
 import 'styles/nprogress.css';
-import 'styles/fonts.min.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import Cookies from 'js-cookie';
