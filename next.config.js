@@ -11,54 +11,54 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-// const withOptimizedImages = require('next-optimized-images');
+const withOptimizedImages = require('next-optimized-images');
 
 module.exports = withBundleAnalyzer(
-  // withOptimizedImages(
-  withCSS(
-    withPurgeCss(
-      withPWA({
-        webpack: (config, { dev }) => {
-          config.plugins.push(
-            new Dotenv({
-              path: path.join(__dirname, '.env'),
-              systemvars: true,
-            }),
-          );
-          config.resolve.modules.push(path.resolve('./'));
-          // remove existing plugin
-          config.plugins = config.plugins.filter(plugin => {
-            return plugin.constructor.name !== 'ForkTsCheckerWebpackPlugin';
-          });
-          // only report errors on a matcher that doesn't match anything
-          config.plugins.push(
-            new ForkTsCheckerWebpackPlugin({
-              reportFiles: ['does-not-exist'],
-            }),
-          );
-          config.module.rules.push({
-            test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-            use: {
-              loader: 'url-loader',
-              options: {
-                limit: 100000,
+  withOptimizedImages(
+    withCSS(
+      withPurgeCss(
+        withPWA({
+          webpack: (config, { dev }) => {
+            config.plugins.push(
+              new Dotenv({
+                path: path.join(__dirname, '.env'),
+                systemvars: true,
+              }),
+            );
+            config.resolve.modules.push(path.resolve('./'));
+            // remove existing plugin
+            config.plugins = config.plugins.filter(plugin => {
+              return plugin.constructor.name !== 'ForkTsCheckerWebpackPlugin';
+            });
+            // only report errors on a matcher that doesn't match anything
+            config.plugins.push(
+              new ForkTsCheckerWebpackPlugin({
+                reportFiles: ['does-not-exist'],
+              }),
+            );
+            config.module.rules.push({
+              test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+              use: {
+                loader: 'url-loader',
+                options: {
+                  limit: 100000,
+                },
               },
-            },
-          });
-          if (!dev) {
-            config.optimization.minimize = true;
-            config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
-            config.optimization.minimizer.push(new TerserPlugin());
-          }
-          return config;
-        },
-        pwa: {
-          disable: process.env.NODE_ENV !== 'production',
-          // dest: 'public/static',
-          publicExcludes: ['!static/images'],
-        },
-      }),
+            });
+            if (!dev) {
+              config.optimization.minimize = true;
+              config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}));
+              config.optimization.minimizer.push(new TerserPlugin());
+            }
+            return config;
+          },
+          pwa: {
+            disable: process.env.NODE_ENV !== 'production',
+            // dest: 'public/static',
+            publicExcludes: ['!static/images'],
+          },
+        }),
+      ),
     ),
   ),
-  // ),
 );

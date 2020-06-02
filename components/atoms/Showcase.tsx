@@ -15,7 +15,7 @@ const Showcase = (props: any) => {
   };
   return (
     <div className="c-showcase">
-      <Swipeable onSwipedLeft={onClickLeft} onSwipedRight={onClickRight}>
+      <Swipeable onSwipedLeft={onClickRight} onSwipedRight={onClickLeft}>
         <div className="c-showcase__container">
           {images.map((img, index) => (
             <LazyLoad key={index}>
