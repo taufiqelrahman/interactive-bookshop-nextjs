@@ -1,4 +1,4 @@
-FROM node:12.16-alpine
+FROM node:12.16
 
 # Create app directory
 WORKDIR /usr/src/wigu
