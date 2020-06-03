@@ -15,6 +15,7 @@ const BookPage = (props: any) => {
     if (string) style = { ...style, ...JSON.parse(string) };
     if (props.isMobile && style.fontSizeMobile) style = { ...style, fontSize: style.fontSizeMobile };
     if (props.isMobile && style.lineHeightMobile) style = { ...style, lineHeight: style.lineHeightMobile };
+    if (props.isMobile && style.widthMobile) style = { ...style, width: style.widthMobile };
     if (props.isWhiteCover) style = { ...style, color: 'black' };
     if (props.contents[0].occupation.name === 'Front Cover') {
       style = {
