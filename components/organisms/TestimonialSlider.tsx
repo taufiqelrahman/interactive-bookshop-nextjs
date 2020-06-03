@@ -117,6 +117,9 @@ const TestimonialSlider = (props: any) => {
               @apply inline-flex;
               transform: translateX(${translationX}px);
               transition: transform 0.5s ease-in;
+              margin-left: 4%;
+            }
+            @screen lg {
               margin-left: 12.5%;
             }
           }
