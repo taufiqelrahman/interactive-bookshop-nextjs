@@ -33,6 +33,7 @@ deploy_production:
     - echo SHOPIFY_VARIANT_ID="$SHOPIFY_VARIANT_ID" >> .env
     - echo STOREFRONT_API_KEY="$STOREFRONT_API_KEY" >> .env
     - cat .env
+    - pip install python-dotenv
   script:
     - source .env
     # - git submodule sync --recursive
