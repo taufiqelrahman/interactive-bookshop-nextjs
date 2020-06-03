@@ -20,7 +20,7 @@ deploy_production:
   when: manual
   before_script:
     - docker info
-    - apk add --no-cache docker-compose git
+    - apk add --no-cache docker-compose git python-pip
     - echo APP_URL="$APP_URL" >> .env
     - echo API_URL="$API_URL" >> .env
     - echo GA_TRACKING_ID="$GA_TRACKING_ID" >> .env
