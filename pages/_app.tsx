@@ -97,6 +97,10 @@ const App: NextPage<any> = (props: any) => {
           box-sizing: border-box;
         }
 
+        ::selection {
+          @apply bg-brand text-white;
+        }
+
         .u-container {
           padding-left: 16px;
           padding-right: 16px;

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
-import GoogleMapReact from 'google-map-react';
+// import GoogleMapReact from 'google-map-react';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Accordion from 'components/atoms/Accordion';
@@ -31,7 +31,7 @@ const Help = (props: any): any => {
       required: { value: true, message: `${props.t('form:message-label')} ${props.t('form:required-error')}` },
     },
   };
-  const Marker = (props: any) => <div>{props.text}</div>;
+  // const Marker = (props: any) => <div>{props.text}</div>;
   const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
@@ -67,26 +67,28 @@ const Help = (props: any): any => {
               <div className="c-help-section__contact-us">
                 <h2>{props.t('contact-us')}</h2>
                 <div className={props.isMobile ? '' : 'flex'}>
-                  <div className="c-help-section__map">
+                  {/* <div className="c-help-section__map">
                     <GoogleMapReact
                       bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
                       defaultCenter={{
-                        lat: 59.95,
-                        lng: 30.33,
+                        lat: 6.2,
+                        lng: 106.82,
                       }}
                       defaultZoom={11}
                     >
-                      <Marker lat={59.955413} lng={30.337844}>
+                      <Marker lat={-6.199212} lng={106.822436}>
                         marker
                       </Marker>
                     </GoogleMapReact>
-                  </div>
+                  </div> */}
                   <div className="c-help-section__info">
-                    <h2 style={props.isMobile ? {} : { marginBottom: 16 }}>PT. When I Grow Up Indonesia</h2>
+                    <h2 style={props.isMobile ? {} : { marginBottom: 16 }}>When I Grow Up</h2>
                     <div className="c-help-section__address">
-                      Plaza City View, Lt. 2 Jalan Ampera 22. Kemang, Jakarta Selatan 19540
+                      UOB Plaza
+                      <br />
+                      Jalan M.H. Thamrin Kav. 8-10, Tanah Abang, Jakarta Pusat, DKI Jakarta 10230
                     </div>
-                    <div className="c-help-section__phone">(+6221) 765 888 900</div>
+                    <div className="c-help-section__phone">(+62) 877-7543-2567</div>
                   </div>
                 </div>
                 <Divider
