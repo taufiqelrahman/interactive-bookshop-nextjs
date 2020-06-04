@@ -4,7 +4,7 @@
 #   script:
 #     - yarn
 #     - npm run lint
-image: docker
+image: ubuntu:18.04
 
 services:
   - docker:dind
@@ -22,9 +22,11 @@ deploy_production:
   before_script:
     - docker info
     # - apk add --no-cache git py-pip gcc
-    # - sudo apt-get install -y python-pip
-    - yum install epel-release
-    - yum install python-pip
+    - sudo apt-get update
+    - sudo apt-get install docker-ce docker-ce-cli containerd.io
+    - sudo apt-get install -y python-pip
+    # - yum install epel-release
+    # - yum install python-pip
     - echo APP_URL="$APP_URL" >> .env
     - echo API_URL="$API_URL" >> .env
     - echo GA_TRACKING_ID="$GA_TRACKING_ID" >> .env
