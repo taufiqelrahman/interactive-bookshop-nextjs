@@ -24,9 +24,8 @@ deploy_production:
     # - docker info
     # - apk add --no-cache git py-pip gcc
     - apt-get update
-    - apt install curl
+    - apt-get install -y python-pip curl
     - curl -sSL https://get.docker.com/ 90 | sh
-    - apt-get install -y python-pip
     # - yum install epel-release
     # - yum install python-pip
     - echo APP_URL="$APP_URL" >> .env
