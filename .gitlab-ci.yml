@@ -20,7 +20,7 @@ deploy_production:
     - triggers
     - master
   when: manual
-  before_script:
+  script:
     - docker info
     # - apk add --no-cache git py-pip gcc
     # - sudo apt-get update
@@ -42,7 +42,7 @@ deploy_production:
     - cat .env
     # - pip install python-dotenv
     - pip install docker-compose
-  script:
+  # script:
     - source .env
     # - git submodule sync --recursive
     # - git submodule update --init --recursive
