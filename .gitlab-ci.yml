@@ -20,7 +20,7 @@ deploy_production:
   when: manual
   before_script:
     - docker info
-    - apk add --no-cache docker-compose git py-pip
+    - apk add --no-cache git py-pip
     - echo APP_URL="$APP_URL" >> .env
     - echo API_URL="$API_URL" >> .env
     - echo GA_TRACKING_ID="$GA_TRACKING_ID" >> .env
@@ -34,6 +34,7 @@ deploy_production:
     - echo STOREFRONT_API_KEY="$STOREFRONT_API_KEY" >> .env
     - cat .env
     - pip install python-dotenv
+    - pip install docker-compose
   script:
     - source .env
     # - git submodule sync --recursive
