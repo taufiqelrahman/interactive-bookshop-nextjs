@@ -20,7 +20,7 @@ deploy_production:
     - triggers
     - master
   when: manual
-  before script:
+  before_script:
     # - docker info
     # - apk add --no-cache git py-pip gcc
     - apt-get update
