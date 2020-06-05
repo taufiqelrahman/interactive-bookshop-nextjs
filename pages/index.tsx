@@ -74,7 +74,7 @@ const Index = (props: any): any => {
               <div className="c-section__content">
                 <h1>{props.t('createnow-title')}</h1>
                 <div className="c-section__content__content">{props.t('createnow-content')}</div>
-                <Link to="create-book" spy={true} smooth={true} offset={-150} duration={500} onClick={landingTracker}>
+                <Link to="create-book" spy={true} smooth={true} offset={-100} duration={500} onClick={landingTracker}>
                   <Button variant="outline" color="black" style={{ marginTop: 24 }}>
                     {props.t('createnow-button')}
                   </Button>
@@ -161,14 +161,14 @@ const Index = (props: any): any => {
         <div className="c-section--bottom__testi">
           <TestimonialSlider isMobile={props.isMobile} testimonials={testimonials} />
         </div>
-        <Element name="create-book">
-          <LazyLoad>
-            <div id="create-book" className="c-section--bottom__create-book">
+        <LazyLoad>
+          <div id="create-book" className="c-section--bottom__create-book">
+            <Element name="create-book">
               <h2>{props.t('createbook-header')}</h2>
               <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} occupations={occupations} />
-            </div>
-          </LazyLoad>
-        </Element>
+            </Element>
+          </div>
+        </LazyLoad>
       </div>
       {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
@@ -355,7 +355,6 @@ const Index = (props: any): any => {
               top: 38%;
               width: 100vw;
               left: 0;
-              z-index: 2;
               @screen md {
                 @apply hidden;
               }

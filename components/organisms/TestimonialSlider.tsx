@@ -6,6 +6,7 @@ import * as gtag from 'lib/gtag';
 const TestimonialSlider = (props: any) => {
   const [navRightClass, setNavRightClass] = useState(0);
   const [translationX, setTranslationX] = useState(0);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const calculateRightBound = () => {
     const lastChild = (window as any).document.querySelector('.c-testi-slider__slide:last-child');
@@ -17,7 +18,10 @@ const TestimonialSlider = (props: any) => {
   };
 
   useEffect(() => {
-    const setNavTimeout = setTimeout(() => setNavRightClass(decideNavRightClass()), 500);
+    const setNavTimeout = setTimeout(() => {
+      setNavRightClass(decideNavRightClass());
+      setIsNavigating(false);
+    }, 500);
     return () => {
       clearTimeout(setNavTimeout);
     };
@@ -25,7 +29,8 @@ const TestimonialSlider = (props: any) => {
 
   const onNavRight = () => {
     // eslint-disable-next-line no-extra-boolean-cast
-    if (!!navRightClass) return;
+    if (isNavigating || !!navRightClass) return;
+    setIsNavigating(true);
     gtag.event({
       action: 'testimonials',
       category: 'engagement',
@@ -110,11 +115,11 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__slides {
-            @apply flex;
+            @apply flex mr-0 overflow-x-auto;
             margin-left: 16px;
-            margin-right: 16px;
             @screen md {
               @apply inline-flex;
+              overflow-x: unset;
               transform: translateX(${translationX}px);
               transition: transform 0.5s ease-in;
               margin-left: 4%;
@@ -124,9 +129,12 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__slide {
-            margin-right: 16px;
+            padding-right: 16px;
             @screen md {
-              @apply mr-12;
+              @apply pr-12;
+              &:last-child {
+                @apply pr-0;
+              }
             }
           }
         }
