@@ -174,6 +174,7 @@ const init = function() {
           function(e) {
             if (e.keyCode == forwardsKeycode) {
               this.turnPage('forwards');
+              clearInterval(initInterval);
               return false;
             }
             if (e.keyCode == backKeycode) {
