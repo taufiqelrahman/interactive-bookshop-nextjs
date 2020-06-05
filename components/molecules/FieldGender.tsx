@@ -27,7 +27,7 @@ const FieldGender = (props: any) => {
               label={gender.name}
               name="Gender"
               errors={props.errors}
-              style={{ height: 44, width: 120 }}
+              style={{ height: 44, width: 106 }}
               // imageUrl={gender.image}
               // type="image"
               // variant={props.isMobile ? 'box' : ''}
