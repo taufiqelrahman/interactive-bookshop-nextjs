@@ -17,6 +17,10 @@ export default class Orders {
     return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`)
   }
 
+  loadOrderGuest(orderNumber) {
+    return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`)
+  }
+
   loadOrders() {
     return this.adapter.secure.get(this.basePath)
   }

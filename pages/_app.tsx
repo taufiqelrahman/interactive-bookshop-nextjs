@@ -210,7 +210,7 @@ const App: NextPage<any> = (props: any) => {
 };
 
 const redirectPrivateRoutes = ({ pathname, res }) => {
-  const privateRoutes = ['/orders/[id]', '/orders/success', '/account', '/orders'];
+  const privateRoutes = ['/orders/success', '/account', '/orders'];
   if (privateRoutes.includes(pathname)) {
     const redirectTo = pathname.split('/')[1];
     const login = `/login?from=${redirectTo}`;

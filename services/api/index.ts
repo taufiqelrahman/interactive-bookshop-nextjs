@@ -28,7 +28,7 @@ const createSecureAdapter = (req?): AxiosAdapter => {
   if (req) {
     // if server-side
     const userCookie = (req as any).headers.cookie.split(';').filter(cookie => cookie.includes('user='));
-    const cryptedToken = userCookie[0].split('=')[1];
+    const cryptedToken = userCookie[0] && userCookie[0].split('=')[1];
     token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
   } else {
     // if client-side
