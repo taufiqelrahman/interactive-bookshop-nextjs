@@ -139,7 +139,7 @@ const Login = (props: any): any => {
       <Head>
         <title>When I Grow Up | {props.t('login')}</title>
       </Head>
-      <div className={`u-container ${props.isMobile ? 'u-container__page mb-16' : 'u-container__page--large'}`}>
+      <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-login">
           <Wrapper variant="border">
             <div className="c-login__container">
@@ -207,7 +207,7 @@ const Login = (props: any): any => {
                           errors={errors.password}
                           variant="full-width"
                           isPassword={true}
-                          style={{ marginTop: 24 }}
+                          formStyle={{ marginTop: 24 }}
                         />
                         <div
                           onClick={forgotPassword}
@@ -317,7 +317,7 @@ const Login = (props: any): any => {
           </Wrapper>
         </div>
       </div>
-      {props.isMobile && <Footer isMobile={props.isMobile} />}
+      {/* {props.isMobile && <Footer isMobile={props.isMobile} />} */}
       <style jsx>{`
         .c-login {
           @apply mx-auto w-full;

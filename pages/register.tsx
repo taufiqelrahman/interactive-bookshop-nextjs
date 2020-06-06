@@ -95,7 +95,7 @@ const Register = (props: any): any => {
       <Head>
         <title>When I Grow Up | {props.t('register')}</title>
       </Head>
-      <div className={`u-container ${props.isMobile ? 'u-container__page mb-16' : 'u-container__page--large'}`}>
+      <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-register">
           <Wrapper variant="border">
             <div className="c-register__container">
@@ -175,7 +175,7 @@ const Register = (props: any): any => {
                           register={register}
                           errors={errors.phone}
                           variant="full-width"
-                          style={{ marginTop: 24 }}
+                          formStyle={{ marginTop: 24 }}
                         />
                         <FormTextField
                           label={props.t('form:password-label')}
@@ -186,7 +186,7 @@ const Register = (props: any): any => {
                           errors={errors.password}
                           variant="full-width"
                           isPassword={true}
-                          style={{ marginTop: 24 }}
+                          formStyle={{ marginTop: 24 }}
                         />
                         <FormTextField
                           label={props.t('form:confirm-password-label')}
@@ -197,7 +197,7 @@ const Register = (props: any): any => {
                           errors={errors.confirmPassword}
                           variant="full-width"
                           isPassword={true}
-                          style={{ marginTop: 24 }}
+                          formStyle={{ marginTop: 24 }}
                         />
                       </div>
                       <div>
@@ -216,7 +216,7 @@ const Register = (props: any): any => {
           </Wrapper>
         </div>
       </div>
-      {props.isMobile && <Footer isMobile={props.isMobile} />}
+      {/* {props.isMobile && <Footer isMobile={props.isMobile} />} */}
       <style jsx>{`
         .c-register {
           @apply mx-auto w-full;
