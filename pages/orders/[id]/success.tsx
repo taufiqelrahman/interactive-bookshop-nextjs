@@ -20,26 +20,26 @@ const OrderSuccess = (props: any): any => {
         <title>When I Grow Up | {props.t('checkout')}</title>
       </Head>
       <div className="u-container" style={props.isMobile ? {} : { paddingTop: 61 }}>
-        <div className="c-login">
+        <div className="c-success">
           <Wrapper variant="border">
-            <div className="c-login__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+            <div className="c-success__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
-                <img alt="success" className="c-login__image" src="/static/images/welcome.png" />
-                <h1 className="c-login__title">{props.t('order-success')}</h1>
-                <div className="c-login__subtitle">
+                <img alt="success" className="c-success__image" src="/static/images/welcome.png" />
+                <h1 className="c-success__title">{props.t('order-success')}</h1>
+                <div className="c-success__subtitle">
                   {isLoggedIn ? props.t('order-success-content') : props.t('order-success-content-guest')}
                 </div>
               </div>
-              <div className="c-login__actions">
-                <Link href={isLoggedIn ? `/orders/${id}` : '/create'}>
+              <div className="c-success__actions">
+                <Link href={`/orders/${id}`}>
                   <a>
                     <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
-                      {isLoggedIn ? props.t('go-to-orders') : props.t('create-another')}
+                      {props.t('go-to-orders')}
                     </Button>
                   </a>
                 </Link>
                 <Link href="/">
-                  <a className="c-login__link">{props.t('back-to-home')}</a>
+                  <a className="c-success__link">{props.t('back-to-home')}</a>
                 </Link>
               </div>
             </div>
@@ -47,7 +47,7 @@ const OrderSuccess = (props: any): any => {
         </div>
       </div>
       <style jsx>{`
-        .c-login {
+        .c-success {
           @apply mx-auto w-full;
           &__container {
             @apply text-center flex flex-col justify-between;
