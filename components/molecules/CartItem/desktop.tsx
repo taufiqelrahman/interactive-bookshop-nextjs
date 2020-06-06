@@ -114,10 +114,7 @@ const CartItem = (props: any) => {
                     <Skeleton width={20} />
                   </div>
                 ) : (
-                  <span
-                    onClick={() => props.removeFromCart(props.cartId, props.id)}
-                    className="c-cart-item__detail__actions__icon icon-trash"
-                  />
+                  <span onClick={() => setShowModal(true)} className="c-cart-item__detail__actions__icon icon-trash" />
                 )}
                 {props.isSkeleton ? (
                   <Skeleton width={140} />
@@ -149,7 +146,11 @@ const CartItem = (props: any) => {
         closeModal={() => setShowModal(false)}
         actions={
           <Fragment>
-            <Button width="100%" onClick={() => setQuantity(0)} style={{ marginBottom: 12 }}>
+            <Button
+              width="100%"
+              onClick={() => props.removeFromCart(props.cartId, props.id)}
+              style={{ marginBottom: 12 }}
+            >
               {props.t('form:continue-button')}
             </Button>
             <Button width="100%" onClick={() => setShowModal(false)} variant="outline" color="black">

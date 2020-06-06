@@ -22,7 +22,7 @@ const Modal = (props: any) => {
       {props.isOpen && <div className={`c-modal__overlay ${overlayClass}`} onClick={onClose}></div>}
       <style jsx>{`
         .c-modal {
-          @apply absolute bg-white flex flex-col justify-between;
+          @apply fixed bg-white flex flex-col justify-between;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
