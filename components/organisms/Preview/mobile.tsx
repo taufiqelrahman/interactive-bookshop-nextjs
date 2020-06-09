@@ -120,7 +120,19 @@ const PreviewMobile = (props: any): any => {
         name="specs-sheet"
         isOpen={showSpecs}
         closeSheet={() => setShowSpecs(false)}
-        content={<div className="c-sheet__content">{props.t('book-specs-content')}</div>}
+        content={
+          <div className="c-sheet__content">
+            <div className="c-sheet__content__item">
+              <span className="icon-ico_verified" /> {props.t('book-specs-1')}
+            </div>
+            <div className="c-sheet__content__item">
+              <span className="icon-ico_premium_account" /> {props.t('book-specs-2')}
+            </div>
+            <div className="c-sheet__content__item">
+              <span className="icon-ico_book" /> {props.t('book-specs-3')}
+            </div>
+          </div>
+        }
         header={true}
         title={props.t(`book-specs`)}
       />
@@ -172,6 +184,13 @@ const PreviewMobile = (props: any): any => {
           line-height: 22px;
           padding-top: 16px;
           padding-bottom: 16px;
+          &__item {
+            @apply mb-2 flex;
+            align-items: baseline;
+            span {
+              @apply mr-3;
+            }
+          }
         }
       `}</style>
     </DefaultLayout>

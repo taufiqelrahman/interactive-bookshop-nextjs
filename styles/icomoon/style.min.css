@@ -1,10 +1,10 @@
 @font-face {
   font-family: whenigrowup;
-  src: url(/static/fonts/icons/whenigrowup.eot?z42pcr);
-  src: url(/static/fonts/icons/whenigrowup.eot?z42pcr#iefix) format('embedded-opentype'),
-    url(/static/fonts/icons/whenigrowup.ttf?z42pcr) format('truetype'),
-    url(/static/fonts/icons/whenigrowup.woff?z42pcr) format('woff'),
-    url(/static/fonts/icons/whenigrowup.svg?z42pcr#whenigrowup) format('svg');
+  src: url(/static/fonts/icons/whenigrowup.eot?npmp6j);
+  src: url(/static/fonts/icons/whenigrowup.eot?npmp6j#iefix) format('embedded-opentype'),
+    url(/static/fonts/icons/whenigrowup.ttf?npmp6j) format('truetype'),
+    url(/static/fonts/icons/whenigrowup.woff?npmp6j) format('woff'),
+    url(/static/fonts/icons/whenigrowup.svg?npmp6j#whenigrowup) format('svg');
   font-weight: 400;
   font-style: normal;
   font-display: block;
@@ -12,7 +12,7 @@
 [class*=' icon-'],
 [class^='icon-'] {
   font-family: whenigrowup !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: 400;
   font-variant: normal;
@@ -20,6 +20,15 @@
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-ico_book:before {
+  content: '\e914';
+}
+.icon-ico_premium_account:before {
+  content: '\e915';
+}
+.icon-ico_verified:before {
+  content: '\e916';
 }
 .icon-whatsapp:before {
   content: '\ea93';

@@ -85,7 +85,17 @@ const PreviewDesktop = (props: any): any => {
               <div className="c-preview__details">
                 <div className="c-preview__details--left">
                   <h2>{props.t('book-specs')}</h2>
-                  <div className="c-preview__details__content">{props.t('book-specs-content')}</div>
+                  <div className="c-preview__details__content">
+                    <div className="c-preview__details__item">
+                      <span className="icon-ico_verified" /> {props.t('book-specs-1')}
+                    </div>
+                    <div className="c-preview__details__item">
+                      <span className="icon-ico_premium_account" /> {props.t('book-specs-2')}
+                    </div>
+                    <div className="c-preview__details__item">
+                      <span className="icon-ico_book" /> {props.t('book-specs-3')}
+                    </div>
+                  </div>
                 </div>
                 <div className="c-preview__details--right">
                   <div className="c-preview__cover">
@@ -161,6 +171,13 @@ const PreviewDesktop = (props: any): any => {
             &__content {
               @apply font-opensans;
               line-height: 22px;
+            }
+            &__item {
+              @apply mb-1 flex;
+              align-items: baseline;
+              span {
+                @apply mr-2;
+              }
             }
           }
         }

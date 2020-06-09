@@ -136,6 +136,15 @@ const App: NextPage<any> = (props: any) => {
 
         /* icons */
 
+        .icon-ico_book:before {
+          content: '\e914';
+        }
+        .icon-ico_premium_account:before {
+          content: '\e915';
+        }
+        .icon-ico_verified:before {
+          content: '\e916';
+        }
         .icon-whatsapp:before {
           content: '\ea93';
         }
