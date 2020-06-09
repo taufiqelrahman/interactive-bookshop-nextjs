@@ -19,12 +19,12 @@ const OrderSuccess = (props: any): any => {
       <Head>
         <title>When I Grow Up | {props.t('checkout')}</title>
       </Head>
-      <div className="u-container" style={props.isMobile ? {} : { paddingTop: 61 }}>
+      <div className="u-container" style={props.isMobile ? {} : { padding: '61px 0 ' }}>
         <div className="c-success">
           <Wrapper variant="border">
             <div className="c-success__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
-                <img alt="success" className="c-success__image" src="/static/images/welcome.png" />
+                <img alt="success" className="c-success__image" src="/static/images/success.png" />
                 <h1 className="c-success__title">{props.t('order-success')}</h1>
                 <div className="c-success__subtitle">
                   {isLoggedIn ? props.t('order-success-content') : props.t('order-success-content-guest')}
