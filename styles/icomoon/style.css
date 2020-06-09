@@ -1,7 +1,9 @@
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
 @font-face {
   font-family: 'whenigrowup';
   src: url('/static/fonts/icons/whenigrowup.eot?npmp6j');
-  src: url('/static/fonts/icons/whenigrowup.eot?npmp6j#iefix') format('embedded-opentype'),
+  src:
+    url('/static/fonts/icons/whenigrowup.eot?npmp6j#iefix') format('embedded-opentype'),
     url('/static/fonts/icons/whenigrowup.ttf?npmp6j') format('truetype'),
     url('/static/fonts/icons/whenigrowup.woff?npmp6j') format('woff'),
     url('/static/fonts/icons/whenigrowup.svg?npmp6j#whenigrowup') format('svg');
@@ -26,80 +28,103 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-ico_book:before {
+.icon-ico_book::before {
   content: '\e914';
 }
-.icon-ico_premium_account:before {
+
+.icon-ico_premium_account::before {
   content: '\e915';
 }
-.icon-ico_verified:before {
+
+.icon-ico_verified::before {
   content: '\e916';
 }
-.icon-whatsapp:before {
+
+.icon-whatsapp::before {
   content: '\ea93';
 }
-.icon-duplicate:before {
+
+.icon-duplicate::before {
   content: '\e913';
 }
-.icon-tag_label:before {
+
+.icon-tag_label::before {
   content: '\e912';
 }
-.icon-ui_cross:before {
+
+.icon-ui_cross::before {
   content: '\e911';
 }
-.icon-eye-show:before {
+
+.icon-eye-show::before {
   content: '\e90e';
   color: #484e5c;
 }
-.icon-eye_hide:before {
+
+.icon-eye_hide::before {
   content: '\e90f';
   color: #484e5c;
 }
-.icon-menu:before {
+
+.icon-menu::before {
   content: '\e910';
 }
-.icon-cross_check:before {
+
+.icon-cross_check::before {
   content: '\e90d';
 }
-.icon-chevron_up:before {
+
+.icon-chevron_up::before {
   content: '\e90b';
 }
-.icon-chevron_down:before {
+
+.icon-chevron_down::before {
   content: '\e90c';
 }
-.icon-info:before {
+
+.icon-info::before {
   content: '\e90a';
 }
-.icon-edit:before {
+
+.icon-edit::before {
   content: '\e908';
 }
-.icon-trash:before {
+
+.icon-trash::before {
   content: '\e909';
 }
-.icon-arrow_left:before {
+
+.icon-arrow_left::before {
   content: '\e907';
 }
-.icon-facebook_white:before {
+
+.icon-facebook_white::before {
   content: '\e904';
   color: #fafafa;
 }
-.icon-instagram_white:before {
+
+.icon-instagram_white::before {
   content: '\e905';
   color: #fafafa;
 }
-.icon-twitter_white:before {
+
+.icon-twitter_white::before {
   content: '\e906';
   color: #fafafa;
 }
-.icon-chevron_right:before {
+
+.icon-chevron_right::before {
   content: '\e902';
 }
-.icon-chevron_left:before {
+
+.icon-chevron_left::before {
   content: '\e903';
 }
-.icon-cart:before {
+
+.icon-cart::before {
   content: '\e900';
 }
-.icon-account:before {
+
+.icon-account::before {
   content: '\e901';
 }
