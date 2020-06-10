@@ -54,7 +54,6 @@ const OrderSuccess = (props: any): any => {
             padding: 29px 0 14px;
             @screen md {
               padding: 42px;
-              display: unset;
             }
           }
           &__image {

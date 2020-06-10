@@ -161,14 +161,16 @@ const Index = (props: any): any => {
         <div className="c-section--bottom__testi">
           <TestimonialSlider isMobile={props.isMobile} testimonials={testimonials} />
         </div>
-        <LazyLoad>
-          <div id="create-book" className="c-section--bottom__create-book">
-            <Element name="create-book">
-              <h2>{props.t('createbook-header')}</h2>
-              <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} occupations={occupations} />
-            </Element>
-          </div>
-        </LazyLoad>
+        <div id="create-book">
+          <LazyLoad>
+            <div className="c-section--bottom__create-book">
+              <Element name="create-book">
+                <h2>{props.t('createbook-header')}</h2>
+                <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} occupations={occupations} />
+              </Element>
+            </div>
+          </LazyLoad>
+        </div>
       </div>
       {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
