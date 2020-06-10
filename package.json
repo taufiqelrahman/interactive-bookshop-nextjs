@@ -41,7 +41,6 @@
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^8.0.0",
-    "jquery": "^3.4.1",
     "js-cookie": "^2.2.1",
     "lodash.debounce": "^4.0.8",
     "lodash.groupby": "^4.6.0",
@@ -113,20 +112,16 @@
   },
   "lint-staged": {
     "*.+(js|jsx)": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "*.+(json|md)": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.+(css)": [
-      "stylelint --fix",
-      "git add"
+      "stylelint --fix"
     ],
     "*.+(scss)": [
-      "stylelint --syntax scss --fix",
-      "git add"
+      "stylelint --syntax scss --fix"
     ]
   }
 }

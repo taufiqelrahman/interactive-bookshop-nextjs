@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
 import { i18n } from 'i18n';
-import $ from 'jquery';
-import initHeidelberg from 'assets/heidelberg.js';
+import initBook from 'assets/flipbook.js';
 import debounce from 'lodash.debounce';
 import BookPage from './atoms/BookPage';
 import Pagination from './atoms/Pagination';
@@ -24,13 +23,16 @@ const BookPreview = (props: any) => {
   //   lastPage: false,
   // });
 
-  const updateHeight = () => {
-    // const image: any = document.querySelector('.Heidelberg-Page img');
+  const calcHeight = () => {
+    // const image: any = document.querySelector('.c-flipbook__page img');
     const containerWidth = window.innerWidth > 1024 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
     // const containerMargin = (window.innerWidth - containerWidth) / 2;
     const padding = 60;
     const bookRatio = 495 / 700;
-    const height = ((containerWidth - padding) / 2) * bookRatio;
+    return ((containerWidth - padding) / 2) * bookRatio;
+  };
+  const updateHeight = () => {
+    const height = calcHeight();
     setState({ ...state, height, loaded: true });
     return Promise.resolve();
   };
@@ -42,15 +44,12 @@ const BookPreview = (props: any) => {
   const setupBook = async () => {
     setState({ ...state, loaded: false });
     await updateHeight();
-    const bookHeidelberg = new (window as any).Heidelberg($('#Heidelberg'), {
-      // initialActivePage: 1,
+    const flipBookInstance = new (window as any).FlipBook('FlipBook', {
       canClose: true,
       arrowKeys: true,
       concurrentAnimations: 5,
-      // hasSpreads: true,
-      // onPageTurn: (isFirstPage: boolean, isLastPage: boolean) => {
-      //   setPageInfo({ firstPage: isFirstPage, lastPage: isLastPage });
-      // },
+      height: `${calcHeight()}px`,
+      initialCall: true,
       onPageTurn: (_, els) => {
         gtag.event({
           action: 'click_book_page',
@@ -61,7 +60,7 @@ const BookPreview = (props: any) => {
         if (currentPage) setCurrentPage(parseInt(currentPage.id, 10));
       },
     });
-    setBook(bookHeidelberg);
+    setBook(flipBookInstance);
   };
 
   let debouncedFunctionRef: any = useRef();
@@ -86,18 +85,13 @@ const BookPreview = (props: any) => {
       }
       return;
     }
-    initHeidelberg();
+    initBook();
     setupBook();
     window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
     return () => {
       window.removeEventListener('resize', () => debouncedSetup);
       debouncedFunctionRef = null;
     };
-    // setTimeout(() => {
-    //   new CircleType(document.getElementById('title1')).radius(384);
-    //   new CircleType(document.getElementById('title2')).radius(384);
-    //   new CircleType(document.getElementById('title3')).radius(384);
-    // }, 1000);
   }, []);
 
   const isFirstRun = useRef(true);
@@ -170,11 +164,11 @@ const BookPreview = (props: any) => {
     return imagePath.toLowerCase();
   };
 
-  const pageClass = index => {
-    if (index === 0) return 'first-page';
-    if (index === jointPages.length - 1) return 'last-page';
-    return '';
-  };
+  // const pageClass = index => {
+  //   // if (index === 0) return 'first-page';
+  //   // if (index === jointPages.length - 1) return 'last-page';
+  //   return '';
+  // };
 
   // for mobile
   const bookHeight = '(100vh - 69px - 257px) * 0.7';
@@ -226,12 +220,13 @@ const BookPreview = (props: any) => {
         </Fragment>
       ) : (
         <div className="c-book-preview__container">
-          <div className="Heidelberg-Book at-front-cover" id="Heidelberg">
+          <div className="c-flipbook" id="FlipBook">
             {jointPages.map((page, index) => (
               <BookPage
                 key={index}
                 id={index + 1}
-                className={`Heidelberg-Page ${pageClass(index)}`}
+                className="c-flipbook__page"
+                // className={`c-flipbook__page ${pageClass(index)}`}
                 image={getImage(page[0].occupation.name, page[0].page_number)}
                 name={props.selected.Name}
                 language={props.selected.Language}
@@ -241,7 +236,7 @@ const BookPreview = (props: any) => {
                 contents={page}
                 isMobile={props.isMobile}
                 isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
-                mustLoad={index + 1 < currentPage + 7}
+                mustLoad={index + 1 < currentPage + 7 || index === jointPages.length - 1}
               />
             ))}
           </div>
@@ -324,12 +319,18 @@ const BookPreview = (props: any) => {
         }
       `}</style>
       <style jsx global>{`
-        .Heidelberg-Book {
+        .c-flipbook {
           -webkit-perspective: 2200px;
           perspective: 2200px;
           -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
           opacity: ${state.loaded ? 1 : 0};
+          position: absolute;
+          left: 0;
+          -webkit-transition: left 0.7s;
+          -o-transition: left 0.7s;
+          transition: left 0.7s;
+          top: 0;
 
           &:not(.is-ready) * {
             -webkit-transition: none !important;
@@ -342,6 +343,39 @@ const BookPreview = (props: any) => {
             display: table;
             clear: both;
           }
+
+          &[data-useragent*='MSIE 10.0'] .c-flipbook__page {
+            opacity: 0;
+
+            &.is-active {
+              -webkit-transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
+              transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
+              -o-transition: transform 0.9s ease, opacity 0.9s ease;
+              transition: transform 0.9s ease, opacity 0.9s ease;
+              transition: transform 0.9s ease, opacity 0.9s ease, -webkit-transform 0.9s ease;
+              opacity: 1;
+            }
+
+            &.was-active {
+              -webkit-transition-delay: 2s;
+              -o-transition-delay: 2s;
+              transition-delay: 2s;
+              -webkit-transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
+              transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
+              -o-transition: transform 0.9s ease, opacity 0.9s ease;
+              transition: transform 0.9s ease, opacity 0.9s ease;
+              transition: transform 0.9s ease, opacity 0.9s ease, -webkit-transform 0.9s ease;
+              opacity: 0;
+            }
+          }
+
+          &.at-front-cover {
+            left: -25%;
+          }
+
+          &.at-rear-cover {
+            left: 25%;
+          }
         }
 
         .is-calling {
@@ -349,13 +383,11 @@ const BookPreview = (props: any) => {
           transform: rotateY(-20deg) !important;
         }
 
-        .Heidelberg-Page {
+        .c-flipbook__page {
           cursor: pointer;
           overflow: hidden;
           position: absolute;
           width: 50%;
-          min-height: 100%;
-          max-height: 100%;
           background: #000;
           -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
@@ -425,7 +457,7 @@ const BookPreview = (props: any) => {
                 transform: rotateY(-15deg);
               }
 
-              ~ .Heidelberg-Page {
+              ~ .c-flipbook__page {
                 &:nth-child(2n) {
                   -webkit-transform: rotateY(180deg);
                   transform: rotateY(180deg);
@@ -447,28 +479,18 @@ const BookPreview = (props: any) => {
             &:nth-child(odd) {
               z-index: 4;
 
-              ~ .Heidelberg-Page.is-animating {
+              ~ .c-flipbook__page.is-animating {
                 z-index: 3;
               }
             }
 
-            + .Heidelberg-Page:not(.is-animating):nth-child(odd) {
+            + .c-flipbook__page:not(.is-animating):nth-child(odd) {
               z-index: 1;
             }
           }
         }
 
-        .Heidelberg-Book > .Heidelberg-Spread {
-          display: none;
-
-          &:first-child {
-            display: block;
-            width: 100%;
-            overflow: hidden;
-          }
-        }
-
-        .no-csstransforms3d .Heidelberg-Page {
+        .no-csstransforms3d .c-flipbook__page {
           display: none;
 
           &.is-active {
@@ -478,65 +500,8 @@ const BookPreview = (props: any) => {
           }
         }
 
-        .Heidelberg-Spread {
-          position: relative;
-          width: 200%;
-        }
-
-        .Heidelberg-Page.with-Spread:nth-child(odd) .Heidelberg-Spread,
-        .no-csstransforms3d
-          .Heidelberg-Page.with-Spread.is-active
-          + .Heidelberg-Page.with-Spread.is-active
-          .Heidelberg-Spread {
-          left: -100%;
-        }
-
-        .Heidelberg-Book {
-          &[data-useragent*='MSIE 10.0'] .Heidelberg-Page {
-            opacity: 0;
-
-            &.is-active {
-              -webkit-transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              -o-transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease, -webkit-transform 0.9s ease;
-              opacity: 1;
-            }
-
-            &.was-active {
-              -webkit-transition-delay: 2s;
-              -o-transition-delay: 2s;
-              transition-delay: 2s;
-              -webkit-transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              -o-transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease, -webkit-transform 0.9s ease;
-              opacity: 0;
-            }
-          }
-
-          position: absolute;
-          left: 0;
-          -webkit-transition: left 0.7s;
-          -o-transition: left 0.7s;
-          transition: left 0.7s;
-          top: 0;
-          width: 100%;
-          height: 100%;
-
-          &.at-front-cover {
-            left: -25%;
-          }
-
-          &.at-rear-cover {
-            left: 25%;
-          }
-        }
-
         @supports (transition: transform 0.9s ease) and (not (-ms-ime-align: auto)) {
-          .Heidelberg-Page {
+          .c-flipbook__page {
             -webkit-transition: -webkit-transform 0.9s ease;
             transition: -webkit-transform 0.9s ease;
             -o-transition: transform 0.9s ease;
@@ -545,7 +510,7 @@ const BookPreview = (props: any) => {
           }
         }
 
-        .Heidelberg-Page {
+        .c-flipbook__page {
           &:before {
             content: '';
             position: absolute;
@@ -554,10 +519,6 @@ const BookPreview = (props: any) => {
             width: 100%;
             height: 100%;
             background-size: 100% 100%;
-          }
-
-          &.with-Spread:before {
-            display: none;
           }
 
           &:nth-child(2n).is-active:hover {
@@ -576,20 +537,16 @@ const BookPreview = (props: any) => {
           }
         }
 
-        .Heidelberg-Spread {
-          height: 100%;
-        }
-
-        .heidelberg-book-image {
+        /* .c-flipbook-image {
           position: relative;
           z-index: 2;
           height: auto;
           width: 100%;
           display: block;
           pointer-events: none;
-        }
+        } */
 
-        .Heidelberg-Page .ss-loading {
+        .c-flipbook__page .ss-loading {
           font-size: 2rem;
           position: absolute;
           z-index: 1;
