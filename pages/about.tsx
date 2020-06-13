@@ -54,11 +54,11 @@ const Help = (props: any): any => {
             <a href="https://www.tjetak.com/" rel="noreferrer noopener" target="_blank">
               <LazyLoad>
                 <img
-                  className="c-about-us_powered_image"
+                  className="c-about-us__powered__image"
                   src="/static/images/tjetak.png"
                   alt="tjetak"
-                  width="200"
-                  height="40"
+                  width="100"
+                  height="20"
                 />
               </LazyLoad>
             </a>
@@ -115,17 +115,22 @@ const Help = (props: any): any => {
             margin-top: -24px;
           }
           &__powered {
-            @apply mt-8 mb-24 p-6;
+            @apply mt-6 mb-20 p-6;
             @screen md {
-              @apply p-0 mt-16 mb-32;
+              @apply p-0 mt-12 mb-32;
             }
             h5 {
-              font-weight: 600;
-              font-size: 20px;
-              line-height: 30px;
+              @apply font-semibold text-center;
             }
             &__container {
-              @apply flex justify-center mt-16;
+              @apply mt-5 flex justify-center;
+              @screen md {
+              }
+            }
+            &__image {
+              @apply object-contain;
+              width: 100px;
+              height: 20px;
             }
           }
         }
