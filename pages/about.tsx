@@ -7,6 +7,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
 import Button from 'components/atoms/Button';
 import Footer from 'components/organisms/Footer';
+import LazyLoad from 'react-lazyload';
 
 const Help = (props: any): any => {
   return (
@@ -44,7 +45,25 @@ const Help = (props: any): any => {
             </a>
           </Link>
         </div>
-        <img className="c-about-us__image c-about-us--long" src="/static/images/about-us.png" alt="about-us" />
+        <LazyLoad>
+          <img className="c-about-us__image c-about-us--long" src="/static/images/about-us.png" alt="about-us" />
+        </LazyLoad>
+        <div className="c-about-us__powered">
+          <h5>Powered by:</h5>
+          <div className="c-about-us__powered__container">
+            <a href="https://www.tjetak.com/" rel="noreferrer noopener" target="_blank">
+              <LazyLoad>
+                <img
+                  className="c-about-us_powered_image"
+                  src="/static/images/tjetak.png"
+                  alt="tjetak"
+                  width="200"
+                  height="40"
+                />
+              </LazyLoad>
+            </a>
+          </div>
+        </div>
       </div>
       {props.isMobile && <Footer isMobile={props.isMobile} />}
       <style jsx>{`
@@ -94,6 +113,20 @@ const Help = (props: any): any => {
           &__image {
             @apply my-0;
             margin-top: -24px;
+          }
+          &__powered {
+            @apply mt-8 mb-24 p-6;
+            @screen md {
+              @apply p-0 mt-16 mb-32;
+            }
+            h5 {
+              font-weight: 600;
+              font-size: 20px;
+              line-height: 30px;
+            }
+            &__container {
+              @apply flex justify-center mt-16;
+            }
           }
         }
       `}</style>
