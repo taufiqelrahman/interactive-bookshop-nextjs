@@ -47,6 +47,7 @@ deploy_production:
     - echo API_URL="$API_URL" >> .env
     - echo GA_TRACKING_ID="$GA_TRACKING_ID" >> .env
     - echo FACEBOOK_PIXEL_ID="$FACEBOOK_PIXEL_ID" >> .env
+    - echo SENTRY_DSN="$SENTRY_DSN" >> .env
     - echo DOMAIN="$DOMAIN" >> .env
     - echo GOOGLE_MAPS_API_KEY="$GOOGLE_MAPS_API_KEY" >> .env
     - echo SECRET_IV="$SECRET_IV" >> .env
