@@ -31,6 +31,7 @@ export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null
   const localStorageCart = JSON.parse(localStorage.getItem('cart') as any);
   localStorage.removeItem('cart');
   const localCartResponse = await graphql().checkout.get(localStorageCart.id);
+  if (!localCartResponse) return;
   const localCartItems = JSON.parse(JSON.stringify(localCartResponse.lineItems)).map(item => ({
     variantId: item.variant.id,
     customAttributes: item.customAttributes.map(att => ({ key: att.key, value: att.value })),
