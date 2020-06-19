@@ -10,6 +10,27 @@ import Footer from 'components/organisms/Footer';
 import LazyLoad from 'react-lazyload';
 
 const Help = (props: any): any => {
+  const names = [
+    'Vinsensiana Aprillia',
+    'Dwita Regiana',
+    'Anita Yustisia',
+    'Dhana Bisma',
+    'Amanda',
+    'Aninda',
+    'Raffisal',
+    'Fariz',
+    'Riyan Aga',
+    'Taufiq El Rahman',
+    'Vandi',
+    'Dhana Bisma',
+  ];
+  const renderNames = string => {
+    let content = string;
+    names.forEach(name => {
+      content = content.replace('[name]', `<strong>${name}</strong>`);
+    });
+    return content;
+  };
   return (
     <DefaultLayout
       {...props}
@@ -48,6 +69,12 @@ const Help = (props: any): any => {
         <LazyLoad>
           <img className="c-about-us__image c-about-us--long" src="/static/images/about-us.png" alt="about-us" />
         </LazyLoad>
+        <div className="c-about-us c-about-us__team c-about-us--long">
+          <div
+            className="c-about-us__team__content"
+            dangerouslySetInnerHTML={{ __html: renderNames(props.t('team-desc')) }}
+          />
+        </div>
         <div className="c-about-us__powered">
           <h5>Powered by:</h5>
           <div className="c-about-us__powered__container">
@@ -76,6 +103,9 @@ const Help = (props: any): any => {
           @apply mb-5 p-6;
           @screen md {
             @apply mb-10 p-0;
+          }
+          &__team {
+            @apply mt-5;
           }
           &--long {
             @apply w-full my-6 leading-normal mx-auto text-sm;
@@ -133,6 +163,11 @@ const Help = (props: any): any => {
               height: 20px;
             }
           }
+        }
+      `}</style>
+      <style jsx global>{`
+        strong {
+          @apply font-semibold;
         }
       `}</style>
     </DefaultLayout>
