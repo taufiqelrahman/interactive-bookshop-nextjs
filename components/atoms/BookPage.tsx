@@ -39,6 +39,7 @@ const BookPage = (props: any) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
     const { contents, name, gender, dedication } = props;
+    if (!name) return processed;
     if (contents[0].occupation.name === 'Front Cover') {
       processed = processed.split('[name]').join((name || '').toUpperCase());
     } else {

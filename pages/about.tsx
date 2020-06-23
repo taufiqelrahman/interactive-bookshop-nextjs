@@ -53,11 +53,11 @@ const Help = (props: any): any => {
             benar-benar membuat anak dapat tertarik membacanya.
           </div>
           <div className="c-about-us--quote">
-            <span>&ldquo;</span>Visi kami ingin terus meningkatan literasi anak bangsa.<span>&rdquo;</span>
+            <span>&ldquo;</span>Misi kami ingin terus meningkatan literasi anak bangsa.<span>&rdquo;</span>
           </div>
           <div className="c-about-us--long">
             Perlu kita ketahui bahwa gemar membaca dapat meningkatkan pengetahuan yang luas, konsentrasi, imajinasi,
-            sosial-emosinya dan masih banyak lagi. Visi besar kami adalah meningkatkan <strong>literasi</strong> anak
+            sosial-emosinya dan masih banyak lagi. Misi besar kami adalah meningkatkan <strong>literasi</strong> anak
             penerus bangsa.
           </div>
           <Link href="/create">
