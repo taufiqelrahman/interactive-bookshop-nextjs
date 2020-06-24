@@ -26,7 +26,7 @@ OrderDetail.getInitialProps = async (ctx: any): Promise<any> => {
     }
     const { order, state, payment } = orderData.data;
     order.state = state.name;
-    order.payment = formatPayment(payment);
+    order.payment = payment ? formatPayment(payment) : null;
     ctx.reduxStore.dispatch(actions.loadOrder(false, order));
   } catch (err) {
     console.log(err.message);

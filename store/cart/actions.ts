@@ -77,6 +77,7 @@ export const thunkLoadCart = (id, isLocal = false): ThunkAction<void, types.Cart
   return graphql()
     .checkout.get(id)
     .then(cart => {
+      if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
       dispatch(loadCart(false, { ...cart, lineItems }));
     })
