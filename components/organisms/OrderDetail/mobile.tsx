@@ -220,34 +220,40 @@ const OrderDetailMobile = (props: any): any => {
                       </div>
                       {currentOrder.financial_status !== 'paid' && (
                         <div className="c-detail__summary__info">
-                          <div className="c-detail__summary__info__item">
-                            {props.t('awaiting-payment')} {payment.type}
-                          </div>
-                          {payment.instance ? (
-                            <div className="flex justify-between items-end">
-                              <div>
-                                <div className="c-detail__summary__info__payment">{payment.instance}</div>
-                                <div className="c-detail__summary__info__payment">{payment.number}</div>
+                          {payment.type ? (
+                            <Fragment>
+                              <div className="c-detail__summary__info__item">
+                                {props.t('awaiting-payment')} {payment.type}
                               </div>
-                              <div className="c-detail__summary__info__copy" onClick={copyToClipboard}>
-                                {/* for copying to clipboard purpose */}
-                                <input
-                                  id="payment-number"
-                                  value={payment.number}
-                                  type="text"
-                                  style={{ position: 'absolute', left: 999 }}
-                                />
-                                <span className="icon-duplicate" />
-                              </div>
-                            </div>
-                          ) : payment.url ? (
-                            <div className="c-detail__summary__info__link">
-                              <a href={payment.url} target="_blank" rel="noopener noreferrer">
-                                {props.t('continue-payment')}
-                              </a>
-                            </div>
+                              {payment.instance ? (
+                                <div className="flex justify-between items-end">
+                                  <div>
+                                    <div className="c-detail__summary__info__payment">{payment.instance}</div>
+                                    <div className="c-detail__summary__info__payment">{payment.number}</div>
+                                  </div>
+                                  <div className="c-detail__summary__info__copy" onClick={copyToClipboard}>
+                                    {/* for copying to clipboard purpose */}
+                                    <input
+                                      id="payment-number"
+                                      value={payment.number}
+                                      type="text"
+                                      style={{ position: 'absolute', left: 999 }}
+                                    />
+                                    <span className="icon-duplicate" />
+                                  </div>
+                                </div>
+                              ) : payment.url ? (
+                                <div className="c-detail__summary__info__link">
+                                  <a href={payment.url} target="_blank" rel="noopener noreferrer">
+                                    {props.t('continue-payment')}
+                                  </a>
+                                </div>
+                              ) : (
+                                props.t('processing-payment')
+                              )}
+                            </Fragment>
                           ) : (
-                            props.t('processing-payment')
+                            <div>{props.t('payment-failure')}</div>
                           )}
                         </div>
                       )}

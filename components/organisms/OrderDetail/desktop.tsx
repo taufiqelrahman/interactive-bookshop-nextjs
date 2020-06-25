@@ -238,36 +238,42 @@ const OrderDetailDesktop = (props: any): any => {
                 </div>
                 {currentOrder && currentOrder.financial_status !== 'paid' && (
                   <div className="c-detail__summary__info">
-                    <div className="c-detail__summary__info__item">
-                      {isFetching ? (
-                        <Skeleton height={24} width={120} />
-                      ) : (
-                        `${props.t('awaiting-payment')} ${payment.type}:`
-                      )}
-                    </div>
-                    {payment.instance ? (
-                      <div className="flex justify-between">
-                        {isFetching ? (
-                          <Skeleton height={24} width={120} />
+                    {payment.type ? (
+                      <Fragment>
+                        <div className="c-detail__summary__info__item">
+                          {isFetching ? (
+                            <Skeleton height={24} width={120} />
+                          ) : (
+                            `${props.t('awaiting-payment')} ${payment.type}:`
+                          )}
+                        </div>
+                        {payment.instance ? (
+                          <div className="flex justify-between">
+                            {isFetching ? (
+                              <Skeleton height={24} width={120} />
+                            ) : (
+                              <Fragment>
+                                <div className="c-detail__summary__info__payment">{payment.instance}</div>
+                                <div className="c-detail__summary__info__payment">{payment.number}</div>
+                              </Fragment>
+                            )}
+                          </div>
+                        ) : payment.url ? (
+                          <div className="c-detail__summary__info__link">
+                            {isFetching ? (
+                              <Skeleton height={24} width={120} />
+                            ) : (
+                              <a href={payment.url} target="_blank" rel="noopener noreferrer">
+                                {props.t('continue-payment')}
+                              </a>
+                            )}
+                          </div>
                         ) : (
-                          <Fragment>
-                            <div className="c-detail__summary__info__payment">{payment.instance}</div>
-                            <div className="c-detail__summary__info__payment">{payment.number}</div>
-                          </Fragment>
+                          props.t('processing-payment')
                         )}
-                      </div>
-                    ) : payment.url ? (
-                      <div className="c-detail__summary__info__link">
-                        {isFetching ? (
-                          <Skeleton height={24} width={120} />
-                        ) : (
-                          <a href={payment.url} target="_blank" rel="noopener noreferrer">
-                            {props.t('continue-payment')}
-                          </a>
-                        )}
-                      </div>
+                      </Fragment>
                     ) : (
-                      props.t('processing-payment')
+                      <div>{props.t('payment-failure')}</div>
                     )}
                   </div>
                 )}

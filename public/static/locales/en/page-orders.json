@@ -22,6 +22,7 @@
   "continue-payment": "Continue Payment?",
   "awaiting-payment": "Awaiting payment",
   "processing-payment": "Please wait, while we process your payment",
+  "payment-failure": "There was an error when processing your payment. Please contact our customer service.",
   "copy-success": "Copied successfully",
   "orders-empty-title": "No Past Orders",
   "orders-empty-subtitle": "Looks like you haven’t purchased any books yet",
