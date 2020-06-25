@@ -7,6 +7,9 @@ import Button from 'components/atoms/Button';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import actions from 'store/actions';
+import api from 'services/api';
+import { formatPayment } from 'lib/format-payment';
 
 const OrderSuccess = (props: any): any => {
   const router = useRouter();
@@ -25,16 +28,22 @@ const OrderSuccess = (props: any): any => {
             <div className="c-success__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
                 <img alt="success" className="c-success__image" src="/static/images/success.png" />
-                <h1 className="c-success__title">{props.t('order-success')}</h1>
+                <h1 className="c-success__title">
+                  {props.paymentProblem ? props.t('payment-problem') : props.t('order-success')}
+                </h1>
                 <div className="c-success__subtitle">
-                  {isLoggedIn ? props.t('order-success-content') : props.t('order-success-content-guest')}
+                  {props.paymentProblem
+                    ? props.t('payment-problem-content')
+                    : isLoggedIn
+                    ? props.t('order-success-content')
+                    : props.t('order-success-content-guest')}
                 </div>
               </div>
               <div className="c-success__actions">
-                <Link href={`/orders/${id}`}>
+                <Link href={props.paymentProblem ? '/create' : `/orders/${id}`}>
                   <a>
                     <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
-                      {props.t('go-to-orders')}
+                      {props.paymentProblem ? props.t('create-another') : props.t('go-to-orders')}
                     </Button>
                   </a>
                 </Link>
@@ -92,6 +101,33 @@ const OrderSuccess = (props: any): any => {
       `}</style>
     </DefaultLayout>
   );
+};
+
+OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
+  let paymentProblem = false;
+  try {
+    ctx.reduxStore.dispatch(actions.loadOrder(true));
+    const userCookie = ctx.req.headers.cookie.split(';').filter(cookie => cookie.includes('user='));
+    let orderData;
+    if (userCookie.length > 0) {
+      ({ data: orderData } = await api(ctx.req).orders.loadOrder(ctx.query.id));
+    } else {
+      ({ data: orderData } = await api().orders.loadOrderGuest(ctx.query.id));
+    }
+    const { order, state, payment } = orderData.data;
+    order.state = state.name;
+    order.payment = payment ? formatPayment(payment) : null;
+    ctx.reduxStore.dispatch(actions.loadOrder(false, order));
+    if (!payment) paymentProblem = true;
+  } catch (err) {
+    console.log(err.message);
+    if (!ctx.res) return;
+    ctx.res.writeHead(302, {
+      Location: '/',
+    });
+    ctx.res.end();
+  }
+  return { namespacesRequired: ['page-orders'], paymentProblem };
 };
 
 export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(OrderSuccess));

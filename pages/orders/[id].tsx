@@ -30,6 +30,7 @@ OrderDetail.getInitialProps = async (ctx: any): Promise<any> => {
     ctx.reduxStore.dispatch(actions.loadOrder(false, order));
   } catch (err) {
     console.log(err.message);
+    if (!ctx.res) return;
     ctx.res.writeHead(302, {
       Location: '/login?from=orders',
     });
