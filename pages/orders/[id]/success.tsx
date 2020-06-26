@@ -107,6 +107,7 @@ OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
   let paymentProblem = false;
   try {
     ctx.reduxStore.dispatch(actions.loadOrder(true));
+    if (!ctx.req) return;
     const userCookie = ctx.req.headers.cookie.split(';').filter(cookie => cookie.includes('user='));
     let orderData;
     if (userCookie.length > 0) {
@@ -127,7 +128,7 @@ OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
     });
     ctx.res.end();
   }
-  return { namespacesRequired: ['page-orders'], paymentProblem };
+  return { namespacesRequired: ['common'], paymentProblem };
 };
 
 export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(OrderSuccess));
