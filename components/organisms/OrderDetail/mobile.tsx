@@ -368,7 +368,7 @@ const OrderDetailMobile = (props: any): any => {
             &__info {
               @apply text-sm;
               margin-top: 20px;
-              line-height: 20px;
+              line-height: 24px;
               background: #f6f5f8;
               border-radius: 12px;
               padding: 20px;

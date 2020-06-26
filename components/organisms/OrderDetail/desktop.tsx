@@ -244,7 +244,7 @@ const OrderDetailDesktop = (props: any): any => {
                           {isFetching ? (
                             <Skeleton height={24} width={120} />
                           ) : (
-                            `${props.t('awaiting-payment')} ${payment.type}:`
+                            `${props.t('awaiting-payment')} ${payment.type}`
                           )}
                         </div>
                         {payment.instance ? (
@@ -388,7 +388,7 @@ const OrderDetailDesktop = (props: any): any => {
             &__info {
               @apply text-sm;
               margin-top: 24px;
-              line-height: 18px;
+              line-height: 22px;
               background: #f6f5f8;
               border-radius: 12px;
               padding: 18px;

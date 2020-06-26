@@ -21,7 +21,7 @@
   "view-payment": "View Payment",
   "continue-payment": "Continue Payment?",
   "awaiting-payment": "Awaiting payment",
-  "processing-payment": "Please wait, while we process your payment",
+  "processing-payment": "Please wait, while we process your payment. If there is any problem, please contact our customer service.",
   "payment-failure": "There was an error when processing your payment. Please contact our customer service.",
   "copy-success": "Copied successfully",
   "orders-empty-title": "No Past Orders",
