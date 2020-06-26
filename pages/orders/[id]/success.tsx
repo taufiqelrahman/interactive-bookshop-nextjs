@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import actions from 'store/actions';
 import api from 'services/api';
 import { formatPayment } from 'lib/format-payment';
+import cookies from 'next-cookies';
 
 const OrderSuccess = (props: any): any => {
   const router = useRouter();
@@ -107,10 +108,8 @@ const OrderSuccess = (props: any): any => {
 OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
   try {
     ctx.reduxStore.dispatch(actions.loadOrder(true));
-    if (!ctx.req) return;
-    const userCookie = ctx.req.headers.cookie.split(';').filter(cookie => cookie.includes('user='));
     let orderData;
-    if (userCookie.length > 0) {
+    if (cookies(ctx).user) {
       ({ data: orderData } = await api(ctx.req).orders.loadOrder(ctx.query.id));
     } else {
       ({ data: orderData } = await api().orders.loadOrderGuest(ctx.query.id));

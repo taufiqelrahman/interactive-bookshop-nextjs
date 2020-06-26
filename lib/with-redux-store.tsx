@@ -42,7 +42,7 @@ const withReduxStore = (Component: NextPage<any>) => {
 
       return {
         ...appProps,
-        pageProps: appProps.pageProps || {},
+        pageProps: (appProps as any).pageProps || {},
         initialReduxState: reduxStore.getState(),
       };
     }
