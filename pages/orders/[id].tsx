@@ -17,6 +17,7 @@ const OrderDetail = (props: any): any => {
 OrderDetail.getInitialProps = async (ctx: any): Promise<any> => {
   try {
     ctx.reduxStore.dispatch(actions.loadOrder(true));
+    if (!ctx.req) return;
     const userCookie = ctx.req.headers.cookie.split(';').filter(cookie => cookie.includes('user='));
     let orderData;
     if (userCookie.length > 0) {
