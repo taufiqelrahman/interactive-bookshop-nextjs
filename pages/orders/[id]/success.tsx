@@ -17,6 +17,7 @@ const OrderSuccess = (props: any): any => {
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const { isLoggedIn } = props.state.users;
+  const { paymentProblem } = props.state.orders;
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={props.t('checkout')} />}>
       <Head>
@@ -29,10 +30,10 @@ const OrderSuccess = (props: any): any => {
               <div>
                 <img alt="success" className="c-success__image" src="/static/images/success.png" />
                 <h1 className="c-success__title">
-                  {props.paymentProblem ? props.t('payment-problem') : props.t('order-success')}
+                  {paymentProblem ? props.t('payment-problem') : props.t('order-success')}
                 </h1>
                 <div className="c-success__subtitle">
-                  {props.paymentProblem
+                  {paymentProblem
                     ? props.t('payment-problem-content')
                     : isLoggedIn
                     ? props.t('order-success-content')
@@ -40,10 +41,10 @@ const OrderSuccess = (props: any): any => {
                 </div>
               </div>
               <div className="c-success__actions">
-                <Link href={props.paymentProblem ? '/create' : `/orders/${id}`}>
+                <Link href={paymentProblem ? '/create' : `/orders/${id}`}>
                   <a>
                     <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
-                      {props.paymentProblem ? props.t('create-another') : props.t('go-to-orders')}
+                      {paymentProblem ? props.t('create-another') : props.t('go-to-orders')}
                     </Button>
                   </a>
                 </Link>
@@ -104,7 +105,6 @@ const OrderSuccess = (props: any): any => {
 };
 
 OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
-  let paymentProblem = false;
   try {
     ctx.reduxStore.dispatch(actions.loadOrder(true));
     if (!ctx.req) return;
@@ -119,7 +119,9 @@ OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
     order.state = state.name;
     order.payment = payment ? formatPayment(payment) : null;
     ctx.reduxStore.dispatch(actions.loadOrder(false, order));
+    let paymentProblem = false;
     if (!payment) paymentProblem = true;
+    ctx.reduxStore.dispatch(actions.setPaymentProblem(paymentProblem));
   } catch (err) {
     console.log(err.message);
     if (!ctx.res) return;
@@ -128,7 +130,7 @@ OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
     });
     ctx.res.end();
   }
-  return { namespacesRequired: ['common'], paymentProblem };
+  return { namespacesRequired: ['common'] };
 };
 
 export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(OrderSuccess));

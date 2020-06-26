@@ -4,6 +4,7 @@ const initialState: types.OrdersState = {
   isFetching: false,
   orders: [],
   currentOrder: null,
+  paymentProblem: false,
 };
 
 const reducer = (state = initialState, action: types.OrdersActionTypes): types.OrdersState => {
@@ -20,6 +21,12 @@ const reducer = (state = initialState, action: types.OrdersActionTypes): types.O
         ...state,
         orders: action.payload,
         isFetching: action.isFetching,
+      };
+    }
+    case types.SET_PAYMENT_PROBLEM: {
+      return {
+        ...state,
+        paymentProblem: action.payload,
       };
     }
     default:

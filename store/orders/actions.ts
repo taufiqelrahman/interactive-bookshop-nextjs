@@ -68,3 +68,10 @@ export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Ac
       captureException(err);
     });
 };
+
+export function setPaymentProblem(status): types.OrdersActionTypes {
+  return {
+    type: types.SET_PAYMENT_PROBLEM,
+    payload: status,
+  };
+}
