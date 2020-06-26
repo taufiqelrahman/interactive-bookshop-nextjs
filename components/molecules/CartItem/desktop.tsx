@@ -40,6 +40,7 @@ const CartItem = (props: any) => {
       id: props.id,
       quantity: props.quantity,
       ...props.customAttributes,
+      Occupations: props.customAttributes.Occupations.split(','),
     });
     Router.push('/create');
   };
