@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the component 1`] = `
+exports[`components/atoms/Dot renders the component 1`] = `
 Object {
   "debug": [Function],
   "findAllByAltText": [Function],
@@ -54,7 +54,7 @@ Object {
 }
 `;
 
-exports[`renders the component 2`] = `
+exports[`components/atoms/Dot renders the component 2`] = `
 Object {
   "debug": [Function],
   "findAllByAltText": [Function],
