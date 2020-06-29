@@ -2,7 +2,7 @@ const Dot = (props: any) => {
   const colorVariant = props.color ? `c-dot--${props.color}` : '';
   return (
     <div>
-      <span className={`c-dot ${colorVariant}`} />
+      <span className={`c-dot ${colorVariant}`} data-testid="span" />
       <style jsx>{`
         .c-dot {
           @apply bg-black flex mx-1;

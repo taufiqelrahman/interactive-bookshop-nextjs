@@ -15,7 +15,8 @@
     "deploy": "yarn build && yarn start",
     "analyze": "ANALYZE=true yarn build",
     "sitemap": "node sitemap_generator.js",
-    "test": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.js -u --watchAll"
+    "test": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.js -u --watchAll --silent",
+    "test:ci": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.ci.js -u --watchAll --silent"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
@@ -74,6 +75,7 @@
     "styled-jsx-plugin-postcss": "^2.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
     "@types/jest": "^26.0.3",
     "@types/node": "^12.11.7",
@@ -81,6 +83,7 @@
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "@zeit/next-typescript": "^1.1.1",
+    "babel-plugin-module-resolver": "^4.0.0",
     "coveralls": "^3.1.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",

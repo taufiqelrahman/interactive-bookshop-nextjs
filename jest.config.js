@@ -17,4 +17,7 @@ module.exports = {
   // setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
   // Module file extensions for importing
   // moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleNameMapper: {
+    'components(.*)$': '<rootDir>/components$1',
+  },
 };

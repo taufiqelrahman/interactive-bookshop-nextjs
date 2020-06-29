@@ -2,12 +2,12 @@ module.exports = {
   presets: [
     '@zeit/next-typescript/babel',
     [
-      "next/babel",
+      'next/babel',
       {
-        "styled-jsx": {
-          "plugins": [
-            "styled-jsx-plugin-postcss",
-            "styled-jsx-plugin-sass"
+        'styled-jsx': {
+          'plugins': [
+            'styled-jsx-plugin-postcss',
+            'styled-jsx-plugin-sass'
           ]
         }
       }
@@ -18,17 +18,28 @@ module.exports = {
       presets: [
         '@zeit/next-typescript/babel',
         [
-          "next/babel",
+          'next/babel',
           {
-            "styled-jsx": {
-              "plugins": [
-                "styled-jsx-plugin-sass"
+            'styled-jsx': {
+              'plugins': [
+                'styled-jsx-plugin-sass'
               ]
             }
           }
         ],
       ],
-      plugins: ['styled-jsx/babel-test']
+      plugins: [
+        'styled-jsx/babel-test',
+        [
+          'module-resolver',
+          {
+            'root': ['./'],
+            'alias': {
+              '@components': './components',
+            }
+          }
+        ],
+      ]
     }
   }
 }

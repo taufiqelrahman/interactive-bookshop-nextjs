@@ -1,10 +1,10 @@
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
-import { render, waitFor, screen } from '@testing-library/react';
-import Dot from './Dot';
+import { render, screen } from '@testing-library/react';
+import Badge from './Badge';
 
-describe('components/atoms/Dot', () => {
+describe('components/atoms/Badge', () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
@@ -19,16 +19,10 @@ describe('components/atoms/Dot', () => {
     container = null;
   });
 
-  it('loads and displays greeting', async () => {
-    render(<Dot color="red" />);
-    await waitFor(() => screen.getByTestId('span'));
-    expect(screen.getByTestId('span')).toHaveClass('c-dot--red');
-  });
-
   it('renders the component', () => {
-    render(<Dot color="red" />);
+    render(<Badge>!</Badge>);
     expect(screen).toMatchSnapshot();
-    render(<Dot />);
+    render(<Badge />);
     expect(screen).toMatchSnapshot();
   });
 });
