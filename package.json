@@ -16,7 +16,7 @@
     "analyze": "ANALYZE=true yarn build",
     "sitemap": "node sitemap_generator.js",
     "test": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.js -u --watchAll --silent",
-    "test:ci": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.ci.js -u --watchAll --silent"
+    "test:ci": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.ci.js -u --silent"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
