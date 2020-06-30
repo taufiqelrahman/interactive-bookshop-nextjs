@@ -77,7 +77,7 @@ const DefaultLayout = (props: any) => {
       <div className="c-overlay" onClick={hideOverlay}></div>
       {showWhatsapp && (
         <a
-          href="https://wa.me/6285747977740?text=Saya%20tertarik%20mengenai%20buku%20When%20I%20Grow%20Up"
+          href="https://wa.me/62877777177119?text=Saya%20tertarik%20mengenai%20buku%20When%20I%20Grow%20Up"
           target="_blank"
           rel="noopener noreferrer"
         >
