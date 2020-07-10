@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { withTranslation } from 'i18n';
 import Testimonial from 'components/molecules/Testimonial';
 import * as gtag from 'lib/gtag';
+import Card from 'components/atoms/Card';
 
 const TestimonialSlider = (props: any) => {
   const [navRightClass, setNavRightClass] = useState(0);
@@ -66,9 +67,9 @@ const TestimonialSlider = (props: any) => {
         </div>
         <div className="c-testi-slider__slides">
           {props.testimonials.map(testi => (
-            <div key={testi.id} className="c-testi-slider__slide">
+            <Card key={testi.id} className="c-testi-slider__slide">
               <Testimonial testi={testi} />
-            </div>
+            </Card>
           ))}
         </div>
       </div>
@@ -116,7 +117,7 @@ const TestimonialSlider = (props: any) => {
           }
           &__slides {
             @apply flex mr-0 overflow-x-auto;
-            margin-left: 16px;
+            flex: 1;
             @screen md {
               @apply inline-flex;
               overflow-x: unset;
@@ -128,13 +129,28 @@ const TestimonialSlider = (props: any) => {
               margin-left: 12.5%;
             }
           }
-          &__slide {
-            padding-right: 16px;
-            @screen md {
-              @apply pr-12;
-              &:last-child {
-                @apply pr-0;
-              }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-testi-slider__slide {
+          @apply flex;
+          margin-right: 16px;
+          min-width: 297px;
+          width: 297px;
+          padding: 20px;
+          &:first-child {
+            margin-left: 16px;
+          }
+          @screen md {
+            @apply mr-12;
+            min-width: 370px;
+            width: 370px;
+            padding: 40px;
+            &:first-child {
+              @apply ml-0;
+            }
+            &:last-child {
+              @apply mr-0;
             }
           }
         }

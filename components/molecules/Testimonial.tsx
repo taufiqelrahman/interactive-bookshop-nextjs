@@ -1,47 +1,33 @@
-import Card from 'components/atoms/Card';
-
 const Testimonial = (props: any) => {
   const data = props.testi;
   return (
-    <div>
-      <div className="c-testimonial">
-        <Card>
-          <div className="c-testimonial__container">
-            <div className="c-testimonial__content">{data.message}</div>
-            <div className="flex items-center">
-              <img alt="photo" className="c-testimonial__photo" width="44" height="44" src={data.image_url} />
-              <div>
-                <div className="c-testimonial__name">{data.name}</div>
-                <div className="c-testimonial__instance">{data.company}</div>
-              </div>
-            </div>
-          </div>
-        </Card>
+    <div className="c-testimonial">
+      {/* <div className="c-testimonial__container"> */}
+      <div className="c-testimonial__content" dangerouslySetInnerHTML={{ __html: data.message }} />
+      <div className="flex items-center">
+        <img alt="photo" className="c-testimonial__photo" width="60" height="60" src={data.image_url} />
+        <div>
+          <div className="c-testimonial__name">{data.name}</div>
+          <div className="c-testimonial__instance" dangerouslySetInnerHTML={{ __html: data.company }} />
+        </div>
       </div>
+      {/* </div> */}
       <style jsx>{`
         .c-testimonial {
-          width: 297px;
-          height: 216px;
-          @screen md {
-            width: 370px;
-            height: 346px;
-          }
-          &__container {
-            padding: 20px;
-            @screen md {
-              padding: 40px;
-            }
-          }
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
           &__content {
-            @apply italic text-sm flex items-center w-full text-dark-grey font-opensans;
+            @apply italic text-sm w-full text-dark-grey font-opensans;
             line-height: 19px;
-            height: 120px;
             opacity: 0.8;
-            margin-bottom: 12px;
+            margin-top: 24px;
+            margin-bottom: 34px;
             @screen md {
-              @apply text-lg mb-8;
-              height: 174px;
-              line-height: 25px;
+              @apply text-lg;
+              margin-bottom: 54px;
+              line-height: 28px;
             }
           }
           &__photo {
@@ -64,6 +50,12 @@ const Testimonial = (props: any) => {
             line-height: 21px;
             color: #898699;
           }
+        }
+      `}</style>
+      <style jsx global>{`
+        strong,
+        a {
+          @apply font-semibold;
         }
       `}</style>
     </div>

@@ -6,8 +6,8 @@ const Card = (props: any) => {
   };
 
   return (
-    <div style={props.style}>
-      <div className={`c-card ${variantClass()}`}>{props.children}</div>
+    <div className={`c-card ${variantClass()} ${props.className}`} style={props.style}>
+      {props.children}
       <style jsx>{`
         .c-card {
           @apply bg-white;
