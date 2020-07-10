@@ -20,13 +20,13 @@ const Testimonial = (props: any) => {
           justify-content: space-between;
           &__content {
             @apply italic text-sm w-full text-dark-grey font-opensans;
-            line-height: 19px;
+            line-height: 22px;
             opacity: 0.8;
-            margin-top: 24px;
+            margin-top: 16px;
             margin-bottom: 34px;
             @screen md {
               @apply text-lg;
-              margin-bottom: 54px;
+              margin-bottom: 48px;
               line-height: 28px;
             }
           }

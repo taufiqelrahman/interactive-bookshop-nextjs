@@ -144,7 +144,7 @@ const TestimonialSlider = (props: any) => {
           @screen md {
             @apply mr-12;
             min-width: 370px;
-            width: 370px;
+            width: 390px;
             padding: 40px;
             &:first-child {
               @apply ml-0;
