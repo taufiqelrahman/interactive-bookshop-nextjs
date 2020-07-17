@@ -29,7 +29,7 @@ const Terms = (props: any): any => {
             e-mail di{' '}
             <strong>
               <u>
-                <a href="hello@whenigrowup.co.id">hello@whenigrowup.co.id</a>
+                <a href="mailto:hello@whenigrowup.co.id">hello@whenigrowup.co.id</a>
               </u>
             </strong>
             .
@@ -233,7 +233,7 @@ const Terms = (props: any): any => {
             Pemberitahuan atas Permintaan untuk Pengembalian Produk dapat diberitahukan dengan mengisi Form Pernyataan
             Barang Dalam Keadaan Bagus dan dikirimkan ke email kami{' '}
             <u>
-              <a href="hello@whenigrowup.co.id">hello@whenigrowup.co.id</a>
+              <a href="mailto:hello@whenigrowup.co.id">hello@whenigrowup.co.id</a>
             </u>
             .
             <br />
