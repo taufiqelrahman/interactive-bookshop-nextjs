@@ -34,6 +34,9 @@ const Footer = React.memo((props: any) => {
               <Link href="/policies">
                 <a>{props.t('policies')}</a>
               </Link>
+              <Link href="/terms">
+                <a>{props.t('terms')}</a>
+              </Link>
               <Link href="/help">
                 <a>{props.t('help-contact-us')}</a>
               </Link>
@@ -100,11 +103,11 @@ const Footer = React.memo((props: any) => {
             &__menu {
               @apply flex text-white text-center font-semibold underline flex-col;
               margin-bottom: 40px;
-              height: 90px;
+              height: 110px;
               justify-content: space-evenly;
               @screen md {
-                @apply items-center font-semibold text-left mb-0 no-underline items-end;
-                height: 80px;
+                @apply font-semibold text-left mb-0 no-underline items-end;
+                height: 100px;
                 padding-right: 30px;
                 border-right: 1px solid white;
               }
