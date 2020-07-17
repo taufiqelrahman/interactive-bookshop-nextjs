@@ -45,15 +45,18 @@ const Accordion = (props: any) => {
             }
           }
           &__body {
-            @apply font-opensans whitespace-pre-wrap text-xs;
+            @apply font-opensans whitespace-pre-wrap text-sm;
             color: #616161;
-            line-height: 24px;
+            line-height: 28px;
             padding-bottom: 20px;
             margin-top: 20px;
+            padding-right: 24px;
             @screen md {
               @apply text-base text-dark-grey;
-              padding-bottom: 60px;
               margin-top: 25px;
+              padding-bottom: 30px;
+              line-height: 30px;
+              padding-right: 28px;
             }
           }
         }

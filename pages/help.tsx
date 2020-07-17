@@ -5,7 +5,8 @@ import { withTranslation } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Stepper from 'components/atoms/Stepper';
 import Accordion from 'components/atoms/Accordion';
-import dummyContents from '_mocks/helpContents';
+// import dummyContents from '_mocks/helpContents';
+import helpContents from 'config/helpContents';
 import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
 import FormTextField from 'components/molecules/FormTextField';
@@ -52,8 +53,8 @@ const Help = (props: any): any => {
         <div className="c-help-section">
           <div className="c-help-section__left">
             {props.isMobile && <div className="c-help-section__title">{props.t('faq')}</div>}
-            {dummyContents &&
-              dummyContents.map(content => (
+            {helpContents &&
+              helpContents.map(content => (
                 <Accordion
                   key={content.id}
                   title={content.title}
