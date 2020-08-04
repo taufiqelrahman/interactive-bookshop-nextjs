@@ -25,7 +25,7 @@ const BookPreview = (props: any) => {
 
   const calcHeight = () => {
     // const image: any = document.querySelector('.c-flipbook__page img');
-    const containerWidth = window.innerWidth > 1024 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
+    const containerWidth = window.innerWidth > 1023 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
     // const containerMargin = (window.innerWidth - containerWidth) / 2;
     const padding = 60;
     const bookRatio = 495 / 700;
