@@ -58,8 +58,10 @@ const init = function() {
       this.pages = this.el.querySelectorAll(`.${this.classNames.page}, .${this.classNames.hiddenCover}`);
       if (this.options.canClose) {
         if (this.options.initialActivePage === 0) this.el.classList.add(this.classNames.atFrontCover);
-        this.pages.item(0).classList.add(this.classNames.firstPage);
-        this.pages.item(this.pages.length - 1).classList.add(this.classNames.lastPage);
+        if (this.pages.item(0)) {
+          this.pages.item(0).classList.add(this.classNames.firstPage);
+          this.pages.item(this.pages.length - 1).classList.add(this.classNames.lastPage);
+        }
       }
       // RUN
       this.init();
@@ -118,7 +120,7 @@ const init = function() {
         coverEl.classList.add(classNames.hiddenCover);
         el.prepend(coverEl.cloneNode());
         el.append(coverEl.cloneNode());
-      } else if (options.initialActivePage === 0) {
+      } else if (options.initialActivePage === 0 && this.pages.item(0)) {
         this.pages.item(0).classList.add(classNames.isActive);
       }
       if ((options.initialActivePage !== 0 && options.canClose) || !options.canClose) {
