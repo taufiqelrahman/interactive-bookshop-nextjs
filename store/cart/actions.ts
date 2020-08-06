@@ -51,7 +51,6 @@ export const thunkCreateCart = (callback?): ThunkAction<void, types.CartState, n
   dispatch(createCart(true));
   const { user } = (getState() as any).users;
   const cart = user ? await createCheckout(user) : await createCheckoutGuest();
-  console.log('created', cart.id);
   if (!user) {
     localStorage.setItem('cart', JSON.stringify(cart));
     dispatch(createCart(false));
