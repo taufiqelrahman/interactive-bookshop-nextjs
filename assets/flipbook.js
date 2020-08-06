@@ -52,6 +52,7 @@ const init = function() {
       // PRIVATE const
       this.el = document.getElementById(el);
 
+      if (!this.el) return;
       this.el.style.width = this.options.width;
       this.el.style.height = this.options.height;
       this.el.setAttribute('data-useragent', navigator.userAgent); // Add user agent attribute to HTMLElement - used in CSS selection ( for IE10 detection )
