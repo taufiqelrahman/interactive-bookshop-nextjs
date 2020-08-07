@@ -81,7 +81,7 @@ const CartItem = (props: any) => {
                   {props.isSkeleton ? <Skeleton /> : props.t('dream-occupation')}
                 </div>
                 <div className="c-cart-item__detail__value">
-                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Occupations}
+                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Occupations?.replace(/,/g, ', ')}
                 </div>
               </div>
               {!props.isSkeleton && props.customAttributes.Dedication && (
