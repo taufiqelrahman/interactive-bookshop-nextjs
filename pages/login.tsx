@@ -12,7 +12,7 @@ import Divider from 'components/atoms/Divider';
 import FormTextField from 'components/molecules/FormTextField';
 import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
-import Footer from 'components/organisms/Footer';
+// import Footer from 'components/organisms/Footer';
 import * as gtag from 'lib/gtag';
 
 const Login = (props: any): any => {
@@ -148,6 +148,7 @@ const Login = (props: any): any => {
                   <img alt="welcome" className="c-login__image" src="/static/images/login-illus.png" />
                   <h1 className="c-login__title">{isTransit ? props.t('please-wait') : props.t('welcome-back')}</h1>
                   <Button
+                    name="google"
                     onClick={loginGoogle}
                     variant="outline"
                     width="100%"
@@ -158,6 +159,7 @@ const Login = (props: any): any => {
                     {`${props.t('login-with')} Google`}
                   </Button>
                   <Button
+                    name="facebook"
                     onClick={loginFacebook}
                     variant="outline"
                     width="100%"
@@ -167,7 +169,12 @@ const Login = (props: any): any => {
                   >
                     {`${props.t('login-with')} Facebook`}
                   </Button>
-                  <div onClick={loginEmail} className="c-login__link" style={{ marginBottom: 24, marginTop: 24 }}>
+                  <div
+                    data-testid="email"
+                    onClick={loginEmail}
+                    className="c-login__link"
+                    style={{ marginBottom: 24, marginTop: 24 }}
+                  >
                     {`${props.t('login-with')} Email`}
                   </div>
                   <Divider />
@@ -210,6 +217,7 @@ const Login = (props: any): any => {
                           formStyle={{ marginTop: 24 }}
                         />
                         <div
+                          data-testid="submit"
                           onClick={forgotPassword}
                           className="c-login__link"
                           style={{ margin: '12px 0', textAlign: 'left' }}

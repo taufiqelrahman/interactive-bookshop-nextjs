@@ -16,6 +16,7 @@ const Button = (props: any) => {
         className={`c-button ${variantClass()} ${colorClass} ${disabledClass}`}
         onClick={props.onClick}
         disabled={props.disabled || props.isLoading}
+        data-testid={props.name}
       >
         {props.isLoading ? <Loader /> : props.children}
       </button>
