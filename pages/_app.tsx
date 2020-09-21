@@ -254,7 +254,7 @@ const redirectLoginRoutes = ({ pathname, res }) => {
   }
 };
 
-App.getInitialProps = async ({ Component, ctx, router }: any): Promise<any> => {
+App.getInitialProps = async ({ Component, ctx }: any): Promise<any> => {
   const { dispatch, getState } = ctx.reduxStore;
   if (cookies(ctx).user) {
     if (!getState().users.user) {

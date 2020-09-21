@@ -12,7 +12,7 @@ import FormTextField from 'components/molecules/FormTextField';
 import NavBar from 'components/organisms/NavBar/mobile';
 import api from 'services/api';
 import Head from 'next/head';
-import Footer from 'components/organisms/Footer';
+// import Footer from 'components/organisms/Footer';
 
 const Register = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });

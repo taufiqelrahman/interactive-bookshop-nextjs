@@ -1,4 +1,4 @@
-import { withTranslation, Router } from 'i18n';
+import { withTranslation } from 'i18n';
 import DefaultLayout from 'components/layouts/Default';
 import Button from 'components/atoms/Button';
 import FieldCover from 'components/molecules/FieldCover';

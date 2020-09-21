@@ -69,7 +69,7 @@ const createAdapter = (): ApolloClient<any> => {
 //   return bytes.toString(CryptoJS.enc.Utf8);
 // }
 
-export default (): any => {
+const graphqlService = (): any => {
   // const adapter = {
   //   default: createAdapter(),
   //   admin: createAdminAdapter(),
@@ -82,3 +82,5 @@ export default (): any => {
     // users: new Users(adapter),
   };
 };
+
+export default graphqlService;

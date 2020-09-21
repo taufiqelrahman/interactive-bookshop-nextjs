@@ -45,7 +45,7 @@ const createSecureAdapter = (req?): AxiosAdapter => {
   return axios.create(secureOptions);
 }
 
-export default (req?) => {
+const apiService = (req?) => {
   const instance = createAdapter();
   const secure = createSecureAdapter(req);
   const adapter = {
@@ -61,3 +61,5 @@ export default (req?) => {
     message: new Message(adapter),
   }
 };
+
+export default apiService;

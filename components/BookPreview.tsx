@@ -75,7 +75,7 @@ const BookPreview = (props: any) => {
   const ref = useRef<HTMLInputElement>(null);
   const handleScroll = () => {
     const imageWidth = document.getElementsByClassName('c-book-page__svg')[0].getBoundingClientRect().width;
-    const currentScroll = Math.floor(ref.current.scrollLeft / imageWidth) + 1;
+    const currentScroll = Math.floor((ref as any).current.scrollLeft / imageWidth) + 1;
     setCurrentPage(currentScroll);
   };
   useEffect(() => {
