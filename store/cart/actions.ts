@@ -94,6 +94,7 @@ export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null
   return graphql()
     .checkout.addLineItems(dbId, localCartItems)
     .then(cart => {
+      if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
       dispatch(transferCart(false, { ...cart, lineItems }));
     })
@@ -234,6 +235,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
   return graphql()
     .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
     .then(cart => {
+      if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
       dispatch(addToCart(false, { ...cart, lineItems }));
       Router.replace('/cart');
@@ -268,6 +270,7 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
   return graphql()
     .checkout.updateLineItems(user ? checkoutId : id, lineItemsToUpdate)
     .then(cart => {
+      if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
       dispatch(updateCart(false, { ...cart, lineItems }));
       if (Router.pathname !== '/cart') Router.replace('/cart');
@@ -297,6 +300,7 @@ export const thunkRemoveFromCart = (id, itemId): ThunkAction<void, types.CartSta
   return graphql()
     .checkout.removeLineItems(id, itemId)
     .then(cart => {
+      if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
       dispatch(removeFromCart(false, { ...cart, lineItems }));
     })
