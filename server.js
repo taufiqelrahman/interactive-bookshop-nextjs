@@ -26,7 +26,8 @@ const handle = app.getRequestHandler();
     const parsedUrl = parse(req.url, true);
     const filePath = path.join(__dirname, '.next', parsedUrl.pathname);
     // app.serveStatic(req, res, filePath);
-    createReadStream(filePath).pipe(res);
+    // createReadStream(filePath).pipe(res);
+    res.sendFile(filePath);
   });
   server.get('/workbox*', (req, res) => {
     const parsedUrl = parse(req.url, true);
