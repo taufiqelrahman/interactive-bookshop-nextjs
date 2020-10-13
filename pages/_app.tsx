@@ -2,6 +2,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { NextPage } from 'next';
+import Head from 'next/head';
 import * as Sentry from '@sentry/browser';
 import { appWithTranslation, i18n, Router } from 'i18n';
 import { useEffect, useState, useCallback, useRef } from 'react';
@@ -88,6 +89,84 @@ const App: NextPage<any> = (props: any) => {
   });
   return (
     <Provider store={reduxStore}>
+      <Head>
+        <meta key="robots" name="robots" content="noimageindex" />
+        <meta key="theme-color" name="theme-color" content="#000000" />
+        <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
+        <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          key="apple-mobile-web-app-status-bar-style"
+          name="apple-mobile-web-app-status-bar-style"
+          content="white"
+        />
+        <meta
+          key="description"
+          name="description"
+          content="children books, custom books, parenting books, parenting, children, baby, creativity, growing up"
+        />
+        {/* PWA */}
+        <meta key="charSet" charSet="utf-8" />
+        <meta key="httpEquiv" httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+          key="viewport"
+          name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+        />
+        <meta
+          key="keyword"
+          name="keywords"
+          content="children books, custom books, parenting books, parenting, children, baby, creativity, growing up"
+        />
+        {/* <!-- Android  --> */}
+        <meta key="theme-color" name="theme-color" content="#de6236" />
+        <meta key="mobile-web-app-capable" name="mobile-web-app-capable" content="yes" />
+
+        {/* <!-- iOS --> */}
+        <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
+        <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          key="apple-mobile-web-app-status-bar-style"
+          name="apple-mobile-web-app-status-bar-style"
+          content="default"
+        />
+
+        {/* <!-- Windows  --> */}
+        <meta key="msapplication-navbutton-color" name="msapplication-navbutton-color" content="#de6236" />
+        <meta key="msapplication-TileColor" name="msapplication-TileColor" content="#de6236" />
+        <meta
+          key="msapplication-TileImage"
+          name="msapplication-TileImage"
+          content="/static/images/icons/icon-144x144.png"
+        />
+        <meta key="msapplication-config" name="msapplication-config" content="browserconfig.xml" />
+
+        {/* <!-- Pinned Sites  --> */}
+        <meta key="application-name" name="application-name" content="When I Grow Up" />
+        <meta key="msapplication-tooltip" name="msapplication-tooltip" content="When I Grow Up" />
+        <meta key="msapplication-starturl" name="msapplication-starturl" content="/" />
+
+        {/* <!-- Tap highlighting  --> */}
+        <meta key="msapplication-tap-highlight" name="msapplication-tap-highlight" content="no" />
+
+        {/* <!-- UC Mobile Browser  --> */}
+        <meta key="full-screen" name="full-screen" content="yes" />
+        <meta key="browsermode" name="browsermode" content="application" />
+
+        {/* <!-- Disable night mode for this page  --> */}
+        <meta key="nightmode" name="nightmode" content="enable/disable" />
+
+        {/* <!-- Fitscreen  --> */}
+        {/* <meta key="viewport" name="viewport" content="uc-fitscreen=yes" /> */}
+
+        {/* <!-- Layout mode --> */}
+        <meta key="layoutmode" name="layoutmode" content="fitscreen/standard" />
+
+        {/* <!-- imagemode - show image even in text only mode  --> */}
+        <meta key="imagemode" name="imagemode" content="force" />
+
+        {/* <!-- Orientation  --> */}
+        {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
+      </Head>
       <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`

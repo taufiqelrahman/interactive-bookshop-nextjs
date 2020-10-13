@@ -4,6 +4,7 @@ const next = require('next');
 const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const path = require('path');
 const { parse } = require('url');
+const { createReadStream } = require('fs');
 const nextI18next = require('./i18n');
 const config = require('./next.config');
 
@@ -24,7 +25,8 @@ const handle = app.getRequestHandler();
   server.get('/sw.js', (req, res) => {
     const parsedUrl = parse(req.url, true);
     const filePath = path.join(__dirname, '.next', parsedUrl.pathname);
-    app.serveStatic(req, res, filePath);
+    // app.serveStatic(req, res, filePath);
+    createReadStream(filePath).pipe(res);
   });
   server.get('/workbox*', (req, res) => {
     const parsedUrl = parse(req.url, true);
