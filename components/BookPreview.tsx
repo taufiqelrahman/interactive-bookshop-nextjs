@@ -14,6 +14,7 @@ import detectIt from 'detect-it';
 const BookPreview = (props: any) => {
   const [, setBook] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [bookClicked, setBookClicked] = useState(false);
   const [state, setState] = useState({
     height: 0,
     loaded: false,
@@ -58,6 +59,7 @@ const BookPreview = (props: any) => {
         });
         const currentPage = els.pagesTarget[els.pagesTarget.length - 1];
         if (currentPage) setCurrentPage(parseInt(currentPage.id, 10));
+        if (!bookClicked) setBookClicked(true);
       },
     });
     setBook(flipBookInstance);
@@ -219,28 +221,35 @@ const BookPreview = (props: any) => {
           <Pagination current={currentPage} pages={jointPages} />
         </Fragment>
       ) : (
-        <div className="c-book-preview__container">
-          <div className="c-flipbook" id="FlipBook">
-            {jointPages.map((page, index) => (
-              <BookPage
-                key={index}
-                id={index + 1}
-                className="c-flipbook__page"
-                // className={`c-flipbook__page ${pageClass(index)}`}
-                image={getImage(page[0].occupation.name, page[0].page_number)}
-                name={props.selected.Name}
-                language={props.selected.Language}
-                // language="indo"
-                gender={props.selected.Gender}
-                dedication={props.selected.Dedication}
-                contents={page}
-                isMobile={props.isMobile}
-                isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
-                mustLoad={index + 1 < currentPage + 7 || index === jointPages.length - 1}
-              />
-            ))}
+        <Fragment>
+          {!bookClicked && (
+            <div className="c-book-preview__try">
+              <img src="/static/images/try-me.png" alt="try me" />
+            </div>
+          )}
+          <div className="c-book-preview__container">
+            <div className="c-flipbook" id="FlipBook">
+              {jointPages.map((page, index) => (
+                <BookPage
+                  key={index}
+                  id={index + 1}
+                  className="c-flipbook__page"
+                  // className={`c-flipbook__page ${pageClass(index)}`}
+                  image={getImage(page[0].occupation.name, page[0].page_number)}
+                  name={props.selected.Name}
+                  language={props.selected.Language}
+                  // language="indo"
+                  gender={props.selected.Gender}
+                  dedication={props.selected.Dedication}
+                  contents={page}
+                  isMobile={props.isMobile}
+                  isWhiteCover={props.cover === 'white' && page[0].occupation.name.includes('Cover')}
+                  mustLoad={index + 1 < currentPage + 7 || index === jointPages.length - 1}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </Fragment>
       )}
       {/* <div className="c-book-preview__right">
         <span
@@ -266,6 +275,10 @@ const BookPreview = (props: any) => {
             padding: 0;
             overflow: unset;
             height: unset;
+          }
+          &__try {
+            @apply absolute;
+            right: 10%;
           }
           &__pages {
             @apply flex overflow-x-auto w-full;
