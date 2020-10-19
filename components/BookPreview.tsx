@@ -392,8 +392,8 @@ const BookPreview = (props: any) => {
         }
 
         .is-calling {
-          -webkit-transform: rotateY(-20deg) !important;
-          transform: rotateY(-20deg) !important;
+          -webkit-transform: rotateY(-15deg) !important;
+          transform: rotateY(-15deg) !important;
         }
 
         .c-flipbook__page {
