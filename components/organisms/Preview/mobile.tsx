@@ -91,7 +91,7 @@ const PreviewMobile = (props: any): any => {
             <FieldCover schema={schema(props).cover} register={register} errors={errors.cover} />
           </div>
           <Button type="submit" width="648px" style={{ margin: '12px 0 18px' }}>
-            {selected.id ? props.t('update-cart') : props.t('form:continue-button')}
+            {props.t('form:continue-button')}
           </Button>
         </form>
       </div>

@@ -32,7 +32,8 @@ Preview.getInitialProps = async (ctx: any): Promise<any> => {
   }
   try {
     ctx.reduxStore.dispatch(actions.loadBookPages(true));
-    const PARAMS = { jobs: selected.jobIds.toString() };
+    // const PARAMS = { jobs: selected.jobIds.toString() };
+    const PARAMS = { jobs: selected.jobIds[0].toString() };
     const { data } = await api().master.getBookPages(PARAMS);
     ctx.reduxStore.dispatch(actions.loadBookPages(false, data.data));
   } catch (err) {

@@ -198,6 +198,7 @@ const BookPreview = (props: any) => {
             {jointPages.map((page, index) => (
               <BookPage
                 key={index}
+                isLast={index === jointPages.length - 1}
                 style={{
                   height: `calc(80vw / (${bookRatio}))`,
                   minWidth: '80vw',
@@ -233,6 +234,7 @@ const BookPreview = (props: any) => {
                 <BookPage
                   key={index}
                   id={index + 1}
+                  isLast={index === jointPages.length - 1}
                   className="c-flipbook__page"
                   // className={`c-flipbook__page ${pageClass(index)}`}
                   image={getImage(page[0].occupation.name, page[0].page_number)}

@@ -102,7 +102,7 @@ const PreviewDesktop = (props: any): any => {
                     <FieldCover schema={schema(props).cover} errors={errors.Cover} register={register} />
                   </div>
                   <Button type="submit" width="320px">
-                    {selected.id ? props.t('update-cart') : props.t('add-to-cart')}
+                    {props.t('form:continue-order-button')}
                   </Button>
                 </div>
               </div>

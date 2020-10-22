@@ -1,3 +1,4 @@
+import { withTranslation } from 'i18n';
 import LazyLoad, { forceVisible } from 'react-lazyload';
 import { useEffect } from 'react';
 import 'styles/fonts.min.css';
@@ -69,17 +70,21 @@ const BookPage = (props: any) => {
         <svg className="c-book-page__svg" xmlns="http://www.w3.org/2000/svg">
           <foreignObject x="0" y="0" width="100%" height="100%" style={{ overflow: 'visible' }}>
             <img className="c-book-page__image" src={props.mustLoad ? props.image : ''} alt="book page" />
-            {props.contents.map((content, key) => {
-              const value = processContent(content, props.language);
-              return (
-                <div
-                  key={key}
-                  className="c-book-page__content"
-                  style={styleGenerator(content.style)}
-                  dangerouslySetInnerHTML={{ __html: value }}
-                />
-              );
-            })}
+            {props.isLast ? (
+              <div className="c-book-page__limit">{props.t('book-limit')}</div>
+            ) : (
+              props.contents.map((content, key) => {
+                const value = processContent(content, props.language);
+                return (
+                  <div
+                    key={key}
+                    className="c-book-page__content"
+                    style={styleGenerator(content.style)}
+                    dangerouslySetInnerHTML={{ __html: value }}
+                  />
+                );
+              })
+            )}
           </foreignObject>
         </svg>
       </LazyLoad>
@@ -112,6 +117,12 @@ const BookPage = (props: any) => {
           &__content {
             @apply absolute;
           }
+          &__limit {
+            @apply absolute h-full w-full flex items-center justify-center top-0 p-8 text-center font-semibold text-xl;
+            background: rgba(255, 255, 255, 0.8);
+            line-height: 28px;
+            font-family: Jost;
+          }
         }
       `}</style>
       <style jsx global>{`
@@ -128,4 +139,4 @@ const BookPage = (props: any) => {
   );
 };
 
-export default BookPage;
+export default withTranslation('common')(BookPage);
