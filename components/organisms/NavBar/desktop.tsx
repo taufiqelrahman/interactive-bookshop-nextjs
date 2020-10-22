@@ -60,6 +60,9 @@ const NavBar = (props: any) => {
     toggleShow(false, setShowAccount);
   };
 
+  const userFullName = props.users?.user?.name;
+  const userName = userFullName ? userFullName.split(' ')[0] : props.t('account');
+
   return (
     <div className={`relative z-50 ${showCart || showAccount ? 'bg-white' : ''}`}>
       <div className={stickyClassName()} ref={ref}>
@@ -99,7 +102,7 @@ const NavBar = (props: any) => {
                     <a>
                       <div className="c-nav-bar__menu__item c-nav-bar__menu__button">
                         <span className="c-nav-bar__menu__icon icon-account"></span>
-                        {props.t('account')}
+                        {userName}
                       </div>
                     </a>
                     {showAccount && <AccountDropdown logout={logout} />}
