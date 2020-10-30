@@ -216,6 +216,9 @@ const App: NextPage<any> = (props: any) => {
 
         /* icons */
 
+        .icon-gift:before {
+          content: '\e99f';
+        }
         .icon-ico_book:before {
           content: '\e914';
         }
