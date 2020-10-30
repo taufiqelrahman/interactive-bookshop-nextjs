@@ -131,6 +131,9 @@ const PreviewMobile = (props: any): any => {
             <div className="c-sheet__content__item">
               <span className="icon-ico_book" /> {props.t('book-specs-3')}
             </div>
+            <div className="c-sheet__content__item">
+              <span className="icon-gift" /> {props.t('manufacturing-time')}
+            </div>
           </div>
         }
         header={true}

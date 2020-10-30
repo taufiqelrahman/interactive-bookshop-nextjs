@@ -147,12 +147,15 @@ const BookPreview = (props: any) => {
     bookPages[occupation] = groupby(pageByOccupations[occupation], page => page.page_number);
   });
   let jointPages: any = [];
-  bookPages.forEach((jobs: Array<any>) => {
+  bookPages.forEach((jobs: Array<any>, index) => {
+    if (index === bookPages.length - 1 && jobs[1] && jobs[2]) {
+      jointPages = [...jointPages, jobs[1], jobs[2]];
+      return;
+    }
     Object.keys(jobs).forEach(pageNumber => {
       jointPages = [...jointPages, jobs[pageNumber]];
     });
   });
-  // console.log(jointPages);
 
   const getImage = (job, pageNumber) => {
     const { Gender, Age, Skin, Hair } = props.selected;

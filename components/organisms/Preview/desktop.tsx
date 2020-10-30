@@ -95,6 +95,9 @@ const PreviewDesktop = (props: any): any => {
                     <div className="c-preview__details__item">
                       <span className="icon-ico_book" /> {props.t('book-specs-3')}
                     </div>
+                    <div className="c-preview__details__item">
+                      <span className="icon-gift" /> {props.t('manufacturing-time')}
+                    </div>
                   </div>
                 </div>
                 <div className="c-preview__details--right">

@@ -171,9 +171,13 @@ const Cart = (props: any): any => {
                           {props.t('shipping-not-included')}
                         </div>
                       )}
-                      <div className="c-cart__summary__info__item">
+                      <div className="c-cart__summary__info__item" style={{ marginBottom: 8 }}>
                         <span className="icon-tag_label" />
                         {props.t('discount-next-step')}
+                      </div>
+                      <div className="c-cart__summary__info__item">
+                        <span className="icon-gift" />
+                        {props.t('manufacturing-time')}
                       </div>
                     </div>
                   )}

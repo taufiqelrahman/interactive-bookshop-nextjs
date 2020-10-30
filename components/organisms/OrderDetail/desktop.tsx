@@ -47,10 +47,12 @@ const OrderDetailDesktop = (props: any): any => {
               ) : (
                 <Fragment>
                   {props.t('order-title')}: {orderNumber}
-                  <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
-                    {props.t(currentOrder.state)}
-                    {props.state === 'received' && <span className="icon-cross_check" />}
-                  </Capsule>
+                  {currentOrder && (
+                    <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
+                      {props.t(currentOrder.state)}
+                      {props.state === 'received' && <span className="icon-cross_check" />}
+                    </Capsule>
+                  )}
                 </Fragment>
               )}
             </div>
@@ -133,6 +135,9 @@ const OrderDetailDesktop = (props: any): any => {
                       {isFetching ? <Skeleton height={22} width={170} /> : trackingNumber}
                     </div>
                   </div>
+                </div>
+                <div className="c-detail__order__info">
+                  <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>
                 </div>
               </div>
             </Card>
@@ -363,6 +368,16 @@ const OrderDetailDesktop = (props: any): any => {
             }
             &__right {
               @apply w-5/12;
+            }
+            &__info {
+              @apply text-sm;
+              line-height: 22px;
+              background: #f6f5f8;
+              border-radius: 12px;
+              padding: 18px;
+              &__item {
+                line-height: 20px;
+              }
             }
           }
           &__address {

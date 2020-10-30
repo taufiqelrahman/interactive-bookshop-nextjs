@@ -136,6 +136,9 @@ const OrderDetailMobile = (props: any): any => {
                         <div className="c-detail__label">{props.t('tracking-number')}</div>
                         <div className="c-detail__value">{trackingNumber}</div>
                       </div>
+                      <div className="c-detail__order__info">
+                        <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>
+                      </div>
                     </div>
                     <div className="c-detail__container">
                       <h2>{props.t('shipping-address')}</h2>
@@ -311,6 +314,18 @@ const OrderDetailMobile = (props: any): any => {
               @apply font-semibold;
               line-height: 24px;
               margin-bottom: 24px;
+            }
+          }
+          &__order {
+            &__info {
+              @apply text-sm mt-6;
+              line-height: 24px;
+              background: #f6f5f8;
+              border-radius: 12px;
+              padding: 20px;
+              &__item {
+                line-height: 20px;
+              }
             }
           }
           &__note {
