@@ -29,7 +29,8 @@ const OrderSuccess = (props: any): any => {
           <Wrapper variant="border">
             <div className="c-success__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
-                <img alt="success" className="c-success__image" src="/static/images/success.png" />
+                {/* <img alt="success" className="c-success__image" src="/static/images/success.png" /> */}
+                <img alt="success" className="c-success__image" src="/static/images/old_man.gif" />
                 <h1 className="c-success__title">
                   {paymentProblem ? props.t('payment-problem') : props.t('order-success')}
                 </h1>
@@ -69,8 +70,12 @@ const OrderSuccess = (props: any): any => {
           }
           &__image {
             @apply mx-auto;
+            width: 160px;
             margin-top: 12px;
             margin-bottom: 24px;
+            @screen md {
+              width: 220px;
+            }
           }
           &__title {
             @apply font-semibold;
