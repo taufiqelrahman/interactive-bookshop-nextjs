@@ -38,7 +38,7 @@ const CharacterCustomization = (props: any) => {
     setShowSheet(true);
   };
   const quit = () => {
-    props.setSheet(false);
+    setShowSheet(false);
     Router.push('/');
   };
   const onBack = () => {
