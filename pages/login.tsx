@@ -31,7 +31,7 @@ const Login = (props: any): any => {
     email: { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
     password: { required: true },
     confirmPassword: {
-      required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
+      required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
       validate: value => value === watch('password') || props.t('form:password-different'),
     },
   };
