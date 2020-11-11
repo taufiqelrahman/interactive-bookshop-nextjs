@@ -1,16 +1,22 @@
 import { withTranslation } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import Stepper from 'components/atoms/Stepper';
-import Card from 'components/atoms/Card';
-import Button from 'components/atoms/Button';
-import FieldCover from 'components/molecules/FieldCover';
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
-import Modal from 'components/atoms/Modal';
 import * as gtag from 'lib/gtag';
+import DefaultLayout from 'components/layouts/Default';
+// import Modal from 'components/atoms/Modal';
+// import Button from 'components/atoms/Button';
+// import FieldCover from 'components/molecules/FieldCover';
+// import BookPreview from 'components/BookPreview';
+
+const Modal = dynamic(() => import('components/atoms/Modal'));
+const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const Card = dynamic(() => import('components/atoms/Card'));
+const Button = dynamic(() => import('components/atoms/Button'));
+const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
+const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 
 const PreviewDesktop = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);

@@ -2,11 +2,13 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import Stepper from 'components/atoms/Stepper';
-import NavBar from 'components/organisms/NavBar/mobile';
 import Head from 'next/head';
-import Footer from 'components/organisms/Footer';
+import dynamic from 'next/dynamic';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+
+const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Policies = (props: any): any => {
   return (

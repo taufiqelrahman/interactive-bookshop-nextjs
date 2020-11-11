@@ -5,15 +5,17 @@ import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import Card from 'components/atoms/Card';
-import DefaultLayout from 'components/layouts/Default';
-import Button from 'components/atoms/Button';
-import Divider from 'components/atoms/Divider';
-import FormTextField from 'components/molecules/FormTextField';
-import NavBar from 'components/organisms/NavBar/mobile';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
-// import Footer from 'components/organisms/Footer';
 import * as gtag from 'lib/gtag';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+// import Footer from 'components/organisms/Footer';
+
+const Card = dynamic(() => import('components/atoms/Card'));
+const Button = dynamic(() => import('components/atoms/Button'));
+const Divider = dynamic(() => import('components/atoms/Divider'));
+const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
 const Login = (props: any): any => {
   const router = useRouter();

@@ -1,19 +1,21 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import Stepper from 'components/atoms/Stepper';
-import CartItem from 'components/molecules/CartItem/desktop';
-import CartItemMobile from 'components/molecules/CartItem/mobile';
-import Card from 'components/atoms/Card';
-import Dot from 'components/atoms/Dot';
-import Divider from 'components/atoms/Divider';
-import Button from 'components/atoms/Button';
+import dynamic from 'next/dynamic';
 import NumberFormat from 'react-number-format';
-import NavBar from 'components/organisms/NavBar/mobile';
 import { Fragment, useEffect } from 'react';
 import Head from 'next/head';
 import * as gtag from 'lib/gtag';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+
+const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const CartItem = dynamic(() => import('components/molecules/CartItem/desktop'));
+const CartItemMobile = dynamic(() => import('components/molecules/CartItem/mobile'));
+const Card = dynamic(() => import('components/atoms/Card'));
+const Dot = dynamic(() => import('components/atoms/Dot'));
+const Divider = dynamic(() => import('components/atoms/Divider'));
+const Button = dynamic(() => import('components/atoms/Button'));
 
 const Cart = (props: any): any => {
   const { users, cart } = props.state;

@@ -1,20 +1,22 @@
 import { withTranslation, Router } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-// import dummyOrder from '_mocks/orderDetail';
+import dynamic from 'next/dynamic';
 import NumberFormat from 'react-number-format';
-import Divider from 'components/atoms/Divider';
 import appConfig from 'config';
 import { useState, useEffect, Fragment } from 'react';
-import Capsule from 'components/atoms/Capsule';
 import { fullDate } from 'lib/format-date';
-import NavBar from 'components/organisms/NavBar/mobile';
 import { retrieveInfo } from './helper';
-import Sheet from 'components/atoms/Sheet';
 import { Swipeable } from 'react-swipeable';
-import Dot from 'components/atoms/Dot';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
 import { toast } from 'react-toastify';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+// import dummyOrder from '_mocks/orderDetail';
+
+const Divider = dynamic(() => import('components/atoms/Divider'));
+const Capsule = dynamic(() => import('components/atoms/Capsule'));
+const Sheet = dynamic(() => import('components/atoms/Sheet'));
+const Dot = dynamic(() => import('components/atoms/Dot'));
 
 const OrderDetailMobile = (props: any): any => {
   const { isFetching, currentOrder: order } = props.state.orders;

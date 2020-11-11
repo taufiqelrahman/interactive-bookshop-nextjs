@@ -2,12 +2,14 @@ import { NextPage } from 'next';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import NavBar from 'components/organisms/NavBar/mobile';
-import Button from 'components/atoms/Button';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Footer from 'components/organisms/Footer';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+
+const Button = dynamic(() => import('components/atoms/Button'));
+const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Error: NextPage<any> = (props: any) => {
   const router = useRouter();

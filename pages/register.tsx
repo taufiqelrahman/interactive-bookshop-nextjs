@@ -4,15 +4,18 @@ import { withTranslation, Link } from 'i18n';
 import { useState, useEffect, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import Card from 'components/atoms/Card';
-import DefaultLayout from 'components/layouts/Default';
-import Button from 'components/atoms/Button';
-import Divider from 'components/atoms/Divider';
-import FormTextField from 'components/molecules/FormTextField';
-import NavBar from 'components/organisms/NavBar/mobile';
-import api from 'services/api';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import api from 'services/api';
+import debouncePromise from 'awesome-debounce-promise';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
 // import Footer from 'components/organisms/Footer';
+
+const Card = dynamic(() => import('components/atoms/Card'));
+const Button = dynamic(() => import('components/atoms/Button'));
+const Divider = dynamic(() => import('components/atoms/Divider'));
+const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
 const Register = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -27,10 +30,10 @@ const Register = (props: any): any => {
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
       pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: props.t('form:email-invalid') },
-      validate: async value => {
+      validate: debouncePromise(async value => {
         const { data } = await api().users.checkEmail({ email: value });
         return !data.exists || props.t('form:email-exists');
-      }, // watch for duplicate email
+      }, 500), // watch for duplicate email
     },
     name: { required: { value: true, message: `${props.t('form:name-label')} ${props.t('form:required-error')}` } },
     phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },

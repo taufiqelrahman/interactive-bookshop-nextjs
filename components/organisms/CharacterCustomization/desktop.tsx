@@ -1,24 +1,28 @@
-import Card from 'components/atoms/Card';
 import { useForm } from 'react-hook-form';
+import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { withTranslation, Router } from 'i18n';
-import FieldOccupations from 'components/molecules/FieldOccupations';
-import FormTextField from 'components/molecules/FormTextField';
-import FieldAge from 'components/molecules/FieldAge';
-// import FieldDob from 'components/molecules/FieldDob';
-import FieldGender from 'components/molecules/FieldGender';
-import FieldHair from 'components/molecules/FieldHair';
-import FieldSkin from 'components/molecules/FieldSkin';
-import FieldLanguage from 'components/molecules/FieldLanguage';
-import FormTextArea from 'components/molecules/FormTextArea';
-import Divider from 'components/atoms/Divider';
-import Button from 'components/atoms/Button';
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
-import DefaultLayout from 'components/layouts/Default';
-import Stepper from 'components/atoms/Stepper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
+// import Card from 'components/atoms/Card';
+// import FieldDob from 'components/molecules/FieldDob';
+// import DefaultLayout from 'components/layouts/Default';
+
+const DefaultLayout = dynamic(() => import('components/layouts/Default'));
+const Card = dynamic(() => import('components/atoms/Card'));
+const FieldOccupations = dynamic(() => import('components/molecules/FieldOccupations'));
+const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
+const FieldAge = dynamic(() => import('components/molecules/FieldAge'));
+const FieldGender = dynamic(() => import('components/molecules/FieldGender'));
+const FieldHair = dynamic(() => import('components/molecules/FieldHair'));
+const FieldSkin = dynamic(() => import('components/molecules/FieldSkin'));
+const FieldLanguage = dynamic(() => import('components/molecules/FieldLanguage'));
+const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
+const Button = dynamic(() => import('components/atoms/Button'));
+const Divider = dynamic(() => import('components/atoms/Divider'));
+const Stepper = dynamic(() => import('components/atoms/Stepper'));
 
 const CharacterCustomization = (props: any) => {
   const router = useRouter();
@@ -30,18 +34,22 @@ const CharacterCustomization = (props: any) => {
       showError(props.t('form-error'));
     }
   }, [errors]);
-  const selected = props.state.cart.selected || {
-    // Occupations: ['Teacher', 'Pilot', 'Police'],
-    // Name: 'Kadhgihbkt',
-    // Age: 'kid',
-    // Gender: 'girl',
-    // Skin: 'light',
-    // Language: 'english',
-    // Dedication:
-    //   '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-    // 'Date of Birth': '03-01-2019',
-    // Hair: 'short',
-  };
+  const isDev = process.env.NODE_ENV === 'development';
+  const defaultSelected = isDev
+    ? {
+        Occupations: ['Teacher', 'Pilot', 'Police'],
+        Name: 'Kadhgihbkt',
+        Age: 'kid',
+        Gender: 'girl',
+        Skin: 'light',
+        Language: 'english',
+        Dedication:
+          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
+        'Date of Birth': '03-01-2019',
+        Hair: 'short',
+      }
+    : {};
+  const selected = props.state.cart.selected || defaultSelected;
   const { occupations } = props.state.master;
   const onSubmit = data => {
     if (!router.query.edit) {

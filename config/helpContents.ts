@@ -24,7 +24,7 @@ export default [
       'Dalam cerita ini, anak Anda akan menjadi tokoh utamanya. Anda dapat melihatnya dalam judul cerita, nama karakter, ilustrasi karakter, bahasa,  dan 3 cita-cita pilihannya. Anda juga akan dapat menuliskan pesan khusus di akhir cerita.',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Apa saja cita-cita yang bisa dipilih?',
     content:
       'Si kecil dapat memilih (atau Anda bisa ikut memilihkan) 3 profesi di dalam 1 cerita. Ada 8 macam profesi yang bisa dipilih, yaitu Astronot, Guru, Dokter, Musisi, Koki, Balerina, Pilot, dan Polisi.',

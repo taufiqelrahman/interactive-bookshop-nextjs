@@ -1,16 +1,18 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
-import Card from 'components/atoms/Card';
-import DefaultLayout from 'components/layouts/Default';
-import Button from 'components/atoms/Button';
-import NavBar from 'components/organisms/NavBar/mobile';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import cookies from 'next-cookies';
 import actions from 'store/actions';
 import api from 'services/api';
 import { formatPayment } from 'lib/format-payment';
-import cookies from 'next-cookies';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+
+const Card = dynamic(() => import('components/atoms/Card'));
+const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderSuccess = (props: any): any => {
   const router = useRouter();

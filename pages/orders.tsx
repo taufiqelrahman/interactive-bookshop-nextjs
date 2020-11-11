@@ -1,17 +1,19 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import Stepper from 'components/atoms/Stepper';
-import OrderItem from 'components/molecules/OrderItem/desktop';
-import OrderItemMobile from 'components/molecules/OrderItem/mobile';
-// import dummyOrders from '_mocks/orders';
-import NavBar from 'components/organisms/NavBar/mobile';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import actions from 'store/actions';
 import api from 'services/api';
-import Head from 'next/head';
-import Button from 'components/atoms/Button';
-import Footer from 'components/organisms/Footer';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+// import dummyOrders from '_mocks/orders';
+
+const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const OrderItem = dynamic(() => import('components/molecules/OrderItem/desktop'));
+const OrderItemMobile = dynamic(() => import('components/molecules/OrderItem/mobile'));
+const Button = dynamic(() => import('components/atoms/Button'));
+const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Orders = (props: any): any => {
   const { orders } = props.state;

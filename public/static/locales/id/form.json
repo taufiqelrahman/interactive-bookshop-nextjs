@@ -73,5 +73,6 @@
   "zip": "Kodepos",
   "quit-customizing": "Batalkan buku?",
   "quit-confirmation": "Jika kamu batalkan, data buku ini juga akan terhapus. Langkah ini tidak bisa dikembalikan lagi.",
-  "yes-quit": "Ya, batalkan"
+  "yes-quit": "Ya, batalkan",
+  "copy-success-help": "Pesan berhasil dikirm"
 }

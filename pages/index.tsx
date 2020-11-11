@@ -1,22 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-// import api from 'services/api';
-import DefaultLayout from 'components/layouts/Default';
-import { withTranslation } from 'i18n';
-import TestimonialSlider from 'components/organisms/TestimonialSlider';
-import BookForm from 'components/organisms/BookForm';
-import Button from 'components/atoms/Button';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import NavBar from 'components/organisms/NavBar/mobile';
-import Footer from 'components/organisms/Footer';
-import actions from 'store/actions';
-// import graphql from 'services/graphql';
-import api from 'services/api';
 import * as gtag from 'lib/gtag';
 import LazyLoad from 'react-lazyload';
 import { Link, Element } from 'react-scroll';
-import Showcase from 'components/atoms/Showcase';
+import { withTranslation } from 'i18n';
+import actions from 'store/actions';
+// import graphql from 'services/graphql';
+// import api from 'services/api';
+import api from 'services/api';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+
+const Button = dynamic(() => import('components/atoms/Button'));
+const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
+const BookForm = dynamic(() => import('components/organisms/BookForm'));
+const Showcase = dynamic(() => import('components/atoms/Showcase'));
+const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Index = (props: any): any => {
   const { testimonials, occupations } = props.state.master;

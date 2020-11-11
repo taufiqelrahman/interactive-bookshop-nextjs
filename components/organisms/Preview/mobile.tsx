@@ -1,15 +1,21 @@
 import { withTranslation } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import Button from 'components/atoms/Button';
-import FieldCover from 'components/molecules/FieldCover';
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import BookPreview from 'components/BookPreview';
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
-import NavBar from '../NavBar/mobile';
 import Cookies from 'js-cookie';
-import Sheet from 'components/atoms/Sheet';
 import * as gtag from 'lib/gtag';
+import NavBar from 'components/organisms/NavBar/mobile';
+import DefaultLayout from 'components/layouts/Default';
+// import BookPreview from 'components/BookPreview';
+// import Sheet from 'components/atoms/Sheet';
+// import Button from 'components/atoms/Button';
+// import FieldCover from 'components/molecules/FieldCover';
+
+const Button = dynamic(() => import('components/atoms/Button'));
+const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
+const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
+const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
 const PreviewMobile = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);

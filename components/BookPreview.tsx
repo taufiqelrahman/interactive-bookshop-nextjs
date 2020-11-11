@@ -1,15 +1,17 @@
 import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
+import dynamic from 'next/dynamic';
 import { i18n } from 'i18n';
-import initBook from 'assets/flipbook.js';
 import debounce from 'lodash.debounce';
-import BookPage from './atoms/BookPage';
-import Pagination from './atoms/Pagination';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
+import initBook from 'assets/flipbook.js';
+import BookPage from 'components/atoms/BookPage';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
+
+const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
 const BookPreview = (props: any) => {
   const [, setBook] = useState(null);

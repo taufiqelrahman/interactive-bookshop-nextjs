@@ -1,20 +1,23 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import Stepper from 'components/atoms/Stepper';
-import Card from 'components/atoms/Card';
-import NavBar from 'components/organisms/NavBar/mobile';
 import { useState, useEffect } from 'react';
-import TextField from 'components/atoms/TextField';
-import Button from 'components/atoms/Button';
 import { useForm } from 'react-hook-form';
-import api from 'services/api';
-// import Modal from 'components/atoms/Modal';
-import actions from 'store/actions';
 import Select from 'react-select';
 import Head from 'next/head';
-import Footer from 'components/organisms/Footer';
+import dynamic from 'next/dynamic';
+import debouncePromise from 'awesome-debounce-promise';
+import api from 'services/api';
+import actions from 'store/actions';
+import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+import TextField from 'components/atoms/TextField';
+// import Modal from 'components/atoms/Modal';
+
+const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const Card = dynamic(() => import('components/atoms/Card'));
+const Button = dynamic(() => import('components/atoms/Button'));
+const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Account = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
@@ -54,10 +57,10 @@ const Account = (props: any): any => {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i,
         message: `Email ${props.t('form:invalid-error')}`,
       },
-      validate: async value => {
+      validate: debouncePromise(async value => {
         const { data } = await api().users.checkEmailChange({ email: value });
         return !data.exists || props.t('form:email-exists');
-      }, // watch for duplicate email
+      }, 500), // watch for duplicate email
     },
     phone: {
       required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` },

@@ -9,19 +9,21 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import debounce from 'lodash.debounce';
+import cookies from 'next-cookies';
+import NProgress from 'nprogress';
+import Cookies from 'js-cookie';
+import detectIt from 'detect-it';
+import dynamic from 'next/dynamic';
 import withReduxStore from 'lib/with-redux-store';
 import * as gtag from 'lib/gtag';
 import actions from 'store/actions';
-import cookies from 'next-cookies';
-import NProgress from 'nprogress';
 import api from 'services/api';
 import 'styles/tailwind.css';
 import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
-import Cookies from 'js-cookie';
-import Pixel from 'components/atoms/Pixel';
-import detectIt from 'detect-it';
+
+const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
 // disable when development
 Sentry.init({

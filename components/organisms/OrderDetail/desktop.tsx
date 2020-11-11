@@ -1,18 +1,20 @@
 import { withTranslation } from 'i18n';
-import DefaultLayout from 'components/layouts/Default';
-import Stepper from 'components/atoms/Stepper';
-// import dummyOrder from '_mocks/orderDetail';
-import Card from 'components/atoms/Card';
-import NumberFormat from 'react-number-format';
-import Divider from 'components/atoms/Divider';
-import Popover from 'components/atoms/Popover';
+import dynamic from 'next/dynamic';
 import appConfig from 'config';
 import { Fragment } from 'react';
-import Capsule from 'components/atoms/Capsule';
 import { fullDate } from 'lib/format-date';
 import { retrieveInfo, previewImg } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
+import DefaultLayout from 'components/layouts/Default';
+// import dummyOrder from '_mocks/orderDetail';
+
+const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const Card = dynamic(() => import('components/atoms/Card'));
+const NumberFormat = dynamic(() => import('react-number-format'));
+const Divider = dynamic(() => import('components/atoms/Divider'));
+const Popover = dynamic(() => import('components/atoms/Popover'));
+const Capsule = dynamic(() => import('components/atoms/Capsule'));
 
 const OrderDetailDesktop = (props: any): any => {
   const { isFetching, currentOrder: order } = props.state.orders;
