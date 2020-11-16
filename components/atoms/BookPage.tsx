@@ -1,6 +1,7 @@
 import { withTranslation } from 'i18n';
 import LazyLoad, { forceVisible } from 'react-lazyload';
 import { useEffect } from 'react';
+import DOMPurify from 'dompurify';
 import 'styles/fonts.min.css';
 
 const BookPage = (props: any) => {
@@ -80,7 +81,7 @@ const BookPage = (props: any) => {
                     key={key}
                     className="c-book-page__content"
                     style={styleGenerator(content.style)}
-                    dangerouslySetInnerHTML={{ __html: value }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value) }}
                   />
                 );
               })

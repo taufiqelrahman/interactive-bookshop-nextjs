@@ -91,11 +91,11 @@ const Help = (props: any): any => {
                   <div className="c-help-section__info">
                     <h2 style={props.isMobile ? {} : { marginBottom: 16 }}>When I Grow Up</h2>
                     <div className="c-help-section__address">
-                      UOB Plaza
+                      CoHive - Sahid Sudirman Residence
                       <br />
-                      Jalan M.H. Thamrin Kav. 8-10, Tanah Abang, Jakarta Pusat, DKI Jakarta 10230
+                      Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10250
                     </div>
-                    <div className="c-help-section__phone">(+62) 877-7543-2567</div>
+                    <div className="c-help-section__phone">(+62) 877-7771-7119</div>
                   </div>
                 </div>
                 <Divider

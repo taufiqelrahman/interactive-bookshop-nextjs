@@ -20,9 +20,9 @@ const Footer = React.memo((props: any) => {
             <div className="c-footer__left__info">
               <div className="c-footer__left__name">When I Grow Up</div>
               <div className="c-footer__left__address">
-                UOB Plaza
+                CoHive - Sahid Sudirman Residence
                 <br />
-                Jalan M.H. Thamrin Kav. 8-10, Tanah Abang, Jakarta Pusat, DKI Jakarta 10230
+                Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10250
               </div>
             </div>
           </div>

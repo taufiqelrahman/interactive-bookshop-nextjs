@@ -4,6 +4,7 @@ import { withTranslation, Link } from 'i18n';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import LazyLoad from 'react-lazyload';
+import DOMPurify from 'dompurify';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 
@@ -31,7 +32,7 @@ const Help = (props: any): any => {
     names.forEach(name => {
       content = content.replace('[name]', `<strong>${name}</strong>`);
     });
-    return content;
+    return DOMPurify.sanitize(content);
   };
   return (
     <DefaultLayout

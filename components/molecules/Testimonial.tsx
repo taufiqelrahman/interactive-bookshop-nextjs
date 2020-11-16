@@ -1,14 +1,19 @@
+import DOMPurify from 'dompurify';
+
 const Testimonial = (props: any) => {
   const data = props.testi;
   return (
     <div className="c-testimonial">
       {/* <div className="c-testimonial__container"> */}
-      <div className="c-testimonial__content" dangerouslySetInnerHTML={{ __html: data.message }} />
+      <div className="c-testimonial__content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.message) }} />
       <div className="flex items-center">
         <img alt="photo" className="c-testimonial__photo" width="60" height="60" src={data.image_url} />
         <div>
           <div className="c-testimonial__name">{data.name}</div>
-          <div className="c-testimonial__instance" dangerouslySetInnerHTML={{ __html: data.company }} />
+          <div
+            className="c-testimonial__instance"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.company) }}
+          />
         </div>
       </div>
       {/* </div> */}
