@@ -56,6 +56,9 @@ const Button = (props: any) => {
             opacity: 0.3;
             cursor: not-allowed;
           }
+          &--whatsapp {
+            background: #25d366;
+          }
         }
       `}</style>
     </div>

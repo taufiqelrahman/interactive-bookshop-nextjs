@@ -17,6 +17,7 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Capsule = dynamic(() => import('components/atoms/Capsule'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 const Dot = dynamic(() => import('components/atoms/Dot'));
+const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderDetailMobile = (props: any): any => {
   const { isFetching, currentOrder: order } = props.state.orders;
@@ -40,6 +41,7 @@ const OrderDetailMobile = (props: any): any => {
     discounts,
     totalDiscounts,
     payment,
+    whatsappUrl,
   } = retrieveInfo(order || {});
   useEffect(() => {
     setState({ ...state, showPreview: true });
@@ -254,11 +256,25 @@ const OrderDetailMobile = (props: any): any => {
                                   </a>
                                 </div>
                               ) : (
-                                props.t('processing-payment')
+                                <Fragment>
+                                  {props.t('processing-payment')}
+                                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                                    <Button className="mt-3" variant="whatsapp" width="100%">
+                                      WhatsApp
+                                    </Button>
+                                  </a>
+                                </Fragment>
                               )}
                             </Fragment>
                           ) : (
-                            <div>{props.t('payment-failure')}</div>
+                            <Fragment>
+                              <div>{props.t('payment-failure')}</div>
+                              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                                <Button className="mt-3" variant="whatsapp" width="100%">
+                                  WhatsApp
+                                </Button>
+                              </a>
+                            </Fragment>
                           )}
                         </div>
                       )}

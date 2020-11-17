@@ -87,7 +87,15 @@ const CartItemMobile = (props: any) => {
                 {props.isSkeleton ? (
                   <Skeleton height={24} width={120} />
                 ) : (
-                  <NumberFormat value={props.variant.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  <Fragment>
+                    <div className="c-cart-item__detail__price--original">Rp250,000.00</div>
+                    <NumberFormat
+                      value={props.variant.price}
+                      thousandSeparator={true}
+                      prefix={'Rp'}
+                      displayType="text"
+                    />
+                  </Fragment>
                 )}
               </div>
               <div className="c-cart-item__detail__actions">
@@ -173,7 +181,14 @@ const CartItemMobile = (props: any) => {
               padding: 4px;
             }
             &__price {
-              @apply font-semibold;
+              @apply font-semibold py-2;
+              &--original {
+                font-size: 14px;
+                text-decoration: line-through;
+                color: #8c8b8c;
+                font-weight: 600;
+                margin-bottom: 8px;
+              }
             }
             &__name {
               @apply font-semibold;

@@ -93,7 +93,7 @@ const Help = (props: any): any => {
                     <div className="c-help-section__address">
                       CoHive - Sahid Sudirman Residence
                       <br />
-                      Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10250
+                      Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Jakarta 10250
                     </div>
                     <div className="c-help-section__phone">(+62) 877-7771-7119</div>
                   </div>

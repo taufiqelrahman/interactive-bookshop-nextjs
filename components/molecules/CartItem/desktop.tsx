@@ -99,7 +99,15 @@ const CartItem = (props: any) => {
                 {props.isSkeleton ? (
                   <Skeleton width={200} />
                 ) : (
-                  <NumberFormat value={props.variant.price} thousandSeparator={true} prefix={'Rp'} displayType="text" />
+                  <Fragment>
+                    <span className="c-cart-item__detail__price--original">Rp250,000.00</span>
+                    <NumberFormat
+                      value={props.variant.price}
+                      thousandSeparator={true}
+                      prefix={'Rp'}
+                      displayType="text"
+                    />
+                  </Fragment>
                 )}
               </div>
               <div className="c-cart-item__detail__actions">
@@ -200,6 +208,13 @@ const CartItem = (props: any) => {
               @apply font-semibold;
               font-size: 20px;
               line-height: 30px;
+              &--original {
+                font-size: 16px;
+                text-decoration: line-through;
+                color: #8c8b8c;
+                font-weight: 600;
+                margin-right: 8px;
+              }
             }
             &__label {
               @apply text-xs font-semibold;

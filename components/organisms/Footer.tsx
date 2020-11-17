@@ -22,7 +22,7 @@ const Footer = React.memo((props: any) => {
               <div className="c-footer__left__address">
                 CoHive - Sahid Sudirman Residence
                 <br />
-                Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10250
+                Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Jakarta 10250
               </div>
             </div>
           </div>

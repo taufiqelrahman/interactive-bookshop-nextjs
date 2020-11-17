@@ -15,6 +15,7 @@ const NumberFormat = dynamic(() => import('react-number-format'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Popover = dynamic(() => import('components/atoms/Popover'));
 const Capsule = dynamic(() => import('components/atoms/Capsule'));
+const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderDetailDesktop = (props: any): any => {
   const { isFetching, currentOrder: order } = props.state.orders;
@@ -32,6 +33,7 @@ const OrderDetailDesktop = (props: any): any => {
     discounts,
     totalDiscounts,
     payment,
+    whatsappUrl,
   } = retrieveInfo(order || {});
   return (
     <DefaultLayout {...props}>
@@ -276,11 +278,25 @@ const OrderDetailDesktop = (props: any): any => {
                             )}
                           </div>
                         ) : (
-                          props.t('processing-payment')
+                          <Fragment>
+                            {props.t('processing-payment')}
+                            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                              <Button className="mt-3" variant="whatsapp" width="100%">
+                                WhatsApp
+                              </Button>
+                            </a>
+                          </Fragment>
                         )}
                       </Fragment>
                     ) : (
-                      <div>{props.t('payment-failure')}</div>
+                      <Fragment>
+                        <div>{props.t('payment-failure')}</div>
+                        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                          <Button className="mt-3" variant="whatsapp" width="100%">
+                            WhatsApp
+                          </Button>
+                        </a>
+                      </Fragment>
                     )}
                   </div>
                 )}

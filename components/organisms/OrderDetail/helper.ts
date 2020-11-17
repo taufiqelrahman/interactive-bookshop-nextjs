@@ -21,6 +21,7 @@ export const retrieveInfo = order => {
     customAttributes: mapKeyValue(item.properties || []),
   }));
   const hasDedication = lineItems.some(item => !!item.customAttributes.Dedication);
+  const whatsappUrl = `https://wa.me/6287777717119?text=Saya%20ingin%20bertanya%20terkait%20pesanan%20${order.name}`;
   return {
     currentOrder: order,
     shippingAddress,
@@ -35,6 +36,7 @@ export const retrieveInfo = order => {
     discounts: discountApps || [],
     totalDiscounts,
     payment: order.payment || {},
+    whatsappUrl,
   };
 };
 
