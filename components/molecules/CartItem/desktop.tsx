@@ -100,7 +100,7 @@ const CartItem = (props: any) => {
                   <Skeleton width={200} />
                 ) : (
                   <Fragment>
-                    <span className="c-cart-item__detail__price--original">Rp250,000.00</span>
+                    <div className="c-cart-item__detail__price--original">Rp250,000.00</div>
                     <NumberFormat
                       value={props.variant.price}
                       thousandSeparator={true}
@@ -207,13 +207,12 @@ const CartItem = (props: any) => {
             &__price {
               @apply font-semibold;
               font-size: 20px;
-              line-height: 30px;
+              line-height: 24px;
               &--original {
                 font-size: 16px;
                 text-decoration: line-through;
                 color: #8c8b8c;
                 font-weight: 600;
-                margin-right: 8px;
               }
             }
             &__label {
