@@ -113,7 +113,7 @@ export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, 
     })
     .catch(err => {
       dispatch(login(false));
-      dispatch(setErrorMessage(err.message));
+      dispatch(setErrorMessage(err.response && err.response.data));
       captureException(err);
     });
 };
