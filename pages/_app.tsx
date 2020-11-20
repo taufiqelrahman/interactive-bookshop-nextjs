@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { NextPage } from 'next';
+import { NextApiResponse, NextPage } from 'next';
 import Head from 'next/head';
 import * as Sentry from '@sentry/browser';
 import { appWithTranslation, i18n, Router } from 'i18n';
@@ -46,15 +46,12 @@ const App: NextPage<any> = (props: any) => {
   const { Component, pageProps, reduxStore } = props;
   const [width, setWidth] = useState(0);
 
-  const debouncedFunctionRef = useRef();
-  (debouncedFunctionRef.current as any) = () => {
-    setWidth(window.innerWidth);
-  };
+  const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
   const debouncedSetup = useCallback(
-    debounce(() => (debouncedFunctionRef.current as any)(), 200),
+    debounce(() => debouncedFunctionRef.current(), 200),
     [],
   );
-  const handleRouteChange = url => {
+  const handleRouteChange = (url: string) => {
     gtag.pageview(url);
   };
   useEffect(() => {
@@ -83,7 +80,7 @@ const App: NextPage<any> = (props: any) => {
     createCartForUser();
   }, [reduxStore.getState().users]);
   Router.events.on('routeChangeComplete', () => {
-    window.scroll({
+    window.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth',
@@ -303,7 +300,7 @@ const App: NextPage<any> = (props: any) => {
   );
 };
 
-const redirectPrivateRoutes = ({ pathname, res }) => {
+const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
   const privateRoutes = ['/orders/success', '/account', '/orders'];
   if (privateRoutes.includes(pathname)) {
     const redirectTo = pathname.split('/')[1];
@@ -321,7 +318,7 @@ const redirectPrivateRoutes = ({ pathname, res }) => {
   }
 };
 
-const redirectLoginRoutes = ({ pathname, res }) => {
+const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
   const loginRoutes = ['/login', '/register'];
   if (loginRoutes.includes(pathname)) {
     const home = '/';
