@@ -21,3 +21,18 @@ interface SendMessage {
   payload: boolean;
 }
 export type ActionTypes = SetSideNav | SetErrorMessage | SendMessage;
+
+export interface KeyValue {
+  key?: string;
+  name?: string;
+  value: string;
+}
+
+export interface Child {
+  Name: string;
+  Gender: string;
+  Age: string;
+  Skin: string;
+  Hair: string;
+  Dedication: string;
+}
