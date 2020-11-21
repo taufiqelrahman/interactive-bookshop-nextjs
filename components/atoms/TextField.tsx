@@ -9,13 +9,13 @@ const TextField = React.forwardRef((props: any, ref: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-text-field--${variant}`).join(' ');
+    return variants.map((variant: string) => `c-text-field--${variant}`).join(' ');
   };
   return (
     <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass()}`} style={props.style}>
       {['phone', 'newPhones'].includes(props.name) ? (
         <NumberFormat
-          format="#### #### ####"
+          format="#### #### #### ####"
           name={props.name}
           placeholder={props.placeholder}
           getInputRef={ref}

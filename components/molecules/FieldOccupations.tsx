@@ -8,20 +8,20 @@ const FieldOccupations = (props: any) => {
   const [occupations, setOccupations]: any = useState([]);
   // const router = useRouter();
   // const isIndexPage = router.pathname === '/';
-  const setValue = value => {
+  const setValue = (value: string | string[]) => {
     setOccupations(value);
     props.setValue('Occupations', value);
     if (props.formState.isSubmitted || value.length > 2) {
       props.triggerValidation('Occupations');
     }
   };
-  const handleCheck = event => {
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = event.target;
-    let newValue: Array<string> = [...occupations];
+    let newValue: string[] = [...occupations];
     if (checked) {
       newValue = [...newValue, value];
     } else {
-      const index = occupations.findIndex(job => job === value);
+      const index = occupations.findIndex((job: string) => job === value);
       if (index === -1) return;
       newValue.splice(index, 1);
     }
@@ -30,7 +30,7 @@ const FieldOccupations = (props: any) => {
   const occupationsOpts = () => {
     let occupationsOpts = [...props.occupations];
     if ((props.isMobile && props.gender === 'boy') || !props.isMobile) {
-      occupationsOpts = [...props.occupations.filter(job => job.name !== 'President')];
+      occupationsOpts = [...props.occupations.filter((job: { name: string }) => job.name !== 'President')];
     }
     if (props.gender === 'boy') {
       occupationsOpts = [...occupationsOpts.filter(job => job.name !== 'Ballerina')];
@@ -42,7 +42,7 @@ const FieldOccupations = (props: any) => {
   }, []);
   useEffect(() => {
     if (props.gender === 'boy' && occupations.includes('Ballerina')) {
-      setValue(occupations.filter(job => job !== 'Ballerina'));
+      setValue(occupations.filter((job: string) => job !== 'Ballerina'));
     }
   }, [props.gender]);
   return (
@@ -61,7 +61,7 @@ const FieldOccupations = (props: any) => {
                 inset={true}
                 handleCheck={handleCheck}
                 checked={occupations.includes(job.name)}
-                isMobile={props.isMobile}
+                name="Occupations"
               >
                 <span>{i18n.language === 'en' ? job.name : job.indonesia}</span>
               </Checkbox>
@@ -99,7 +99,7 @@ const FieldOccupations = (props: any) => {
               }
               span {
                 @apply justify-center font-bold text-xs;
-                display: ${true ? 'flex' : 'none'};
+                display: flex;
                 margin-top: 4px;
                 line-height: 16px;
                 @screen md {

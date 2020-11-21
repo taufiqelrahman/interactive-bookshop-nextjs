@@ -5,7 +5,7 @@ import DOMPurify from 'dompurify';
 import 'styles/fonts.min.css';
 
 const BookPage = (props: any) => {
-  const styleGenerator = (string: any): any => {
+  const styleGenerator = (string: string): any => {
     let style: any = {
       width: '37%',
       fontSize: props.isMobile ? '2vw' : '0.8vw',
@@ -19,7 +19,8 @@ const BookPage = (props: any) => {
     if (props.isMobile && style.lineHeightMobile) style = { ...style, lineHeight: style.lineHeightMobile };
     if (props.isMobile && style.widthMobile) style = { ...style, width: style.widthMobile };
     if (props.isWhiteCover) style = { ...style, color: 'black' };
-    if (props.contents[0].occupation.name === 'Front Cover') {
+    const [firstContent] = props.contents;
+    if (firstContent.occupation.name === 'Front Cover') {
       style = {
         ...style,
         fontSize: props.isMobile ? '9vw' : '3.5vw',
@@ -37,12 +38,22 @@ const BookPage = (props: any) => {
     }
     return style;
   };
-  const processContent = (content, language) => {
+  interface Content {
+    english: string;
+    indonesia: string;
+    style: any;
+  }
+  const processContent = (content: Content, language: string) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
-    const { contents, name, gender, dedication } = props;
+    const {
+      contents: [firstContent],
+      name,
+      gender,
+      dedication,
+    } = props;
     if (!name) return processed;
-    if (contents[0].occupation.name === 'Front Cover') {
+    if (firstContent.occupation.name === 'Front Cover') {
       processed = processed.split('[name]').join((name || '').toUpperCase());
     } else {
       processed = processed.split('[name]').join(name.replace(/^./, name[0].toUpperCase()));
@@ -54,7 +65,7 @@ const BookPage = (props: any) => {
       processed = processed.split('[child:2]').join(isBoy ? 'his' : 'her');
       processed = processed.split('[child:3]').join(isBoy ? 'him' : 'her');
     }
-    if (contents[0].occupation.name === 'Back Cover') {
+    if (firstContent.occupation.name === 'Back Cover') {
       processed = dedication;
     }
     return processed;
@@ -74,7 +85,7 @@ const BookPage = (props: any) => {
             {props.isLast ? (
               <div className="c-book-page__limit">{props.t('book-limit')}</div>
             ) : (
-              props.contents.map((content, key) => {
+              props.contents.map((content: Content, key: number) => {
                 const value = processContent(content, props.language);
                 return (
                   <div

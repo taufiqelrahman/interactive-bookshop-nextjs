@@ -1,8 +1,13 @@
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import { Router } from 'i18n';
+import { CartItem } from 'store/cart/types';
 
-export const schema = props => ({
+export interface FormData {
+  Cover: string;
+}
+
+export const schema = (props: any) => ({
   cover: {
     required: {
       value: true,
@@ -23,17 +28,17 @@ export const dummySelected = {
   skin: 'light',
 };
 
-export const showError = error => {
+export const showError = (error: string): void => {
   window.scrollTo(0, 0);
   toast.error(error);
 };
 
-export const getFromCookies = () => {
-  if (!Cookies.get('pendingTrx')) return '';
-  return JSON.parse(Cookies.get('pendingTrx'));
+export const getFromCookies = (): CartItem | null => {
+  if (!Cookies.get('pendingTrx')) return null;
+  return JSON.parse(Cookies.get('pendingTrx') || '');
 };
 
-export const saveToCookies = cart => {
+export const saveToCookies = (cart: CartItem | null): void => {
   // save pending trx
   Cookies.set('pendingTrx', JSON.stringify(cart));
   Router.push('/login?from=preview');

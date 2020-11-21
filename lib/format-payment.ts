@@ -1,4 +1,19 @@
-function processType(payment) {
+interface Payment {
+  va_numbers: {
+    bank: string;
+    va_number: string;
+  }[];
+  permata_va_number: string;
+  payment_type: string;
+  store: string;
+  biller_code: string;
+  bill_key: string;
+  payment_code: string;
+  redirect_url: string;
+  actions: { url: string }[];
+}
+
+function processType(payment: Payment) {
   let type = '';
   const { va_numbers: vaNumbers, permata_va_number: permataVaNumber, payment_type: paymentType, store } = payment;
   switch (paymentType) {
@@ -43,10 +58,10 @@ function processType(payment) {
   return type;
 }
 
-function processInstance(payment) {
+function processInstance(payment: Payment) {
   let instance = '';
   const { va_numbers: vaNumbers, permata_va_number: permataVaNumber, payment_type: paymentType, store } = payment;
-  if (vaNumbers && vaNumbers[0]) {
+  if (vaNumbers && vaNumbers.length && vaNumbers[0]) {
     instance = vaNumbers[0].bank.toUpperCase();
   } else if (permataVaNumber) {
     instance = 'Permata Bank';
@@ -59,7 +74,7 @@ function processInstance(payment) {
   return instance;
 }
 
-function processNumber(payment) {
+function processNumber(payment: Payment) {
   let number = '';
   const {
     va_numbers: vaNumbers,
@@ -70,7 +85,7 @@ function processNumber(payment) {
     payment_code: paymentCode,
     store,
   } = payment;
-  if (vaNumbers && vaNumbers[0]) {
+  if (vaNumbers && vaNumbers.length && vaNumbers[0]) {
     number = vaNumbers[0].va_number;
   } else if (permataVaNumber) {
     number = permataVaNumber;
@@ -83,18 +98,18 @@ function processNumber(payment) {
   return number;
 }
 
-function processUrl(payment) {
+function processUrl(payment: Payment) {
   let url = '';
   const { redirect_url: redirectUrl, actions } = payment;
   if (redirectUrl) {
     url = redirectUrl;
-  } else if (actions && actions[0]) {
+  } else if (actions && actions.length && actions[0]) {
     url = actions[0].url;
   }
   return url;
 }
 
-export const formatPayment = payment => {
+export const formatPayment = (payment: Payment) => {
   const type = processType(payment);
   const instance = processInstance(payment);
   const number = processNumber(payment);

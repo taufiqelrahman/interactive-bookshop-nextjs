@@ -1,12 +1,15 @@
-import { withTranslation } from 'i18n';
+import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
+import { dummySelected, schema, showError, saveToCookies, getFromCookies, FormData } from './helper';
 import Cookies from 'js-cookie';
 import * as gtag from 'lib/gtag';
 import NavBar from 'components/organisms/NavBar/mobile';
 import DefaultLayout from 'components/layouts/Default';
+import { PropsFromRedux } from 'lib/with-redux-store';
+import { WithTranslation } from 'next-i18next';
+import { Product } from 'store/products/types';
 // import BookPreview from 'components/BookPreview';
 // import Sheet from 'components/atoms/Sheet';
 // import Button from 'components/atoms/Button';
@@ -17,15 +20,17 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const PreviewMobile = (props: any): any => {
+interface Props extends PropsFromRedux, WithTranslation {
+  isMobile: boolean;
+}
+const PreviewMobile: React.FC<Props> = (props: Props): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
-  const [showSheet, setShowSheet] = useState(false);
-  const [showSpecs, setShowSpecs] = useState(false);
-  const [tempData, setTempData] = useState(null);
-  const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, formState, watch } = methods;
+  const [showSheet, setShowSheet] = useState<boolean>(false);
+  const [showSpecs, setShowSpecs] = useState<boolean>(false);
+  const [tempData, setTempData] = useState<Product | any>(null);
+  const { register, handleSubmit, errors, formState, watch } = useForm<FormData>({ mode: 'onChange' });
   const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = cart => {
+  const addToCart = (cart: Product) => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -46,7 +51,11 @@ const PreviewMobile = (props: any): any => {
       props.thunkAddToCart(cart);
     }
   };
-  const onSubmit = data => {
+  const onSubmit = (data: FormData): void => {
+    if (!selected) {
+      Router.replace('/create');
+      return;
+    }
     const cart = { ...selected, ...data };
     if (!props.state.users.isLoggedIn) {
       setTempData(cart);
@@ -94,7 +103,7 @@ const PreviewMobile = (props: any): any => {
             <span className="icon-chevron_right" />
           </div>
           <div className="c-preview__cover">
-            <FieldCover schema={schema(props).cover} register={register} errors={errors.cover} />
+            <FieldCover schema={schema(props).cover} register={register} errors={errors.Cover} />
           </div>
           <Button type="submit" width="648px" style={{ margin: '12px 0 18px' }}>
             {props.t('form:continue-button')}
