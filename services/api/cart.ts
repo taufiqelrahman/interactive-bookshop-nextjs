@@ -9,15 +9,19 @@ export default class Cart {
     this.basePath = '/cart';
   }
 
-  get() {
-    return this.adapter.secure.get(`${this.basePath}`)
-  }
+  // get() {
+  //   return this.adapter.secure.get(`${this.basePath}`)
+  // }
 
-  addToCart(data) {
+  // addToCart(data) {
+  //   return this.adapter.secure.post(`${this.basePath}`, data)
+  // }
+
+  // removeFromCart(data) {
+  //   return this.adapter.secure.delete(`${this.basePath}`, data)
+  // }
+
+  createCart(data) {
     return this.adapter.secure.post(`${this.basePath}`, data)
-  }
-
-  removeFromCart(data) {
-    return this.adapter.secure.delete(`${this.basePath}`, data)
   }
 }
