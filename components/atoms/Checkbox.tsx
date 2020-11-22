@@ -1,16 +1,7 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
-interface Props {
-  errors: Error;
-  value: string;
-  name: string;
-  checked: boolean;
-  handleCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  children: ReactElement;
-  inset: boolean;
-}
-const Checkbox: React.FC<Props> = (props: Props) => {
+const Checkbox = (props: any) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const checkboxClass = () => {

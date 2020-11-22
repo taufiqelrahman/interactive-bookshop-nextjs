@@ -5,7 +5,7 @@ import DOMPurify from 'dompurify';
 import 'styles/fonts.min.css';
 
 const BookPage = (props: any) => {
-  const styleGenerator = (string: string): any => {
+  const styleGenerator = (string: any): any => {
     let style: any = {
       width: '37%',
       fontSize: props.isMobile ? '2vw' : '0.8vw',
@@ -38,12 +38,7 @@ const BookPage = (props: any) => {
     }
     return style;
   };
-  interface Content {
-    english: string;
-    indonesia: string;
-    style: any;
-  }
-  const processContent = (content: Content, language: string) => {
+  const processContent = (content, language) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
     const {
@@ -85,7 +80,7 @@ const BookPage = (props: any) => {
             {props.isLast ? (
               <div className="c-book-page__limit">{props.t('book-limit')}</div>
             ) : (
-              props.contents.map((content: Content, key: number) => {
+              props.contents.map((content, key) => {
                 const value = processContent(content, props.language);
                 return (
                   <div

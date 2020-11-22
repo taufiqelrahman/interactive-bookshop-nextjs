@@ -2,13 +2,10 @@ import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies, FormData } from './helper';
+import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
 import * as gtag from 'lib/gtag';
 import DefaultLayout from 'components/layouts/Default';
-import { WithTranslation } from 'next-i18next';
-import { PropsFromRedux } from 'lib/with-redux-store';
-import { Product } from 'store/products/types';
 // import Modal from 'components/atoms/Modal';
 // import Button from 'components/atoms/Button';
 // import FieldCover from 'components/molecules/FieldCover';
@@ -21,14 +18,14 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 
-interface Props extends PropsFromRedux, WithTranslation {}
-const PreviewDesktop: React.FC<Props> = (props: Props): any => {
+const PreviewDesktop = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
-  const [showModal, setShowModal] = useState<boolean>(() => false);
-  const [tempData, setTempData] = useState<Product | any>(null);
-  const { register, handleSubmit, errors, formState, watch } = useForm<FormData>({ mode: 'onChange' });
+  const methods = useForm({ mode: 'onChange' });
+  const [showModal, setShowModal] = useState(false);
+  const [tempData, setTempData] = useState(null);
+  const { register, handleSubmit, errors, formState, watch } = methods;
   const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = (cart: Product) => {
+  const addToCart = cart => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -49,7 +46,7 @@ const PreviewDesktop: React.FC<Props> = (props: Props): any => {
       props.thunkAddToCart(cart);
     }
   };
-  const onSubmit = (data: FormData): void => {
+  const onSubmit = data => {
     if (!selected) {
       Router.replace('/create');
       return;

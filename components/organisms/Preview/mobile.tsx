@@ -2,14 +2,11 @@ import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies, FormData } from './helper';
+import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
 import * as gtag from 'lib/gtag';
 import NavBar from 'components/organisms/NavBar/mobile';
 import DefaultLayout from 'components/layouts/Default';
-import { PropsFromRedux } from 'lib/with-redux-store';
-import { WithTranslation } from 'next-i18next';
-import { Product } from 'store/products/types';
 // import BookPreview from 'components/BookPreview';
 // import Sheet from 'components/atoms/Sheet';
 // import Button from 'components/atoms/Button';
@@ -20,17 +17,15 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-interface Props extends PropsFromRedux, WithTranslation {
-  isMobile: boolean;
-}
-const PreviewMobile: React.FC<Props> = (props: Props): any => {
+const PreviewMobile = (props: any): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
-  const [showSheet, setShowSheet] = useState<boolean>(false);
-  const [showSpecs, setShowSpecs] = useState<boolean>(false);
-  const [tempData, setTempData] = useState<Product | any>(null);
-  const { register, handleSubmit, errors, formState, watch } = useForm<FormData>({ mode: 'onChange' });
+  const [showSheet, setShowSheet] = useState(false);
+  const [showSpecs, setShowSpecs] = useState(false);
+  const [tempData, setTempData] = useState(null);
+  const methods = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, errors, formState, watch } = methods;
   const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = (cart: Product) => {
+  const addToCart = cart => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -51,7 +46,7 @@ const PreviewMobile: React.FC<Props> = (props: Props): any => {
       props.thunkAddToCart(cart);
     }
   };
-  const onSubmit = (data: FormData): void => {
+  const onSubmit = data => {
     if (!selected) {
       Router.replace('/create');
       return;

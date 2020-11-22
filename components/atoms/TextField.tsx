@@ -15,7 +15,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
     <div className={`c-text-field ${props.errors ? 'c-text-field--error' : ''} ${variantClass()}`} style={props.style}>
       {['phone', 'newPhones'].includes(props.name) ? (
         <NumberFormat
-          format="#### #### #### ####"
+          format="#### #### ####"
           name={props.name}
           placeholder={props.placeholder}
           getInputRef={ref}

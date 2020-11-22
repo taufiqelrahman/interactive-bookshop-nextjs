@@ -8,7 +8,6 @@ import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
 import initBook from 'assets/flipbook.js';
 import BookPage from 'components/atoms/BookPage';
-import { BookPage as BookPageType } from 'store/master/types';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
@@ -54,7 +53,7 @@ const BookPreview = (props: any) => {
       concurrentAnimations: 5,
       height: `${calcHeight()}px`,
       initialCall: true,
-      onPageTurn: (_: any, els: { pagesTarget: any }) => {
+      onPageTurn: (_, els) => {
         gtag.event({
           action: 'click_book_page',
           category: 'engagement',
@@ -138,18 +137,18 @@ const BookPreview = (props: any) => {
   //   updatePageInfo();
   // };
 
-  let pageByOccupations: any = {};
+  let pageByOccupations = {};
   if (props.bookPages.length > 0) {
     pageByOccupations = groupby(props.bookPages, page => page.occupation_id);
-    pageByOccupations = sortby(pageByOccupations, ([group]) => props.bookPages.indexOf(group));
+    pageByOccupations = sortby(pageByOccupations, group => props.bookPages.indexOf(group[0]));
   }
   // console.log(pageByOccupations);
-  const bookPages: any[] = [];
-  Object.keys(pageByOccupations).forEach((occupation: any) => {
+  const bookPages = [];
+  Object.keys(pageByOccupations).forEach(occupation => {
     bookPages[occupation] = groupby(pageByOccupations[occupation], page => page.page_number);
   });
-  let jointPages: any[] = [];
-  bookPages.forEach((jobs: any, index: number) => {
+  let jointPages: any = [];
+  bookPages.forEach((jobs: Array<any>, index) => {
     if (index === bookPages.length - 1 && jobs[1] && jobs[2]) {
       jointPages = [...jointPages, jobs[1], jobs[2]];
       return;
@@ -159,7 +158,7 @@ const BookPreview = (props: any) => {
     });
   });
 
-  const getImage = (job: string, pageNumber: number) => {
+  const getImage = (job, pageNumber) => {
     const { Gender, Age, Skin, Hair } = props.selected;
     const pagePath = props.isMobile ? 'pages-sm' : 'pages';
     let jobPath = `${job}/page-${pageNumber}`;
@@ -200,7 +199,7 @@ const BookPreview = (props: any) => {
       {props.isMobile ? (
         <Fragment>
           <div className="c-book-preview__pages" ref={ref}>
-            {jointPages.map((page: BookPageType[], index: number) => {
+            {jointPages.map((page, index) => {
               const [firstPage] = page;
               return (
                 <BookPage
@@ -238,7 +237,7 @@ const BookPreview = (props: any) => {
           )}
           <div className="c-book-preview__container">
             <div className="c-flipbook" id="FlipBook">
-              {jointPages.map((page: BookPageType[], index: number) => {
+              {jointPages.map((page, index) => {
                 const [firstPage] = page;
                 return (
                   <BookPage

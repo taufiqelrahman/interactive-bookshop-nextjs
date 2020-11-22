@@ -1,19 +1,4 @@
-interface Payment {
-  va_numbers: {
-    bank: string;
-    va_number: string;
-  }[];
-  permata_va_number: string;
-  payment_type: string;
-  store: string;
-  biller_code: string;
-  bill_key: string;
-  payment_code: string;
-  redirect_url: string;
-  actions: { url: string }[];
-}
-
-function processType(payment: Payment) {
+function processType(payment) {
   let type = '';
   const { va_numbers: vaNumbers, permata_va_number: permataVaNumber, payment_type: paymentType, store } = payment;
   switch (paymentType) {
@@ -58,7 +43,7 @@ function processType(payment: Payment) {
   return type;
 }
 
-function processInstance(payment: Payment) {
+function processInstance(payment) {
   let instance = '';
   const { va_numbers: vaNumbers, permata_va_number: permataVaNumber, payment_type: paymentType, store } = payment;
   if (vaNumbers && vaNumbers.length && vaNumbers[0]) {
@@ -74,7 +59,7 @@ function processInstance(payment: Payment) {
   return instance;
 }
 
-function processNumber(payment: Payment) {
+function processNumber(payment) {
   let number = '';
   const {
     va_numbers: vaNumbers,
@@ -98,7 +83,7 @@ function processNumber(payment: Payment) {
   return number;
 }
 
-function processUrl(payment: Payment) {
+function processUrl(payment) {
   let url = '';
   const { redirect_url: redirectUrl, actions } = payment;
   if (redirectUrl) {
@@ -109,7 +94,7 @@ function processUrl(payment: Payment) {
   return url;
 }
 
-export const formatPayment = (payment: Payment) => {
+export const formatPayment = payment => {
   const type = processType(payment);
   const instance = processInstance(payment);
   const number = processNumber(payment);
