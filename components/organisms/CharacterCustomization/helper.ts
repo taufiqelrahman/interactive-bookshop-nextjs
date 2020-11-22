@@ -59,3 +59,13 @@ export const loadImg = source => {
   };
   downloadingImage.src = source;
 };
+
+export const addDedicationToLS = (dedication: string) => {
+  localStorage.setItem('dedication', JSON.stringify(dedication));
+};
+
+export const retrieveDedication = () => {
+  const dedicationFromLs = localStorage.getItem('dedication');
+  if (!dedicationFromLs) return '';
+  return JSON.parse(dedicationFromLs);
+};

@@ -74,5 +74,6 @@
   "quit-customizing": "Quit customizing?",
   "quit-confirmation": "If you quit this page, all book preferences will be lost. This action cannot be undone.",
   "yes-quit": "Yes, quit",
-  "copy-success-help": "Message sent successfully"
+  "copy-success-help": "Message sent successfully",
+  "clear-dedication": "Clear message?"
 }

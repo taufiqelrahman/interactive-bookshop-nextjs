@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
+import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, retrieveDedication } from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
@@ -48,7 +48,9 @@ const CharacterCustomization = (props: any) => {
         'Date of Birth': '03-01-2019',
         Hair: 'short',
       }
-    : {};
+    : {
+        Dedication: retrieveDedication(),
+      };
   const selected = props.state.cart.selected || defaultSelected;
   const { occupations } = props.state.master;
   const onSubmit = data => {
@@ -61,6 +63,7 @@ const CharacterCustomization = (props: any) => {
     }
     const jobIds = getJobIds(data.Occupations, occupations);
     props.saveSelected({ ...selected, ...data, jobIds });
+    addDedicationToLS(data.Dedication);
     Router.push('/preview');
   };
 
@@ -184,6 +187,7 @@ const CharacterCustomization = (props: any) => {
                   errors={errors.Dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}
                   defaultValue={selected.Dedication}
+                  clear={() => setValue('Dedication', '')}
                 />
                 <Divider />
                 <Button type="submit" width="100%" style={{ marginTop: 24 }}>

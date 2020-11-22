@@ -18,6 +18,11 @@ const FormTextArea = (props: any) => (
         errors={props.errors}
         defaultValue={props.defaultValue}
       />
+      {props.clear && (
+        <button className="c-form-text-area__clear" type="button" onClick={props.clear}>
+          {props.t('clear-dedication')}
+        </button>
+      )}
     </div>
     <style jsx>{`
       .c-form-text-area {
@@ -32,7 +37,7 @@ const FormTextArea = (props: any) => (
           }
         }
         &__hint {
-          @apply text-sm mb-3;
+          @apply text-xs mb-3;
           line-height: 19px;
           @screen md {
             @apply text-xs;
@@ -40,6 +45,12 @@ const FormTextArea = (props: any) => (
         }
         &__options {
           @apply flex flex-wrap;
+        }
+        &__clear {
+          @apply text-sm text-left underline;
+          @screen md {
+            margin-top: 7px;
+          }
         }
       }
     `}</style>

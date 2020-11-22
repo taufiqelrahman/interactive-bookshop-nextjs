@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { useEffect, useState, Fragment } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
+import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, retrieveDedication } from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 // import FieldDob from 'components/molecules/FieldDob';
@@ -67,7 +67,9 @@ const CharacterCustomization = (props: any) => {
         'Date of Birth': '03-01-2019',
         Hair: 'short',
       }
-    : {};
+    : {
+        Dedication: retrieveDedication(),
+      };
   const selected = props.state.cart.selected || defaultSelected;
   const registerOccupations = () => {
     // setTimeout(() => {
@@ -98,6 +100,7 @@ const CharacterCustomization = (props: any) => {
         label: '/create',
       });
     }
+    addDedicationToLS(data.Dedication);
     Router.push('/preview');
   };
   // const pickedJobs = () => {
@@ -252,6 +255,7 @@ const CharacterCustomization = (props: any) => {
                     register={register}
                     errors={errors.Dedication}
                     defaultValue={selected.Dedication}
+                    clear={() => setValue('Dedication', '')}
                   />
                 )}
               </div>

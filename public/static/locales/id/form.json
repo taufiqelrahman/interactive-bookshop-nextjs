@@ -74,5 +74,6 @@
   "quit-customizing": "Batalkan buku?",
   "quit-confirmation": "Jika kamu batalkan, data buku ini juga akan terhapus. Langkah ini tidak bisa dikembalikan lagi.",
   "yes-quit": "Ya, batalkan",
-  "copy-success-help": "Pesan berhasil dikirm"
+  "copy-success-help": "Pesan berhasil dikirm",
+  "clear-dedication": "Hapus pesan?"
 }
