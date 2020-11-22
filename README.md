@@ -1,22 +1,12 @@
-# Wonderbooks
+# WhenIGrowUp
 
-Wonderbooks is a NextJS project bundled with redux, typescript, tailwindcss, css-in-js, and Laravel as its backend.
+WhenIGrowUp is a NextJS project bundled with redux, typescript, tailwindcss, and css-in-js.
 
 ## Installation
-
-### Front end part
 Use the package manager yarn to install.
 
 ```bash
 yarn
-```
-### Back end part
-Change directory to /api
-
-```bash
-composer install
-php artisan migrate
-php artisan passport:install
 ```
 
 ## Usage

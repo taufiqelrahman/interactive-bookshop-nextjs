@@ -21,9 +21,9 @@ export const thunkLoadProducts = (): ThunkAction<void, types.ProductsState, null
       dispatch(loadProducts(false, data.data));
     })
     .catch(err => {
-      throw err;
       dispatch(loadProducts(false));
       captureException(err);
+      throw err;
     });
 };
 
@@ -44,8 +44,8 @@ export const thunkShowProduct = (slug, req = null): ThunkAction<void, types.Prod
       dispatch(showProduct(false, data.data));
     })
     .catch(err => {
-      throw err;
       dispatch(showProduct(false));
       captureException(err);
+      throw err;
     });
 };

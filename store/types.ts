@@ -1,3 +1,23 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
-export interface State {}
-export type ActionTypes = any;
+export const SET_SIDE_NAV = 'SET_SIDE_NAV';
+export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+
+export interface State {
+  isSideNavOpen: boolean;
+  errorMessage: string;
+  isFetching: boolean;
+}
+
+interface SetSideNav {
+  type: typeof SET_SIDE_NAV;
+  payload: boolean;
+}
+interface SetErrorMessage {
+  type: typeof SET_ERROR_MESSAGE;
+  payload: string;
+}
+interface SendMessage {
+  type: typeof SEND_MESSAGE;
+  payload: boolean;
+}
+export type ActionTypes = SetSideNav | SetErrorMessage | SendMessage;

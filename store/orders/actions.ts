@@ -4,42 +4,42 @@ import { captureException } from '@sentry/browser';
 import * as types from './types';
 import api from '../../services/api';
 
-function checkout(isFetching, order = null): types.OrdersActionTypes {
-  return {
-    type: types.CHECKOUT,
-    payload: order,
-    isFetching,
-  };
-}
+// function checkout(isFetching, order = null): types.OrdersActionTypes {
+//   return {
+//     type: types.CHECKOUT,
+//     payload: order,
+//     isFetching,
+//   };
+// }
 
-export const thunkCheckout = (newOrder): ThunkAction<void, types.OrdersState, null, Action<string>> => (
-  dispatch,
-): any => {
-  dispatch(checkout(true));
-  return api()
-    .orders.checkout(newOrder)
-    .then(({ data }) => {
-      dispatch(checkout(false, data.data));
-    })
-    .catch(err => {
-      dispatch(checkout(false));
-      captureException(err);
-    });
-};
+// export const thunkCheckout = (newOrder): ThunkAction<void, types.OrdersState, null, Action<string>> => (
+//   dispatch,
+// ): any => {
+//   dispatch(checkout(true));
+//   return api()
+//     .orders.checkout(newOrder)
+//     .then(({ data }) => {
+//       dispatch(checkout(false, data.data));
+//     })
+//     .catch(err => {
+//       dispatch(checkout(false));
+//       captureException(err);
+//     });
+// };
 
-function loadOrder(isFetching, order = null): types.OrdersActionTypes {
+export function loadOrder(isFetching, order = null): types.OrdersActionTypes {
   return {
     type: types.LOAD_ORDER,
     payload: order,
     isFetching,
   };
 }
-export const thunkLoadOrder = (chargeData): ThunkAction<void, types.OrdersState, null, Action<string>> => (
+export const thunkLoadOrder = (orderNumber): ThunkAction<void, types.OrdersState, null, Action<string>> => (
   dispatch,
 ): any => {
   dispatch(loadOrder(true));
   return api()
-    .orders.loadOrder(chargeData)
+    .orders.loadOrder(orderNumber)
     .then(({ data }) => {
       dispatch(loadOrder(false, data.data));
     })
@@ -48,3 +48,30 @@ export const thunkLoadOrder = (chargeData): ThunkAction<void, types.OrdersState,
       captureException(err);
     });
 };
+
+export function loadOrders(isFetching, orders: any = []): types.OrdersActionTypes {
+  return {
+    type: types.LOAD_ORDERS,
+    payload: orders,
+    isFetching,
+  };
+}
+export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Action<string>> => (dispatch): any => {
+  dispatch(loadOrders(true));
+  return api()
+    .orders.loadOrders()
+    .then(({ data }) => {
+      dispatch(loadOrders(false, data.data));
+    })
+    .catch(err => {
+      dispatch(loadOrders(false));
+      captureException(err);
+    });
+};
+
+export function setPaymentProblem(status): types.OrdersActionTypes {
+  return {
+    type: types.SET_PAYMENT_PROBLEM,
+    payload: status,
+  };
+}

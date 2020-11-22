@@ -1,22 +1,23 @@
 import Link from 'next/link';
 
-const Features = (props) => {
+const Features = (props: any) => {
   return (
     <div>
       <div className="c-features">
         <div className="u-container">
-          { props.features.map((item, i) => {
+          {props.features.map((item, i) => {
             return (
               <Link key={i} href={'/books/' + item.slug}>
                 <a
                   className="c-features__item"
                   style={{
                     background: `url(\'${item.images[0].filepath}\')`,
-                  }}>
-                  { item.name }
+                  }}
+                >
+                  {item.name}
                 </a>
               </Link>
-            )
+            );
           })}
         </div>
       </div>
@@ -34,7 +35,7 @@ const Features = (props) => {
         }
       `}</style>
     </div>
-  )
+  );
 };
 
 export default Features;

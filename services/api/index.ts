@@ -1,10 +1,12 @@
 import axios, { AxiosAdapter, AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
-import CryptoJS from 'crypto-js';
 import Cart from './cart';
 import Orders from './orders';
 import Products from './products';
 import Users from './users';
+import Master from './master';
+import Message from './message';
+import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
 
 export interface AdapterObject {
   default: AxiosInstance,
@@ -12,7 +14,7 @@ export interface AdapterObject {
 }
 
 const options = {
-  baseURL: process.env.API_URL,
+  baseURL: `${process.env.API_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -20,14 +22,19 @@ const options = {
 const createAdapter = (): AxiosAdapter => {
   return axios.create(options);
 }
-const decryptToken = (cryptedToken) => {
-  const bytes  = CryptoJS.AES.decrypt(cryptedToken, process.env.SECRET_KEY);
-  return bytes.toString(CryptoJS.enc.Utf8);
-}
 
-const createSecureAdapter = (): AxiosAdapter => {
-  const cryptedToken = Cookies.get('user');
-  const token = cryptedToken ? decryptToken(cryptedToken) : '';
+const createSecureAdapter = (req?): AxiosAdapter => {
+  let token;
+  if (req) {
+    // if server-side
+    const userCookie = (req as any).headers.cookie.split(';').filter(cookie => cookie.includes('user='));
+    const cryptedToken = userCookie[0] && userCookie[0].split('=')[1];
+    token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
+  } else {
+    // if client-side
+    const cryptedToken = Cookies.get('user');
+    token = !!cryptedToken ? decryptTokenClient(cryptedToken) : '';
+  }
   const secureOptions = {
     ...options,
     headers: {
@@ -38,9 +45,9 @@ const createSecureAdapter = (): AxiosAdapter => {
   return axios.create(secureOptions);
 }
 
-export default () => {
+const apiService = (req?) => {
   const instance = createAdapter();
-  const secure = createSecureAdapter();
+  const secure = createSecureAdapter(req);
   const adapter = {
     default: instance,
     secure: secure,
@@ -50,5 +57,9 @@ export default () => {
     orders: new Orders(adapter),
     products: new Products(adapter),
     users: new Users(adapter),
+    master: new Master(adapter),
+    message: new Message(adapter),
   }
 };
+
+export default apiService;

@@ -4,3 +4,8 @@ node_modules
 api/Midtrans-Laravel5-master.zip
 server
 .env
+public/static/sw.js*
+public/static/workbox-*
+public/static/images/pages-xs
+coverage
+report.*

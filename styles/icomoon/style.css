@@ -1,0 +1,134 @@
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
+@font-face {
+  font-family: 'whenigrowup';
+  src: url('/static/fonts/icons/whenigrowup.eot?xcui52');
+  src:
+    url('/static/fonts/icons/whenigrowup.eot?xcui52#iefix') format('embedded-opentype'),
+    url('/static/fonts/icons/whenigrowup.ttf?xcui52') format('truetype'),
+    url('/static/fonts/icons/whenigrowup.woff?xcui52') format('woff'),
+    url('/static/fonts/icons/whenigrowup.svg?xcui52#whenigrowup') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'whenigrowup' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-gift::before {
+  content: '\e99f';
+}
+
+.icon-ico_book::before {
+  content: '\e914';
+}
+
+.icon-ico_premium_account::before {
+  content: '\e915';
+}
+
+.icon-ico_verified::before {
+  content: '\e916';
+}
+
+.icon-whatsapp::before {
+  content: '\ea93';
+}
+
+.icon-duplicate::before {
+  content: '\e913';
+}
+
+.icon-tag_label::before {
+  content: '\e912';
+}
+
+.icon-ui_cross::before {
+  content: '\e911';
+}
+
+.icon-eye-show::before {
+  content: '\e90e';
+  color: #484e5c;
+}
+
+.icon-eye_hide::before {
+  content: '\e90f';
+  color: #484e5c;
+}
+
+.icon-menu::before {
+  content: '\e910';
+}
+
+.icon-cross_check::before {
+  content: '\e90d';
+}
+
+.icon-chevron_up::before {
+  content: '\e90b';
+}
+
+.icon-chevron_down::before {
+  content: '\e90c';
+}
+
+.icon-info::before {
+  content: '\e90a';
+}
+
+.icon-edit::before {
+  content: '\e908';
+}
+
+.icon-trash::before {
+  content: '\e909';
+}
+
+.icon-arrow_left::before {
+  content: '\e907';
+}
+
+.icon-facebook_white::before {
+  content: '\e904';
+  color: #fafafa;
+}
+
+.icon-instagram_white::before {
+  content: '\e905';
+  color: #fafafa;
+}
+
+.icon-twitter_white::before {
+  content: '\e906';
+  color: #fafafa;
+}
+
+.icon-chevron_right::before {
+  content: '\e902';
+}
+
+.icon-chevron_left::before {
+  content: '\e903';
+}
+
+.icon-cart::before {
+  content: '\e900';
+}
+
+.icon-account::before {
+  content: '\e901';
+}
