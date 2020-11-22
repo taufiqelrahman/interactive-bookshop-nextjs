@@ -10,8 +10,7 @@ interface Testimonial {
   image_url: string;
 }
 
-export interface Occupation {
-  id: number;
+interface Occupation {
   name: string;
   description: string;
   page_count: number;
@@ -22,14 +21,13 @@ interface BookContent {
   style: string;
 }
 
-export interface BookPage {
+interface BookPage {
   order: number;
   occupation: Occupation;
   book_contens: BookContent[];
-  page_number: number;
 }
 
-export interface Province {
+interface Province {
   name: string;
   code: string;
 }

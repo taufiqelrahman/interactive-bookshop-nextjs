@@ -1,11 +1,9 @@
-import { CartItem } from 'store/cart/types';
-
 // export const CHECKOUT = 'CHECKOUT';
 export const LOAD_ORDER = 'LOAD_ORDER';
 export const LOAD_ORDERS = 'LOAD_ORDERS';
 export const SET_PAYMENT_PROBLEM = 'SET_PAYMENT_PROBLEM';
 
-export interface Order extends CartItem {
+interface Order {
   id: number;
   order_number: string;
   shopify_order_id: string;
@@ -14,10 +12,6 @@ export interface Order extends CartItem {
   created_at: string;
   updated_at: string;
   deleted_at: string;
-  state: {
-    name: string;
-  };
-  properties?: any;
 }
 
 export interface OrdersState {

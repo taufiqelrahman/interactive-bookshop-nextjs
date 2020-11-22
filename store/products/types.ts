@@ -1,9 +1,7 @@
 export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
 export const SHOW_PRODUCT = 'SHOW_PRODUCT';
 
-export type Product = {
-  [key in string | number]: string;
-} & {
+interface Product {
   id: number;
   name: string;
   description: string;
@@ -13,8 +11,7 @@ export type Product = {
   updated_at: string;
   deleted_at: string;
   images: ProductImage[];
-  jobIds?: string[];
-};
+}
 
 interface ProductImage {
   id: number;

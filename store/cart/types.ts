@@ -1,5 +1,3 @@
-import { Child, KeyValue } from 'store/types';
-
 export const LOAD_CART = 'LOAD_CART';
 // export const ADD_DISCOUNT = 'ADD_DISCOUNT';
 // export const REMOVE_DISCOUNT = 'REMOVE_DISCOUNT';
@@ -17,11 +15,9 @@ export interface Cart {
   updated_at: string;
   deleted_at: string;
   cart_items: CartItem[];
-  lineItems: any[];
 }
 
-type CustomAttributes = Child & KeyValue[];
-export interface CartItem {
+interface CartItem {
   id: number;
   cart_id: number;
   product_id: number;
@@ -29,8 +25,6 @@ export interface CartItem {
   price: number;
   created_at: string;
   updated_at: string;
-  variant: { id: number; price: number };
-  customAttributes: CustomAttributes;
 }
 
 export interface CartState {

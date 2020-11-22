@@ -13,21 +13,7 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SEND_OTP = 'SEND_OTP';
 
 export interface User {
-  name?: string;
   email: string;
-  address?: Address | string;
-  phone: string;
-  password?: string;
-}
-
-// generated from API response
-export interface Address {
-  id?: string;
-  first_name?: string;
-  last_name?: string;
-  created_at?: string;
-  updated_at?: string;
-  deleted_at?: string;
 }
 
 export interface UsersState {
