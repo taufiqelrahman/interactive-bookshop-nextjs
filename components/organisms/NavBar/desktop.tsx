@@ -25,10 +25,7 @@ const NavBar = (props: any) => {
     }
   };
   useEffect(() => {
-    const { user } = props.users;
-    if (user && user.cart) {
-      props.thunkLoadCart(user.cart.checkout_id);
-    } else if (!user && localStorage.getItem('cart')) {
+    if (!props.users.user && localStorage.getItem('cart')) {
       props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true);
     }
     document.body.classList.remove('overlay-active');
@@ -39,6 +36,11 @@ const NavBar = (props: any) => {
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, []);
+  useEffect(() => {
+    const { user } = props.users;
+    if (!user || !user.cart) return;
+    props.thunkLoadCart(user.cart.checkout_id);
+  }, [props.users.user && props.users.user.cart.checkout_id]);
 
   const stickyClassName = () => {
     return isSticky ? 'c-nav-bar--sticky' : '';
@@ -46,7 +48,7 @@ const NavBar = (props: any) => {
 
   const cartNotEmpty = !!props.cartItems && props.cartItems.length > 0;
 
-  const toggleShow = (state, action) => {
+  const toggleShow = (state: boolean, action) => {
     action(state);
     if (state) {
       document.body.classList.add('overlay-active');

@@ -133,6 +133,7 @@ export const thunkLoadCart = (
     dispatch(thunkTransferCart(id));
     return;
   }
+  if (!id) return;
   return graphql()
     .checkout.get(id)
     .then(cart => {
