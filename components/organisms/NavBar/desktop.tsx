@@ -40,7 +40,7 @@ const NavBar = (props: any) => {
     const { user } = props.users;
     if (!user || !user.cart) return;
     props.thunkLoadCart(user.cart.checkout_id);
-  }, [props.users.user && props.users.user.cart.checkout_id]);
+  }, [props.users.user && props.users.user.cart && props.users.user.cart.checkout_id]);
 
   const stickyClassName = () => {
     return isSticky ? 'c-nav-bar--sticky' : '';
