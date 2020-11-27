@@ -99,7 +99,7 @@ export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null
       dispatch(transferCart(false, { ...cart, lineItems }));
     })
     .catch(err => {
-      if (err.message.includes('exist') || err.message.includes('completed')) {
+      if (err.message && (err.message.includes('exist') || err.message.includes('completed'))) {
         dispatch(thunkCreateCart());
       } else {
         dispatch(transferCart(false));
@@ -142,7 +142,7 @@ export const thunkLoadCart = (
       dispatch(loadCart(false, { ...cart, lineItems }));
     })
     .catch(err => {
-      if (err.message.includes('exist') || err.message.includes('completed')) {
+      if (err.message && (err.message.includes('exist') || err.message.includes('completed'))) {
         dispatch(thunkCreateCart());
       } else {
         dispatch(loadCart(false));
@@ -248,7 +248,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
       Router.replace('/cart');
     })
     .catch(err => {
-      if (err.message.includes('exist') || err.message.includes('completed')) {
+      if (err.message && (err.message.includes('exist') || err.message.includes('completed'))) {
         dispatch(thunkCreateCart(thunkAddToCart(newProduct)));
       } else {
         dispatch(addToCart(false));
@@ -283,7 +283,7 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
       if (Router.pathname !== '/cart') Router.replace('/cart');
     })
     .catch(err => {
-      if (err.message.includes('exist') || err.message.includes('completed')) {
+      if (err.message && (err.message.includes('exist') || err.message.includes('completed'))) {
         dispatch(thunkCreateCart(thunkAddToCart(product)));
       } else {
         dispatch(updateCart(false));
@@ -312,7 +312,7 @@ export const thunkRemoveFromCart = (id, itemId): ThunkAction<void, types.CartSta
       dispatch(removeFromCart(false, { ...cart, lineItems }));
     })
     .catch(err => {
-      if (err.message.includes('exist') || err.message.includes('completed')) {
+      if (err.message && (err.message.includes('exist') || err.message.includes('completed'))) {
         dispatch(thunkCreateCart());
       } else {
         dispatch(removeFromCart(false));
