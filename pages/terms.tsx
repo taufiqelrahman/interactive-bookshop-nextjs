@@ -189,7 +189,7 @@ const Terms = (props: any): any => {
             </strong>
             <br />
             Dengan usaha terbaik Kami, Kami akan memproses Pemesanan atas Produk yang Anda pesan sesuai dengan periode
-            waktu paling lama 7 hari kerja.Periode pengiriman yang Kami sebutkan merupakan perkiraan dan bukan lah
+            waktu paling lama 14 hari kerja.Periode pengiriman yang Kami sebutkan merupakan perkiraan dan bukan lah
             jaminan yang kami berikan dan Kami tidak memiliki tanggung jawab atas kerugian atau biaya tambahan yang
             mungkin Anda keluarkan terkait keterlambatan pada proses Pengiriman Produk yang ada pesan.
             <br />

@@ -79,6 +79,7 @@ const CharacterCustomization = (props: any) => {
   useEffect(() => {
     // setTimeout(() => {
     //   register({ name: 'Date of Birth' }, schema(props).dob);
+    loadImg(previewImg(selected, watch));
     Router.prefetch('/preview');
     register({ name: 'Occupations' }, schema(props).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
