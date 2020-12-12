@@ -1,12 +1,14 @@
+import DOMPurify from 'dompurify';
+
 const Sheet = (props: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-sheet--${variant}`).join(' ');
+    return variants.map((variant: string) => `c-sheet--${variant}`).join(' ');
   };
   const overlayClass = props.overlay ? `c-sheet__overlay--${props.overlay}` : '';
   const zIndexMultiplier = props.zIndexLevel ? 5 * props.zIndexLevel : 1;
-  const onClose = event => {
+  const onClose = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     props.closeSheet();
   };
@@ -23,7 +25,10 @@ const Sheet = (props: any) => {
               </div>
             </div>
           )}
-          <div style={{ marginTop: props.header ? 0 : 8 }}>{props.content}</div>
+          <div
+            style={{ marginTop: props.header ? 0 : 8 }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.content) }}
+          />
         </div>
         {props.actions && <div className="c-sheet__action">{props.actions}</div>}
       </div>
