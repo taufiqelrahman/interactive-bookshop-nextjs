@@ -4,6 +4,7 @@ const initState: types.State = {
   isSideNavOpen: false,
   errorMessage: '',
   isFetching: false,
+  maintenanceMode: true,
 };
 
 const reducer = (state: types.State = initState, action: types.ActionTypes): any => {

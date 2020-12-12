@@ -1,13 +1,17 @@
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';
 import Floating from 'components/atoms/Floating';
 
+const MaintenanceModal = dynamic(() => import('components/molecules/MaintenanceModal'));
+
 const DefaultLayout = (props: any) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const showWhatsapp = ['/', '/login', '/register', '/help', '/account'].includes(router.pathname);
@@ -19,6 +23,7 @@ const DefaultLayout = (props: any) => {
     if (props.state.default.isSideNavOpen) hideSideNav();
   };
   useEffect(() => {
+    if (props.state.default.maintenanceMode && isIndexPage) setShowModal(true);
     // reset overlay
     hideSideNav();
     // set top margin for fixed navbar
@@ -86,6 +91,7 @@ const DefaultLayout = (props: any) => {
           </Floating>
         </a>
       )}
+      {showModal && <MaintenanceModal show={showModal} setShow={setShowModal} isMobile={props.isMobile} />}
       <style jsx>{`
         .c-overlay {
           @apply opacity-0;

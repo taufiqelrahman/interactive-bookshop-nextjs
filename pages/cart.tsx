@@ -3,7 +3,7 @@ import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import NumberFormat from 'react-number-format';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Head from 'next/head';
 import * as gtag from 'lib/gtag';
 import DefaultLayout from 'components/layouts/Default';
@@ -16,8 +16,10 @@ const Card = dynamic(() => import('components/atoms/Card'));
 const Dot = dynamic(() => import('components/atoms/Dot'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Button = dynamic(() => import('components/atoms/Button'));
+const MaintenanceModal = dynamic(() => import('components/molecules/MaintenanceModal'));
 
 const Cart = (props: any): any => {
+  const [showModal, setShowModal] = useState(false);
   const { users, cart } = props.state;
   const items = cart.cart ? cart.cart.lineItems : cart.isFetching ? [1, 2] : [];
   const itemsAmount = cart.cart ? cart.cart.lineItemsSubtotalPrice.amount : 0;
@@ -32,6 +34,10 @@ const Cart = (props: any): any => {
     }
   }, []);
   const continuePayment = () => {
+    if (props.state.default.maintenanceMode) {
+      setShowModal(true);
+      return;
+    }
     window.location.href = cart.cart ? cart.cart.webUrl : '';
     gtag.event({
       action: 'checkout',
@@ -209,6 +215,7 @@ const Cart = (props: any): any => {
             </Link>
           </div>
         )}
+        {showModal && <MaintenanceModal show={showModal} setShow={setShowModal} isMobile={props.isMobile} />}
       </div>
       <style jsx>{`
         .c-cart-section {

@@ -30,7 +30,7 @@ const Sheet = (props: any) => {
       {props.isOpen && <div className={`c-sheet__overlay ${overlayClass}`} onClick={onClose}></div>}
       <style jsx>{`
         .c-sheet {
-          @apply absolute w-full bg-white left-0 bottom-0 flex flex-col justify-between;
+          @apply fixed w-full bg-white left-0 bottom-0 flex flex-col justify-between;
           transform: ${props.isOpen ? 'none' : 'translateY(999px)'};
           transition: transform 0.2s ease-in;
           min-height: 268px;
