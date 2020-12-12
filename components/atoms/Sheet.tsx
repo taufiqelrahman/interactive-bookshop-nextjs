@@ -25,10 +25,14 @@ const Sheet = (props: any) => {
               </div>
             </div>
           )}
-          <div
-            style={{ marginTop: props.header ? 0 : 8 }}
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.content) }}
-          />
+          {props.stringContent ? (
+            <div
+              style={{ marginTop: props.header ? 0 : 8, marginBottom: 16, lineHeight: '24px' }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.content) }}
+            />
+          ) : (
+            <div style={{ marginTop: props.header ? 0 : 8 }}>{props.content}</div>
+          )}
         </div>
         {props.actions && <div className="c-sheet__action">{props.actions}</div>}
       </div>

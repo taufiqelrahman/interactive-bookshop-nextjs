@@ -29,6 +29,7 @@ const MaintenanceModal: React.FC<Props> = ({ show, setShow, isMobile }: Props) =
       variant="rounded"
       content={maintenanceContent}
       actions={renderActions}
+      stringContent={true}
     />
   ) : (
     <Modal isOpen={show} closeModal={closeModal} actions={renderActions} content={maintenanceContent} />
