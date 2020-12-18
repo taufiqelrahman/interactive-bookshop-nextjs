@@ -28,7 +28,7 @@ import Checkout from './checkout';
 //   },
 // }
 
-function adapterGenerator(uri, token): ApolloClient<any> {
+function adapterGenerator(uri: string, token: string): ApolloClient<any> {
   // const httpLink = createHttpLink({ uri });
   // const middlewareLink = setContext(() => ({
   //   headers: {
@@ -42,7 +42,7 @@ function adapterGenerator(uri, token): ApolloClient<any> {
   //   cache: new InMemoryCache(),
   // });
 
-  return Client.buildClient({
+  return (Client as any).buildClient({
     domain: uri,
     storefrontAccessToken: token,
   });
@@ -50,9 +50,9 @@ function adapterGenerator(uri, token): ApolloClient<any> {
 
 const createAdapter = (): ApolloClient<any> => {
   return adapterGenerator(
-    process.env.SHOPIFY_URL,
+    process.env.SHOPIFY_URL as string,
     // 'X-Shopify-Storefront-Access-Token',
-    process.env.STOREFRONT_API_KEY,
+    process.env.STOREFRONT_API_KEY as string,
   );
 };
 

@@ -11,6 +11,7 @@ import Head from 'next/head';
 import { toast } from 'react-toastify';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { Order } from 'store/orders/types';
 // import dummyOrder from '_mocks/orderDetail';
 
 const Divider = dynamic(() => import('components/atoms/Divider'));
@@ -51,7 +52,7 @@ const OrderDetailMobile = (props: any): any => {
     Router.push('/orders');
   };
   const screenHeight = '100vh - 59px';
-  const showNote = event => {
+  const showNote = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     setState({ ...state, showNote: true });
   };
@@ -73,7 +74,7 @@ const OrderDetailMobile = (props: any): any => {
         <Skeleton height={30} width={'100%'} />
       ) : (
         <Capsule
-          color={appConfig.stateColor[currentOrder.state]}
+          color={(appConfig.stateColor as any)[currentOrder.state]}
           variant="bar"
           style={{ zIndex: 42, position: 'fixed', top: 59 }}
         >
@@ -107,7 +108,7 @@ const OrderDetailMobile = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={19} width={280} />
                       ) : (
-                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                        lineItems.map((item: Order) => item.customAttributes.Name).join(', ') || '-'
                       )}
                     </div>
                     <div className="c-detail__label">{props.t('common:quantity')}</div>
@@ -195,7 +196,7 @@ const OrderDetailMobile = (props: any): any => {
                         </div>
                       )}
                       {discounts &&
-                        discounts.map(discount => (
+                        discounts.map((discount: { code: string }) => (
                           <div
                             key={discount.code}
                             className="flex justify-between items-baseline"
@@ -306,7 +307,7 @@ const OrderDetailMobile = (props: any): any => {
               title={props.t(`common:note-preview`)}
               content={
                 <div className="c-detail__note">
-                  {lineItems.map(item => (
+                  {lineItems.map((item: Order) => (
                     <Fragment key={item.id}>
                       <h5>{item.customAttributes.Name}</h5>
                       <div>{item.customAttributes.Dedication}</div>

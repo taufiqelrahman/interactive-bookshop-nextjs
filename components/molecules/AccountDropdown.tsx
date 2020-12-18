@@ -6,7 +6,7 @@ const AccountDropdown = (props: any) => {
     props.logout();
   };
   return (
-    <div onClick={e => e.stopPropagation()}>
+    <div onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
       <div className="c-account-dropdown">
         <div className="c-account-dropdown__item">
           <Link href="/orders">

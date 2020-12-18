@@ -7,6 +7,7 @@ import Users from './users';
 import Master from './master';
 import Message from './message';
 import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
+import { NextApiRequest } from 'next';
 
 export interface AdapterObject {
   default: AxiosInstance,
@@ -23,11 +24,11 @@ const createAdapter = (): AxiosAdapter => {
   return axios.create(options);
 }
 
-const createSecureAdapter = (req?): AxiosAdapter => {
+const createSecureAdapter = (req?: NextApiRequest): AxiosAdapter => {
   let token;
   if (req) {
     // if server-side
-    const userCookie = (req as any).headers.cookie.split(';').filter(cookie => cookie.includes('user='));
+    const userCookie = (req as any).headers.cookie.split(';').filter((cookie: string) => cookie.includes('user='));
     const cryptedToken = userCookie[0] && userCookie[0].split('=')[1];
     token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
   } else {
@@ -45,7 +46,7 @@ const createSecureAdapter = (req?): AxiosAdapter => {
   return axios.create(secureOptions);
 }
 
-const apiService = (req?) => {
+const apiService = (req?: NextApiRequest) => {
   const instance = createAdapter();
   const secure = createSecureAdapter(req);
   const adapter = {

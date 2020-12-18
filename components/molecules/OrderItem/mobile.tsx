@@ -6,9 +6,10 @@ import { previewImg } from './helper';
 import Divider from 'components/atoms/Divider';
 import Skeleton from 'react-loading-skeleton';
 import { mapKeyValue } from 'lib/format-array';
+import { Order } from 'store/orders/types';
 
 const OrderItem = (props: any) => {
-  const lineItems = (props.line_items || []).map(item => ({
+  const lineItems = (props.line_items || []).map((item: { properties: any[] }) => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));
@@ -31,7 +32,7 @@ const OrderItem = (props: any) => {
                   {props.isSkeleton ? (
                     <Skeleton height={24} width={180} />
                   ) : (
-                    lineItems.map(item => item.customAttributes.Name).join(', ')
+                    lineItems.map((item: Order) => item.customAttributes.Name).join(', ')
                   )}
                 </div>
                 <div className="c-order-item__detail__books">

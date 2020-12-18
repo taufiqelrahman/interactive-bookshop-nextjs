@@ -18,7 +18,7 @@ const DateField = (props: any) => {
     setMonth({ label: parsed[1], value: parsed[1] });
     setYear({ label: parsed[2], value: parsed[2] });
   };
-  const handleChange = (selectedOption, setter) => {
+  const handleChange = (selectedOption: Event, setter: (x: Event) => void) => {
     setter(selectedOption);
   };
   useEffect(() => {

@@ -27,7 +27,7 @@ const Help = (props: any): any => {
     'Vandi',
     'Dhana Bisma',
   ];
-  const renderNames = string => {
+  const renderNames = (string: string) => {
     let content = string;
     names.forEach(name => {
       content = content.replace('[name]', `<strong>${name}</strong>`);

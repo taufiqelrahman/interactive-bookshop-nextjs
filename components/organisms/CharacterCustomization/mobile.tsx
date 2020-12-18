@@ -2,12 +2,22 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { useEffect, useState, Fragment } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, retrieveDedication } from './helper';
+import {
+  schema,
+  showError,
+  previewImg,
+  getJobIds,
+  loadImg,
+  FormData,
+  addDedicationToLS,
+  retrieveDedication,
+} from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 // import FieldDob from 'components/molecules/FieldDob';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { selectedMock } from '_mocks/selected';
 
 const FieldOccupations = dynamic(() => import('components/molecules/FieldOccupations'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
@@ -34,8 +44,9 @@ const CharacterCustomization = (props: any) => {
   };
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
-  const methods = useForm({ mode: 'onChange' });
-  const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
+  const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm<
+    FormData
+  >({ mode: 'onChange' });
   const cancel = () => {
     setShowSheet(true);
   };
@@ -55,18 +66,7 @@ const CharacterCustomization = (props: any) => {
 
   const isDev = process.env.NODE_ENV === 'development';
   const defaultSelected = isDev
-    ? {
-        Occupations: ['Teacher', 'Pilot', 'Police'],
-        Name: 'Kalilist',
-        Age: 'kid',
-        Gender: 'girl',
-        Skin: 'light',
-        Language: 'english',
-        Dedication:
-          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-        'Date of Birth': '03-01-2019',
-        Hair: 'short',
-      }
+    ? selectedMock
     : {
         Dedication: retrieveDedication(),
       };
@@ -78,7 +78,7 @@ const CharacterCustomization = (props: any) => {
     // }, 500);
   };
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data: FormData) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {
       const jobIds = getJobIds(data.Occupations, occupations);

@@ -4,21 +4,23 @@ import { initializeStore } from '../store';
 import actions from '../store/actions';
 import { bindActionCreators } from 'redux';
 import { NextPage } from 'next';
+import { connect, ConnectedProps } from 'react-redux';
+import { AppContext } from 'next/app';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
 
-function getOrCreateStore(initialState?) {
+function getOrCreateStore(initialState?: any) {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
     return initializeStore(initialState);
   }
 
   // Store in global variable if client
-  if (!window[__NEXT_REDUX_STORE__]) {
-    window[__NEXT_REDUX_STORE__] = initializeStore(initialState);
+  if (!(window as any)[__NEXT_REDUX_STORE__]) {
+    (window as any)[__NEXT_REDUX_STORE__] = initializeStore(initialState);
   }
-  return window[__NEXT_REDUX_STORE__];
+  return (window as any)[__NEXT_REDUX_STORE__];
 }
 
 export type Store = ReturnType<typeof getOrCreateStore>;
@@ -29,11 +31,11 @@ const withReduxStore = (Component: NextPage<any>) => {
   return class Redux extends React.Component<Props> {
     private reduxStore;
 
-    static async getInitialProps(appContext) {
+    static async getInitialProps(appContext: AppContext) {
       const reduxStore = getOrCreateStore();
 
       // Provide the store to getInitialProps of pages
-      appContext.ctx.reduxStore = reduxStore;
+      (appContext.ctx as any).reduxStore = reduxStore;
 
       let appProps = {};
       if ((Component as any).getInitialProps) {
@@ -47,7 +49,7 @@ const withReduxStore = (Component: NextPage<any>) => {
       };
     }
 
-    constructor(props) {
+    constructor(props: any) {
       super(props);
       this.reduxStore = getOrCreateStore(props.initialReduxState);
     }
@@ -59,6 +61,9 @@ const withReduxStore = (Component: NextPage<any>) => {
 };
 
 export default withReduxStore;
-export const mapStateToProps = state => ({ state });
-export const mapDispatchToProps = dispatch => ({ ...bindActionCreators(actions, dispatch) });
+export const mapStateToProps = (state: any) => ({ state });
+export const mapDispatchToProps = (dispatch: any) => ({ ...bindActionCreators(actions, dispatch) });
 // export type Dispatchable<P> = P & ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>
+
+export const connector = connect(mapStateToProps, mapDispatchToProps);
+export type PropsFromRedux = ConnectedProps<typeof connector>;

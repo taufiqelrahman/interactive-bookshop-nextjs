@@ -2,7 +2,7 @@ const Card = (props: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-card--${variant}`).join(' ');
+    return variants.map((variant: string) => `c-card--${variant}`).join(' ');
   };
 
   return (

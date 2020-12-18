@@ -2,10 +2,22 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, retrieveDedication } from './helper';
+import {
+  schema,
+  showError,
+  previewImg,
+  getJobIds,
+  loadImg,
+  FormData,
+  addDedicationToLS,
+  retrieveDedication,
+} from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
+import { WithTranslation } from 'next-i18next';
+import { PropsFromRedux } from 'lib/with-redux-store';
+import { selectedMock } from '_mocks/selected';
 // import Card from 'components/atoms/Card';
 // import FieldDob from 'components/molecules/FieldDob';
 // import DefaultLayout from 'components/layouts/Default';
@@ -24,11 +36,15 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 
-const CharacterCustomization = (props: any) => {
+interface Props extends PropsFromRedux, WithTranslation {}
+
+const CharacterCustomization: React.FC<Props> = (props: Props) => {
   const router = useRouter();
   const [isSticky, setSticky] = useState(false);
-  const methods = useForm({ mode: 'onChange' });
-  const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
+
+  const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = useForm<
+    FormData
+  >({ mode: 'onChange' });
   useEffect(() => {
     if (!formState.isValid) {
       showError(props.t('form-error'));
@@ -36,24 +52,13 @@ const CharacterCustomization = (props: any) => {
   }, [errors]);
   const isDev = process.env.NODE_ENV === 'development';
   const defaultSelected = isDev
-    ? {
-        Occupations: ['Teacher', 'Pilot', 'Police'],
-        Name: 'Kadhgihbkt',
-        Age: 'kid',
-        Gender: 'girl',
-        Skin: 'light',
-        Language: 'english',
-        Dedication:
-          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-        'Date of Birth': '03-01-2019',
-        Hair: 'short',
-      }
+    ? selectedMock
     : {
         Dedication: retrieveDedication(),
       };
   const selected = props.state.cart.selected || defaultSelected;
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data: FormData) => {
     if (!router.query.edit) {
       gtag.event({
         action: 'click_create',

@@ -1,5 +1,5 @@
 export const customStyles = {
-  menu: provided => ({
+  menu: (provided: any) => ({
     ...provided,
     marginTop: 0,
     border: '2px solid #333',
@@ -10,14 +10,14 @@ export const customStyles = {
   indicatorSeparator: () => ({
     display: 'none',
   }),
-  option: provided => ({
+  option: (provided: any) => ({
     ...provided,
     '&:hover': {
       background: '#333',
       color: 'white',
     },
   }),
-  control: (provided, state) => ({
+  control: (provided: any, state: any) => ({
     ...provided,
     borderWidth: 2,
     borderType: 'solid',
@@ -31,7 +31,7 @@ export const customStyles = {
   }),
 };
 
-const padNumber = number => {
+const padNumber = (number: number) => {
   let s = String(number);
   while (s.length < 2) {
     s = `0${s}`;
@@ -45,8 +45,8 @@ const generateNumberOpts = (range: any) => {
   return numbers.map(num => ({ value: padNumber(num), label: padNumber(num) }));
 };
 
-export const dates = month => {
-  const selectedMonth = month ? (month as any).value : 1;
+export const dates = (month: { value: number }) => {
+  const selectedMonth = month ? month.value : 1;
   let range;
   if (selectedMonth % 2 === 1) {
     range = 31;

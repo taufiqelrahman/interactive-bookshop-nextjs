@@ -3,7 +3,15 @@ import { withTranslation } from 'i18n';
 import TextField from 'components/atoms/TextField';
 import Badge from 'components/atoms/Badge';
 
-const FormTextField: any = (props: any) => {
+interface Props {
+  formStyle: React.CSSProperties;
+  className: string;
+  label: string;
+  errors: Error[];
+  schema: any;
+  register: any;
+}
+const FormTextField: React.FC<Props> = (props: Props) => {
   return (
     <div style={props.formStyle} className={props.className}>
       <div className="c-form-text-field">

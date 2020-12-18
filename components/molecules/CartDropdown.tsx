@@ -1,11 +1,12 @@
 import { withTranslation, Link } from 'i18n';
 import { previewImg } from 'components/molecules/CartItem/helper';
 import NumberFormat from 'react-number-format';
+import { CartItem } from 'store/cart/types';
 
 const CartDropdown = (props: any) => {
   const cartNotEmpty = !!props.items && props.items.length > 0;
   return (
-    <div onClick={e => e.stopPropagation()}>
+    <div onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
       <div className={`c-cart-dropdown ${!cartNotEmpty ? 'c-cart-dropdown--empty' : ''}`}>
         {cartNotEmpty ? (
           <div className="c-cart-dropdown__container">
@@ -16,7 +17,7 @@ const CartDropdown = (props: any) => {
               </Link>
             </div>
             <div className="c-cart-dropdown__content">
-              {props.items.map((item, i) => {
+              {props.items.map((item: CartItem, i: number) => {
                 return (
                   <div key={i} className="c-cart-dropdown__item">
                     <div className="flex items-center">

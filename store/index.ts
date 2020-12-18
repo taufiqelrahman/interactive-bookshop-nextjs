@@ -24,6 +24,6 @@ const composeEnhancer =
     : compose;
 
 export type AppState = ReturnType<typeof rootReducer>;
-export function initializeStore(initialState?): Store {
+export function initializeStore(initialState?: any): Store {
   return createStore(rootReducer, initialState, composeEnhancer(applyMiddleware(thunkMiddleware)));
 }

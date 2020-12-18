@@ -1,29 +1,31 @@
+import { ApolloClient } from 'apollo-boost';
+
 export default class Checkout {
   adapter: any;
-  basePath: string;
+  // basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: ApolloClient<any>) {
     this.adapter = adapter;
   }
 
-  create(data): Promise<any> {
+  create(data: any): Promise<any> {
     // return this.adapter.product.fetchAll();
     return this.adapter.checkout.create(data);
   }
 
-  get(id): Promise<any> {
+  get(id: number): Promise<any> {
     return this.adapter.checkout.fetch(id);
   }
 
-  addLineItems(id, data): Promise<any> {
+  addLineItems(id: number, data: any): Promise<any> {
     return this.adapter.checkout.addLineItems(id, data);
   }
 
-  updateLineItems(id, data): Promise<any> {
+  updateLineItems(id: number, data: any): Promise<any> {
     return this.adapter.checkout.updateLineItems(id, data);
   }
 
-  removeLineItems(id, itemId): Promise<any> {
+  removeLineItems(id: number, itemId: number): Promise<any> {
     return this.adapter.checkout.removeLineItems(id, itemId);
   }
 

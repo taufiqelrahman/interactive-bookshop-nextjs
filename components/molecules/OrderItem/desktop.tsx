@@ -8,9 +8,10 @@ import appConfig from 'config';
 import { previewImg } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import { mapKeyValue } from 'lib/format-array';
+import { Order } from 'store/orders/types';
 
 const OrderItem = (props: any) => {
-  const lineItems = (props.line_items || []).map(item => ({
+  const lineItems = (props.line_items || []).map((item: any) => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));
@@ -33,14 +34,14 @@ const OrderItem = (props: any) => {
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={350} />
                 ) : (
-                  <h2>{lineItems.map(item => item.customAttributes.Name).join(', ')}</h2>
+                  <h2>{lineItems.map((item: Order) => item.customAttributes.Name).join(', ')}</h2>
                 )}
               </div>
               <div className="c-order-item__detail--top--right">
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={135} />
                 ) : (
-                  <Capsule color={appConfig.stateColor[props.state]}>
+                  <Capsule color={(appConfig as any).stateColor[props.state]}>
                     {props.t(props.state)}
                     {props.state === 'done' && <span className="icon-cross_check" />}
                   </Capsule>

@@ -7,7 +7,7 @@ const Pagination = (props: any) => {
   //   if (props.pages.length > 8) length = 9;
   //   return new Array(length).fill(0);
   // };
-  const renderClass = (order): string => {
+  const renderClass = (order: number): string => {
     let className = 'c-pagination__dot';
     const { current, pages } = props;
     if (order === current) className += ' c-pagination__dot--active';
@@ -51,7 +51,7 @@ const Pagination = (props: any) => {
   return (
     <div className="c-pagination">
       <div className="c-pagination__container">
-        {props.pages.map((_, index) => {
+        {props.pages.map((_: any, index: number) => {
           return <div key={index} className={renderClass(index + 1)} />;
         })}
       </div>

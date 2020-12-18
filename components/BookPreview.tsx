@@ -8,9 +8,21 @@ import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
 import initBook from 'assets/flipbook.js';
 import BookPage from 'components/atoms/BookPage';
-// import dummyPages from '_mocks/bookPages';
+// import dummyPages from '_mocks/book';
 
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
+
+const getImage = (job: string, pageNumber: number, props: any) => {
+  const { Gender, Age, Skin, Hair } = props.selected;
+  const pagePath = props.isMobile ? 'pages-sm' : 'pages';
+  let jobPath = `${job}/page-${pageNumber}`;
+  if (job.includes('Cover')) {
+    jobPath = job.includes('Front') ? 'cover/front/' : 'cover/back/';
+    jobPath += props.cover || 'blue';
+  }
+  const imagePath = `/static/images/${pagePath}/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
+  return imagePath.toLowerCase();
+};
 
 const BookPreview = (props: any) => {
   // const [, setBook] = useState(null);
@@ -170,18 +182,6 @@ const BookPreview = (props: any) => {
     return result;
   }, [props.bookPages]);
 
-  const getImage = (job: string, pageNumber: number) => {
-    const { Gender, Age, Skin, Hair } = props.selected;
-    const pagePath = props.isMobile ? 'pages-sm' : 'pages';
-    let jobPath = `${job}/page-${pageNumber}`;
-    if (job.includes('Cover')) {
-      jobPath = job.includes('Front') ? 'cover/front/' : 'cover/back/';
-      jobPath += props.cover || 'blue';
-    }
-    const imagePath = `/static/images/${pagePath}/${jobPath}/${Gender}/${Age}/${Hair}/${Skin}.jpg`;
-    return imagePath.toLowerCase();
-  };
-
   // const pageClass = index => {
   //   // if (index === 0) return 'first-page';
   //   // if (index === jointPages.length - 1) return 'last-page';
@@ -224,12 +224,9 @@ const BookPreview = (props: any) => {
                     minWidth: '80vw',
                     width: '80vw',
                   }}
-                  image={getImage(firstPage.occupation.name, firstPage.page_number)}
-                  name={props.selected.Name}
-                  language={props.selected.Language}
+                  image={getImage(firstPage.occupation.name, firstPage.page_number, props)}
+                  selected={props.selected}
                   // language="indo"
-                  gender={props.selected.Gender}
-                  dedication={props.selected.Dedication}
                   contents={page}
                   isMobile={props.isMobile}
                   isWhiteCover={props.cover === 'white' && firstPage.occupation.name.includes('Cover')}
@@ -253,6 +250,7 @@ const BookPreview = (props: any) => {
             {showBook && (
               <div className="c-flipbook" id="FlipBook">
                 {jointPages.map((page: any[], index: number) => {
+                  console.log({ page });
                   const [firstPage] = page;
                   return (
                     <BookPage
@@ -261,12 +259,8 @@ const BookPreview = (props: any) => {
                       isLast={index === jointPages.length - 1}
                       className="c-flipbook__page"
                       // className={`c-flipbook__page ${pageClass(index)}`}
-                      image={getImage(firstPage.occupation.name, firstPage.page_number)}
-                      name={props.selected.Name}
-                      language={props.selected.Language}
-                      // language="indo"
-                      gender={props.selected.Gender}
-                      dedication={props.selected.Dedication}
+                      image={getImage(firstPage.occupation.name, firstPage.page_number, props)}
+                      selected={props.selected}
                       contents={page}
                       isMobile={props.isMobile}
                       isWhiteCover={props.cover === 'white' && firstPage.occupation.name.includes('Cover')}

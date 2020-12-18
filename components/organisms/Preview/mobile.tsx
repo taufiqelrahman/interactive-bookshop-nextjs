@@ -2,11 +2,12 @@ import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
-import Cookies from 'js-cookie';
-import * as gtag from 'lib/gtag';
+import { dummySelected, schema, showError, saveToCookies, getFromCookies, FormData, addToCart } from './helper';
 import NavBar from 'components/organisms/NavBar/mobile';
 import DefaultLayout from 'components/layouts/Default';
+import { PropsFromRedux } from 'lib/with-redux-store';
+import { WithTranslation } from 'next-i18next';
+import { Product } from 'store/products/types';
 // import BookPreview from 'components/BookPreview';
 // import Sheet from 'components/atoms/Sheet';
 // import Button from 'components/atoms/Button';
@@ -17,36 +18,17 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const PreviewMobile = (props: any): any => {
+interface Props extends PropsFromRedux, WithTranslation {
+  isMobile: boolean;
+}
+const PreviewMobile: React.FC<Props> = (props: Props): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
-  const [showSheet, setShowSheet] = useState(false);
-  const [showSpecs, setShowSpecs] = useState(false);
-  const [tempData, setTempData] = useState(null);
-  const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, formState, watch } = methods;
+  const [showSheet, setShowSheet] = useState<boolean>(false);
+  const [showSpecs, setShowSpecs] = useState<boolean>(false);
+  const [tempData, setTempData] = useState<Product | any>(null);
+  const { register, handleSubmit, errors, formState, watch } = useForm<FormData>({ mode: 'onChange' });
   const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = cart => {
-    if (selected.id) {
-      props.thunkUpdateCart(cart);
-    } else {
-      gtag.event({
-        action: 'click_create',
-        category: 'engagement',
-        label: '/preview',
-      });
-      gtag.event({
-        action: 'add_to_cart',
-        category: 'ecommerce',
-        label: 'mobile',
-      });
-      (window as any).fbq('track', 'AddToCart', {
-        cartItem: cart,
-        isLoggedIn: props.state.users.isLoggedIn,
-      });
-      props.thunkAddToCart(cart);
-    }
-  };
-  const onSubmit = data => {
+  const onSubmit = (data: FormData): void => {
     if (!selected) {
       Router.replace('/create');
       return;
@@ -58,10 +40,7 @@ const PreviewMobile = (props: any): any => {
       // saveToCookies(cart);
       return;
     }
-    addToCart(cart);
-  };
-  const continueAsGuest = () => {
-    addToCart(tempData);
+    addToCart(cart, selected, props);
   };
   useEffect(() => {
     if (!formState.isValid) {
@@ -69,12 +48,7 @@ const PreviewMobile = (props: any): any => {
     }
   }, [errors]);
   useEffect(() => {
-    const fromCookies = getFromCookies();
-    if (fromCookies) {
-      props.saveSelected(fromCookies);
-      Cookies.remove('pendingTrx');
-      // setEnableLazy(false);
-    }
+    getFromCookies(props);
   }, []);
   const screenHeight = '100vh - 69px';
   const bookPages = props.state.master.bookPages;
@@ -120,7 +94,7 @@ const PreviewMobile = (props: any): any => {
             <Button width="100%" onClick={() => saveToCookies(tempData)} style={{ marginBottom: 12 }}>
               {props.t('login')}
             </Button>
-            <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
+            <Button width="100%" onClick={() => addToCart(tempData, selected, props)} variant="outline" color="black">
               {props.t('continue-guest')}
             </Button>
           </Fragment>

@@ -5,7 +5,9 @@ import DOMPurify from 'dompurify';
 import 'styles/fonts.min.css';
 
 const BookPage = (props: any) => {
-  const styleGenerator = (string: any): any => {
+  const { selected, isMobile } = props;
+  const { Name: name, Language: language, Gender: gender, Dedication: dedication } = selected;
+  const styleGenerator = (string: string): any => {
     let style: any = {
       width: '37%',
       fontSize: props.isMobile ? '2vw' : '0.8vw',
@@ -15,18 +17,18 @@ const BookPage = (props: any) => {
       fontWeight: 300,
     };
     if (string) style = { ...style, ...JSON.parse(string) };
-    if (props.isMobile && style.fontSizeMobile) style = { ...style, fontSize: style.fontSizeMobile };
-    if (props.isMobile && style.lineHeightMobile) style = { ...style, lineHeight: style.lineHeightMobile };
-    if (props.isMobile && style.widthMobile) style = { ...style, width: style.widthMobile };
+    if (isMobile && style.fontSizeMobile) style = { ...style, fontSize: style.fontSizeMobile };
+    if (isMobile && style.lineHeightMobile) style = { ...style, lineHeight: style.lineHeightMobile };
+    if (isMobile && style.widthMobile) style = { ...style, width: style.widthMobile };
     if (props.isWhiteCover) style = { ...style, color: 'black' };
     const [firstContent] = props.contents;
     if (firstContent.occupation.name === 'Front Cover') {
       style = {
         ...style,
-        fontSize: props.isMobile ? '9vw' : '3.5vw',
-        lineHeight: props.isMobile ? '7.5vw' : '3vw',
+        fontSize: isMobile ? '9vw' : '3.5vw',
+        lineHeight: isMobile ? '7.5vw' : '3vw',
       };
-      if (props.name && props.name.length > 4) {
+      if (name && name.length > 4) {
         style = {
           ...style,
           width: '90%',
@@ -38,14 +40,16 @@ const BookPage = (props: any) => {
     }
     return style;
   };
-  const processContent = (content, language) => {
+  interface Content {
+    english: string;
+    indonesia: string;
+    style: any;
+  }
+  const processContent = (content: Content, language: string) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
     const {
       contents: [firstContent],
-      name,
-      gender,
-      dedication,
     } = props;
     if (!name) return processed;
     if (firstContent.occupation.name === 'Front Cover') {
@@ -69,7 +73,7 @@ const BookPage = (props: any) => {
   //   if (!props.enableLazy) forceVisible();
   // }, [props.enableLazy]);
   useEffect(() => {
-    if (!props.isMobile) forceVisible();
+    if (!isMobile) forceVisible();
   }, []);
   return (
     <div id={props.id} className={`c-book-page ${props.className || ''}`} style={props.style}>
@@ -80,8 +84,8 @@ const BookPage = (props: any) => {
             {props.isLast ? (
               <div className="c-book-page__limit">{props.t('book-limit')}</div>
             ) : (
-              props.contents.map((content, key) => {
-                const value = processContent(content, props.language);
+              props.contents.map((content: Content, key: number) => {
+                const value = processContent(content, language);
                 return (
                   <div
                     key={key}
@@ -135,11 +139,11 @@ const BookPage = (props: any) => {
       <style jsx global>{`
         strong {
           @apply font-bold;
-          font-size: ${props.isMobile ? '2.5vw' : '1vw'};
+          font-size: ${isMobile ? '2.5vw' : '1vw'};
         }
         .c-book-page__sub {
           @apply mt-2;
-          font-size: ${props.isMobile ? '9.5vw' : '4vw'};
+          font-size: ${isMobile ? '9.5vw' : '4vw'};
         }
       `}</style>
     </div>

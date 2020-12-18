@@ -26,7 +26,7 @@ const BookForm = (props: any) => {
     name: {
       required: { value: true, message: `${props.t('nickname-label')} ${props.t('required-error')}` },
       maxLength: { value: 10, message: `${props.t('nickname-label')} ${props.t('less-than-error')} 10` },
-      validate: value => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
+      validate: (value: string) => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
     },
     // age: { required: true },
     gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
@@ -52,7 +52,7 @@ const BookForm = (props: any) => {
   //     setState({ ...state, step: stepEnum.DETAIL, occupations: watch('occupations') });
   //   }
   // };
-  const onSubmit = data => {
+  const onSubmit = (data: Record<string, any>) => {
     // if (props.isMobile && state.step === stepEnum.OCCUPATIONS) {
     //   next();
     //   return;

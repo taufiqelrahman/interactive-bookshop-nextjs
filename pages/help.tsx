@@ -24,7 +24,7 @@ const Help = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, reset } = methods;
   const { isFetching } = props.state.default;
-  const onSubmit = async data => {
+  const onSubmit = async (data: Record<string, any>) => {
     await props.thunkSendMessage(data);
     reset();
     toast.success(props.t('form:copy-success-help'));

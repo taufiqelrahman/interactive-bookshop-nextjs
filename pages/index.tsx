@@ -1,11 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { connector, PropsFromRedux } from 'lib/with-redux-store';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import * as gtag from 'lib/gtag';
 import LazyLoad from 'react-lazyload';
 import { Link, Element } from 'react-scroll';
+import { NextPage } from 'next';
+import { WithTranslation } from 'next-i18next';
 import { withTranslation } from 'i18n';
 import actions from 'store/actions';
 // import graphql from 'services/graphql';
@@ -13,6 +14,7 @@ import actions from 'store/actions';
 import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { Occupation } from 'store/master/types';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
@@ -20,10 +22,14 @@ const BookForm = dynamic(() => import('components/organisms/BookForm'));
 const Showcase = dynamic(() => import('components/atoms/Showcase'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Index = (props: any): any => {
+interface Props extends PropsFromRedux, WithTranslation {
+  isMobile: boolean;
+}
+
+const Index: NextPage<Props> = (props: Props) => {
   const { testimonials, occupations } = props.state.master;
-  const occupationsTop = props.isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
-  const occupationsBottom = props.isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
+  const occupationsTop: Occupation[] = props.isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
+  const occupationsBottom: Occupation[] = props.isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
 
   // const createCheckout = async () => {
   //   let checkout = await graphql().checkout.create({
@@ -55,7 +61,7 @@ const Index = (props: any): any => {
   //   createCheckout();
   // }, []);
 
-  const landingTracker = () => {
+  const landingTracker = (): void => {
     gtag.event({
       action: 'click_landing',
       category: 'engagement',
@@ -433,4 +439,4 @@ Index.getInitialProps = async (ctx: any): Promise<any> => {
   return { namespacesRequired: ['page-index'] };
 };
 
-export default withTranslation('page-index')(connect(mapStateToProps, mapDispatchToProps)(Index));
+export default withTranslation('page-index')(connector(Index));

@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
+import { WithTranslation } from 'next-i18next';
+import { NextPage } from 'next';
 import { withTranslation, Link } from 'i18n';
 import { useState, useEffect, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,7 +19,10 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
-const Register = (props: any): any => {
+interface Props extends PropsFromRedux, WithTranslation {
+  isMobile: boolean;
+}
+const Register: NextPage<Props> = (props: Props): JSX.Element => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const stepEnum = { WELCOME: 0, EMAIL: 1, DETAIL: 2 };
@@ -46,7 +51,7 @@ const Register = (props: any): any => {
     },
     confirmPassword: {
       required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('password') || props.t('form:password-different'),
+      validate: (value: string) => value === watch('password') || props.t('form:password-different'),
     },
   };
   useEffect(() => {
@@ -54,7 +59,7 @@ const Register = (props: any): any => {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
-  const onSubmit = async data => {
+  const onSubmit = async (data: Record<string, any>) => {
     switch (registerStep) {
       case stepEnum.EMAIL:
         setSavedEmail(data.email);

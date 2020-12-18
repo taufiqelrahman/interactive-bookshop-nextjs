@@ -7,6 +7,7 @@ import { retrieveInfo, previewImg } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
 import DefaultLayout from 'components/layouts/Default';
+import { Order } from 'store/orders/types';
 // import dummyOrder from '_mocks/orderDetail';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -52,7 +53,10 @@ const OrderDetailDesktop = (props: any): any => {
                 <Fragment>
                   {props.t('order-title')}: {orderNumber}
                   {currentOrder && (
-                    <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
+                    <Capsule
+                      color={(appConfig.stateColor as any)[currentOrder.state]}
+                      style={{ height: 30, marginLeft: 18 }}
+                    >
                       {props.t(currentOrder.state)}
                       {props.state === 'received' && <span className="icon-cross_check" />}
                     </Capsule>
@@ -83,7 +87,7 @@ const OrderDetailDesktop = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={22} width={250} />
                       ) : (
-                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                        lineItems.map((item: Order) => item.customAttributes.Name).join(', ') || '-'
                       )}
                     </div>
                     <div className="c-detail__label" style={{ marginTop: 30 }}>
@@ -93,7 +97,7 @@ const OrderDetailDesktop = (props: any): any => {
                       <Skeleton height={24} width={115} />
                     ) : hasDedication ? (
                       <Popover
-                        content={lineItems.map(item => (
+                        content={lineItems.map((item: Order) => (
                           <Fragment key={item.id}>
                             <h5>{item.customAttributes.Name}</h5>
                             <div>{item.customAttributes.Dedication}</div>
@@ -215,7 +219,7 @@ const OrderDetailDesktop = (props: any): any => {
                   </div>
                 )}
                 {discounts &&
-                  discounts.map(discount => (
+                  discounts.map((discount: { code: string }) => (
                     <div key={discount.code} className="flex justify-between items-baseline" style={{ marginTop: 18 }}>
                       <div>
                         <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>

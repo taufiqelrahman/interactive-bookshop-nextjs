@@ -1,6 +1,16 @@
 import { withTranslation, Router } from 'i18n';
+import { WithTranslation } from 'next-i18next';
+import { ReactElement } from 'react';
 
-const Stepper = ({ backButton = true, isMobile = false, ...props }: any) => {
+interface Props extends WithTranslation {
+  title: string | ReactElement;
+  backButton?: boolean;
+  isMobile?: boolean;
+  totalSteps?: number;
+  step?: number;
+  style?: object;
+}
+const Stepper = ({ backButton = true, isMobile = false, ...props }: Props) => {
   return (
     <div className="c-stepper" style={props.style}>
       {backButton && (

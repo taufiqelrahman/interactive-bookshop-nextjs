@@ -7,6 +7,7 @@ import actions from 'store/actions';
 import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { Order } from 'store/orders/types';
 // import dummyOrders from '_mocks/orders';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -32,7 +33,7 @@ const Orders = (props: any): any => {
         <div className="c-orders-section">
           <div className="c-orders-section__left">
             {orderList.length > 0 ? (
-              orderList.map(item => (
+              orderList.map((item: Order | any) => (
                 <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
                   <a>
                     {props.isMobile ? (
@@ -103,11 +104,11 @@ Orders.getInitialProps = async (ctx: any): Promise<any> => {
     ctx.reduxStore.dispatch(actions.loadOrders(true));
     const { data: orderData } = await api(ctx.req).orders.loadOrders();
     const { order_states: orderStates, orders: rawOrders } = orderData.data;
-    const states = orderStates.reduce((acc, cur) => {
-      acc[cur.shopify_order_id] = cur.state.name;
+    const states = orderStates.reduce((acc: any, cur: Order) => {
+      acc[cur.shopify_order_id] = cur.state && cur.state.name;
       return acc;
     }, {});
-    const orders = rawOrders.map(order => ({ ...order, state: states[order.id] }));
+    const orders = rawOrders.map((order: Order) => ({ ...order, state: states[order.id] }));
     ctx.reduxStore.dispatch(actions.loadOrders(false, orders));
   } catch (err) {
     console.log(err.message);

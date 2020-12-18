@@ -8,20 +8,20 @@ const secretIv = process.env.SECRET_IV || '';
 const parsedKey = CryptoJS.enc.Utf8.parse(secretKey);
 const parsedIv = CryptoJS.enc.Utf8.parse(secretIv);
 
-export function encryptTokenClient(token) {
+export function encryptTokenClient(token: string) {
   const options = { mode: CryptoJS.mode.CBC, iv: parsedIv };
   const json = CryptoJS.AES.encrypt(token, parsedKey, options);
   return json.ciphertext.toString(CryptoJS.enc.Hex);
 }
 
-export const decryptTokenClient = cryptedToken => {
+export const decryptTokenClient = (cryptedToken: any) => {
   let result = '';
   const options = { mode: CryptoJS.mode.CBC, iv: parsedIv };
   try {
     const json = CryptoJS.AES.decrypt(
       {
         ciphertext: CryptoJS.enc.Hex.parse(cryptedToken),
-      },
+      } as any,
       parsedKey,
       options,
     );
@@ -31,7 +31,7 @@ export const decryptTokenClient = cryptedToken => {
   return result;
 };
 
-export const decryptTokenServer = cryptedToken => {
+export const decryptTokenServer = (cryptedToken: string) => {
   let result = '';
   const decipher = Crypto.createDecipheriv('aes-256-cbc', secretKey, secretIv);
   const dec = decipher.update(cryptedToken, 'hex', 'utf8');

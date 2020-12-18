@@ -2,10 +2,9 @@ import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
-import Cookies from 'js-cookie';
-import * as gtag from 'lib/gtag';
+import { dummySelected, schema, showError, saveToCookies, getFromCookies, FormData, Props, addToCart } from './helper';
 import DefaultLayout from 'components/layouts/Default';
+import { Product } from 'store/products/types';
 // import Modal from 'components/atoms/Modal';
 // import Button from 'components/atoms/Button';
 // import FieldCover from 'components/molecules/FieldCover';
@@ -18,35 +17,13 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 
-const PreviewDesktop = (props: any): any => {
+const PreviewDesktop: React.FC<Props> = (props: Props): any => {
   // const [enableLazy, setEnableLazy] = useState(true);
-  const methods = useForm({ mode: 'onChange' });
-  const [showModal, setShowModal] = useState(false);
-  const [tempData, setTempData] = useState(null);
-  const { register, handleSubmit, errors, formState, watch } = methods;
+  const [showModal, setShowModal] = useState<boolean>(() => false);
+  const [tempData, setTempData] = useState<Product | any>(null);
+  const { register, handleSubmit, errors, formState, watch } = useForm<FormData>({ mode: 'onChange' });
   const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = cart => {
-    if (selected.id) {
-      props.thunkUpdateCart(cart);
-    } else {
-      gtag.event({
-        action: 'click_create',
-        category: 'engagement',
-        label: '/preview',
-      });
-      gtag.event({
-        action: 'add_to_cart',
-        category: 'ecommerce',
-        label: 'desktop',
-      });
-      (window as any).fbq('track', 'AddToCart', {
-        cartItem: cart,
-        isLoggedIn: props.state.users.isLoggedIn,
-      });
-      props.thunkAddToCart(cart);
-    }
-  };
-  const onSubmit = data => {
+  const onSubmit = (data: FormData): void => {
     if (!selected) {
       Router.replace('/create');
       return;
@@ -58,23 +35,18 @@ const PreviewDesktop = (props: any): any => {
       // saveToCookies(cart);
       return;
     }
-    addToCart(cart);
-  };
-  const continueAsGuest = () => {
-    addToCart(tempData);
+    addToCart(cart, selected, props);
   };
   useEffect(() => {
+    /**
+     * Show errors realtime
+     */
     if (!formState.isValid) {
       showError(props.t('form:form-error'));
     }
   }, [errors]);
   useEffect(() => {
-    const fromCookies = getFromCookies();
-    if (fromCookies) {
-      props.saveSelected(fromCookies);
-      Cookies.remove('pendingTrx');
-      // setEnableLazy(false);
-    }
+    getFromCookies(props);
   }, []);
   const bookPages = props.state.master.bookPages;
   return (
@@ -132,7 +104,7 @@ const PreviewDesktop = (props: any): any => {
             <Button width="100%" onClick={() => saveToCookies(tempData)} style={{ marginBottom: 12 }}>
               {props.t('login')}
             </Button>
-            <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
+            <Button width="100%" onClick={() => addToCart(tempData, selected, props)} variant="outline" color="black">
               {props.t('continue-guest')}
             </Button>
           </Fragment>

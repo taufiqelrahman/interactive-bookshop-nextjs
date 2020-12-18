@@ -19,8 +19,12 @@ const FormTextField = dynamic(() => import('components/molecules/FormTextField')
 
 const Login = (props: any): any => {
   const router = useRouter();
-  const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, formState, watch } = methods;
+  interface FormData {
+    email: string;
+    password: string;
+    password_confirmation: string;
+  }
+  const { register, handleSubmit, errors, formState, watch } = useForm<FormData>({ mode: 'onChange' });
   const stepEnum = { WELCOME: 0, EMAIL: 1, FORGOT: 2, SENT: 3, RESET: 4 };
   const [loginStep, setLoginStep] = useState(stepEnum.WELCOME);
   const [isTransit, setIsTransit] = useState(false); // only for facebook & google redirects
@@ -34,7 +38,7 @@ const Login = (props: any): any => {
     password: { required: true },
     confirmPassword: {
       required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('password') || props.t('form:password-different'),
+      validate: (value: string) => value === watch('password') || props.t('form:password-different'),
     },
   };
   useEffect(() => {
@@ -65,7 +69,7 @@ const Login = (props: any): any => {
   const forgotPassword = () => {
     setLoginStep(stepEnum.FORGOT);
   };
-  const onSubmit = data => {
+  const onSubmit = (data: FormData) => {
     const { email, token } = resetData;
     switch (loginStep) {
       case stepEnum.EMAIL:

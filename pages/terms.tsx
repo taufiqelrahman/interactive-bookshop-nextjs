@@ -1,16 +1,21 @@
 /* eslint-disable no-irregular-whitespace */
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
+import { NextPage } from 'next';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Terms = (props: any): any => {
+interface Props extends PropsFromRedux, WithTranslation {
+  isMobile: boolean;
+}
+const Terms: NextPage<Props> = (props: Props): JSX.Element => {
   return (
     <DefaultLayout
       {...props}
