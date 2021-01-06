@@ -3,7 +3,7 @@ import React from 'react';
 const Facebook = () => {
   const pixelId = process.env.FACEBOOK_PIXEL_ID;
   return (
-    <React.Fragment>
+    <>
       <script
         dangerouslySetInnerHTML={{
           __html: `!function(f,b,e,v,n,t,s)
@@ -24,7 +24,7 @@ const Facebook = () => {
       src="https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1" />`,
         }}
       />
-    </React.Fragment>
+    </>
   );
 };
 
