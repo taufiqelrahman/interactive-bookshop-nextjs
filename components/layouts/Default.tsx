@@ -31,7 +31,7 @@ const DefaultLayout = (props: any) => {
     setNavbarHeight(navbarDiv.clientHeight);
     const { users, cart } = props.state;
     (window as any).fbq('track', 'ViewContent', {
-      cartItems: cart.cart && cart.cart.lineItems.length,
+      cartItems: (cart.cart && cart.cart.lineItems.length) || 0,
       isLoggedIn: users.isLoggedIn,
       path: router.pathname,
     });

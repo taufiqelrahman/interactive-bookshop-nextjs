@@ -47,8 +47,8 @@ const Cart = (props: any): any => {
     });
     const { isLoggedIn } = props.state.users;
     (window as any).fbq('track', 'InitiateCheckout', {
-      price: cart.cart && cart.cart.totalPrice,
-      cartItems: cart.cart && cart.cart.lineItems.length,
+      price: (cart.cart && cart.cart.totalPrice) || 0,
+      cartItems: (cart.cart && cart.cart.lineItems.length) || 0,
       isLoggedIn,
     });
     if (!isLoggedIn) localStorage.removeItem('cart');
@@ -95,6 +95,13 @@ const Cart = (props: any): any => {
                   />
                 );
               })}
+              {props.isMobile && (
+                <div className="c-cart-section__more">
+                  <Link href="/create">
+                    <a>{props.t('add-more')}</a>
+                  </Link>
+                </div>
+              )}
             </div>
             <div className="c-cart-section__summary">
               <Wrapper variant="border">
@@ -225,6 +232,11 @@ const Cart = (props: any): any => {
           }
           @screen xl {
             @apply flex-row;
+          }
+          &__more {
+            @apply flex justify-center text-brand font-semibold text-sm;
+            line-height: 1.8rem;
+            margin: 12px 0;
           }
           &__items {
             @apply w-full overflow-y-auto;

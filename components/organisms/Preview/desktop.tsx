@@ -40,7 +40,7 @@ const PreviewDesktop = (props: any): any => {
         label: 'desktop',
       });
       (window as any).fbq('track', 'AddToCart', {
-        cartItem: cart,
+        cartItem: cart || {},
         isLoggedIn: props.state.users.isLoggedIn,
       });
       props.thunkAddToCart(cart);
