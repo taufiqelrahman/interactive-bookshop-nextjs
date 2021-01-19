@@ -239,9 +239,13 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
       customAttributes,
     },
   ];
-  const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') as any);
+  const currentCart = user ? user.cart : JSON.parse(localStorage.getItem('cart') as any);
+  if (!currentCart) {
+    dispatch(thunkCreateCart(thunkAddToCart(newProduct)));
+    return;
+  }
   return graphql()
-    .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
+    .checkout.addLineItems(user ? currentCart.checkoutId : currentCart.id, lineItemsToAdd)
     .then(cart => {
       if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
