@@ -252,7 +252,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
     return;
   }
   return graphql()
-    .checkout.addLineItems(user ? currentCart.checkoutId : currentCart.id, lineItemsToAdd)
+    .checkout.addLineItems(user ? currentCart.checkout_id : currentCart.id, lineItemsToAdd)
     .then(cart => {
       if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
@@ -261,7 +261,10 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
       Router.replace('/cart');
     })
     .catch(err => {
-      if (err.message && (err.message.includes('exist') || err.message.includes('completed'))) {
+      if (
+        err.message &&
+        (err.message.includes('exist') || err.message.includes('completed') || err.message.includes('invalid'))
+      ) {
         dispatch(thunkCreateCart(thunkAddToCart(newProduct)));
       } else {
         dispatch(addToCart(false));
