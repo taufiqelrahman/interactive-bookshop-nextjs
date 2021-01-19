@@ -83,6 +83,7 @@ export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null
   dispatch(transferCart(true));
   const localStorageCart = JSON.parse(localStorage.getItem('cart') as any);
   localStorage.removeItem('cart');
+  if (!localStorageCart) return;
   const localCartResponse = await graphql().checkout.get(localStorageCart.id);
   if (!localCartResponse) return;
   const localCartItems = JSON.parse(JSON.stringify(localCartResponse.lineItems)).map(item => ({

@@ -26,7 +26,7 @@ const PreviewMobile = (props: any): any => {
   const { register, handleSubmit, errors, formState, watch } = methods;
   const selected = props.state.cart.selected || dummySelected || {};
   const addToCart = cart => {
-    if (selected.id) {
+    if (selected && selected.id) {
       props.thunkUpdateCart(cart);
     } else {
       gtag.event({
