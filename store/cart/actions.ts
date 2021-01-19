@@ -206,6 +206,13 @@ export const thunkLoadCart = (
 //     });
 // };
 
+export function saveSelected(selected = null): types.CartActionTypes {
+  return {
+    type: types.SAVE_SELECTED,
+    payload: selected,
+  };
+}
+
 function updateCart(isFetching, cart = null): types.CartActionTypes {
   return {
     type: types.UPDATE_CART,
@@ -250,6 +257,7 @@ export const thunkAddToCart = (newProduct: any): ThunkAction<void, types.CartSta
       if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
       dispatch(addToCart(false, { ...cart, lineItems }));
+      dispatch(saveSelected());
       Router.replace('/cart');
     })
     .catch(err => {
@@ -285,6 +293,7 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
       if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
       dispatch(updateCart(false, { ...cart, lineItems }));
+      dispatch(saveSelected());
       if (Router.pathname !== '/cart') Router.replace('/cart');
     })
     .catch(err => {
@@ -326,10 +335,3 @@ export const thunkRemoveFromCart = (id, itemId): ThunkAction<void, types.CartSta
       }
     });
 };
-
-export function saveSelected(selected = null): types.CartActionTypes {
-  return {
-    type: types.SAVE_SELECTED,
-    payload: selected,
-  };
-}
