@@ -216,7 +216,7 @@ const Login = (props: any): any => {
                           errors={errors.password}
                           variant="full-width"
                           isPassword={true}
-                          formStyle={{ marginTop: 24 }}
+                          style={{ marginTop: 24 }}
                         />
                         <div
                           data-testid="submit"
