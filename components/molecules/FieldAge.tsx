@@ -18,6 +18,7 @@ const FieldAge = (props: any) => {
         <div className="c-field-age__options">
           {ages.map(age => (
             <Radio
+              {...props}
               key={age.code}
               value={age.code}
               label={age.name}
@@ -25,7 +26,6 @@ const FieldAge = (props: any) => {
               style={{ height: 44, minWidth: 92 }}
               defaultChecked={props.defaultChecked === age.code}
               ref={props.register(props.schema)}
-              {...props}
             />
           ))}
         </div>
