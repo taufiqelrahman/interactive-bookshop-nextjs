@@ -95,13 +95,11 @@ const Cart = (props: any): any => {
                   />
                 );
               })}
-              {props.isMobile && (
-                <div className="c-cart-section__more">
-                  <Link href="/create">
-                    <a>{props.t('add-more')}</a>
-                  </Link>
-                </div>
-              )}
+              <div className="c-cart-section__more">
+                <Link href="/create">
+                  <a>{props.t('add-more')}</a>
+                </Link>
+              </div>
             </div>
             <div className="c-cart-section__summary">
               <Wrapper variant="border">
@@ -237,6 +235,9 @@ const Cart = (props: any): any => {
             @apply flex justify-center text-brand font-semibold text-sm;
             line-height: 1.8rem;
             margin: 12px 0;
+            @screen md {
+              padding: 24px 0;
+            }
           }
           &__items {
             @apply w-full overflow-y-auto;

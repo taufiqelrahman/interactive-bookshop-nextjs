@@ -12,7 +12,7 @@ const Dot = (props: any) => {
 
           &--red,
           &--magenta {
-            background: #de3636;
+            background: #b0008e;
           }
           &--blue {
             background: #445ca4;

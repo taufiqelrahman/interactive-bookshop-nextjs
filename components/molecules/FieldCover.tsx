@@ -7,7 +7,7 @@ const FieldCover = (props: any) => {
   const colors = [
     { name: 'blue', color: '#445ca4' },
     { name: 'white', color: '#efeef4' },
-    { name: 'magenta', color: '#de3636' },
+    { name: 'magenta', color: '#b0008e' },
   ];
   return (
     <div style={props.style}>
