@@ -10,7 +10,9 @@ const Dot = (props: any) => {
           height: ${props.width || '6px'};
           border-radius: 50%;
 
-          &--red,
+          &--red {
+            background: #de3636;
+          }
           &--magenta {
             background: #b0008e;
           }
