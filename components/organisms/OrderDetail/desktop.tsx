@@ -131,7 +131,7 @@ const OrderDetailDesktop = (props: any): any => {
                     {currentOrder && !currentOrder.fulfillment_status && (
                       <>
                         <div className="c-detail__label">{props.t('order-estimation')}</div>
-                        <div className="c-detail__value capitalize">
+                        <div className="c-detail__value">
                           {isFetching ? (
                             <Skeleton height={22} width={170} />
                           ) : (
