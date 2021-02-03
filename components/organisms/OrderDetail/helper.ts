@@ -41,3 +41,22 @@ export const retrieveInfo = order => {
 };
 
 export const previewImg = item => getPreviewUrl(item);
+
+export const calculateDays = createdAt => {
+  if (!createdAt) return 0;
+  // const createdDate = new Date('2021-02-01T15:07:19+07:00');
+  const createdDate = new Date(createdAt);
+  const currentDate = new Date();
+  let numWorkDays = 0;
+
+  while (createdDate <= currentDate) {
+    // Skips Sunday and Saturday
+    const dayIndex = createdDate.getDay();
+    if (dayIndex !== 0 && dayIndex !== 6) {
+      numWorkDays++;
+    }
+    createdDate.setDate(createdDate.getDate() + 1);
+  }
+  const daysLeft = 14 - numWorkDays;
+  return daysLeft > 0 ? daysLeft : 0;
+};

@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 import appConfig from 'config';
 import { useState, useEffect, Fragment } from 'react';
 import { fullDate } from 'lib/format-date';
-import { retrieveInfo } from './helper';
+import { retrieveInfo, calculateDays } from './helper';
 import { Swipeable } from 'react-swipeable';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
@@ -139,6 +139,14 @@ const OrderDetailMobile = (props: any): any => {
                         <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
                         <div className="c-detail__label">{props.t('tracking-number')}</div>
                         <div className="c-detail__value">{trackingNumber}</div>
+                        {!currentOrder.fulfillment_status && (
+                          <>
+                            <div className="c-detail__label">{props.t('order-estimation')}</div>
+                            <div className="c-detail__value">
+                              {`${calculateDays(currentOrder.processed_at)} ${props.t('day')}`}
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className="c-detail__order__info">
                         <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>

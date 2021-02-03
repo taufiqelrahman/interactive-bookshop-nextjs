@@ -26,5 +26,7 @@
   "copy-success": "Copied successfully",
   "orders-empty-title": "No Past Orders",
   "orders-empty-subtitle": "Looks like you haven’t purchased any books yet",
-  "orders-empty-cta": "Create a book"
+  "orders-empty-cta": "Create a book",
+  "order-estimation": "Days left to deliver",
+  "day": "day(s)"
 }

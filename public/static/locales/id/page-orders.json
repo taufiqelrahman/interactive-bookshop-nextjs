@@ -26,5 +26,7 @@
   "copy-success": "Berhasil disalin",
   "orders-empty-title": "Riwayat pesananmu kosong",
   "orders-empty-subtitle": "Sepertinya kamu belum beli buku satupun",
-  "orders-empty-cta": "Bikin bukumu"
+  "orders-empty-cta": "Bikin bukumu",
+  "order-estimation": "Sisa waktu pembuatan buku",
+  "day": "hari"
 }

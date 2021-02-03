@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import appConfig from 'config';
 import { Fragment } from 'react';
 import { fullDate } from 'lib/format-date';
-import { retrieveInfo, previewImg } from './helper';
+import { retrieveInfo, previewImg, calculateDays } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
 import DefaultLayout from 'components/layouts/Default';
@@ -128,6 +128,18 @@ const OrderDetailDesktop = (props: any): any => {
                     <div className="c-detail__value capitalize">
                       {isFetching ? <Skeleton height={22} width={170} /> : props.t(currentOrder.state)}
                     </div>
+                    {!currentOrder.fulfillment_status && (
+                      <>
+                        <div className="c-detail__label">{props.t('order-estimation')}</div>
+                        <div className="c-detail__value capitalize">
+                          {isFetching ? (
+                            <Skeleton height={22} width={170} />
+                          ) : (
+                            `${calculateDays(currentOrder.processed_at)} ${props.t('day')}`
+                          )}
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="c-detail__order__right">
                     <div className="c-detail__label">{props.t('shipping-date')}</div>
