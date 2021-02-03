@@ -139,7 +139,7 @@ const OrderDetailMobile = (props: any): any => {
                         <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
                         <div className="c-detail__label">{props.t('tracking-number')}</div>
                         <div className="c-detail__value">{trackingNumber}</div>
-                        {!currentOrder.fulfillment_status && (
+                        {currentOrder && !currentOrder.fulfillment_status && (
                           <>
                             <div className="c-detail__label">{props.t('order-estimation')}</div>
                             <div className="c-detail__value">

@@ -128,7 +128,7 @@ const OrderDetailDesktop = (props: any): any => {
                     <div className="c-detail__value capitalize">
                       {isFetching ? <Skeleton height={22} width={170} /> : props.t(currentOrder.state)}
                     </div>
-                    {!currentOrder.fulfillment_status && (
+                    {currentOrder && !currentOrder.fulfillment_status && (
                       <>
                         <div className="c-detail__label">{props.t('order-estimation')}</div>
                         <div className="c-detail__value capitalize">
