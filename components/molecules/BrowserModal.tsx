@@ -14,9 +14,9 @@ const MaintenanceModal = ({ show, setShow, isMobile, t }: any) => {
   const closeModal = useCallback(() => setShow(false), []);
   const renderActions = useMemo(
     () => (
-      <a href={process.env.APP_URL as string} target="_blank" rel="noopener noreferrer">
-        <Button width="100%">{t('open-browser-button')}</Button>
-      </a>
+      <Button width="100%" onClick={closeModal}>
+        {t('open-browser-button')}
+      </Button>
     ),
     [t, closeModal],
   );
