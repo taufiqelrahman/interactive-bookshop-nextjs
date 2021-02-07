@@ -55,10 +55,6 @@ const App: NextPage<any> = (props: any) => {
     gtag.pageview(url);
   };
   useEffect(() => {
-    if (navigator.userAgent.includes('Instagram')) {
-      window.open(process.env.APP_URL as string, '_system');
-    }
-
     if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);

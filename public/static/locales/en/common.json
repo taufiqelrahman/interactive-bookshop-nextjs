@@ -81,5 +81,7 @@
   "payment-problem-content": "There was an error when processing your payment. Please contact our customer service or create another book.",
   "book-limit": "Purchase now to read the full story!",
   "manufacturing-time": "Requires 7-14 working days to craft",
-  "add-more": "+ add more books"
+  "add-more": "+ add more books",
+  "open-browser-content": "Use your favourite browser for best experience.",
+  "open-browser-button": "Use"
 }
