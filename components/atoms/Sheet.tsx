@@ -31,7 +31,7 @@ const Sheet = (props: any) => {
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.content) }}
             />
           ) : (
-            <div style={{ marginTop: props.header ? 0 : 8 }}>{props.content}</div>
+            <div style={{ marginTop: props.header ? 0 : 8, lineHeight: '20px' }}>{props.content}</div>
           )}
         </div>
         {props.actions && <div className="c-sheet__action">{props.actions}</div>}

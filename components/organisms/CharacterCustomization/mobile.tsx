@@ -34,6 +34,7 @@ const CharacterCustomization = (props: any) => {
   };
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
+  const [showSheetOccupations, setShowSheetOccupations] = useState(false);
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   const cancel = () => {
@@ -142,6 +143,11 @@ const CharacterCustomization = (props: any) => {
           title={props.t('common:character-customization')}
           step={1}
           totalSteps={2}
+          actionRight={
+            charStep === stepEnum.OCCUPATIONS ? (
+              <span className="icon-info" onClick={() => setShowSheetOccupations(true)} />
+            ) : null
+          }
         />
       }
     >
@@ -290,6 +296,23 @@ const CharacterCustomization = (props: any) => {
               {props.t('cancel-button')}
             </Button>
           </Fragment>
+        }
+      />
+      <Sheet
+        name="occupations-example"
+        isOpen={showSheetOccupations}
+        header
+        title={props.t('info')}
+        closeSheet={() => setShowSheetOccupations(false)}
+        content={
+          <>
+            {`${props.t('occupations-info')}${props.t('example-below')}`}
+            <img
+              src="/static/images/occupations-example-sm.png"
+              alt="sheet-image"
+              style={{ marginTop: 18, width: '100%' }}
+            />
+          </>
         }
       />
       <style jsx>{`

@@ -75,5 +75,9 @@
   "quit-confirmation": "If you quit this page, all book preferences will be lost. This action cannot be undone.",
   "yes-quit": "Yes, quit",
   "copy-success-help": "Message sent successfully",
-  "clear-dedication": "Clear message?"
+  "clear-dedication": "Clear message?",
+  "occupations-info": "The book’s ending will encourage readers to pursue anything they want to be in the future regardless of chosen options. ",
+  "see-example": "See Example",
+  "example-below": "Example below.",
+  "info": "Info"
 }

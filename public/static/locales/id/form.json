@@ -75,5 +75,9 @@
   "quit-confirmation": "Jika kamu batalkan, data buku ini juga akan terhapus. Langkah ini tidak bisa dikembalikan lagi.",
   "yes-quit": "Ya, batalkan",
   "copy-success-help": "Pesan berhasil dikirm",
-  "clear-dedication": "Hapus pesan?"
+  "clear-dedication": "Hapus pesan?",
+  "occupations-info": "Di akhir buku, anak tetap akan didorong untuk mengejar cita-cita apapun terlepas dari pilihan ini. ",
+  "see-example": "Lihat Contoh",
+  "example-below": "Contoh di bawah.",
+  "info": "Info"
 }

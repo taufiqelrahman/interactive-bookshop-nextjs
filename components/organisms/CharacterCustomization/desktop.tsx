@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation, Router } from 'i18n';
 import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, retrieveDedication } from './helper';
 import { useRouter } from 'next/router';
@@ -23,10 +23,12 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const Modal = dynamic(() => import('components/atoms/Modal'));
 
 const CharacterCustomization = (props: any) => {
   const router = useRouter();
   const [isSticky, setSticky] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
@@ -164,12 +166,21 @@ const CharacterCustomization = (props: any) => {
                   triggerValidation={triggerValidation}
                   register={register}
                   errors={errors.Occupations}
-                  style={{ maxWidth: 550, marginBottom: 24 }}
+                  style={{ maxWidth: 550, marginBottom: 20 }}
                   defaultValue={selected.Occupations}
                   occupations={occupations}
                   formState={formState}
                   gender={watch('Gender')}
                 />
+                <div className="c-char-custom__info__wrapper">
+                  <span className="icon-info" />
+                  <div className="c-char-custom__info">
+                    {props.t('occupations-info')}
+                    <span className="c-char-custom__info__example" onClick={() => setShowModal(true)}>
+                      {props.t('see-example')}
+                    </span>
+                  </div>
+                </div>
                 <Divider />
                 <FieldLanguage
                   schema={schema(props).language}
@@ -203,6 +214,11 @@ const CharacterCustomization = (props: any) => {
             </div>
           </div>
         </div>
+        <Modal
+          isOpen={showModal}
+          closeModal={() => setShowModal(false)}
+          image="/static/images/occupations-example.png"
+        />
       </div>
       <style jsx>{`
         .c-char-custom {
@@ -250,6 +266,24 @@ const CharacterCustomization = (props: any) => {
             @apply flex flex-col;
             @screen lg {
               @apply flex-row;
+            }
+          }
+          &__info {
+            &__wrapper {
+              @apply text-sm flex items-start;
+              margin-top: 12px;
+              padding: 12px;
+              background: #f6f5f8;
+              border-radius: 12px;
+              margin-bottom: 32px;
+              .icon-info {
+                font-size: 20px;
+                margin-right: 8px;
+              }
+            }
+            line-height: 20px;
+            &__example {
+              @apply font-bold cursor-pointer;
             }
           }
         }
