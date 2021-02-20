@@ -165,6 +165,9 @@ const App: NextPage<any> = (props: any) => {
 
         {/* <!-- Orientation  --> */}
         {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
+
+        {/* google workspace verification */}
+        <meta name="google-site-verification" content="U_d31WZHeLx9MAJbl_s5lo3DXPJ9ZkmbRCfbcmcQVUs" />
       </Head>
       <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
