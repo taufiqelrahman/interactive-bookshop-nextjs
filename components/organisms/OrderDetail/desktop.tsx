@@ -115,6 +115,16 @@ const OrderDetailDesktop = (props: any): any => {
                 </div>
               </div>
             </Card>
+            {currentOrder && !currentOrder.fulfillment_status && (
+              <Card variant="border,banner" style={{ marginBottom: 12 }}>
+                <div className="c-detail__container">
+                  <span className="icon-gift" style={{ marginRight: 8 }} />
+                  <span>
+                    {`${props.t('order-estimation')}: ${calculateDays(currentOrder.processed_at)} ${props.t('day')}`}
+                  </span>
+                </div>
+              </Card>
+            )}
             <Card variant="border" style={{ marginBottom: 12 }}>
               <div className="c-detail__container">
                 <h2>{props.t('order-state')}</h2>
@@ -128,18 +138,6 @@ const OrderDetailDesktop = (props: any): any => {
                     <div className="c-detail__value capitalize">
                       {isFetching ? <Skeleton height={22} width={170} /> : props.t(currentOrder.state)}
                     </div>
-                    {currentOrder && !currentOrder.fulfillment_status && (
-                      <>
-                        <div className="c-detail__label">{props.t('order-estimation')}</div>
-                        <div className="c-detail__value">
-                          {isFetching ? (
-                            <Skeleton height={22} width={170} />
-                          ) : (
-                            `${calculateDays(currentOrder.processed_at)} ${props.t('day')}`
-                          )}
-                        </div>
-                      </>
-                    )}
                   </div>
                   <div className="c-detail__order__right">
                     <div className="c-detail__label">{props.t('shipping-date')}</div>

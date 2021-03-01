@@ -114,6 +114,16 @@ const OrderDetailMobile = (props: any): any => {
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems.length} ${props.t('books')}`}
                     </div>
+                    {currentOrder && !currentOrder.fulfillment_status && (
+                      <>
+                        <div className="c-detail__label">{props.t('order-estimation')}</div>
+                        <div className="c-detail__value">
+                          <Capsule color="dark-blue" style={{ height: 30, display: 'inline-flex' }}>
+                            {`${calculateDays(currentOrder.processed_at)} ${props.t('day')}`}
+                          </Capsule>
+                        </div>
+                      </>
+                    )}
                     <div className="c-detail__label">{props.t('common:dedication-note')}</div>
                     {isFetching ? (
                       <Skeleton height={21} width={100} />
@@ -139,14 +149,6 @@ const OrderDetailMobile = (props: any): any => {
                         <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
                         <div className="c-detail__label">{props.t('tracking-number')}</div>
                         <div className="c-detail__value">{trackingNumber}</div>
-                        {currentOrder && !currentOrder.fulfillment_status && (
-                          <>
-                            <div className="c-detail__label">{props.t('order-estimation')}</div>
-                            <div className="c-detail__value">
-                              {`${calculateDays(currentOrder.processed_at)} ${props.t('day')}`}
-                            </div>
-                          </>
-                        )}
                       </div>
                       <div className="c-detail__order__info">
                         <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>

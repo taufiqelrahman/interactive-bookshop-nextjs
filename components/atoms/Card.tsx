@@ -30,6 +30,10 @@ const Card = (props: any) => {
               border: 1px solid #efeef4;
             }
           }
+          &--banner {
+            @apply text-white border-0;
+            background-color: #3d76c7;
+          }
         }
       `}</style>
     </div>
