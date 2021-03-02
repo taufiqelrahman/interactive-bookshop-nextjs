@@ -72,9 +72,11 @@ const OrderDetailDesktop = (props: any): any => {
                     {isFetching ? (
                       <Skeleton height={136} width={136} />
                     ) : (
-                      <div className="c-detail__book__image">
-                        <img src={previewImg(lineItems[0].customAttributes)} alt="item preview" />
-                      </div>
+                      !!lineItems && (
+                        <div className="c-detail__book__image">
+                          <img src={previewImg(lineItems[0].customAttributes)} alt="item preview" />
+                        </div>
+                      )
                     )}
                   </div>
                   <div className="c-detail__book__middle">
@@ -162,7 +164,11 @@ const OrderDetailDesktop = (props: any): any => {
                   <div className="c-detail__address__left">
                     <div className="c-detail__label">{props.t('street-address')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.address1}
+                      {isFetching ? (
+                        <Skeleton height={22} width={170} />
+                      ) : (
+                        `${shippingAddress.address1} ${shippingAddress.address2}`
+                      )}
                     </div>
                     <div className="c-detail__label">{props.t('province')}</div>
                     <div className="c-detail__value">

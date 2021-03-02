@@ -41,9 +41,11 @@ const OrderItem = (props: any) => {
               {props.isSkeleton ? (
                 <Skeleton height={47} width={47} />
               ) : (
-                <div className="c-order-item__detail__image">
-                  <img src={previewImg(lineItems[0])} alt="item preview" />
-                </div>
+                !!lineItems && (
+                  <div className="c-order-item__detail__image">
+                    <img src={previewImg(lineItems[0])} alt="item preview" />
+                  </div>
+                )
               )}
             </div>
             <Divider style={{ borderColor: '#EFEEF4', margin: '3px 0 9px' }} />

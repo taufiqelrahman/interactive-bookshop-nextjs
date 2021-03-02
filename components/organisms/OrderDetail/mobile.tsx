@@ -158,7 +158,9 @@ const OrderDetailMobile = (props: any): any => {
                       <h2>{props.t('shipping-address')}</h2>
                       <div className="c-detail__address">
                         <div className="c-detail__label">{props.t('street-address')}</div>
-                        <div className="c-detail__value">{shippingAddress.address1}</div>
+                        <div className="c-detail__value">
+                          {`${shippingAddress.address1} ${shippingAddress.address2}`}
+                        </div>
                         <div className="c-detail__label">{props.t('province')}</div>
                         <div className="c-detail__value">{shippingAddress.province}</div>
                         <div className="c-detail__label">{props.t('postal-code')}</div>

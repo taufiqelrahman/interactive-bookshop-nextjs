@@ -22,9 +22,11 @@ const OrderItem = (props: any) => {
             {props.isSkeleton ? (
               <Skeleton height={180} width={142} />
             ) : (
-              <div className="c-order-item__preview__image">
-                <img src={previewImg(lineItems[0])} alt="item preview" />
-              </div>
+              !!lineItems && (
+                <div className="c-order-item__preview__image">
+                  <img src={previewImg(lineItems[0])} alt="item preview" />
+                </div>
+              )
             )}
           </div>
           <div className="c-order-item__detail">
