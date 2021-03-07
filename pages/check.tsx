@@ -57,7 +57,11 @@ const Check = (props: any): any => {
             <div className="c-check-order__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
                 {!props.isMobile && <h1 className="c-check-order__title">{props.t('check-order')}</h1>}
-                <img alt="check-order" className="c-check-order__image" src="/static/images/airbaloon.png" />
+                <img
+                  alt="check-order"
+                  className="c-check-order__image"
+                  src={`/static/images/airbaloon${props.isMobile ? '-sm' : ''}.png`}
+                />
                 <div className="c-check-order__subtitle">{props.t('check-order-subtitle')}</div>
                 <form className="c-check-order__form" onSubmit={handleSubmit(onSearch)}>
                   <FormTextField
