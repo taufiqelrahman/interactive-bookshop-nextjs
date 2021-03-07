@@ -89,7 +89,7 @@ const Check = (props: any): any => {
           @apply mx-auto w-full;
           &__container {
             @apply text-center flex flex-col justify-between;
-            padding: 29px 0 14px;
+            padding-top: 12px;
             @screen md {
               padding: 42px;
             }
