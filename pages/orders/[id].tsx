@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { Router } from 'i18n';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import OrderDetailMobile from 'components/organisms/OrderDetail/mobile';
 import OrderDetailDesktop from 'components/organisms/OrderDetail/desktop';
@@ -30,11 +31,16 @@ OrderDetail.getInitialProps = async (ctx: any): Promise<any> => {
     ctx.reduxStore.dispatch(actions.loadOrder(false, order));
   } catch (err) {
     console.log(err.message);
-    if (!ctx.res) return;
-    ctx.res.writeHead(302, {
-      Location: '/login?from=orders',
-    });
-    ctx.res.end();
+    if (ctx.res) {
+      // server side
+      ctx.res.writeHead(302, {
+        Location: '/login?from=orders',
+      });
+      ctx.res.end();
+    } else {
+      // client side
+      Router.push('/login?from=orders');
+    }
   }
   return { namespacesRequired: ['page-orders'] };
 };

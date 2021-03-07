@@ -27,7 +27,8 @@ const Button = (props: any) => {
           padding: ${props.width ? '12px 0' : '12px'};
           max-width: ${props.width ? '100%' : 'none'};
           width: ${props.width || '100%'};
-          line-height: 24px;
+          height: ${props.height || 'auto'};
+          line-height: ${props.height ? 'unset' : '24px'};
           @screen sm {
             width: ${props.width || '350px'};
           }

@@ -92,5 +92,9 @@
   "manufacturing-time": "Membutuhkan 7-14 hari kerja untuk pengerjaan",
   "add-more": "+ tambah buku lagi",
   "open-browser-content": "Gunakan browser favorit anda untuk pengalaman terbaik.",
-  "open-browser-button": "Saya mengerti"
+  "open-browser-button": "Saya mengerti",
+  "check-order": "Cek pesanan saya",
+  "check-order-subtitle": "Ketik nomor pesanan anda di bawah (contoh. WIGU-XXXX) dan klik \"Cek\".",
+  "check-order-button": "Cek",
+  "order-number-invalid": "Format nomor order salah"
 }

@@ -24,6 +24,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
       ) : (
         <Fragment>
           <input
+            onChange={props.onChange}
             type={props.isPassword && !showPassword ? 'password' : props.type || 'text'}
             name={props.name}
             placeholder={props.placeholder}
@@ -66,6 +67,12 @@ const TextField = React.forwardRef((props: any, ref: any) => {
           &--full-width {
             input {
               @apply w-full;
+            }
+          }
+          &--medium {
+            width: 300px;
+            input {
+              width: 300px;
             }
           }
           &--large {

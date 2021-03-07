@@ -83,5 +83,9 @@
   "manufacturing-time": "Requires 7-14 working days to craft",
   "add-more": "+ add more books",
   "open-browser-content": "Use your favourite browser for best experience.",
-  "open-browser-button": "I understand"
+  "open-browser-button": "I understand",
+  "check-order": "Check my order",
+  "check-order-subtitle": "Type in your order number below (e.g. WIGU-XXXX) and click \"Check\".",
+  "check-order-button": "Check",
+  "order-number-invalid": "Order number is invalid"
 }

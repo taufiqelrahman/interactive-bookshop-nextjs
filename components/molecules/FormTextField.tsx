@@ -7,10 +7,12 @@ const FormTextField: any = (props: any) => {
   return (
     <div style={props.formStyle} className={props.className}>
       <div className="c-form-text-field">
-        <div className="c-form-text-field__label">
-          {props.label}
-          {props.errors && <Badge>!</Badge>}
-        </div>
+        {!!props.label && (
+          <div className="c-form-text-field__label">
+            {props.label}
+            {props.errors && <Badge>!</Badge>}
+          </div>
+        )}
         <TextField ref={props.schema ? props.register(props.schema) : props.register} {...props} />
       </div>
       <style jsx>{`

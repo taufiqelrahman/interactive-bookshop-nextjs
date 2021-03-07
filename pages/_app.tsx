@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { NextApiResponse, NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import * as Sentry from '@sentry/browser';
 import { appWithTranslation, i18n, Router } from 'i18n';
@@ -303,7 +303,7 @@ const App: NextPage<any> = (props: any) => {
   );
 };
 
-const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
+const redirectPrivateRoutes = ({ pathname, res }: NextPageContext) => {
   const privateRoutes = ['/orders/success', '/account', '/orders'];
   if (privateRoutes.includes(pathname)) {
     const redirectTo = pathname.split('/')[1];
@@ -321,19 +321,19 @@ const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextA
   }
 };
 
-const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
+const redirectLoginRoutes = ({ pathname, res, query }: NextPageContext) => {
   const loginRoutes = ['/login', '/register'];
   if (loginRoutes.includes(pathname)) {
-    const home = '/';
+    const destination = query.from ? `/${query.from}` : '/';
     if (res) {
       // server-side
       res.writeHead(302, {
-        Location: home,
+        Location: destination,
       });
       res.end();
     } else {
       // client-side
-      Router.replace(home);
+      Router.replace(destination);
     }
   }
 };
