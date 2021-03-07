@@ -96,5 +96,6 @@
   "check-order": "Cek pesanan saya",
   "check-order-subtitle": "Ketik nomor pesanan anda di bawah (contoh. WIGU-XXXX) dan klik \"Cek\".",
   "check-order-button": "Cek",
-  "order-number-invalid": "Format nomor order salah"
+  "order-number-invalid": "Format nomor order salah",
+  "check-order-here": "Mau cek pesanan anda? Klik di sini"
 }

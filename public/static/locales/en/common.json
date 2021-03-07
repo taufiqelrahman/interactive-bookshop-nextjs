@@ -87,5 +87,6 @@
   "check-order": "Check my order",
   "check-order-subtitle": "Type in your order number below (e.g. WIGU-XXXX) and click \"Check\".",
   "check-order-button": "Check",
-  "order-number-invalid": "Order number is invalid"
+  "order-number-invalid": "Order number is invalid",
+  "check-order-here": "Want to check your order? Click here"
 }
