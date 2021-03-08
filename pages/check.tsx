@@ -34,7 +34,11 @@ const Check = (props: any): any => {
   };
   const onSearch = () => {
     if (!orderNumberIsValid(keyword)) return;
-    Router.push(`/orders/${keyword}`);
+    if (keyword.length === 4) {
+      Router.push(`/orders/WIGU-${keyword}`);
+    } else {
+      Router.push(`/orders/${keyword}`);
+    }
   };
   const onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
