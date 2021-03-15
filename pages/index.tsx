@@ -98,6 +98,13 @@ const Index = (props: any): any => {
             </div>
           </div>
         </div>
+        <div className="c-section__gotix">
+          <div className="u-container">
+            <a href="https://go-tix.id/events/when-i-grow-up-voucher-14855" rel="noreferrer noopener" target="_blank">
+              <img src={`/static/images/gotix-promo${props.isMobile ? '-sm' : ''}.png`} alt="gotix promo" />
+            </a>
+          </div>
+        </div>
         <div className="c-section__start-story">
           <div className="u-container">
             <div>
@@ -215,6 +222,15 @@ const Index = (props: any): any => {
                 margin-left: 0;
                 margin-top: 0;
               }
+            }
+          }
+          &__gotix {
+            padding-top: 10%;
+            @screen md {
+              padding-top: 22%;
+            }
+            img {
+              @apply w-full;
             }
           }
           &--middle {
