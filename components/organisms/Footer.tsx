@@ -115,7 +115,7 @@ const Footer = React.memo((props: any) => {
             &__social {
               @apply mx-auto flex justify-between;
               font-size: 36px;
-              width: 144px;
+              width: 96px;
               @screen md {
                 @apply items-center;
                 justify-content: unset;
