@@ -100,7 +100,7 @@ const Index = (props: any): any => {
         </div>
         <div className="c-section__gotix">
           <div className="u-container">
-            <a href="https://go-tix.id/events/when-i-grow-up-voucher-14855" rel="noreferrer noopener" target="_blank">
+            <a href="https://bit.ly/promowigugotix" rel="noreferrer noopener" target="_blank">
               <img src={`/static/images/gotix-promo${props.isMobile ? '-sm' : ''}.png`} alt="gotix promo" />
             </a>
           </div>
