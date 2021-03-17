@@ -2,10 +2,10 @@ import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
 import { render, screen } from '@testing-library/react';
-import Capsule from './Capsule';
+import Card from '../Card';
 
-describe('components/atoms/Capsule', () => {
-  let container = null;
+describe('components/atoms/Card', () => {
+  let container;
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
@@ -20,9 +20,11 @@ describe('components/atoms/Capsule', () => {
   });
 
   it('renders the component', () => {
-    render(<Capsule color="red">Test</Capsule>);
+    render(<Card variant="border--light,square--light"></Card>);
     expect(screen).toMatchSnapshot();
-    render(<Capsule />);
+    render(<Card variant="border">Test</Card>);
+    expect(screen).toMatchSnapshot();
+    render(<Card>Test</Card>);
     expect(screen).toMatchSnapshot();
   });
 });

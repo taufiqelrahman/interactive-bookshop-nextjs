@@ -74,7 +74,7 @@ const BookPage = (props: any) => {
   return (
     <div id={props.id} className={`c-book-page ${props.className || ''}`} style={props.style}>
       <LazyLoad overflow>
-        <svg className="c-book-page__svg" xmlns="http://www.w3.org/2000/svg">
+        <svg data-testid="bookPage-svg" className="c-book-page__svg" xmlns="http://www.w3.org/2000/svg">
           <foreignObject x="0" y="0" width="100%" height="100%" style={{ overflow: 'visible' }}>
             <img className="c-book-page__image" src={props.mustLoad ? props.image : ''} alt="book page" />
             {props.isLast ? (
@@ -85,6 +85,7 @@ const BookPage = (props: any) => {
                 return (
                   <div
                     key={key}
+                    data-testid="bookPage-content"
                     className="c-book-page__content"
                     style={styleGenerator(content.style)}
                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value) }}

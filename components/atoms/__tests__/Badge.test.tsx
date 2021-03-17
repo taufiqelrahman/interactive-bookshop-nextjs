@@ -2,10 +2,10 @@ import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
 import { render, screen } from '@testing-library/react';
-import Loader from './Loader';
+import Badge from '../Badge';
 
-describe('components/atoms/Loader', () => {
-  let container = null;
+describe('components/atoms/Badge', () => {
+  let container;
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
@@ -20,7 +20,9 @@ describe('components/atoms/Loader', () => {
   });
 
   it('renders the component', () => {
-    render(<Loader />);
+    render(<Badge>!</Badge>);
+    expect(screen).toMatchSnapshot();
+    render(<Badge />);
     expect(screen).toMatchSnapshot();
   });
 });
