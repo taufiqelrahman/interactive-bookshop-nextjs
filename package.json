@@ -16,6 +16,7 @@
     "analyze": "ANALYZE=true yarn build",
     "sitemap": "node sitemap_generator.js",
     "test": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.js -u --watchAll --silent",
+    "test:watch": "TZ=Asia/Jakarta jest --colors --config=jest.config.js -u --watchAll --silent",
     "test:e2e": "jest --colors --config=jest.config.js -u --watchAll ./pages",
     "test:ci": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.ci.js -u --silent"
   },
@@ -96,7 +97,8 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react": "^7.21.5",
+    "faker": "^5.1.0",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "husky": "^4.2.5",
     "image-trace-loader": "^1.0.2",

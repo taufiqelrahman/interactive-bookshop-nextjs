@@ -38,6 +38,7 @@ const DateField = (props: any) => {
         placeholder="DD"
         value={date}
         options={dates(month)}
+        date-testid="select-date"
         onChange={e => handleChange(e, setDate)}
       />
       <Select

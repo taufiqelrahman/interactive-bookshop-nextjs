@@ -6,7 +6,7 @@ const Footer = React.memo((props: any) => {
   const socialMedia = [
     // { icon: 'twitter_white', url: 'https://twitter.com' },
     { icon: 'instagram_white', url: 'https://www.instagram.com/wigubooks/' },
-    { icon: 'facebook_white', url: 'https://www.facebook.com/wigubooks' },
+    { icon: 'facebook_white', url: 'https://www.facebook.com/wigubooks/' },
   ];
 
   return (
