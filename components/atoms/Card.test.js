@@ -1,11 +1,11 @@
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
-import { render, waitFor, screen } from '@testing-library/react';
-import Dot from '../Dot';
+import { render, screen } from '@testing-library/react';
+import Card from './Card';
 
-describe('components/atoms/Dot', () => {
-  let container;
+describe('components/atoms/Card', () => {
+  let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
@@ -19,16 +19,12 @@ describe('components/atoms/Dot', () => {
     container = null;
   });
 
-  it('loads and displays greeting', async () => {
-    render(<Dot color="red" />);
-    await waitFor(() => screen.getByTestId('span'));
-    expect(screen.getByTestId('span')).toHaveClass('c-dot--red');
-  });
-
   it('renders the component', () => {
-    render(<Dot color="red" />);
+    render(<Card variant="border--light,square--light"></Card>);
     expect(screen).toMatchSnapshot();
-    render(<Dot />);
+    render(<Card variant="border">Test</Card>);
+    expect(screen).toMatchSnapshot();
+    render(<Card>Test</Card>);
     expect(screen).toMatchSnapshot();
   });
 });

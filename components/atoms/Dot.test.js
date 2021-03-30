@@ -1,11 +1,11 @@
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
-import { render, screen } from '@testing-library/react';
-import Capsule from '../Capsule';
+import { render, waitFor, screen } from '@testing-library/react';
+import Dot from './Dot';
 
-describe('components/atoms/Capsule', () => {
-  let container;
+describe('components/atoms/Dot', () => {
+  let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
@@ -19,10 +19,16 @@ describe('components/atoms/Capsule', () => {
     container = null;
   });
 
+  it('loads and displays greeting', async () => {
+    render(<Dot color="red" />);
+    await waitFor(() => screen.getByTestId('span'));
+    expect(screen.getByTestId('span')).toHaveClass('c-dot--red');
+  });
+
   it('renders the component', () => {
-    render(<Capsule color="red">Test</Capsule>);
+    render(<Dot color="red" />);
     expect(screen).toMatchSnapshot();
-    render(<Capsule />);
+    render(<Dot />);
     expect(screen).toMatchSnapshot();
   });
 });

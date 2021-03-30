@@ -56,22 +56,17 @@ const TestimonialSlider = (props: any) => {
               <div
                 className={`c-testi-slider__nav--left ${translationX === 0 ? 'c-testi-slider__nav--inactive' : ''}`}
                 onClick={onNavLeft}
-                data-testid="nav-left"
               >
                 <span className="icon-chevron_left" />
               </div>
-              <div
-                className={`c-testi-slider__nav--right ${navRightClass}`}
-                onClick={onNavRight}
-                data-testid="nav-right"
-              >
+              <div className={`c-testi-slider__nav--right ${navRightClass}`} onClick={onNavRight}>
                 <span className="icon-chevron_right" />
               </div>
             </div>
           )}
         </div>
         <div className="c-testi-slider__slides">
-          {props.testimonials.map((testi: { id: number }) => (
+          {props.testimonials.map(testi => (
             <Card key={testi.id} className="c-testi-slider__slide">
               <Testimonial testi={testi} />
             </Card>

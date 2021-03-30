@@ -2,10 +2,10 @@ import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
 import { render, screen } from '@testing-library/react';
-import Button from '../Button';
+import Divider from './Divider';
 
-describe('components/atoms/Button', () => {
-  let container;
+describe('components/atoms/Divider', () => {
+  let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
     container = document.createElement('div');
@@ -20,9 +20,7 @@ describe('components/atoms/Button', () => {
   });
 
   it('renders the component', () => {
-    render(<Button>Test</Button>);
-    expect(screen).toMatchSnapshot();
-    render(<Button />);
+    render(<Divider />);
     expect(screen).toMatchSnapshot();
   });
 });
