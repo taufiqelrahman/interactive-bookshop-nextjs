@@ -22,7 +22,6 @@ import 'styles/tailwind.css';
 import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
-import TagManager from 'react-gtm-module';
 
 const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
@@ -56,10 +55,6 @@ const App: NextPage<any> = (props: any) => {
     gtag.pageview(url);
   };
   useEffect(() => {
-    TagManager.initialize({
-      gtmId: 'GTM-TWKF2WK',
-    });
-
     if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
