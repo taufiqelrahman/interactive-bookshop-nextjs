@@ -4,9 +4,9 @@ import LazyLoad from 'react-lazyload';
 
 const Footer = React.memo((props: any) => {
   const socialMedia = [
-    { icon: 'twitter_white', url: 'https://twitter.com' },
-    { icon: 'instagram_white', url: 'https://instagram.com' },
-    { icon: 'facebook_white', url: 'https://facebook.com' },
+    // { icon: 'twitter_white', url: 'https://twitter.com' },
+    { icon: 'instagram_white', url: 'https://www.instagram.com/wigubooks/' },
+    { icon: 'facebook_white', url: 'https://www.facebook.com/wigubooks/' },
   ];
 
   return (
@@ -115,7 +115,7 @@ const Footer = React.memo((props: any) => {
             &__social {
               @apply mx-auto flex justify-between;
               font-size: 36px;
-              width: 144px;
+              width: 96px;
               @screen md {
                 @apply items-center;
                 justify-content: unset;

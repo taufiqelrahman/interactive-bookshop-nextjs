@@ -19,6 +19,9 @@ const Dot = (props: any) => {
           &--blue {
             background: #445ca4;
           }
+          &--green {
+            background: #618c30;
+          }
           &--white {
             background: #fff;
             border: 1px solid #e1e1e1;

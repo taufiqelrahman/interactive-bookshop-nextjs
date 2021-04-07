@@ -2,13 +2,9 @@ import React from 'react';
 import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 import { withTranslation } from 'i18n';
+import { bookColors } from 'constants/book-colors';
 
 const FieldCover = (props: any) => {
-  const colors = [
-    { name: 'blue', color: '#445ca4' },
-    { name: 'white', color: '#efeef4' },
-    { name: 'magenta', color: '#b0008e' },
-  ];
   return (
     <div style={props.style}>
       <div className="c-field-cover">
@@ -17,8 +13,7 @@ const FieldCover = (props: any) => {
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-cover__options">
-          {/* dummy */}
-          {colors.map(cover => (
+          {bookColors.map(cover => (
             <Radio
               key={cover.name}
               ref={props.register(props.schema)}
