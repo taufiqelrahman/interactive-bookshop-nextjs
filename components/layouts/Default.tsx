@@ -28,7 +28,7 @@ const DefaultLayout = (props: any) => {
   };
   useEffect(() => {
     // if (navigator.userAgent.includes('Instagram')) setShowBrowserModal(true);
-    setShowHolidayModal(true);
+    if (isIndexPage) setShowHolidayModal(true);
     if (props.state.default.maintenanceMode && isIndexPage) setShowModal(true);
     // reset overlay
     hideSideNav();
