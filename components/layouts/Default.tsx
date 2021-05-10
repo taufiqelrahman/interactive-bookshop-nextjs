@@ -8,12 +8,14 @@ import SideNav from 'components/organisms/SideNav';
 import Floating from 'components/atoms/Floating';
 
 const MaintenanceModal = dynamic(() => import('components/molecules/MaintenanceModal'));
-const BrowserModal = dynamic(() => import('components/molecules/BrowserModal'));
+// const BrowserModal = dynamic(() => import('components/molecules/BrowserModal'));
+const HolidayModal = dynamic(() => import('components/molecules/HolidayModal'));
 
 const DefaultLayout = (props: any) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
   const [showModal, setShowModal] = useState(false);
-  const [showBrowserModal, setShowBrowserModal] = useState(false);
+  // const [showBrowserModal, setShowBrowserModal] = useState(false);
+  const [showHolidayModal, setShowHolidayModal] = useState(false);
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const showWhatsapp = ['/', '/login', '/register', '/help', '/account'].includes(router.pathname);
@@ -25,7 +27,8 @@ const DefaultLayout = (props: any) => {
     if (props.state.default.isSideNavOpen) hideSideNav();
   };
   useEffect(() => {
-    if (navigator.userAgent.includes('Instagram')) setShowBrowserModal(true);
+    // if (navigator.userAgent.includes('Instagram')) setShowBrowserModal(true);
+    setShowHolidayModal(true);
     if (props.state.default.maintenanceMode && isIndexPage) setShowModal(true);
     // reset overlay
     hideSideNav();
@@ -95,8 +98,11 @@ const DefaultLayout = (props: any) => {
         </a>
       )}
       {showModal && <MaintenanceModal show={showModal} setShow={setShowModal} isMobile={props.isMobile} />}
-      {showBrowserModal && (
+      {/* {showBrowserModal && (
         <BrowserModal show={showBrowserModal} setShow={setShowBrowserModal} isMobile={props.isMobile} />
+      )} */}
+      {showHolidayModal && (
+        <HolidayModal show={showHolidayModal} setShow={setShowHolidayModal} isMobile={props.isMobile} />
       )}
       <style jsx>{`
         .c-overlay {
