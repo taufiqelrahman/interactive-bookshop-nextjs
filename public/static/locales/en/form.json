@@ -14,6 +14,7 @@
   "name-label": "Name",
   "nickname-label": "Nickname",
   "name-placeholder": "Type the child’s name here",
+  "name-user-placeholder": "Type your name here",
   "email-label": "Email",
   "email-exists": "This email already exists",
   "your-email-label": "Your email address",

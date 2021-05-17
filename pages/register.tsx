@@ -167,7 +167,7 @@ const Register = (props: any): any => {
                         <FormTextField
                           label={props.t('form:name-label')}
                           name="name"
-                          placeholder={props.t('form:name-placeholder')}
+                          placeholder={props.t('form:name-user-placeholder')}
                           schema={schema.name}
                           register={register}
                           errors={errors.name}
