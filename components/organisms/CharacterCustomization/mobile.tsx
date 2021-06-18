@@ -29,8 +29,9 @@ const CharacterCustomization = (props: any) => {
     HAIR: 2,
     SKIN: 3,
     OCCUPATIONS: 4,
-    LANGUAGE: 5,
-    DEDICATION: 6,
+    PARENTS: 5,
+    LANGUAGE: 6,
+    DEDICATION: 7,
   };
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
@@ -241,6 +242,30 @@ const CharacterCustomization = (props: any) => {
                     defaultChecked={selected.Skin}
                     register={register}
                   />
+                )}
+                {charStep === stepEnum.PARENTS && (
+                  <Fragment>
+                    <FormTextField
+                      label={props.t('daddy-label')}
+                      name="Daddy"
+                      placeholder={props.t('daddy-placeholder')}
+                      schema={schema(props).daddy}
+                      register={register}
+                      errors={errors.Daddy}
+                      defaultValue={selected.Daddy}
+                      variant="full-width"
+                    />
+                    <FormTextField
+                      label={props.t('mommy-label')}
+                      name="Mommy"
+                      placeholder={props.t('mommy-placeholder')}
+                      schema={schema(props).mommy}
+                      register={register}
+                      errors={errors.Mommy}
+                      defaultValue={selected.Mommy}
+                      variant="full-width"
+                    />
+                  </Fragment>
                 )}
                 {charStep === stepEnum.LANGUAGE && (
                   <FieldLanguage

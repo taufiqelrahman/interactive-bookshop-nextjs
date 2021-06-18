@@ -182,6 +182,25 @@ const CharacterCustomization = (props: any) => {
                   </div>
                 </div>
                 <Divider />
+                <FormTextField
+                  label={props.t('daddy-label')}
+                  name="Daddy"
+                  placeholder={props.t('daddy-placeholder')}
+                  schema={schema(props).daddy}
+                  register={register}
+                  errors={errors.Daddy}
+                  defaultValue={selected.Daddy}
+                />
+                <FormTextField
+                  label={props.t('mommy-label')}
+                  name="Mommy"
+                  placeholder={props.t('mommy-placeholder')}
+                  schema={schema(props).mommy}
+                  register={register}
+                  errors={errors.Mommy}
+                  defaultValue={selected.Mommy}
+                  formStyle={{ marginTop: 24 }}
+                />
                 <FieldLanguage
                   schema={schema(props).language}
                   register={register}

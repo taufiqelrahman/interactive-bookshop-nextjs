@@ -10,6 +10,8 @@ export const schema = props => ({
     maxLength: { value: 10, message: `${props.t('nickname-label')} ${props.t('less-than-error')} 10` },
     validate: value => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
   },
+  mommy: { required: { value: true, message: `${props.t('mommy-label')} ${props.t('required-error')}` } },
+  daddy: { required: { value: true, message: `${props.t('daddy-label')} ${props.t('required-error')}` } },
   age: { required: { value: true, message: `${props.t('age-label')} ${props.t('required-error')}` } },
   // dob: { required: false },
   gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
