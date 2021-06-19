@@ -114,11 +114,11 @@ const CharacterCustomization = (props: any) => {
     loadImg(previewImg(selected, watch, true));
   }, [previewImg(selected, watch, true)]);
   useEffect(() => {
-    if ([stepEnum.AGE, stepEnum.SKIN, stepEnum.LANGUAGE].includes(charStep)) {
+    if ([stepEnum.AGE, stepEnum.SKIN, stepEnum.PARENTS].includes(charStep)) {
       loadImg(previewImg(selected, watch, true));
     }
     if (charStep === stepEnum.OCCUPATIONS) registerOccupations();
-    if (charStep === stepEnum.LANGUAGE) unregister('Occupations');
+    if (charStep === stepEnum.PARENTS) unregister('Occupations');
   }, [charStep]);
   useEffect(() => {
     const { Name, Gender } = selected;
