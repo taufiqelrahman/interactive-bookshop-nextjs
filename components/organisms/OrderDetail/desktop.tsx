@@ -154,6 +154,7 @@ const OrderDetailDesktop = (props: any): any => {
                 </div>
                 <div className="c-detail__order__info">
                   <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>
+                  <div className="c-detail__order__info__item">{props.t('common:ppkm')}</div>
                 </div>
               </div>
             </Card>
@@ -410,7 +411,7 @@ const OrderDetailDesktop = (props: any): any => {
               border-radius: 12px;
               padding: 18px;
               &__item {
-                line-height: 20px;
+                line-height: 24px;
               }
             }
           }

@@ -152,6 +152,7 @@ const OrderDetailMobile = (props: any): any => {
                       </div>
                       <div className="c-detail__order__info">
                         <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>
+                        <div className="c-detail__order__info__item">{props.t('common:ppkm')}</div>
                       </div>
                     </div>
                     <div className="c-detail__container">
