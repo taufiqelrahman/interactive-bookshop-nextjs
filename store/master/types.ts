@@ -10,10 +10,12 @@ interface Testimonial {
   image_url: string;
 }
 
-interface Occupation {
+export interface Occupation {
   name: string;
   description: string;
   page_count: number;
+  indonesia: string;
+  id: number;
 }
 
 interface BookContent {
@@ -40,10 +42,10 @@ interface Province {
 
 export interface MasterState {
   isFetching: boolean;
-  testimonials: Testimonial[];
-  occupations: Occupation[];
-  bookPages: BookPage[];
-  provinces: Province[];
+  testimonials?: Testimonial[];
+  occupations?: Occupation[];
+  bookPages?: BookPage[];
+  provinces?: Province[];
 }
 
 interface LoadTestimonials {

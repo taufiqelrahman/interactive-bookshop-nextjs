@@ -38,15 +38,19 @@ export interface Cart {
 }
 
 export interface CustomAttributes {
+  Occupations: string[];
+  OccupationsString: string;
   Name: string;
-  Language: 'english' | 'indo';
-  Gender: 'boy' | 'girl';
   Age: 'kid' | 'toddler';
+  Gender: 'boy' | 'girl';
   Skin: 'light' | 'medium' | 'dark';
-  Hair: 'short' | 'curly' | 'hijab';
+  Language: 'english' | 'indo';
   Dedication: string;
-  Occupations: string;
+  Hair: 'short' | 'curly' | 'hijab';
   Cover: BookColors;
+  Mommy: string;
+  Daddy: string;
+  'Date of Birth': string;
 }
 
 export interface CartItem extends CustomAttributes {
