@@ -7,7 +7,7 @@ import productsReducer from './products/reducers';
 import usersReducer from './users/reducers';
 import masterReducer from './master/reducers';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   default: reducer,
   cart: cartReducer,
   orders: ordersReducer,
@@ -24,6 +24,6 @@ const composeEnhancer =
     : compose;
 
 export type AppState = ReturnType<typeof rootReducer>;
-export function initializeStore(initialState?): Store {
+export function initializeStore(initialState?: any): Store {
   return createStore(rootReducer, initialState, composeEnhancer(applyMiddleware(thunkMiddleware)));
 }

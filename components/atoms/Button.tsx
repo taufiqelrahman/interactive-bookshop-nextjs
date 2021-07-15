@@ -1,16 +1,15 @@
 import { HTMLAttributes } from 'react';
 import Loader from './Loader';
 
-interface ButtonProps extends HTMLAttributes<HTMLDivElement> {
-  variant: 'outline' | 'rectangle' | 'small-text' | 'whatsapp';
-  color: 'black' | 'white';
-  disabled: boolean;
-  isLoading: boolean;
+interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+  variant?: 'outline' | 'rectangle' | 'small-text' | 'whatsapp';
+  color?: 'black' | 'white';
+  disabled?: boolean;
+  isLoading?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  onClick: () => void;
-  name: string;
-  width: string;
-  height: string;
+  name?: string;
+  width?: string;
+  height?: string;
 }
 
 const Button = (props: ButtonProps) => {

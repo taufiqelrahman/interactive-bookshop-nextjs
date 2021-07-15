@@ -17,8 +17,8 @@ export interface User {
 }
 
 export interface UsersState {
-  isFetching: boolean;
-  isLoggedIn: boolean;
+  isFetching: boolean | null;
+  isLoggedIn: boolean | null;
   isExpired: boolean;
   user: User | null;
 }

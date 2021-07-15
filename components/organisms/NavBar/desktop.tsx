@@ -1,23 +1,32 @@
 import { useRouter } from 'next/router';
 // import { ShoppingCart } from 'react-feather';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { withTranslation, Link } from 'i18n';
 import TranslationToggle from 'components/molecules/TranslationToggle';
 import CartDropdown from 'components/molecules/CartDropdown';
 import AccountDropdown from 'components/molecules/AccountDropdown';
 import Dot from 'components/atoms/Dot';
 import detectIt from 'detect-it';
+import { WithTranslation } from 'next-i18next';
+import { UsersState } from 'store/users/types';
+import { CartItem } from 'store/cart/types';
 
-const NavBar = (props: any) => {
+interface NavBarProps extends WithTranslation {
+  users: UsersState;
+  cartItems: CartItem[] | null | undefined;
+  thunkLogout: () => any;
+  thunkLoadCart: (id: any, isLocal?: any) => any;
+}
+const NavBar = (props: NavBarProps) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const [isSticky, setSticky] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const guestMenu = [
-    { text: props.t('login'), path: '/login' },
+    { text: props.t('login'), path: '/login', className: '' },
     { text: props.t('register'), path: '/register', className: 'text-brand' },
-  ];
+  ] as const;
   const ref = useRef<HTMLInputElement>(null);
   const handleScroll = () => {
     if (ref && ref.current) {
@@ -48,7 +57,7 @@ const NavBar = (props: any) => {
 
   const cartNotEmpty = !!props.cartItems && props.cartItems.length > 0;
 
-  const toggleShow = (state: boolean, action) => {
+  const toggleShow = (state: boolean, action: Dispatch<SetStateAction<boolean>>) => {
     action(state);
     if (state) {
       document.body.classList.add('overlay-active');
@@ -111,10 +120,10 @@ const NavBar = (props: any) => {
                   </div>
                 </Link>
               ) : (
-                (guestMenu as any).map((menu, i): any => {
+                guestMenu.map((menu, i) => {
                   return (
                     <Link key={i} href={menu.path}>
-                      <a className={`c-nav-bar__menu__item ${menu.className || ''}`}>{menu.text}</a>
+                      <a className={`c-nav-bar__menu__item ${menu.className}`}>{menu.text}</a>
                     </Link>
                   );
                 })

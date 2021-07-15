@@ -1,17 +1,22 @@
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { HTMLAttributes, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';
 import Floating from 'components/atoms/Floating';
+import { PropsFromRedux } from 'lib/with-redux-store';
 
 const MaintenanceModal = dynamic(() => import('components/molecules/MaintenanceModal'));
 const BrowserModal = dynamic(() => import('components/molecules/BrowserModal'));
 // const HolidayModal = dynamic(() => import('components/molecules/HolidayModal'));
 
-const DefaultLayout = (props: any) => {
+interface DefaultLayoutProps extends PropsFromRedux, HTMLAttributes<HTMLButtonElement> {
+  isMobile: boolean;
+  navbar?: React.ReactElement;
+}
+const DefaultLayout = (props: DefaultLayoutProps) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
   const [showModal, setShowModal] = useState(false);
   const [showBrowserModal, setShowBrowserModal] = useState(false);
@@ -37,7 +42,7 @@ const DefaultLayout = (props: any) => {
     setNavbarHeight(navbarDiv.clientHeight);
     const { users, cart } = props.state;
     (window as any).fbq('track', 'ViewContent', {
-      cartItems: (cart.cart && cart.cart.lineItems.length) || 0,
+      cartItems: (cart.cart && cart?.cart?.lineItems?.length) || 0,
       isLoggedIn: users.isLoggedIn,
       path: router.pathname,
     });

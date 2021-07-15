@@ -1,14 +1,24 @@
 import Stepper from 'components/atoms/Stepper';
 import { useRouter } from 'next/router';
 import { Router } from 'i18n';
+import { HTMLAttributes } from 'react';
 
-const NavBar = (props: any) => {
+interface NavBarProps extends HTMLAttributes<HTMLDivElement> {
+  setSideNav?: (state: boolean) => any;
+  onBack: () => void;
+  isSteps: boolean;
+  step: number;
+  totalSteps: number;
+  actionRight: React.ReactElement | null;
+  menuAction?: boolean;
+}
+const NavBar = (props: NavBarProps) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const isErrorPage = router.pathname === '/_error';
   const indexOrError = isIndexPage || isErrorPage;
   const showSideNav = () => {
-    props.setSideNav(true);
+    props.setSideNav?.(true);
   };
   return (
     <div className="c-nav-bar" style={props.style}>
