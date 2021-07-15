@@ -14,7 +14,7 @@ const BrowserModal = dynamic(() => import('components/molecules/BrowserModal'));
 
 interface DefaultLayoutProps extends PropsFromRedux, HTMLAttributes<HTMLButtonElement> {
   isMobile: boolean;
-  navbar?: React.ReactElement;
+  navbar?: React.ReactElement | false;
 }
 const DefaultLayout = (props: DefaultLayoutProps) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
@@ -42,7 +42,7 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
     setNavbarHeight(navbarDiv.clientHeight);
     const { users, cart } = props.state;
     (window as any).fbq('track', 'ViewContent', {
-      cartItems: (cart.cart && cart?.cart?.lineItems?.length) || 0,
+      cartItems: cart?.cart?.lineItems?.length || 0,
       isLoggedIn: users.isLoggedIn,
       path: router.pathname,
     });
@@ -63,7 +63,7 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
       {props.navbar || (
         <NavBar
           users={props.state.users}
-          cartItems={props.state.cart.cart && props.state.cart.cart.lineItems}
+          cartItems={props.state.cart.cart?.lineItems}
           thunkLogout={props.thunkLogout}
           thunkLoadCart={props.thunkLoadCart}
         />

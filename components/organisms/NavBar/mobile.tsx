@@ -5,11 +5,11 @@ import { HTMLAttributes } from 'react';
 
 interface NavBarProps extends HTMLAttributes<HTMLDivElement> {
   setSideNav?: (state: boolean) => any;
-  onBack: () => void;
-  isSteps: boolean;
-  step: number;
-  totalSteps: number;
-  actionRight: React.ReactElement | null;
+  onBack?: () => void;
+  isSteps?: boolean;
+  step?: number;
+  totalSteps?: number;
+  actionRight?: React.ReactElement | null;
   menuAction?: boolean;
 }
 const NavBar = (props: NavBarProps) => {

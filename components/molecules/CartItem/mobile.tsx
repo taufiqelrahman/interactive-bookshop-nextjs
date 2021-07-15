@@ -4,12 +4,12 @@ import NumberFormat from 'react-number-format';
 import debounce from 'lodash.debounce';
 import Card from 'components/atoms/Card';
 import Divider from 'components/atoms/Divider';
-import { previewImg, updateQuantity } from './helper';
+import { CartItemProps, previewImg, updateQuantity } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import Sheet from 'components/atoms/Sheet';
 import Button from 'components/atoms/Button';
 
-const CartItemMobile = (props: any) => {
+const CartItemMobile = (props: CartItemProps) => {
   const [quantity, setQuantity] = useState(props.quantity);
   const [showSheet, setShowSheet] = useState(false);
   const onDecrease = () => {

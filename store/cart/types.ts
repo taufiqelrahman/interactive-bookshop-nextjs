@@ -1,3 +1,5 @@
+import { BookColors } from 'constants/book-colors';
+
 export const LOAD_CART = 'LOAD_CART';
 // export const ADD_DISCOUNT = 'ADD_DISCOUNT';
 // export const REMOVE_DISCOUNT = 'REMOVE_DISCOUNT';
@@ -32,9 +34,22 @@ export interface Cart {
   lineItems?: CartItem[];
   webUrl?: string;
   totalPrice?: number;
+  checkout_id: number;
 }
 
-export interface CartItem {
+export interface CustomAttributes {
+  Name: string;
+  Language: 'english' | 'indo';
+  Gender: 'boy' | 'girl';
+  Age: 'kid' | 'toddler';
+  Skin: 'light' | 'medium' | 'dark';
+  Hair: 'short' | 'curly' | 'hijab';
+  Dedication: string;
+  Occupations: string;
+  Cover: BookColors;
+}
+
+export interface CartItem extends CustomAttributes {
   id: number;
   cart_id: number;
   product_id: number;
@@ -43,13 +58,10 @@ export interface CartItem {
   created_at: string;
   updated_at: string;
 
-  Name: string;
-  Language: 'english' | 'indo';
-  Gender: 'boy' | 'girl';
-  Age: 'kid' | 'toddler';
-  Skin: 'light' | 'medium' | 'dark';
-  Hair: 'short' | 'curly' | 'hijab';
-  Dedication: 'string';
+  customAttributes: CustomAttributes;
+  variant: {
+    price: number;
+  };
 }
 
 export interface CartState {

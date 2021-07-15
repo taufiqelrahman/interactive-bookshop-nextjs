@@ -1,3 +1,5 @@
+import { Cart } from 'store/cart/types';
+
 // export const SET_USER = 'SET_USER';
 export const LOAD_USER = 'LOAD_USER';
 export const UPDATE_USER = 'UPDATE_USER';
@@ -14,6 +16,8 @@ export const SEND_OTP = 'SEND_OTP';
 
 export interface User {
   email: string;
+  name: string;
+  cart: Cart;
 }
 
 export interface UsersState {

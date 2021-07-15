@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import NumberFormat from 'react-number-format';
@@ -8,6 +8,8 @@ import Head from 'next/head';
 import * as gtag from 'lib/gtag';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { CartItem as ICartItem } from 'store/cart/types';
+import { WithTranslation } from 'next-i18next';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const CartItem = dynamic(() => import('components/molecules/CartItem/desktop'));
@@ -18,12 +20,15 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const MaintenanceModal = dynamic(() => import('components/molecules/MaintenanceModal'));
 
-const Cart = (props: any): any => {
+interface CartProps extends PropsFromRedux, WithTranslation {
+  isMobile: boolean;
+}
+const Cart = (props: CartProps) => {
   const [showModal, setShowModal] = useState(false);
   const { users, cart } = props.state;
-  const items = cart.cart ? cart.cart.lineItems : cart.isFetching ? [1, 2] : [];
-  const itemsAmount = cart.cart ? cart.cart.lineItemsSubtotalPrice.amount : 0;
-  const hasShippingLine = cart.cart && cart.cart.shippingLine;
+  const items = cart.isFetching ? ([{}, {}] as ICartItem[]) : cart.cart?.lineItems || [];
+  const itemsAmount = cart.cart ? cart.cart?.lineItemsSubtotalPrice?.amount : 0;
+  const hasShippingLine = cart.cart?.shippingLine;
   const discounts = cart.cart ? cart.cart.discountApplications : [];
   useEffect(() => {
     const { user } = users;
@@ -38,7 +43,7 @@ const Cart = (props: any): any => {
       setShowModal(true);
       return;
     }
-    window.location.href = cart.cart ? cart.cart.webUrl : '';
+    (window as any).location.href = cart.cart ? cart.cart.webUrl : '';
     gtag.event({
       action: 'checkout',
       category: 'ecommerce',
@@ -48,7 +53,7 @@ const Cart = (props: any): any => {
     const { isLoggedIn } = props.state.users;
     (window as any).fbq('track', 'InitiateCheckout', {
       price: (cart.cart && cart.cart.totalPrice) || 0,
-      cartItems: (cart.cart && cart.cart.lineItems.length) || 0,
+      cartItems: (cart.cart && cart.cart.lineItems?.length) || 0,
       isLoggedIn,
     });
     if (!isLoggedIn) localStorage.removeItem('cart');
@@ -67,28 +72,28 @@ const Cart = (props: any): any => {
       </Head>
       <div className={props.isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={props.t('cart-title')} />}
-        {items.length > 0 ? (
+        {items?.length ? (
           <div className="c-cart-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
             <div className="c-cart-section__items">
-              {items.map(item => {
+              {items.map((item, index) => {
                 return props.isMobile ? (
                   <CartItemMobile
-                    key={item.id || item}
+                    key={index}
                     {...item}
                     style={{ marginBottom: 12 }}
                     isSkeleton={cart.isFetching}
-                    cartId={cart.cart && cart.cart.id}
+                    cartId={cart.cart?.id}
                     removeFromCart={props.thunkRemoveFromCart}
                     saveSelected={props.saveSelected}
                     updateCart={props.thunkUpdateCart}
                   />
                 ) : (
                   <CartItem
-                    key={item.id || item}
+                    key={index}
                     {...item}
                     style={{ marginBottom: 12 }}
                     isSkeleton={cart.isFetching}
-                    cartId={cart.cart && cart.cart.id}
+                    cartId={cart.cart?.id}
                     removeFromCart={props.thunkRemoveFromCart}
                     saveSelected={props.saveSelected}
                     updateCart={props.thunkUpdateCart}
@@ -118,12 +123,7 @@ const Cart = (props: any): any => {
                           </div>
                         </div>
                         <div className="c-cart__summary__total">
-                          <NumberFormat
-                            value={cart.cart && itemsAmount}
-                            thousandSeparator={true}
-                            prefix={'Rp'}
-                            displayType="text"
-                          />
+                          <NumberFormat value={itemsAmount} thousandSeparator={true} prefix={'Rp'} displayType="text" />
                         </div>
                       </div>
                       {hasShippingLine && (
@@ -133,7 +133,7 @@ const Cart = (props: any): any => {
                           </div>
                           <div className="c-cart__summary__total">
                             <NumberFormat
-                              value={cart.cart.shippingLine.price}
+                              value={cart.cart?.shippingLine?.price}
                               thousandSeparator={true}
                               prefix={'Rp'}
                               displayType="text"
@@ -141,7 +141,7 @@ const Cart = (props: any): any => {
                           </div>
                         </div>
                       )}
-                      {discounts.map(discount => (
+                      {discounts?.map(discount => (
                         <div
                           key={discount.code}
                           className="flex justify-between items-baseline"
@@ -153,7 +153,7 @@ const Cart = (props: any): any => {
                           </div>
                           <div className="c-cart__summary__total">
                             <NumberFormat
-                              value={-(itemsAmount * (discount.value.percentage / 100))}
+                              value={-((itemsAmount || 0) * (discount.value.percentage / 100))}
                               thousandSeparator={true}
                               prefix={'Rp'}
                               displayType="text"
@@ -170,7 +170,7 @@ const Cart = (props: any): any => {
                       {props.isMobile && <span className="icon-info" />}
                     </div>
                     <NumberFormat
-                      value={cart.cart && cart.cart.totalPrice}
+                      value={cart.cart?.totalPrice}
                       thousandSeparator={true}
                       prefix={'Rp'}
                       displayType="text"
@@ -199,7 +199,7 @@ const Cart = (props: any): any => {
                   <Button
                     width="100%"
                     color="black"
-                    style={{ marginTop: props.isMobile ? 12 : 30 }}
+                    style={props.isMobile ? { marginTop: 12 } : { marginTop: 30 }}
                     onClick={continuePayment}
                   >
                     {props.t('continue-payment')}
