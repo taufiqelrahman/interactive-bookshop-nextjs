@@ -8,6 +8,12 @@ export const TRANSFER_CART = 'TRANSFER_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
 
+interface DiscountApplications {
+  code: string;
+  value: {
+    percentage: number;
+  };
+}
 export interface Cart {
   id: number;
   user_id: number;
@@ -15,9 +21,20 @@ export interface Cart {
   updated_at: string;
   deleted_at: string;
   cart_items: CartItem[];
+
+  lineItemsSubtotalPrice?: {
+    amount: number;
+  };
+  shippingLine?: {
+    price: number;
+  };
+  discountApplications?: DiscountApplications[];
+  lineItems?: CartItem[];
+  webUrl?: string;
+  totalPrice?: number;
 }
 
-interface CartItem {
+export interface CartItem {
   id: number;
   cart_id: number;
   product_id: number;
@@ -25,6 +42,14 @@ interface CartItem {
   price: number;
   created_at: string;
   updated_at: string;
+
+  Name: string;
+  Language: 'english' | 'indo';
+  Gender: 'boy' | 'girl';
+  Age: 'kid' | 'toddler';
+  Skin: 'light' | 'medium' | 'dark';
+  Hair: 'short' | 'curly' | 'hijab';
+  Dedication: 'string';
 }
 
 export interface CartState {

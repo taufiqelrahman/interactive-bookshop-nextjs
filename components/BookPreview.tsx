@@ -7,12 +7,21 @@ import sortby from 'lodash.sortby';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
 import initBook from 'assets/flipbook.js';
-import BookPage from 'components/atoms/BookPage';
+import BookPageComp from 'components/atoms/BookPage';
+import { BookPage } from 'store/master/types';
+import { CartItem } from 'store/cart/types';
+import { BookColors } from 'constants/book-colors';
 // import dummyPages from '_mocks/bookPages';
 
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
-const BookPreview = (props: any) => {
+interface BookPreviewProps {
+  bookPages: BookPage[];
+  isMobile: boolean;
+  selected: CartItem;
+  cover: BookColors;
+}
+const BookPreview = (props: BookPreviewProps) => {
   // const [, setBook] = useState(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [bookClicked, setBookClicked] = useState<boolean>(false);
@@ -43,7 +52,7 @@ const BookPreview = (props: any) => {
       concurrentAnimations: 5,
       height: `${currentHeight}px`,
       initialCall: true,
-      onPageTurn: (_: any, els: { pagesTarget: any }) => {
+      onPageTurn: (_: HTMLElement, els: { pagesTarget: Element[] }) => {
         gtag.event({
           action: 'click_book_page',
           category: 'engagement',
@@ -148,17 +157,20 @@ const BookPreview = (props: any) => {
    * Compute book pages
    */
   const jointPages = useMemo(() => {
-    let pageByOccupations: any = {};
+    let pageByOccupations: BookPage[][] = [];
     if (props.bookPages.length > 0) {
-      pageByOccupations = groupby(props.bookPages, page => page.occupation_id);
-      pageByOccupations = sortby(pageByOccupations, ([group]) => props.bookPages.indexOf(group));
+      const occupationDictionary = groupby(props.bookPages, (page: BookPage) => page.occupation_id);
+      pageByOccupations = sortby(occupationDictionary, ([group]: BookPage[]) => props.bookPages.indexOf(group));
     }
-    const bookPages: any[] = [];
-    Object.keys(pageByOccupations).forEach((occupation: any) => {
-      bookPages[occupation] = groupby(pageByOccupations[occupation], page => page.page_number);
+    const bookPages: Dictionary<BookPage[]>[] = [];
+    Object.keys(pageByOccupations).forEach((occupation: string) => {
+      bookPages[occupation as any] = groupby(
+        pageByOccupations[occupation as any] as BookPage[],
+        (page: BookPage) => page.page_number,
+      );
     });
-    let result: any[] = [];
-    bookPages.forEach((jobs: any, index: number) => {
+    let result: BookPage[][] = [];
+    bookPages.forEach((jobs: Dictionary<BookPage[]>, index: number) => {
       if (index === bookPages.length - 1 && jobs[1] && jobs[2]) {
         result = [...result, jobs[1], jobs[2]];
         return;
@@ -213,10 +225,10 @@ const BookPreview = (props: any) => {
       {props.isMobile ? (
         <Fragment>
           <div className="c-book-preview__pages" ref={pagesRef}>
-            {jointPages.map((page: any[], index: number) => {
+            {jointPages.map((page: BookPage[], index: number) => {
               const [firstPage] = page;
               return (
-                <BookPage
+                <BookPageComp
                   key={index}
                   isLast={index === jointPages.length - 1}
                   style={{
@@ -252,12 +264,12 @@ const BookPreview = (props: any) => {
           <div className="c-book-preview__container" ref={pagesRef}>
             {showBook && (
               <div className="c-flipbook" id="FlipBook">
-                {jointPages.map((page: any[], index: number) => {
+                {jointPages.map((page: BookPage[], index: number) => {
                   const [firstPage] = page;
                   return (
-                    <BookPage
+                    <BookPageComp
                       key={index}
-                      id={index + 1}
+                      id={(index + 1).toString()}
                       isLast={index === jointPages.length - 1}
                       className="c-flipbook__page"
                       // className={`c-flipbook__page ${pageClass(index)}`}

@@ -21,10 +21,16 @@ interface BookContent {
   style: string;
 }
 
-interface BookPage {
+export interface BookPage {
   order: number;
   occupation: Occupation;
   book_contens: BookContent[];
+
+  occupation_id: string;
+  page_number: number;
+  english: string;
+  indonesia: string;
+  style: string;
 }
 
 interface Province {
