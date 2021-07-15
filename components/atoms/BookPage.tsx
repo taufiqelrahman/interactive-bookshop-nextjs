@@ -42,7 +42,7 @@ const BookPageComp = (props: BookPageProps) => {
         fontSize: props.isMobile ? '9vw' : '3.5vw',
         lineHeight: props.isMobile ? '7.5vw' : '3vw',
       };
-      if (props.name && props.name.length > 4) {
+      if (props.name?.length > 4) {
         style = {
           ...style,
           width: '90%',

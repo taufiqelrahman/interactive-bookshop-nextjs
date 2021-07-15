@@ -29,7 +29,7 @@ const NavBar = (props: NavBarProps) => {
   ] as const;
   const ref = useRef<HTMLInputElement>(null);
   const handleScroll = () => {
-    if (ref && ref.current) {
+    if (ref?.current) {
       setSticky(ref.current.getBoundingClientRect().top < -80);
     }
   };
@@ -49,13 +49,13 @@ const NavBar = (props: NavBarProps) => {
     const { user } = props.users;
     if (!user || !user.cart) return;
     props.thunkLoadCart(user.cart.checkout_id);
-  }, [props.users.user && props.users.user.cart && props.users.user.cart.checkout_id]);
+  }, [props.users.user?.cart?.checkout_id]);
 
   const stickyClassName = () => {
     return isSticky ? 'c-nav-bar--sticky' : '';
   };
 
-  const cartNotEmpty = !!props.cartItems && props.cartItems.length > 0;
+  const cartNotEmpty = !!props.cartItems?.length;
 
   const toggleShow = (state: boolean, action: Dispatch<SetStateAction<boolean>>) => {
     action(state);

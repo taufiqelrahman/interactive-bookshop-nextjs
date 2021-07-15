@@ -32,7 +32,7 @@ const Cart = (props: CartProps) => {
   const discounts = cart.cart ? cart.cart.discountApplications : [];
   useEffect(() => {
     const { user } = users;
-    if (user && user.cart) {
+    if (user?.cart) {
       props.thunkLoadCart(user.cart.checkout_id);
     } else if (!user && localStorage.getItem('cart')) {
       props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true);
@@ -48,12 +48,12 @@ const Cart = (props: CartProps) => {
       action: 'checkout',
       category: 'ecommerce',
       label: props.isMobile ? 'mobile' : 'desktop',
-      value: cart.cart && cart.cart.totalPrice,
+      value: cart?.cart?.totalPrice,
     });
     const { isLoggedIn } = props.state.users;
     (window as any).fbq('track', 'InitiateCheckout', {
-      price: (cart.cart && cart.cart.totalPrice) || 0,
-      cartItems: (cart.cart && cart.cart.lineItems?.length) || 0,
+      price: cart?.cart?.totalPrice || 0,
+      cartItems: cart?.cart?.lineItems?.length || 0,
       isLoggedIn,
     });
     if (!isLoggedIn) localStorage.removeItem('cart');
