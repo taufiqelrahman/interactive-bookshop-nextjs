@@ -15,6 +15,9 @@ const TextArea = React.forwardRef((props: any, ref: any) => (
         &__message {
           @apply text-sm text-left;
           margin-top: 7px;
+          &::first-letter {
+            @apply capitalize;
+          }
           .c-text-area--error & {
             @apply text-red-600;
           }
