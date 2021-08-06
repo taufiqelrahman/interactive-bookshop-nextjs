@@ -206,6 +206,39 @@ export const thunkLoadCart = (
 //     });
 // };
 
+function updateAttributes(isFetching, cart = null): types.CartActionTypes {
+  return {
+    type: types.UPDATE_ATTRIBUTES,
+    payload: cart,
+    isFetching,
+  };
+}
+
+export const thunkUpdateAttributes = (
+  customAttributes: any[],
+): ThunkAction<void, types.CartState, null, Action<string>> => async (dispatch, getState): Promise<any> => {
+  dispatch(updateAttributes(true));
+  const { user } = (getState() as any).users;
+  const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') as any);
+  return graphql()
+    .checkout.updateAttributes(user ? checkoutId : id, { customAttributes })
+    .then(cart => {
+      if (!cart) return;
+      dispatch(updateAttributes(false, cart));
+      // dispatch(saveSelected());
+      if (Router.pathname !== '/cart') Router.replace('/cart');
+    })
+    .catch(err => {
+      if (err.message && (err.message.includes('exist') || err.message.includes('completed'))) {
+        dispatch(thunkCreateCart(thunkUpdateAttributes(customAttributes)));
+      } else {
+        dispatch(updateAttributes(false));
+        dispatch(setErrorMessage(err.message));
+        captureException(err);
+      }
+    });
+};
+
 export function saveSelected(selected = null): types.CartActionTypes {
   return {
     type: types.SAVE_SELECTED,

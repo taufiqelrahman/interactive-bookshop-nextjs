@@ -27,6 +27,10 @@ export default class Checkout {
     return this.adapter.checkout.removeLineItems(id, itemId);
   }
 
+  updateAttributes(id, data): Promise<any> {
+    return this.adapter.checkout.updateAttributes(id, data);
+  }
+
   // addDiscount(id, code): Promise<any> {
   //   return this.adapter.checkout.addDiscount(id, code);
   // }
