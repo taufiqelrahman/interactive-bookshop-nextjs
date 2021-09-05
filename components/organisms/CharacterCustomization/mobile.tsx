@@ -8,6 +8,9 @@ import * as gtag from 'lib/gtag';
 // import FieldDob from 'components/molecules/FieldDob';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { PropsFromRedux } from 'lib/with-redux-store';
+import { WithTranslation } from 'next-i18next';
+import { CustomAttributes } from 'store/cart/types';
 
 const FieldOccupations = dynamic(() => import('components/molecules/FieldOccupations'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
@@ -20,7 +23,10 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const CharacterCustomization = (props: any) => {
+interface CharacterCustomizationProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const CharacterCustomization = (props: CharacterCustomizationProps) => {
   const router = useRouter();
   const stepEnum = {
     NAME_GENDER: 0,
@@ -72,7 +78,7 @@ const CharacterCustomization = (props: any) => {
     : {
         Dedication: retrieveDedication(),
       };
-  const selected = props.state.cart.selected || defaultSelected;
+  const selected = props.state.cart.selected || (defaultSelected as CustomAttributes);
   const registerOccupations = () => {
     // setTimeout(() => {
     register({ name: 'Occupations' }, schema(props).occupations);
@@ -80,7 +86,7 @@ const CharacterCustomization = (props: any) => {
     // }, 500);
   };
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {
       const jobIds = getJobIds(data.Occupations, occupations);
@@ -124,9 +130,6 @@ const CharacterCustomization = (props: any) => {
     const { Name, Gender } = selected;
     if (!router.query.edit && Name && Gender) {
       setCharStep(stepEnum.AGE);
-    }
-    if (typeof selected.Occupations === 'string') {
-      selected.Occupations = selected.Occupations.split(',');
     }
     Router.prefetch('/preview');
   }, []);

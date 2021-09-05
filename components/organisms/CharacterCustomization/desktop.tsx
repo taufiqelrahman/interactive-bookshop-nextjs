@@ -6,6 +6,9 @@ import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, r
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
+import { PropsFromRedux } from 'lib/with-redux-store';
+import { WithTranslation } from 'next-i18next';
+import { CustomAttributes } from 'store/cart/types';
 // import Card from 'components/atoms/Card';
 // import FieldDob from 'components/molecules/FieldDob';
 // import DefaultLayout from 'components/layouts/Default';
@@ -25,7 +28,10 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Modal = dynamic(() => import('components/atoms/Modal'));
 
-const CharacterCustomization = (props: any) => {
+interface CharacterCustomizationProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const CharacterCustomization = (props: CharacterCustomizationProps) => {
   const router = useRouter();
   const [isSticky, setSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -53,9 +59,9 @@ const CharacterCustomization = (props: any) => {
     : {
         Dedication: retrieveDedication(),
       };
-  const selected = props.state.cart.selected || defaultSelected;
+  const selected = props.state.cart.selected || (defaultSelected as CustomAttributes);
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     if (!router.query.edit) {
       gtag.event({
         action: 'click_create',

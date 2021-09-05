@@ -39,7 +39,6 @@ export interface Cart {
 
 export interface CustomAttributes {
   Occupations: string[];
-  OccupationsString: string;
   Name: string;
   Age: 'kid' | 'toddler';
   Gender: 'boy' | 'girl';
