@@ -2,10 +2,13 @@ import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
+import { schema, showError, saveToCookies, getFromCookies, PreviewProps } from './helper';
 import Cookies from 'js-cookie';
 import * as gtag from 'lib/gtag';
 import DefaultLayout from 'components/layouts/Default';
+import { CartItem } from 'store/cart/types';
+import { cartItem } from '_mocks/cartItem';
+import { BookPage } from 'store/master/types';
 // import Modal from 'components/atoms/Modal';
 // import Button from 'components/atoms/Button';
 // import FieldCover from 'components/molecules/FieldCover';
@@ -18,14 +21,15 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 
-const PreviewDesktop = (props: any): any => {
+const PreviewDesktop = (props: PreviewProps) => {
   // const [enableLazy, setEnableLazy] = useState(true);
   const methods = useForm({ mode: 'onChange' });
   const [showModal, setShowModal] = useState(false);
-  const [tempData, setTempData] = useState(null);
+  const [tempData, setTempData] = useState({} as CartItem);
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = cart => {
+  const isDev = process.env.NODE_ENV === 'development';
+  const selected = isDev ? props.state.cart.selected || ({} as CartItem) : cartItem;
+  const addToCart = (cart: CartItem) => {
     if (selected && selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -46,7 +50,7 @@ const PreviewDesktop = (props: any): any => {
       props.thunkAddToCart(cart);
     }
   };
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     if (!selected) {
       Router.replace('/create');
       return;
@@ -76,7 +80,7 @@ const PreviewDesktop = (props: any): any => {
       // setEnableLazy(false);
     }
   }, []);
-  const bookPages = props.state.master.bookPages;
+  const bookPages = props.state.master.bookPages || ([] as BookPage[]);
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page">
@@ -86,7 +90,7 @@ const PreviewDesktop = (props: any): any => {
             <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
               <div className="c-preview__book">
                 <BookPreview
-                  selected={selected || {}}
+                  selected={selected}
                   bookPages={bookPages}
                   cover={watch('Cover')}
                   // enableLazy={enableLazy}

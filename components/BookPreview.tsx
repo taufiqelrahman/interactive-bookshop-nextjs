@@ -17,7 +17,7 @@ const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
 interface BookPreviewProps {
   bookPages: BookPage[];
-  isMobile: boolean;
+  isMobile?: boolean;
   selected: CartItem;
   cover: BookColors;
 }
@@ -243,7 +243,7 @@ const BookPreview = (props: BookPreviewProps) => {
                   gender={props.selected.Gender}
                   dedication={props.selected.Dedication}
                   contents={page}
-                  isMobile={props.isMobile}
+                  isMobile={!!props.isMobile}
                   isWhiteCover={props.cover === 'white' && firstPage.occupation.name.includes('Cover')}
                   mustLoad={true}
                   height={bookHeight}
@@ -280,7 +280,7 @@ const BookPreview = (props: BookPreviewProps) => {
                       gender={props.selected.Gender}
                       dedication={props.selected.Dedication}
                       contents={page}
-                      isMobile={props.isMobile}
+                      isMobile={!!props.isMobile}
                       isWhiteCover={props.cover === 'white' && firstPage.occupation.name.includes('Cover')}
                       mustLoad={index + 1 < currentPage + 7 || index === jointPages.length - 1}
                     />

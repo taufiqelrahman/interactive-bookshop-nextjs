@@ -1,8 +1,14 @@
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import { Router } from 'i18n';
+import { PropsFromRedux } from 'lib/with-redux-store';
+import { WithTranslation } from 'next-i18next';
+import { CartItem } from 'store/cart/types';
 
-export const schema = props => ({
+export interface PreviewProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+export const schema = (props: PreviewProps) => ({
   cover: {
     required: {
       value: true,
@@ -11,19 +17,7 @@ export const schema = props => ({
   },
 });
 
-export const dummySelected = {
-  age: 'Kid',
-  dedication: '',
-  dob: '05-01-2019',
-  gender: 'girl',
-  hair: 'hair',
-  languange: 'English',
-  name: 'asd',
-  occupations: ['astronaut', 'doctor', 'nurse'],
-  skin: 'light',
-};
-
-export const showError = error => {
+export const showError = (error: string) => {
   window.scrollTo(0, 0);
   toast.error(error);
 };
@@ -33,7 +27,7 @@ export const getFromCookies = () => {
   return JSON.parse(Cookies.get('pendingTrx') || '');
 };
 
-export const saveToCookies = cart => {
+export const saveToCookies = (cart: CartItem) => {
   // save pending trx
   Cookies.set('pendingTrx', JSON.stringify(cart));
   Router.push('/login?from=preview');

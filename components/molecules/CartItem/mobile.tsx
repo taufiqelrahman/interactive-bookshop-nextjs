@@ -57,11 +57,7 @@ const CartItemMobile = (props: CartItemProps) => {
                   {props.isSkeleton ? <Skeleton height={24} /> : props.customAttributes.Name}
                 </div>
                 <div className="c-cart-item__detail__jobs">
-                  {props.isSkeleton ? (
-                    <Skeleton height={19} />
-                  ) : (
-                    props.customAttributes.Occupations?.replace(/,/g, ', ')
-                  )}
+                  {props.isSkeleton ? <Skeleton height={19} /> : props.customAttributes.Occupations?.join(', ')}
                 </div>
                 <div className="c-cart-item__detail__notes">
                   {props.isSkeleton ? (

@@ -2,15 +2,23 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { useEffect, useState, Fragment } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, retrieveDedication } from './helper';
+import {
+  schema,
+  showError,
+  previewImg,
+  getJobIds,
+  loadImg,
+  addDedicationToLS,
+  retrieveDedication,
+  CharacterCustomizationProps,
+} from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 // import FieldDob from 'components/molecules/FieldDob';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { PropsFromRedux } from 'lib/with-redux-store';
-import { WithTranslation } from 'next-i18next';
 import { CustomAttributes } from 'store/cart/types';
+import { cartItem } from '_mocks/cartItem';
 
 const FieldOccupations = dynamic(() => import('components/molecules/FieldOccupations'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
@@ -23,9 +31,6 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-interface CharacterCustomizationProps extends WithTranslation, PropsFromRedux {
-  isMobile: boolean;
-}
 const CharacterCustomization = (props: CharacterCustomizationProps) => {
   const router = useRouter();
   const stepEnum = {
@@ -63,25 +68,14 @@ const CharacterCustomization = (props: CharacterCustomizationProps) => {
 
   const isDev = process.env.NODE_ENV === 'development';
   const defaultSelected = isDev
-    ? {
-        Occupations: ['Teacher', 'Pilot', 'Police'],
-        Name: 'Kalilist',
-        Age: 'kid',
-        Gender: 'girl',
-        Skin: 'light',
-        Language: 'english',
-        Dedication:
-          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-        'Date of Birth': '03-01-2019',
-        Hair: 'short',
-      }
+    ? cartItem
     : {
         Dedication: retrieveDedication(),
       };
   const selected = props.state.cart.selected || (defaultSelected as CustomAttributes);
   const registerOccupations = () => {
     // setTimeout(() => {
-    register({ name: 'Occupations' }, schema(props).occupations);
+    register({ name: 'Occupations' } as any, schema(props).occupations as any);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
   };
@@ -89,7 +83,7 @@ const CharacterCustomization = (props: CharacterCustomizationProps) => {
   const onSubmit = (data: any) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {
-      const jobIds = getJobIds(data.Occupations, occupations);
+      const jobIds = getJobIds(data.Occupations, occupations || []);
       PARAMS = { ...PARAMS, jobIds };
     }
     // if (charStep === stepEnum.AGE && !router.query.edit) {

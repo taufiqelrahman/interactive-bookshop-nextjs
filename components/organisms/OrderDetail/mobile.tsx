@@ -4,13 +4,14 @@ import NumberFormat from 'react-number-format';
 import appConfig from 'config';
 import { useState, useEffect, Fragment } from 'react';
 import { fullDate } from 'lib/format-date';
-import { retrieveInfo, calculateDays } from './helper';
+import { retrieveInfo, calculateDays, OrderDetailProps } from './helper';
 import { Swipeable } from 'react-swipeable';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
 import { toast } from 'react-toastify';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { Order } from 'store/orders/types';
 // import dummyOrder from '_mocks/orderDetail';
 
 const Divider = dynamic(() => import('components/atoms/Divider'));
@@ -19,7 +20,7 @@ const Sheet = dynamic(() => import('components/atoms/Sheet'));
 const Dot = dynamic(() => import('components/atoms/Dot'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const OrderDetailMobile = (props: any): any => {
+const OrderDetailMobile = (props: OrderDetailProps) => {
   const { isFetching, currentOrder: order } = props.state.orders;
   const [state, setState] = useState({
     showPreview: false,
@@ -42,7 +43,7 @@ const OrderDetailMobile = (props: any): any => {
     totalDiscounts,
     payment,
     whatsappUrl,
-  } = retrieveInfo(order || {});
+  } = retrieveInfo(order || ({} as Order));
   useEffect(() => {
     setState({ ...state, showPreview: true });
   }, []);
@@ -51,7 +52,7 @@ const OrderDetailMobile = (props: any): any => {
     Router.push('/orders');
   };
   const screenHeight = '100vh - 59px';
-  const showNote = event => {
+  const showNote = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     setState({ ...state, showNote: true });
   };
@@ -72,14 +73,16 @@ const OrderDetailMobile = (props: any): any => {
       {isFetching ? (
         <Skeleton height={30} width={'100%'} />
       ) : (
-        <Capsule
-          color={appConfig.stateColor[currentOrder.state]}
-          variant="bar"
-          style={{ zIndex: 42, position: 'fixed', top: 59 }}
-        >
-          {props.t(currentOrder.state)}
-          {props.state === 'received' && <span className="icon-cross_check" />}
-        </Capsule>
+        currentOrder && (
+          <Capsule
+            color={(appConfig as any).stateColor[currentOrder.state]}
+            variant="bar"
+            style={{ zIndex: 42, position: 'fixed', top: 59 }}
+          >
+            {props.t(currentOrder.state)}
+            {currentOrder.state === 'received' && <span className="icon-cross_check" />}
+          </Capsule>
+        )
       )}
       <div
         className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}
@@ -107,12 +110,12 @@ const OrderDetailMobile = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={19} width={280} />
                       ) : (
-                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                        lineItems?.map(item => item.customAttributes.Name).join(', ') || '-'
                       )}
                     </div>
                     <div className="c-detail__label">{props.t('common:quantity')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems.length} ${props.t('books')}`}
+                      {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems?.length} ${props.t('books')}`}
                     </div>
                     {currentOrder && !currentOrder.fulfillment_status && (
                       <>
@@ -142,9 +145,9 @@ const OrderDetailMobile = (props: any): any => {
                       <h2>{props.t('order-state')}</h2>
                       <div className="c-detail__order">
                         <div className="c-detail__label">{props.t('order-date')}</div>
-                        <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
+                        <div className="c-detail__value">{fullDate(currentOrder?.created_at)}</div>
                         <div className="c-detail__label">{props.t('order-state')}</div>
-                        <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
+                        <div className="c-detail__value capitalize">{props.t(currentOrder?.state || '')}</div>
                         <div className="c-detail__label">{props.t('shipping-date')}</div>
                         <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
                         <div className="c-detail__label">{props.t('tracking-number')}</div>
@@ -160,14 +163,14 @@ const OrderDetailMobile = (props: any): any => {
                       <div className="c-detail__address">
                         <div className="c-detail__label">{props.t('street-address')}</div>
                         <div className="c-detail__value">
-                          {`${shippingAddress.address1} ${shippingAddress.address2}`}
+                          {`${shippingAddress?.address1} ${shippingAddress?.address2}`}
                         </div>
                         <div className="c-detail__label">{props.t('province')}</div>
-                        <div className="c-detail__value">{shippingAddress.province}</div>
+                        <div className="c-detail__value">{shippingAddress?.province}</div>
                         <div className="c-detail__label">{props.t('postal-code')}</div>
-                        <div className="c-detail__value">{shippingAddress.zip}</div>
+                        <div className="c-detail__value">{shippingAddress?.zip}</div>
                         <div className="c-detail__label">{props.t('city')}</div>
-                        <div className="c-detail__value">{shippingAddress.city}</div>
+                        <div className="c-detail__value">{shippingAddress?.city}</div>
                       </div>
                     </div>
                     <div className="c-detail__container">
@@ -179,12 +182,12 @@ const OrderDetailMobile = (props: any): any => {
                         <div>
                           <div className="c-detail__summary__title">When I Grow Up</div>
                           <div className="c-detail__summary__label">
-                            {props.t('common:quantity')}: {lineItems.length}
+                            {props.t('common:quantity')}: {lineItems?.length}
                           </div>
                         </div>
                         <div className="c-detail__summary__total">
                           <NumberFormat
-                            value={currentOrder.total_line_items_price}
+                            value={currentOrder?.total_line_items_price}
                             thousandSeparator={true}
                             prefix={'Rp'}
                             displayType="text"
@@ -220,7 +223,7 @@ const OrderDetailMobile = (props: any): any => {
                             </div>
                             <div className="c-detail__summary__total">
                               <NumberFormat
-                                value={-totalDiscounts}
+                                value={totalDiscounts ? -totalDiscounts : 0}
                                 thousandSeparator={true}
                                 prefix={'Rp'}
                                 displayType="text"
@@ -232,39 +235,39 @@ const OrderDetailMobile = (props: any): any => {
                       <div className="c-detail__summary__subtotal">
                         <div>Subtotal</div>
                         <NumberFormat
-                          value={currentOrder.total_price}
+                          value={currentOrder?.total_price}
                           thousandSeparator={true}
                           prefix={'Rp'}
                           displayType="text"
                         />
                       </div>
-                      {currentOrder.financial_status !== 'paid' && (
+                      {currentOrder?.financial_status !== 'paid' && (
                         <div className="c-detail__summary__info">
-                          {payment.type ? (
+                          {payment?.type ? (
                             <Fragment>
                               <div className="c-detail__summary__info__item">
-                                {props.t('awaiting-payment')} {payment.type}
+                                {props.t('awaiting-payment')} {payment?.type}
                               </div>
-                              {payment.instance ? (
+                              {payment?.instance ? (
                                 <div className="flex justify-between items-end">
                                   <div>
-                                    <div className="c-detail__summary__info__payment">{payment.instance}</div>
-                                    <div className="c-detail__summary__info__payment">{payment.number}</div>
+                                    <div className="c-detail__summary__info__payment">{payment?.instance}</div>
+                                    <div className="c-detail__summary__info__payment">{payment?.number}</div>
                                   </div>
                                   <div className="c-detail__summary__info__copy" onClick={copyToClipboard}>
                                     {/* for copying to clipboard purpose */}
                                     <input
                                       id="payment-number"
-                                      value={payment.number}
+                                      value={payment?.number}
                                       type="text"
                                       style={{ position: 'absolute', left: 999 }}
                                     />
                                     <span className="icon-duplicate" />
                                   </div>
                                 </div>
-                              ) : payment.url ? (
+                              ) : payment?.url ? (
                                 <div className="c-detail__summary__info__link">
-                                  <a href={payment.url} target="_blank" rel="noopener noreferrer">
+                                  <a href={payment?.url} target="_blank" rel="noopener noreferrer">
                                     {props.t('continue-payment')}
                                   </a>
                                 </div>
@@ -319,7 +322,7 @@ const OrderDetailMobile = (props: any): any => {
               title={props.t(`common:note-preview`)}
               content={
                 <div className="c-detail__note">
-                  {lineItems.map(item => (
+                  {lineItems?.map(item => (
                     <Fragment key={item.id}>
                       <h5>{item.customAttributes.Name}</h5>
                       <div>{item.customAttributes.Dedication}</div>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -7,6 +7,8 @@ import actions from 'store/actions';
 import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
+import { Order, OrderStateJson } from 'store/orders/types';
 // import dummyOrders from '_mocks/orders';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -15,9 +17,12 @@ const OrderItemMobile = dynamic(() => import('components/molecules/OrderItem/mob
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Orders = (props: any): any => {
+interface OrdersProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Orders = (props: OrdersProps): any => {
   const { orders } = props.state;
-  const orderList = orders.isFetching ? [1, 2] : orders.orders;
+  const orderList = orders.isFetching ? ([{}, {}] as Order[]) : orders.orders;
   // const orderList = dummyOrders;
   return (
     <DefaultLayout
@@ -33,7 +38,7 @@ const Orders = (props: any): any => {
           <div className="c-orders-section__left">
             {orderList.length > 0 ? (
               orderList.map(item => (
-                <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
+                <Link key={item.id} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
                   <a>
                     {props.isMobile ? (
                       <OrderItemMobile {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
@@ -103,11 +108,11 @@ Orders.getInitialProps = async (ctx: any): Promise<any> => {
     ctx.reduxStore.dispatch(actions.loadOrders(true));
     const { data: orderData } = await api(ctx.req).orders.loadOrders();
     const { order_states: orderStates, orders: rawOrders } = orderData.data;
-    const states = orderStates.reduce((acc, cur) => {
+    const states = orderStates.reduce((acc: any, cur: OrderStateJson) => {
       acc[cur.shopify_order_id] = cur.state.name;
       return acc;
     }, {});
-    const orders = rawOrders.map(order => ({ ...order, state: states[order.id] }));
+    const orders = rawOrders.map((order: Order) => ({ ...order, state: states[order.id] }));
     ctx.reduxStore.dispatch(actions.loadOrders(false, orders));
   } catch (err) {
     console.log(err.message);
