@@ -2,25 +2,25 @@ import { AdapterObject } from './index';
 
 export default class Products {
   adapter: AdapterObject;
-  basePath: string;
+  // basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
   }
 
-  register(data) {
+  register(data: any) {
     return this.adapter.default.post('/register', data);
   }
 
-  checkEmail(data) {
+  checkEmail(data: any) {
     return this.adapter.default.post('/check-email', data);
   }
 
-  checkEmailChange(data) {
+  checkEmailChange(data: any) {
     return this.adapter.secure.post('/check-email-change', data);
   }
 
-  login(data) {
+  login(data: any) {
     return this.adapter.default.post('/login', data);
   }
 
@@ -28,11 +28,11 @@ export default class Products {
     return this.adapter.secure.get('/logout');
   }
 
-  forgotPassword(data) {
+  forgotPassword(data: any) {
     return this.adapter.default.post('/forgot-password', data);
   }
 
-  resetPassword(data) {
+  resetPassword(data: any) {
     return this.adapter.default.post('/reset-password', data);
   }
 
@@ -40,7 +40,7 @@ export default class Products {
     return this.adapter.secure.get('/me');
   }
 
-  updateMe(data) {
+  updateMe(data: any) {
     return this.adapter.secure.post('/me', data);
   }
 
@@ -48,11 +48,11 @@ export default class Products {
     return this.adapter.secure.post('/send-otp');
   }
 
-  loginFacebook(data) {
+  loginFacebook(data: any) {
     return this.adapter.default.post('/login-facebook', data);
   }
 
-  loginGoogle(data) {
+  loginGoogle(data: any) {
     return this.adapter.default.post('/login-google', data);
   }
 }

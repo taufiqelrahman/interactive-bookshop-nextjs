@@ -138,7 +138,7 @@ const OrderDetailDesktop = (props: OrderDetailProps) => {
                   <div className="c-detail__order__left">
                     <div className="c-detail__label">{props.t('order-date')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(currentOrder?.created_at)}
+                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(currentOrder?.created_at || '')}
                     </div>
                     <div className="c-detail__label">{props.t('order-state')}</div>
                     <div className="c-detail__value capitalize">
@@ -148,7 +148,7 @@ const OrderDetailDesktop = (props: OrderDetailProps) => {
                   <div className="c-detail__order__right">
                     <div className="c-detail__label">{props.t('shipping-date')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(shippingDate) || '-'}
+                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(shippingDate || '') || '-'}
                     </div>
                     <div className="c-detail__label">{props.t('tracking-number')}</div>
                     <div className="c-detail__value">

@@ -145,11 +145,11 @@ const OrderDetailMobile = (props: OrderDetailProps) => {
                       <h2>{props.t('order-state')}</h2>
                       <div className="c-detail__order">
                         <div className="c-detail__label">{props.t('order-date')}</div>
-                        <div className="c-detail__value">{fullDate(currentOrder?.created_at)}</div>
+                        <div className="c-detail__value">{fullDate(currentOrder?.created_at || '')}</div>
                         <div className="c-detail__label">{props.t('order-state')}</div>
                         <div className="c-detail__value capitalize">{props.t(currentOrder?.state || '')}</div>
                         <div className="c-detail__label">{props.t('shipping-date')}</div>
-                        <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
+                        <div className="c-detail__value">{fullDate(shippingDate || '') || '-'}</div>
                         <div className="c-detail__label">{props.t('tracking-number')}</div>
                         <div className="c-detail__value">{trackingNumber}</div>
                       </div>

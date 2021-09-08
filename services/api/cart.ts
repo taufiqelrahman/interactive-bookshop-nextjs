@@ -4,7 +4,7 @@ export default class Cart {
   adapter: AdapterObject;
   basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
     this.basePath = '/cart';
   }
@@ -21,7 +21,7 @@ export default class Cart {
   //   return this.adapter.secure.delete(`${this.basePath}`, data)
   // }
 
-  createCart(data) {
+  createCart(data: {checkoutId: string | number}) {
     return this.adapter.secure.post(`${this.basePath}`, data)
   }
 }

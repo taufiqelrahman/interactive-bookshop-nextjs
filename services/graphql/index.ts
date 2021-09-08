@@ -1,5 +1,4 @@
 // import ApolloClient from 'apollo-boost';
-import { ApolloClient } from 'apollo-client';
 // import { createHttpLink } from 'apollo-link-http';
 // import { setContext } from 'apollo-link-context';
 // import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -28,7 +27,7 @@ import Checkout from './checkout';
 //   },
 // }
 
-function adapterGenerator(uri, token): ApolloClient<any> {
+function adapterGenerator(uri: string, token: string): Client.Client {
   // const httpLink = createHttpLink({ uri });
   // const middlewareLink = setContext(() => ({
   //   headers: {
@@ -45,14 +44,14 @@ function adapterGenerator(uri, token): ApolloClient<any> {
   return Client.buildClient({
     domain: uri,
     storefrontAccessToken: token,
-  });
+  } as Client.Config);
 }
 
-const createAdapter = (): ApolloClient<any> => {
+const createAdapter = (): Client.Client => {
   return adapterGenerator(
-    process.env.SHOPIFY_URL,
+    process.env.SHOPIFY_URL || '',
     // 'X-Shopify-Storefront-Access-Token',
-    process.env.STOREFRONT_API_KEY,
+    process.env.STOREFRONT_API_KEY || '',
   );
 };
 

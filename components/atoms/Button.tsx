@@ -2,13 +2,13 @@ import { HTMLAttributes } from 'react';
 import Loader from './Loader';
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  variant?: 'outline' | 'rectangle' | 'small-text' | 'whatsapp';
+  variant?: string;
   color?: 'black' | 'white';
   disabled?: boolean;
   isLoading?: boolean;
   type?: 'button' | 'submit' | 'reset';
   name?: string;
-  width?: string;
+  width?: string | null;
   height?: string;
 }
 

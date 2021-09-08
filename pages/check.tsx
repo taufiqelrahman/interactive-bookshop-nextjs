@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Router } from 'i18n';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { useForm } from 'react-hook-form';
+import { WithTranslation } from 'next-i18next';
 
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -17,13 +18,15 @@ const Card = dynamic(() => import('components/atoms/Card'));
 const orderNumberIsValid = (value: string) => {
   return value.match(/^\d{4}$/) || value.match(/^WIGU-\d{4}$/);
 };
-
-const Check = (props: any): any => {
+interface CheckProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Check = (props: CheckProps) => {
   const [keyword, setKeyword] = useState('WIGU-');
   const { register, handleSubmit, errors, formState } = useForm({ mode: 'onChange' });
   const schema = {
     keyword: {
-      validate: value => {
+      validate: (value: string) => {
         if (orderNumberIsValid(value)) {
           return true;
         } else {

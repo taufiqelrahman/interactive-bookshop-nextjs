@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  variant: string;
+  variant?: string;
 }
 
 const Card = (props: CardProps) => {

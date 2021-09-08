@@ -1,4 +1,5 @@
 import { CustomAttributes } from 'store/cart/types';
+import { Address } from 'store/users/types';
 
 // export const CHECKOUT = 'CHECKOUT';
 export const LOAD_ORDER = 'LOAD_ORDER';
@@ -26,13 +27,7 @@ export interface Order {
   state: string;
   line_items: LineItem[];
   total_price: number;
-  shipping_address: {
-    address1: string;
-    address2: string;
-    province: string;
-    zip: string;
-    city: string;
-  };
+  shipping_address: Address;
   fulfillments: {
     created_at: string;
     tracking_number: string;

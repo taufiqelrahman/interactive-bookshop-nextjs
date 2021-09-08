@@ -20,7 +20,7 @@ const Footer = dynamic(() => import('components/organisms/Footer'));
 interface OrdersProps extends WithTranslation, PropsFromRedux {
   isMobile: boolean;
 }
-const Orders = (props: OrdersProps): any => {
+const Orders = (props: OrdersProps) => {
   const { orders } = props.state;
   const orderList = orders.isFetching ? ([{}, {}] as Order[]) : orders.orders;
   // const orderList = dummyOrders;

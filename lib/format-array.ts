@@ -1,4 +1,4 @@
-export const mapKeyValue = array => {
+export const mapKeyValue = (array: any[]) => {
   return array.reduce((map, obj) => {
     if (obj.key === 'Occupations') {
       map[obj.key] = obj.value.split(',');

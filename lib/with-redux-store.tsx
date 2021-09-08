@@ -4,7 +4,7 @@ import { AppState, initializeStore } from '../store';
 import actions from '../store/actions';
 import { bindActionCreators } from 'redux';
 import { NextPage } from 'next';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect, ConnectedProps, ReactReduxContextValue } from 'react-redux';
 import { AppContext } from 'next/app';
 
 const isServer = typeof window === 'undefined';
@@ -29,7 +29,7 @@ type Props = { reduxStore: Store };
 
 const withReduxStore = (Component: NextPage<any>) => {
   return class Redux extends React.Component<Props> {
-    private reduxStore;
+    private reduxStore: ReactReduxContextValue;
 
     static async getInitialProps(appContext: AppContext) {
       const reduxStore = getOrCreateStore();

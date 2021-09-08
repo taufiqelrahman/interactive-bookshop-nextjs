@@ -14,10 +14,21 @@ export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SEND_OTP = 'SEND_OTP';
 
+export interface Address {
+  address1: string;
+  address2: string;
+  province: string;
+  zip: string;
+  city: string;
+  country: string;
+}
+
 export interface User {
   email: string;
   name: string;
+  phone: string;
   cart: Cart;
+  address: Address;
 }
 
 export interface UsersState {

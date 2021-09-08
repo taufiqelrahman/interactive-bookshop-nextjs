@@ -48,7 +48,7 @@ const Cart = (props: CartProps) => {
       action: 'checkout',
       category: 'ecommerce',
       label: props.isMobile ? 'mobile' : 'desktop',
-      value: cart?.cart?.totalPrice,
+      value: cart?.cart?.totalPrice?.toString(),
     });
     const { isLoggedIn } = props.state.users;
     (window as any).fbq('track', 'InitiateCheckout', {
