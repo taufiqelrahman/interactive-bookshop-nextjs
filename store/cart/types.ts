@@ -34,7 +34,7 @@ export interface Cart {
   lineItems?: CartItem[];
   webUrl?: string;
   totalPrice?: number;
-  checkout_id: number;
+  checkout_id: string;
 }
 
 export interface CustomAttributes {
@@ -53,7 +53,7 @@ export interface CustomAttributes {
 }
 
 export interface CartItem extends CustomAttributes {
-  id: number;
+  id: string;
   cart_id: number;
   product_id: number;
   quantity: number;

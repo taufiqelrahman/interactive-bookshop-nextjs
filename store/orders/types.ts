@@ -13,6 +13,10 @@ export interface LineItem {
     value: string;
   }[];
   customAttributes: CustomAttributes;
+  variant: {
+    id: string;
+  };
+  quantity: number;
 }
 export interface Order {
   id: number;

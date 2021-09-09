@@ -4,7 +4,7 @@ import { captureException } from '@sentry/browser';
 import * as types from './types';
 import api from '../../services/api';
 
-// function checkout(isFetching, order = null): types.OrdersActionTypes {
+// function checkout(isFetching: boolean, order = null): types.OrdersActionTypes {
 //   return {
 //     type: types.CHECKOUT,
 //     payload: order,
@@ -27,14 +27,14 @@ import api from '../../services/api';
 //     });
 // };
 
-export function loadOrder(isFetching, order = null): types.OrdersActionTypes {
+export function loadOrder(isFetching: boolean, order = null): types.OrdersActionTypes {
   return {
     type: types.LOAD_ORDER,
     payload: order,
     isFetching,
   };
 }
-export const thunkLoadOrder = (orderNumber): ThunkAction<void, types.OrdersState, null, Action<string>> => (
+export const thunkLoadOrder = (orderNumber: string): ThunkAction<void, types.OrdersState, null, Action<string>> => (
   dispatch,
 ): any => {
   dispatch(loadOrder(true));
@@ -49,7 +49,7 @@ export const thunkLoadOrder = (orderNumber): ThunkAction<void, types.OrdersState
     });
 };
 
-export function loadOrders(isFetching, orders: any = []): types.OrdersActionTypes {
+export function loadOrders(isFetching: boolean, orders: any = []): types.OrdersActionTypes {
   return {
     type: types.LOAD_ORDERS,
     payload: orders,
@@ -69,7 +69,7 @@ export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Ac
     });
 };
 
-export function setPaymentProblem(status): types.OrdersActionTypes {
+export function setPaymentProblem(status: boolean): types.OrdersActionTypes {
   return {
     type: types.SET_PAYMENT_PROBLEM,
     payload: status,

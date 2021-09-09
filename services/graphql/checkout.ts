@@ -8,7 +8,7 @@ export default class Checkout {
     this.adapter = adapter;
   }
 
-  create(data: any): Promise<any> {
+  create(data?: any): Promise<any> {
     // return this.adapter.product.fetchAll();
     return this.adapter.checkout.create(data);
   }

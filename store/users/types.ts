@@ -21,6 +21,12 @@ export interface Address {
   zip: string;
   city: string;
   country: string;
+  first_name?: string;
+  last_name?: string;
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: string;
 }
 
 export interface User {

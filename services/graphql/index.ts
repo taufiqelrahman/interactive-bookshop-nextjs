@@ -68,7 +68,7 @@ const createAdapter = (): Client.Client => {
 //   return bytes.toString(CryptoJS.enc.Utf8);
 // }
 
-const graphqlService = (): any => {
+const graphqlService = () => {
   // const adapter = {
   //   default: createAdapter(),
   //   admin: createAdminAdapter(),

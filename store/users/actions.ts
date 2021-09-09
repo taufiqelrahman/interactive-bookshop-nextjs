@@ -10,6 +10,7 @@ import api from 'services/api';
 import graphql from 'services/graphql';
 import { encryptTokenClient } from 'lib/crypto';
 import { toast } from 'react-toastify';
+import { NextApiRequest } from 'next';
 
 // function setUser(user: types.User): types.UsersActionTypes {
 //   return {
@@ -18,7 +19,7 @@ import { toast } from 'react-toastify';
 //   };
 // };
 
-export function loadUser(isFetching, user: types.User | null): types.UsersActionTypes {
+export function loadUser(isFetching: boolean, user: types.User | null): types.UsersActionTypes {
   return {
     type: types.LOAD_USER,
     payload: user,
@@ -26,13 +27,15 @@ export function loadUser(isFetching, user: types.User | null): types.UsersAction
   };
 }
 
-export const thunkLoadUser = (req?): any => (dispatch): any => {
+export const thunkLoadUser = (
+  req?: NextApiRequest,
+): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(loadUser(true, null));
   return api(req)
     .users.getMe()
     .then(({ data }) => {
       dispatch(loadUser(false, data));
-      if (data.cart) dispatch(thunkLoadCart(data.cart.checkout_id));
+      if (data.cart) dispatch(thunkLoadCart(data.cart.checkout_id) as any);
     })
     .catch(err => {
       dispatch(loadUser(false, null));
@@ -41,7 +44,7 @@ export const thunkLoadUser = (req?): any => (dispatch): any => {
     });
 };
 
-function updateUser(isFetching, user?: types.User): types.UsersActionTypes {
+function updateUser(isFetching: boolean, user?: types.User): types.UsersActionTypes {
   return {
     type: types.UPDATE_USER,
     payload: user,
@@ -49,7 +52,9 @@ function updateUser(isFetching, user?: types.User): types.UsersActionTypes {
   };
 }
 
-export const thunkUpdateUser = (data): any => (dispatch): any => {
+export const thunkUpdateUser = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+): any => {
   dispatch(updateUser(true));
   return api()
     .users.updateMe(data)
@@ -93,14 +98,16 @@ export function setExpired(state: boolean): types.UsersActionTypes {
   };
 }
 
-function login(isFetching, state = null): types.UsersActionTypes {
+function login(isFetching: boolean, state = null): types.UsersActionTypes {
   return {
     type: types.LOGIN,
     payload: !!state,
     isFetching,
   };
 }
-export const thunkLogin = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
+export const thunkLogin = (userData: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
+  dispatch,
+): any => {
   dispatch(login(true));
   return api()
     .users.login(userData)
@@ -124,14 +131,14 @@ function redirectSocialLogin() {
   Router.push(`/${fromQuery || ''}`);
 }
 
-function loginFacebook(isFetching, state = null): types.UsersActionTypes {
+function loginFacebook(isFetching: boolean, state = null): types.UsersActionTypes {
   return {
     type: types.LOGIN_FACEBOOK,
     payload: !!state,
     isFetching,
   };
 }
-export const thunkLoginFacebook = (data): ThunkAction<void, types.UsersState, null, Action<string>> => (
+export const thunkLoginFacebook = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
   dispatch,
 ): any => {
   dispatch(loginFacebook(true));
@@ -152,14 +159,14 @@ export const thunkLoginFacebook = (data): ThunkAction<void, types.UsersState, nu
     });
 };
 
-function loginGoogle(isFetching, state = null): types.UsersActionTypes {
+function loginGoogle(isFetching: boolean, state = null): types.UsersActionTypes {
   return {
     type: types.LOGIN_FACEBOOK,
     payload: !!state,
     isFetching,
   };
 }
-export const thunkLoginGoogle = (data): ThunkAction<void, types.UsersState, null, Action<string>> => (
+export const thunkLoginGoogle = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
   dispatch,
 ): any => {
   dispatch(loginGoogle(true));
@@ -180,7 +187,7 @@ export const thunkLoginGoogle = (data): ThunkAction<void, types.UsersState, null
     });
 };
 
-function logout(isFetching, state = null): types.UsersActionTypes {
+function logout(isFetching: boolean, state = null): types.UsersActionTypes {
   return {
     type: types.LOGOUT,
     payload: !state,
@@ -203,13 +210,13 @@ export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<
     });
 };
 
-function register(isFetching): types.UsersActionTypes {
+function register(isFetching: boolean): types.UsersActionTypes {
   return {
     type: types.REGISTER,
     isFetching,
   };
 }
-export const thunkRegister = (userData): ThunkAction<void, types.UsersState, null, Action<string>> => async (
+export const thunkRegister = (userData: any): ThunkAction<void, types.UsersState, null, Action<string>> => async (
   dispatch,
 ): Promise<any> => {
   dispatch(register(true));
@@ -230,13 +237,13 @@ export const thunkRegister = (userData): ThunkAction<void, types.UsersState, nul
     });
 };
 
-function forgotPassword(isFetching): types.UsersActionTypes {
+function forgotPassword(isFetching: boolean): types.UsersActionTypes {
   return {
     type: types.FORGOT_PASSWORD,
     isFetching,
   };
 }
-export const thunkForgotPassword = (data): ThunkAction<void, types.UsersState, null, Action<string>> => (
+export const thunkForgotPassword = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
   dispatch,
 ): any => {
   dispatch(forgotPassword(true));
@@ -252,13 +259,13 @@ export const thunkForgotPassword = (data): ThunkAction<void, types.UsersState, n
     });
 };
 
-function resetPassword(isFetching): types.UsersActionTypes {
+function resetPassword(isFetching: boolean): types.UsersActionTypes {
   return {
     type: types.FORGOT_PASSWORD,
     isFetching,
   };
 }
-export const thunkResetPassword = (data): ThunkAction<void, types.UsersState, null, Action<string>> => (
+export const thunkResetPassword = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
   dispatch,
 ): any => {
   dispatch(resetPassword(true));
@@ -275,7 +282,7 @@ export const thunkResetPassword = (data): ThunkAction<void, types.UsersState, nu
     });
 };
 
-function sendOtp(isFetching): types.UsersActionTypes {
+function sendOtp(isFetching: boolean): types.UsersActionTypes {
   return {
     type: types.FORGOT_PASSWORD,
     isFetching,

@@ -8,21 +8,23 @@ import { Router } from 'i18n';
 import { setErrorMessage } from '../actions';
 import { loadUser } from '../users/actions';
 import { mapKeyValue } from 'lib/format-array';
+import { LineItem } from 'store/orders/types';
+import { User } from 'store/users/types';
 
-function mapItems(items) {
+function mapItems(items: any[]) {
   return items.map(item => ({
     ...item,
     customAttributes: mapKeyValue(item.customAttributes),
   }));
 }
 
-function createCart(isFetching): types.CartActionTypes {
+function createCart(isFetching: boolean): types.CartActionTypes {
   return {
     type: types.CREATE_CART,
     isFetching,
   };
 }
-function createCheckout(user) {
+function createCheckout(user: User) {
   const { email, address } = user;
   let PARAMS: any = { email };
   if (address) {
@@ -44,7 +46,7 @@ function createCheckout(user) {
 function createCheckoutGuest() {
   return graphql().checkout.create();
 }
-export const thunkCreateCart = (callback?): ThunkAction<void, types.CartState, null, Action<string>> => async (
+export const thunkCreateCart = (callback?: any): ThunkAction<void, types.CartState, null, Action<string>> => async (
   dispatch,
   getState,
 ): Promise<any> => {
@@ -69,7 +71,7 @@ export const thunkCreateCart = (callback?): ThunkAction<void, types.CartState, n
     });
 };
 
-function transferCart(isFetching, cart = null): types.CartActionTypes {
+function transferCart(isFetching: boolean, cart = null): types.CartActionTypes {
   return {
     type: types.TRANSFER_CART,
     payload: cart,
@@ -77,7 +79,7 @@ function transferCart(isFetching, cart = null): types.CartActionTypes {
   };
 }
 
-export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null, Action<string>> => async (
+export const thunkTransferCart = (dbId: string): ThunkAction<void, types.CartState, null, Action<string>> => async (
   dispatch,
 ): Promise<any> => {
   dispatch(transferCart(true));
@@ -86,9 +88,9 @@ export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null
   if (!localStorageCart) return;
   const localCartResponse = await graphql().checkout.get(localStorageCart.id);
   if (!localCartResponse) return;
-  const localCartItems = JSON.parse(JSON.stringify(localCartResponse.lineItems)).map(item => ({
+  const localCartItems = JSON.parse(JSON.stringify(localCartResponse.lineItems)).map((item: LineItem) => ({
     variantId: item.variant.id,
-    customAttributes: item.customAttributes.map(att => ({ key: att.key, value: att.value })),
+    customAttributes: (item.customAttributes as any).map((att: any) => ({ key: att.key, value: att.value })),
     quantity: item.quantity,
   }));
   if (localCartItems.length === 0) return;
@@ -109,7 +111,7 @@ export const thunkTransferCart = (dbId): ThunkAction<void, types.CartState, null
     });
 };
 
-export function loadCart(isFetching, cart = null): types.CartActionTypes {
+export function loadCart(isFetching: boolean, cart = null): types.CartActionTypes {
   return {
     type: types.LOAD_CART,
     payload: cart,
@@ -125,7 +127,7 @@ export function loadCart(isFetching, cart = null): types.CartActionTypes {
 //   };
 // }
 export const thunkLoadCart = (
-  id,
+  id: string,
   isLocal = false,
   retryLeft = 3,
 ): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
@@ -213,7 +215,7 @@ export function saveSelected(selected = null): types.CartActionTypes {
   };
 }
 
-function updateCart(isFetching, cart = null): types.CartActionTypes {
+function updateCart(isFetching: boolean, cart = null): types.CartActionTypes {
   return {
     type: types.UPDATE_CART,
     payload: cart,
@@ -221,7 +223,7 @@ function updateCart(isFetching, cart = null): types.CartActionTypes {
   };
 }
 
-function addToCart(isFetching, cart = null): types.CartActionTypes {
+function addToCart(isFetching: boolean, cart = null): types.CartActionTypes {
   return {
     type: types.ADD_TO_CART,
     payload: cart,
@@ -310,19 +312,20 @@ export const thunkUpdateCart = (product: any): ThunkAction<void, types.CartState
     });
 };
 
-function removeFromCart(isFetching, cart = null): types.CartActionTypes {
+function removeFromCart(isFetching: boolean, cart = null): types.CartActionTypes {
   return {
     type: types.REMOVE_FROM_CART,
     payload: cart,
     isFetching,
   };
 }
-export const thunkRemoveFromCart = (id, itemId): ThunkAction<void, types.CartState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkRemoveFromCart = (
+  id: number,
+  itemId: string,
+): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
   dispatch(removeFromCart(true));
   return graphql()
-    .checkout.removeLineItems(id, itemId)
+    .checkout.removeLineItems(id, [itemId])
     .then(cart => {
       if (!cart) return;
       const lineItems = mapItems(cart.lineItems);
