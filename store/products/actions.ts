@@ -12,9 +12,7 @@ function loadProducts(isFetching: boolean, products = null): types.ProductsActio
     isFetching,
   };
 }
-export const thunkLoadProducts = (): ThunkAction<void, types.ProductsState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLoadProducts = (): ThunkAction<void, types.ProductsState, null, Action<string>> => dispatch => {
   dispatch(loadProducts(true));
   return api()
     .products.get()
@@ -38,7 +36,7 @@ function showProduct(isFetching: boolean, currentProduct = null): types.Products
 export const thunkShowProduct = (
   slug: string,
   req?: NextApiRequest,
-): ThunkAction<void, types.ProductsState, null, Action<string>> => (dispatch): any => {
+): ThunkAction<void, types.ProductsState, null, Action<string>> => dispatch => {
   dispatch(showProduct(true));
   return api(req)
     .products.show(slug)

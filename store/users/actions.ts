@@ -52,9 +52,7 @@ function updateUser(isFetching: boolean, user?: types.User): types.UsersActionTy
   };
 }
 
-export const thunkUpdateUser = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkUpdateUser = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(updateUser(true));
   return api()
     .users.updateMe(data)
@@ -105,9 +103,7 @@ function login(isFetching: boolean, state = null): types.UsersActionTypes {
     isFetching,
   };
 }
-export const thunkLogin = (userData: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLogin = (userData: any): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(login(true));
   return api()
     .users.login(userData)
@@ -138,9 +134,9 @@ function loginFacebook(isFetching: boolean, state = null): types.UsersActionType
     isFetching,
   };
 }
-export const thunkLoginFacebook = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLoginFacebook = (
+  data: any,
+): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(loginFacebook(true));
   return api()
     .users.loginFacebook(data)
@@ -166,9 +162,7 @@ function loginGoogle(isFetching: boolean, state = null): types.UsersActionTypes 
     isFetching,
   };
 }
-export const thunkLoginGoogle = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLoginGoogle = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(loginGoogle(true));
   return api()
     .users.loginGoogle(data)
@@ -194,7 +188,7 @@ function logout(isFetching: boolean, state = null): types.UsersActionTypes {
     isFetching,
   };
 }
-export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch): any => {
+export const thunkLogout = (): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(logout(true));
   return api()
     .users.logout()
@@ -243,9 +237,9 @@ function forgotPassword(isFetching: boolean): types.UsersActionTypes {
     isFetching,
   };
 }
-export const thunkForgotPassword = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkForgotPassword = (
+  data: any,
+): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(forgotPassword(true));
   return api()
     .users.forgotPassword(data)
@@ -265,9 +259,9 @@ function resetPassword(isFetching: boolean): types.UsersActionTypes {
     isFetching,
   };
 }
-export const thunkResetPassword = (data: any): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkResetPassword = (
+  data: any,
+): ThunkAction<void, types.UsersState, null, Action<string>> => dispatch => {
   dispatch(resetPassword(true));
   return api()
     .users.resetPassword(data)
@@ -288,10 +282,7 @@ function sendOtp(isFetching: boolean): types.UsersActionTypes {
     isFetching,
   };
 }
-export const thunkSendOtp = (): ThunkAction<void, types.UsersState, null, Action<string>> => (
-  dispatch,
-  getState,
-): any => {
+export const thunkSendOtp = (): ThunkAction<void, types.UsersState, null, Action<string>> => (dispatch, getState) => {
   dispatch(sendOtp(true));
   return api()
     .users.sendOtp()

@@ -130,7 +130,7 @@ export const thunkLoadCart = (
   id: string,
   isLocal = false,
   retryLeft = 3,
-): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
+): ThunkAction<void, types.CartState, null, Action<string>> => dispatch => {
   dispatch(loadCart(true));
   if (!isLocal && localStorage.getItem('cart')) {
     dispatch(thunkTransferCart(id));
@@ -355,7 +355,7 @@ function removeFromCart(isFetching: boolean, cart = null): types.CartActionTypes
 export const thunkRemoveFromCart = (
   id: number,
   itemId: string,
-): ThunkAction<void, types.CartState, null, Action<string>> => (dispatch): any => {
+): ThunkAction<void, types.CartState, null, Action<string>> => dispatch => {
   dispatch(removeFromCart(true));
   return graphql()
     .checkout.removeLineItems(id, [itemId])

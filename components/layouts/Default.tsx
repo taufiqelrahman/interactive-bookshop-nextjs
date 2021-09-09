@@ -38,8 +38,8 @@ const DefaultLayout = (props: DefaultLayoutProps) => {
     // reset overlay
     hideSideNav();
     // set top margin for fixed navbar
-    const navbarDiv: any = document.querySelector('.c-nav-bar');
-    setNavbarHeight(navbarDiv.clientHeight);
+    const navbarDiv: Element | null = document.querySelector('.c-nav-bar');
+    setNavbarHeight(navbarDiv?.clientHeight || 60);
     const { users, cart } = props.state;
     (window as any).fbq('track', 'ViewContent', {
       cartItems: cart?.cart?.lineItems?.length || 0,

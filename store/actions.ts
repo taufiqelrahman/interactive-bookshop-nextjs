@@ -25,7 +25,7 @@ function sendMessage(isFetching: boolean): types.ActionTypes {
 export const thunkSendMessage = (data: any): ThunkAction<void, types.State, null, Action<string>> => (
   dispatch,
   getState,
-): any => {
+) => {
   const { user } = (getState() as any).users;
   let DATA = { ...data };
   if (user) DATA = { ...data, userId: user.id };

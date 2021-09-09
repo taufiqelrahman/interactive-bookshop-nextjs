@@ -14,7 +14,7 @@ import api from '../../services/api';
 
 // export const thunkCheckout = (newOrder): ThunkAction<void, types.OrdersState, null, Action<string>> => (
 //   dispatch,
-// ): any => {
+// ) => {
 //   dispatch(checkout(true));
 //   return api()
 //     .orders.checkout(newOrder)
@@ -34,9 +34,9 @@ export function loadOrder(isFetching: boolean, order = null): types.OrdersAction
     isFetching,
   };
 }
-export const thunkLoadOrder = (orderNumber: string): ThunkAction<void, types.OrdersState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLoadOrder = (
+  orderNumber: string,
+): ThunkAction<void, types.OrdersState, null, Action<string>> => dispatch => {
   dispatch(loadOrder(true));
   return api()
     .orders.loadOrder(orderNumber)
@@ -49,14 +49,14 @@ export const thunkLoadOrder = (orderNumber: string): ThunkAction<void, types.Ord
     });
 };
 
-export function loadOrders(isFetching: boolean, orders: any = []): types.OrdersActionTypes {
+export function loadOrders(isFetching: boolean, orders: types.Order[] = []): types.OrdersActionTypes {
   return {
     type: types.LOAD_ORDERS,
     payload: orders,
     isFetching,
   };
 }
-export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Action<string>> => (dispatch): any => {
+export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Action<string>> => dispatch => {
   dispatch(loadOrders(true));
   return api()
     .orders.loadOrders()
