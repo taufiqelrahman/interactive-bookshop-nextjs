@@ -208,7 +208,7 @@ export const thunkLoadCart = (
 //     });
 // };
 
-function updateAttributes(isFetching, cart = null): types.CartActionTypes {
+function updateAttributes(isFetching: boolean, cart = null): types.CartActionTypes {
   return {
     type: types.UPDATE_ATTRIBUTES,
     payload: cart,

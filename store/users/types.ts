@@ -35,6 +35,7 @@ export interface User {
   phone: string;
   cart: Cart;
   address: Address;
+  is_reseller: number;
 }
 
 export interface UsersState {

@@ -36,6 +36,7 @@ export interface Cart {
   webUrl?: string;
   totalPrice?: number;
   checkout_id: string;
+  customAttributes: any[];
 }
 
 export interface CustomAttributes {
