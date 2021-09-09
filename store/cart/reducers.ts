@@ -15,6 +15,7 @@ const reducer = (state = initialState, action: types.CartActionTypes): types.Car
     case types.TRANSFER_CART:
     case types.UPDATE_CART:
     case types.REMOVE_FROM_CART:
+    case types.UPDATE_ATTRIBUTES:
       return {
         ...state,
         isFetching: action.isFetching,

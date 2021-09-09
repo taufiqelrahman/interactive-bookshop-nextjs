@@ -25,7 +25,10 @@ export const schema = (props: CharacterCustomizationProps) => ({
   hair: { required: { value: true, message: `${props.t('hair-label')} ${props.t('required-error')}` } },
   skin: { required: { value: true, message: `${props.t('skin-label')} ${props.t('required-error')}` } },
   language: { required: { value: true, message: `${props.t('language-label')} ${props.t('required-error')}` } },
-  dedication: { required: false },
+  dedication: {
+    required: false,
+    maxLength: { value: 500, message: `${props.t('less-than-error')} 500` },
+  },
 });
 
 export const showError = (error: string) => {

@@ -11,6 +11,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import { CartItem as ICartItem } from 'store/cart/types';
 import { WithTranslation } from 'next-i18next';
 
+const BookingCode = dynamic(() => import('components/organisms/BookingCode'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const CartItem = dynamic(() => import('components/molecules/CartItem/desktop'));
 const CartItemMobile = dynamic(() => import('components/molecules/CartItem/mobile'));
@@ -105,6 +106,12 @@ const Cart = (props: CartProps) => {
                   <a>{props.t('add-more')}</a>
                 </Link>
               </div>
+              {props.isMobile && users?.user?.is_reseller === 1 && (
+                <BookingCode
+                  onUpdate={props.thunkUpdateAttributes}
+                  currentValue={cart.cart?.customAttributes?.find(att => att.key === 'bookingCode')?.value}
+                />
+              )}
             </div>
             <div className="c-cart-section__summary">
               <Wrapper variant="border">
@@ -194,6 +201,17 @@ const Cart = (props: CartProps) => {
                       </div>
                     </div>
                   )}
+
+                  {!props.isMobile && users?.user?.is_reseller === 1 && (
+                    <>
+                      <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
+                      <BookingCode
+                        onUpdate={props.thunkUpdateAttributes}
+                        currentValue={cart.cart?.customAttributes?.find(att => att.key === 'bookingCode')?.value}
+                      />
+                    </>
+                  )}
+
                   {/* <Button onClick={() => props.thunkAddDiscount('NEWMEMBER')}>add discount</Button>
                   <Button onClick={() => props.thunkRemoveDiscount('NEWMEMBER')}>remove discount</Button> */}
                   <Button

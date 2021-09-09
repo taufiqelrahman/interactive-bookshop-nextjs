@@ -92,7 +92,7 @@ const TextField = React.forwardRef((props: any, ref: any) => {
             height: 44px;
             border: 2px solid #e1e0e7;
             &::placeholder {
-              color: #e1e1e1;
+              color: #d1d1d1;
               line-height: 25px;
             }
           }
