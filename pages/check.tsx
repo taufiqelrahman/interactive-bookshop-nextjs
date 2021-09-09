@@ -46,7 +46,7 @@ const Check = (props: CheckProps) => {
   const onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   const screenHeight = '100vh - 59px';
   return (
     <DefaultLayout

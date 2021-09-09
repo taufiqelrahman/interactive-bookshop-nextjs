@@ -87,7 +87,7 @@ const Register = (props: RegisterProps) => {
         break;
     }
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
       {...props}

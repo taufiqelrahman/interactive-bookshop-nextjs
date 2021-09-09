@@ -43,7 +43,7 @@ const Help = (props: HelpProps) => {
     },
   };
   // const Marker = (props: any) => <div>{props.text}</div>;
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
       {...props}

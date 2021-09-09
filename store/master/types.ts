@@ -3,7 +3,8 @@ export const LOAD_TESTIMONIALS = 'LOAD_TESTIMONIALS';
 export const LOAD_BOOK_PAGES = 'LOAD_BOOK_PAGES';
 export const LOAD_PROVINCES = 'LOAD_PROVINCES';
 
-interface Testimonial {
+export interface Testimonial {
+  id: number;
   name: string;
   company: string;
   message: string;

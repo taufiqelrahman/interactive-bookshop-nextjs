@@ -15,7 +15,7 @@ interface NavBarProps extends WithTranslation {
   users: UsersState;
   cartItems: CartItem[] | null | undefined;
   thunkLogout: () => any;
-  thunkLoadCart: (id: any, isLocal?: any) => any;
+  thunkLoadCart: (id: string, isLocal?: any) => any;
 }
 const NavBar = (props: NavBarProps) => {
   const router = useRouter();

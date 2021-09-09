@@ -118,7 +118,7 @@ const Account = (props: AccountProps) => {
       width: props.isMobile ? '100%' : '400px',
     }),
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   const disabledUpdateAddress = (): boolean =>
     !!(errors.address1 || errors.address2 || errors.city || errors.province || errors.zip) ||
     (watch('address1') === userAddress.address1 &&

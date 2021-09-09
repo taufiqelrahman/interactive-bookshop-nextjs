@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -10,15 +10,19 @@ import api from 'services/api';
 import { formatPayment } from 'lib/format-payment';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 
 const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const OrderSuccess = (props: any): any => {
+interface OrderSuccessProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const OrderSuccess = (props: OrderSuccessProps) => {
   const router = useRouter();
   const { id } = router.query;
   const screenHeight = '100vh - 59px';
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   const { isLoggedIn } = props.state.users;
   const { paymentProblem } = props.state.orders;
   return (

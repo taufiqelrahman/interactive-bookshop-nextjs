@@ -107,7 +107,7 @@ const Login = (props: LoginProps) => {
         break;
     }
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   const loginFacebook = () => {
     const { from }: any = Router.query;
     if (from) localStorage.setItem('from', from);
