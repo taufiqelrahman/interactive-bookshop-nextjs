@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link, Router } from 'i18n';
 import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
@@ -10,6 +10,7 @@ import Head from 'next/head';
 import * as gtag from 'lib/gtag';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 // import Footer from 'components/organisms/Footer';
 
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -17,7 +18,10 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
-const Login = (props: any): any => {
+interface LoginProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Login = (props: LoginProps) => {
   const router = useRouter();
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
@@ -34,7 +38,7 @@ const Login = (props: any): any => {
     password: { required: true },
     confirmPassword: {
       required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('password') || props.t('form:password-different'),
+      validate: (value: string) => value === watch('password') || props.t('form:password-different'),
     },
   };
   useEffect(() => {
@@ -65,7 +69,7 @@ const Login = (props: any): any => {
   const forgotPassword = () => {
     setLoginStep(stepEnum.FORGOT);
   };
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     const { email, token } = resetData;
     switch (loginStep) {
       case stepEnum.EMAIL:
@@ -103,7 +107,7 @@ const Login = (props: any): any => {
         break;
     }
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   const loginFacebook = () => {
     const { from }: any = Router.query;
     if (from) localStorage.setItem('from', from);

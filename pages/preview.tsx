@@ -8,7 +8,7 @@ import api from 'services/api';
 import Head from 'next/head';
 import cookies from 'next-cookies';
 
-const Preview = (props: any): any => (
+const Preview = (props: any) => (
   <div>
     <Head>
       <title>When I Grow Up | {props.t('book-preferences')}</title>

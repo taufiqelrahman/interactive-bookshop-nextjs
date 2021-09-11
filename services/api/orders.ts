@@ -4,7 +4,7 @@ export default class Orders {
   adapter: AdapterObject;
   basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
     this.basePath = '/orders';
   }
@@ -13,11 +13,11 @@ export default class Orders {
   //   return this.adapter.secure.post(`${this.basePath}`, data)
   // }
 
-  loadOrder(orderNumber) {
+  loadOrder(orderNumber: string) {
     return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`)
   }
 
-  loadOrderGuest(orderNumber) {
+  loadOrderGuest(orderNumber: string) {
     return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`)
   }
 

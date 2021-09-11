@@ -1,10 +1,22 @@
+import { HTMLAttributes } from 'react';
 import Loader from './Loader';
 
-const Button = (props: any) => {
+interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+  variant?: string;
+  color?: 'black' | 'white';
+  disabled?: boolean;
+  isLoading?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  name?: string;
+  width?: string | null;
+  height?: string;
+}
+
+const Button = (props: ButtonProps) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-button--${variant}`).join(' ');
+    return variants.map((variant: string) => `c-button--${variant}`).join(' ');
   };
   const colorClass = props.color ? `c-button--${props.color}` : '';
   const disabledClass = props.disabled || props.isLoading ? `c-button--disabled` : '';
@@ -12,7 +24,7 @@ const Button = (props: any) => {
     <div style={props.style} className={props.className}>
       <button
         aria-label="button"
-        type={props.type ? props.type : null}
+        type={props.type}
         className={`c-button ${variantClass()} ${colorClass} ${disabledClass}`}
         onClick={props.onClick}
         disabled={props.disabled || props.isLoading}

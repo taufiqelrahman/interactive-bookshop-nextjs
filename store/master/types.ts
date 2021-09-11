@@ -3,17 +3,20 @@ export const LOAD_TESTIMONIALS = 'LOAD_TESTIMONIALS';
 export const LOAD_BOOK_PAGES = 'LOAD_BOOK_PAGES';
 export const LOAD_PROVINCES = 'LOAD_PROVINCES';
 
-interface Testimonial {
+export interface Testimonial {
+  id: number;
   name: string;
   company: string;
   message: string;
   image_url: string;
 }
 
-interface Occupation {
+export interface Occupation {
   name: string;
   description: string;
   page_count: number;
+  indonesia: string;
+  id: number;
 }
 
 interface BookContent {
@@ -21,10 +24,16 @@ interface BookContent {
   style: string;
 }
 
-interface BookPage {
+export interface BookPage {
   order: number;
   occupation: Occupation;
   book_contens: BookContent[];
+
+  occupation_id: string;
+  page_number: number;
+  english: string;
+  indonesia: string;
+  style: string;
 }
 
 interface Province {
@@ -34,10 +43,10 @@ interface Province {
 
 export interface MasterState {
   isFetching: boolean;
-  testimonials: Testimonial[];
-  occupations: Occupation[];
-  bookPages: BookPage[];
-  provinces: Province[];
+  testimonials?: Testimonial[];
+  occupations?: Occupation[];
+  bookPages?: BookPage[];
+  provinces?: Province[];
 }
 
 interface LoadTestimonials {

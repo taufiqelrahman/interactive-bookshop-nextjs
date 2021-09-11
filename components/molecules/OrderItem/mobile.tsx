@@ -2,12 +2,12 @@ import { withTranslation } from 'i18n';
 import NumberFormat from 'react-number-format';
 import { date } from 'lib/format-date';
 import Card from 'components/atoms/Card';
-import { previewImg } from './helper';
+import { OrderItemProps, previewImg } from './helper';
 import Divider from 'components/atoms/Divider';
 import Skeleton from 'react-loading-skeleton';
 import { mapKeyValue } from 'lib/format-array';
 
-const OrderItem = (props: any) => {
+const OrderItem = (props: OrderItemProps) => {
   const lineItems = (props.line_items || []).map(item => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),

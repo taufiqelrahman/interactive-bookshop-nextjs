@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,6 +12,8 @@ import actions from 'store/actions';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import TextField from 'components/atoms/TextField';
+import { WithTranslation } from 'next-i18next';
+import { Address } from 'store/users/types';
 // import Modal from 'components/atoms/Modal';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -19,11 +21,14 @@ const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Account = (props: any): any => {
+interface AccountProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Account = (props: AccountProps) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, setValue, watch, triggerValidation, unregister } = methods;
   const { user } = props.state.users;
-  const userAddress = user.address || {};
+  const userAddress = user?.address || ({} as Address);
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState({
     name: {
@@ -71,14 +76,14 @@ const Account = (props: any): any => {
     },
     confirmNewPassword: {
       required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('newPassword') || props.t('form:password-different'),
+      validate: (value: string) => value === watch('newPassword') || props.t('form:password-different'),
     },
     address: {
       required: { value: true, message: `${props.t('address-label')} ${props.t('form:required-error')}` },
     },
   };
   const customStyles = {
-    menu: provided => ({
+    menu: (provided: any) => ({
       ...provided,
       marginTop: 0,
       border: '2px solid #333',
@@ -90,7 +95,7 @@ const Account = (props: any): any => {
     indicatorSeparator: () => ({
       display: 'none',
     }),
-    option: provided => ({
+    option: (provided: any) => ({
       ...provided,
       '&:hover': {
         background: '#333',
@@ -98,7 +103,7 @@ const Account = (props: any): any => {
       },
       width: props.isMobile ? '100%' : '400px',
     }),
-    control: (provided, state) => ({
+    control: (provided: any, state: any) => ({
       ...provided,
       borderWidth: 2,
       borderType: 'solid',
@@ -113,23 +118,19 @@ const Account = (props: any): any => {
       width: props.isMobile ? '100%' : '400px',
     }),
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
-  const disabledUpdateAddress = () =>
-    errors.address1 ||
-    errors.address2 ||
-    errors.city ||
-    errors.province ||
-    errors.zip ||
+  const Wrapper = props.isMobile ? 'div' : Card;
+  const disabledUpdateAddress = (): boolean =>
+    !!(errors.address1 || errors.address2 || errors.city || errors.province || errors.zip) ||
     (watch('address1') === userAddress.address1 &&
       watch('address2') === userAddress.address2 &&
       watch('city') === userAddress.city &&
       watch('province') &&
       watch('province').label === userAddress.province &&
       watch('zip') === userAddress.zip);
-  const editField = (type, isClear, value?): any => {
+  const editField = (type: string, isClear: boolean, value?: string) => {
     const newState = { ...state };
     Object.keys(newState).forEach(key => {
-      newState[key].isEdit = false;
+      (newState as any)[key].isEdit = false;
     });
     setState({
       ...newState,
@@ -146,8 +147,8 @@ const Account = (props: any): any => {
   };
   const provinces = () => {
     const { provinces } = props.state.master;
-    if (provinces.length === 0) return [];
-    return provinces.map(prov => ({
+    if (provinces?.length === 0) return [];
+    return provinces?.map(prov => ({
       value: prov.name,
       label: prov.name,
     }));
@@ -159,11 +160,11 @@ const Account = (props: any): any => {
   //   props.thunkSendOtp();
   //   setShowModal(true);
   // };
-  const onChangeProvince = e => {
+  const onChangeProvince = (e: any) => {
     triggerValidation('province');
     setValue('province', e);
   };
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     let PARAMS = data;
     if (data.province) PARAMS = { ...data, province: data.province.value };
     if (data.newPhone) PARAMS = { ...data, phone: data.newPhone.replace(/^\s+|\s+$/gm, '') };
@@ -205,7 +206,7 @@ const Account = (props: any): any => {
                 <div className="c-account__header">
                   <div className="c-account__title">{props.t('name-label')}</div>
                   {!state.name.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('name', false, user.name)}>
+                    <div className="c-account__action" onClick={() => editField('name', false, user?.name)}>
                       Edit
                     </div>
                   )}
@@ -224,7 +225,7 @@ const Account = (props: any): any => {
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.name || watch('name') === user.name}
+                        disabled={!!errors.name || watch('name') === user?.name}
                       >
                         {props.t('form:update-button')}
                       </Button>
@@ -234,14 +235,14 @@ const Account = (props: any): any => {
                     </div>
                   </form>
                 ) : (
-                  <div className="c-account__value">{user.name}</div>
+                  <div className="c-account__value">{user?.name}</div>
                 )}
               </div>
               <div className="c-account__row">
                 <div className="c-account__header">
                   <div className="c-account__title">{props.t('email-label')}</div>
                   {!state.email.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('email', false, user.email)}>
+                    <div className="c-account__action" onClick={() => editField('email', false, user?.email)}>
                       Change
                     </div>
                   )}
@@ -253,7 +254,7 @@ const Account = (props: any): any => {
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
                       defaultValue={state.email.value}
-                      ref={register(schema.email)}
+                      ref={register(schema.email as any) as any}
                       name="email"
                       errors={errors.email}
                     />
@@ -261,7 +262,7 @@ const Account = (props: any): any => {
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.email || watch('email') === user.email}
+                        disabled={!!errors.email || watch('email') === user?.email}
                       >
                         {props.t('form:update-button')}
                       </Button>
@@ -271,19 +272,19 @@ const Account = (props: any): any => {
                     </div>
                   </form>
                 ) : (
-                  <div className="c-account__value">{user.email}</div>
+                  <div className="c-account__value">{user?.email}</div>
                 )}
               </div>
               <div className="c-account__row">
                 <div className="c-account__header">
                   <div className="c-account__title">{props.t('phone-label')}</div>
-                  {!user.phone && !state.phone.isEdit && (
-                    <div className="c-account__action" onClick={() => editField('phone', false, user.phone)}>
+                  {!user?.phone && !state.phone.isEdit && (
+                    <div className="c-account__action" onClick={() => editField('phone', false, user?.phone)}>
                       Add
                     </div>
                   )}
                 </div>
-                {user.phone && <div className="c-account__subheader">{props.t('phone-warning')}</div>}
+                {user?.phone && <div className="c-account__subheader">{props.t('phone-warning')}</div>}
                 {state.phone.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
                     {/* <div className="c-account__label">{props.t('old-number')}</div> */}
@@ -307,7 +308,7 @@ const Account = (props: any): any => {
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.newPhone || watch('newPhone') === user.phone}
+                        disabled={!!errors.newPhone || watch('newPhone') === user?.phone}
                         // type="button"
                         // onClick={onChangePhone}
                       >
@@ -320,7 +321,7 @@ const Account = (props: any): any => {
                   </form>
                 ) : (
                   // <div className="c-account__value">{`*****${user.phone.slice(5)}`}</div>
-                  <div className="c-account__value">{user.phone || '-'}</div>
+                  <div className="c-account__value">{user?.phone || '-'}</div>
                 )}
               </div>
               <div className="c-account__row">
@@ -356,7 +357,7 @@ const Account = (props: any): any => {
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
-                      ref={register(schema.confirmNewPassword)}
+                      ref={register(schema.confirmNewPassword as any) as any}
                       name="confirmNewPassword"
                       errors={errors.confirmNewPassword}
                       isPassword={true}
@@ -366,9 +367,7 @@ const Account = (props: any): any => {
                         width="101px"
                         variant="rectangle,small-text"
                         disabled={
-                          errors.password ||
-                          errors.newPassword ||
-                          errors.confirmNewPassword ||
+                          !!(errors.password || errors.newPassword || errors.confirmNewPassword) ||
                           !watch('password') ||
                           !watch('newPassword') ||
                           !watch('confirmNewPassword')

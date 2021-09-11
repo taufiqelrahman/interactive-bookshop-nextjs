@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import Head from 'next/head';
 import helpContents from 'config/helpContents';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Accordion = dynamic(() => import('components/atoms/Accordion'));
@@ -20,11 +21,14 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Help = (props: any): any => {
+interface HelpProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Help = (props: HelpProps) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, reset } = methods;
   const { isFetching } = props.state.default;
-  const onSubmit = async data => {
+  const onSubmit = async (data: any) => {
     await props.thunkSendMessage(data);
     reset();
     toast.success(props.t('form:copy-success-help'));
@@ -39,7 +43,7 @@ const Help = (props: any): any => {
     },
   };
   // const Marker = (props: any) => <div>{props.text}</div>;
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
       {...props}

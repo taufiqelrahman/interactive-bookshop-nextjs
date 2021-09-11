@@ -7,7 +7,7 @@ const initState: types.State = {
   maintenanceMode: false,
 };
 
-const reducer = (state: types.State = initState, action: types.ActionTypes): any => {
+const reducer = (state: types.State = initState, action: types.ActionTypes) => {
   switch (action.type) {
     case types.SET_SIDE_NAV: {
       return {

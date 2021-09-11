@@ -1,3 +1,5 @@
+import { BookColors } from 'constants/book-colors';
+
 export const LOAD_CART = 'LOAD_CART';
 // export const ADD_DISCOUNT = 'ADD_DISCOUNT';
 // export const REMOVE_DISCOUNT = 'REMOVE_DISCOUNT';
@@ -9,6 +11,12 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const UPDATE_ATTRIBUTES = 'UPDATE_ATTRIBUTES';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
 
+interface DiscountApplications {
+  code: string;
+  value: {
+    percentage: number;
+  };
+}
 export interface Cart {
   id: number;
   user_id: number;
@@ -16,16 +24,49 @@ export interface Cart {
   updated_at: string;
   deleted_at: string;
   cart_items: CartItem[];
+
+  lineItemsSubtotalPrice?: {
+    amount: number;
+  };
+  shippingLine?: {
+    price: number;
+  };
+  discountApplications?: DiscountApplications[];
+  lineItems?: CartItem[];
+  webUrl?: string;
+  totalPrice?: number;
+  checkout_id: string;
+  customAttributes: any[];
 }
 
-interface CartItem {
-  id: number;
+export interface CustomAttributes {
+  Occupations: string[];
+  Name: string;
+  Age: 'kid' | 'toddler';
+  Gender: 'boy' | 'girl';
+  Skin: 'light' | 'medium' | 'dark';
+  Language: 'english' | 'indo';
+  Dedication: string;
+  Hair: 'short' | 'curly' | 'hijab';
+  Cover: BookColors;
+  Mommy: string;
+  Daddy: string;
+  'Date of Birth': string;
+}
+
+export interface CartItem extends CustomAttributes {
+  id: string;
   cart_id: number;
   product_id: number;
   quantity: number;
   price: number;
   created_at: string;
   updated_at: string;
+
+  customAttributes: CustomAttributes;
+  variant: {
+    price: number;
+  };
 }
 
 export interface CartState {

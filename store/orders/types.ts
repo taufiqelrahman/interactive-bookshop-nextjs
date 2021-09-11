@@ -1,10 +1,26 @@
+import { CustomAttributes } from 'store/cart/types';
+import { Address } from 'store/users/types';
+
 // export const CHECKOUT = 'CHECKOUT';
 export const LOAD_ORDER = 'LOAD_ORDER';
 export const LOAD_ORDERS = 'LOAD_ORDERS';
 export const SET_PAYMENT_PROBLEM = 'SET_PAYMENT_PROBLEM';
 
-interface Order {
+export interface LineItem {
+  id: string;
+  properties: {
+    name: string;
+    value: string;
+  }[];
+  customAttributes: CustomAttributes;
+  variant: {
+    id: string;
+  };
+  quantity: number;
+}
+export interface Order {
   id: number;
+  name: string;
   order_number: string;
   shopify_order_id: string;
   user_id: number;
@@ -12,6 +28,32 @@ interface Order {
   created_at: string;
   updated_at: string;
   deleted_at: string;
+  state: string;
+  line_items: LineItem[];
+  total_price: number;
+  shipping_address: Address;
+  fulfillments: {
+    created_at: string;
+    tracking_number: string;
+  }[];
+  fulfillment_status: string;
+  processed_at: string;
+  shipping_lines: {
+    title: string;
+    price: number;
+  }[];
+  discount_applications: {
+    code: string;
+  }[];
+  total_discounts: number;
+  payment: {
+    type: string;
+    instance: string;
+    number: string;
+    url: string;
+  };
+  total_line_items_price: number;
+  financial_status: string;
 }
 
 export interface OrdersState {
@@ -19,6 +61,13 @@ export interface OrdersState {
   orders: Order[];
   currentOrder: Order | null;
   paymentProblem: boolean;
+}
+
+export interface OrderStateJson {
+  shopify_order_id: string;
+  state: {
+    name: string;
+  };
 }
 
 // interface Checkout {

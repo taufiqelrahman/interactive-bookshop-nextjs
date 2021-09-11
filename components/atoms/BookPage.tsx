@@ -1,19 +1,35 @@
 import { withTranslation } from 'i18n';
 import LazyLoad, { forceVisible } from 'react-lazyload';
-import { useEffect } from 'react';
+import { HTMLAttributes, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import 'styles/fonts.min.css';
+import { WithTranslation } from 'next-i18next';
+import { CartItem } from 'store/cart/types';
+import { BookPage } from 'store/master/types';
 
-const BookPage = (props: any) => {
-  const styleGenerator = (string: any): any => {
-    let style: any = {
+interface BookPageProps extends WithTranslation, HTMLAttributes<HTMLDivElement> {
+  isMobile: boolean;
+  isWhiteCover: boolean;
+  isLast: boolean;
+  image: string;
+  name: CartItem['Name'];
+  language: CartItem['Language'];
+  gender: CartItem['Gender'];
+  dedication: CartItem['Dedication'];
+  contents: BookPage[];
+  mustLoad: boolean;
+  height?: string;
+}
+const BookPageComp = (props: BookPageProps) => {
+  const styleGenerator = (string: string) => {
+    let style = {
       width: '37%',
       fontSize: props.isMobile ? '2vw' : '0.8vw',
       lineHeight: props.isMobile ? '2.5vw' : '1vw',
       fontFamily: 'Jost',
       textAlign: 'center',
       fontWeight: 300,
-    };
+    } as any;
     if (string) style = { ...style, ...JSON.parse(string) };
     if (props.isMobile && style.fontSizeMobile) style = { ...style, fontSize: style.fontSizeMobile };
     if (props.isMobile && style.lineHeightMobile) style = { ...style, lineHeight: style.lineHeightMobile };
@@ -26,7 +42,7 @@ const BookPage = (props: any) => {
         fontSize: props.isMobile ? '9vw' : '3.5vw',
         lineHeight: props.isMobile ? '7.5vw' : '3vw',
       };
-      if (props.name && props.name.length > 4) {
+      if (props.name?.length > 4) {
         style = {
           ...style,
           width: '90%',
@@ -38,7 +54,7 @@ const BookPage = (props: any) => {
     }
     return style;
   };
-  const processContent = (content, language) => {
+  const processContent = (content: BookPage, language: CartItem['Language']) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
     const {
@@ -147,4 +163,4 @@ const BookPage = (props: any) => {
   );
 };
 
-export default withTranslation('common')(BookPage);
+export default withTranslation('common')(BookPageComp);

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import { useState, useEffect, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import api from 'services/api';
 import debouncePromise from 'awesome-debounce-promise';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 // import Footer from 'components/organisms/Footer';
 
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -17,7 +18,10 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
-const Register = (props: any): any => {
+interface RegisterProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Register = (props: RegisterProps) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const stepEnum = { WELCOME: 0, EMAIL: 1, DETAIL: 2 };
@@ -46,7 +50,7 @@ const Register = (props: any): any => {
     },
     confirmPassword: {
       required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('password') || props.t('form:password-different'),
+      validate: (value: string) => value === watch('password') || props.t('form:password-different'),
     },
   };
   useEffect(() => {
@@ -54,7 +58,7 @@ const Register = (props: any): any => {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
-  const onSubmit = async data => {
+  const onSubmit = async (data: any) => {
     switch (registerStep) {
       case stepEnum.EMAIL:
         setSavedEmail(data.email);
@@ -83,7 +87,7 @@ const Register = (props: any): any => {
         break;
     }
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
       {...props}

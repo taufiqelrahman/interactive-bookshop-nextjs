@@ -6,12 +6,12 @@ import Card from 'components/atoms/Card';
 import Dot from 'components/atoms/Dot';
 import Divider from 'components/atoms/Divider';
 import Popover from 'components/atoms/Popover';
-import { previewImg, updateQuantity } from './helper';
+import { CartItemProps, previewImg, updateQuantity } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import Modal from 'components/atoms/Modal';
 import Button from 'components/atoms/Button';
 
-const CartItem = (props: any) => {
+const CartItem = (props: CartItemProps) => {
   const [quantity, setQuantity] = useState(props.quantity);
   const [showModal, setShowModal] = useState(false);
   const onDecrease = () => {
@@ -40,7 +40,7 @@ const CartItem = (props: any) => {
       id: props.id,
       quantity: props.quantity,
       ...props.customAttributes,
-      Occupations: props.customAttributes.Occupations.split(','),
+      Occupations: props.customAttributes.Occupations,
     });
     Router.push('/create');
   };
@@ -81,7 +81,7 @@ const CartItem = (props: any) => {
                   {props.isSkeleton ? <Skeleton /> : props.t('dream-occupation')}
                 </div>
                 <div className="c-cart-item__detail__value">
-                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Occupations?.replace(/,/g, ', ')}
+                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Occupations?.join(', ')}
                 </div>
               </div>
               {!props.isSkeleton && props.customAttributes.Dedication && (

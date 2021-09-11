@@ -5,13 +5,13 @@ const Features = (props: any) => {
     <div>
       <div className="c-features">
         <div className="u-container">
-          {props.features.map((item, i) => {
+          {props.features.map((item: any, i: number) => {
             return (
               <Link key={i} href={'/books/' + item.slug}>
                 <a
                   className="c-features__item"
                   style={{
-                    background: `url(\'${item.images[0].filepath}\')`,
+                    background: `url('${item.images[0].filepath}')`,
                   }}
                 >
                   {item.name}

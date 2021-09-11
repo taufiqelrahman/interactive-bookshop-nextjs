@@ -3,10 +3,11 @@ import dynamic from 'next/dynamic';
 import appConfig from 'config';
 import { Fragment } from 'react';
 import { fullDate } from 'lib/format-date';
-import { retrieveInfo, previewImg, calculateDays } from './helper';
+import { retrieveInfo, previewImg, calculateDays, OrderDetailProps } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
 import DefaultLayout from 'components/layouts/Default';
+import { Order } from 'store/orders/types';
 // import dummyOrder from '_mocks/orderDetail';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -17,7 +18,7 @@ const Popover = dynamic(() => import('components/atoms/Popover'));
 const Capsule = dynamic(() => import('components/atoms/Capsule'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const OrderDetailDesktop = (props: any): any => {
+const OrderDetailDesktop = (props: OrderDetailProps) => {
   const { isFetching, currentOrder: order } = props.state.orders;
   const {
     currentOrder,
@@ -34,7 +35,7 @@ const OrderDetailDesktop = (props: any): any => {
     totalDiscounts,
     payment,
     whatsappUrl,
-  } = retrieveInfo(order || {});
+  } = retrieveInfo(order || ({} as Order));
   return (
     <DefaultLayout {...props}>
       <Head>
@@ -52,9 +53,12 @@ const OrderDetailDesktop = (props: any): any => {
                 <Fragment>
                   {props.t('order-title')}: {orderNumber}
                   {currentOrder && (
-                    <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
+                    <Capsule
+                      color={(appConfig as any).stateColor[currentOrder.state]}
+                      style={{ height: 30, marginLeft: 18 }}
+                    >
                       {props.t(currentOrder.state)}
-                      {props.state === 'received' && <span className="icon-cross_check" />}
+                      {currentOrder.state === 'received' && <span className="icon-cross_check" />}
                     </Capsule>
                   )}
                 </Fragment>
@@ -85,7 +89,7 @@ const OrderDetailDesktop = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={22} width={250} />
                       ) : (
-                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                        lineItems?.map(item => item.customAttributes.Name).join(', ') || '-'
                       )}
                     </div>
                     <div className="c-detail__label" style={{ marginTop: 30 }}>
@@ -95,7 +99,7 @@ const OrderDetailDesktop = (props: any): any => {
                       <Skeleton height={24} width={115} />
                     ) : hasDedication ? (
                       <Popover
-                        content={lineItems.map(item => (
+                        content={lineItems?.map(item => (
                           <Fragment key={item.id}>
                             <h5>{item.customAttributes.Name}</h5>
                             <div>{item.customAttributes.Dedication}</div>
@@ -111,7 +115,7 @@ const OrderDetailDesktop = (props: any): any => {
                   <div className="c-detail__book__right">
                     <div className="c-detail__label">{props.t('common:quantity')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={60} /> : `${lineItems.length} ${props.t('books')}`}
+                      {isFetching ? <Skeleton height={22} width={60} /> : `${lineItems?.length} ${props.t('books')}`}
                     </div>
                   </div>
                 </div>
@@ -134,17 +138,17 @@ const OrderDetailDesktop = (props: any): any => {
                   <div className="c-detail__order__left">
                     <div className="c-detail__label">{props.t('order-date')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(currentOrder.created_at)}
+                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(currentOrder?.created_at || '')}
                     </div>
                     <div className="c-detail__label">{props.t('order-state')}</div>
                     <div className="c-detail__value capitalize">
-                      {isFetching ? <Skeleton height={22} width={170} /> : props.t(currentOrder.state)}
+                      {isFetching ? <Skeleton height={22} width={170} /> : props.t(currentOrder?.state || '')}
                     </div>
                   </div>
                   <div className="c-detail__order__right">
                     <div className="c-detail__label">{props.t('shipping-date')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(shippingDate) || '-'}
+                      {isFetching ? <Skeleton height={22} width={170} /> : fullDate(shippingDate || '') || '-'}
                     </div>
                     <div className="c-detail__label">{props.t('tracking-number')}</div>
                     <div className="c-detail__value">
@@ -168,22 +172,22 @@ const OrderDetailDesktop = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={22} width={170} />
                       ) : (
-                        `${shippingAddress.address1} ${shippingAddress.address2}`
+                        `${shippingAddress?.address1} ${shippingAddress?.address2}`
                       )}
                     </div>
                     <div className="c-detail__label">{props.t('province')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.province}
+                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress?.province}
                     </div>
                   </div>
                   <div className="c-detail__address__right">
                     <div className="c-detail__label">{props.t('postal-code')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.zip}
+                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress?.zip}
                     </div>
                     <div className="c-detail__label">{props.t('city')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.city}
+                      {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress?.city}
                     </div>
                   </div>
                 </div>
@@ -203,7 +207,7 @@ const OrderDetailDesktop = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={18} width={72} />
                       ) : (
-                        `${props.t('common:quantity')}: ${lineItems.length}`
+                        `${props.t('common:quantity')}: ${lineItems?.length}`
                       )}
                     </div>
                   </div>
@@ -212,7 +216,7 @@ const OrderDetailDesktop = (props: any): any => {
                       <Skeleton height={24} width={120} />
                     ) : (
                       <NumberFormat
-                        value={currentOrder.total_line_items_price}
+                        value={currentOrder?.total_line_items_price}
                         thousandSeparator={true}
                         prefix={'Rp'}
                         displayType="text"
@@ -240,7 +244,7 @@ const OrderDetailDesktop = (props: any): any => {
                       </div>
                       <div className="c-detail__summary__total">
                         <NumberFormat
-                          value={-totalDiscounts}
+                          value={totalDiscounts ? -totalDiscounts : 0}
                           thousandSeparator={true}
                           prefix={'Rp'}
                           displayType="text"
@@ -255,7 +259,7 @@ const OrderDetailDesktop = (props: any): any => {
                     <Skeleton height={24} width={120} />
                   ) : (
                     <NumberFormat
-                      value={currentOrder.total_price}
+                      value={currentOrder?.total_price}
                       thousandSeparator={true}
                       prefix={'Rp'}
                       displayType="text"
@@ -264,27 +268,27 @@ const OrderDetailDesktop = (props: any): any => {
                 </div>
                 {currentOrder && currentOrder.financial_status !== 'paid' && (
                   <div className="c-detail__summary__info">
-                    {payment.type ? (
+                    {payment?.type ? (
                       <Fragment>
                         <div className="c-detail__summary__info__item">
                           {isFetching ? (
                             <Skeleton height={24} width={120} />
                           ) : (
-                            `${props.t('awaiting-payment')} ${payment.type}`
+                            `${props.t('awaiting-payment')} ${payment?.type}`
                           )}
                         </div>
-                        {payment.instance ? (
+                        {payment?.instance ? (
                           <div className="flex justify-between">
                             {isFetching ? (
                               <Skeleton height={24} width={120} />
                             ) : (
                               <Fragment>
-                                <div className="c-detail__summary__info__payment">{payment.instance}</div>
-                                <div className="c-detail__summary__info__payment">{payment.number}</div>
+                                <div className="c-detail__summary__info__payment">{payment?.instance}</div>
+                                <div className="c-detail__summary__info__payment">{payment?.number}</div>
                               </Fragment>
                             )}
                           </div>
-                        ) : payment.url ? (
+                        ) : payment?.url ? (
                           <div className="c-detail__summary__info__link">
                             {isFetching ? (
                               <Skeleton height={24} width={120} />

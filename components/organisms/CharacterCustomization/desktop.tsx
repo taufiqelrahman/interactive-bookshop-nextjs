@@ -2,10 +2,21 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg, addDedicationToLS, retrieveDedication } from './helper';
+import {
+  schema,
+  showError,
+  previewImg,
+  getJobIds,
+  loadImg,
+  addDedicationToLS,
+  retrieveDedication,
+  CharacterCustomizationProps,
+} from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
+import { CustomAttributes } from 'store/cart/types';
+import { cartItem } from '_mocks/cartItem';
 // import Card from 'components/atoms/Card';
 // import FieldDob from 'components/molecules/FieldDob';
 // import DefaultLayout from 'components/layouts/Default';
@@ -25,7 +36,7 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Modal = dynamic(() => import('components/atoms/Modal'));
 
-const CharacterCustomization = (props: any) => {
+const CharacterCustomization = (props: CharacterCustomizationProps) => {
   const router = useRouter();
   const [isSticky, setSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -38,24 +49,13 @@ const CharacterCustomization = (props: any) => {
   }, [errors]);
   const isDev = process.env.NODE_ENV === 'development';
   const defaultSelected = isDev
-    ? {
-        Occupations: ['Teacher', 'Pilot', 'Police'],
-        Name: 'Kadhgihbkt',
-        Age: 'kid',
-        Gender: 'girl',
-        Skin: 'light',
-        Language: 'english',
-        Dedication:
-          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-        'Date of Birth': '03-01-2019',
-        Hair: 'short',
-      }
+    ? cartItem
     : {
         Dedication: retrieveDedication(),
       };
-  const selected = props.state.cart.selected || defaultSelected;
+  const selected = props.state.cart.selected || (defaultSelected as CustomAttributes);
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     if (!router.query.edit) {
       gtag.event({
         action: 'click_create',
@@ -63,7 +63,7 @@ const CharacterCustomization = (props: any) => {
         label: '/create',
       });
     }
-    const jobIds = getJobIds(data.Occupations, occupations);
+    const jobIds = getJobIds(data.Occupations, occupations || []);
     props.saveSelected({ ...selected, ...data, jobIds });
     addDedicationToLS(data.Dedication);
     Router.push('/preview');
@@ -83,7 +83,7 @@ const CharacterCustomization = (props: any) => {
     //   register({ name: 'Date of Birth' }, schema(props).dob);
     loadImg(previewImg(selected, watch));
     Router.prefetch('/preview');
-    register({ name: 'Occupations' }, schema(props).occupations);
+    register({ name: 'Occupations' } as any, schema(props).occupations as any);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
     window.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);

@@ -7,7 +7,7 @@ const initState: types.UsersState = {
   user: null,
 };
 
-const reducer = (state: types.UsersState = initState, action: types.UsersActionTypes): any => {
+const reducer = (state = initState, action: types.UsersActionTypes): types.UsersState => {
   switch (action.type) {
     case types.LOAD_USER:
     case types.UPDATE_USER:
@@ -41,7 +41,7 @@ const reducer = (state: types.UsersState = initState, action: types.UsersActionT
     case types.SEND_OTP:
       return {
         ...state,
-        isFetching: action,
+        isFetching: action.isFetching,
       };
     default:
       return state;

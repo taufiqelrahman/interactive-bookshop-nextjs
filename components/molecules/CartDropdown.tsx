@@ -1,8 +1,13 @@
 import { withTranslation, Link } from 'i18n';
 import { previewImg } from 'components/molecules/CartItem/helper';
 import NumberFormat from 'react-number-format';
+import { CartItem } from 'store/cart/types';
+import { WithTranslation } from 'next-i18next';
 
-const CartDropdown = (props: any) => {
+interface CartDropdownProps extends WithTranslation {
+  items: CartItem[] | null | undefined;
+}
+const CartDropdown = (props: CartDropdownProps) => {
   const cartNotEmpty = !!props.items && props.items.length > 0;
   return (
     <div onClick={e => e.stopPropagation()}>
@@ -10,13 +15,13 @@ const CartDropdown = (props: any) => {
         {cartNotEmpty ? (
           <div className="c-cart-dropdown__container">
             <div className="c-cart-dropdown__header">
-              <div className="c-cart-dropdown__quantity">{props.items.length} item(s)</div>
+              <div className="c-cart-dropdown__quantity">{props.items?.length} item(s)</div>
               <Link href="/cart">
                 <a>{props.t('cart-link')}</a>
               </Link>
             </div>
             <div className="c-cart-dropdown__content">
-              {props.items.map((item, i) => {
+              {props.items?.map((item, i) => {
                 return (
                   <div key={i} className="c-cart-dropdown__item">
                     <div className="flex items-center">

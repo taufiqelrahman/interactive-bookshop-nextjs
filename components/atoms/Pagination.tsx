@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 
-const Pagination = (props: any) => {
+interface PaginationProps {
+  current: number;
+  pages: any[];
+}
+const Pagination = (props: PaginationProps) => {
   const [translation, setTranslation] = useState(0);
   // const dotCount = () => {
   //   let length = props.pages.length;
   //   if (props.pages.length > 8) length = 9;
   //   return new Array(length).fill(0);
   // };
-  const renderClass = (order): string => {
+  const renderClass = (order: number) => {
     let className = 'c-pagination__dot';
     const { current, pages } = props;
     if (order === current) className += ' c-pagination__dot--active';

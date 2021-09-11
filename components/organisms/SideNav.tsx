@@ -2,8 +2,16 @@ import { withTranslation, Link } from 'i18n';
 import { useEffect } from 'react';
 import TranslationToggle from 'components/molecules/TranslationToggle';
 import Button from 'components/atoms/Button';
+import { WithTranslation } from 'next-i18next';
+import { UsersState } from 'store/users/types';
 
-const SideNav = (props: any) => {
+interface SideNavProps extends WithTranslation {
+  isOpen: boolean;
+  hide: () => void;
+  thunkLogout: () => void;
+  users: UsersState;
+}
+const SideNav = (props: SideNavProps) => {
   const signOut = () => {
     props.thunkLogout();
     props.hide();

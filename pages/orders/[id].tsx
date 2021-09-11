@@ -8,7 +8,7 @@ import api from 'services/api';
 import { formatPayment } from 'lib/format-payment';
 import cookies from 'next-cookies';
 
-const OrderDetail = (props: any): any => {
+const OrderDetail = (props: any) => {
   if (props.isMobile) {
     return <OrderDetailMobile {...props} />;
   } else {

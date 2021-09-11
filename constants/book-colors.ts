@@ -1,3 +1,5 @@
+export type BookColors = 'blue' | 'white' | 'magenta' | 'green';
+
 export const bookColors = [
   { name: 'blue', color: '#445ca4' },
   { name: 'white', color: '#efeef4' },

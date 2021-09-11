@@ -16,16 +16,16 @@ export const setErrorMessage = (message: string): types.ActionTypes => {
   };
 };
 
-function sendMessage(isFetching): types.ActionTypes {
+function sendMessage(isFetching: boolean): types.ActionTypes {
   return {
     type: types.SEND_MESSAGE,
     payload: isFetching,
   };
 }
-export const thunkSendMessage = (data): ThunkAction<void, types.State, null, Action<string>> => (
+export const thunkSendMessage = (data: any): ThunkAction<void, types.State, null, Action<string>> => (
   dispatch,
   getState,
-): any => {
+) => {
   const { user } = (getState() as any).users;
   let DATA = { ...data };
   if (user) DATA = { ...data, userId: user.id };
