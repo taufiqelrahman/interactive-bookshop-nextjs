@@ -1,4 +1,10 @@
-const Card = (props: any) => {
+import { HTMLAttributes } from 'react';
+
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  variant?: string;
+}
+
+const Card = (props: CardProps) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
@@ -29,6 +35,10 @@ const Card = (props: any) => {
             &--light {
               border: 1px solid #efeef4;
             }
+          }
+          &--banner {
+            @apply text-white border-0;
+            background-color: #3d76c7;
           }
         }
       `}</style>

@@ -23,6 +23,9 @@ const Capsule = (props: any) => {
           &--blue {
             background: #4aa8c6;
           }
+          &--dark-blue {
+            background: #3d76c7;
+          }
           &--grey {
             @apply text-dark-grey;
             background: #efeef4;

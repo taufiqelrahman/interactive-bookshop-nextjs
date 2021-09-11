@@ -1,21 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, HTMLAttributes } from 'react';
 import { withTranslation, i18n } from 'i18n';
 // import { useRouter } from 'next/router';
 import Checkbox from 'components/atoms/Checkbox';
 import Badge from 'components/atoms/Badge';
+import { FieldValues, FormStateProxy } from 'react-hook-form';
+import { Occupation } from 'store/master/types';
+import { CustomAttributes } from 'store/cart/types';
+import { WithTranslation } from 'next-i18next';
 
-const FieldOccupations = (props: any) => {
-  const [occupations, setOccupations]: any = useState([]);
+interface FieldOccupationsProps extends WithTranslation, HTMLAttributes<HTMLDivElement> {
+  formState: FormStateProxy<FieldValues>;
+  triggerValidation: (payload?: string | string[] | undefined, shouldRender?: boolean | undefined) => Promise<boolean>;
+  setValue: (name: any, value?: any, shouldValidate?: boolean | undefined) => void;
+  errors: any;
+  register: any;
+
+  occupations?: Occupation[];
+  isMobile?: boolean;
+  gender: CustomAttributes['Gender'];
+  defaultValue: string[];
+}
+const FieldOccupations = (props: FieldOccupationsProps) => {
+  const [occupations, setOccupations] = useState([] as string[]);
   // const router = useRouter();
   // const isIndexPage = router.pathname === '/';
-  const setValue = value => {
+  const setValue = (value: string[]) => {
     setOccupations(value);
     props.setValue('Occupations', value);
     if (props.formState.isSubmitted || value.length > 2) {
       props.triggerValidation('Occupations');
     }
   };
-  const handleCheck = event => {
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = event.target;
     let newValue: Array<string> = [...occupations];
     if (checked) {
@@ -28,6 +44,7 @@ const FieldOccupations = (props: any) => {
     setValue(newValue);
   };
   const occupationsOpts = () => {
+    if (!props.occupations) return [];
     let occupationsOpts = [...props.occupations];
     if ((props.isMobile && props.gender === 'boy') || !props.isMobile) {
       occupationsOpts = [...props.occupations.filter(job => job.name !== 'President')];
@@ -120,4 +137,4 @@ const FieldOccupations = (props: any) => {
 };
 FieldOccupations.displayName = 'FieldOccupations';
 
-export default withTranslation('form', { withRef: true })<any>(FieldOccupations);
+export default withTranslation('form', { withRef: true })(FieldOccupations);

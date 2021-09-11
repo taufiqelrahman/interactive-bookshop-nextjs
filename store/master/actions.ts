@@ -5,16 +5,14 @@ import * as types from './types';
 import { setErrorMessage } from '../actions';
 import api from '../../services/api';
 
-export function loadTestimonials(isFetching, testimonials = []): types.MasterActionTypes {
+export function loadTestimonials(isFetching: boolean, testimonials = []): types.MasterActionTypes {
   return {
     type: types.LOAD_TESTIMONIALS,
     payload: testimonials,
     isFetching,
   };
 }
-export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, null, Action<string>> => dispatch => {
   dispatch(loadTestimonials(true));
   return api()
     .master.getTestimonials()
@@ -28,16 +26,14 @@ export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, nu
     });
 };
 
-export function loadOccupations(isFetching, occupations = []): types.MasterActionTypes {
+export function loadOccupations(isFetching: boolean, occupations = []): types.MasterActionTypes {
   return {
     type: types.LOAD_OCCUPATIONS,
     payload: occupations,
     isFetching,
   };
 }
-export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, null, Action<string>> => (
-  dispatch,
-): any => {
+export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, null, Action<string>> => dispatch => {
   dispatch(loadOccupations(true));
   return api()
     .master.getOccupations()
@@ -51,14 +47,14 @@ export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, nul
     });
 };
 
-export function loadBookPages(isFetching, bookPages = []): types.MasterActionTypes {
+export function loadBookPages(isFetching: boolean, bookPages = []): types.MasterActionTypes {
   return {
     type: types.LOAD_BOOK_PAGES,
     payload: bookPages,
     isFetching,
   };
 }
-// export const thunkLoadBookPages = (): ThunkAction<void, types.MasterState, null, Action<string>> => (dispatch): any => {
+// export const thunkLoadBookPages = (): ThunkAction<void, types.MasterState, null, Action<string>> => (dispatch) => {
 //   dispatch(loadBookPages(true));
 //   return api()
 //     .master.getBookPages()
@@ -72,14 +68,14 @@ export function loadBookPages(isFetching, bookPages = []): types.MasterActionTyp
 //     });
 // };
 
-export function loadProvinces(isFetching, provinces = []): types.MasterActionTypes {
+export function loadProvinces(isFetching: boolean, provinces = []): types.MasterActionTypes {
   return {
     type: types.LOAD_PROVINCES,
     payload: provinces,
     isFetching,
   };
 }
-export const thunkLoadProvinces = (): ThunkAction<void, types.MasterState, null, Action<string>> => (dispatch): any => {
+export const thunkLoadProvinces = (): ThunkAction<void, types.MasterState, null, Action<string>> => dispatch => {
   dispatch(loadProvinces(true));
   return api()
     .master.getProvinces()

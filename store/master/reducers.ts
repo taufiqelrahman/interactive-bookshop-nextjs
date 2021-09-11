@@ -8,7 +8,7 @@ const initState: types.MasterState = {
   provinces: [],
 };
 
-const reducer = (state: types.MasterState = initState, action: types.MasterActionTypes): any => {
+const reducer = (state: types.MasterState = initState, action: types.MasterActionTypes): types.MasterState => {
   switch (action.type) {
     case types.LOAD_TESTIMONIALS: {
       return {

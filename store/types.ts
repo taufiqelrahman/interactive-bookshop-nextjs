@@ -6,6 +6,7 @@ export interface State {
   isSideNavOpen: boolean;
   errorMessage: string;
   isFetching: boolean;
+  maintenanceMode: boolean;
 }
 
 interface SetSideNav {

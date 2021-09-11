@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { customStyles, dates, months, years } from './helper';
 
+export interface Selected {
+  label: string;
+  value: number;
+}
 const DateField = (props: any) => {
-  const [date, setDate]: any = useState(null);
-  const [month, setMonth]: any = useState(null);
-  const [year, setYear]: any = useState(null);
+  const [date, setDate] = useState(null as Selected | null);
+  const [month, setMonth] = useState(null as Selected | null);
+  const [year, setYear] = useState(null as Selected | null);
   const setFullDate = () => {
     if (!date || !month || !year) return;
-    props.setValue(props.name, `${(date as any).value}-${(month as any).value}-${(year as any).value}`);
+    props.setValue(props.name, `${date.value}-${month.value}-${year.value}`);
     props.triggerValidation(props.name);
   };
   const setDefaultDate = () => {
@@ -18,7 +22,7 @@ const DateField = (props: any) => {
     setMonth({ label: parsed[1], value: parsed[1] });
     setYear({ label: parsed[2], value: parsed[2] });
   };
-  const handleChange = (selectedOption, setter) => {
+  const handleChange = (selectedOption: Selected | null, setter: (data: Selected | null) => void) => {
     setter(selectedOption);
   };
   useEffect(() => {
@@ -38,6 +42,7 @@ const DateField = (props: any) => {
         placeholder="DD"
         value={date}
         options={dates(month)}
+        date-testid="select-date"
         onChange={e => handleChange(e, setDate)}
       />
       <Select

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import * as gtag from 'lib/gtag';
@@ -13,6 +13,7 @@ import actions from 'store/actions';
 import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
@@ -20,10 +21,13 @@ const BookForm = dynamic(() => import('components/organisms/BookForm'));
 const Showcase = dynamic(() => import('components/atoms/Showcase'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Index = (props: any): any => {
+interface IndexProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Index = (props: IndexProps) => {
   const { testimonials, occupations } = props.state.master;
-  const occupationsTop = props.isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
-  const occupationsBottom = props.isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
+  const occupationsTop = props.isMobile ? occupations?.slice(0, 1) : occupations?.slice(0, 5);
+  const occupationsBottom = props.isMobile ? occupations?.slice(1, 3) : occupations?.slice(5, 9);
 
   // const createCheckout = async () => {
   //   let checkout = await graphql().checkout.create({
@@ -98,6 +102,13 @@ const Index = (props: any): any => {
             </div>
           </div>
         </div>
+        <div className="c-section__gotix">
+          <div className="u-container">
+            <a href="https://bit.ly/promowigugotix" rel="noreferrer noopener" target="_blank">
+              <img src={`/static/images/gotix-promo${props.isMobile ? '-sm' : ''}.png`} alt="gotix promo" />
+            </a>
+          </div>
+        </div>
         <div className="c-section__start-story">
           <div className="u-container">
             <div>
@@ -129,7 +140,7 @@ const Index = (props: any): any => {
       </div>
       <div className="c-section--middle">
         <div className="c-section__jobs--top">
-          {occupationsTop.map(job => (
+          {occupationsTop?.map(job => (
             <div key={job.id} className="c-section__jobs__circle">
               <LazyLoad>
                 <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
@@ -138,7 +149,7 @@ const Index = (props: any): any => {
           ))}
         </div>
         <div className="c-section__jobs--bottom">
-          {occupationsBottom.map(
+          {occupationsBottom?.map(
             job =>
               job.name !== 'President' && (
                 <div key={job.id} className="c-section__jobs__circle">
@@ -215,6 +226,15 @@ const Index = (props: any): any => {
                 margin-left: 0;
                 margin-top: 0;
               }
+            }
+          }
+          &__gotix {
+            padding-top: 10%;
+            @screen md {
+              padding-top: 22%;
+            }
+            img {
+              @apply w-full;
             }
           }
           &--middle {

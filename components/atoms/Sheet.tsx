@@ -1,12 +1,14 @@
+import DOMPurify from 'dompurify';
+
 const Sheet = (props: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-sheet--${variant}`).join(' ');
+    return variants.map((variant: string) => `c-sheet--${variant}`).join(' ');
   };
   const overlayClass = props.overlay ? `c-sheet__overlay--${props.overlay}` : '';
   const zIndexMultiplier = props.zIndexLevel ? 5 * props.zIndexLevel : 1;
-  const onClose = event => {
+  const onClose = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     props.closeSheet();
   };
@@ -23,14 +25,21 @@ const Sheet = (props: any) => {
               </div>
             </div>
           )}
-          <div style={{ marginTop: props.header ? 0 : 8 }}>{props.content}</div>
+          {props.stringContent ? (
+            <div
+              style={{ marginTop: props.header ? 0 : 8, marginBottom: 16, lineHeight: '24px' }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.content) }}
+            />
+          ) : (
+            <div style={{ marginTop: props.header ? 0 : 8, lineHeight: '20px' }}>{props.content}</div>
+          )}
         </div>
         {props.actions && <div className="c-sheet__action">{props.actions}</div>}
       </div>
       {props.isOpen && <div className={`c-sheet__overlay ${overlayClass}`} onClick={onClose}></div>}
       <style jsx>{`
         .c-sheet {
-          @apply absolute w-full bg-white left-0 bottom-0 flex flex-col justify-between;
+          @apply fixed w-full bg-white left-0 bottom-0 flex flex-col justify-between;
           transform: ${props.isOpen ? 'none' : 'translateY(999px)'};
           transition: transform 0.2s ease-in;
           min-height: 268px;

@@ -4,12 +4,12 @@ export default class Products {
   adapter: AdapterObject;
   basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
     this.basePath = '/message';
   }
 
-  send(data) {
+  send(data: any) {
     return this.adapter.default.post(`${this.basePath}/send`, data)
   }
 }

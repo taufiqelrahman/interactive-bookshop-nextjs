@@ -5,7 +5,7 @@ import Button from 'components/atoms/Button';
 import DatePicker from '../DatePicker';
 
 const DateField = (props: any) => {
-  const [picker, setPicker] = useState(null);
+  const [picker, setPicker] = useState(null as null | { data: any });
   const [state, setState] = useState({
     date: null,
     month: null,
@@ -43,9 +43,9 @@ const DateField = (props: any) => {
       value: null,
     });
   };
-  const onSelect = (event: any) => {
+  const onSelect = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    const { day, month, year } = (picker as any).data;
+    const { day, month, year } = picker?.data;
     setState({
       ...state,
       date: day.item.textContent,
@@ -85,7 +85,7 @@ const DateField = (props: any) => {
           }
           actions={
             <Fragment>
-              <Button width="100%" onClick={(event: any) => onSelect(event)}>
+              <Button width="100%" onClick={event => onSelect(event)}>
                 {props.t('select-button')}
               </Button>
             </Fragment>

@@ -4,7 +4,7 @@ import queryString from 'query-string';
 export default class Products {
   adapter: AdapterObject;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
   }
 
@@ -16,7 +16,7 @@ export default class Products {
     return this.adapter.default.get('/occupations')
   }
 
-  getBookPages(params) {
+  getBookPages(params: {jobs: string}) {
     return this.adapter.default.get(`/book-pages?${queryString.stringify(params)}`)
   }
 

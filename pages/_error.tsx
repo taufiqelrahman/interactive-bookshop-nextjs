@@ -1,17 +1,22 @@
 import { NextPage } from 'next';
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Error: NextPage<any> = (props: any) => {
+interface ErrorProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+  statusCode: number;
+}
+const Error: NextPage<any> = (props: ErrorProps) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const title = () => {

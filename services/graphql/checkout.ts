@@ -1,30 +1,36 @@
-export default class Checkout {
-  adapter: any;
-  basePath: string;
+import Client from 'shopify-buy';
 
-  constructor(adapter) {
+export default class Checkout {
+  adapter: Client.Client;
+  // basePath: string;
+
+  constructor(adapter: Client.Client) {
     this.adapter = adapter;
   }
 
-  create(data): Promise<any> {
+  create(data?: any): Promise<any> {
     // return this.adapter.product.fetchAll();
     return this.adapter.checkout.create(data);
   }
 
-  get(id): Promise<any> {
+  get(id: string): Promise<any> {
     return this.adapter.checkout.fetch(id);
   }
 
-  addLineItems(id, data): Promise<any> {
+  addLineItems(id: string | number, data: any): Promise<any> {
     return this.adapter.checkout.addLineItems(id, data);
   }
 
-  updateLineItems(id, data): Promise<any> {
+  updateLineItems(id: string | number, data: any): Promise<any> {
     return this.adapter.checkout.updateLineItems(id, data);
   }
 
-  removeLineItems(id, itemId): Promise<any> {
+  removeLineItems(id: string | number, itemId: string[]): Promise<any> {
     return this.adapter.checkout.removeLineItems(id, itemId);
+  }
+
+  updateAttributes(id: any, data: any): Promise<any> {
+    return (this.adapter.checkout as any).updateAttributes(id, data);
   }
 
   // addDiscount(id, code): Promise<any> {

@@ -2,13 +2,13 @@ import { withTranslation } from 'i18n';
 import NumberFormat from 'react-number-format';
 import { date } from 'lib/format-date';
 import Card from 'components/atoms/Card';
-import { previewImg } from './helper';
+import { OrderItemProps, previewImg } from './helper';
 import Divider from 'components/atoms/Divider';
 import Skeleton from 'react-loading-skeleton';
 import { mapKeyValue } from 'lib/format-array';
 
-const OrderItem = (props: any) => {
-  const lineItems = props.line_items.map(item => ({
+const OrderItem = (props: OrderItemProps) => {
+  const lineItems = (props.line_items || []).map(item => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));
@@ -41,9 +41,11 @@ const OrderItem = (props: any) => {
               {props.isSkeleton ? (
                 <Skeleton height={47} width={47} />
               ) : (
-                <div className="c-order-item__detail__image">
-                  <img src={previewImg(lineItems[0])} alt="item preview" />
-                </div>
+                !!lineItems && (
+                  <div className="c-order-item__detail__image">
+                    <img src={previewImg(lineItems[0])} alt="item preview" />
+                  </div>
+                )
               )}
             </div>
             <Divider style={{ borderColor: '#EFEEF4', margin: '3px 0 9px' }} />

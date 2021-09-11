@@ -4,7 +4,7 @@ import Radio from 'components/atoms/Radio';
 import Badge from 'components/atoms/Badge';
 
 const FieldLanguage = (props: any) => (
-  <div>
+  <div style={props.style}>
     <div className="c-field-language">
       <div className="c-field-language__header">
         {props.t('language-label')}

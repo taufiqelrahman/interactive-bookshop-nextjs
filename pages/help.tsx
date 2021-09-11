@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation } from 'i18n';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
+import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import Head from 'next/head';
 import helpContents from 'config/helpContents';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Accordion = dynamic(() => import('components/atoms/Accordion'));
@@ -20,11 +21,14 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Help = (props: any): any => {
+interface HelpProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Help = (props: HelpProps) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, reset } = methods;
   const { isFetching } = props.state.default;
-  const onSubmit = async data => {
+  const onSubmit = async (data: any) => {
     await props.thunkSendMessage(data);
     reset();
     toast.success(props.t('form:copy-success-help'));
@@ -39,7 +43,7 @@ const Help = (props: any): any => {
     },
   };
   // const Marker = (props: any) => <div>{props.text}</div>;
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
       {...props}
@@ -58,6 +62,17 @@ const Help = (props: any): any => {
         )}
         <div className="c-help-section">
           <div className="c-help-section__left">
+            <Link href="/check">
+              <a>
+                {props.isMobile ? (
+                  <div className="c-help-section__check-order">{props.t('check-order-here')}</div>
+                ) : (
+                  <Card variant="border,banner" style={{ marginBottom: 12 }}>
+                    <h2 className="c-help-section__check-order">{props.t('check-order-here')}</h2>
+                  </Card>
+                )}
+              </a>
+            </Link>
             {props.isMobile && <div className="c-help-section__title">{props.t('faq')}</div>}
             {helpContents &&
               helpContents.map(content => (
@@ -150,6 +165,17 @@ const Help = (props: any): any => {
           margin-top: 4px;
           @screen md {
             margin-top: 36px;
+          }
+          &__check-order {
+            padding: 0 16px;
+            margin: 16px 0;
+            color: #3d76c7;
+            font-weight: 600;
+            @screen md {
+              @apply text-white;
+              padding: 24px !important;
+              margin: 0 !important;
+            }
           }
           &__left {
             @apply w-full;

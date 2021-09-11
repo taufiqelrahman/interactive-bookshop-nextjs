@@ -21,10 +21,12 @@
   "view-payment": "Lihat Pembayaran",
   "continue-payment": "Lanjut Pembayaran?",
   "awaiting-payment": "Menunggu pembayaran",
-  "processing-payment": "Harap tunggu, kami sedang memproses pembayaranmu. Jika ada masalah, silahkan hubungi CS kami.",
-  "payment-failure": "Terdapat kesalahan ketika memproses pembayaranmu. Silahkan hubungi CS kami.",
+  "processing-payment": "Harap tunggu, kami sedang memproses pembayaranmu. Jika ada masalah, silahkan hubungi CS kami di 087777717119.",
+  "payment-failure": "Terdapat kesalahan ketika memproses pembayaranmu. Silahkan hubungi CS kami di 087777717119.",
   "copy-success": "Berhasil disalin",
   "orders-empty-title": "Riwayat pesananmu kosong",
   "orders-empty-subtitle": "Sepertinya kamu belum beli buku satupun",
-  "orders-empty-cta": "Bikin bukumu"
+  "orders-empty-cta": "Bikin bukumu",
+  "order-estimation": "Sisa waktu pembuatan buku",
+  "day": "hari"
 }

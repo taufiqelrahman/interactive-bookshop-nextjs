@@ -4,9 +4,10 @@ const initState: types.State = {
   isSideNavOpen: false,
   errorMessage: '',
   isFetching: false,
+  maintenanceMode: false,
 };
 
-const reducer = (state: types.State = initState, action: types.ActionTypes): any => {
+const reducer = (state: types.State = initState, action: types.ActionTypes) => {
   switch (action.type) {
     case types.SET_SIDE_NAV: {
       return {

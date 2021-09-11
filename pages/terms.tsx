@@ -1,16 +1,20 @@
 /* eslint-disable no-irregular-whitespace */
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation } from 'i18n';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Terms = (props: any): any => {
+interface TermsProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Terms = (props: TermsProps) => {
   return (
     <DefaultLayout
       {...props}
@@ -189,7 +193,7 @@ const Terms = (props: any): any => {
             </strong>
             <br />
             Dengan usaha terbaik Kami, Kami akan memproses Pemesanan atas Produk yang Anda pesan sesuai dengan periode
-            waktu paling lama 7 hari kerja.Periode pengiriman yang Kami sebutkan merupakan perkiraan dan bukan lah
+            waktu paling lama 14 hari kerja.Periode pengiriman yang Kami sebutkan merupakan perkiraan dan bukan lah
             jaminan yang kami berikan dan Kami tidak memiliki tanggung jawab atas kerugian atau biaya tambahan yang
             mungkin Anda keluarkan terkait keterlambatan pada proses Pengiriman Produk yang ada pesan.
             <br />

@@ -1,14 +1,24 @@
 import Stepper from 'components/atoms/Stepper';
 import { useRouter } from 'next/router';
 import { Router } from 'i18n';
+import { HTMLAttributes } from 'react';
 
-const NavBar = (props: any) => {
+interface NavBarProps extends HTMLAttributes<HTMLDivElement> {
+  setSideNav?: (state: boolean) => any;
+  onBack?: () => void;
+  isSteps?: boolean;
+  step?: number;
+  totalSteps?: number;
+  actionRight?: React.ReactElement | null;
+  menuAction?: boolean;
+}
+const NavBar = (props: NavBarProps) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const isErrorPage = router.pathname === '/_error';
   const indexOrError = isIndexPage || isErrorPage;
   const showSideNav = () => {
-    props.setSideNav(true);
+    props.setSideNav?.(true);
   };
   return (
     <div className="c-nav-bar" style={props.style}>
@@ -19,20 +29,23 @@ const NavBar = (props: any) => {
           <span className="icon-arrow_left" onClick={() => (props.onBack ? props.onBack() : Router.back())} />
         )}
       </div>
-      <div className={`c-nav-bar__title ${indexOrError ? 'c-nav-bar__title--index' : ''}`}>
-        {indexOrError ? (
-          <img src="/static/images/logo.png" alt="logo" width="33" height="33" />
-        ) : props.isSteps ? (
-          <Stepper
-            step={props.step}
-            totalSteps={props.totalSteps}
-            title={props.title}
-            backButton={false}
-            isMobile={true}
-          />
-        ) : (
-          <div className="c-nav-bar__title__text">{props.title}</div>
-        )}
+      <div className="c-nav-bar__title__wrapper">
+        <div className={`c-nav-bar__title ${indexOrError ? 'c-nav-bar__title--index' : ''}`}>
+          {indexOrError ? (
+            <img src="/static/images/logo.png" alt="logo" width="33" height="33" />
+          ) : props.isSteps ? (
+            <Stepper
+              step={props.step}
+              totalSteps={props.totalSteps}
+              title={props.title}
+              backButton={false}
+              isMobile={true}
+            />
+          ) : (
+            <div className="c-nav-bar__title__text">{props.title}</div>
+          )}
+        </div>
+        {props.actionRight && <div className="c-nav-bar__action--right">{props.actionRight}</div>}
       </div>
       <style jsx>{`
         .c-nav-bar {
@@ -47,8 +60,14 @@ const NavBar = (props: any) => {
             &--index {
               @apply text-brand;
             }
+            &--right {
+              font-size: 24px;
+            }
           }
           &__title {
+            &__wrapper {
+              @apply flex items-center justify-between w-full;
+            }
             &--index {
               @apply flex justify-center items-center w-full;
               img {

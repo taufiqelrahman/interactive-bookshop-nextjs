@@ -1,11 +1,22 @@
 import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
+import {
+  schema,
+  showError,
+  previewImg,
+  getJobIds,
+  loadImg,
+  addDedicationToLS,
+  retrieveDedication,
+  CharacterCustomizationProps,
+} from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
+import { CustomAttributes } from 'store/cart/types';
+import { cartItem } from '_mocks/cartItem';
 // import Card from 'components/atoms/Card';
 // import FieldDob from 'components/molecules/FieldDob';
 // import DefaultLayout from 'components/layouts/Default';
@@ -23,10 +34,12 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
+const Modal = dynamic(() => import('components/atoms/Modal'));
 
-const CharacterCustomization = (props: any) => {
+const CharacterCustomization = (props: CharacterCustomizationProps) => {
   const router = useRouter();
   const [isSticky, setSticky] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
@@ -36,22 +49,13 @@ const CharacterCustomization = (props: any) => {
   }, [errors]);
   const isDev = process.env.NODE_ENV === 'development';
   const defaultSelected = isDev
-    ? {
-        Occupations: ['Teacher', 'Pilot', 'Police'],
-        Name: 'Kadhgihbkt',
-        Age: 'kid',
-        Gender: 'girl',
-        Skin: 'light',
-        Language: 'english',
-        Dedication:
-          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-        'Date of Birth': '03-01-2019',
-        Hair: 'short',
-      }
-    : {};
-  const selected = props.state.cart.selected || defaultSelected;
+    ? cartItem
+    : {
+        Dedication: retrieveDedication(),
+      };
+  const selected = props.state.cart.selected || (defaultSelected as CustomAttributes);
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     if (!router.query.edit) {
       gtag.event({
         action: 'click_create',
@@ -59,8 +63,9 @@ const CharacterCustomization = (props: any) => {
         label: '/create',
       });
     }
-    const jobIds = getJobIds(data.Occupations, occupations);
+    const jobIds = getJobIds(data.Occupations, occupations || []);
     props.saveSelected({ ...selected, ...data, jobIds });
+    addDedicationToLS(data.Dedication);
     Router.push('/preview');
   };
 
@@ -76,8 +81,9 @@ const CharacterCustomization = (props: any) => {
   useEffect(() => {
     // setTimeout(() => {
     //   register({ name: 'Date of Birth' }, schema(props).dob);
+    loadImg(previewImg(selected, watch));
     Router.prefetch('/preview');
-    register({ name: 'Occupations' }, schema(props).occupations);
+    register({ name: 'Occupations' } as any, schema(props).occupations as any);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
     window.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
@@ -160,13 +166,41 @@ const CharacterCustomization = (props: any) => {
                   triggerValidation={triggerValidation}
                   register={register}
                   errors={errors.Occupations}
-                  style={{ maxWidth: 550, marginBottom: 24 }}
+                  style={{ maxWidth: 550, marginBottom: 20 }}
                   defaultValue={selected.Occupations}
                   occupations={occupations}
                   formState={formState}
                   gender={watch('Gender')}
                 />
+                <div className="c-char-custom__info__wrapper">
+                  <span className="icon-info" />
+                  <div className="c-char-custom__info">
+                    {props.t('occupations-info')}
+                    <span className="c-char-custom__info__example" onClick={() => setShowModal(true)}>
+                      {props.t('see-example')}
+                    </span>
+                  </div>
+                </div>
                 <Divider />
+                <FormTextField
+                  label={props.t('daddy-label')}
+                  name="Daddy"
+                  placeholder={props.t('daddy-placeholder')}
+                  schema={schema(props).daddy}
+                  register={register}
+                  errors={errors.Daddy}
+                  defaultValue={selected.Daddy}
+                />
+                <FormTextField
+                  label={props.t('mommy-label')}
+                  name="Mommy"
+                  placeholder={props.t('mommy-placeholder')}
+                  schema={schema(props).mommy}
+                  register={register}
+                  errors={errors.Mommy}
+                  defaultValue={selected.Mommy}
+                  formStyle={{ marginTop: 24 }}
+                />
                 <FieldLanguage
                   schema={schema(props).language}
                   register={register}
@@ -184,6 +218,7 @@ const CharacterCustomization = (props: any) => {
                   errors={errors.Dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}
                   defaultValue={selected.Dedication}
+                  clear={() => setValue('Dedication', '')}
                 />
                 <Divider />
                 <Button type="submit" width="100%" style={{ marginTop: 24 }}>
@@ -198,6 +233,11 @@ const CharacterCustomization = (props: any) => {
             </div>
           </div>
         </div>
+        <Modal
+          isOpen={showModal}
+          closeModal={() => setShowModal(false)}
+          image="/static/images/occupations-example.png"
+        />
       </div>
       <style jsx>{`
         .c-char-custom {
@@ -245,6 +285,24 @@ const CharacterCustomization = (props: any) => {
             @apply flex flex-col;
             @screen lg {
               @apply flex-row;
+            }
+          }
+          &__info {
+            &__wrapper {
+              @apply text-sm flex items-start;
+              margin-top: 12px;
+              padding: 12px;
+              background: #f6f5f8;
+              border-radius: 12px;
+              margin-bottom: 32px;
+              .icon-info {
+                font-size: 20px;
+                margin-right: 8px;
+              }
+            }
+            line-height: 20px;
+            &__example {
+              @apply font-bold cursor-pointer;
             }
           }
         }

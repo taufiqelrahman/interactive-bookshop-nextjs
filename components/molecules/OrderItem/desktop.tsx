@@ -5,11 +5,11 @@ import Card from 'components/atoms/Card';
 // import Dot from 'components/atoms/Dot';
 import Capsule from 'components/atoms/Capsule';
 import appConfig from 'config';
-import { previewImg } from './helper';
+import { OrderItemProps, previewImg } from './helper';
 import Skeleton from 'react-loading-skeleton';
 import { mapKeyValue } from 'lib/format-array';
 
-const OrderItem = (props: any) => {
+const OrderItem = (props: OrderItemProps) => {
   const lineItems = (props.line_items || []).map(item => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
@@ -22,9 +22,11 @@ const OrderItem = (props: any) => {
             {props.isSkeleton ? (
               <Skeleton height={180} width={142} />
             ) : (
-              <div className="c-order-item__preview__image">
-                <img src={previewImg(lineItems[0])} alt="item preview" />
-              </div>
+              !!lineItems && (
+                <div className="c-order-item__preview__image">
+                  <img src={previewImg(lineItems[0])} alt="item preview" />
+                </div>
+              )
             )}
           </div>
           <div className="c-order-item__detail">
@@ -40,7 +42,7 @@ const OrderItem = (props: any) => {
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={135} />
                 ) : (
-                  <Capsule color={appConfig.stateColor[props.state]}>
+                  <Capsule color={(appConfig as any).stateColor[props.state]}>
                     {props.t(props.state)}
                     {props.state === 'done' && <span className="icon-cross_check" />}
                   </Capsule>

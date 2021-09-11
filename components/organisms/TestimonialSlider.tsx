@@ -3,9 +3,15 @@ import { withTranslation } from 'i18n';
 import Testimonial from 'components/molecules/Testimonial';
 import * as gtag from 'lib/gtag';
 import Card from 'components/atoms/Card';
+import { WithTranslation } from 'next-i18next';
+import { Testimonial as ITestimonial } from 'store/master/types';
 
-const TestimonialSlider = (props: any) => {
-  const [navRightClass, setNavRightClass] = useState(0);
+interface TestimonialSliderProps extends WithTranslation {
+  isMobile: boolean;
+  testimonials?: ITestimonial[];
+}
+const TestimonialSlider = (props: TestimonialSliderProps) => {
+  const [navRightClass, setNavRightClass] = useState('');
   const [translationX, setTranslationX] = useState(0);
   const [isNavigating, setIsNavigating] = useState(false);
 
@@ -14,7 +20,7 @@ const TestimonialSlider = (props: any) => {
     return lastChild && lastChild.getBoundingClientRect().right;
   };
 
-  const decideNavRightClass = (): any => {
+  const decideNavRightClass = (): string => {
     return calculateRightBound() < window.innerWidth ? 'c-testi-slider__nav--inactive' : '';
   };
 
@@ -56,17 +62,22 @@ const TestimonialSlider = (props: any) => {
               <div
                 className={`c-testi-slider__nav--left ${translationX === 0 ? 'c-testi-slider__nav--inactive' : ''}`}
                 onClick={onNavLeft}
+                data-testid="nav-left"
               >
                 <span className="icon-chevron_left" />
               </div>
-              <div className={`c-testi-slider__nav--right ${navRightClass}`} onClick={onNavRight}>
+              <div
+                className={`c-testi-slider__nav--right ${navRightClass}`}
+                onClick={onNavRight}
+                data-testid="nav-right"
+              >
                 <span className="icon-chevron_right" />
               </div>
             </div>
           )}
         </div>
         <div className="c-testi-slider__slides">
-          {props.testimonials.map(testi => (
+          {props.testimonials?.map((testi: { id: number }) => (
             <Card key={testi.id} className="c-testi-slider__slide">
               <Testimonial testi={testi} />
             </Card>

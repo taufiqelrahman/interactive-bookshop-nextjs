@@ -3,16 +3,21 @@ import React from 'react';
 const TextArea = React.forwardRef((props: any, ref: any) => (
   <div className={`c-text-area ${props.errors ? 'c-text-area--error' : ''}`}>
     <textarea name={props.name} placeholder={props.placeholder} rows={3} ref={ref} defaultValue={props.defaultValue} />
-    <div className="c-text-area__message">{props.errors ? props.errors.message : props.hint}</div>
+    {(props.errors || props.hint) && (
+      <div className="c-text-area__message">{props.errors ? props.errors.message : props.hint}</div>
+    )}
     <style jsx>{`
       .c-text-area {
-        @apply mb-4;
+        @apply mb-2;
         @screen md {
           @apply mb-0;
         }
         &__message {
           @apply text-sm text-left;
           margin-top: 7px;
+          &::first-letter {
+            @apply capitalize;
+          }
           .c-text-area--error & {
             @apply text-red-600;
           }

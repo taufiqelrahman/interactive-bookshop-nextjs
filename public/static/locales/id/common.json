@@ -87,7 +87,18 @@
   "book-specs-3": "26 halaman berkelas internasional penuh dengan ilustrasi berwarna",
   "team-desc": "Kami ucapkan terima kasih kepada tim kami; Lead Illustrator - [name]. Lead Story Writer - [name]. Layouter - [name] & [name]. Editor & Proofreader - [name] & [name]. Lead Print - [name]. Print manager - [name]. Lead legal - [name]. Lead tech - [name]. UX - [name]. PM - [name].",
   "payment-problem": "Sepertinya ada masalah",
-  "payment-problem-content": "Terdapat kesalahan ketika memproses pembayaranmu. Silahkan hubungi CS kami atau buat buku lagi.",
+  "payment-problem-content": "Terdapat kesalahan ketika memproses pembayaranmu. Silahkan hubungi CS kami di 087777717119 atau buat buku lagi.",
   "book-limit": "Yuk, pesan untuk baca kisah selengkapnya!",
-  "manufacturing-time": "Membutuhkan 5-7 hari untuk pengerjaan"
+  "manufacturing-time": "Membutuhkan 7-14 hari kerja untuk pengerjaan.",
+  "ppkm": "Dalam masa ppkm akan ada kemungkinan keterlambatan dalam proses produksi.",
+  "add-more": "+ tambah buku lagi",
+  "open-browser-content": "Gunakan browser favorit anda untuk pengalaman terbaik.",
+  "open-browser-button": "Saya mengerti",
+  "check-order": "Cek pesanan saya",
+  "check-order-subtitle": "Ketik nomor pesanan anda di bawah (contoh: WIGU-XXXX) dan klik \"Cek\".",
+  "check-order-button": "Cek",
+  "order-number-invalid": "Format nomor order salah",
+  "check-order-here": "Mau cek pesanan anda? Klik di sini",
+  "holiday-content": "Tanggal 12-16 Mei 2021 Tim WIGUBOOKS akan berlibur dulu ke 🌙.<br/><br/>Namun kami tetap menerima pesanan, hanya saja pengerjaan dimulai saat kami sudah tiba 🌏 pada 17 mei 2021",
+  "holiday-button": "Saya mengerti"
 }

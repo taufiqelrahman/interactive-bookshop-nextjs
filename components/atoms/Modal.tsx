@@ -1,22 +1,29 @@
+import DOMPurify from 'dompurify';
+
 const Modal = (props: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-modal--${variant}`).join(' ');
+    return variants.map((variant: string) => `c-modal--${variant}`).join(' ');
   };
   const overlayClass = props.overlay ? `c-modal__overlay--${props.overlay}` : '';
   const zIndexMultiplier = props.zIndexLevel ? 5 * props.zIndexLevel : 1;
-  const onClose = event => {
+  const onClose = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     props.closeModal();
   };
   return (
     <div key={props.name} style={props.style}>
       <div onClick={props.onClick} className={`c-modal ${variantClass()}`}>
-        <div className="c-modal__head">
-          <div className="c-modal__head__title">{props.title}</div>
-        </div>
-        <div className="c-modal__content">{props.content}</div>
+        {props.title && (
+          <div className="c-modal__head">
+            <div className="c-modal__head__title">{props.title}</div>
+          </div>
+        )}
+        {props.content && (
+          <div className="c-modal__content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.content) }} />
+        )}
+        {props.image && <img src={props.image} alt="modal-image" />}
         {props.actions && <div className="c-modal__action">{props.actions}</div>}
       </div>
       {props.isOpen && <div className={`c-modal__overlay ${overlayClass}`} onClick={onClose}></div>}
@@ -30,16 +37,16 @@ const Modal = (props: any) => {
           opacity: ${props.isOpen ? 1 : 0};
           transition: opacity 0.2s ease-in;
           min-height: 268px;
-          padding: 16px;
+          padding: ${!props.content && props.image ? '' : '16px'};
           z-index: ${props.isOpen ? 50 + zIndexMultiplier : -99};
           border-radius: 24px;
-          border: 2px solid #e1e0e7;
+          border: ${!props.content && props.image ? '' : '2px solid #e1e0e7'};
           &__overlay {
             @apply fixed top-0 left-0 w-full h-full;
             background-color: rgba(51, 51, 51, 0.8);
             opacity: ${props.isOpen ? 1 : 0};
             transition: opacity 0.3s ease-in;
-            z-index: ${40 + zIndexMultiplier};
+            z-index: ${49 + zIndexMultiplier};
             &--light {
               background-color: rgba(51, 51, 51, 0.5);
             }

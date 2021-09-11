@@ -7,7 +7,7 @@ import actions from 'store/actions';
 import api from 'services/api';
 import Head from 'next/head';
 
-const Create = (props: any): any => (
+const Create = (props: any) => (
   <div>
     <Head>
       <title>When I Grow Up | {props.t('character-customization')}</title>

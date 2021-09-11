@@ -2,12 +2,23 @@ import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { useEffect, useState, Fragment } from 'react';
 import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
+import {
+  schema,
+  showError,
+  previewImg,
+  getJobIds,
+  loadImg,
+  addDedicationToLS,
+  retrieveDedication,
+  CharacterCustomizationProps,
+} from './helper';
 import { useRouter } from 'next/router';
 import * as gtag from 'lib/gtag';
 // import FieldDob from 'components/molecules/FieldDob';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { CustomAttributes } from 'store/cart/types';
+import { cartItem } from '_mocks/cartItem';
 
 const FieldOccupations = dynamic(() => import('components/molecules/FieldOccupations'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
@@ -20,7 +31,7 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const CharacterCustomization = (props: any) => {
+const CharacterCustomization = (props: CharacterCustomizationProps) => {
   const router = useRouter();
   const stepEnum = {
     NAME_GENDER: 0,
@@ -29,11 +40,13 @@ const CharacterCustomization = (props: any) => {
     HAIR: 2,
     SKIN: 3,
     OCCUPATIONS: 4,
-    LANGUAGE: 5,
-    DEDICATION: 6,
+    PARENTS: 5,
+    LANGUAGE: 6,
+    DEDICATION: 7,
   };
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
+  const [showSheetOccupations, setShowSheetOccupations] = useState(false);
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   const cancel = () => {
@@ -55,31 +68,22 @@ const CharacterCustomization = (props: any) => {
 
   const isDev = process.env.NODE_ENV === 'development';
   const defaultSelected = isDev
-    ? {
-        Occupations: ['Teacher', 'Pilot', 'Police'],
-        Name: 'Kalilist',
-        Age: 'kid',
-        Gender: 'girl',
-        Skin: 'light',
-        Language: 'english',
-        Dedication:
-          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
-        'Date of Birth': '03-01-2019',
-        Hair: 'short',
-      }
-    : {};
-  const selected = props.state.cart.selected || defaultSelected;
+    ? cartItem
+    : {
+        Dedication: retrieveDedication(),
+      };
+  const selected = props.state.cart.selected || (defaultSelected as CustomAttributes);
   const registerOccupations = () => {
     // setTimeout(() => {
-    register({ name: 'Occupations' }, schema(props).occupations);
+    register({ name: 'Occupations' } as any, schema(props).occupations as any);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
   };
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {
-      const jobIds = getJobIds(data.Occupations, occupations);
+      const jobIds = getJobIds(data.Occupations, occupations || []);
       PARAMS = { ...PARAMS, jobIds };
     }
     // if (charStep === stepEnum.AGE && !router.query.edit) {
@@ -98,6 +102,7 @@ const CharacterCustomization = (props: any) => {
         label: '/create',
       });
     }
+    addDedicationToLS(data.Dedication);
     Router.push('/preview');
   };
   // const pickedJobs = () => {
@@ -109,19 +114,16 @@ const CharacterCustomization = (props: any) => {
     loadImg(previewImg(selected, watch, true));
   }, [previewImg(selected, watch, true)]);
   useEffect(() => {
-    if ([stepEnum.AGE, stepEnum.SKIN, stepEnum.LANGUAGE].includes(charStep)) {
+    if ([stepEnum.AGE, stepEnum.SKIN, stepEnum.PARENTS].includes(charStep)) {
       loadImg(previewImg(selected, watch, true));
     }
     if (charStep === stepEnum.OCCUPATIONS) registerOccupations();
-    if (charStep === stepEnum.LANGUAGE) unregister('Occupations');
+    if (charStep === stepEnum.PARENTS) unregister('Occupations');
   }, [charStep]);
   useEffect(() => {
     const { Name, Gender } = selected;
     if (!router.query.edit && Name && Gender) {
       setCharStep(stepEnum.AGE);
-    }
-    if (typeof selected.Occupations === 'string') {
-      selected.Occupations = selected.Occupations.split(',');
     }
     Router.prefetch('/preview');
   }, []);
@@ -139,6 +141,11 @@ const CharacterCustomization = (props: any) => {
           title={props.t('common:character-customization')}
           step={1}
           totalSteps={2}
+          actionRight={
+            charStep === stepEnum.OCCUPATIONS ? (
+              <span className="icon-info" onClick={() => setShowSheetOccupations(true)} />
+            ) : null
+          }
         />
       }
     >
@@ -233,6 +240,30 @@ const CharacterCustomization = (props: any) => {
                     register={register}
                   />
                 )}
+                {charStep === stepEnum.PARENTS && (
+                  <Fragment>
+                    <FormTextField
+                      label={props.t('daddy-label')}
+                      name="Daddy"
+                      placeholder={props.t('daddy-placeholder')}
+                      schema={schema(props).daddy}
+                      register={register}
+                      errors={errors.Daddy}
+                      defaultValue={selected.Daddy}
+                      variant="full-width"
+                    />
+                    <FormTextField
+                      label={props.t('mommy-label')}
+                      name="Mommy"
+                      placeholder={props.t('mommy-placeholder')}
+                      schema={schema(props).mommy}
+                      register={register}
+                      errors={errors.Mommy}
+                      defaultValue={selected.Mommy}
+                      variant="full-width"
+                    />
+                  </Fragment>
+                )}
                 {charStep === stepEnum.LANGUAGE && (
                   <FieldLanguage
                     schema={schema(props).language}
@@ -252,6 +283,7 @@ const CharacterCustomization = (props: any) => {
                     register={register}
                     errors={errors.Dedication}
                     defaultValue={selected.Dedication}
+                    clear={() => setValue('Dedication', '')}
                   />
                 )}
               </div>
@@ -286,6 +318,23 @@ const CharacterCustomization = (props: any) => {
               {props.t('cancel-button')}
             </Button>
           </Fragment>
+        }
+      />
+      <Sheet
+        name="occupations-example"
+        isOpen={showSheetOccupations}
+        header
+        title={props.t('info')}
+        closeSheet={() => setShowSheetOccupations(false)}
+        content={
+          <>
+            {`${props.t('occupations-info')}${props.t('example-below')}`}
+            <img
+              src="/static/images/occupations-example-sm.png"
+              alt="sheet-image"
+              style={{ marginTop: 18, width: '100%' }}
+            />
+          </>
         }
       />
       <style jsx>{`

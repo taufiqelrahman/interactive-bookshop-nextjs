@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { mapStateToProps, mapDispatchToProps, PropsFromRedux } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -7,12 +7,16 @@ import LazyLoad from 'react-lazyload';
 import DOMPurify from 'dompurify';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { WithTranslation } from 'next-i18next';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Help = (props: any): any => {
+interface HelpProps extends WithTranslation, PropsFromRedux {
+  isMobile: boolean;
+}
+const Help = (props: HelpProps) => {
   const names = [
     'Vinsensiana Aprillia',
     'Dwita Regiana',
@@ -27,7 +31,7 @@ const Help = (props: any): any => {
     'Vandi',
     'Dhana Bisma',
   ];
-  const renderNames = string => {
+  const renderNames = (string: string) => {
     let content = string;
     names.forEach(name => {
       content = content.replace('[name]', `<strong>${name}</strong>`);

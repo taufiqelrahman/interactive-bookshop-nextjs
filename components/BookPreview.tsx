@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
+import { useEffect, useState, useCallback, useRef, Fragment, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { i18n } from 'i18n';
 import debounce from 'lodash.debounce';
@@ -7,53 +7,52 @@ import sortby from 'lodash.sortby';
 import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
 import initBook from 'assets/flipbook.js';
-import BookPage from 'components/atoms/BookPage';
+import BookPageComp from 'components/atoms/BookPage';
+import { BookPage } from 'store/master/types';
+import { CartItem } from 'store/cart/types';
+import { BookColors } from 'constants/book-colors';
 // import dummyPages from '_mocks/bookPages';
-// import CircleType from 'circletype';
 
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
-const BookPreview = (props: any) => {
-  const [, setBook] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [bookClicked, setBookClicked] = useState(false);
-  const [state, setState] = useState({
-    height: 0,
-    loaded: false,
-  });
+interface BookPreviewProps {
+  bookPages: BookPage[];
+  isMobile?: boolean;
+  selected: CartItem;
+  cover: BookColors;
+}
+const BookPreview = (props: BookPreviewProps) => {
+  // const [, setBook] = useState(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [bookClicked, setBookClicked] = useState<boolean>(false);
+  const pagesRef = useRef<HTMLDivElement | null>(null);
   // const [pageInfo, setPageInfo] = useState({
   //   firstPage: true,
   //   lastPage: false,
   // });
 
-  const calcHeight = () => {
-    // const image: any = document.querySelector('.c-flipbook__page img');
+  /**
+   * Desktop only
+   */
+  const [showBook, setShowBook] = useState<boolean>(false);
+  const [height, setHeight] = useState<number>(0);
+
+  const updateHeight = () => {
+    if (!pagesRef.current) return;
     const containerWidth = window.innerWidth > 1023 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
-    // const containerMargin = (window.innerWidth - containerWidth) / 2;
     const padding = 60;
     const bookRatio = 495 / 700;
-    return ((containerWidth - padding) / 2) * bookRatio;
-  };
-  const updateHeight = () => {
-    const height = calcHeight();
-    setState({ ...state, height, loaded: true });
-    return Promise.resolve();
+    setHeight(() => ((containerWidth - padding) / 2) * bookRatio);
   };
 
-  // const updatePageInfo = () => {
-  //   setPageInfo({ ...pageInfo, firstPage: (book as any).isFirstPage(), lastPage: (book as any).isLastPage() });
-  // };
-
-  const setupBook = async () => {
-    setState({ ...state, loaded: false });
-    await updateHeight();
-    const flipBookInstance = new (window as any).FlipBook('FlipBook', {
+  const setupBook = (currentHeight: number) => {
+    new (window as any).FlipBook('FlipBook', {
       canClose: true,
       arrowKeys: true,
       concurrentAnimations: 5,
-      height: `${calcHeight()}px`,
+      height: `${currentHeight}px`,
       initialCall: true,
-      onPageTurn: (_, els) => {
+      onPageTurn: (_: HTMLElement, els: { pagesTarget: Element[] }) => {
         gtag.event({
           action: 'click_book_page',
           category: 'engagement',
@@ -64,55 +63,72 @@ const BookPreview = (props: any) => {
         if (!bookClicked) setBookClicked(true);
       },
     });
-    setBook(flipBookInstance);
+    // setBook(flipBookInstance);
   };
-
-  let debouncedFunctionRef: any = useRef(() => setupBook());
   const debouncedSetup = useCallback(
-    debounce(() => debouncedFunctionRef && (debouncedFunctionRef.current as any)(), 300),
+    debounce(() => updateHeight(), 300),
     [],
   );
 
-  const ref = useRef<HTMLInputElement>(null);
+  /**
+   * Mobile only
+   */
   const handleScroll = () => {
     const svgPages = document.getElementsByClassName('c-book-page__svg');
     if (!svgPages.length) return;
     const imageWidth = document.getElementsByClassName('c-book-page__svg')[0].getBoundingClientRect().width;
-    const currentScroll = Math.floor((ref as any).current.scrollLeft / imageWidth) + 1;
+    const currentScroll = Math.floor((pagesRef.current as HTMLDivElement).scrollLeft / imageWidth) + 1;
     setCurrentPage(currentScroll);
   };
   useEffect(() => {
-    if (props.isMobile) {
-      if (ref && ref.current) {
-        ref.current.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
-      }
-      return;
+    if (props.isMobile && pagesRef.current) {
+      pagesRef.current.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
+    } else {
+      initBook();
+      updateHeight();
+      window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
     }
-    initBook();
-    setupBook();
-    window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
     return () => {
-      window.removeEventListener('resize', () => debouncedSetup);
-      debouncedFunctionRef = null;
+      if (props.isMobile) {
+        window.removeEventListener('scroll', handleScroll);
+      } else {
+        pagesRef.current = null;
+        window.removeEventListener('resize', debouncedSetup);
+      }
     };
   }, []);
 
+  const rerenderBookPages = (currentHeight: number) => {
+    setShowBook(() => false);
+    setTimeout(() => {
+      setShowBook(() => true);
+      setupBook(currentHeight);
+    }, 500);
+  };
+
+  /**
+   * Handle book on window resize
+   */
+  useEffect(() => {
+    if (!height) return;
+    rerenderBookPages(height);
+  }, [height]);
+
+  /**
+   * Handle book when languange changes
+   */
   const isFirstRun = useRef(true);
   useEffect(() => {
     if (isFirstRun.current) {
       isFirstRun.current = false;
       return;
     }
-    setTimeout(() => {
-      setupBook();
-    }, 500);
+    rerenderBookPages(height);
   }, [i18n.language]);
 
-  // useEffect(() => {
-  //   if (!book) return;
-  //   updatePageInfo();
-  // }, [book]);
-
+  // const updatePageInfo = () => {
+  //   setPageInfo({ ...pageInfo, firstPage: (book as any).isFirstPage(), lastPage: (book as any).isLastPage() });
+  // };
   // const firstPage = () => {
   //   if (pageInfo.firstPage) return;
   //   (book as any).turnPage(1);
@@ -137,28 +153,36 @@ const BookPreview = (props: any) => {
   //   updatePageInfo();
   // };
 
-  let pageByOccupations = {};
-  if (props.bookPages.length > 0) {
-    pageByOccupations = groupby(props.bookPages, page => page.occupation_id);
-    pageByOccupations = sortby(pageByOccupations, group => props.bookPages.indexOf(group[0]));
-  }
-  // console.log(pageByOccupations);
-  const bookPages = [];
-  Object.keys(pageByOccupations).forEach(occupation => {
-    bookPages[occupation] = groupby(pageByOccupations[occupation], page => page.page_number);
-  });
-  let jointPages: any = [];
-  bookPages.forEach((jobs: Array<any>, index) => {
-    if (index === bookPages.length - 1 && jobs[1] && jobs[2]) {
-      jointPages = [...jointPages, jobs[1], jobs[2]];
-      return;
+  /**
+   * Compute book pages
+   */
+  const jointPages = useMemo(() => {
+    let pageByOccupations: BookPage[][] = [];
+    if (props.bookPages.length > 0) {
+      const occupationDictionary = groupby(props.bookPages, (page: BookPage) => page.occupation_id);
+      pageByOccupations = sortby(occupationDictionary, ([group]: BookPage[]) => props.bookPages.indexOf(group));
     }
-    Object.keys(jobs).forEach(pageNumber => {
-      jointPages = [...jointPages, jobs[pageNumber]];
+    const bookPages: Dictionary<BookPage[]>[] = [];
+    Object.keys(pageByOccupations).forEach((occupation: string) => {
+      bookPages[occupation as any] = groupby(
+        pageByOccupations[occupation as any] as BookPage[],
+        (page: BookPage) => page.page_number,
+      );
     });
-  });
+    let result: BookPage[][] = [];
+    bookPages.forEach((jobs: Dictionary<BookPage[]>, index: number) => {
+      if (index === bookPages.length - 1 && jobs[1] && jobs[2]) {
+        result = [...result, jobs[1], jobs[2]];
+        return;
+      }
+      Object.keys(jobs).forEach(pageNumber => {
+        result = [...result, jobs[pageNumber]];
+      });
+    });
+    return result;
+  }, [props.bookPages]);
 
-  const getImage = (job, pageNumber) => {
+  const getImage = (job: string, pageNumber: number) => {
     const { Gender, Age, Skin, Hair } = props.selected;
     const pagePath = props.isMobile ? 'pages-sm' : 'pages';
     let jobPath = `${job}/page-${pageNumber}`;
@@ -176,7 +200,9 @@ const BookPreview = (props: any) => {
   //   return '';
   // };
 
-  // for mobile
+  /**
+   * Mobile only
+   */
   const bookHeight = '(100vh - 69px - 257px) * 0.7';
   const bookRatio = '700 / 495';
 
@@ -198,11 +224,11 @@ const BookPreview = (props: any) => {
       </div> */}
       {props.isMobile ? (
         <Fragment>
-          <div className="c-book-preview__pages" ref={ref}>
-            {jointPages.map((page, index) => {
+          <div className="c-book-preview__pages" ref={pagesRef}>
+            {jointPages.map((page: BookPage[], index: number) => {
               const [firstPage] = page;
               return (
-                <BookPage
+                <BookPageComp
                   key={index}
                   isLast={index === jointPages.length - 1}
                   style={{
@@ -217,7 +243,7 @@ const BookPreview = (props: any) => {
                   gender={props.selected.Gender}
                   dedication={props.selected.Dedication}
                   contents={page}
-                  isMobile={props.isMobile}
+                  isMobile={!!props.isMobile}
                   isWhiteCover={props.cover === 'white' && firstPage.occupation.name.includes('Cover')}
                   mustLoad={true}
                   height={bookHeight}
@@ -235,31 +261,33 @@ const BookPreview = (props: any) => {
               <img src="/static/images/try-me.png" alt="try me" />
             </div>
           )}
-          <div className="c-book-preview__container">
-            <div className="c-flipbook" id="FlipBook">
-              {jointPages.map((page, index) => {
-                const [firstPage] = page;
-                return (
-                  <BookPage
-                    key={index}
-                    id={index + 1}
-                    isLast={index === jointPages.length - 1}
-                    className="c-flipbook__page"
-                    // className={`c-flipbook__page ${pageClass(index)}`}
-                    image={getImage(firstPage.occupation.name, firstPage.page_number)}
-                    name={props.selected.Name}
-                    language={props.selected.Language}
-                    // language="indo"
-                    gender={props.selected.Gender}
-                    dedication={props.selected.Dedication}
-                    contents={page}
-                    isMobile={props.isMobile}
-                    isWhiteCover={props.cover === 'white' && firstPage.occupation.name.includes('Cover')}
-                    mustLoad={index + 1 < currentPage + 7 || index === jointPages.length - 1}
-                  />
-                );
-              })}
-            </div>
+          <div className="c-book-preview__container" ref={pagesRef}>
+            {showBook && (
+              <div className="c-flipbook" id="FlipBook">
+                {jointPages.map((page: BookPage[], index: number) => {
+                  const [firstPage] = page;
+                  return (
+                    <BookPageComp
+                      key={index}
+                      id={(index + 1).toString()}
+                      isLast={index === jointPages.length - 1}
+                      className="c-flipbook__page"
+                      // className={`c-flipbook__page ${pageClass(index)}`}
+                      image={getImage(firstPage.occupation.name, firstPage.page_number)}
+                      name={props.selected.Name}
+                      language={props.selected.Language}
+                      // language="indo"
+                      gender={props.selected.Gender}
+                      dedication={props.selected.Dedication}
+                      contents={page}
+                      isMobile={!!props.isMobile}
+                      isWhiteCover={props.cover === 'white' && firstPage.occupation.name.includes('Cover')}
+                      mustLoad={index + 1 < currentPage + 7 || index === jointPages.length - 1}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
         </Fragment>
       )}
@@ -305,7 +333,7 @@ const BookPreview = (props: any) => {
             @apply flex flex-row;
             @screen md {
               @apply w-full relative;
-              height: ${state.height}px;
+              height: ${height}px;
               transition: height 0.5s;
               z-index: 1;
               display: unset;
@@ -349,7 +377,6 @@ const BookPreview = (props: any) => {
           perspective: 2200px;
           -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
-          opacity: ${state.loaded ? 1 : 0};
           position: absolute;
           left: 0;
           -webkit-transition: left 0.7s;

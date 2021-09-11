@@ -1,3 +1,5 @@
+import { Cart } from 'store/cart/types';
+
 // export const SET_USER = 'SET_USER';
 export const LOAD_USER = 'LOAD_USER';
 export const UPDATE_USER = 'UPDATE_USER';
@@ -12,13 +14,33 @@ export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SEND_OTP = 'SEND_OTP';
 
+export interface Address {
+  address1: string;
+  address2: string;
+  province: string;
+  zip: string;
+  city: string;
+  country: string;
+  first_name?: string;
+  last_name?: string;
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: string;
+}
+
 export interface User {
   email: string;
+  name: string;
+  phone: string;
+  cart: Cart;
+  address: Address;
+  is_reseller: number;
 }
 
 export interface UsersState {
-  isFetching: boolean;
-  isLoggedIn: boolean;
+  isFetching: boolean | null;
+  isLoggedIn: boolean | null;
   isExpired: boolean;
   user: User | null;
 }

@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { NextApiResponse, NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import * as Sentry from '@sentry/browser';
 import { appWithTranslation, i18n, Router } from 'i18n';
@@ -22,6 +22,7 @@ import 'styles/tailwind.css';
 import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
+import TagManager from 'react-gtm-module';
 
 const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
@@ -55,6 +56,10 @@ const App: NextPage<any> = (props: any) => {
     gtag.pageview(url);
   };
   useEffect(() => {
+    TagManager.initialize({
+      gtmId: 'GTM-TWKF2WK',
+    });
+
     if (reduxStore.getState().users.isExpired) Cookies.remove('user', { domain: process.env.DOMAIN });
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
@@ -165,6 +170,9 @@ const App: NextPage<any> = (props: any) => {
 
         {/* <!-- Orientation  --> */}
         {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
+
+        {/* google workspace verification */}
+        <meta name="google-site-verification" content="U_d31WZHeLx9MAJbl_s5lo3DXPJ9ZkmbRCfbcmcQVUs" />
       </Head>
       <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
@@ -300,7 +308,7 @@ const App: NextPage<any> = (props: any) => {
   );
 };
 
-const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
+const redirectPrivateRoutes = ({ pathname, res }: NextPageContext) => {
   const privateRoutes = ['/orders/success', '/account', '/orders'];
   if (privateRoutes.includes(pathname)) {
     const redirectTo = pathname.split('/')[1];
@@ -318,19 +326,19 @@ const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextA
   }
 };
 
-const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
+const redirectLoginRoutes = ({ pathname, res, query }: NextPageContext) => {
   const loginRoutes = ['/login', '/register'];
   if (loginRoutes.includes(pathname)) {
-    const home = '/';
+    const destination = query.from ? `/${query.from}` : '/';
     if (res) {
       // server-side
       res.writeHead(302, {
-        Location: home,
+        Location: destination,
       });
       res.end();
     } else {
       // client-side
-      Router.replace(home);
+      Router.replace(destination);
     }
   }
 };

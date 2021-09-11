@@ -2,11 +2,14 @@ import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
+import { schema, showError, saveToCookies, getFromCookies, PreviewProps } from './helper';
 import Cookies from 'js-cookie';
 import * as gtag from 'lib/gtag';
 import NavBar from 'components/organisms/NavBar/mobile';
 import DefaultLayout from 'components/layouts/Default';
+import { CartItem } from 'store/cart/types';
+import { cartItem } from '_mocks/cartItem';
+import { BookPage } from 'store/master/types';
 // import BookPreview from 'components/BookPreview';
 // import Sheet from 'components/atoms/Sheet';
 // import Button from 'components/atoms/Button';
@@ -17,16 +20,17 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const PreviewMobile = (props: any): any => {
+const PreviewMobile = (props: PreviewProps) => {
   // const [enableLazy, setEnableLazy] = useState(true);
   const [showSheet, setShowSheet] = useState(false);
   const [showSpecs, setShowSpecs] = useState(false);
-  const [tempData, setTempData] = useState(null);
+  const [tempData, setTempData] = useState({} as CartItem);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = cart => {
-    if (selected.id) {
+  const isDev = process.env.NODE_ENV === 'development';
+  const selected = isDev ? props.state.cart.selected || ({} as CartItem) : cartItem;
+  const addToCart = (cart: CartItem) => {
+    if (selected && selected.id) {
       props.thunkUpdateCart(cart);
     } else {
       gtag.event({
@@ -40,13 +44,13 @@ const PreviewMobile = (props: any): any => {
         label: 'mobile',
       });
       (window as any).fbq('track', 'AddToCart', {
-        cartItem: cart,
+        cartItem: cart || {},
         isLoggedIn: props.state.users.isLoggedIn,
       });
       props.thunkAddToCart(cart);
     }
   };
-  const onSubmit = data => {
+  const onSubmit = (data: any) => {
     if (!selected) {
       Router.replace('/create');
       return;
@@ -77,7 +81,7 @@ const PreviewMobile = (props: any): any => {
     }
   }, []);
   const screenHeight = '100vh - 69px';
-  const bookPages = props.state.master.bookPages;
+  const bookPages = props.state.master.bookPages || ([] as BookPage[]);
   // const dontHaveCart = !props.state.users.user.cart;
   return (
     <DefaultLayout
