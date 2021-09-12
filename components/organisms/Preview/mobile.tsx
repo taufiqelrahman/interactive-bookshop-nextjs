@@ -28,7 +28,7 @@ const PreviewMobile = (props: PreviewProps) => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const isDev = process.env.NODE_ENV === 'development';
-  const selected = isDev ? props.state.cart.selected || ({} as CartItem) : cartItem;
+  const selected = isDev ? cartItem : props.state.cart.selected || ({} as CartItem);
   const addToCart = (cart: CartItem) => {
     if (selected && selected.id) {
       props.thunkUpdateCart(cart);
