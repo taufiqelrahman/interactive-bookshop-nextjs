@@ -8,7 +8,6 @@ import * as gtag from 'lib/gtag';
 import NavBar from 'components/organisms/NavBar/mobile';
 import DefaultLayout from 'components/layouts/Default';
 import { CartItem } from 'store/cart/types';
-import { cartItem } from '_mocks/cartItem';
 import { BookPage } from 'store/master/types';
 // import BookPreview from 'components/BookPreview';
 // import Sheet from 'components/atoms/Sheet';
@@ -27,8 +26,7 @@ const PreviewMobile = (props: PreviewProps) => {
   const [tempData, setTempData] = useState({} as CartItem);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const isDev = process.env.NODE_ENV === 'development';
-  const selected = isDev ? cartItem : props.state.cart.selected || ({} as CartItem);
+  const selected = props.state.cart.selected || ({} as CartItem);
   const addToCart = (cart: CartItem) => {
     if (selected && selected.id) {
       props.thunkUpdateCart(cart);
@@ -90,7 +88,7 @@ const PreviewMobile = (props: PreviewProps) => {
     >
       <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
         <BookPreview
-          selected={selected || {}}
+          selected={selected}
           isMobile={props.isMobile}
           bookPages={bookPages}
           cover={watch('Cover')}
