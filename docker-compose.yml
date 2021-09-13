@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
+  'web_${ENVIRONMENT}':
     container_name: 'whenigrowup-${ENVIRONMENT}'
     build: .
     working_dir: '/usr/src/wigu' # Where to container will assume it should run commands and where you will start out if you go inside the container
