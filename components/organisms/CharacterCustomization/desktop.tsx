@@ -212,7 +212,7 @@ const CharacterCustomization = (props: CharacterCustomizationProps) => {
                   label={props.t('dedication-label')}
                   hint={props.t('dedication-hint')}
                   name="Dedication"
-                  placeholder={props.t('dedication-placeholder')}
+                  placeholder="Tetap bahagia selalu ya nak”&#x0a;Mama Ina"
                   schema={schema(props).dedication}
                   register={register}
                   errors={errors.Dedication}
