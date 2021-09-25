@@ -45,10 +45,7 @@ const FieldOccupations = (props: FieldOccupationsProps) => {
   };
   const occupationsOpts = () => {
     if (!props.occupations) return [];
-    let occupationsOpts = [...props.occupations];
-    if ((props.isMobile && props.gender === 'boy') || !props.isMobile) {
-      occupationsOpts = [...props.occupations.filter(job => job.name !== 'President')];
-    }
+    let occupationsOpts = [...props.occupations.filter(job => job.name !== 'President')];
     if (props.gender === 'boy') {
       occupationsOpts = [...occupationsOpts.filter(job => job.name !== 'Ballerina')];
     }
