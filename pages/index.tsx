@@ -26,8 +26,8 @@ interface IndexProps extends WithTranslation, PropsFromRedux {
 }
 const Index = (props: IndexProps) => {
   const { testimonials, occupations } = props.state.master;
-  const occupationsTop = props.isMobile ? occupations?.slice(0, 1) : occupations?.slice(0, 5);
-  const occupationsBottom = props.isMobile ? occupations?.slice(1, 3) : occupations?.slice(5, 9);
+  const occupationsTop = props.isMobile ? occupations?.slice(0, 2) : occupations?.slice(0, 6);
+  const occupationsBottom = props.isMobile ? occupations?.slice(7, 11) : occupations?.slice(6, 11);
 
   // const createCheckout = async () => {
   //   let checkout = await graphql().checkout.create({
@@ -448,7 +448,7 @@ Index.getInitialProps = async (ctx: any): Promise<any> => {
     ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
   } catch (err) {
     console.log(err);
-    console.log(err.message);
+    // console.log(err.message);
   }
   return { namespacesRequired: ['page-index'] };
 };
