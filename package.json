@@ -15,8 +15,8 @@
     "deploy": "yarn build && yarn start",
     "analyze": "ANALYZE=true yarn build",
     "sitemap": "node sitemap_generator.js",
-    "test": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.js -u --watchAll --silent",
-    "test:e2e": "jest --colors --config=jest.config.js -u --watchAll ./pages",
+    "test": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.js -u --silent",
+    "test:e2e": "jest --colors --config=jest.config.js -u ./pages",
     "test:ci": "TZ=Asia/Jakarta jest --coverage --colors --config=jest.config.ci.js -u --silent"
   },
   "dependencies": {

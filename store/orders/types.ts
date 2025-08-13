@@ -3,7 +3,7 @@ export const LOAD_ORDER = 'LOAD_ORDER';
 export const LOAD_ORDERS = 'LOAD_ORDERS';
 export const SET_PAYMENT_PROBLEM = 'SET_PAYMENT_PROBLEM';
 
-interface Order {
+export interface Order {
   id: number;
   order_number: string;
   shopify_order_id: string;
