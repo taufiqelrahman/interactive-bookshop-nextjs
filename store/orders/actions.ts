@@ -27,16 +27,16 @@ import api from '../../services/api';
 //     });
 // };
 
-export function loadOrder(isFetching, order = null): types.OrdersActionTypes {
+export function loadOrder(isFetching: boolean, order: types.Order | null = null): types.OrdersActionTypes {
   return {
     type: types.LOAD_ORDER,
     payload: order,
     isFetching,
   };
 }
-export const thunkLoadOrder = (orderNumber): ThunkAction<void, types.OrdersState, null, Action<string>> => (
+export const thunkLoadOrder = (orderNumber: string): ThunkAction<void, types.OrdersState, null, Action<string>> => (
   dispatch,
-): any => {
+) => {
   dispatch(loadOrder(true));
   return api()
     .orders.loadOrder(orderNumber)
@@ -49,14 +49,14 @@ export const thunkLoadOrder = (orderNumber): ThunkAction<void, types.OrdersState
     });
 };
 
-export function loadOrders(isFetching, orders: any = []): types.OrdersActionTypes {
+export function loadOrders(isFetching: boolean, orders: types.Order[] = []): types.OrdersActionTypes {
   return {
     type: types.LOAD_ORDERS,
     payload: orders,
     isFetching,
   };
 }
-export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Action<string>> => (dispatch): any => {
+export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Action<string>> => (dispatch) => {
   dispatch(loadOrders(true));
   return api()
     .orders.loadOrders()

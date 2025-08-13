@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import { withTranslation, Link } from 'i18n';
-import { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, ElementType } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';
@@ -17,23 +17,44 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
-const Register = (props: any): any => {
-  const methods = useForm({ mode: 'onChange' });
-  const { register, handleSubmit, errors, formState, watch } = methods;
-  const stepEnum = { WELCOME: 0, EMAIL: 1, DETAIL: 2 };
-  const [registerStep, setRegisterStep] = useState(stepEnum.WELCOME);
-  const [savedEmail, setSavedEmail] = useState('');
-  const registerEmail = () => {
-    setRegisterStep(stepEnum.EMAIL);
+interface RegisterProps {
+  t: (key: string) => string;
+  isMobile: boolean;
+  setSideNav: (open: boolean) => void;
+  thunkRegister: (data: RegisterFormData) => void;
+  state: {
+    [key: string]: unknown;
   };
+}
+
+type RegisterFormData = {
+  email: string;
+  name: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+};
+
+enum RegisterStep {
+  WELCOME = 0,
+  EMAIL = 1,
+  DETAIL = 2,
+}
+
+const Register: React.FC<RegisterProps> = props => {
+  const methods = useForm<RegisterFormData>({ mode: 'onChange' });
+  const { register, handleSubmit, errors, formState, watch } = methods;
+  const [registerStep, setRegisterStep] = useState<RegisterStep>(RegisterStep.WELCOME);
+  const [savedEmail, setSavedEmail] = useState<string>('');
+  const registerEmail = () => setRegisterStep(RegisterStep.EMAIL);
   const schema = {
     email: {
       required: { value: true, message: `Email ${props.t('form:required-error')}` },
       pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: props.t('form:email-invalid') },
-      validate: debouncePromise(async value => {
+      validate: debouncePromise(async (value: string) => {
         const { data } = await api().users.checkEmail({ email: value });
         return !data.exists || props.t('form:email-exists');
-      }, 500), // watch for duplicate email
+      }, 500),
     },
     name: {
       required: { value: true, message: `${props.t('form:name-label')} ${props.t('form:required-error')}` },
@@ -46,7 +67,7 @@ const Register = (props: any): any => {
     },
     confirmPassword: {
       required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('password') || props.t('form:password-different'),
+      validate: (value: string) => value === watch('password') || props.t('form:password-different'),
     },
   };
   useEffect(() => {
@@ -54,13 +75,13 @@ const Register = (props: any): any => {
       toast.error(props.t('form:form-error'));
     }
   }, [errors]);
-  const onSubmit = async data => {
+  const onSubmit = async (data: RegisterFormData) => {
     switch (registerStep) {
-      case stepEnum.EMAIL:
+      case RegisterStep.EMAIL:
         setSavedEmail(data.email);
-        setRegisterStep(stepEnum.DETAIL);
+        setRegisterStep(RegisterStep.DETAIL);
         break;
-      case stepEnum.DETAIL:
+      case RegisterStep.DETAIL:
         props.thunkRegister({
           ...data,
           email: savedEmail,
@@ -73,17 +94,17 @@ const Register = (props: any): any => {
   };
   const onBack = () => {
     switch (registerStep) {
-      case stepEnum.EMAIL:
-        setRegisterStep(stepEnum.WELCOME);
+      case RegisterStep.EMAIL:
+        setRegisterStep(RegisterStep.WELCOME);
         break;
-      case stepEnum.DETAIL:
-        setRegisterStep(stepEnum.EMAIL);
+      case RegisterStep.DETAIL:
+        setRegisterStep(RegisterStep.EMAIL);
         break;
       default:
         break;
     }
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper: ElementType = props.isMobile ? 'div' : Card;
   return (
     <DefaultLayout
       {...props}
@@ -92,7 +113,7 @@ const Register = (props: any): any => {
           <NavBar
             onBack={onBack}
             setSideNav={props.setSideNav}
-            menuAction={registerStep === stepEnum.WELCOME}
+            menuAction={registerStep === RegisterStep.WELCOME}
             title={props.t('register')}
           />
         )
@@ -103,9 +124,9 @@ const Register = (props: any): any => {
       </Head>
       <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-register">
-          <Wrapper variant="border">
+          <Wrapper {...(!props.isMobile && { variant: 'border' })}>
             <div className="c-register__container">
-              {registerStep === stepEnum.WELCOME ? (
+              {registerStep === RegisterStep.WELCOME ? (
                 <Fragment>
                   <img alt="welcome" className="c-register__image" src="/static/images/register-illus.png" />
                   <h1 className="c-register__title">{props.t('lets-join')}</h1>
@@ -132,7 +153,7 @@ const Register = (props: any): any => {
                   style={props.isMobile ? { minHeight: 'calc(100vh - 59px - 24px)' } : {}}
                   onSubmit={handleSubmit(onSubmit)}
                 >
-                  {registerStep === stepEnum.EMAIL && (
+                  {registerStep === RegisterStep.EMAIL && (
                     <Fragment>
                       <div>
                         <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
@@ -157,7 +178,7 @@ const Register = (props: any): any => {
                       </div>
                     </Fragment>
                   )}
-                  {registerStep === stepEnum.DETAIL && (
+                  {registerStep === RegisterStep.DETAIL && (
                     <Fragment>
                       <div>
                         <h1 className="c-register__title" style={{ marginBottom: 8 }}>
@@ -289,4 +310,4 @@ const Register = (props: any): any => {
   );
 };
 
-export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Register));
+export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Register) as any);
