@@ -25,7 +25,7 @@ declare global {
 }
 const composeEnhancer =
   isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(reduxOption as any)
+    ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as any)(reduxOption)
     : compose;
 
 export type AppState = ReturnType<typeof rootReducer>;

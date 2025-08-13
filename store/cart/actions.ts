@@ -22,15 +22,21 @@ function createCart(isFetching): types.CartActionTypes {
     isFetching,
   };
 }
-function createCheckout(user) {
+interface CheckoutParams {
+  email: string;
+  shippingAddress?: {
+    [key: string]: any;
+  };
+}
+function createCheckout(user: { email: string; address?: Record<string, any> }) {
   const { email, address } = user;
-  let PARAMS: any = { email };
+  let PARAMS: CheckoutParams = { email };
   if (address) {
     const shippingAddress = {
       ...address,
       firstName: address.first_name,
       lastName: address.last_name,
-    };
+    } as { [key: string]: any };
     delete shippingAddress.id;
     delete shippingAddress.created_at;
     delete shippingAddress.updated_at;
