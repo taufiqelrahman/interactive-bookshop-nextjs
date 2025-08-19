@@ -22,11 +22,10 @@ function sendMessage(isFetching): types.ActionTypes {
     payload: isFetching,
   };
 }
-export const thunkSendMessage = (data): ThunkAction<void, types.State, null, Action<string>> => (
-  dispatch,
-  getState,
-): any => {
-  const { user } = (getState() as any).users;
+export const thunkSendMessage = (
+  data: Record<string, unknown>,
+): ThunkAction<void, types.State, null, Action<string>> => (dispatch, getState) => {
+  const { user } = ((getState() as unknown) as { users: { user: { id: string } | null } }).users;
   let DATA = { ...data };
   if (user) DATA = { ...data, userId: user.id };
   dispatch(sendMessage(true));
