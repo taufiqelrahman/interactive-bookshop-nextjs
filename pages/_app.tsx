@@ -77,7 +77,8 @@ const App: NextPage<any> = (props: any) => {
     }
   };
   useEffect(() => {
-    createCartForUser();
+    // @todo uncomment
+    // createCartForUser();
   }, [reduxStore.getState().users]);
   Router.events.on('routeChangeComplete', () => {
     window.scrollTo({
@@ -340,9 +341,9 @@ App.getInitialProps = async ({ Component, ctx }: any): Promise<any> => {
   if (cookies(ctx).user) {
     if (!getState().users.user) {
       try {
-        const { data: me } = await api(ctx.req).users.getMe();
+        // const { data: me } = await api(ctx.req).users.getMe();
         dispatch(actions.setLogin(true));
-        dispatch(actions.loadUser(false, me));
+        dispatch(actions.loadUser(false, {} as any));
         // eslint-disable-next-line no-empty
       } catch (error) {
         // if (error.response && error.response.status === 401) {

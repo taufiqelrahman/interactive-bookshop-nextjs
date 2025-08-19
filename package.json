@@ -136,5 +136,8 @@
     "*.+(scss)": [
       "stylelint --syntax scss --fix"
     ]
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
