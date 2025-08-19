@@ -5,14 +5,12 @@ module.exports = {
       'next/babel',
       {
         'styled-jsx': {
-          'plugins': [
-            'styled-jsx-plugin-postcss',
-            'styled-jsx-plugin-sass'
-          ]
-        }
-      }
+          plugins: ['styled-jsx-plugin-postcss', 'styled-jsx-plugin-sass'],
+        },
+      },
     ],
   ],
+  plugins: ['@babel/plugin-proposal-optional-chaining'],
   env: {
     test: {
       presets: [
@@ -21,11 +19,9 @@ module.exports = {
           'next/babel',
           {
             'styled-jsx': {
-              'plugins': [
-                'styled-jsx-plugin-sass'
-              ]
-            }
-          }
+              plugins: ['styled-jsx-plugin-sass'],
+            },
+          },
         ],
       ],
       plugins: [
@@ -33,13 +29,13 @@ module.exports = {
         [
           'module-resolver',
           {
-            'root': ['./'],
-            'alias': {
+            root: ['./'],
+            alias: {
               '@components': './components',
-            }
-          }
+            },
+          },
         ],
-      ]
-    }
-  }
-}
+      ],
+    },
+  },
+};

@@ -25,7 +25,8 @@ const DefaultLayout = (props: any) => {
     const navbarDiv: any = document.querySelector('.c-nav-bar');
     setNavbarHeight(navbarDiv.clientHeight);
     const { users, cart } = props.state;
-    (window as any).fbq('track', 'ViewContent', {
+    if (!window.fbq) return;
+    window.fbq('track', 'ViewContent', {
       cartItems: cart.cart && cart.cart.lineItems.length,
       isLoggedIn: users.isLoggedIn,
       path: router.pathname,
