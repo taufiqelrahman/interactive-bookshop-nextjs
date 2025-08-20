@@ -20,16 +20,16 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: yarn lint
+        run: pnpm run lint
 
       - name: Type check
-        run: yarn tsc --noEmit
+        run: pnpm run tsc --noEmit
 
       - name: Run tests
-        run: yarn test --ci --passWithNoTests
+        run: pnpm run test --ci --passWithNoTests
 
       - name: Build
-        run: yarn build
+        run: pnpm run build

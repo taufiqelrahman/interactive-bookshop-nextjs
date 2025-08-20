@@ -62,7 +62,7 @@ cd whenigrowup
 2. Install dependencies:
 
 ```bash
-yarn
+pnpm install
 ```
 
 3. Set up environment variables:
@@ -75,7 +75,7 @@ cp .env.example .env.local
 4. Run the development server:
 
 ```bash
-yarn tinker
+pnpm run tinker
 ```
 
 The application will be available at `http://localhost:3000`.
@@ -84,27 +84,27 @@ The application will be available at `http://localhost:3000`.
 
 ### Development
 
-- `yarn dev` - Start development server with debugging
-- `yarn tinker` - Run linting and development server concurrently
-- `yarn debug` - Start server without debugging
+- `pnpm run dev` - Start development server with debugging
+- `pnpm run tinker` - Run linting and development server concurrently
+- `pnpm run debug` - Start server without debugging
 
 ### Building & Deployment
 
-- `yarn build` - Build production application
-- `yarn start` - Start production server
-- `yarn deploy` - Build and start production server
+- `pnpm run build` - Build production application
+- `pnpm run start` - Start production server
+- `pnpm run deploy` - Build and start production server
 
 ### Testing & Quality
 
-- `yarn test` - Run tests in watch mode with coverage
-- `yarn test:ci` - Run tests for CI/CD
-- `yarn test:e2e` - Run end-to-end tests
-- `yarn lint` - Run ESLint and Stylelint
+- `pnpm run test` - Run tests in watch mode with coverage
+- `pnpm run test:ci` - Run tests for CI/CD
+- `pnpm run test:e2e` - Run end-to-end tests
+- `pnpm run lint` - Run ESLint and Stylelint
 
 ### Utilities
 
-- `yarn analyze` - Analyze bundle size
-- `yarn sitemap` - Generate sitemap
+- `pnpm run analyze` - Analyze bundle size
+- `pnpm run sitemap` - Generate sitemap
 
 ## 🏗 Project Structure
 
@@ -143,8 +143,8 @@ The project includes comprehensive testing:
 Run tests:
 
 ```bash
-yarn test        # Development with watch mode
-yarn test:ci     # CI/CD mode
+pnpm run test        # Development with watch mode
+pnpm run test:ci     # CI/CD mode
 ```
 
 ## 🐳 Docker Deployment
