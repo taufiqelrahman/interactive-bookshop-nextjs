@@ -23,7 +23,16 @@ module.exports = withBundleAnalyzer(
       if (!dev) {
         config.optimization.minimize = true;
         config.optimization.minimizer.push(new CssMinimizerPlugin({}));
-        config.optimization.minimizer.push(new TerserPlugin());
+        config.optimization.minimizer.push(
+          new TerserPlugin({
+            terserOptions: {
+              ecma: 2020, // <- support optional chaining & nullish coalescing
+              parse: {},
+              compress: {},
+              mangle: true,
+            },
+          }),
+        );
       }
       return config;
     },
