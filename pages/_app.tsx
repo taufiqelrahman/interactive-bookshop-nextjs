@@ -22,6 +22,7 @@ import 'styles/tailwind.css';
 import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
+import 'styles/fonts.min.css';
 
 const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
@@ -47,10 +48,7 @@ const App: NextPage<any> = (props: any) => {
   const [width, setWidth] = useState(0);
 
   const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
-  const debouncedSetup = useCallback(
-    debounce(() => debouncedFunctionRef.current(), 200),
-    [],
-  );
+  const debouncedSetup = useCallback(debounce(() => debouncedFunctionRef.current(), 200), []);
   const handleRouteChange = (url: string) => {
     gtag.pageview(url);
   };

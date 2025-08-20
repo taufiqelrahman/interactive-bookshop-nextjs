@@ -2,7 +2,7 @@ import { withTranslation } from 'i18n';
 import LazyLoad, { forceVisible } from 'react-lazyload';
 import { useEffect } from 'react';
 import DOMPurify from 'dompurify';
-import 'styles/fonts.min.css';
+// import 'styles/fonts.min.css'; // @todo change to module
 
 const BookPage = (props: any) => {
   const styleGenerator = (string: any): any => {

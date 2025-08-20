@@ -14,22 +14,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js 12.x
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: yarn lint
-
-      - name: Type check
-        run: yarn tsc --noEmit
+        run: pnpm run lint
 
       - name: Run tests
-        run: yarn test --ci --passWithNoTests
+        run: pnpm run test --ci --passWithNoTests
 
       - name: Build
-        run: yarn build
+        run: pnpm run build

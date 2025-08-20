@@ -16,6 +16,7 @@ WhenIGrowUp is a modern web application for creating personalized children's boo
 ## 🛠 Tech Stack
 
 ### Frontend
+
 - **Next.js 9.1.1** - React framework with SSR/SSG
 - **React 16.11** - UI library
 - **TypeScript** - Type safety
@@ -24,49 +25,57 @@ WhenIGrowUp is a modern web application for creating personalized children's boo
 - **Redux** - State management with Redux Thunk
 
 ### Backend & Services
+
 - **Express.js** - Custom server
 - **GraphQL** - API with Apollo Client
 - **Shopify Buy SDK** - E-commerce integration
 - **Sentry** - Error tracking
 
 ### Development & Testing
+
 - **Jest** - Testing framework
 - **ESLint & Prettier** - Code formatting and linting
 - **Husky** - Git hooks
 - **Bundle Analyzer** - Performance optimization
 
 ### Deployment
+
 - **Docker** - Containerization
 - **PWA** - Progressive Web App features
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 12.16 or higher
+
+- Node.js 22.17 or higher
 - Yarn package manager
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/taufiqelrahman/whenigrowup.git
 cd whenigrowup
 ```
 
 2. Install dependencies:
+
 ```bash
-yarn
+pnpm install
 ```
 
 3. Set up environment variables:
+
 ```bash
 cp .env.example .env.local
 # Edit .env.local with your configuration
 ```
 
 4. Run the development server:
+
 ```bash
-yarn tinker
+pnpm run tinker
 ```
 
 The application will be available at `http://localhost:3000`.
@@ -74,24 +83,28 @@ The application will be available at `http://localhost:3000`.
 ## 📜 Available Scripts
 
 ### Development
-- `yarn dev` - Start development server with debugging
-- `yarn tinker` - Run linting and development server concurrently
-- `yarn debug` - Start server without debugging
+
+- `pnpm run dev` - Start development server with debugging
+- `pnpm run tinker` - Run linting and development server concurrently
+- `pnpm run debug` - Start server without debugging
 
 ### Building & Deployment
-- `yarn build` - Build production application
-- `yarn start` - Start production server
-- `yarn deploy` - Build and start production server
+
+- `pnpm run build` - Build production application
+- `pnpm run start` - Start production server
+- `pnpm run deploy` - Build and start production server
 
 ### Testing & Quality
-- `yarn test` - Run tests in watch mode with coverage
-- `yarn test:ci` - Run tests for CI/CD
-- `yarn test:e2e` - Run end-to-end tests
-- `yarn lint` - Run ESLint and Stylelint
+
+- `pnpm run test` - Run tests in watch mode with coverage
+- `pnpm run test:ci` - Run tests for CI/CD
+- `pnpm run test:e2e` - Run end-to-end tests
+- `pnpm run lint` - Run ESLint and Stylelint
 
 ### Utilities
-- `yarn analyze` - Analyze bundle size
-- `yarn sitemap` - Generate sitemap
+
+- `pnpm run analyze` - Analyze bundle size
+- `pnpm run sitemap` - Generate sitemap
 
 ## 🏗 Project Structure
 
@@ -113,6 +126,7 @@ The application will be available at `http://localhost:3000`.
 ## 🎨 Component Architecture
 
 The project follows Atomic Design principles:
+
 - **Atoms**: Basic building blocks (Button, TextField, etc.)
 - **Molecules**: Simple combinations (FormTextField, CartItem, etc.)
 - **Organisms**: Complex components (BookForm, NavBar, etc.)
@@ -120,26 +134,30 @@ The project follows Atomic Design principles:
 ## 🧪 Testing
 
 The project includes comprehensive testing:
+
 - Unit tests for components
 - Integration tests
 - E2E testing
 - Coverage reporting
 
 Run tests:
+
 ```bash
-yarn test        # Development with watch mode
-yarn test:ci     # CI/CD mode
+pnpm run test        # Development with watch mode
+pnpm run test:ci     # CI/CD mode
 ```
 
 ## 🐳 Docker Deployment
 
 Build and run with Docker:
+
 ```bash
 docker build -t whenigrowup .
 docker run -p 3000:3000 whenigrowup
 ```
 
 Or use docker-compose:
+
 ```bash
 docker-compose up
 ```
@@ -158,6 +176,7 @@ The app supports multiple languages using next-i18next. Language files are confi
 ## 🔧 Environment Variables
 
 Create a `.env.local` file with the following variables:
+
 ```
 # Add your environment variables here
 NODE_ENV=development
@@ -184,6 +203,7 @@ NODE_ENV=development
 5. Open a Pull Request
 
 ### Development Guidelines
+
 - Follow TypeScript best practices
 - Write tests for new features
 - Use conventional commit messages
