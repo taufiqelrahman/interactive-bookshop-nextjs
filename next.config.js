@@ -5,7 +5,7 @@ export default withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })(
   withPWA({
-    // webpack: config => {
+    // webpack: (config) => {
     //   return config;
     // },
     pwa: {

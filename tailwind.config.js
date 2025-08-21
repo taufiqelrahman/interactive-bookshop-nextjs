@@ -1,27 +1,21 @@
 module.exports = {
-  important: true,
+  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  darkMode: false, // or 'media' or 'class'
   theme: {
-    backgroundColor: (theme) => ({
-      ...theme('colors'),
-      brand: '#DE6236',
-      'dark-grey': '#333',
-      'light-grey': '#fafafa',
-    }),
-    textColor: (theme) => ({
-      ...theme('colors'),
-      brand: '#DE6236',
-      'dark-grey': '#333',
-    }),
-    fontFamily: {
-      poppins: ['Poppins', 'serif'],
-      opensans: ['Open Sans', 'sans-serif'],
+    extend: {
+      colors: {
+        brand: '#DE6236',
+        'dark-grey': '#333',
+        'light-grey': '#fafafa',
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'serif'],
+        opensans: ['Open Sans', 'sans-serif'],
+      },
     },
+  },
+  variants: {
     extend: {},
   },
-  variants: {},
   plugins: [],
-  future: {
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-  },
 };
