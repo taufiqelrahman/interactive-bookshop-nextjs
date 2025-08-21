@@ -243,7 +243,7 @@ const BookPreview = (props: any) => {
             className="c-book-preview__container md:h-[var(--dynamic-height)]"
             style={{ '--dynamic-height': `${state.height}px` } as React.CSSProperties}
           >
-            <div className={twMerge('c-flipbook', state.loaded ? 'opacity-100' : 'opacity-0')} id="FlipBook">
+            <div className={twMerge(styles['c-flipbook'], state.loaded ? 'opacity-100' : 'opacity-0')} id="FlipBook">
               {jointPages.map((page, index) => {
                 const [firstPage] = page;
                 return (
@@ -251,7 +251,7 @@ const BookPreview = (props: any) => {
                     key={index}
                     id={index + 1}
                     isLast={index === jointPages.length - 1}
-                    className="c-flipbook__page"
+                    className={styles['c-flipbook__page']}
                     // className={`c-flipbook__page ${pageClass(index)}`}
                     image={getImage(firstPage.occupation.name, firstPage.page_number)}
                     name={props.selected.Name}
