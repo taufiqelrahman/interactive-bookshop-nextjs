@@ -48,7 +48,7 @@ WhenIGrowUp is a modern web application for creating personalized children's boo
 ### Prerequisites
 
 - Node.js 22.17 or higher
-- Yarn package manager
+- Pnpm package manager
 
 ### Installation
 
