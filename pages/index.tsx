@@ -221,11 +221,11 @@ const Index = (props: any): any => {
           &--middle {
             @apply w-full;
             padding-bottom: 227px;
+            /* background: linear-gradient(180deg, #536390 0%, #3ba99c 100%); */
+            background: linear-gradient(180deg, #3d77c7 0%, #228e79 100%);
             @screen md {
               padding-bottom: 240px;
             }
-            /* background: linear-gradient(180deg, #536390 0%, #3ba99c 100%); */
-            background: linear-gradient(180deg, #3d77c7 0%, #228e79 100%);
           }
           &--bottom {
             @apply relative z-10;
@@ -424,12 +424,12 @@ const Index = (props: any): any => {
 Index.getInitialProps = async (ctx: any): Promise<any> => {
   try {
     // @todo uncomment
-    // const [{ data: testi }, { data: occupations }] = await Promise.all([
-    //   api().master.getTestimonials(),
-    //   api().master.getOccupations(),
-    // ]);
-    ctx.reduxStore.dispatch(actions.loadTestimonials(false, []));
-    ctx.reduxStore.dispatch(actions.loadOccupations(false, []));
+    const [{ data: testi }, { data: occupations }] = await Promise.all([
+      api().master.getTestimonials(),
+      api().master.getOccupations(),
+    ]);
+    ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi as any));
+    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations as any));
   } catch (err) {
     console.log(err);
     console.log(err.message);

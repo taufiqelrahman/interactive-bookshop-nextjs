@@ -72,16 +72,16 @@ const App: NextPage<any> = (props: any) => {
   }, []);
 
   // @todo uncomment
-  // const createCartForUser = () => {
-  //   const { dispatch, getState } = reduxStore;
-  //   const { user } = getState().users;
-  //   if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
-  //     dispatch(actions.thunkCreateCart());
-  //   }
-  // };
-  // useEffect(() => {
-  //   createCartForUser();
-  // }, [reduxStore.getState().users]);
+  const createCartForUser = () => {
+    const { dispatch, getState } = reduxStore;
+    const { user } = getState().users;
+    if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
+      dispatch(actions.thunkCreateCart());
+    }
+  };
+  useEffect(() => {
+    createCartForUser();
+  }, [reduxStore.getState().users]);
 
   Router.events.on('routeChangeComplete', () => {
     window.scrollTo({

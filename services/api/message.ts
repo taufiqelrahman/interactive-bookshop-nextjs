@@ -10,6 +10,13 @@ export default class Products {
   }
 
   send(data) {
-    return this.adapter.default.post(`${this.basePath}/send`, data);
+    // return this.adapter.default.post(`${this.basePath}/send`, data);
+    return Promise.resolve({
+      data: {
+        messageId: 1,
+        status: 'sent',
+        ...data,
+      },
+    });
   }
 }

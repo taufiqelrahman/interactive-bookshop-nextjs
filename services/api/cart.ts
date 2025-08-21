@@ -22,6 +22,15 @@ export default class Cart {
   // }
 
   createCart(data) {
-    return this.adapter.secure.post(`${this.basePath}`, data);
+    // return this.adapter.secure.post(`${this.basePath}`, data);
+    return Promise.resolve({
+      data: {
+        cartId: 123,
+        items: data.items || [],
+        total: 100000,
+        createdAt: new Date().toISOString(),
+        ...data,
+      },
+    });
   }
 }
