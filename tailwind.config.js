@@ -1,13 +1,13 @@
 module.exports = {
   important: true,
   theme: {
-    backgroundColor: theme => ({
+    backgroundColor: (theme) => ({
       ...theme('colors'),
       brand: '#DE6236',
       'dark-grey': '#333',
       'light-grey': '#fafafa',
     }),
-    textColor: theme => ({
+    textColor: (theme) => ({
       ...theme('colors'),
       brand: '#DE6236',
       'dark-grey': '#333',

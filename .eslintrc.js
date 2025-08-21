@@ -1,32 +1,42 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  root: true,
+  parser: '@typescript-eslint/parser',
+  plugins: ['import', 'react', 'prettier'],
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
-    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from @typescript-eslint/eslint-plugin
-    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'next',
+    'next/core-web-vitals',
+    'prettier',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
-    ecmaFeatures: {
-      jsx: true, // Allows for the parsing of JSX
-    },
+    ecmaVersion: 2020, // gunakan angka agar aman di ESLint lama
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+  },
+  settings: {
+    react: { version: 'detect' },
+    // supaya plugin import paham path TS/alias
+    'import/resolver': { typescript: true },
   },
   rules: {
-    // Place to specify ESLint rules. Can be used to overwrite rules specified from
-    // the extended configs e.g. "@typescript-eslint/explicit-function-return-type":
-    // "off",
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'no-undef': 'off',
-  },
-  settings: {
-    react: {
-      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
-    },
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
+    'prettier/prettier': 'warn',
   },
 };
