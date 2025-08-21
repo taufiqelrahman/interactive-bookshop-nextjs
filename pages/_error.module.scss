@@ -1,0 +1,50 @@
+.c-error {
+  @apply flex-grow flex flex-col items-center justify-center overflow-hidden bg-cover px-4 text-white;
+  background:
+    url('/static/images/stars-bg.png') no-repeat center center fixed,
+    linear-gradient(180deg, #0b094e 0%, #171763 100%);
+  min-height: calc(100vh - 59px);
+  @screen md {
+    min-height: $ {
+      isindexpage? '100vh' : 'calc(100vh - 80px)';
+    }
+  }
+  &__title {
+    @apply font-semibold;
+    font-size: 80px;
+    line-height: 120px;
+    @screen md {
+      font-size: 150px;
+      line-height: 225px;
+    }
+  }
+  &__message {
+    @apply mb-4 text-center text-sm;
+    line-height: 1.3rem;
+    @screen md {
+      @apply mb-6 text-lg;
+    }
+  }
+  &__planet {
+    @apply absolute;
+    &--blue {
+      width: 199px;
+      left: -100px;
+      top: 10%;
+      @screen md {
+        width: 270px;
+        left: 5%;
+      }
+    }
+    &--red {
+      width: 121px;
+      right: -60px;
+      bottom: 10%;
+      @screen md {
+        width: 159px;
+        right: 5%;
+        bottom: 5%;
+      }
+    }
+  }
+}

@@ -1,28 +1,29 @@
 /* eslint-disable no-useless-escape */
-import React from 'react';
-import { Provider } from 'react-redux';
-import { NextApiResponse, NextPage } from 'next';
-import Head from 'next/head';
 import * as Sentry from '@sentry/browser';
-import { appWithTranslation, i18n, Router } from 'i18n';
-import { useEffect, useState, useCallback, useRef } from 'react';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
+import detectIt from 'detect-it';
+import Cookies from 'js-cookie';
 import debounce from 'lodash.debounce';
+import { NextApiResponse, NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import cookies from 'next-cookies';
 import NProgress from 'nprogress';
-import Cookies from 'js-cookie';
-import detectIt from 'detect-it';
-import dynamic from 'next/dynamic';
-import withReduxStore from 'lib/with-redux-store';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Provider } from 'react-redux';
+
+import { appWithTranslation, i18n, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
+import withReduxStore from 'lib/with-redux-store';
+// import api from 'services/api';
 import actions from 'store/actions';
-import api from 'services/api';
 import 'styles/tailwind.css';
 import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import 'styles/fonts.min.css';
+import 'styles/global.scss';
 
 const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
@@ -47,8 +48,10 @@ const App: NextPage<any> = (props: any) => {
   const { Component, pageProps, reduxStore } = props;
   const [width, setWidth] = useState(0);
 
-  const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
-  const debouncedSetup = useCallback(debounce(() => debouncedFunctionRef.current(), 200), []);
+  const debouncedSetup = useCallback(
+    debounce(() => setWidth(window.innerWidth), 200),
+    [],
+  );
   const handleRouteChange = (url: string) => {
     gtag.pageview(url);
   };
@@ -66,18 +69,19 @@ const App: NextPage<any> = (props: any) => {
       // windows resize
       window.removeEventListener('resize', () => debouncedSetup);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const createCartForUser = () => {
-    const { dispatch, getState } = reduxStore;
-    const { user } = getState().users;
-    if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
-      dispatch(actions.thunkCreateCart());
-    }
-  };
-  useEffect(() => {
-    // @todo uncomment
-    // createCartForUser();
-  }, [reduxStore.getState().users]);
+  // const createCartForUser = () => {
+  //   const { dispatch, getState } = reduxStore;
+  //   const { user } = getState().users;
+  //   if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
+  //     dispatch(actions.thunkCreateCart());
+  //   }
+  // };
+  // @todo uncomment
+  // useEffect(() => {
+  //   createCartForUser();
+  // }, [reduxStore.getState().users]);
   Router.events.on('routeChangeComplete', () => {
     window.scrollTo({
       top: 0,
@@ -167,134 +171,6 @@ const App: NextPage<any> = (props: any) => {
       </Head>
       <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
-      <style jsx global>{`
-        body {
-          @apply font-poppins text-dark-grey;
-          -webkit-box-sizing: border-box;
-          -moz-box-sizing: border-box;
-          box-sizing: border-box;
-        }
-
-        ::selection {
-          @apply bg-brand text-white;
-        }
-
-        .u-container {
-          padding-left: 16px;
-          padding-right: 16px;
-          @screen md {
-            @apply w-11/12 mx-auto;
-            padding-left: 0;
-            padding-right: 0;
-          }
-          &__spread {
-            @apply flex items-center justify-between;
-          }
-          &__page {
-            padding-top: 24px;
-            @screen md {
-              padding-top: 30px;
-              padding-bottom: 30px;
-            }
-            &--large {
-              padding-top: 61px;
-              padding-bottom: 61px;
-            }
-          }
-          @screen lg {
-            @apply w-9/12;
-          }
-        }
-
-        .h-min-screen {
-          @screen md {
-            min-height: calc(100vh - 239px);
-          }
-        }
-
-        /* icons */
-
-        .icon-gift:before {
-          content: '\e99f';
-        }
-        .icon-ico_book:before {
-          content: '\e914';
-        }
-        .icon-ico_premium_account:before {
-          content: '\e915';
-        }
-        .icon-ico_verified:before {
-          content: '\e916';
-        }
-        .icon-whatsapp:before {
-          content: '\ea93';
-        }
-        .icon-duplicate:before {
-          content: '\e913';
-        }
-        .icon-tag_label:before {
-          content: '\e912';
-        }
-        .icon-ui_cross:before {
-          content: '\e911';
-        }
-        .icon-eye-show:before {
-          content: '\e90e';
-          color: #484e5c;
-        }
-        .icon-eye_hide:before {
-          content: '\e90f';
-          color: #484e5c;
-        }
-        .icon-menu:before {
-          content: '\e910';
-        }
-        .icon-cross_check:before {
-          content: '\e90d';
-        }
-        .icon-chevron_up:before {
-          content: '\e90b';
-        }
-        .icon-chevron_down:before {
-          content: '\e90c';
-        }
-        .icon-info:before {
-          content: '\e90a';
-        }
-        .icon-edit:before {
-          content: '\e908';
-        }
-        .icon-trash:before {
-          content: '\e909';
-        }
-        .icon-arrow_left:before {
-          content: '\e907';
-        }
-        .icon-facebook_white:before {
-          content: '\e904';
-          color: #fafafa;
-        }
-        .icon-instagram_white:before {
-          content: '\e905';
-          color: #fafafa;
-        }
-        .icon-twitter_white:before {
-          content: '\e906';
-          color: #fafafa;
-        }
-        .icon-chevron_right:before {
-          content: '\e902';
-        }
-        .icon-chevron_left:before {
-          content: '\e903';
-        }
-        .icon-cart:before {
-          content: '\e900';
-        }
-        .icon-account:before {
-          content: '\e901';
-        }
-      `}</style>
     </Provider>
   );
 };
@@ -342,7 +218,7 @@ App.getInitialProps = async ({ Component, ctx }: any): Promise<any> => {
         // const { data: me } = await api(ctx.req).users.getMe();
         dispatch(actions.setLogin(true));
         dispatch(actions.loadUser(false, {} as any));
-        // eslint-disable-next-line no-empty
+        // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
       } catch (error) {
         // if (error.response && error.response.status === 401) {
         dispatch(actions.setExpired(true));
