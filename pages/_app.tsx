@@ -44,7 +44,7 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 const App: NextPage<any> = (props: any) => {
-  const { Component, pageProps, reduxStore } = props;
+  const { Component, pageProps = {}, reduxStore } = props;
   const [width, setWidth] = useState(0);
 
   const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
@@ -171,7 +171,7 @@ const App: NextPage<any> = (props: any) => {
         {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
       </Head>
       <Pixel />
-      {!!width && <Component isMobile={width < 768} {...pageProps} />}
+      {!!width && Component && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
         body {
           @apply font-poppins text-dark-grey;
@@ -340,7 +340,7 @@ const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApi
 };
 
 App.getInitialProps = async ({ Component, ctx }: any): Promise<any> => {
-  const { dispatch, getState } = ctx.reduxStore;
+  const { dispatch, getState } = ctx.reduxStore || { dispatch: () => {}, getState: () => ({}) };
   if (cookies(ctx).user) {
     if (!getState().users.user) {
       try {
@@ -361,9 +361,9 @@ App.getInitialProps = async ({ Component, ctx }: any): Promise<any> => {
   }
 
   if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
-  return {
-    pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},
-  };
+
+  const cProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  return { pageProps: cProps || {} };
 };
 
 export default appWithTranslation(withReduxStore(App));
