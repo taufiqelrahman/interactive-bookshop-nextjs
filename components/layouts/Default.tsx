@@ -1,14 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { twMerge } from 'tailwind-merge';
 
 import Floating from 'components/atoms/Floating';
 import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';
-
-import styles from './Default.module.scss';
 
 const DefaultLayout = (props: any) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
@@ -45,7 +42,6 @@ const DefaultLayout = (props: any) => {
         props.setErrorMessage('');
       }, 5000);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.state.default.errorMessage]);
 
   return (
@@ -67,16 +63,12 @@ const DefaultLayout = (props: any) => {
         />
       )}
       <div
-        className={twMerge(
-          `${styles['c-layout']} mt-[var(--dynamic-margin-top)]`,
-          props.isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey',
-          isIndexPage ? 'md:mt-0' : 'md:mt-[80px]',
-        )}
-        style={{ ...props.style, marginTop: `${navbarHeight}px` } as React.CSSProperties}
+        className={`c-layout ${props.isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`}
+        style={props.style}
       >
         <ToastContainer
-          className={styles['c-toast__container']}
-          toastClassName={styles['c-toast__toast']}
+          className="c-toast__container"
+          toastClassName="c-toast__toast"
           position={toast.POSITION.TOP_CENTER}
           hideProgressBar={true}
           // autoClose={false}
@@ -84,7 +76,7 @@ const DefaultLayout = (props: any) => {
         {props.children}
       </div>
       {!props.isMobile && <Footer />}
-      <div className={styles['c-overlay']} onClick={hideOverlay}></div>
+      <div className="c-overlay" onClick={hideOverlay}></div>
       {showWhatsapp && (
         <a
           href="https://wa.me/6287777717119?text=Saya%20tertarik%20mengenai%20buku%20When%20I%20Grow%20Up"
@@ -96,6 +88,62 @@ const DefaultLayout = (props: any) => {
           </Floating>
         </a>
       )}
+      <style jsx>{`
+        .c-overlay {
+          @apply opacity-0;
+        }
+        .c-layout {
+          @apply relative overflow-hidden;
+          margin-top: ${navbarHeight}px;
+          @screen md {
+            margin-top: ${isIndexPage ? 0 : '80px'};
+          }
+        }
+      `}</style>
+      <style jsx global>{`
+        .c-overlay {
+          .overlay-active & {
+            @apply fixed left-0 top-0 z-40 h-full w-full;
+            background-color: rgba(51, 51, 51, 0.8);
+            opacity: 1 !important;
+            transition: opacity 0.3s ease-in;
+            @screen md {
+              background-color: rgba(51, 51, 51, 0.5);
+            }
+          }
+        }
+        .c-toast {
+          &__container,
+          &__toast {
+            min-height: 44px !important;
+            @screen md {
+              min-width: 480px !important;
+            }
+          }
+          &__container {
+            top: 64px !important;
+            padding: 0 4px !important;
+            @screen md {
+              margin: 0 !important;
+              top: 105px !important;
+              transform: translateX(-50%) !important;
+            }
+          }
+          &__toast {
+            line-height: 24px;
+            margin-bottom: 8px;
+            @apply text-center font-poppins;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.32);
+            border-radius: 6px;
+            &.Toastify__toast--success {
+              background: #4aa8c6 !important;
+            }
+            &.Toastify__toast--error {
+              background: #de3636 !important;
+            }
+          }
+        }
+      `}</style>
     </div>
   );
 };
