@@ -1,19 +1,22 @@
 import { NextPage } from 'next';
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
+// import { useRouter } from 'next/router';
+import { connect } from 'react-redux';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Link } from 'i18n';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+
+import styles from './_error.module.scss';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Error: NextPage<any> = (props: any) => {
-  const router = useRouter();
-  const isIndexPage = router.pathname === '/';
+  // const router = useRouter();
+  // const isIndexPage = router.pathname === '/';
   const title = () => {
     if (!props.statusCode) return props.t('whoops');
     return props.statusCode;
@@ -39,7 +42,7 @@ const Error: NextPage<any> = (props: any) => {
       </Head>
       <div className="w-full">
         <div className="relative">
-          <div className="c-error">
+          <div className={styles['c-error']}>
             <div className="c-error__title">{title()}</div>
             <div className="c-error__message">{message()}</div>
             <Link href="/">
@@ -57,55 +60,6 @@ const Error: NextPage<any> = (props: any) => {
         </div>
         {props.isMobile && <Footer isMobile={props.isMobile} />}
       </div>
-      <style jsx>{`
-        .c-error {
-          @apply flex items-center justify-center flex-grow flex-col text-white bg-cover px-4 overflow-hidden;
-          background: url('/static/images/stars-bg.png') no-repeat center center fixed,
-            linear-gradient(180deg, #0b094e 0%, #171763 100%);
-          min-height: calc(100vh - 59px);
-          @screen md {
-            min-height: ${isIndexPage ? '100vh' : 'calc(100vh - 80px)'};
-          }
-          &__title {
-            @apply font-semibold;
-            font-size: 80px;
-            line-height: 120px;
-            @screen md {
-              font-size: 150px;
-              line-height: 225px;
-            }
-          }
-          &__message {
-            @apply text-sm mb-4 text-center;
-            line-height: 1.3rem;
-            @screen md {
-              @apply text-lg mb-6;
-            }
-          }
-          &__planet {
-            @apply absolute;
-            &--blue {
-              width: 199px;
-              left: -100px;
-              top: 10%;
-              @screen md {
-                width: 270px;
-                left: 5%;
-              }
-            }
-            &--red {
-              width: 121px;
-              right: -60px;
-              bottom: 10%;
-              @screen md {
-                width: 159px;
-                right: 5%;
-                bottom: 5%;
-              }
-            }
-          }
-        }
-      `}</style>
     </DefaultLayout>
   );
 };

@@ -1,15 +1,19 @@
-import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
-import dynamic from 'next/dynamic';
-import { i18n } from 'i18n';
+import detectIt from 'detect-it';
 import debounce from 'lodash.debounce';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
-import * as gtag from 'lib/gtag';
-import detectIt from 'detect-it';
+import dynamic from 'next/dynamic';
+import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
+import { twMerge } from 'tailwind-merge';
+
 import initBook from 'assets/flipbook.js';
 import BookPage from 'components/atoms/BookPage';
+import { i18n } from 'i18n';
+import * as gtag from 'lib/gtag';
+
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
+import styles from './BookPreview.module.scss';
 
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
@@ -139,13 +143,13 @@ const BookPreview = (props: any) => {
 
   let pageByOccupations = {};
   if (props.bookPages.length > 0) {
-    pageByOccupations = groupby(props.bookPages, page => page.occupation_id);
-    pageByOccupations = sortby(pageByOccupations, group => props.bookPages.indexOf(group[0]));
+    pageByOccupations = groupby(props.bookPages, (page) => page.occupation_id);
+    pageByOccupations = sortby(pageByOccupations, (group) => props.bookPages.indexOf(group[0]));
   }
   // console.log(pageByOccupations);
   const bookPages = [];
-  Object.keys(pageByOccupations).forEach(occupation => {
-    bookPages[occupation] = groupby(pageByOccupations[occupation], page => page.page_number);
+  Object.keys(pageByOccupations).forEach((occupation) => {
+    bookPages[occupation] = groupby(pageByOccupations[occupation], (page) => page.page_number);
   });
   let jointPages: any = [];
   bookPages.forEach((jobs: Array<any>, index) => {
@@ -153,7 +157,7 @@ const BookPreview = (props: any) => {
       jointPages = [...jointPages, jobs[1], jobs[2]];
       return;
     }
-    Object.keys(jobs).forEach(pageNumber => {
+    Object.keys(jobs).forEach((pageNumber) => {
       jointPages = [...jointPages, jobs[pageNumber]];
     });
   });
@@ -181,7 +185,7 @@ const BookPreview = (props: any) => {
   const bookRatio = '700 / 495';
 
   return (
-    <div className="c-book-preview">
+    <div className={styles['c-book-preview']}>
       {/* <div className="c-book-preview__left">
         <span
           className={`c-book-preview__nav icon-chevron_left ${
@@ -235,8 +239,11 @@ const BookPreview = (props: any) => {
               <img src="/static/images/try-me.png" alt="try me" />
             </div>
           )}
-          <div className="c-book-preview__container">
-            <div className="c-flipbook" id="FlipBook">
+          <div
+            className="c-book-preview__container md:h-[var(--dynamic-height)]"
+            style={{ '--dynamic-height': `${state.height}px` } as React.CSSProperties}
+          >
+            <div className={twMerge('c-flipbook', state.loaded ? 'opacity-100' : 'opacity-0')} id="FlipBook">
               {jointPages.map((page, index) => {
                 const [firstPage] = page;
                 return (
@@ -277,325 +284,6 @@ const BookPreview = (props: any) => {
           onClick={lastPage}
         />
       </div> */}
-      <style jsx>{`
-        .c-book-preview {
-          @apply flex items-center bg-light-grey h-full relative flex-col justify-center;
-          @screen md {
-            @apply mt-4 bg-white;
-            flex-direction: unset;
-            justify-content: unset;
-            padding: 0;
-            overflow: unset;
-            height: unset;
-          }
-          &__try {
-            @apply absolute;
-            right: 10%;
-          }
-          &__pages {
-            @apply flex overflow-x-auto w-full;
-            padding: 15px 36px 0;
-          }
-          &__left {
-            @apply w-2/12 flex justify-end;
-            padding-right: 30px;
-            z-index: 2;
-          }
-          &__container {
-            @apply flex flex-row;
-            @screen md {
-              @apply w-full relative;
-              height: ${state.height}px;
-              transition: height 0.5s;
-              z-index: 1;
-              display: unset;
-              flex-direction: unset;
-            }
-          }
-          &__right {
-            @apply w-2/12 flex justify-start;
-            padding-left: 30px;
-            z-index: 2;
-          }
-          &__nav {
-            @apply text-white flex items-center justify-center font-bold cursor-pointer;
-            background: #e1e1e1;
-            border-radius: 50%;
-            height: 44px;
-            width: 44px;
-            .c-book-preview__left &:first-child {
-              margin-right: 12px;
-            }
-            .c-book-preview__right &:last-child {
-              margin-left: 12px;
-            }
-            &:hover {
-              background: #de6236;
-              transition: background 0.5s;
-            }
-            &--disabled {
-              @apply cursor-not-allowed;
-              background: #efeef4;
-              &:hover {
-                background: #efeef4;
-              }
-            }
-          }
-        }
-      `}</style>
-      <style jsx global>{`
-        .c-flipbook {
-          -webkit-perspective: 2200px;
-          perspective: 2200px;
-          -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-          opacity: ${state.loaded ? 1 : 0};
-          position: absolute;
-          left: 0;
-          -webkit-transition: left 0.7s;
-          -o-transition: left 0.7s;
-          transition: left 0.7s;
-          top: 0;
-
-          &:not(.is-ready) * {
-            -webkit-transition: none !important;
-            -o-transition: none !important;
-            transition: none !important;
-          }
-
-          &:after {
-            content: '';
-            display: table;
-            clear: both;
-          }
-
-          &[data-useragent*='MSIE 10.0'] .c-flipbook__page {
-            opacity: 0;
-
-            &.is-active {
-              -webkit-transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              -o-transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease, -webkit-transform 0.9s ease;
-              opacity: 1;
-            }
-
-            &.was-active {
-              -webkit-transition-delay: 2s;
-              -o-transition-delay: 2s;
-              transition-delay: 2s;
-              -webkit-transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              transition: opacity 0.9s ease, -webkit-transform 0.9s ease;
-              -o-transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease;
-              transition: transform 0.9s ease, opacity 0.9s ease, -webkit-transform 0.9s ease;
-              opacity: 0;
-            }
-          }
-
-          &.at-front-cover {
-            left: -25%;
-          }
-
-          &.at-rear-cover {
-            left: 25%;
-          }
-        }
-
-        .is-calling {
-          -webkit-transform: rotateY(-15deg) !important;
-          transform: rotateY(-15deg) !important;
-        }
-
-        .c-flipbook__page {
-          cursor: pointer;
-          overflow: hidden;
-          position: absolute;
-          width: 50%;
-          background: #000;
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          -webkit-transform: rotateY(0);
-          transform: rotateY(0);
-          background: #efeef4;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-          -webkit-transition: none;
-          -o-transition: none;
-          transition: none;
-          height: 100%;
-
-          -webkit-transition: -webkit-transform 0.9s ease;
-          transition: -webkit-transform 0.9s ease;
-          -o-transition: transform 0.9s ease;
-          transition: transform 0.9s ease;
-          transition: transform 0.9s ease, -webkit-transform 0.9s ease;
-
-          &:nth-child(2n) {
-            -webkit-transform-origin: 100%;
-            -ms-transform-origin: 100%;
-            transform-origin: 100%;
-            left: 0;
-            border-radius: 6px 0px 0px 6px;
-
-            &:not(.last-page) {
-              border-right: none;
-            }
-          }
-
-          &:nth-child(odd) {
-            -webkit-transform-origin: 0;
-            -ms-transform-origin: 0;
-            transform-origin: 0;
-            right: 0;
-            -webkit-transform: rotateY(-180deg);
-            transform: rotateY(-180deg);
-            border-radius: 0px 6px 6px 0px;
-
-            &:not(.first-page) {
-              border-left: none;
-            }
-          }
-
-          &.is-active {
-            z-index: 2;
-
-            &:nth-child(2n) {
-              -webkit-transform: rotateY(10deg);
-              transform: rotateY(10deg);
-
-              &:hover {
-                -webkit-transform: rotateY(15deg);
-                transform: rotateY(15deg);
-              }
-            }
-
-            &:nth-child(odd) {
-              -webkit-transform: rotateY(-10deg);
-              transform: rotateY(-10deg);
-
-              &:hover {
-                -webkit-transform: rotateY(-15deg);
-                transform: rotateY(-15deg);
-              }
-
-              ~ .c-flipbook__page {
-                &:nth-child(2n) {
-                  -webkit-transform: rotateY(180deg);
-                  transform: rotateY(180deg);
-                }
-
-                &:nth-child(odd) {
-                  -webkit-transform: rotateY(0);
-                  transform: rotateY(0);
-                }
-              }
-            }
-          }
-
-          &.was-active {
-            z-index: 1;
-          }
-
-          &.is-animating {
-            &:nth-child(odd) {
-              z-index: 4;
-
-              ~ .c-flipbook__page.is-animating {
-                z-index: 3;
-              }
-            }
-
-            + .c-flipbook__page:not(.is-animating):nth-child(odd) {
-              z-index: 1;
-            }
-          }
-        }
-
-        .no-csstransforms3d .c-flipbook__page {
-          display: none;
-
-          &.is-active {
-            display: block;
-            position: relative;
-            float: left;
-          }
-        }
-
-        @supports (transition: transform 0.9s ease) and (not (-ms-ime-align: auto)) {
-          .c-flipbook__page {
-            -webkit-transition: -webkit-transform 0.9s ease;
-            transition: -webkit-transform 0.9s ease;
-            -o-transition: transform 0.9s ease;
-            transition: transform 0.9s ease;
-            transition: transform 0.9s ease, -webkit-transform 0.9s ease;
-          }
-        }
-
-        .c-flipbook__page {
-          &:before {
-            content: '';
-            position: absolute;
-            z-index: 3;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background-size: 100% 100%;
-          }
-
-          &:nth-child(2n).is-active:hover {
-            -webkit-transform: rotateY(5deg);
-            transform: rotateY(5deg);
-          }
-
-          &:nth-child(odd).is-active:hover {
-            -webkit-transform: rotateY(-5deg);
-            transform: rotateY(-5deg);
-          }
-
-          &.is-active:not(:hover) {
-            -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
-          }
-        }
-
-        /* .c-flipbook-image {
-          position: relative;
-          z-index: 2;
-          height: auto;
-          width: 100%;
-          display: block;
-          pointer-events: none;
-        } */
-
-        .c-flipbook__page .ss-loading {
-          font-size: 2rem;
-          position: absolute;
-          z-index: 1;
-          top: 0;
-          bottom: 0;
-          width: 100%;
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-
-          &:before {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            width: 100%;
-          }
-        }
-      `}</style>
     </div>
   );
 };

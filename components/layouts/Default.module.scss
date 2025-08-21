@@ -1,0 +1,49 @@
+.c-overlay {
+  @apply opacity-0;
+}
+.c-layout {
+  @apply relative overflow-hidden;
+}
+
+.c-overlay {
+  .overlay-active & {
+    @apply fixed left-0 top-0 z-40 h-full w-full;
+    background-color: rgba(51, 51, 51, 0.8);
+    opacity: 1 !important;
+    transition: opacity 0.3s ease-in;
+    @screen md {
+      background-color: rgba(51, 51, 51, 0.5);
+    }
+  }
+}
+.c-toast {
+  &__container,
+  &__toast {
+    min-height: 44px !important;
+    @screen md {
+      min-width: 480px !important;
+    }
+  }
+  &__container {
+    top: 64px !important;
+    padding: 0 4px !important;
+    @screen md {
+      margin: 0 !important;
+      top: 105px !important;
+      transform: translateX(-50%) !important;
+    }
+  }
+  &__toast {
+    line-height: 24px;
+    margin-bottom: 8px;
+    @apply text-center font-poppins;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.32);
+    border-radius: 6px;
+    &.Toastify__toast--success {
+      background: #4aa8c6 !important;
+    }
+    &.Toastify__toast--error {
+      background: #de3636 !important;
+    }
+  }
+}

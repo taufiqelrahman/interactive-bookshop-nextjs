@@ -1,0 +1,40 @@
+.c-button {
+  @apply bg-brand text-sm font-semibold text-white;
+  border-radius: 60px;
+
+  @screen md {
+    @apply text-base;
+  }
+
+  &--outline {
+    @apply bg-transparent;
+    border: 2px solid;
+
+    &.c-button--black {
+      @apply text-dark-grey;
+      border-color: #333333;
+    }
+
+    &.c-button--white {
+      @apply border-white;
+    }
+  }
+
+  &--rectangle {
+    border-radius: 6px;
+    padding: 8px 16px;
+  }
+
+  &--small-text {
+    @apply text-sm;
+  }
+
+  &--disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  &--whatsapp {
+    background: #25d366;
+  }
+}
