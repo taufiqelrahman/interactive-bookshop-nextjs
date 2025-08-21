@@ -1,47 +1,16 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import withBundleAnalyzer from '@next/bundle-analyzer';
+import withPWA from 'next-pwa';
+
+export default withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-});
-const withPWA = require('next-pwa');
-const path = require('path');
-const Dotenv = require('dotenv-webpack');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-
-module.exports = withBundleAnalyzer(
+})(
   withPWA({
-    webpack: (config, { dev }) => {
-      config.plugins.push(
-        new Dotenv({
-          path: path.join(__dirname, '.env'),
-          systemvars: true,
-        }),
-      );
-
-      config.resolve.modules.push(path.resolve('./'));
-
-      if (!dev) {
-        config.optimization.minimize = true;
-        config.optimization.minimizer.push(new CssMinimizerPlugin({}));
-        config.optimization.minimizer.push(
-          new TerserPlugin({
-            terserOptions: {
-              ecma: 2020, // <- support optional chaining & nullish coalescing
-              parse: {},
-              compress: {},
-              mangle: true,
-            },
-          }),
-        );
-      }
-      return config;
-    },
+    // webpack: config => {
+    //   return config;
+    // },
     pwa: {
       disable: process.env.NODE_ENV !== 'production',
       publicExcludes: ['!static/images'],
-    },
-    future: {
-      webpack5: true,
     },
   }),
 );
