@@ -1,14 +1,16 @@
-import { withTranslation } from 'i18n';
-import NumberFormat from 'react-number-format';
-import { date } from 'lib/format-date';
-import Card from 'components/atoms/Card';
-import { previewImg } from './helper';
-import Divider from 'components/atoms/Divider';
 import Skeleton from 'react-loading-skeleton';
+import NumberFormat from 'react-number-format';
+
+import Card from 'components/atoms/Card';
+import Divider from 'components/atoms/Divider';
+import { withTranslation } from 'i18n';
 import { mapKeyValue } from 'lib/format-array';
+import { date } from 'lib/format-date';
+
+import { previewImg } from './helper';
 
 const OrderItem = (props: any) => {
-  const lineItems = props.line_items.map(item => ({
+  const lineItems = props.line_items.map((item) => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));
@@ -31,7 +33,7 @@ const OrderItem = (props: any) => {
                   {props.isSkeleton ? (
                     <Skeleton height={24} width={180} />
                   ) : (
-                    lineItems.map(item => item.customAttributes.Name).join(', ')
+                    lineItems.map((item) => item.customAttributes.Name).join(', ')
                   )}
                 </div>
                 <div className="c-order-item__detail__books">
@@ -66,7 +68,7 @@ const OrderItem = (props: any) => {
           &__detail {
             @apply w-full;
             &--top {
-              @apply flex justify-between items-center font-opensans text-xs;
+              @apply flex items-center justify-between font-opensans text-xs;
               color: #898699;
             }
             &__image {
@@ -82,11 +84,11 @@ const OrderItem = (props: any) => {
               line-height: 24px;
             }
             &--middle {
-              @apply flex justify-between items-center;
+              @apply flex items-center justify-between;
               margin: 13px 0;
             }
             &__books {
-              @apply text-sm font-opensans;
+              @apply font-opensans text-sm;
               line-height: 19px;
               margin-top: 3px;
             }

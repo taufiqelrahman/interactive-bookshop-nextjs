@@ -1,12 +1,13 @@
-import { withTranslation, Router } from 'i18n';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import Card from 'components/atoms/Card';
+
 import Button from 'components/atoms/Button';
+import Card from 'components/atoms/Card';
 // import FieldOccupations from 'components/molecules/FieldOccupations';
+import FieldGender from 'components/molecules/FieldGender';
 import FormTextField from 'components/molecules/FormTextField';
 // import FieldAge from 'components/molecules/FieldAge';
-import { useState, useEffect } from 'react';
-import FieldGender from 'components/molecules/FieldGender';
+import { withTranslation, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 
 const BookForm = (props: any) => {
@@ -26,7 +27,7 @@ const BookForm = (props: any) => {
     name: {
       required: { value: true, message: `${props.t('nickname-label')} ${props.t('required-error')}` },
       maxLength: { value: 10, message: `${props.t('nickname-label')} ${props.t('less-than-error')} 10` },
-      validate: value => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
+      validate: (value) => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
     },
     // age: { required: true },
     gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
@@ -52,7 +53,7 @@ const BookForm = (props: any) => {
   //     setState({ ...state, step: stepEnum.DETAIL, occupations: watch('occupations') });
   //   }
   // };
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     // if (props.isMobile && state.step === stepEnum.OCCUPATIONS) {
     //   next();
     //   return;
@@ -172,12 +173,12 @@ const BookForm = (props: any) => {
           &__second-row {
             @apply flex flex-col;
             @screen lg {
-              @apply items-start justify-between flex-row;
+              @apply flex-row items-start justify-between;
             }
             &__inputs {
-              @apply flex flex-col w-full;
+              @apply flex w-full flex-col;
               @screen md {
-                @apply items-start justify-between flex-row;
+                @apply flex-row items-start justify-between;
               }
               @screen lg {
                 @apply w-2/3;

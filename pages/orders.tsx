@@ -1,12 +1,13 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import actions from 'store/actions';
-import api from 'services/api';
+import { connect } from 'react-redux';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Link } from 'i18n';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import api from 'services/api';
+import actions from 'store/actions';
 // import dummyOrders from '_mocks/orders';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -32,7 +33,7 @@ const Orders = (props: any): any => {
         <div className="c-orders-section">
           <div className="c-orders-section__left">
             {orderList.length > 0 ? (
-              orderList.map(item => (
+              orderList.map((item) => (
                 <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
                   <a>
                     {props.isMobile ? (
@@ -75,13 +76,13 @@ const Orders = (props: any): any => {
         }
         .c-orders {
           &__empty {
-            @apply m-auto text-center pb-12 flex flex-col justify-center items-center;
+            @apply m-auto flex flex-col items-center justify-center pb-12 text-center;
             width: 85vw;
             @screen md {
               width: 35vw;
             }
             &__title {
-              @apply text-xl font-semibold mt-2 mb-5;
+              @apply mb-5 mt-2 text-xl font-semibold;
             }
             &__subtitle {
               @apply mb-5 text-sm;
@@ -107,7 +108,7 @@ Orders.getInitialProps = async (ctx: any): Promise<any> => {
       acc[cur.shopify_order_id] = cur.state.name;
       return acc;
     }, {});
-    const orders = rawOrders.map(order => ({ ...order, state: states[order.id] }));
+    const orders = rawOrders.map((order) => ({ ...order, state: states[order.id] }));
     ctx.reduxStore.dispatch(actions.loadOrders(false, orders));
   } catch (err) {
     console.log(err.message);

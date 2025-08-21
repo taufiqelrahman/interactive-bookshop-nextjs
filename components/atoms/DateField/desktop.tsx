@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
+
 import { customStyles, dates, months, years } from './helper';
 
 const DateField = (props: any) => {
@@ -38,7 +39,7 @@ const DateField = (props: any) => {
         placeholder="DD"
         value={date}
         options={dates(month)}
-        onChange={e => handleChange(e, setDate)}
+        onChange={(e) => handleChange(e, setDate)}
       />
       <Select
         styles={customStyles}
@@ -47,7 +48,7 @@ const DateField = (props: any) => {
         placeholder="MM"
         value={month}
         options={months}
-        onChange={e => handleChange(e, setMonth)}
+        onChange={(e) => handleChange(e, setMonth)}
       />
       <Select
         styles={customStyles}
@@ -56,7 +57,7 @@ const DateField = (props: any) => {
         placeholder="YYYY"
         value={year}
         options={years()}
-        onChange={e => handleChange(e, setYear)}
+        onChange={(e) => handleChange(e, setYear)}
       />
       <style jsx>{`
         .c-date-field {

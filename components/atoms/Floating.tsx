@@ -5,7 +5,7 @@ const Floating = (props: any) => {
       {props.children}
       <style jsx>{`
         .c-floating {
-          @apply fixed rounded-full flex items-center justify-center cursor-pointer;
+          @apply fixed flex cursor-pointer items-center justify-center rounded-full;
           width: 60px;
           height: 60px;
           bottom: 3vh;

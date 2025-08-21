@@ -24,7 +24,7 @@ const Testimonial = (props: any) => {
           flex-direction: column;
           justify-content: space-between;
           &__content {
-            @apply italic text-sm w-full text-dark-grey font-opensans;
+            @apply w-full font-opensans text-sm italic text-dark-grey;
             line-height: 22px;
             opacity: 0.8;
             margin-top: 16px;

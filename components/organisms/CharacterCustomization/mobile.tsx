@@ -1,13 +1,15 @@
-import { useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
-import { useEffect, useState, Fragment } from 'react';
-import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 import { useRouter } from 'next/router';
-import * as gtag from 'lib/gtag';
+import { useEffect, useState, Fragment } from 'react';
+import { useForm } from 'react-hook-form';
+
 // import FieldDob from 'components/molecules/FieldDob';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Router } from 'i18n';
+import * as gtag from 'lib/gtag';
+
+import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 
 const FieldOccupations = dynamic(() => import('components/molecules/FieldOccupations'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
@@ -76,7 +78,7 @@ const CharacterCustomization = (props: any) => {
     // }, 500);
   };
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {
       const jobIds = getJobIds(data.Occupations, occupations);
@@ -295,12 +297,12 @@ const CharacterCustomization = (props: any) => {
             @apply overflow-auto;
           }
           &__link {
-            @apply font-semibold cursor-pointer text-sm text-center;
+            @apply cursor-pointer text-center text-sm font-semibold;
             margin-bottom: 18px;
             color: #445ca4;
           }
           &__message {
-            @apply font-semibold text-sm text-center;
+            @apply text-center text-sm font-semibold;
             &__jobs {
               margin-bottom: 8px;
             }
@@ -309,7 +311,7 @@ const CharacterCustomization = (props: any) => {
             @apply flex flex-col justify-between;
           }
           &__preview {
-            @apply bg-light-grey flex justify-center;
+            @apply flex justify-center bg-light-grey;
             padding: 20px 0;
             flex: 100%;
             div {

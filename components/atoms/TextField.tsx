@@ -43,12 +43,12 @@ const TextField = React.forwardRef((props: any, ref: any) => {
       )}
       <style jsx>{`
         .c-text-field {
-          @apply mb-4 relative;
+          @apply relative mb-4;
           @screen md {
             @apply mb-0;
           }
           &__message {
-            @apply text-sm text-left;
+            @apply text-left text-sm;
             margin-top: 7px;
             .c-text-field--error & {
               @apply text-red-600;

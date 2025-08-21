@@ -10,6 +10,6 @@ export default class Products {
   }
 
   send(data) {
-    return this.adapter.default.post(`${this.basePath}/send`, data)
+    return this.adapter.default.post(`${this.basePath}/send`, data);
   }
 }

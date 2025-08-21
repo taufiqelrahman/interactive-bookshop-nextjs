@@ -1,9 +1,9 @@
+import { NextPage } from 'next';
 import React from 'react';
+import { bindActionCreators } from 'redux';
 
 import { initializeStore } from '../store';
 import actions from '../store/actions';
-import { bindActionCreators } from 'redux';
-import { NextPage } from 'next';
 
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
@@ -59,6 +59,6 @@ const withReduxStore = (Component: NextPage<any>) => {
 };
 
 export default withReduxStore;
-export const mapStateToProps = state => ({ state });
-export const mapDispatchToProps = dispatch => ({ ...bindActionCreators(actions, dispatch) });
+export const mapStateToProps = (state) => ({ state });
+export const mapDispatchToProps = (dispatch) => ({ ...bindActionCreators(actions, dispatch) });
 // export type Dispatchable<P> = P & ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>

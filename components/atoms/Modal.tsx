@@ -2,11 +2,11 @@ const Modal = (props: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-modal--${variant}`).join(' ');
+    return variants.map((variant) => `c-modal--${variant}`).join(' ');
   };
   const overlayClass = props.overlay ? `c-modal__overlay--${props.overlay}` : '';
   const zIndexMultiplier = props.zIndexLevel ? 5 * props.zIndexLevel : 1;
-  const onClose = event => {
+  const onClose = (event) => {
     event.stopPropagation();
     props.closeModal();
   };
@@ -22,7 +22,7 @@ const Modal = (props: any) => {
       {props.isOpen && <div className={`c-modal__overlay ${overlayClass}`} onClick={onClose}></div>}
       <style jsx>{`
         .c-modal {
-          @apply fixed bg-white flex flex-col justify-between;
+          @apply fixed flex flex-col justify-between bg-white;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
@@ -35,7 +35,7 @@ const Modal = (props: any) => {
           border-radius: 24px;
           border: 2px solid #e1e0e7;
           &__overlay {
-            @apply fixed top-0 left-0 w-full h-full;
+            @apply fixed left-0 top-0 h-full w-full;
             background-color: rgba(51, 51, 51, 0.8);
             opacity: ${props.isOpen ? 1 : 0};
             transition: opacity 0.3s ease-in;

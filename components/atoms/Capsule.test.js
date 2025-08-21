@@ -1,7 +1,8 @@
+import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
-import { render, screen } from '@testing-library/react';
+
 import Capsule from './Capsule';
 
 describe('components/atoms/Capsule', () => {

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { withTranslation } from 'i18n';
-import Testimonial from 'components/molecules/Testimonial';
-import * as gtag from 'lib/gtag';
+
 import Card from 'components/atoms/Card';
+import Testimonial from 'components/molecules/Testimonial';
+import { withTranslation } from 'i18n';
+import * as gtag from 'lib/gtag';
 
 const TestimonialSlider = (props: any) => {
   const [navRightClass, setNavRightClass] = useState(0);
@@ -66,7 +67,7 @@ const TestimonialSlider = (props: any) => {
           )}
         </div>
         <div className="c-testi-slider__slides">
-          {props.testimonials.map(testi => (
+          {props.testimonials.map((testi) => (
             <Card key={testi.id} className="c-testi-slider__slide">
               <Testimonial testi={testi} />
             </Card>
@@ -92,7 +93,7 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__title {
-            @apply w-3/4 text-center mx-auto;
+            @apply mx-auto w-3/4 text-center;
             @screen md {
               @apply mx-0 text-left;
               width: 550px;
@@ -102,7 +103,7 @@ const TestimonialSlider = (props: any) => {
             @apply flex;
             &--left,
             &--right {
-              @apply bg-white text-lg flex justify-center items-center cursor-pointer;
+              @apply flex cursor-pointer items-center justify-center bg-white text-lg;
               width: 44px;
               height: 44px;
               border-radius: 50%;
@@ -116,7 +117,7 @@ const TestimonialSlider = (props: any) => {
             }
           }
           &__slides {
-            @apply flex mr-0 overflow-x-auto;
+            @apply mr-0 flex overflow-x-auto;
             flex: 1;
             @screen md {
               @apply inline-flex;

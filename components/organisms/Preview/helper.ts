@@ -1,8 +1,9 @@
-import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
+
 import { Router } from 'i18n';
 
-export const schema = props => ({
+export const schema = (props) => ({
   cover: {
     required: {
       value: true,
@@ -23,7 +24,7 @@ export const dummySelected = {
   skin: 'light',
 };
 
-export const showError = error => {
+export const showError = (error) => {
   window.scrollTo(0, 0);
   toast.error(error);
 };
@@ -33,7 +34,7 @@ export const getFromCookies = () => {
   return JSON.parse(Cookies.get('pendingTrx') || '');
 };
 
-export const saveToCookies = cart => {
+export const saveToCookies = (cart) => {
   // save pending trx
   Cookies.set('pendingTrx', JSON.stringify(cart));
   Router.push('/login?from=preview');

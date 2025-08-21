@@ -1,15 +1,16 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link, Router } from 'i18n';
-import { useState, useEffect, Fragment } from 'react';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import * as gtag from 'lib/gtag';
+import { useRouter } from 'next/router';
+import { useState, useEffect, Fragment } from 'react';
+import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Link, Router } from 'i18n';
+import * as gtag from 'lib/gtag';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 // import Footer from 'components/organisms/Footer';
 
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -34,7 +35,7 @@ const Login = (props: any): any => {
     password: { required: true },
     confirmPassword: {
       required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('password') || props.t('form:password-different'),
+      validate: (value) => value === watch('password') || props.t('form:password-different'),
     },
   };
   useEffect(() => {
@@ -65,7 +66,7 @@ const Login = (props: any): any => {
   const forgotPassword = () => {
     setLoginStep(stepEnum.FORGOT);
   };
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     const { email, token } = resetData;
     switch (loginStep) {
       case stepEnum.EMAIL:
@@ -373,7 +374,7 @@ const Login = (props: any): any => {
             }
           }
           &__link {
-            @apply font-semibold cursor-pointer text-sm;
+            @apply cursor-pointer text-sm font-semibold;
             margin-bottom: 18px;
             color: #445ca4;
             @screen md {

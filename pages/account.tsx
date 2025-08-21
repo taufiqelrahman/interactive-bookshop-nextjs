@@ -1,17 +1,18 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation } from 'i18n';
+import debouncePromise from 'awesome-debounce-promise';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
 import Select from 'react-select';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import debouncePromise from 'awesome-debounce-promise';
-import api from 'services/api';
-import actions from 'store/actions';
+
+import TextField from 'components/atoms/TextField';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import TextField from 'components/atoms/TextField';
+import { withTranslation } from 'i18n';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import api from 'services/api';
+import actions from 'store/actions';
 // import Modal from 'components/atoms/Modal';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -57,7 +58,7 @@ const Account = (props: any): any => {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i,
         message: `Email ${props.t('form:invalid-error')}`,
       },
-      validate: debouncePromise(async value => {
+      validate: debouncePromise(async (value) => {
         const { data } = await api().users.checkEmailChange({ email: value });
         return !data.exists || props.t('form:email-exists');
       }, 500), // watch for duplicate email
@@ -71,14 +72,14 @@ const Account = (props: any): any => {
     },
     confirmNewPassword: {
       required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
-      validate: value => value === watch('newPassword') || props.t('form:password-different'),
+      validate: (value) => value === watch('newPassword') || props.t('form:password-different'),
     },
     address: {
       required: { value: true, message: `${props.t('address-label')} ${props.t('form:required-error')}` },
     },
   };
   const customStyles = {
-    menu: provided => ({
+    menu: (provided) => ({
       ...provided,
       marginTop: 0,
       border: '2px solid #333',
@@ -90,7 +91,7 @@ const Account = (props: any): any => {
     indicatorSeparator: () => ({
       display: 'none',
     }),
-    option: provided => ({
+    option: (provided) => ({
       ...provided,
       '&:hover': {
         background: '#333',
@@ -128,7 +129,7 @@ const Account = (props: any): any => {
       watch('zip') === userAddress.zip);
   const editField = (type, isClear, value?): any => {
     const newState = { ...state };
-    Object.keys(newState).forEach(key => {
+    Object.keys(newState).forEach((key) => {
       newState[key].isEdit = false;
     });
     setState({
@@ -147,7 +148,7 @@ const Account = (props: any): any => {
   const provinces = () => {
     const { provinces } = props.state.master;
     if (provinces.length === 0) return [];
-    return provinces.map(prov => ({
+    return provinces.map((prov) => ({
       value: prov.name,
       label: prov.name,
     }));
@@ -159,11 +160,11 @@ const Account = (props: any): any => {
   //   props.thunkSendOtp();
   //   setShowModal(true);
   // };
-  const onChangeProvince = e => {
+  const onChangeProvince = (e) => {
     triggerValidation('province');
     setValue('province', e);
   };
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     let PARAMS = data;
     if (data.province) PARAMS = { ...data, province: data.province.value };
     if (data.newPhone) PARAMS = { ...data, phone: data.newPhone.replace(/^\s+|\s+$/gm, '') };
@@ -553,7 +554,7 @@ const Account = (props: any): any => {
             margin-bottom: 6px;
           }
           &__action {
-            @apply text-brand font-semibold cursor-pointer text-sm;
+            @apply cursor-pointer text-sm font-semibold text-brand;
             line-height: 21px;
             @screen md {
               @apply text-base;
@@ -561,12 +562,12 @@ const Account = (props: any): any => {
             }
           }
           &__link {
-            @apply text-sm font-semibold cursor-pointer;
+            @apply cursor-pointer text-sm font-semibold;
             line-height: 20px;
             margin-left: 12px;
           }
           &__address {
-            @apply text-xs w-full;
+            @apply w-full text-xs;
             color: #898699;
             background: #fcfcff;
             border: 1px solid #efeef4;
@@ -575,7 +576,7 @@ const Account = (props: any): any => {
             line-height: 16px;
             padding: 8px 8px 24px;
             @screen md {
-              @apply text-base bg-transparent border-0 rounded-none p-0 text-dark-grey w-4/5;
+              @apply w-4/5 rounded-none border-0 bg-transparent p-0 text-base text-dark-grey;
               line-height: 22px;
             }
           }

@@ -1,11 +1,12 @@
-import { withTranslation, Link } from 'i18n';
-import { previewImg } from 'components/molecules/CartItem/helper';
 import NumberFormat from 'react-number-format';
+
+import { previewImg } from 'components/molecules/CartItem/helper';
+import { withTranslation, Link } from 'i18n';
 
 const CartDropdown = (props: any) => {
   const cartNotEmpty = !!props.items && props.items.length > 0;
   return (
-    <div onClick={e => e.stopPropagation()}>
+    <div onClick={(e) => e.stopPropagation()}>
       <div className={`c-cart-dropdown ${!cartNotEmpty ? 'c-cart-dropdown--empty' : ''}`}>
         {cartNotEmpty ? (
           <div className="c-cart-dropdown__container">
@@ -64,7 +65,7 @@ const CartDropdown = (props: any) => {
           padding: 18px;
 
           &--empty {
-            @apply flex items-center justify-center italic text-base font-opensans;
+            @apply flex items-center justify-center font-opensans text-base italic;
             left: -15px;
             width: 200px;
             height: 58px;
@@ -81,7 +82,7 @@ const CartDropdown = (props: any) => {
           }
 
           &__item {
-            @apply flex mt-3 justify-between;
+            @apply mt-3 flex justify-between;
             &__image {
               @apply mr-3;
               height: 44px;

@@ -1,5 +1,6 @@
-import Stepper from 'components/atoms/Stepper';
 import { useRouter } from 'next/router';
+
+import Stepper from 'components/atoms/Stepper';
 import { Router } from 'i18n';
 
 const NavBar = (props: any) => {
@@ -36,11 +37,11 @@ const NavBar = (props: any) => {
       </div>
       <style jsx>{`
         .c-nav-bar {
-          @apply fixed top-0 bg-white flex w-full z-30 items-center;
+          @apply fixed top-0 z-30 flex w-full items-center bg-white;
           padding: ${indexOrError ? '14px' : '16px'};
           border-bottom: ${indexOrError ? 'none' : '1px solid #efeef4'};
           &__action {
-            @apply flex justify-center items-center cursor-pointer;
+            @apply flex cursor-pointer items-center justify-center;
             width: 22px;
             font-size: 20px;
             margin-right: ${indexOrError ? 0 : '16px'};
@@ -50,7 +51,7 @@ const NavBar = (props: any) => {
           }
           &__title {
             &--index {
-              @apply flex justify-center items-center w-full;
+              @apply flex w-full items-center justify-center;
               img {
                 width: 33px;
               }

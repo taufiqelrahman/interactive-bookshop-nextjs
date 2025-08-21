@@ -1,7 +1,8 @@
+import { render, waitFor, screen } from '@testing-library/react';
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { unmountComponentAtNode } from 'react-dom';
-import { render, waitFor, screen } from '@testing-library/react';
+
 import Dot from './Dot';
 
 describe('components/atoms/Dot', () => {

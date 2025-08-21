@@ -1,13 +1,15 @@
-import { withTranslation, Router } from 'i18n';
-import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
-import NumberFormat from 'react-number-format';
 import debounce from 'lodash.debounce';
+import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import NumberFormat from 'react-number-format';
+
+import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
 import Divider from 'components/atoms/Divider';
-import { previewImg, updateQuantity } from './helper';
-import Skeleton from 'react-loading-skeleton';
 import Sheet from 'components/atoms/Sheet';
-import Button from 'components/atoms/Button';
+import { withTranslation, Router } from 'i18n';
+
+import { previewImg, updateQuantity } from './helper';
 
 const CartItemMobile = (props: any) => {
   const [quantity, setQuantity] = useState(props.quantity);
@@ -123,7 +125,7 @@ const CartItemMobile = (props: any) => {
                     >
                       -
                     </span>
-                    <input type="number" value={quantity} onChange={e => setQuantity(parseInt(e.target.value, 10))} />
+                    <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
                     <span
                       onClick={() => setQuantity(quantity + 1)}
                       className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__plus"
@@ -170,7 +172,7 @@ const CartItemMobile = (props: any) => {
               }
             }
             &--bottom {
-              @apply flex justify-between items-center;
+              @apply flex items-center justify-between;
             }
             &__image {
               @apply overflow-hidden;
@@ -181,7 +183,7 @@ const CartItemMobile = (props: any) => {
               padding: 4px;
             }
             &__price {
-              @apply font-semibold py-2;
+              @apply py-2 font-semibold;
               &--original {
                 font-size: 14px;
                 text-decoration: line-through;
@@ -196,12 +198,12 @@ const CartItemMobile = (props: any) => {
               margin-bottom: 2px;
             }
             &__jobs {
-              @apply text-sm font-opensans;
+              @apply font-opensans text-sm;
               line-height: 19px;
               margin-bottom: 11px;
             }
             &__notes {
-              @apply text-xs font-opensans;
+              @apply font-opensans text-xs;
               line-height: 16px;
             }
             &__actions {
@@ -232,7 +234,7 @@ const CartItemMobile = (props: any) => {
                 -moz-appearance: textfield; /* Firefox */
               }
               &__button {
-                @apply flex items-center justify-center cursor-pointer;
+                @apply flex cursor-pointer items-center justify-center;
                 width: 32px;
                 background: #efeef4;
                 border: 1px solid #efeef4;

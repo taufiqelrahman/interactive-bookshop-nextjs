@@ -16,17 +16,17 @@ const Toggle = (props: any) => {
 
           /* Hide default HTML checkbox */
           input {
-            @apply opacity-0 w-0 h-0;
+            @apply h-0 w-0 opacity-0;
           }
 
           /* The slider */
           &__slider {
-            @apply absolute cursor-pointer inset-0;
+            @apply absolute inset-0 cursor-pointer;
             -webkit-transition: 0.4s;
             transition: 0.4s;
 
             &:before {
-              @apply bg-dark-grey absolute;
+              @apply absolute bg-dark-grey;
               content: '';
               height: 28px;
               width: 48px;

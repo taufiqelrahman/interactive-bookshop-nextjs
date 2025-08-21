@@ -1,6 +1,7 @@
 import Picker from 'pickerjs';
-import { withTranslation } from 'i18n';
 import { useEffect } from 'react';
+
+import { withTranslation } from 'i18n';
 
 const DatePicker = (props: any) => {
   useEffect(() => {

@@ -1,6 +1,7 @@
 import React from 'react';
-import { withTranslation, Link } from 'i18n';
 import LazyLoad from 'react-lazyload';
+
+import { withTranslation, Link } from 'i18n';
 
 const Footer = React.memo((props: any) => {
   const socialMedia = [
@@ -42,7 +43,7 @@ const Footer = React.memo((props: any) => {
               </Link>
             </div>
             <div className="c-footer__right__social">
-              {socialMedia.map(med => (
+              {socialMedia.map((med) => (
                 <a key={med.icon} href={med.url} target="_blank" rel="noopener noreferrer">
                   <span className={`icon-${med.icon}`} />
                 </a>
@@ -53,7 +54,7 @@ const Footer = React.memo((props: any) => {
       </div>
       <style jsx>{`
         .c-footer {
-          @apply text-sm bg-dark-grey py-3;
+          @apply bg-dark-grey py-3 text-sm;
           padding: 24px 0;
           @screen md {
             padding: 48px 0;
@@ -61,11 +62,11 @@ const Footer = React.memo((props: any) => {
           &__container {
             @apply flex flex-col;
             @screen md {
-              @apply justify-between flex-row;
+              @apply flex-row justify-between;
             }
           }
           &__left {
-            @apply flex items-center flex-col justify-center;
+            @apply flex flex-col items-center justify-center;
             @screen md {
               @apply flex-row;
               justify-content: unset;
@@ -75,7 +76,7 @@ const Footer = React.memo((props: any) => {
               width: 58px;
             }
             &__name {
-              @apply font-semibold text-white text-base;
+              @apply text-base font-semibold text-white;
               line-height: 24px;
               @screen md {
                 @apply text-sm;
@@ -91,7 +92,7 @@ const Footer = React.memo((props: any) => {
               margin-top: 15px;
               margin-bottom: 30px;
               @screen md {
-                @apply text-left my-0;
+                @apply my-0 text-left;
               }
             }
           }
@@ -101,12 +102,12 @@ const Footer = React.memo((props: any) => {
               @apply flex-row;
             }
             &__menu {
-              @apply flex text-white text-center font-semibold underline flex-col;
+              @apply flex flex-col text-center font-semibold text-white underline;
               margin-bottom: 40px;
               height: 110px;
               justify-content: space-evenly;
               @screen md {
-                @apply font-semibold text-left mb-0 no-underline items-end;
+                @apply mb-0 items-end text-left font-semibold no-underline;
                 height: 100px;
                 padding-right: 30px;
                 border-right: 1px solid white;

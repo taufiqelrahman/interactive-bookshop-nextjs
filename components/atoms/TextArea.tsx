@@ -11,14 +11,14 @@ const TextArea = React.forwardRef((props: any, ref: any) => (
           @apply mb-0;
         }
         &__message {
-          @apply text-sm text-left;
+          @apply text-left text-sm;
           margin-top: 7px;
           .c-text-area--error & {
             @apply text-red-600;
           }
         }
         textarea {
-          @apply px-3 w-full;
+          @apply w-full px-3;
           padding: 16px;
           height: 104px;
           border: 2px solid #e1e0e7;

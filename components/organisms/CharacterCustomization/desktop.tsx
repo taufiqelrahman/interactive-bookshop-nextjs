@@ -1,11 +1,14 @@
-import { useForm } from 'react-hook-form';
-import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
-import { withTranslation, Router } from 'i18n';
-import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
-import { useRouter } from 'next/router';
-import * as gtag from 'lib/gtag';
 import detectIt from 'detect-it';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { withTranslation, Router } from 'i18n';
+import * as gtag from 'lib/gtag';
+
+import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
+
 // import Card from 'components/atoms/Card';
 // import FieldDob from 'components/molecules/FieldDob';
 // import DefaultLayout from 'components/layouts/Default';
@@ -51,7 +54,7 @@ const CharacterCustomization = (props: any) => {
     : {};
   const selected = props.state.cart.selected || defaultSelected;
   const { occupations } = props.state.master;
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     if (!router.query.edit) {
       gtag.event({
         action: 'click_create',

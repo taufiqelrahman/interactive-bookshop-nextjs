@@ -1,7 +1,8 @@
 import React from 'react';
-import { withTranslation } from 'i18n';
-import Radio from 'components/atoms/Radio';
+
 import Badge from 'components/atoms/Badge';
+import Radio from 'components/atoms/Radio';
+import { withTranslation } from 'i18n';
 
 const FieldLanguage = (props: any) => (
   <div>
@@ -12,7 +13,7 @@ const FieldLanguage = (props: any) => (
       </div>
       <div className="c-field-language__options">
         {/* dummy */}
-        {['Bahasa Indonesia', 'English'].map(language => (
+        {['Bahasa Indonesia', 'English'].map((language) => (
           <Radio
             key={language}
             ref={props.register(props.schema)}
@@ -34,7 +35,7 @@ const FieldLanguage = (props: any) => (
           @apply mb-0;
         }
         &__header {
-          @apply font-semibold mb-3 flex;
+          @apply mb-3 flex font-semibold;
         }
         &__options {
           @apply flex flex-wrap;

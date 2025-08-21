@@ -14,14 +14,14 @@ export default class Orders {
   // }
 
   loadOrder(orderNumber) {
-    return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`)
+    return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`);
   }
 
   loadOrderGuest(orderNumber) {
-    return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`)
+    return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`);
   }
 
   loadOrders() {
-    return this.adapter.secure.get(this.basePath)
+    return this.adapter.secure.get(this.basePath);
   }
 }

@@ -1,12 +1,13 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation } from 'i18n';
-import PreviewMobile from 'components/organisms/Preview/mobile';
-import PreviewDesktop from 'components/organisms/Preview/desktop';
-import actions from 'store/actions';
-import api from 'services/api';
 import Head from 'next/head';
 import cookies from 'next-cookies';
+import { connect } from 'react-redux';
+
+import PreviewDesktop from 'components/organisms/Preview/desktop';
+import PreviewMobile from 'components/organisms/Preview/mobile';
+import { withTranslation } from 'i18n';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import api from 'services/api';
+import actions from 'store/actions';
 
 const Preview = (props: any): any => (
   <div>

@@ -1,12 +1,13 @@
+import detectIt from 'detect-it';
 import { useRouter } from 'next/router';
 // import { ShoppingCart } from 'react-feather';
 import { useState, useRef, useEffect } from 'react';
-import { withTranslation, Link } from 'i18n';
-import TranslationToggle from 'components/molecules/TranslationToggle';
-import CartDropdown from 'components/molecules/CartDropdown';
-import AccountDropdown from 'components/molecules/AccountDropdown';
+
 import Dot from 'components/atoms/Dot';
-import detectIt from 'detect-it';
+import AccountDropdown from 'components/molecules/AccountDropdown';
+import CartDropdown from 'components/molecules/CartDropdown';
+import TranslationToggle from 'components/molecules/TranslationToggle';
+import { withTranslation, Link } from 'i18n';
 
 const NavBar = (props: any) => {
   const router = useRouter();
@@ -131,7 +132,7 @@ const NavBar = (props: any) => {
             box-shadow: ${isIndexPage ? 'none' : '0px 2px 8px rgba(0, 0, 0, 0.08)'};
 
             .c-nav-bar--sticky & {
-              @apply fixed top-0 inset-x-0 bg-white;
+              @apply fixed inset-x-0 top-0 bg-white;
             }
 
             &__logo {
@@ -141,9 +142,9 @@ const NavBar = (props: any) => {
             }
 
             &__menu {
-              @apply flex items-center text-dark-grey text-xs h-full;
+              @apply flex h-full items-center text-xs text-dark-grey;
               &__item {
-                @apply px-6 py-3 font-semibold cursor-pointer flex items-center;
+                @apply flex cursor-pointer items-center px-6 py-3 font-semibold;
               }
               &__icon {
                 @apply mr-3;
@@ -151,10 +152,10 @@ const NavBar = (props: any) => {
               }
               &__cart,
               &__account {
-                @apply relative h-full flex items-center;
+                @apply relative flex h-full items-center;
 
                 &__button {
-                  @apply mx-6 justify-center cursor-pointer;
+                  @apply mx-6 cursor-pointer justify-center;
                   width: 120px;
                 }
                 &:hover .c-nav-bar__menu__cart__button,

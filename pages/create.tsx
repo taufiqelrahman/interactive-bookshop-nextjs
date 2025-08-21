@@ -1,11 +1,12 @@
+import Head from 'next/head';
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation } from 'i18n';
+
 import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
-import actions from 'store/actions';
+import { withTranslation } from 'i18n';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
-import Head from 'next/head';
+import actions from 'store/actions';
 
 const Create = (props: any): any => (
   <div>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { withTranslation } from 'i18n';
-import Radio from 'components/atoms/Radio';
+
 import Badge from 'components/atoms/Badge';
+import Radio from 'components/atoms/Radio';
+import { withTranslation } from 'i18n';
 
 const FieldAge = (props: any) => {
   const ages = [
@@ -16,7 +17,7 @@ const FieldAge = (props: any) => {
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-age__options">
-          {ages.map(age => (
+          {ages.map((age) => (
             <Radio
               key={age.code}
               value={age.code}
@@ -38,7 +39,7 @@ const FieldAge = (props: any) => {
             @apply mb-0;
           }
           &__header {
-            @apply font-semibold mb-3 flex;
+            @apply mb-3 flex font-semibold;
           }
           &__options {
             @apply flex flex-wrap;

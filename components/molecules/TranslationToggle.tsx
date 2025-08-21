@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
 import Toggle from 'components/atoms/Toggle';
 import { i18n } from 'i18n';
-import { useEffect, useState } from 'react';
 import * as gtag from 'lib/gtag';
 
 const TranslationToggle = (props: any) => {
@@ -38,7 +39,7 @@ const TranslationToggle = (props: any) => {
       </Toggle>
       <style jsx>{`
         .c-translate {
-          @apply flex items-center h-full relative z-10 font-semibold text-xs;
+          @apply relative z-10 flex h-full items-center text-xs font-semibold;
           &__option {
             @apply w-2/4 text-center;
             line-height: 20px;

@@ -1,15 +1,17 @@
-import { withTranslation, Router } from 'i18n';
-import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
-import NumberFormat from 'react-number-format';
 import debounce from 'lodash.debounce';
-import Card from 'components/atoms/Card';
-import Dot from 'components/atoms/Dot';
-import Divider from 'components/atoms/Divider';
-import Popover from 'components/atoms/Popover';
-import { previewImg, updateQuantity } from './helper';
+import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import Modal from 'components/atoms/Modal';
+import NumberFormat from 'react-number-format';
+
 import Button from 'components/atoms/Button';
+import Card from 'components/atoms/Card';
+import Divider from 'components/atoms/Divider';
+import Dot from 'components/atoms/Dot';
+import Modal from 'components/atoms/Modal';
+import Popover from 'components/atoms/Popover';
+import { withTranslation, Router } from 'i18n';
+
+import { previewImg, updateQuantity } from './helper';
 
 const CartItem = (props: any) => {
   const [quantity, setQuantity] = useState(props.quantity);
@@ -135,7 +137,7 @@ const CartItem = (props: any) => {
                     >
                       -
                     </span>
-                    <input type="number" value={quantity} onChange={e => setQuantity(parseInt(e.target.value, 10))} />
+                    <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))} />
                     <span
                       onClick={() => setQuantity(quantity + 1)}
                       className="c-cart-item__detail__quantity__button c-cart-item__detail__quantity__plus"
@@ -185,7 +187,7 @@ const CartItem = (props: any) => {
               border-radius: 12px;
             }
             &__cover {
-              @apply flex text-xs items-center;
+              @apply flex items-center text-xs;
               width: 100px;
               padding: 6px 8px;
               background: #f2f2f6;
@@ -202,7 +204,7 @@ const CartItem = (props: any) => {
               }
             }
             &--bottom {
-              @apply flex justify-between items-center;
+              @apply flex items-center justify-between;
             }
             &__price {
               @apply font-semibold;
@@ -227,7 +229,7 @@ const CartItem = (props: any) => {
               margin-bottom: 13px;
             }
             &__link {
-              @apply font-semibold cursor-pointer;
+              @apply cursor-pointer font-semibold;
               color: #445ca4;
               line-height: 24px;
             }
@@ -259,7 +261,7 @@ const CartItem = (props: any) => {
                 -moz-appearance: textfield; /* Firefox */
               }
               &__button {
-                @apply flex items-center justify-center text-white cursor-pointer;
+                @apply flex cursor-pointer items-center justify-center text-white;
                 width: 36px;
                 background: #e1e1e1;
                 border: 1px solid #e1e1e1;

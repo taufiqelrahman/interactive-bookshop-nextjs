@@ -9,19 +9,18 @@ export default class Products {
   }
 
   getTestimonials() {
-    return this.adapter.default.get('/testimonials')
+    return this.adapter.default.get('/testimonials');
   }
 
   getOccupations() {
-    return this.adapter.default.get('/occupations')
+    return this.adapter.default.get('/occupations');
   }
 
   getBookPages(params) {
-    return this.adapter.default.get(`/book-pages?${queryString.stringify(params)}`)
+    return this.adapter.default.get(`/book-pages?${queryString.stringify(params)}`);
   }
 
   getProvinces() {
-    return this.adapter.default.get('/provinces')
+    return this.adapter.default.get('/provinces');
   }
-
 }

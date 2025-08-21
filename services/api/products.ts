@@ -10,10 +10,10 @@ export default class Products {
   }
 
   get() {
-    return this.adapter.default.get(`${this.basePath}`)
+    return this.adapter.default.get(`${this.basePath}`);
   }
 
   show(slug) {
-    return this.adapter.default.get(`${this.basePath}/${slug}/slug`)
+    return this.adapter.default.get(`${this.basePath}/${slug}/slug`);
   }
 }

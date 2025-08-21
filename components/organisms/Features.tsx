@@ -26,7 +26,7 @@ const Features = (props: any) => {
           @apply py-6;
 
           &__item {
-            @apply mr-3 bg-cover bg-center text-white text-center p-5 text-xl w-1/3 !important;
+            @apply mr-3 w-1/3 bg-cover bg-center p-5 text-center text-xl text-white !important;
             height: 370px;
             &:last-child {
               @apply mr-0;

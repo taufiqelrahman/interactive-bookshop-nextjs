@@ -1,12 +1,15 @@
-import { withTranslation } from 'i18n';
 import dynamic from 'next/dynamic';
-import appConfig from 'config';
-import { Fragment } from 'react';
-import { fullDate } from 'lib/format-date';
-import { retrieveInfo, previewImg } from './helper';
-import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
+import { Fragment } from 'react';
+import Skeleton from 'react-loading-skeleton';
+
 import DefaultLayout from 'components/layouts/Default';
+import appConfig from 'config';
+import { withTranslation } from 'i18n';
+import { fullDate } from 'lib/format-date';
+
+import { retrieveInfo, previewImg } from './helper';
+
 // import dummyOrder from '_mocks/orderDetail';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -83,7 +86,7 @@ const OrderDetailDesktop = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={22} width={250} />
                       ) : (
-                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                        lineItems.map((item) => item.customAttributes.Name).join(', ') || '-'
                       )}
                     </div>
                     <div className="c-detail__label" style={{ marginTop: 30 }}>
@@ -93,7 +96,7 @@ const OrderDetailDesktop = (props: any): any => {
                       <Skeleton height={24} width={115} />
                     ) : hasDedication ? (
                       <Popover
-                        content={lineItems.map(item => (
+                        content={lineItems.map((item) => (
                           <Fragment key={item.id}>
                             <h5>{item.customAttributes.Name}</h5>
                             <div>{item.customAttributes.Dedication}</div>
@@ -177,7 +180,7 @@ const OrderDetailDesktop = (props: any): any => {
             <Card variant="border">
               <div className="c-detail__container">
                 <h2>{props.t('common:order-summary')}</h2>
-                <div className="flex justify-between items-baseline overflow-hidden">
+                <div className="flex items-baseline justify-between overflow-hidden">
                   <div>
                     <div className="c-detail__summary__title">
                       {isFetching ? <Skeleton height={24} width={190} /> : 'When I Grow Up'}
@@ -204,7 +207,7 @@ const OrderDetailDesktop = (props: any): any => {
                   </div>
                 </div>
                 {shippingLine && (
-                  <div className="flex justify-between items-baseline" style={{ marginTop: 16 }}>
+                  <div className="flex items-baseline justify-between" style={{ marginTop: 16 }}>
                     <div>
                       <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
                       <div className="c-detail__summary__label">{shippingName}</div>
@@ -215,8 +218,8 @@ const OrderDetailDesktop = (props: any): any => {
                   </div>
                 )}
                 {discounts &&
-                  discounts.map(discount => (
-                    <div key={discount.code} className="flex justify-between items-baseline" style={{ marginTop: 18 }}>
+                  discounts.map((discount) => (
+                    <div key={discount.code} className="flex items-baseline justify-between" style={{ marginTop: 18 }}>
                       <div>
                         <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>
                         <div className="c-detail__summary__label">{discount.code}</div>
@@ -431,7 +434,7 @@ const OrderDetailDesktop = (props: any): any => {
                 margin-bottom: 18px;
               }
               &__payment {
-                @apply font-semibold text-base;
+                @apply text-base font-semibold;
                 line-height: 24px;
               }
               &__link {
@@ -447,12 +450,12 @@ const OrderDetailDesktop = (props: any): any => {
             color: #999;
           }
           &__value {
-            @apply font-opensans overflow-hidden;
+            @apply overflow-hidden font-opensans;
             line-height: 22px;
             margin-bottom: 13px;
           }
           &__link {
-            @apply font-semibold cursor-pointer;
+            @apply cursor-pointer font-semibold;
             color: #445ca4;
             line-height: 24px;
           }

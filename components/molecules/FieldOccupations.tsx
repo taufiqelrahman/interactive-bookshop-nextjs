@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
+
+import Badge from 'components/atoms/Badge';
+import Checkbox from 'components/atoms/Checkbox';
 import { withTranslation, i18n } from 'i18n';
 // import { useRouter } from 'next/router';
-import Checkbox from 'components/atoms/Checkbox';
-import Badge from 'components/atoms/Badge';
 
 const FieldOccupations = (props: any) => {
   const [occupations, setOccupations]: any = useState([]);
   // const router = useRouter();
   // const isIndexPage = router.pathname === '/';
-  const setValue = value => {
+  const setValue = (value) => {
     setOccupations(value);
     props.setValue('Occupations', value);
     if (props.formState.isSubmitted || value.length > 2) {
       props.triggerValidation('Occupations');
     }
   };
-  const handleCheck = event => {
+  const handleCheck = (event) => {
     const { checked, value } = event.target;
     let newValue: Array<string> = [...occupations];
     if (checked) {
       newValue = [...newValue, value];
     } else {
-      const index = occupations.findIndex(job => job === value);
+      const index = occupations.findIndex((job) => job === value);
       if (index === -1) return;
       newValue.splice(index, 1);
     }
@@ -30,10 +31,10 @@ const FieldOccupations = (props: any) => {
   const occupationsOpts = () => {
     let occupationsOpts = [...props.occupations];
     if ((props.isMobile && props.gender === 'boy') || !props.isMobile) {
-      occupationsOpts = [...props.occupations.filter(job => job.name !== 'President')];
+      occupationsOpts = [...props.occupations.filter((job) => job.name !== 'President')];
     }
     if (props.gender === 'boy') {
-      occupationsOpts = [...occupationsOpts.filter(job => job.name !== 'Ballerina')];
+      occupationsOpts = [...occupationsOpts.filter((job) => job.name !== 'Ballerina')];
     }
     return occupationsOpts;
   };
@@ -42,7 +43,7 @@ const FieldOccupations = (props: any) => {
   }, []);
   useEffect(() => {
     if (props.gender === 'boy' && occupations.includes('Ballerina')) {
-      setValue(occupations.filter(job => job !== 'Ballerina'));
+      setValue(occupations.filter((job) => job !== 'Ballerina'));
     }
   }, [props.gender]);
   return (
@@ -53,7 +54,7 @@ const FieldOccupations = (props: any) => {
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-occupations__options">
-          {occupationsOpts().map(job => (
+          {occupationsOpts().map((job) => (
             <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
                 value={job.name}
@@ -73,7 +74,7 @@ const FieldOccupations = (props: any) => {
       <style jsx>{`
         .c-field-occupations {
           &__header {
-            @apply font-semibold mb-6 flex justify-center;
+            @apply mb-6 flex justify-center font-semibold;
             @screen md {
               @apply justify-start;
             }
@@ -98,7 +99,7 @@ const FieldOccupations = (props: any) => {
                 flex: unset;
               }
               span {
-                @apply justify-center font-bold text-xs;
+                @apply justify-center text-xs font-bold;
                 display: flex;
                 margin-top: 4px;
                 line-height: 16px;

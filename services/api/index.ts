@@ -9,8 +9,8 @@ import Message from './message';
 import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
 
 export interface AdapterObject {
-  default: AxiosInstance,
-  secure: AxiosInstance,
+  default: AxiosInstance;
+  secure: AxiosInstance;
 }
 
 const options = {
@@ -18,16 +18,16 @@ const options = {
   headers: {
     'Content-Type': 'application/json',
   },
-}
+};
 const createAdapter = (): AxiosAdapter => {
   return axios.create(options);
-}
+};
 
 const createSecureAdapter = (req?): AxiosAdapter => {
   let token;
   if (req) {
     // if server-side
-    const userCookie = (req as any).headers.cookie.split(';').filter(cookie => cookie.includes('user='));
+    const userCookie = (req as any).headers.cookie.split(';').filter((cookie) => cookie.includes('user='));
     const cryptedToken = userCookie[0] && userCookie[0].split('=')[1];
     token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
   } else {
@@ -40,10 +40,10 @@ const createSecureAdapter = (req?): AxiosAdapter => {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-    }
-  }
+    },
+  };
   return axios.create(secureOptions);
-}
+};
 
 const apiService = (req?) => {
   const instance = createAdapter();
@@ -51,7 +51,7 @@ const apiService = (req?) => {
   const adapter = {
     default: instance,
     secure: secure,
-  }
+  };
   return {
     cart: new Cart(adapter),
     orders: new Orders(adapter),
@@ -59,7 +59,7 @@ const apiService = (req?) => {
     users: new Users(adapter),
     master: new Master(adapter),
     message: new Message(adapter),
-  }
+  };
 };
 
 export default apiService;

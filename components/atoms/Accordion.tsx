@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import Card from 'components/atoms/Card';
 
 const Accordion = (props: any) => {
@@ -27,9 +28,9 @@ const Accordion = (props: any) => {
             border: 0;
           }
           &__header {
-            @apply flex justify-between items-center cursor-pointer;
+            @apply flex cursor-pointer items-center justify-between;
             h2 {
-              @apply text-sm font-opensans;
+              @apply font-opensans text-sm;
               line-height: 22px;
               @screen md {
                 @apply font-semibold;
@@ -45,7 +46,7 @@ const Accordion = (props: any) => {
             }
           }
           &__body {
-            @apply font-opensans whitespace-pre-wrap text-sm;
+            @apply whitespace-pre-wrap font-opensans text-sm;
             color: #616161;
             line-height: 28px;
             padding-bottom: 20px;

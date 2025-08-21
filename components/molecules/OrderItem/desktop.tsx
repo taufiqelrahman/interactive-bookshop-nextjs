@@ -1,16 +1,18 @@
-import { withTranslation } from 'i18n';
-import NumberFormat from 'react-number-format';
-import { date } from 'lib/format-date';
-import Card from 'components/atoms/Card';
-// import Dot from 'components/atoms/Dot';
-import Capsule from 'components/atoms/Capsule';
-import appConfig from 'config';
-import { previewImg } from './helper';
 import Skeleton from 'react-loading-skeleton';
+import NumberFormat from 'react-number-format';
+
+import Capsule from 'components/atoms/Capsule';
+import Card from 'components/atoms/Card';
+import appConfig from 'config';
+import { withTranslation } from 'i18n';
 import { mapKeyValue } from 'lib/format-array';
+import { date } from 'lib/format-date';
+// import Dot from 'components/atoms/Dot';
+
+import { previewImg } from './helper';
 
 const OrderItem = (props: any) => {
-  const lineItems = (props.line_items || []).map(item => ({
+  const lineItems = (props.line_items || []).map((item) => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));
@@ -33,7 +35,7 @@ const OrderItem = (props: any) => {
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={350} />
                 ) : (
-                  <h2>{lineItems.map(item => item.customAttributes.Name).join(', ')}</h2>
+                  <h2>{lineItems.map((item) => item.customAttributes.Name).join(', ')}</h2>
                 )}
               </div>
               <div className="c-order-item__detail--top--right">
@@ -103,7 +105,7 @@ const OrderItem = (props: any) => {
           &__detail {
             @apply w-4/5;
             &--top {
-              @apply flex justify-between items-center;
+              @apply flex items-center justify-between;
               &--left {
                 h2 {
                   @apply font-bold;
@@ -121,17 +123,17 @@ const OrderItem = (props: any) => {
               margin: 18px 0;
             }
             &--bottom {
-              @apply flex justify-end items-center;
+              @apply flex items-center justify-end;
             }
             &__cover {
-              @apply flex text-xs items-center;
+              @apply flex items-center text-xs;
               width: 100px;
               padding: 6px 8px;
               background: #f2f2f6;
               border-radius: 60px;
             }
             &__label {
-              @apply text-sm font-opensans;
+              @apply font-opensans text-sm;
               line-height: 19px;
               margin-bottom: 3px;
               color: #999;

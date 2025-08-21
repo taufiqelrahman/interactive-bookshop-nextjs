@@ -1,13 +1,14 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
-import NumberFormat from 'react-number-format';
-import { Fragment, useEffect } from 'react';
 import Head from 'next/head';
-import * as gtag from 'lib/gtag';
+import { Fragment, useEffect } from 'react';
+import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Link } from 'i18n';
+import * as gtag from 'lib/gtag';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const CartItem = dynamic(() => import('components/molecules/CartItem/desktop'));
@@ -64,7 +65,7 @@ const Cart = (props: any): any => {
         {items.length > 0 ? (
           <div className="c-cart-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
             <div className="c-cart-section__items">
-              {items.map(item => {
+              {items.map((item) => {
                 return props.isMobile ? (
                   <CartItemMobile
                     key={item.id || item}
@@ -99,7 +100,7 @@ const Cart = (props: any): any => {
                         <h1>{props.t('order-summary')}</h1>
                         <Dot width="12px" color="red" />
                       </div>
-                      <div className="flex justify-between items-baseline">
+                      <div className="flex items-baseline justify-between">
                         <div>
                           <div className="c-cart__summary__title">When I Grow Up</div>
                           <div className="c-cart__summary__quantity">
@@ -116,7 +117,7 @@ const Cart = (props: any): any => {
                         </div>
                       </div>
                       {hasShippingLine && (
-                        <div className="flex justify-between items-baseline" style={{ marginTop: 18 }}>
+                        <div className="flex items-baseline justify-between" style={{ marginTop: 18 }}>
                           <div>
                             <div className="c-cart__summary__title">{props.t('standard-shipping')}</div>
                           </div>
@@ -130,10 +131,10 @@ const Cart = (props: any): any => {
                           </div>
                         </div>
                       )}
-                      {discounts.map(discount => (
+                      {discounts.map((discount) => (
                         <div
                           key={discount.code}
-                          className="flex justify-between items-baseline"
+                          className="flex items-baseline justify-between"
                           style={{ marginTop: 18 }}
                         >
                           <div>
@@ -292,13 +293,13 @@ const Cart = (props: any): any => {
             }
           }
           &__empty {
-            @apply m-auto text-center pb-12 flex flex-col justify-center items-center;
+            @apply m-auto flex flex-col items-center justify-center pb-12 text-center;
             width: 85vw;
             @screen md {
               width: 35vw;
             }
             &__title {
-              @apply text-xl font-semibold mt-2 mb-5;
+              @apply mb-5 mt-2 text-xl font-semibold;
             }
             &__subtitle {
               @apply mb-5 text-sm;

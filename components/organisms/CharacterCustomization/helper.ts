@@ -1,14 +1,14 @@
 import { toast } from 'react-toastify';
 
-export const schema = props => ({
+export const schema = (props) => ({
   occupations: {
     required: { value: true, message: props.t('occupations-invalid') },
-    validate: value => value.length === 3 || props.t('occupations-invalid'),
+    validate: (value) => value.length === 3 || props.t('occupations-invalid'),
   },
   name: {
     required: { value: true, message: `${props.t('nickname-label')} ${props.t('required-error')}` },
     maxLength: { value: 10, message: `${props.t('nickname-label')} ${props.t('less-than-error')} 10` },
-    validate: value => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
+    validate: (value) => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
   },
   age: { required: { value: true, message: `${props.t('age-label')} ${props.t('required-error')}` } },
   // dob: { required: false },
@@ -19,7 +19,7 @@ export const schema = props => ({
   dedication: { required: false },
 });
 
-export const showError = error => {
+export const showError = (error) => {
   window.scrollTo(0, 0);
   toast.error(error);
 };
@@ -44,12 +44,12 @@ export const previewImg = (data, watch, isMobile = false) => {
 };
 
 export const getJobIds = (names, list) => {
-  return names.map(job => {
-    return list.find(occ => occ.name === job).id;
+  return names.map((job) => {
+    return list.find((occ) => occ.name === job).id;
   });
 };
 
-export const loadImg = source => {
+export const loadImg = (source) => {
   const image: any = document.getElementById('preview-char');
   if (!image) return;
   image.src = '/static/images/empty.png';

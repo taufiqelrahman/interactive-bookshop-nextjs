@@ -1,12 +1,13 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import LazyLoad from 'react-lazyload';
 import DOMPurify from 'dompurify';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import LazyLoad from 'react-lazyload';
+import { connect } from 'react-redux';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Link } from 'i18n';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -27,9 +28,9 @@ const Help = (props: any): any => {
     'Vandi',
     'Dhana Bisma',
   ];
-  const renderNames = string => {
+  const renderNames = (string) => {
     let content = string;
-    names.forEach(name => {
+    names.forEach((name) => {
       content = content.replace('[name]', `<strong>${name}</strong>`);
     });
     return DOMPurify.sanitize(content);
@@ -111,12 +112,12 @@ const Help = (props: any): any => {
             @apply mt-5;
           }
           &--long {
-            @apply w-full my-6 leading-normal mx-auto text-sm;
+            @apply mx-auto my-6 w-full text-sm leading-normal;
             strong {
               @apply font-semibold leading-snug;
             }
             @screen md {
-              @apply w-11/12 my-10 text-base;
+              @apply my-10 w-11/12 text-base;
             }
             @screen lg {
               @apply w-10/12;
@@ -132,9 +133,9 @@ const Help = (props: any): any => {
             }
           }
           &--quote {
-            @apply w-10/12 my-8 text-center text-xl leading-normal font-opensans font-bold mx-auto;
+            @apply mx-auto my-8 w-10/12 text-center font-opensans text-xl font-bold leading-normal;
             @screen md {
-              @apply w-7/12 my-12 text-2xl;
+              @apply my-12 w-7/12 text-2xl;
             }
             @screen xl {
               @apply w-6/12;
@@ -148,12 +149,12 @@ const Help = (props: any): any => {
             margin-top: -24px;
           }
           &__powered {
-            @apply mt-6 mb-20 p-6;
+            @apply mb-20 mt-6 p-6;
             @screen md {
-              @apply p-0 mt-12 mb-32;
+              @apply mb-32 mt-12 p-0;
             }
             h5 {
-              @apply font-semibold text-center;
+              @apply text-center font-semibold;
             }
             &__container {
               @apply mt-5 flex justify-center;

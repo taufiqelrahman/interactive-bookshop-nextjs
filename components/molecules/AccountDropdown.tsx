@@ -1,12 +1,12 @@
-import { withTranslation, Link } from 'i18n';
 import Divider from 'components/atoms/Divider';
+import { withTranslation, Link } from 'i18n';
 
 const AccountDropdown = (props: any) => {
   const signOut = () => {
     props.logout();
   };
   return (
-    <div onClick={e => e.stopPropagation()}>
+    <div onClick={(e) => e.stopPropagation()}>
       <div className="c-account-dropdown">
         <div className="c-account-dropdown__item">
           <Link href="/orders">
@@ -30,7 +30,7 @@ const AccountDropdown = (props: any) => {
             padding: 18px;
           }
           &__sign-out {
-            @apply text-brand cursor-pointer;
+            @apply cursor-pointer text-brand;
           }
         }
       `}</style>

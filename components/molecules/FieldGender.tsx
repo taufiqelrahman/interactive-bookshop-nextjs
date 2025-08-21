@@ -1,6 +1,7 @@
 import React from 'react';
-import Radio from 'components/atoms/Radio';
+
 import Badge from 'components/atoms/Badge';
+import Radio from 'components/atoms/Radio';
 import { withTranslation } from 'i18n';
 
 const FieldGender = (props: any) => {
@@ -19,7 +20,7 @@ const FieldGender = (props: any) => {
         </div>
         <div className="c-field-gender__options">
           {/* dummy */}
-          {genders.map(gender => (
+          {genders.map((gender) => (
             <Radio
               key={gender.name}
               ref={props.register(props.schema)}
@@ -44,7 +45,7 @@ const FieldGender = (props: any) => {
             @apply mb-0;
           }
           &__header {
-            @apply font-semibold mb-3 flex;
+            @apply mb-3 flex font-semibold;
           }
           &__options {
             @apply flex flex-wrap;

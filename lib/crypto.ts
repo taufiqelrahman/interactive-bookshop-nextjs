@@ -1,5 +1,6 @@
-import CryptoJS from 'crypto-js';
 import Crypto from 'crypto';
+
+import CryptoJS from 'crypto-js';
 
 // for server
 const secretKey = process.env.SECRET_KEY || '';
@@ -14,7 +15,7 @@ export function encryptTokenClient(token) {
   return json.ciphertext.toString(CryptoJS.enc.Hex);
 }
 
-export const decryptTokenClient = cryptedToken => {
+export const decryptTokenClient = (cryptedToken) => {
   let result = '';
   const options = { mode: CryptoJS.mode.CBC, iv: parsedIv };
   try {
@@ -31,7 +32,7 @@ export const decryptTokenClient = cryptedToken => {
   return result;
 };
 
-export const decryptTokenServer = cryptedToken => {
+export const decryptTokenServer = (cryptedToken) => {
   let result = '';
   const decipher = Crypto.createDecipheriv('aes-256-cbc', secretKey, secretIv);
   const dec = decipher.update(cryptedToken, 'hex', 'utf8');

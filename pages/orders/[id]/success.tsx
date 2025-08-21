@@ -1,15 +1,16 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import cookies from 'next-cookies';
-import actions from 'store/actions';
-import api from 'services/api';
-import { formatPayment } from 'lib/format-payment';
+import { connect } from 'react-redux';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Link } from 'i18n';
+import { formatPayment } from 'lib/format-payment';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import api from 'services/api';
+import actions from 'store/actions';
 
 const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -40,8 +41,8 @@ const OrderSuccess = (props: any): any => {
                   {paymentProblem
                     ? props.t('payment-problem-content')
                     : isLoggedIn
-                    ? props.t('order-success-content')
-                    : props.t('order-success-content-guest')}
+                      ? props.t('order-success-content')
+                      : props.t('order-success-content-guest')}
                 </div>
               </div>
               <div className="c-success__actions">
@@ -64,7 +65,7 @@ const OrderSuccess = (props: any): any => {
         .c-success {
           @apply mx-auto w-full;
           &__container {
-            @apply text-center flex flex-col justify-between;
+            @apply flex flex-col justify-between text-center;
             padding: 29px 0 14px;
             @screen md {
               padding: 42px;
@@ -91,7 +92,7 @@ const OrderSuccess = (props: any): any => {
             }
           }
           &__subtitle {
-            @apply font-opensans mx-auto text-sm;
+            @apply mx-auto font-opensans text-sm;
             line-height: 20px;
             max-width: 540px;
             @screen md {
@@ -100,7 +101,7 @@ const OrderSuccess = (props: any): any => {
             }
           }
           &__link {
-            @apply font-semibold cursor-pointer;
+            @apply cursor-pointer font-semibold;
             color: #445ca4;
             span {
               @apply font-normal;

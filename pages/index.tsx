@@ -1,18 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import * as gtag from 'lib/gtag';
+import React from 'react';
 import LazyLoad from 'react-lazyload';
+import { connect } from 'react-redux';
 import { Link, Element } from 'react-scroll';
-import { withTranslation } from 'i18n';
-import actions from 'store/actions';
+
 // import graphql from 'services/graphql';
 // import api from 'services/api';
-import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation } from 'i18n';
+import * as gtag from 'lib/gtag';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import api from 'services/api';
+import actions from 'store/actions';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
@@ -129,7 +130,7 @@ const Index = (props: any): any => {
       </div>
       <div className="c-section--middle">
         <div className="c-section__jobs--top">
-          {occupationsTop.map(job => (
+          {occupationsTop.map((job) => (
             <div key={job.id} className="c-section__jobs__circle">
               <LazyLoad>
                 <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
@@ -139,7 +140,7 @@ const Index = (props: any): any => {
         </div>
         <div className="c-section__jobs--bottom">
           {occupationsBottom.map(
-            job =>
+            (job) =>
               job.name !== 'President' && (
                 <div key={job.id} className="c-section__jobs__circle">
                   <LazyLoad>
@@ -149,7 +150,7 @@ const Index = (props: any): any => {
               ),
           )}
         </div>
-        <div className="c-section__content text-white c-section__content--middle">
+        <div className="c-section__content c-section__content--middle text-white">
           <h1>{props.t('choosenow-title')}</h1>
           <div className="c-section__content__content">{props.t('choosenow-content')}</div>
           {/* <a href="#create-book">
@@ -187,7 +188,7 @@ const Index = (props: any): any => {
                 linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
             } */
             &__container {
-              @apply flex w-full items-center flex-col-reverse relative;
+              @apply relative flex w-full flex-col-reverse items-center;
               z-index: 1;
               .c-section__start-story & {
                 @apply flex-col;
@@ -211,7 +212,7 @@ const Index = (props: any): any => {
                 @apply object-contain;
               }
               @screen md {
-                @apply w-7/12 flex justify-end;
+                @apply flex w-7/12 justify-end;
                 margin-left: 0;
                 margin-top: 0;
               }
@@ -242,14 +243,16 @@ const Index = (props: any): any => {
               padding-bottom: 60px;
               /* background-color: #f4c574;
               background-image: url('/static/images/create-book-bg-small.png'); */
-              background: url('/static/images/create-book-bg-mweb.png') no-repeat,
+              background:
+                url('/static/images/create-book-bg-mweb.png') no-repeat,
                 linear-gradient(180deg, #bcb776 0%, #ccba75 20%, #f4c574 100%);
               background-size: cover;
               min-height: 630px;
               background-position: center top;
               @screen md {
-                @apply pt-0 pb-0;
-                background: url('/static/images/create-book-bg-small.png') no-repeat,
+                @apply pb-0 pt-0;
+                background:
+                  url('/static/images/create-book-bg-small.png') no-repeat,
                   linear-gradient(180deg, #bcb776 0%, #ccba75 20%, #f4c574 100%);
                 background-position: center bottom;
               }
@@ -257,7 +260,7 @@ const Index = (props: any): any => {
                 background-size: contain;
               }
               h2 {
-                @apply font-semibold mb-8 text-center text-white;
+                @apply mb-8 text-center font-semibold text-white;
                 font-size: 28px;
                 line-height: 42px;
                 @screen md {
@@ -276,7 +279,7 @@ const Index = (props: any): any => {
               padding: 0;
             }
             h1 {
-              @apply font-semibold mb-3;
+              @apply mb-3 font-semibold;
               font-size: 28px;
               line-height: 42px;
               @screen md {
@@ -286,7 +289,7 @@ const Index = (props: any): any => {
               }
             }
             h2 {
-              @apply font-semibold mb-4;
+              @apply mb-4 font-semibold;
               font-size: 28px;
               line-height: 42px;
               @screen md {
@@ -305,7 +308,7 @@ const Index = (props: any): any => {
               }
             }
             &--middle {
-              @apply text-center w-full;
+              @apply w-full text-center;
               h1,
               h2 {
                 @apply text-center;
@@ -327,7 +330,7 @@ const Index = (props: any): any => {
               padding-top: 157px;
             }
             &__book {
-              @apply ml-auto w-5/12 mt-12;
+              @apply ml-auto mt-12 w-5/12;
               img {
                 width: 93px;
                 height: 75px;
@@ -367,7 +370,7 @@ const Index = (props: any): any => {
               }
             }
             & .c-section--top__image {
-              @apply pl-6 mb-8;
+              @apply mb-8 pl-6;
               @screen md {
                 @apply mb-0;
               }
@@ -399,10 +402,10 @@ const Index = (props: any): any => {
               @apply mx-auto flex justify-center;
             }
             &--bottom {
-              @apply mx-auto flex justify-center mb-12 mt-8;
+              @apply mx-auto mb-12 mt-8 flex justify-center;
             }
             &__circle {
-              @apply bg-white mx-4 flex items-center justify-center;
+              @apply mx-4 flex items-center justify-center bg-white;
               width: 120px;
               height: 120px;
               border-radius: 50%;

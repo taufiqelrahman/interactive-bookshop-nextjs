@@ -2,11 +2,11 @@ const Sheet = (props: any) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
-    return variants.map(variant => `c-sheet--${variant}`).join(' ');
+    return variants.map((variant) => `c-sheet--${variant}`).join(' ');
   };
   const overlayClass = props.overlay ? `c-sheet__overlay--${props.overlay}` : '';
   const zIndexMultiplier = props.zIndexLevel ? 5 * props.zIndexLevel : 1;
-  const onClose = event => {
+  const onClose = (event) => {
     event.stopPropagation();
     props.closeSheet();
   };
@@ -30,14 +30,14 @@ const Sheet = (props: any) => {
       {props.isOpen && <div className={`c-sheet__overlay ${overlayClass}`} onClick={onClose}></div>}
       <style jsx>{`
         .c-sheet {
-          @apply absolute w-full bg-white left-0 bottom-0 flex flex-col justify-between;
+          @apply absolute bottom-0 left-0 flex w-full flex-col justify-between bg-white;
           transform: ${props.isOpen ? 'none' : 'translateY(999px)'};
           transition: transform 0.2s ease-in;
           min-height: 268px;
           padding: 16px;
           z-index: ${50 + zIndexMultiplier};
           &__overlay {
-            @apply fixed top-0 left-0 w-full h-full;
+            @apply fixed left-0 top-0 h-full w-full;
             background-color: rgba(51, 51, 51, 0.8);
             opacity: ${props.isOpen ? 1 : 0};
             transition: opacity 0.3s ease-in;

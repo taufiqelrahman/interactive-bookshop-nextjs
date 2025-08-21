@@ -5,7 +5,7 @@ const Badge = (props: any) => {
       {props.children}
       <style jsx>{`
         .c-badge {
-          @apply text-white flex items-center justify-center text-xs mx-2;
+          @apply mx-2 flex items-center justify-center text-xs text-white;
           width: 16px;
           height: 16px;
           background: #de3636;

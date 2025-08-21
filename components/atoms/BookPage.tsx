@@ -1,7 +1,8 @@
-import { withTranslation } from 'i18n';
-import LazyLoad, { forceVisible } from 'react-lazyload';
-import { useEffect } from 'react';
 import DOMPurify from 'dompurify';
+import { useEffect } from 'react';
+import LazyLoad, { forceVisible } from 'react-lazyload';
+
+import { withTranslation } from 'i18n';
 // import 'styles/fonts.min.css'; // @todo change to module
 
 const BookPage = (props: any) => {
@@ -125,7 +126,7 @@ const BookPage = (props: any) => {
             @apply absolute;
           }
           &__limit {
-            @apply absolute h-full w-full flex items-center justify-center top-0 p-8 text-center font-semibold text-xl;
+            @apply absolute top-0 flex h-full w-full items-center justify-center p-8 text-center text-xl font-semibold;
             background: rgba(255, 255, 255, 0.8);
             line-height: 28px;
             font-family: Jost;

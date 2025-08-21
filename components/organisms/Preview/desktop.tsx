@@ -1,11 +1,14 @@
-import { withTranslation, Router } from 'i18n';
-import dynamic from 'next/dynamic';
-import { useForm } from 'react-hook-form';
-import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
-import * as gtag from 'lib/gtag';
+import dynamic from 'next/dynamic';
+import { useEffect, Fragment, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import DefaultLayout from 'components/layouts/Default';
+import { withTranslation, Router } from 'i18n';
+import * as gtag from 'lib/gtag';
+
+import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
+
 // import Modal from 'components/atoms/Modal';
 // import Button from 'components/atoms/Button';
 // import FieldCover from 'components/molecules/FieldCover';
@@ -25,7 +28,7 @@ const PreviewDesktop = (props: any): any => {
   const [tempData, setTempData] = useState(null);
   const { register, handleSubmit, errors, formState, watch } = methods;
   const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = cart => {
+  const addToCart = (cart) => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -46,7 +49,7 @@ const PreviewDesktop = (props: any): any => {
       props.thunkAddToCart(cart);
     }
   };
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     if (!selected) {
       Router.replace('/create');
       return;
@@ -155,7 +158,7 @@ const PreviewDesktop = (props: any): any => {
             @apply flex justify-center;
           }
           &__link {
-            @apply font-semibold cursor-pointer;
+            @apply cursor-pointer font-semibold;
             color: #445ca4;
             span {
               @apply font-normal;

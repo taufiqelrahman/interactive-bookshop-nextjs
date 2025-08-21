@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import Radio from 'components/atoms/Radio';
+
 import Badge from 'components/atoms/Badge';
+import Radio from 'components/atoms/Radio';
 import { withTranslation } from 'i18n';
 
 const FieldHair = (props: any) => {
@@ -31,7 +32,7 @@ const FieldHair = (props: any) => {
         </div>
         <div className="c-field-hair__options">
           {/* dummy */}
-          {hair.map(hair => (
+          {hair.map((hair) => (
             <Radio
               key={hair.name}
               ref={props.register(props.schema)}
@@ -55,7 +56,7 @@ const FieldHair = (props: any) => {
             @apply mb-0;
           }
           &__header {
-            @apply font-semibold mb-3 flex;
+            @apply mb-3 flex font-semibold;
           }
           &__options {
             @apply flex flex-wrap;

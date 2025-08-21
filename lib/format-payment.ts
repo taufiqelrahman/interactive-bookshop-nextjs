@@ -94,7 +94,7 @@ function processUrl(payment) {
   return url;
 }
 
-export const formatPayment = payment => {
+export const formatPayment = (payment) => {
   const type = processType(payment);
   const instance = processInstance(payment);
   const number = processNumber(payment);

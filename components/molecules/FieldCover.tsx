@@ -1,6 +1,7 @@
 import React from 'react';
-import Radio from 'components/atoms/Radio';
+
 import Badge from 'components/atoms/Badge';
+import Radio from 'components/atoms/Radio';
 import { withTranslation } from 'i18n';
 
 const FieldCover = (props: any) => {
@@ -18,7 +19,7 @@ const FieldCover = (props: any) => {
         </div>
         <div className="c-field-cover__options">
           {/* dummy */}
-          {colors.map(cover => (
+          {colors.map((cover) => (
             <Radio
               key={cover.name}
               ref={props.register(props.schema)}
@@ -42,10 +43,10 @@ const FieldCover = (props: any) => {
         .c-field-cover {
           @apply flex flex-col;
           @screen md {
-            @apply items-center flex-row;
+            @apply flex-row items-center;
           }
           &__header {
-            @apply font-semibold flex text-sm;
+            @apply flex text-sm font-semibold;
             margin-bottom: 6px;
             @screen md {
               @apply text-base;

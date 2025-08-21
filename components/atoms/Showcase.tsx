@@ -81,7 +81,7 @@ const Showcase = (props: any) => {
             }
           }
           &__controls {
-            @apply flex cursor-pointer justify-center items-center mb-6;
+            @apply mb-6 flex cursor-pointer items-center justify-center;
             margin-top: 8px;
             @screen md {
               @apply mb-0;
@@ -89,7 +89,7 @@ const Showcase = (props: any) => {
             }
             &--left,
             &--right {
-              @apply text-lg flex justify-center items-center cursor-pointer text-white;
+              @apply flex cursor-pointer items-center justify-center text-lg text-white;
               width: 44px;
               min-width: 44px;
               height: 44px;
@@ -108,7 +108,7 @@ const Showcase = (props: any) => {
             }
           }
           &__thumb {
-            @apply mr-2 bg-white flex items-center justify-center p-3;
+            @apply mr-2 flex items-center justify-center bg-white p-3;
             width: 72px;
             height: 54px;
             border-radius: 4px;

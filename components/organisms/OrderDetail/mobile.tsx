@@ -1,16 +1,18 @@
-import { withTranslation, Router } from 'i18n';
 import dynamic from 'next/dynamic';
-import NumberFormat from 'react-number-format';
-import appConfig from 'config';
-import { useState, useEffect, Fragment } from 'react';
-import { fullDate } from 'lib/format-date';
-import { retrieveInfo } from './helper';
-import { Swipeable } from 'react-swipeable';
-import Skeleton from 'react-loading-skeleton';
 import Head from 'next/head';
+import { useState, useEffect, Fragment } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import NumberFormat from 'react-number-format';
+import { Swipeable } from 'react-swipeable';
 import { toast } from 'react-toastify';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import appConfig from 'config';
+import { withTranslation, Router } from 'i18n';
+import { fullDate } from 'lib/format-date';
+
+import { retrieveInfo } from './helper';
 // import dummyOrder from '_mocks/orderDetail';
 
 const Divider = dynamic(() => import('components/atoms/Divider'));
@@ -51,7 +53,7 @@ const OrderDetailMobile = (props: any): any => {
     Router.push('/orders');
   };
   const screenHeight = '100vh - 59px';
-  const showNote = event => {
+  const showNote = (event) => {
     event.stopPropagation();
     setState({ ...state, showNote: true });
   };
@@ -107,7 +109,7 @@ const OrderDetailMobile = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={19} width={280} />
                       ) : (
-                        lineItems.map(item => item.customAttributes.Name).join(', ') || '-'
+                        lineItems.map((item) => item.customAttributes.Name).join(', ') || '-'
                       )}
                     </div>
                     <div className="c-detail__label">{props.t('common:quantity')}</div>
@@ -162,7 +164,7 @@ const OrderDetailMobile = (props: any): any => {
                         <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
                         <Dot width="12px" color="red" />
                       </div>
-                      <div className="flex justify-between items-baseline">
+                      <div className="flex items-baseline justify-between">
                         <div>
                           <div className="c-detail__summary__title">When I Grow Up</div>
                           <div className="c-detail__summary__label">
@@ -179,7 +181,7 @@ const OrderDetailMobile = (props: any): any => {
                         </div>
                       </div>
                       {shippingLine && (
-                        <div className="flex justify-between items-baseline" style={{ marginTop: 16 }}>
+                        <div className="flex items-baseline justify-between" style={{ marginTop: 16 }}>
                           <div>
                             <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
                             <div className="c-detail__summary__label">{shippingName}</div>
@@ -195,10 +197,10 @@ const OrderDetailMobile = (props: any): any => {
                         </div>
                       )}
                       {discounts &&
-                        discounts.map(discount => (
+                        discounts.map((discount) => (
                           <div
                             key={discount.code}
-                            className="flex justify-between items-baseline"
+                            className="flex items-baseline justify-between"
                             style={{ marginTop: 18 }}
                           >
                             <div>
@@ -233,7 +235,7 @@ const OrderDetailMobile = (props: any): any => {
                                 {props.t('awaiting-payment')} {payment.type}
                               </div>
                               {payment.instance ? (
-                                <div className="flex justify-between items-end">
+                                <div className="flex items-end justify-between">
                                   <div>
                                     <div className="c-detail__summary__info__payment">{payment.instance}</div>
                                     <div className="c-detail__summary__info__payment">{payment.number}</div>
@@ -306,7 +308,7 @@ const OrderDetailMobile = (props: any): any => {
               title={props.t(`common:note-preview`)}
               content={
                 <div className="c-detail__note">
-                  {lineItems.map(item => (
+                  {lineItems.map((item) => (
                     <Fragment key={item.id}>
                       <h5>{item.customAttributes.Name}</h5>
                       <div>{item.customAttributes.Dedication}</div>
@@ -336,7 +338,7 @@ const OrderDetailMobile = (props: any): any => {
           }
           &__order {
             &__info {
-              @apply text-sm mt-6;
+              @apply mt-6 text-sm;
               line-height: 24px;
               background: #f6f5f8;
               border-radius: 12px;
@@ -352,7 +354,7 @@ const OrderDetailMobile = (props: any): any => {
             ${state.extendNote ? 'overflow: auto;' : 'position: absolute;'}
             padding: 16px 0;
             h5 {
-              @apply text-sm font-opensans font-bold;
+              @apply font-opensans text-sm font-bold;
               line-height: 19px;
               margin-bottom: 4px;
             }
@@ -392,7 +394,7 @@ const OrderDetailMobile = (props: any): any => {
               }
             }
             &__subtotal {
-              @apply flex justify-between font-semibold text-sm;
+              @apply flex justify-between text-sm font-semibold;
             }
             &__title {
               @apply mb-1 text-sm;
@@ -444,7 +446,7 @@ const OrderDetailMobile = (props: any): any => {
             }
           }
           &__link {
-            @apply font-semibold cursor-pointer text-sm;
+            @apply cursor-pointer text-sm font-semibold;
             color: #445ca4;
             line-height: 21px;
           }

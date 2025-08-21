@@ -1,6 +1,7 @@
 import React from 'react';
-import TextArea from 'components/atoms/TextArea';
+
 import Badge from 'components/atoms/Badge';
+import TextArea from 'components/atoms/TextArea';
 import { withTranslation } from 'i18n';
 
 const FormTextArea = (props: any) => (
@@ -26,13 +27,13 @@ const FormTextArea = (props: any) => (
           @apply mb-0;
         }
         &__label {
-          @apply font-semibold mb-2 flex text-sm;
+          @apply mb-2 flex text-sm font-semibold;
           @screen md {
             @apply text-base;
           }
         }
         &__hint {
-          @apply text-sm mb-3;
+          @apply mb-3 text-sm;
           line-height: 19px;
           @screen md {
             @apply text-xs;

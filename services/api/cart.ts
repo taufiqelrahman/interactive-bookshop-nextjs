@@ -22,6 +22,6 @@ export default class Cart {
   // }
 
   createCart(data) {
-    return this.adapter.secure.post(`${this.basePath}`, data)
+    return this.adapter.secure.post(`${this.basePath}`, data);
   }
 }

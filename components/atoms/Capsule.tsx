@@ -6,14 +6,14 @@ const Capsule = (props: any) => {
       {props.children}
       <style jsx>{`
         .c-capsule {
-          @apply bg-black font-bold text-sm flex items-center relative;
+          @apply relative flex items-center bg-black text-sm font-bold;
           border-radius: 60px;
           padding: 6px 28px;
           color: white;
           line-height: normal;
 
           &--bar {
-            @apply w-full rounded-none justify-center;
+            @apply w-full justify-center rounded-none;
           }
 
           &--yellow {

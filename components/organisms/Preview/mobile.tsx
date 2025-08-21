@@ -1,12 +1,15 @@
-import { withTranslation, Router } from 'i18n';
-import dynamic from 'next/dynamic';
-import { useForm } from 'react-hook-form';
-import { useEffect, Fragment, useState } from 'react';
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 import Cookies from 'js-cookie';
-import * as gtag from 'lib/gtag';
-import NavBar from 'components/organisms/NavBar/mobile';
+import dynamic from 'next/dynamic';
+import { useEffect, Fragment, useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import DefaultLayout from 'components/layouts/Default';
+import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Router } from 'i18n';
+import * as gtag from 'lib/gtag';
+
+import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
+
 // import BookPreview from 'components/BookPreview';
 // import Sheet from 'components/atoms/Sheet';
 // import Button from 'components/atoms/Button';
@@ -25,7 +28,7 @@ const PreviewMobile = (props: any): any => {
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const selected = props.state.cart.selected || dummySelected || {};
-  const addToCart = cart => {
+  const addToCart = (cart) => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
     } else {
@@ -46,7 +49,7 @@ const PreviewMobile = (props: any): any => {
       props.thunkAddToCart(cart);
     }
   };
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     if (!selected) {
       Router.replace('/create');
       return;
@@ -161,7 +164,7 @@ const PreviewMobile = (props: any): any => {
             @apply flex;
           }
           &__link {
-            @apply font-semibold cursor-pointer text-sm text-center;
+            @apply cursor-pointer text-center text-sm font-semibold;
             color: #445ca4;
             margin-bottom: 18px;
           }
@@ -178,7 +181,7 @@ const PreviewMobile = (props: any): any => {
             }
           }
           &__specs {
-            @apply flex justify-between mb-6 text-sm items-center font-opensans cursor-pointer;
+            @apply mb-6 flex cursor-pointer items-center justify-between font-opensans text-sm;
             box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
             border-radius: 4px;
             padding: 12px;

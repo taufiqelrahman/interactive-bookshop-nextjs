@@ -1,15 +1,16 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import { withTranslation, Link } from 'i18n';
-import React, { useState, useEffect, Fragment, ElementType } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import debouncePromise from 'awesome-debounce-promise';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import api from 'services/api';
-import debouncePromise from 'awesome-debounce-promise';
+import React, { useState, useEffect, Fragment, ElementType } from 'react';
+import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { withTranslation, Link } from 'i18n';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import api from 'services/api';
 // import Footer from 'components/organisms/Footer';
 
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -41,7 +42,7 @@ enum RegisterStep {
   DETAIL = 2,
 }
 
-const Register: React.FC<RegisterProps> = props => {
+const Register: React.FC<RegisterProps> = (props) => {
   const methods = useForm<RegisterFormData>({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const [registerStep, setRegisterStep] = useState<RegisterStep>(RegisterStep.WELCOME);
@@ -285,7 +286,7 @@ const Register: React.FC<RegisterProps> = props => {
             line-height: 22px;
           }
           &__link {
-            @apply font-semibold cursor-pointer text-sm;
+            @apply cursor-pointer text-sm font-semibold;
             margin-bottom: 18px;
             color: #445ca4;
             @screen md {

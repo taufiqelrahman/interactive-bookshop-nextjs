@@ -1,7 +1,9 @@
-import { withTranslation } from 'i18n';
-import Sheet from 'components/atoms/Sheet';
 import React, { useState, useEffect, Fragment } from 'react';
+
 import Button from 'components/atoms/Button';
+import Sheet from 'components/atoms/Sheet';
+import { withTranslation } from 'i18n';
+
 import DatePicker from '../DatePicker';
 
 const DateField = (props: any) => {
@@ -99,7 +101,7 @@ const DateField = (props: any) => {
             @apply mb-0;
           }
           &__child {
-            @apply flex justify-between items-center;
+            @apply flex items-center justify-between;
             border: 2px solid #e1e0e7;
             border-radius: 4px;
             padding: 8px 12px 8px 20px;

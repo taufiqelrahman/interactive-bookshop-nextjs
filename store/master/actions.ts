@@ -1,9 +1,11 @@
 import { captureException } from '@sentry/core';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import * as types from './types';
-import { setErrorMessage } from '../actions';
+
 import api from '../../services/api';
+import { setErrorMessage } from '../actions';
+
+import * as types from './types';
 
 export function loadTestimonials(isFetching, testimonials = []): types.MasterActionTypes {
   return {
@@ -12,21 +14,21 @@ export function loadTestimonials(isFetching, testimonials = []): types.MasterAct
     isFetching,
   };
 }
-export const thunkLoadTestimonials = (): ThunkAction<void, types.MasterState, null, Action<string>> => (
-  dispatch,
-): any => {
-  dispatch(loadTestimonials(true));
-  return api()
-    .master.getTestimonials()
-    .then(({ data }) => {
-      dispatch(loadTestimonials(false, data.data));
-    })
-    .catch(err => {
-      dispatch(loadTestimonials(false));
-      dispatch(setErrorMessage(err.message));
-      captureException(err);
-    });
-};
+export const thunkLoadTestimonials =
+  (): ThunkAction<void, types.MasterState, null, Action<string>> =>
+  (dispatch): any => {
+    dispatch(loadTestimonials(true));
+    return api()
+      .master.getTestimonials()
+      .then(({ data }) => {
+        dispatch(loadTestimonials(false, data.data));
+      })
+      .catch((err) => {
+        dispatch(loadTestimonials(false));
+        dispatch(setErrorMessage(err.message));
+        captureException(err);
+      });
+  };
 
 export function loadOccupations(isFetching, occupations = []): types.MasterActionTypes {
   return {
@@ -35,21 +37,21 @@ export function loadOccupations(isFetching, occupations = []): types.MasterActio
     isFetching,
   };
 }
-export const thunkLoadOccupations = (): ThunkAction<void, types.MasterState, null, Action<string>> => (
-  dispatch,
-): any => {
-  dispatch(loadOccupations(true));
-  return api()
-    .master.getOccupations()
-    .then(({ data }) => {
-      dispatch(loadOccupations(false, data.data));
-    })
-    .catch(err => {
-      dispatch(loadOccupations(false));
-      dispatch(setErrorMessage(err.message));
-      captureException(err);
-    });
-};
+export const thunkLoadOccupations =
+  (): ThunkAction<void, types.MasterState, null, Action<string>> =>
+  (dispatch): any => {
+    dispatch(loadOccupations(true));
+    return api()
+      .master.getOccupations()
+      .then(({ data }) => {
+        dispatch(loadOccupations(false, data.data));
+      })
+      .catch((err) => {
+        dispatch(loadOccupations(false));
+        dispatch(setErrorMessage(err.message));
+        captureException(err);
+      });
+  };
 
 export function loadBookPages(isFetching, bookPages = []): types.MasterActionTypes {
   return {
@@ -79,16 +81,18 @@ export function loadProvinces(isFetching, provinces = []): types.MasterActionTyp
     isFetching,
   };
 }
-export const thunkLoadProvinces = (): ThunkAction<void, types.MasterState, null, Action<string>> => (dispatch): any => {
-  dispatch(loadProvinces(true));
-  return api()
-    .master.getProvinces()
-    .then(({ data }) => {
-      dispatch(loadProvinces(false, data.data));
-    })
-    .catch(err => {
-      dispatch(loadProvinces(false));
-      dispatch(setErrorMessage(err.message));
-      captureException(err);
-    });
-};
+export const thunkLoadProvinces =
+  (): ThunkAction<void, types.MasterState, null, Action<string>> =>
+  (dispatch): any => {
+    dispatch(loadProvinces(true));
+    return api()
+      .master.getProvinces()
+      .then(({ data }) => {
+        dispatch(loadProvinces(false, data.data));
+      })
+      .catch((err) => {
+        dispatch(loadProvinces(false));
+        dispatch(setErrorMessage(err.message));
+        captureException(err);
+      });
+  };

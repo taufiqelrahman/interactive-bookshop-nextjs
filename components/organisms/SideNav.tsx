@@ -1,7 +1,8 @@
-import { withTranslation, Link } from 'i18n';
 import { useEffect } from 'react';
-import TranslationToggle from 'components/molecules/TranslationToggle';
+
 import Button from 'components/atoms/Button';
+import TranslationToggle from 'components/molecules/TranslationToggle';
+import { withTranslation, Link } from 'i18n';
 
 const SideNav = (props: any) => {
   const signOut = () => {
@@ -79,14 +80,14 @@ const SideNav = (props: any) => {
       </div>
       <style jsx>{`
         .c-side-nav {
-          @apply h-screen fixed z-50 top-0 left-0 overflow-x-hidden text-white;
+          @apply fixed left-0 top-0 z-50 h-screen overflow-x-hidden text-white;
           width: ${props.isOpen ? '90vw' : 0};
           background-color: #de6236;
           transition: width 0.3s ease-in;
           &__container {
             opacity: ${props.isOpen ? 1 : 0};
             transition: opacity 0.3s ease-in;
-            @apply flex flex-col justify-between h-full;
+            @apply flex h-full flex-col justify-between;
             padding: 32px 58px;
           }
           &__header {
@@ -125,7 +126,7 @@ const SideNav = (props: any) => {
             }
           }
           &__footer {
-            @apply text-white font-opensans text-sm;
+            @apply font-opensans text-sm text-white;
             &__sign-out {
               @apply cursor-pointer font-semibold;
               margin-top: 24px;

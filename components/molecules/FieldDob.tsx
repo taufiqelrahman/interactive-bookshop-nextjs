@@ -1,7 +1,8 @@
 import React from 'react';
-import { withTranslation } from 'i18n';
+
 import DateField from 'components/atoms/DateField/desktop';
 import DateFieldMobile from 'components/atoms/DateField/mobile';
+import { withTranslation } from 'i18n';
 // import Badge from 'components/atoms/Badge';
 
 const FieldDob = (props: any) => {
@@ -16,7 +17,7 @@ const FieldDob = (props: any) => {
       <style jsx>{`
         .c-field-dob {
           &__header {
-            @apply font-semibold mb-3 flex text-sm;
+            @apply mb-3 flex text-sm font-semibold;
             @screen md {
               @apply text-base;
             }

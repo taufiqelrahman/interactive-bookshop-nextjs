@@ -1,6 +1,7 @@
 import React from 'react';
-import Radio from 'components/atoms/Radio';
+
 import Badge from 'components/atoms/Badge';
+import Radio from 'components/atoms/Radio';
 import { withTranslation } from 'i18n';
 
 const FieldSkin = (props: any) => {
@@ -18,7 +19,7 @@ const FieldSkin = (props: any) => {
         </div>
         <div className="c-field-skin__options">
           {/* dummy */}
-          {skins.map(skin => (
+          {skins.map((skin) => (
             <Radio
               key={skin.name}
               ref={props.register(props.schema)}
@@ -46,7 +47,7 @@ const FieldSkin = (props: any) => {
             @apply mb-0;
           }
           &__header {
-            @apply font-semibold mb-3 flex;
+            @apply mb-3 flex font-semibold;
           }
           &__options {
             @apply flex flex-wrap;

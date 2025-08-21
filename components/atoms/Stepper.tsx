@@ -20,9 +20,9 @@ const Stepper = ({ backButton = true, isMobile = false, ...props }: any) => {
       </div>
       <style jsx>{`
         .c-stepper {
-          @apply flex items-end w-full;
+          @apply flex w-full items-end;
           &__back {
-            @apply font-bold cursor-pointer;
+            @apply cursor-pointer font-bold;
             margin-right: 12px;
             line-height: 39px;
             font-size: 24px;
@@ -34,7 +34,7 @@ const Stepper = ({ backButton = true, isMobile = false, ...props }: any) => {
             font-size: 18px;
             margin-top: 6px;
             @screen md {
-              @apply font-bold mt-0;
+              @apply mt-0 font-bold;
               font-size: 28px;
               line-height: 42px;
             }

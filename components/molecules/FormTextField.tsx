@@ -1,7 +1,8 @@
 import React from 'react';
-import { withTranslation } from 'i18n';
-import TextField from 'components/atoms/TextField';
+
 import Badge from 'components/atoms/Badge';
+import TextField from 'components/atoms/TextField';
+import { withTranslation } from 'i18n';
 
 const FormTextField: any = (props: any) => {
   return (
@@ -20,7 +21,7 @@ const FormTextField: any = (props: any) => {
             @apply mb-0;
           }
           &__label {
-            @apply font-semibold mb-3 flex text-sm;
+            @apply mb-3 flex text-sm font-semibold;
             @screen md {
               @apply text-base;
             }

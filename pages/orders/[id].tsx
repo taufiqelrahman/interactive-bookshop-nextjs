@@ -1,11 +1,12 @@
-import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
-import OrderDetailMobile from 'components/organisms/OrderDetail/mobile';
-import OrderDetailDesktop from 'components/organisms/OrderDetail/desktop';
-import actions from 'store/actions';
-import api from 'services/api';
-import { formatPayment } from 'lib/format-payment';
 import cookies from 'next-cookies';
+import { connect } from 'react-redux';
+
+import OrderDetailDesktop from 'components/organisms/OrderDetail/desktop';
+import OrderDetailMobile from 'components/organisms/OrderDetail/mobile';
+import { formatPayment } from 'lib/format-payment';
+import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import api from 'services/api';
+import actions from 'store/actions';
 
 const OrderDetail = (props: any): any => {
   if (props.isMobile) {

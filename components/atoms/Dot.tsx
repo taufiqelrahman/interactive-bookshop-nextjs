@@ -5,7 +5,7 @@ const Dot = (props: any) => {
       <span className={`c-dot ${colorVariant}`} data-testid="span" />
       <style jsx>{`
         .c-dot {
-          @apply bg-black flex mx-1;
+          @apply mx-1 flex bg-black;
           width: ${props.width || '6px'};
           height: ${props.width || '6px'};
           border-radius: 50%;
