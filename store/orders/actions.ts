@@ -63,7 +63,7 @@ export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Ac
   return api()
     .orders.loadOrders()
     .then(({ data }) => {
-      dispatch(loadOrders(false, data.data));
+      dispatch(loadOrders(false, data.data.orders));
     })
     .catch((err) => {
       dispatch(loadOrders(false));

@@ -428,8 +428,8 @@ Index.getInitialProps = async (ctx: any): Promise<any> => {
       api().master.getTestimonials(),
       api().master.getOccupations(),
     ]);
-    ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi as any));
-    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations as any));
+    ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi.data));
+    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
   } catch (err) {
     console.log(err);
     console.log(err.message);

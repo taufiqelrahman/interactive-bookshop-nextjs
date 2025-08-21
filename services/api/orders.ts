@@ -17,11 +17,16 @@ export default class Orders {
     // return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`);
     return Promise.resolve({
       data: {
-        orderNumber,
-        status: 'PAID',
-        items: [{ id: 1, name: 'Book 1', qty: 1, price: 100000 }],
-        total: 100000,
-        createdAt: new Date().toISOString(),
+        data: {
+          id: 1,
+          user_id: 1,
+          state_id: 1,
+          updated_at: new Date().toISOString(),
+          deleted_at: null,
+          shopify_order_id: 'gid://shopify/Order/1234567890',
+          order_number: 'ORD001',
+          created_at: new Date().toISOString(),
+        },
       },
     });
   }
@@ -30,12 +35,14 @@ export default class Orders {
     // return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`);
     return Promise.resolve({
       data: {
-        orderNumber,
-        status: 'PAID',
-        items: [{ id: 1, name: 'Book 1', qty: 1, price: 100000 }],
-        total: 100000,
-        guest: true,
-        createdAt: new Date().toISOString(),
+        id: 1,
+        user_id: 1,
+        state_id: 1,
+        updated_at: new Date().toISOString(),
+        deleted_at: null,
+        shopify_order_id: 'gid://shopify/Order/1234567890',
+        order_number: 'ORD001',
+        created_at: new Date().toISOString(),
       },
     });
   }
@@ -43,20 +50,46 @@ export default class Orders {
   loadOrders() {
     // return this.adapter.secure.get(this.basePath);
     return Promise.resolve({
-      data: [
-        {
-          orderNumber: 'ORD001',
-          status: 'PAID',
-          total: 100000,
-          createdAt: new Date().toISOString(),
+      data: {
+        data: {
+          order_states: [
+            {
+              shopify_order_id: 'gid://shopify/Order/1234567890',
+              state: {
+                name: 'PAID',
+              },
+            },
+            {
+              shopify_order_id: 'gid://shopify/Order/0987654321',
+              state: {
+                name: 'PENDING',
+              },
+            },
+          ],
+          orders: [
+            {
+              id: 1,
+              user_id: 1,
+              state_id: 1,
+              updated_at: new Date().toISOString(),
+              deleted_at: null,
+              shopify_order_id: 'gid://shopify/Order/1234567890',
+              order_number: 'ORD001',
+              created_at: new Date().toISOString(),
+            },
+            {
+              id: 2,
+              user_id: 1,
+              state_id: 2,
+              updated_at: new Date().toISOString(),
+              deleted_at: null,
+              shopify_order_id: 'gid://shopify/Order/0987654321',
+              order_number: 'ORD002',
+              created_at: new Date().toISOString(),
+            },
+          ],
         },
-        {
-          orderNumber: 'ORD002',
-          status: 'PENDING',
-          total: 200000,
-          createdAt: new Date().toISOString(),
-        },
-      ],
+      },
     });
   }
 }

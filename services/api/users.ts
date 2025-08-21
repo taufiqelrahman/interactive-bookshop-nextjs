@@ -27,7 +27,7 @@ export default class Products {
 
   checkEmailChange(data) {
     // return this.adapter.secure.post('/check-email-change', data);
-    return Promise.resolve({ data: { canChange: data.email !== 'existing@example.com' } });
+    return Promise.resolve({ data: { exists: data.email === 'existing@example.com' } });
   }
 
   login(data) {
@@ -63,6 +63,9 @@ export default class Products {
         email: 'mockuser@example.com',
         name: 'Mock User',
         isLoggedIn: true,
+        cart: {
+          checkout_id: 'chk_123',
+        },
       },
     });
   }
