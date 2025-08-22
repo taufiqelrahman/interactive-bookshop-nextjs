@@ -8,13 +8,14 @@ import debounce from 'lodash.debounce';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import cookies from 'next-cookies';
 import NProgress from 'nprogress';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { appWithTranslation, i18n, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
-// import api from 'services/api';
+import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
 
@@ -23,6 +24,9 @@ import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import 'styles/fonts.min.css';
+
+const LOGIN_ROUTES = ['/login', '/register'];
+const PRIVATE_ROUTES = ['/orders/success', '/account', '/orders'];
 
 const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
@@ -306,96 +310,52 @@ function WiguApp({ Component, pageProps }: AppProps) {
   );
 }
 
-// @todo create route checking
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
+  try {
+    if (cookies(ctx).user) {
+      if (!store.getState().users?.user) {
+        try {
+          const { data: me } = await api(ctx.req).users.getMe();
+          store.dispatch(actions.setLogin(true));
+          store.dispatch(actions.loadUser(false, me));
+        } catch {
+          store.dispatch(actions.setExpired(true));
+        }
+      }
 
-// const redirectPrivateRoutes = ({
-//   pathname,
-//   res,
-//   reduxStore,
-// }: {
-//   pathname: string;
-//   res: NextApiResponse;
-//   reduxStore: any;
-// }) => {
-//   const privateRoutes = ['/orders/success', '/account', '/orders'];
-//   if (privateRoutes.includes(pathname)) {
-//     const redirectTo = pathname.split('/')[1];
-//     const login = `/login?from=${redirectTo}`;
-//     if (res) {
-//       res.writeHead(302, { Location: login });
-//       res.end();
-//       return { pageProps: {}, initialReduxState: reduxStore.getState() };
-//     } else {
-//       Router.replace(login);
-//       return { pageProps: {}, initialReduxState: reduxStore.getState() };
-//     }
-//   }
-//   return null;
-// };
+      if (LOGIN_ROUTES.includes(ctx.resolvedUrl)) {
+        return {
+          redirect: {
+            destination: '/',
+            permanent: false,
+          },
+        };
+      }
+    } else {
+      store.dispatch(actions.setLogin(false));
+      if (PRIVATE_ROUTES.includes(ctx.resolvedUrl)) {
+        const redirectTo = ctx.resolvedUrl.split('/')[1];
+        const login = `/login?from=${redirectTo}`;
+        return {
+          redirect: {
+            destination: login,
+            permanent: false,
+          },
+        };
+      }
+    }
 
-// const redirectLoginRoutes = ({
-//   pathname,
-//   res,
-//   reduxStore,
-// }: {
-//   pathname: string;
-//   res: NextApiResponse;
-//   reduxStore: any;
-// }) => {
-//   const loginRoutes = ['/login', '/register'];
-//   if (loginRoutes.includes(pathname)) {
-//     const home = '/';
-//     if (res) {
-//       res.writeHead(302, { Location: home });
-//       res.end();
-//       return { pageProps: {}, initialReduxState: reduxStore.getState() };
-//     } else {
-//       Router.replace(home);
-//       return { pageProps: {}, initialReduxState: reduxStore.getState() };
-//     }
-//   }
-//   return null;
-// };
+    if (store.getState().default?.errorMessage) {
+      store.dispatch(actions.setErrorMessage(''));
+    }
+  } catch (err: any) {
+    console.error('🔥 WiguApp.getInitialProps crashed:', err);
+  }
 
-// WiguApp.getInitialProps = async (appContext: any) => {
-//   const { ctx } = appContext;
-//   const reduxStore = getOrCreateStore();
-//   ctx.reduxStore = reduxStore;
-//   const { dispatch, getState } = ctx.reduxStore;
-
-//   try {
-//     // if (cookies(ctx).user) {
-//     //   if (!getState().users?.user) {
-//     //     try {
-//     //       const { data: me } = await api(ctx.req).users.getMe();
-//     //       dispatch(actions.setLogin(true));
-//     //       dispatch(actions.loadUser(false, me));
-//     //     } catch {
-//     //       dispatch(actions.setExpired(true));
-//     //     }
-//     //   }
-//     //   const redirectRes = redirectLoginRoutes(ctx);
-//     //   if (redirectRes) return redirectRes;
-//     // } else {
-//     //   dispatch(actions.setLogin(false));
-//     //   const redirectRes = redirectPrivateRoutes(ctx);
-//     //   if (redirectRes) return redirectRes;
-//     // }
-
-//     if (getState().default?.errorMessage) {
-//       dispatch(actions.setErrorMessage(''));
-//     }
-
-//     return {
-//       pageProps: {},
-//       initialReduxState: reduxStore.getState(),
-//     };
-//   } catch (err) {
-//     console.error('🔥 WiguApp.getInitialProps crashed:', err);
-//     return {
-//       pageProps: {},
-//       initialReduxState: reduxStore.getState(),
-//     };
-//   }
-// };
+  return {
+    props: {
+      namespacesRequired: [],
+    },
+  };
+});
 export default wrapper.withRedux(appWithTranslation(WiguApp));
