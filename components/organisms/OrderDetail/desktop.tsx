@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import appConfig from 'config';
@@ -21,7 +22,7 @@ const Capsule = dynamic(() => import('components/atoms/Capsule'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderDetailDesktop = (props: any): any => {
-  const { isFetching, currentOrder: order } = props.state.orders;
+  const { isFetching, currentOrder: order } = useSelector((state: any) => state.orders);
   const {
     currentOrder,
     shippingAddress,

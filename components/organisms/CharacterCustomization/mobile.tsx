@@ -2,8 +2,9 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-
 // import FieldDob from 'components/molecules/FieldDob';
+import { useSelector } from 'react-redux';
+
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Router } from 'i18n';
@@ -23,6 +24,8 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
 const CharacterCustomization = (props: any) => {
+  const cart = useSelector((state: any) => state.cart);
+  const master = useSelector((state: any) => state.master);
   const router = useRouter();
   const stepEnum = {
     NAME_GENDER: 0,
@@ -70,14 +73,14 @@ const CharacterCustomization = (props: any) => {
         Hair: 'short',
       }
     : {};
-  const selected = props.state.cart.selected || defaultSelected;
+  const selected = cart.selected || defaultSelected;
   const registerOccupations = () => {
     // setTimeout(() => {
     register({ name: 'Occupations' }, schema(props).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
   };
-  const { occupations } = props.state.master;
+  const { occupations } = master;
   const onSubmit = (data) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {

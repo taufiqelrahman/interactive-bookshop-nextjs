@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useState, useEffect, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
+import { useSelector } from 'react-redux';
 import { Swipeable } from 'react-swipeable';
 import { toast } from 'react-toastify';
 
@@ -22,7 +23,7 @@ const Dot = dynamic(() => import('components/atoms/Dot'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderDetailMobile = (props: any): any => {
-  const { isFetching, currentOrder: order } = props.state.orders;
+  const { isFetching, currentOrder: order } = useSelector((state: any) => state.orders);
   const [state, setState] = useState({
     showPreview: false,
     extendPreview: false,

@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
 import { useEffect, Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import { withTranslation, Router } from 'i18n';
@@ -22,12 +23,15 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 
 const PreviewDesktop = (props: any): any => {
+  const cart = useSelector((state: any) => state.cart);
+  const users = useSelector((state: any) => state.users);
+  const master = useSelector((state: any) => state.master);
   // const [enableLazy, setEnableLazy] = useState(true);
   const methods = useForm({ mode: 'onChange' });
   const [showModal, setShowModal] = useState(false);
   const [tempData, setTempData] = useState(null);
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const selected = props.state.cart.selected || dummySelected || {};
+  const selected = cart.selected || dummySelected || {};
   const addToCart = (cart) => {
     if (selected.id) {
       props.thunkUpdateCart(cart);
@@ -44,7 +48,7 @@ const PreviewDesktop = (props: any): any => {
       });
       (window as any).fbq('track', 'AddToCart', {
         cartItem: cart,
-        isLoggedIn: props.state.users.isLoggedIn,
+        isLoggedIn: users.isLoggedIn,
       });
       props.thunkAddToCart(cart);
     }
@@ -55,7 +59,7 @@ const PreviewDesktop = (props: any): any => {
       return;
     }
     const cart = { ...selected, ...data };
-    if (!props.state.users.isLoggedIn) {
+    if (!users.isLoggedIn) {
       setTempData(cart);
       setShowModal(true);
       // saveToCookies(cart);
@@ -79,7 +83,7 @@ const PreviewDesktop = (props: any): any => {
       // setEnableLazy(false);
     }
   }, []);
-  const bookPages = props.state.master.bookPages;
+  const bookPages = master.bookPages;
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page">

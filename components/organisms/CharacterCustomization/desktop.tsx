@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import { withTranslation, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
@@ -28,6 +29,8 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 
 const CharacterCustomization = (props: any) => {
+  const cart = useSelector((state: any) => state.cart);
+  const master = useSelector((state: any) => state.master);
   const router = useRouter();
   const [isSticky, setSticky] = useState(false);
   const methods = useForm({ mode: 'onChange' });
@@ -52,8 +55,8 @@ const CharacterCustomization = (props: any) => {
         Hair: 'short',
       }
     : {};
-  const selected = props.state.cart.selected || defaultSelected;
-  const { occupations } = props.state.master;
+  const selected = cart.selected || defaultSelected;
+  const { occupations } = master;
   const onSubmit = (data) => {
     if (!router.query.edit) {
       gtag.event({

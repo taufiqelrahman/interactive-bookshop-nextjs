@@ -2,11 +2,13 @@ import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
 import { useEffect, Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
+import actions from 'store/actions';
 
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 
@@ -21,16 +23,20 @@ const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
 const PreviewMobile = (props: any): any => {
+  const dispatch = useDispatch();
+  const cart = useSelector((state: any) => state.cart);
+  const users = useSelector((state: any) => state.users);
+  const master = useSelector((state: any) => state.master);
   // const [enableLazy, setEnableLazy] = useState(true);
   const [showSheet, setShowSheet] = useState(false);
   const [showSpecs, setShowSpecs] = useState(false);
   const [tempData, setTempData] = useState(null);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const selected = props.state.cart.selected || dummySelected || {};
+  const selected = cart.selected || dummySelected || {};
   const addToCart = (cart) => {
     if (selected.id) {
-      props.thunkUpdateCart(cart);
+      dispatch(actions.thunkUpdateCart(cart));
     } else {
       gtag.event({
         action: 'click_create',
@@ -44,9 +50,9 @@ const PreviewMobile = (props: any): any => {
       });
       (window as any).fbq('track', 'AddToCart', {
         cartItem: cart,
-        isLoggedIn: props.state.users.isLoggedIn,
+        isLoggedIn: users.isLoggedIn,
       });
-      props.thunkAddToCart(cart);
+      dispatch(actions.thunkAddToCart(cart));
     }
   };
   const onSubmit = (data) => {
@@ -55,7 +61,7 @@ const PreviewMobile = (props: any): any => {
       return;
     }
     const cart = { ...selected, ...data };
-    if (!props.state.users.isLoggedIn) {
+    if (!users.isLoggedIn) {
       setTempData(cart);
       setShowSheet(true);
       // saveToCookies(cart);
@@ -80,8 +86,8 @@ const PreviewMobile = (props: any): any => {
     }
   }, []);
   const screenHeight = '100vh - 69px';
-  const bookPages = props.state.master.bookPages;
-  // const dontHaveCart = !props.state.users.user.cart;
+  const bookPages = master.bookPages;
+  // const dontHaveCart = !users.user.cart;
   return (
     <DefaultLayout
       {...props}
