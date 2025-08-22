@@ -16,7 +16,7 @@ import { Provider } from 'react-redux';
 import { appWithTranslation, i18n, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 import withReduxStore from 'lib/with-redux-store';
-// import api from 'services/api';
+import api from 'services/api';
 import actions from 'store/actions';
 import 'styles/tailwind.css';
 import 'styles/nprogress.css';
@@ -90,6 +90,8 @@ const App: NextPage<any> = (props: any) => {
       behavior: 'smooth',
     });
   });
+
+  if (!Component) return null;
   return (
     <Provider store={reduxStore}>
       <Head>
@@ -339,30 +341,33 @@ const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApi
   }
 };
 
-App.getInitialProps = async ({ Component, ctx }: any): Promise<any> => {
-  const { dispatch, getState } = ctx.reduxStore || { dispatch: () => {}, getState: () => ({}) };
-  if (cookies(ctx).user) {
-    if (!getState().users.user) {
-      try {
-        // const { data: me } = await api(ctx.req).users.getMe();
-        dispatch(actions.setLogin(true));
-        dispatch(actions.loadUser(false, {} as any));
-        // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
-      } catch (error) {
-        // if (error.response && error.response.status === 401) {
-        dispatch(actions.setExpired(true));
-        // }
+App.getInitialProps = async ({ Component, ctx }: any) => {
+  const reduxStore = ctx.reduxStore;
+  if (reduxStore) {
+    const { dispatch, getState } = reduxStore;
+
+    if (cookies(ctx).user) {
+      if (!getState().users?.user) {
+        try {
+          const { data: me } = await api(ctx.req).users.getMe();
+          dispatch(actions.setLogin(true));
+          dispatch(actions.loadUser(false, me));
+        } catch {
+          dispatch(actions.setExpired(true));
+        }
       }
+      redirectLoginRoutes(ctx);
+    } else {
+      dispatch(actions.setLogin(false));
+      redirectPrivateRoutes(ctx);
     }
-    redirectLoginRoutes(ctx);
-  } else {
-    dispatch(actions.setLogin(false));
-    redirectPrivateRoutes(ctx);
+
+    if (getState().default?.errorMessage) {
+      dispatch(actions.setErrorMessage(''));
+    }
   }
 
-  if (getState().default.errorMessage) dispatch(actions.setErrorMessage(''));
-
-  const cProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  const cProps = Component?.getInitialProps ? await Component.getInitialProps(ctx) : {};
   return { pageProps: cProps || {} };
 };
 

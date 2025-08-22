@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import React from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 
 import { initializeStore } from '../store';
@@ -25,19 +25,19 @@ export type Store = ReturnType<typeof getOrCreateStore>;
 
 type Props = { reduxStore: Store };
 
-const withReduxStore = (Component: NextPage<any>) => {
-  return class Redux extends React.Component<Props> {
+const withReduxStore = (App: NextPage<any>) => {
+  return class Redux extends Component<Props> {
     private reduxStore;
 
     static async getInitialProps(appContext) {
       const reduxStore = getOrCreateStore();
 
-      // Provide the store to getInitialProps of pages
+      // inject reduxStore to context
       appContext.ctx.reduxStore = reduxStore;
 
       let appProps = {};
-      if ((Component as any).getInitialProps) {
-        appProps = await (Component as any).getInitialProps(appContext);
+      if (typeof App.getInitialProps === 'function') {
+        appProps = await App.getInitialProps(appContext);
       }
 
       return {
@@ -53,7 +53,7 @@ const withReduxStore = (Component: NextPage<any>) => {
     }
 
     render() {
-      return <Component {...this.props} reduxStore={this.reduxStore} />;
+      return <App {...this.props} reduxStore={this.reduxStore} />;
     }
   };
 };
