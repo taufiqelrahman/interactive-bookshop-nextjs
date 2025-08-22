@@ -318,12 +318,13 @@ const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextA
         Location: login,
       });
       res.end();
-      return { pageProps: {} };
     } else {
       // client-side
       Router.replace(login);
     }
+    return { pageProps: {} };
   }
+  return null;
 };
 
 const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
@@ -336,12 +337,13 @@ const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApi
         Location: home,
       });
       res.end();
-      return { pageProps: {} };
     } else {
       // client-side
       Router.replace(home);
     }
+    return { pageProps: {} };
   }
+  return null;
 };
 
 WiguApp.getInitialProps = async (appContext: any) => {
@@ -352,6 +354,7 @@ WiguApp.getInitialProps = async (appContext: any) => {
   const { dispatch, getState } = reduxStore;
 
   try {
+    let redirectResult = null;
     if (cookies(ctx).user) {
       if (!getState().users?.user) {
         try {
@@ -362,11 +365,13 @@ WiguApp.getInitialProps = async (appContext: any) => {
           dispatch(actions.setExpired(true));
         }
       }
-      redirectLoginRoutes(ctx);
+      redirectResult = redirectLoginRoutes(ctx);
     } else {
       dispatch(actions.setLogin(false));
-      redirectPrivateRoutes(ctx);
+      redirectResult = redirectPrivateRoutes(ctx);
     }
+
+    if (redirectResult) return { ...redirectResult, initialReduxState: reduxStore.getState() };
 
     if (getState().default?.errorMessage) {
       dispatch(actions.setErrorMessage(''));
