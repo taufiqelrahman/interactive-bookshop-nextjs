@@ -318,6 +318,7 @@ const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextA
         Location: login,
       });
       res.end();
+      return { pageProps: {} };
     } else {
       // client-side
       Router.replace(login);
@@ -335,6 +336,7 @@ const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApi
         Location: home,
       });
       res.end();
+      return { pageProps: {} };
     } else {
       // client-side
       Router.replace(home);
