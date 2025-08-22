@@ -1,9 +1,8 @@
 # Interactive Bookshop Next.js 🚀📚
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
-[![Node Version](https://img.shields.io/badge/node-22.x-brightgreen)](https://nodejs.org/)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/taufiqelrahman/interactive-bookshop-nextjs/ci.yml?branch=main)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/actions)
 [![Good First Issue](https://img.shields.io/badge/good%20first%20issue-friendly-brightgreen)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+[![Node Version](https://img.shields.io/badge/node-22.x-brightgreen)](https://nodejs.org/)
+![TypeScript](https://img.shields.io/badge/TS-4.9.5-blue)
 
 **Interactive Bookshop Next.js** is an open-source web application for creating **personalized children's books** with e-commerce support. Built with a **Next.js + Redux + GraphQL + Shopify + PWA** stack, it’s ideal for learning modern full-stack development and contributing to a real project.
 
