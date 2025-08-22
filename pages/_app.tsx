@@ -309,7 +309,15 @@ const WiguApp = (props: any) => {
   );
 };
 
-const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
+const redirectPrivateRoutes = ({
+  pathname,
+  res,
+  reduxStore,
+}: {
+  pathname: string;
+  res: NextApiResponse;
+  reduxStore: any;
+}) => {
   const privateRoutes = ['/orders/success', '/account', '/orders'];
   if (privateRoutes.includes(pathname)) {
     const redirectTo = pathname.split('/')[1];
@@ -317,26 +325,34 @@ const redirectPrivateRoutes = ({ pathname, res }: { pathname: string; res: NextA
     if (res) {
       res.writeHead(302, { Location: login });
       res.end();
-      return { pageProps: {} }; // penting supaya tidak null
+      return { pageProps: {}, initialReduxState: reduxStore.getState() };
     } else {
       Router.replace(login);
-      return { pageProps: {} };
+      return { pageProps: {}, initialReduxState: reduxStore.getState() };
     }
   }
   return null;
 };
 
-const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApiResponse }) => {
+const redirectLoginRoutes = ({
+  pathname,
+  res,
+  reduxStore,
+}: {
+  pathname: string;
+  res: NextApiResponse;
+  reduxStore: any;
+}) => {
   const loginRoutes = ['/login', '/register'];
   if (loginRoutes.includes(pathname)) {
     const home = '/';
     if (res) {
       res.writeHead(302, { Location: home });
       res.end();
-      return { pageProps: {} };
+      return { pageProps: {}, initialReduxState: reduxStore.getState() };
     } else {
       Router.replace(home);
-      return { pageProps: {} };
+      return { pageProps: {}, initialReduxState: reduxStore.getState() };
     }
   }
   return null;
@@ -346,7 +362,7 @@ WiguApp.getInitialProps = async (appContext: any) => {
   const { ctx } = appContext;
   const reduxStore = getOrCreateStore();
   ctx.reduxStore = reduxStore;
-  const { dispatch, getState } = reduxStore;
+  const { dispatch, getState } = ctx.reduxStore;
 
   try {
     if (cookies(ctx).user) {
