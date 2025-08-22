@@ -434,7 +434,10 @@ Index.getInitialProps = async (ctx: any): Promise<any> => {
     console.log(err);
     console.log(err.message);
   }
-  return { namespacesRequired: ['page-index'] };
+  return {
+    pageProps: {},
+    namespacesRequired: ['page-index'],
+  };
 };
 
 export default withTranslation('page-index')(connect(mapStateToProps, mapDispatchToProps)(Index));
