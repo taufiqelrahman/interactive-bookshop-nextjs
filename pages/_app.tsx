@@ -6,6 +6,7 @@ import detectIt from 'detect-it';
 import Cookies from 'js-cookie';
 import debounce from 'lodash.debounce';
 import { NextApiResponse, NextPage } from 'next';
+import App from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import cookies from 'next-cookies';
@@ -15,7 +16,7 @@ import { Provider } from 'react-redux';
 
 import { appWithTranslation, i18n, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
-import withReduxStore from 'lib/with-redux-store';
+import withReduxStore, { getOrCreateStore } from 'lib/with-redux-store';
 import api from 'services/api';
 import actions from 'store/actions';
 import 'styles/tailwind.css';
@@ -43,7 +44,7 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const App: NextPage<any> = (props: any) => {
+const WiguApp: NextPage<any> = (props: any) => {
   const { Component, pageProps = {}, reduxStore } = props;
   const [width, setWidth] = useState(0);
 
@@ -341,34 +342,34 @@ const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApi
   }
 };
 
-App.getInitialProps = async ({ Component, ctx }: any) => {
-  const reduxStore = ctx.reduxStore;
-  if (reduxStore) {
-    const { dispatch, getState } = reduxStore;
+WiguApp.getInitialProps = async (appContext: any) => {
+  const { ctx } = appContext;
+  const reduxStore = getOrCreateStore();
+  ctx.reduxStore = reduxStore;
+  const { dispatch, getState } = reduxStore;
 
-    if (cookies(ctx).user) {
-      if (!getState().users?.user) {
-        try {
-          const { data: me } = await api(ctx.req).users.getMe();
-          dispatch(actions.setLogin(true));
-          dispatch(actions.loadUser(false, me));
-        } catch {
-          dispatch(actions.setExpired(true));
-        }
+  if (cookies(ctx).user) {
+    if (!getState().users?.user) {
+      try {
+        const { data: me } = await api(ctx.req).users.getMe();
+        dispatch(actions.setLogin(true));
+        dispatch(actions.loadUser(false, me));
+      } catch {
+        dispatch(actions.setExpired(true));
       }
-      redirectLoginRoutes(ctx);
-    } else {
-      dispatch(actions.setLogin(false));
-      redirectPrivateRoutes(ctx);
     }
-
-    if (getState().default?.errorMessage) {
-      dispatch(actions.setErrorMessage(''));
-    }
+    redirectLoginRoutes(ctx);
+  } else {
+    dispatch(actions.setLogin(false));
+    redirectPrivateRoutes(ctx);
   }
 
-  const cProps = Component?.getInitialProps ? await Component.getInitialProps(ctx) : {};
-  return { pageProps: cProps || {} };
+  if (getState().default?.errorMessage) {
+    dispatch(actions.setErrorMessage(''));
+  }
+
+  const appProps = await App.getInitialProps(appContext);
+  return { ...appProps, pageProps: appProps.pageProps || {}, initialReduxState: reduxStore.getState() };
 };
 
-export default appWithTranslation(withReduxStore(App));
+export default appWithTranslation(withReduxStore(WiguApp));

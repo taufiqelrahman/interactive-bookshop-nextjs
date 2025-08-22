@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 
@@ -8,52 +8,54 @@ import actions from '../store/actions';
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
 
-function getOrCreateStore(initialState?) {
-  // Always make a new store if server, otherwise state is shared between requests
+export function getOrCreateStore(initialState?: any) {
   if (isServer) {
     return initializeStore(initialState);
   }
 
-  // Store in global variable if client
-  if (!window[__NEXT_REDUX_STORE__]) {
-    window[__NEXT_REDUX_STORE__] = initializeStore(initialState);
+  if (!(window as any)[__NEXT_REDUX_STORE__]) {
+    (window as any)[__NEXT_REDUX_STORE__] = initializeStore(initialState);
   }
-  return window[__NEXT_REDUX_STORE__];
+  return (window as any)[__NEXT_REDUX_STORE__];
 }
 
-export type Store = ReturnType<typeof getOrCreateStore>;
+export interface NextPageContextWithStore extends NextPageContext {
+  reduxStore: ReturnType<typeof getOrCreateStore>;
+}
 
-type Props = { reduxStore: Store };
+type WithReduxProps = {
+  reduxStore: ReturnType<typeof getOrCreateStore>;
+  initialReduxState?: any;
+};
 
-const withReduxStore = (App: NextPage<any>) => {
-  return class Redux extends Component<Props> {
-    private reduxStore;
+const withReduxStore = (AppComponent: NextPage<any>) => {
+  return class ReduxWrapper extends Component<WithReduxProps> {
+    reduxStore: ReturnType<typeof getOrCreateStore>;
 
-    static async getInitialProps(appContext) {
+    static async getInitialProps(appContext: any) {
       const reduxStore = getOrCreateStore();
 
       // inject reduxStore to context
       appContext.ctx.reduxStore = reduxStore;
 
       let appProps = {};
-      if (typeof App.getInitialProps === 'function') {
-        appProps = await App.getInitialProps(appContext);
+      if (typeof AppComponent.getInitialProps === 'function') {
+        appProps = await AppComponent.getInitialProps(appContext);
       }
 
       return {
         ...appProps,
-        pageProps: (appProps as any).pageProps || {},
         initialReduxState: reduxStore.getState(),
       };
     }
 
-    constructor(props) {
+    constructor(props: WithReduxProps) {
       super(props);
       this.reduxStore = getOrCreateStore(props.initialReduxState);
     }
 
     render() {
-      return <App {...this.props} reduxStore={this.reduxStore} />;
+      return <AppComponent {...this.props} reduxStore={this.reduxStore} />;
     }
   };
 };
