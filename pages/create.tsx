@@ -1,11 +1,10 @@
 import Head from 'next/head';
-import { connect } from 'react-redux';
 
 import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
 import { withTranslation } from 'i18n';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
+import { wrapper } from 'store';
 import actions from 'store/actions';
 
 const Create = (props: any): any => (
@@ -17,17 +16,20 @@ const Create = (props: any): any => (
   </div>
 );
 
-Create.getInitialProps = async (ctx: any): Promise<any> => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   try {
-    ctx.reduxStore.dispatch(actions.loadOccupations(true));
+    store.dispatch(actions.loadOccupations(true));
     const { data: occupations } = await api().master.getOccupations();
-    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
-  } catch (err) {
+    store.dispatch(actions.loadOccupations(false, occupations.data));
+  } catch (err: any) {
     console.log(err.message);
   }
-  return {
-    namespacesRequired: ['common'],
-  };
-};
 
-export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Create));
+  return {
+    props: {
+      namespacesRequired: ['common'],
+    },
+  };
+});
+
+export default withTranslation('common')(Create);

@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 // import GoogleMapReact from 'google-map-react';
@@ -10,7 +10,7 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import helpContents from 'config/helpContents';
 import { withTranslation } from 'i18n';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import actions from 'store/actions';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Accordion = dynamic(() => import('components/atoms/Accordion'));
@@ -22,11 +22,13 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Help = (props: any): any => {
+  const dispatch = useDispatch();
+  const defaultStore = useSelector((state: any) => state.default);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, reset } = methods;
-  const { isFetching } = props.state.default;
+  const { isFetching } = defaultStore;
   const onSubmit = async (data) => {
-    await props.thunkSendMessage(data);
+    await dispatch(actions.thunkSendMessage(data));
     reset();
     toast.success(props.t('form:copy-success-help'));
   };
@@ -244,4 +246,4 @@ const Help = (props: any): any => {
   );
 };
 
-export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Help));
+export default withTranslation(['common', 'form'])(Help);

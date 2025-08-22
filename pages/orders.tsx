@@ -1,12 +1,12 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Link } from 'i18n';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
+import { wrapper } from 'store';
 import actions from 'store/actions';
 // import dummyOrders from '_mocks/orders';
 
@@ -17,7 +17,7 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Orders = (props: any): any => {
-  const { orders } = props.state;
+  const orders = useSelector((state: any) => state.orders);
   const orderList = orders.isFetching ? [1, 2] : orders.orders;
   // const orderList = dummyOrders;
   return (
@@ -99,21 +99,26 @@ const Orders = (props: any): any => {
   );
 };
 
-Orders.getInitialProps = async (ctx: any): Promise<any> => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   try {
-    ctx.reduxStore.dispatch(actions.loadOrders(true));
-    const { data: orderData } = await api(ctx.req).orders.loadOrders();
+    store.dispatch(actions.loadOrders(true));
+    const { data: orderData } = await api().orders.loadOrders();
     const { order_states: orderStates, orders: rawOrders } = orderData.data;
     const states = orderStates.reduce((acc, cur) => {
       acc[cur.shopify_order_id] = cur.state.name;
       return acc;
     }, {});
     const orders = rawOrders.map((order) => ({ ...order, state: states[order.id] }));
-    ctx.reduxStore.dispatch(actions.loadOrders(false, orders));
-  } catch (err) {
+    store.dispatch(actions.loadOrders(false, orders));
+  } catch (err: any) {
     console.log(err.message);
   }
-  return { namespacesRequired: ['page-orders'] };
-};
 
-export default withTranslation('page-orders')(connect(mapStateToProps, mapDispatchToProps)(Orders));
+  return {
+    props: {
+      namespacesRequired: ['page-orders'],
+    },
+  };
+});
+
+export default withTranslation('page-orders')(Orders);

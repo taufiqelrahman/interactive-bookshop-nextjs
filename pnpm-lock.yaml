@@ -11,6 +11,9 @@ importers:
       '@apollo/react-hooks':
         specifier: ^3.1.3
         version: 3.1.5(@types/react@17.0.2)(apollo-client@2.6.10(graphql@14.7.0))(apollo-utilities@1.3.4(graphql@14.7.0))(graphql@14.7.0)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      '@reduxjs/toolkit':
+        specifier: ^2.8.2
+        version: 2.8.2(react-redux@7.2.9(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
       '@sentry/browser':
         specifier: ^5.20.1
         version: 5.30.0
@@ -87,8 +90,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.5(next@11.1.4(@babel/core@7.28.3)(node-sass@4.14.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)(sass@1.90.0)(typescript@4.9.5)(webpack@4.44.1))(webpack@4.44.1)
       next-redux-wrapper:
-        specifier: ^4.0.1
-        version: 4.0.1(next@11.1.4(@babel/core@7.28.3)(node-sass@4.14.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)(sass@1.90.0)(typescript@4.9.5)(webpack@4.44.1))(react@17.0.2)
+        specifier: ^8.1.0
+        version: 8.1.0(next@11.1.4(@babel/core@7.28.3)(node-sass@4.14.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)(sass@1.90.0)(typescript@4.9.5)(webpack@4.44.1))(react-redux@7.2.9(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -1551,6 +1554,17 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
+  '@reduxjs/toolkit@2.8.2':
+    resolution: {integrity: sha512-MYlOhQ0sLdw4ud48FoC5w0dH9VfWQjtCjreKwYTT3l+r427qYC5Y8PihNutepr8XrNaBUDQo9khWUwQxZaqt5A==}
+    peerDependencies:
+      react: ^16.9.0 || ^17.0.0 || ^18 || ^19
+      react-redux: ^7.2.1 || ^8.1.3 || ^9.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-redux:
+        optional: true
+
   '@rollup/plugin-node-resolve@7.1.3':
     resolution: {integrity: sha512-RxtSL3XmdTAE2byxekYLnx+98kEUOrPHF/KRVjLH+DEIHy6kjIw7YINQzn+NXiH/NTrQLAwYs0GWB+csWygA9Q==}
     engines: {node: '>= 8.0.0'}
@@ -1611,6 +1625,12 @@ packages:
 
   '@sinonjs/fake-timers@6.0.1':
     resolution: {integrity: sha512-MZPUxrmFubI36XS1DI3qmI0YdN1gks62JtFZvxR67ljjSNCeK6U08Zx4msEWOXuofgqUt6zPHSi1H9fbjR/NRA==}
+
+  '@standard-schema/spec@1.0.0':
+    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
+
+  '@standard-schema/utils@0.3.0':
+    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
   '@styled-jsx/plugin-sass@4.1.1':
     resolution: {integrity: sha512-WU+ThT2bocK3H7MbuhlNE3WxMzl/j2KWgw0S642EqLjZ6+fNdvNxdeDrBY2MUKKhv7bXhGatsUCG5y5JHukyBg==}
@@ -4576,6 +4596,9 @@ packages:
     resolution: {integrity: sha512-++fDnnxsLT+4rpt8babwiIbzapgBzeS2Kgcy+CwgBvgSRFltBFhX2WnpCziMtxhRCzqJcCE9EcHWZP/sj+G3rQ==}
     engines: {node: '>=10'}
 
+  immer@10.1.1:
+    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
+
   immutable@5.1.3:
     resolution: {integrity: sha512-+chQdDfvscSF1SJqv2gn4SRO2ZyS3xL3r7IW/wWEEzrzLisnOlKiQu5ytC/BVNcS15C39WT2Hg/bjKjDMcu+zg==}
 
@@ -5693,11 +5716,12 @@ packages:
       next: '>=7.0.0'
       webpack: '>=4.0.0'
 
-  next-redux-wrapper@4.0.1:
-    resolution: {integrity: sha512-aj9s4VT062hvrU8k2OQevf6iffHSIXpDXtIA8xbLzfpP94h3w7vZCmAJmbmfq3rXignqJT3KG44GODwsCQmdsA==}
+  next-redux-wrapper@8.1.0:
+    resolution: {integrity: sha512-2hIau0hcI6uQszOtrvAFqgc0NkZegKYhBB7ZAKiG3jk7zfuQb4E7OV9jfxViqqojh3SEHdnFfPkN9KErttUKuw==}
     peerDependencies:
-      next: '>=9.0.0'
+      next: '>=9'
       react: '*'
+      react-redux: '*'
 
   next@11.1.4:
     resolution: {integrity: sha512-GWQJrWYkfAKP8vmrzJcCfRSKv955Khyjqd5jipTcVKDGg+SH+NfjDMWFtCwArcQlHPvzisGu1ERLY0+Eoj7G+g==}
@@ -6704,6 +6728,11 @@ packages:
     peerDependencies:
       redux: ^4
 
+  redux-thunk@3.1.0:
+    resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
+    peerDependencies:
+      redux: ^5.0.0
+
   redux@4.2.1:
     resolution: {integrity: sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==}
 
@@ -6786,6 +6815,9 @@ packages:
 
   requires-port@1.0.0:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
+
+  reselect@5.1.1:
+    resolution: {integrity: sha512-K/BG6eIky/SBpzfHZv/dd+9JBFiS4SWV7FIujVyJRux6e45+73RaUHXLmIR1f7WOMaQ0U1km6qwklRQxpJJY0w==}
 
   reset-css@5.0.2:
     resolution: {integrity: sha512-YtgUGSq5z5W0NPSjsBW7ys7rtWa8P8AiE7S6Fg3d1TQCPpAodgYyLuZYlU0AOsLtprk/fC9ormHN/0pAavVIDw==}
@@ -9939,6 +9971,18 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
+  '@reduxjs/toolkit@2.8.2(react-redux@7.2.9(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)':
+    dependencies:
+      '@standard-schema/spec': 1.0.0
+      '@standard-schema/utils': 0.3.0
+      immer: 10.1.1
+      redux: 5.0.1
+      redux-thunk: 3.1.0(redux@5.0.1)
+      reselect: 5.1.1
+    optionalDependencies:
+      react: 17.0.2
+      react-redux: 7.2.9(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+
   '@rollup/plugin-node-resolve@7.1.3(rollup@1.32.1)':
     dependencies:
       '@rollup/pluginutils': 3.1.0(rollup@1.32.1)
@@ -10010,6 +10054,10 @@ snapshots:
   '@sinonjs/fake-timers@6.0.1':
     dependencies:
       '@sinonjs/commons': 1.8.6
+
+  '@standard-schema/spec@1.0.0': {}
+
+  '@standard-schema/utils@0.3.0': {}
 
   '@styled-jsx/plugin-sass@4.1.1(sass@1.90.0)':
     dependencies:
@@ -13685,6 +13733,8 @@ snapshots:
       is-svg: 4.4.0
       svgo: 1.3.2
 
+  immer@10.1.1: {}
+
   immutable@5.1.3: {}
 
   import-cwd@2.1.0:
@@ -15081,10 +15131,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  next-redux-wrapper@4.0.1(next@11.1.4(@babel/core@7.28.3)(node-sass@4.14.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)(sass@1.90.0)(typescript@4.9.5)(webpack@4.44.1))(react@17.0.2):
+  next-redux-wrapper@8.1.0(next@11.1.4(@babel/core@7.28.3)(node-sass@4.14.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)(sass@1.90.0)(typescript@4.9.5)(webpack@4.44.1))(react-redux@7.2.9(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2):
     dependencies:
       next: 11.1.4(@babel/core@7.28.3)(node-sass@4.14.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)(sass@1.90.0)(typescript@4.9.5)(webpack@4.44.1)
       react: 17.0.2
+      react-redux: 7.2.9(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
 
   next@11.1.4(@babel/core@7.28.3)(node-sass@4.14.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)(sass@1.90.0)(typescript@4.9.5)(webpack@4.44.1):
     dependencies:
@@ -16149,6 +16200,10 @@ snapshots:
     dependencies:
       redux: 5.0.1
 
+  redux-thunk@3.1.0(redux@5.0.1):
+    dependencies:
+      redux: 5.0.1
+
   redux@4.2.1:
     dependencies:
       '@babel/runtime': 7.28.3
@@ -16262,6 +16317,8 @@ snapshots:
   require-main-filename@2.0.0: {}
 
   requires-port@1.0.0: {}
+
+  reselect@5.1.1: {}
 
   reset-css@5.0.2: {}
 

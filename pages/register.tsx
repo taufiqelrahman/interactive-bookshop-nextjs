@@ -3,14 +3,14 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React, { useState, useEffect, Fragment, ElementType } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Link } from 'i18n';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
+import actions from 'store/actions';
 // import Footer from 'components/organisms/Footer';
 
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -43,6 +43,7 @@ enum RegisterStep {
 }
 
 const Register: React.FC<RegisterProps> = (props) => {
+  const dispatch = useDispatch();
   const methods = useForm<RegisterFormData>({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
   const [registerStep, setRegisterStep] = useState<RegisterStep>(RegisterStep.WELCOME);
@@ -83,11 +84,13 @@ const Register: React.FC<RegisterProps> = (props) => {
         setRegisterStep(RegisterStep.DETAIL);
         break;
       case RegisterStep.DETAIL:
-        props.thunkRegister({
-          ...data,
-          email: savedEmail,
-          phone: data.phone.replace(/\s/g, ''),
-        });
+        dispatch(
+          actions.thunkRegister({
+            ...data,
+            email: savedEmail,
+            phone: data.phone.replace(/\s/g, ''),
+          }),
+        );
         break;
       default:
         break;
@@ -311,4 +314,4 @@ const Register: React.FC<RegisterProps> = (props) => {
   );
 };
 
-export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Register) as any);
+export default withTranslation(['common', 'form'])(Register);

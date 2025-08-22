@@ -3,14 +3,14 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState, useEffect, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Link, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import actions from 'store/actions';
 // import Footer from 'components/organisms/Footer';
 
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -19,6 +19,7 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
 const Login = (props: any): any => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
@@ -51,10 +52,10 @@ const Login = (props: any): any => {
       setResetData({ email, token });
     } else if (social === 'google') {
       setIsTransit(true);
-      props.thunkLoginGoogle(DATA);
+      dispatch(actions.thunkLoginGoogle(DATA));
     } else if (social === 'facebook') {
       setIsTransit(true);
-      props.thunkLoginFacebook(DATA);
+      dispatch(actions.thunkLoginFacebook(DATA));
     } else {
       setLoginStep(0);
       setResetData({ email: '', token: '' });
@@ -75,14 +76,14 @@ const Login = (props: any): any => {
           category: 'engagement',
           label: 'email',
         });
-        props.thunkLogin({ ...data, from: Router.query.from });
+        dispatch(actions.thunkLogin({ ...data, from: Router.query.from }));
         break;
       case stepEnum.FORGOT:
-        props.thunkForgotPassword(data);
+        dispatch(actions.thunkForgotPassword(data));
         setLoginStep(stepEnum.SENT);
         break;
       case stepEnum.RESET:
-        props.thunkResetPassword({ ...data, email, token });
+        dispatch(actions.thunkResetPassword({ ...data, email, token }));
         break;
       default:
         break;
@@ -399,4 +400,4 @@ const Login = (props: any): any => {
   );
 };
 
-export default withTranslation(['common', 'form'])(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withTranslation(['common', 'form'])(Login);

@@ -3,15 +3,15 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 
 import TextField from 'components/atoms/TextField';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation } from 'i18n';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
+import { wrapper } from 'store';
 import actions from 'store/actions';
 // import Modal from 'components/atoms/Modal';
 
@@ -21,9 +21,11 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Account = (props: any): any => {
+  const dispatch = useDispatch();
+  const master = useSelector((state: any) => state.master);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, setValue, watch, triggerValidation, unregister } = methods;
-  const { user } = props.state.users;
+  const { user } = useSelector((state: any) => state.users);
   const userAddress = user.address || {};
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState({
@@ -146,7 +148,7 @@ const Account = (props: any): any => {
     return `${address1} ${address2}, ${city}, ${province} ${country} ${zip}`;
   };
   const provinces = () => {
-    const { provinces } = props.state.master;
+    const { provinces } = master;
     if (provinces.length === 0) return [];
     return provinces.map((prov) => ({
       value: prov.name,
@@ -168,7 +170,7 @@ const Account = (props: any): any => {
     let PARAMS = data;
     if (data.province) PARAMS = { ...data, province: data.province.value };
     if (data.newPhone) PARAMS = { ...data, phone: data.newPhone.replace(/^\s+|\s+$/gm, '') };
-    props.thunkUpdateUser(PARAMS);
+    dispatch(actions.thunkUpdateUser(PARAMS));
     if (showModal) setShowModal(false);
     const field = Object.keys(data)[0];
     if (['address1', 'address2', 'city', 'country', 'province', 'zip'].includes(field)) {
@@ -586,15 +588,15 @@ const Account = (props: any): any => {
   );
 };
 
-Account.getInitialProps = async (ctx: any): Promise<any> => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   try {
-    ctx.reduxStore.dispatch(actions.loadProvinces(true));
+    store.dispatch(actions.loadProvinces(true));
     const { data: provinces } = await api().master.getProvinces();
-    ctx.reduxStore.dispatch(actions.loadProvinces(false, provinces.data));
+    store.dispatch(actions.loadProvinces(false, provinces.data));
   } catch (err) {
     console.log(err.message);
   }
-  return { namespacesRequired: ['form', 'common'] };
-};
+  return { props: { namespacesRequired: ['form', 'common'] } };
+});
 
-export default withTranslation(['form', 'common'])(connect(mapStateToProps, mapDispatchToProps)(Account));
+export default withTranslation(['form', 'common'])(Account);

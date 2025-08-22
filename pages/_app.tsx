@@ -5,18 +5,17 @@ import 'dayjs/locale/id';
 import detectIt from 'detect-it';
 import Cookies from 'js-cookie';
 import debounce from 'lodash.debounce';
-// import { NextApiResponse } from 'next';
-// import dynamic from 'next/dynamic';
+import type { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
-// import cookies from 'next-cookies';
 import NProgress from 'nprogress';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Provider } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { appWithTranslation, i18n, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
-import withReduxStore, { getOrCreateStore } from 'lib/with-redux-store';
 // import api from 'services/api';
+import { wrapper } from 'store';
 import actions from 'store/actions';
 
 import 'styles/tailwind.css';
@@ -25,7 +24,7 @@ import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import 'styles/fonts.min.css';
 
-// const Pixel = dynamic(() => import('components/atoms/Pixel'));
+const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
 // disable when development
 Sentry.init({
@@ -43,9 +42,11 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const WiguApp = (props: any) => {
-  const { Component, pageProps = {}, reduxStore } = props;
+function WiguApp({ Component, pageProps }: AppProps) {
   const [width, setWidth] = useState(0);
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.users.user);
+  const isExpired = useSelector((state: any) => state.users.isExpired);
 
   const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
   const debouncedSetup = useCallback(
@@ -53,27 +54,27 @@ const WiguApp = (props: any) => {
     [],
   );
 
-  const handleRouteChange = (url: string) => {
-    gtag.pageview(url);
-  };
+  const handleRouteChange = (url: string) => gtag.pageview(url);
 
   useEffect(() => {
-    if (reduxStore.getState().users.isExpired) {
+    if (isExpired) {
       Cookies.remove('user', { domain: process.env.DOMAIN });
     }
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
-    // google analytics
     Router.events.on('routeChangeComplete', handleRouteChange);
-    // windows resize
     window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
     return () => {
-      // google analytics
       Router.events.off('routeChangeComplete', handleRouteChange);
-      // windows resize
-      window.removeEventListener('resize', () => debouncedSetup);
+      window.removeEventListener('resize', debouncedSetup as any);
     };
-  }, []);
+  }, [isExpired]);
+
+  useEffect(() => {
+    if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
+      dispatch(actions.thunkCreateCart());
+    }
+  }, [user, dispatch]);
 
   // useEffect(() => {
   //   const createCartForUser = () => {
@@ -85,18 +86,14 @@ const WiguApp = (props: any) => {
   //   };
   //   createCartForUser();
   // }, [reduxStore.getState().users]);
-
   Router.events.on('routeChangeComplete', () => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   });
 
   if (!Component) return null;
+
   return (
-    <Provider store={reduxStore}>
+    <div>
       <Head>
         <meta key="robots" name="robots" content="noimageindex" />
         <meta key="theme-color" name="theme-color" content="#000000" />
@@ -175,7 +172,7 @@ const WiguApp = (props: any) => {
         {/* <!-- Orientation  --> */}
         {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
       </Head>
-      {/* <Pixel /> */}
+      <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
         body {
@@ -305,9 +302,11 @@ const WiguApp = (props: any) => {
           content: '\e901';
         }
       `}</style>
-    </Provider>
+    </div>
   );
-};
+}
+
+// @todo create route checking
 
 // const redirectPrivateRoutes = ({
 //   pathname,
@@ -358,46 +357,45 @@ const WiguApp = (props: any) => {
 //   return null;
 // };
 
-WiguApp.getInitialProps = async (appContext: any) => {
-  const { ctx } = appContext;
-  const reduxStore = getOrCreateStore();
-  ctx.reduxStore = reduxStore;
-  const { dispatch, getState } = ctx.reduxStore;
+// WiguApp.getInitialProps = async (appContext: any) => {
+//   const { ctx } = appContext;
+//   const reduxStore = getOrCreateStore();
+//   ctx.reduxStore = reduxStore;
+//   const { dispatch, getState } = ctx.reduxStore;
 
-  try {
-    // if (cookies(ctx).user) {
-    //   if (!getState().users?.user) {
-    //     try {
-    //       const { data: me } = await api(ctx.req).users.getMe();
-    //       dispatch(actions.setLogin(true));
-    //       dispatch(actions.loadUser(false, me));
-    //     } catch {
-    //       dispatch(actions.setExpired(true));
-    //     }
-    //   }
-    //   const redirectRes = redirectLoginRoutes(ctx);
-    //   if (redirectRes) return redirectRes;
-    // } else {
-    //   dispatch(actions.setLogin(false));
-    //   const redirectRes = redirectPrivateRoutes(ctx);
-    //   if (redirectRes) return redirectRes;
-    // }
+//   try {
+//     // if (cookies(ctx).user) {
+//     //   if (!getState().users?.user) {
+//     //     try {
+//     //       const { data: me } = await api(ctx.req).users.getMe();
+//     //       dispatch(actions.setLogin(true));
+//     //       dispatch(actions.loadUser(false, me));
+//     //     } catch {
+//     //       dispatch(actions.setExpired(true));
+//     //     }
+//     //   }
+//     //   const redirectRes = redirectLoginRoutes(ctx);
+//     //   if (redirectRes) return redirectRes;
+//     // } else {
+//     //   dispatch(actions.setLogin(false));
+//     //   const redirectRes = redirectPrivateRoutes(ctx);
+//     //   if (redirectRes) return redirectRes;
+//     // }
 
-    if (getState().default?.errorMessage) {
-      dispatch(actions.setErrorMessage(''));
-    }
+//     if (getState().default?.errorMessage) {
+//       dispatch(actions.setErrorMessage(''));
+//     }
 
-    return {
-      pageProps: {},
-      initialReduxState: reduxStore.getState(),
-    };
-  } catch (err) {
-    console.error('🔥 WiguApp.getInitialProps crashed:', err);
-    return {
-      pageProps: {},
-      initialReduxState: reduxStore.getState(),
-    };
-  }
-};
-
-export default appWithTranslation(withReduxStore(WiguApp));
+//     return {
+//       pageProps: {},
+//       initialReduxState: reduxStore.getState(),
+//     };
+//   } catch (err) {
+//     console.error('🔥 WiguApp.getInitialProps crashed:', err);
+//     return {
+//       pageProps: {},
+//       initialReduxState: reduxStore.getState(),
+//     };
+//   }
+// };
+export default wrapper.withRedux(appWithTranslation(WiguApp));

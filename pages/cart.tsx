@@ -2,13 +2,14 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { Fragment, useEffect } from 'react';
 import NumberFormat from 'react-number-format';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Link } from 'i18n';
 import * as gtag from 'lib/gtag';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
+import { wrapper } from 'store';
+import actions from 'store/actions';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const CartItem = dynamic(() => import('components/molecules/CartItem/desktop'));
@@ -18,29 +19,33 @@ const Dot = dynamic(() => import('components/atoms/Dot'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const Cart = (props: any): any => {
-  const { users, cart } = props.state;
+const Cart = ({ isMobile, t, setSideNav }) => {
+  const dispatch = useDispatch();
+  const users = useSelector((state: any) => state.users);
+  const cart = useSelector((state: any) => state.cart);
+
   const items = cart.cart ? cart.cart.lineItems : cart.isFetching ? [1, 2] : [];
   const itemsAmount = cart.cart ? cart.cart.lineItemsSubtotalPrice.amount : 0;
   const hasShippingLine = cart.cart && cart.cart.shippingLine;
   const discounts = cart.cart ? cart.cart.discountApplications : [];
+
   useEffect(() => {
-    const { user } = users;
-    if (user && user.cart) {
-      props.thunkLoadCart(user.cart.checkout_id);
-    } else if (!user && localStorage.getItem('cart')) {
-      props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true);
+    if (users.user && users.user.cart) {
+      dispatch(actions.thunkLoadCart(users.user.cart.checkout_id));
+    } else if (!users.user && localStorage.getItem('cart')) {
+      dispatch(actions.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as string).id, true));
     }
-  }, []);
+  }, [dispatch, users.user]);
+
   const continuePayment = () => {
     window.location.href = cart.cart ? cart.cart.webUrl : '';
     gtag.event({
       action: 'checkout',
       category: 'ecommerce',
-      label: props.isMobile ? 'mobile' : 'desktop',
+      label: isMobile ? 'mobile' : 'desktop',
       value: cart.cart && cart.cart.totalPrice,
     });
-    const { isLoggedIn } = props.state.users;
+    const { isLoggedIn } = users;
     (window as any).fbq('track', 'InitiateCheckout', {
       price: cart.cart && cart.cart.totalPrice,
       cartItems: cart.cart && cart.cart.lineItems.length,
@@ -48,34 +53,36 @@ const Cart = (props: any): any => {
     });
     if (!isLoggedIn) localStorage.removeItem('cart');
   };
+
   const screenHeight = '100vh - 59px';
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper: any = isMobile ? 'div' : Card;
+
   return (
     <DefaultLayout
-      {...props}
-      navbar={
-        props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('cart-title')} />
-      }
+      isMobile={isMobile}
+      navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction title={t('cart-title')} />}
     >
       <Head>
-        <title>When I Grow Up | {props.t('cart-title')}</title>
+        <title>When I Grow Up | {t('cart-title')}</title>
       </Head>
-      <div className={props.isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
-        {!props.isMobile && <Stepper title={props.t('cart-title')} />}
+
+      <div className={isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
+        {!isMobile && <Stepper title={t('cart-title')} />}
+
         {items.length > 0 ? (
-          <div className="c-cart-section" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
+          <div className="c-cart-section" style={isMobile ? { height: `calc(${screenHeight})` } : {}}>
             <div className="c-cart-section__items">
-              {items.map((item) => {
-                return props.isMobile ? (
+              {items.map((item) =>
+                isMobile ? (
                   <CartItemMobile
                     key={item.id || item}
                     {...item}
                     style={{ marginBottom: 12 }}
                     isSkeleton={cart.isFetching}
                     cartId={cart.cart && cart.cart.id}
-                    removeFromCart={props.thunkRemoveFromCart}
-                    saveSelected={props.saveSelected}
-                    updateCart={props.thunkUpdateCart}
+                    removeFromCart={(id) => dispatch(actions.thunkRemoveFromCart(id, item.id))}
+                    saveSelected={(data) => dispatch(actions.saveSelected(data))}
+                    updateCart={(data) => dispatch(actions.thunkUpdateCart(data))}
                   />
                 ) : (
                   <CartItem
@@ -84,34 +91,35 @@ const Cart = (props: any): any => {
                     style={{ marginBottom: 12 }}
                     isSkeleton={cart.isFetching}
                     cartId={cart.cart && cart.cart.id}
-                    removeFromCart={props.thunkRemoveFromCart}
-                    saveSelected={props.saveSelected}
-                    updateCart={props.thunkUpdateCart}
+                    removeFromCart={(id) => dispatch(actions.thunkRemoveFromCart(id, item.id))}
+                    saveSelected={(data) => dispatch(actions.saveSelected(data))}
+                    updateCart={(data) => dispatch(actions.thunkUpdateCart(data))}
                   />
-                );
-              })}
+                ),
+              )}
             </div>
+
             <div className="c-cart-section__summary">
               <Wrapper variant="border">
                 <div className="c-cart__summary">
-                  {!props.isMobile && (
+                  {!isMobile && (
                     <Fragment>
                       <div className="c-cart__summary__header">
-                        <h1>{props.t('order-summary')}</h1>
+                        <h1>{t('order-summary')}</h1>
                         <Dot width="12px" color="red" />
                       </div>
                       <div className="flex items-baseline justify-between">
                         <div>
                           <div className="c-cart__summary__title">When I Grow Up</div>
                           <div className="c-cart__summary__quantity">
-                            {props.t('quantity')}: {items.length}
+                            {t('quantity')}: {items.length}
                           </div>
                         </div>
                         <div className="c-cart__summary__total">
                           <NumberFormat
                             value={cart.cart && itemsAmount}
-                            thousandSeparator={true}
-                            prefix={'Rp'}
+                            thousandSeparator
+                            prefix="Rp"
                             displayType="text"
                           />
                         </div>
@@ -119,13 +127,13 @@ const Cart = (props: any): any => {
                       {hasShippingLine && (
                         <div className="flex items-baseline justify-between" style={{ marginTop: 18 }}>
                           <div>
-                            <div className="c-cart__summary__title">{props.t('standard-shipping')}</div>
+                            <div className="c-cart__summary__title">{t('standard-shipping')}</div>
                           </div>
                           <div className="c-cart__summary__total">
                             <NumberFormat
                               value={cart.cart.shippingLine.price}
-                              thousandSeparator={true}
-                              prefix={'Rp'}
+                              thousandSeparator
+                              prefix="Rp"
                               displayType="text"
                             />
                           </div>
@@ -138,14 +146,14 @@ const Cart = (props: any): any => {
                           style={{ marginTop: 18 }}
                         >
                           <div>
-                            <div className="c-cart__summary__title">{props.t('discount-code')}</div>
+                            <div className="c-cart__summary__title">{t('discount-code')}</div>
                             <div className="c-cart__summary__quantity">{discount.code}</div>
                           </div>
                           <div className="c-cart__summary__total">
                             <NumberFormat
                               value={-(itemsAmount * (discount.value.percentage / 100))}
-                              thousandSeparator={true}
-                              prefix={'Rp'}
+                              thousandSeparator
+                              prefix="Rp"
                               displayType="text"
                             />
                           </div>
@@ -157,60 +165,41 @@ const Cart = (props: any): any => {
                   <div className="c-cart__summary__subtotal">
                     <div className="c-cart__summary__subtotal__label">
                       Subtotal
-                      {props.isMobile && <span className="icon-info" />}
+                      {isMobile && <span className="icon-info" />}
                     </div>
                     <NumberFormat
                       value={cart.cart && cart.cart.totalPrice}
-                      thousandSeparator={true}
-                      prefix={'Rp'}
+                      thousandSeparator
+                      prefix="Rp"
                       displayType="text"
                     />
                   </div>
-                  {!props.isMobile && (
-                    <div className="c-cart__summary__info">
-                      {!hasShippingLine && (
-                        <div className="c-cart__summary__info__item" style={{ marginBottom: 8 }}>
-                          <span className="icon-info" />
-                          {props.t('shipping-not-included')}
-                        </div>
-                      )}
-                      <div className="c-cart__summary__info__item" style={{ marginBottom: 8 }}>
-                        <span className="icon-tag_label" />
-                        {props.t('discount-next-step')}
-                      </div>
-                      <div className="c-cart__summary__info__item">
-                        <span className="icon-gift" />
-                        {props.t('manufacturing-time')}
-                      </div>
-                    </div>
-                  )}
-                  {/* <Button onClick={() => props.thunkAddDiscount('NEWMEMBER')}>add discount</Button>
-                  <Button onClick={() => props.thunkRemoveDiscount('NEWMEMBER')}>remove discount</Button> */}
                   <Button
                     width="100%"
                     color="black"
-                    style={{ marginTop: props.isMobile ? 12 : 30 }}
+                    style={{ marginTop: isMobile ? 12 : 30 }}
                     onClick={continuePayment}
                   >
-                    {props.t('continue-payment')}
+                    {t('continue-payment')}
                   </Button>
                 </div>
               </Wrapper>
             </div>
           </div>
         ) : (
-          <div className="c-cart__empty" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
-            <img src={`/static/images/empty-asset${props.isMobile ? '-sm' : ''}.png`} alt="empty" />
-            <div className="c-cart__empty__title">{props.t('cart-empty-title')}</div>
-            <div className="c-cart__empty__subtitle">{props.t('cart-empty-subtitle')}</div>
+          <div className="c-cart__empty" style={isMobile ? { height: `calc(${screenHeight})` } : {}}>
+            <img src={`/static/images/empty-asset${isMobile ? '-sm' : ''}.png`} alt="empty" />
+            <div className="c-cart__empty__title">{t('cart-empty-title')}</div>
+            <div className="c-cart__empty__subtitle">{t('cart-empty-subtitle')}</div>
             <Link href="/create">
               <a>
-                <Button className={props.isMobile ? 'w-full' : ''}>{props.t('cart-empty-cta')}</Button>
+                <Button className={isMobile ? 'w-full' : ''}>{t('cart-empty-cta')}</Button>
               </a>
             </Link>
           </div>
         )}
       </div>
+
       <style jsx>{`
         .c-cart-section {
           @apply flex w-full flex-col justify-between;
@@ -316,6 +305,12 @@ const Cart = (props: any): any => {
   );
 };
 
-Cart.getInitialProps = () => ({ namespacesRequired: ['common'] });
+export const getServerSideProps = wrapper.getServerSideProps(() => async () => {
+  return {
+    props: {
+      namespacesRequired: ['common'],
+    },
+  };
+});
 
-export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Cart));
+export default withTranslation('common')(Cart);

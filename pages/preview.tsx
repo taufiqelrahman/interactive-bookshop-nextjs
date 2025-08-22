@@ -1,12 +1,11 @@
 import Head from 'next/head';
 import cookies from 'next-cookies';
-import { connect } from 'react-redux';
 
 import PreviewDesktop from 'components/organisms/Preview/desktop';
 import PreviewMobile from 'components/organisms/Preview/mobile';
 import { withTranslation } from 'i18n';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
+import { wrapper } from 'store';
 import actions from 'store/actions';
 
 const Preview = (props: any): any => (
@@ -18,33 +17,36 @@ const Preview = (props: any): any => (
   </div>
 );
 
-Preview.getInitialProps = async (ctx: any): Promise<any> => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   let selected: any = cookies(ctx).pendingTrx;
   if (!selected) {
-    ({ selected } = ctx.reduxStore.getState().cart);
+    ({ selected } = store.getState().cart);
   }
   if (!selected) {
-    const { res } = ctx;
-    if (res) {
-      res.writeHead(302, { Location: 'create' });
-      res.end();
-    }
-    return {};
+    return {
+      redirect: {
+        destination: '/create',
+        permanent: false, // false = temporary redirect
+      },
+    };
   }
   try {
     if (!selected.jobIds.length) return;
     const [firstJobId] = selected.jobIds;
-    ctx.reduxStore.dispatch(actions.loadBookPages(true));
+    store.dispatch(actions.loadBookPages(true));
     // const PARAMS = { jobs: selected.jobIds.toString() };
     const PARAMS = { jobs: firstJobId.toString() };
     const { data } = await api().master.getBookPages(PARAMS);
-    ctx.reduxStore.dispatch(actions.loadBookPages(false, data.data));
-  } catch (err) {
+    store.dispatch(actions.loadBookPages(false, data.data));
+  } catch (err: any) {
     console.log(err.message);
   }
-  return {
-    namespacesRequired: ['form'],
-  };
-};
 
-export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Preview));
+  return {
+    props: {
+      namespacesRequired: ['form'],
+    },
+  };
+});
+
+export default withTranslation('common')(Preview);

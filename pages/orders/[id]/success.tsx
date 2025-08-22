@@ -2,26 +2,28 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import cookies from 'next-cookies';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Link } from 'i18n';
 import { formatPayment } from 'lib/format-payment';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
+import { wrapper } from 'store';
 import actions from 'store/actions';
 
 const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderSuccess = (props: any): any => {
+  const users = useSelector((state: any) => state.users);
+  const { isLoggedIn } = users;
+  const orders = useSelector((state: any) => state.orders);
+  const { paymentProblem } = orders;
   const router = useRouter();
   const { id } = router.query;
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
-  const { isLoggedIn } = props.state.users;
-  const { paymentProblem } = props.state.orders;
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={props.t('checkout')} />}>
       <Head>
@@ -113,9 +115,9 @@ const OrderSuccess = (props: any): any => {
   );
 };
 
-OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   try {
-    ctx.reduxStore.dispatch(actions.loadOrder(true));
+    store.dispatch(actions.loadOrder(true));
     let orderData;
     if (cookies(ctx).user) {
       ({ data: orderData } = await api(ctx.req).orders.loadOrder(ctx.query.id));
@@ -125,19 +127,27 @@ OrderSuccess.getInitialProps = async (ctx: any): Promise<any> => {
     const { order, state, payment } = orderData.data;
     order.state = state.name;
     order.payment = payment ? formatPayment(payment) : null;
-    ctx.reduxStore.dispatch(actions.loadOrder(false, order));
+    store.dispatch(actions.loadOrder(false, order));
     let paymentProblem = false;
     if (!payment) paymentProblem = true;
-    ctx.reduxStore.dispatch(actions.setPaymentProblem(paymentProblem));
-  } catch (err) {
+    store.dispatch(actions.setPaymentProblem(paymentProblem));
+  } catch (err: any) {
     console.log(err.message);
     if (!ctx.res) return;
-    ctx.res.writeHead(302, {
-      Location: '/',
-    });
-    ctx.res.end();
-  }
-  return { namespacesRequired: ['common'] };
-};
 
-export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(OrderSuccess));
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      namespacesRequired: ['page-index'],
+    },
+  };
+});
+
+export default withTranslation('common')(OrderSuccess);

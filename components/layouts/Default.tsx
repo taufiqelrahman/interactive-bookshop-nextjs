@@ -1,31 +1,41 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
 import Floating from 'components/atoms/Floating';
 import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';
+import actions from 'store/actions';
 
-const DefaultLayout = (props: any) => {
+const DefaultLayout = ({ children, navbar, isMobile, style }: any) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const showWhatsapp = ['/', '/login', '/register', '/help', '/account'].includes(router.pathname);
+
+  const dispatch = useDispatch();
+  const users = useSelector((state: any) => state.users);
+  const cart = useSelector((state: any) => state.cart);
+  const { isSideNavOpen, errorMessage } = useSelector((state: any) => state.default);
+
   const hideSideNav = () => {
-    props.setSideNav(false);
+    dispatch(actions.setSideNav(false));
   };
+
   const hideOverlay = () => {
-    if (!props.isMobile) return;
-    if (props.state.default.isSideNavOpen) hideSideNav();
+    if (!isMobile) return;
+    if (isSideNavOpen) hideSideNav();
   };
+
   useEffect(() => {
     // reset overlay
     hideSideNav();
     // set top margin for fixed navbar
     const navbarDiv: any = document.querySelector('.c-nav-bar');
-    setNavbarHeight(navbarDiv.clientHeight);
-    const { users, cart } = props.state;
+    if (navbarDiv) setNavbarHeight(navbarDiv.clientHeight);
+
     if (!window.fbq) return;
     window.fbq('track', 'ViewContent', {
       cartItems: cart.cart && cart.cart.lineItems.length,
@@ -33,50 +43,49 @@ const DefaultLayout = (props: any) => {
       path: router.pathname,
     });
   }, []);
+
   useEffect(() => {
-    // show toast for errors
-    const { errorMessage } = props.state.default;
     if (errorMessage) {
       toast.error(errorMessage);
       setTimeout(() => {
-        props.setErrorMessage('');
+        dispatch(actions.setErrorMessage(''));
       }, 5000);
     }
-  }, [props.state.default.errorMessage]);
+  }, [errorMessage]);
 
   return (
     <div>
-      {props.navbar || (
+      {navbar || (
         <NavBar
-          users={props.state.users}
-          cartItems={props.state.cart.cart && props.state.cart.cart.lineItems}
-          thunkLogout={props.thunkLogout}
-          thunkLoadCart={props.thunkLoadCart}
+          users={users}
+          cartItems={cart.cart?.lineItems}
+          thunkLogout={() => dispatch(actions.thunkLogout())}
+          thunkLoadCart={() => dispatch(actions.thunkLoadCart(cart.cart?.id))}
         />
       )}
-      {props.isMobile && (
+
+      {isMobile && (
         <SideNav
-          isOpen={props.state.default.isSideNavOpen}
+          isOpen={isSideNavOpen}
           hide={hideSideNav}
-          users={props.state.users}
-          thunkLogout={props.thunkLogout}
+          users={users}
+          thunkLogout={() => dispatch(actions.thunkLogout())}
         />
       )}
-      <div
-        className={`c-layout ${props.isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`}
-        style={props.style}
-      >
+
+      <div className={`c-layout ${isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`} style={style}>
         <ToastContainer
           className="c-toast__container"
           toastClassName="c-toast__toast"
           position={toast.POSITION.TOP_CENTER}
           hideProgressBar={true}
-          // autoClose={false}
         />
-        {props.children}
+        {children}
       </div>
-      {!props.isMobile && <Footer />}
+
+      {!isMobile && <Footer />}
       <div className="c-overlay" onClick={hideOverlay}></div>
+
       {showWhatsapp && (
         <a
           href="https://wa.me/6287777717119?text=Saya%20tertarik%20mengenai%20buku%20When%20I%20Grow%20Up"
@@ -88,6 +97,7 @@ const DefaultLayout = (props: any) => {
           </Floating>
         </a>
       )}
+
       <style jsx>{`
         .c-overlay {
           @apply opacity-0;

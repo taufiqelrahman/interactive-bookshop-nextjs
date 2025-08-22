@@ -1,24 +1,31 @@
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { connect } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation, Link } from 'i18n';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Error: NextPage<any> = (props: any) => {
+interface ErrorProps {
+  statusCode?: number;
+  isMobile?: boolean;
+  setSideNav?: (val: boolean) => void;
+  t: (key: string) => string;
+}
+
+const Error: NextPage<ErrorProps> = (props) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
+
   const title = () => {
     if (!props.statusCode) return props.t('whoops');
     return props.statusCode;
   };
+
   const message = () => {
     switch (props.statusCode) {
       case 404:
@@ -29,6 +36,7 @@ const Error: NextPage<any> = (props: any) => {
         return props.t('error-message-general');
     }
   };
+
   return (
     <DefaultLayout
       {...props}
@@ -45,7 +53,7 @@ const Error: NextPage<any> = (props: any) => {
             <div className="c-error__message">{message()}</div>
             <Link href="/">
               <a style={props.isMobile ? { width: '100%' } : {}}>
-                <Button width={props.isMobile ? '100%' : null}>{props.t('back-to-home')}</Button>
+                <Button width={props.isMobile ? '100%' : undefined}>{props.t('back-to-home')}</Button>
               </a>
             </Link>
           </div>
@@ -112,12 +120,15 @@ const Error: NextPage<any> = (props: any) => {
   );
 };
 
-Error.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const statusCode = res?.statusCode ?? 404;
+
   return {
-    statusCode,
-    namespacesRequired: [],
+    props: {
+      statusCode,
+      namespacesRequired: ['common'],
+    },
   };
 };
 
-export default withTranslation('common')(connect(mapStateToProps, mapDispatchToProps)(Error));
+export default withTranslation('common')(Error);

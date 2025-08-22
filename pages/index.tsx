@@ -2,17 +2,15 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
 import LazyLoad from 'react-lazyload';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, Element } from 'react-scroll';
 
-// import graphql from 'services/graphql';
-// import api from 'services/api';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation } from 'i18n';
 import * as gtag from 'lib/gtag';
-import { mapStateToProps, mapDispatchToProps } from 'lib/with-redux-store';
 import api from 'services/api';
+import { wrapper, AppState } from 'store';
 import actions from 'store/actions';
 
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -21,10 +19,12 @@ const BookForm = dynamic(() => import('components/organisms/BookForm'));
 const Showcase = dynamic(() => import('components/atoms/Showcase'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Index = (props: any): any => {
-  const { testimonials, occupations } = props.state.master;
-  const occupationsTop = props.isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
-  const occupationsBottom = props.isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
+const Index = (props: any): JSX.Element => {
+  const { testimonials, occupations } = useSelector((state: AppState) => state.master);
+  const { isMobile, setSideNav, t, saveSelected } = props;
+
+  const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
+  const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
 
   // const createCheckout = async () => {
   //   let checkout = await graphql().checkout.create({
@@ -60,12 +60,12 @@ const Index = (props: any): any => {
     gtag.event({
       action: 'click_landing',
       category: 'engagement',
-      label: props.isMobile ? 'mobile' : 'desktop',
+      label: isMobile ? 'mobile' : 'desktop',
     });
   };
 
   return (
-    <DefaultLayout {...props} navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} />}>
+    <DefaultLayout {...props} navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction={true} />}>
       <Head>
         <title>When I Grow Up</title>
       </Head>
@@ -77,9 +77,9 @@ const Index = (props: any): any => {
               <div className="c-section__content">
                 <h1>{props.t('createnow-title')}</h1>
                 <div className="c-section__content__content">{props.t('createnow-content')}</div>
-                <Link to="create-book" spy={true} smooth={true} offset={-100} duration={500} onClick={landingTracker}>
+                <Link to="create-book" spy smooth offset={-100} duration={500} onClick={landingTracker}>
                   <Button variant="outline" color="black" style={{ marginTop: 24 }}>
-                    {props.t('createnow-button')}
+                    {t('createnow-button')}
                   </Button>
                 </Link>
               </div>
@@ -162,20 +162,20 @@ const Index = (props: any): any => {
       </div>
       <div className="c-section--bottom">
         <div className="c-section--bottom__testi">
-          <TestimonialSlider isMobile={props.isMobile} testimonials={testimonials} />
+          <TestimonialSlider isMobile={isMobile} testimonials={testimonials} />
         </div>
         <div id="create-book">
           <LazyLoad>
             <div className="c-section--bottom__create-book">
               <Element name="create-book">
-                <h2>{props.t('createbook-header')}</h2>
-                <BookForm isMobile={props.isMobile} saveSelected={props.saveSelected} occupations={occupations} />
+                <h2>{t('createbook-header')}</h2>
+                <BookForm isMobile={isMobile} saveSelected={saveSelected} occupations={occupations} />
               </Element>
             </div>
           </LazyLoad>
         </div>
       </div>
-      {props.isMobile && <Footer isMobile={props.isMobile} />}
+      {isMobile && <Footer isMobile={isMobile} />}
       <style jsx>{`
         .c-section {
           &--top {
@@ -421,22 +421,24 @@ const Index = (props: any): any => {
   );
 };
 
-Index.getInitialProps = async (ctx: any): Promise<any> => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   try {
     const [{ data: testi }, { data: occupations }] = await Promise.all([
       api().master.getTestimonials(),
       api().master.getOccupations(),
     ]);
-    ctx.reduxStore.dispatch(actions.loadTestimonials(false, testi.data));
-    ctx.reduxStore.dispatch(actions.loadOccupations(false, occupations.data));
-  } catch (err) {
-    console.log(err);
-    console.log(err.message);
-  }
-  return {
-    pageProps: {},
-    namespacesRequired: ['page-index'],
-  };
-};
 
-export default withTranslation('page-index')(connect(mapStateToProps, mapDispatchToProps)(Index));
+    store.dispatch(actions.loadTestimonials(false, testi.data));
+    store.dispatch(actions.loadOccupations(false, occupations.data));
+  } catch (err: any) {
+    console.error('❌ Index getServerSideProps:', err.message);
+  }
+
+  return {
+    props: {
+      namespacesRequired: ['page-index'],
+    },
+  };
+});
+
+export default withTranslation('page-index')(Index);

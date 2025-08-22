@@ -1,5 +1,5 @@
-import { createStore, applyMiddleware, combineReducers, compose, Store } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 
 import cartReducer from './cart/reducers';
 import masterReducer from './master/reducers';
@@ -17,19 +17,17 @@ const rootReducer = combineReducers({
   master: masterReducer,
 });
 
-const isBrowser = typeof window != 'undefined';
-const reduxOption = { trace: true, traceLimit: 25 };
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-const composeEnhancer =
-  isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as any)(reduxOption)
-    : compose;
+// ✅ bikin store pakai `configureStore` (gak perlu manual compose, enhancer, dll)
+export const makeStore = () =>
+  configureStore({
+    reducer: rootReducer,
+    devTools: process.env.NODE_ENV !== 'production',
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }), // supaya aman kalau ada non-serializable (misal Date)
+  });
 
-export type AppState = ReturnType<typeof rootReducer>;
-export function initializeStore(initialState?: Partial<AppState>): Store {
-  return createStore(rootReducer, initialState, composeEnhancer(applyMiddleware(thunkMiddleware)));
-}
+export type AppStore = ReturnType<typeof makeStore>;
+export type AppState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
+
+// ✅ bikin wrapper
+export const wrapper = createWrapper<AppStore>(makeStore, { debug: process.env.NODE_ENV === 'development' });
