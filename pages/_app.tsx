@@ -345,12 +345,13 @@ const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApi
 };
 
 WiguApp.getInitialProps = async (appContext: any) => {
-  try {
-    const { ctx } = appContext;
-    const reduxStore = getOrCreateStore();
-    ctx.reduxStore = reduxStore;
-    const { dispatch, getState } = reduxStore;
+  const { ctx } = appContext;
+  const reduxStore = getOrCreateStore();
+  ctx.reduxStore = reduxStore;
 
+  const { dispatch, getState } = reduxStore;
+
+  try {
     if (cookies(ctx).user) {
       if (!getState().users?.user) {
         try {
@@ -371,11 +372,22 @@ WiguApp.getInitialProps = async (appContext: any) => {
       dispatch(actions.setErrorMessage(''));
     }
 
-    const appProps = await App.getInitialProps(appContext);
-    return { ...appProps, pageProps: appProps.pageProps || {}, initialReduxState: reduxStore.getState() };
+    const appProps = await App.getInitialProps(appContext).catch((e) => {
+      console.error('🔥 App.getInitialProps failed:', e);
+      return { pageProps: {} }; // fallback aman
+    });
+
+    return {
+      ...appProps,
+      pageProps: appProps.pageProps || {},
+      initialReduxState: reduxStore.getState(),
+    };
   } catch (err) {
-    console.error('🔥 getInitialProps failed:', err);
-    return { pageProps: {} }; // jangan return null
+    console.error('🔥 WiguApp.getInitialProps crashed:', err);
+    return {
+      pageProps: {},
+      initialReduxState: reduxStore.getState(),
+    };
   }
 };
 
