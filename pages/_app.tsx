@@ -6,7 +6,6 @@ import detectIt from 'detect-it';
 import Cookies from 'js-cookie';
 import debounce from 'lodash.debounce';
 import { NextApiResponse, NextPage } from 'next';
-import App from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import cookies from 'next-cookies';
@@ -377,10 +376,7 @@ WiguApp.getInitialProps = async (appContext: any) => {
       dispatch(actions.setErrorMessage(''));
     }
 
-    const appProps = await App.getInitialProps(appContext).catch((e) => {
-      console.error('🔥 App.getInitialProps failed:', e);
-      return { pageProps: {} }; // fallback aman
-    });
+    const appProps = { pageProps: {} };
 
     return {
       ...appProps,
