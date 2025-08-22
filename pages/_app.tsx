@@ -343,33 +343,38 @@ const redirectLoginRoutes = ({ pathname, res }: { pathname: string; res: NextApi
 };
 
 WiguApp.getInitialProps = async (appContext: any) => {
-  const { ctx } = appContext;
-  const reduxStore = getOrCreateStore();
-  ctx.reduxStore = reduxStore;
-  const { dispatch, getState } = reduxStore;
+  try {
+    const { ctx } = appContext;
+    const reduxStore = getOrCreateStore();
+    ctx.reduxStore = reduxStore;
+    const { dispatch, getState } = reduxStore;
 
-  if (cookies(ctx).user) {
-    if (!getState().users?.user) {
-      try {
-        const { data: me } = await api(ctx.req).users.getMe();
-        dispatch(actions.setLogin(true));
-        dispatch(actions.loadUser(false, me));
-      } catch {
-        dispatch(actions.setExpired(true));
+    if (cookies(ctx).user) {
+      if (!getState().users?.user) {
+        try {
+          const { data: me } = await api(ctx.req).users.getMe();
+          dispatch(actions.setLogin(true));
+          dispatch(actions.loadUser(false, me));
+        } catch {
+          dispatch(actions.setExpired(true));
+        }
       }
+      redirectLoginRoutes(ctx);
+    } else {
+      dispatch(actions.setLogin(false));
+      redirectPrivateRoutes(ctx);
     }
-    redirectLoginRoutes(ctx);
-  } else {
-    dispatch(actions.setLogin(false));
-    redirectPrivateRoutes(ctx);
-  }
 
-  if (getState().default?.errorMessage) {
-    dispatch(actions.setErrorMessage(''));
-  }
+    if (getState().default?.errorMessage) {
+      dispatch(actions.setErrorMessage(''));
+    }
 
-  const appProps = await App.getInitialProps(appContext);
-  return { ...appProps, pageProps: appProps.pageProps || {}, initialReduxState: reduxStore.getState() };
+    const appProps = await App.getInitialProps(appContext);
+    return { ...appProps, pageProps: appProps.pageProps || {}, initialReduxState: reduxStore.getState() };
+  } catch (err) {
+    console.error('🔥 getInitialProps failed:', err);
+    return { pageProps: {} }; // jangan return null
+  }
 };
 
 export default appWithTranslation(withReduxStore(WiguApp));
