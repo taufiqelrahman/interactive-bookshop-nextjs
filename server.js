@@ -11,7 +11,6 @@ const nextI18NextMiddleware = require('next-i18next/middleware').default;
 const nextI18next = require('./i18n');
 const config = require('./next.config');
 
-// const port = process.env.PORT || 8101;
 const port = process.env.PORT || 80;
 const app = next({
   dev: process.env.NODE_ENV !== 'production',

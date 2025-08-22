@@ -1,226 +1,162 @@
-# WhenIGrowUp 📚
+# Interactive Bookshop Next.js 🚀📚
 
-WhenIGrowUp is a modern web application for creating personalized children's books. Built with Next.js, TypeScript, and a comprehensive tech stack, it allows users to customize characters and create unique storybooks for children.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Node Version](https://img.shields.io/badge/node-22.x-brightgreen)](https://nodejs.org/)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/taufiqelrahman/interactive-bookshop-nextjs/ci.yml?branch=main)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/actions)
+[![Good First Issue](https://img.shields.io/badge/good%20first%20issue-friendly-brightgreen)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+
+**Interactive Bookshop Next.js** is an open-source web application for creating **personalized children's books** with e-commerce support. Built with a **Next.js + Redux + GraphQL + Shopify + PWA** stack, it’s ideal for learning modern full-stack development and contributing to a real project.
+
+---
 
 ## ✨ Features
 
-- **Character Customization**: Personalize characters with different appearances, occupations, and traits
-- **Interactive Book Creation**: Dynamic form-based book generation
-- **Multi-language Support**: Internationalization with next-i18next
-- **Responsive Design**: Mobile-first design with Tailwind CSS
-- **Progressive Web App**: PWA capabilities for offline usage
-- **Real-time Preview**: Live book preview as users customize
-- **E-commerce Integration**: Shopping cart and order management
-- **User Accounts**: Authentication and user profile management
+- **Character Customization**: Personalize characters with appearances, traits, and occupations
+- **Interactive Story Builder**: Real-time preview of book pages
+- **E-commerce Integration**: Shopify Buy SDK for cart & order management
+- **GraphQL API**: Apollo Client for clean queries & mutations
+- **PWA Ready**: Offline-first, installable, push notifications
+- **Error Tracking**: Integrated Sentry for logging & monitoring
+- **Responsive Design**: Mobile-first UI with Tailwind CSS
+- **Multi-language Support**: Internationalization via next-i18next
+
+---
 
 ## 🛠 Tech Stack
 
-### Frontend
+**Frontend**
 
-- **Next.js 9.1.1** - React framework with SSR/SSG
-- **React 16.11** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first CSS framework
-- **Styled-JSX** - CSS-in-JS styling
-- **Redux** - State management with Redux Thunk
+- Next.js 11.1.4 (SSR/SSG)
+- React 17 + TypeScript
+- Redux Toolkit + Thunk
+- Tailwind CSS + Styled-JSX
+- React Hook Form
+- React-Select & React-Toastify
 
-### Backend & Services
+**Backend & Services**
 
-- **Express.js** - Custom server
-- **GraphQL** - API with Apollo Client
-- **Shopify Buy SDK** - E-commerce integration
-- **Sentry** - Error tracking
+- Express.js custom server
+- GraphQL API via Apollo Client
+- Shopify Buy SDK
+- Sentry for error monitoring
 
-### Development & Testing
+**Dev & Testing**
 
-- **Jest** - Testing framework
-- **ESLint & Prettier** - Code formatting and linting
-- **Husky** - Git hooks
-- **Bundle Analyzer** - Performance optimization
+- Jest + React Testing Library (unit, integration, E2E)
+- ESLint + Prettier
+- Husky + lint-staged
+- Bundle Analyzer
 
-### Deployment
+**Deployment**
 
-- **Docker** - Containerization
-- **PWA** - Progressive Web App features
+- Docker containerization
+- PWA features
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 22.17 or higher
-- Pnpm package manager
+- Node.js 22.x+
+- pnpm package manager
 
 ### Installation
 
-1. Clone the repository:
-
 ```bash
-git clone https://github.com/taufiqelrahman/whenigrowup.git
-cd whenigrowup
-```
-
-2. Install dependencies:
-
-```bash
+git clone https://github.com/<your-username>/interactive-bookshop-nextjs.git
+cd interactive-bookshop-nextjs
 pnpm install
-```
-
-3. Set up environment variables:
-
-```bash
 cp .env.example .env.local
-# Edit .env.local with your configuration
-```
-
-4. Run the development server:
-
-```bash
+# Configure your GraphQL endpoint, Shopify API keys, Sentry DSN, etc.
 pnpm run tinker
 ```
 
-The application will be available at `http://localhost:3000`.
+Visit http://localhost:3000 to explore the app.
 
-## 📜 Available Scripts
+⸻
 
-### Development
+### 📜 Scripts
 
-- `pnpm run dev` - Start development server with debugging
-- `pnpm run tinker` - Run linting and development server concurrently
-- `pnpm run debug` - Start server without debugging
+```bash
+- pnpm run dev - Start dev server
+- pnpm run tinker - Dev + lint concurrently
+- pnpm run build - Production build
+- pnpm run start - Start server
+- pnpm run deploy - Build + start
+- pnpm run test - Run tests
+- pnpm run lint - ESLint & Stylelint
+- pnpm run analyze - Bundle analysis
+```
 
-### Building & Deployment
-
-- `pnpm run build` - Build production application
-- `pnpm run start` - Start production server
-- `pnpm run deploy` - Build and start production server
-
-### Testing & Quality
-
-- `pnpm run test` - Run tests in watch mode with coverage
-- `pnpm run test:ci` - Run tests for CI/CD
-- `pnpm run test:e2e` - Run end-to-end tests
-- `pnpm run lint` - Run ESLint and Stylelint
-
-### Utilities
-
-- `pnpm run analyze` - Analyze bundle size
-- `pnpm run sitemap` - Generate sitemap
+⸻
 
 ## 🏗 Project Structure
 
-```
-├── components/           # React components
-│   ├── atoms/           # Basic UI components
-│   ├── molecules/       # Composite components
-│   └── organisms/       # Complex components
-├── pages/               # Next.js pages and API routes
-├── store/               # Redux store configuration
-├── services/            # API and GraphQL services
-├── lib/                 # Utility functions
-├── styles/              # Global styles and fonts
-├── public/              # Static assets
-├── config/              # Application configuration
-└── _mocks/              # Test mocks
-```
-
-## 🎨 Component Architecture
-
-The project follows Atomic Design principles:
-
-- **Atoms**: Basic building blocks (Button, TextField, etc.)
-- **Molecules**: Simple combinations (FormTextField, CartItem, etc.)
-- **Organisms**: Complex components (BookForm, NavBar, etc.)
-
-## 🧪 Testing
-
-The project includes comprehensive testing:
-
-- Unit tests for components
-- Integration tests
-- E2E testing
-- Coverage reporting
-
-Run tests:
-
 ```bash
-pnpm run test        # Development with watch mode
-pnpm run test:ci     # CI/CD mode
+├── components/      # Atoms, Molecules, Organisms
+├── pages/           # Next.js pages & API routes
+├── store/           # Redux store & slices
+├── services/        # GraphQL, Shopify, Sentry
+├── lib/             # Utilities
+├── styles/          # Global styles
+├── public/          # Static assets & demo screenshot
+├── config/          # App configuration
+└── _mocks/          # Test mocks
 ```
 
-## 🐳 Docker Deployment
-
-Build and run with Docker:
-
-```bash
-docker build -t whenigrowup .
-docker run -p 3000:3000 whenigrowup
-```
-
-Or use docker-compose:
-
-```bash
-docker-compose up
-```
+⸻
 
 ## 🌍 Internationalization
 
-The app supports multiple languages using next-i18next. Language files are configured in `i18n.js`.
+- Built with next-i18next
+- Supports multiple languages
 
 ## 📱 PWA Features
 
-- Offline functionality
-- App-like experience
-- Push notifications support
-- Installable on devices
+- Offline-first
+- Installable
+- Push notifications
 
-## 🔧 Environment Variables
-
-Create a `.env.local` file with the following variables:
-
-```
-# Add your environment variables here
-NODE_ENV=development
-# GraphQL endpoint
-# Shopify configuration
-# Sentry DSN
-# Other API keys
-```
-
-## 📈 Performance Optimizations
-
-- Image optimization with next-optimized-images
-- CSS purging with PurgeCSS
-- Bundle analysis
-- Lazy loading components
-- Progressive loading
+⸻
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+We ❤️ contributions!
 
-### Development Guidelines
+- Check out good first issues here
+- Fork the repo & create a branch:
+
+```bash
+git checkout -b feature/amazing-feature
+```
+
+- Commit & push your changes:
+
+```bash
+git commit -m "Add amazing feature"
+git push origin feature/amazing-feature
+```
+
+- Open a Pull Request to main.
+
+### Guidelines
 
 - Follow TypeScript best practices
 - Write tests for new features
 - Use conventional commit messages
-- Ensure code passes linting
+- Keep code clean & formatted
+
+⸻
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👨‍💻 Author
-
-**Taufiq Rahman** - [@taufiqelrahman](https://github.com/taufiqelrahman)
+MIT License
 
 ## 🐛 Bug Reports & Feature Requests
 
-Please use the [Issues](https://github.com/taufiqelrahman/whenigrowup/issues) section to report bugs or request features.
+Submit via [GitHub Issues](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/issues).
 
----
+⸻
 
-Made with ❤️ for creating magical stories for children
+Made with ❤️ for building interactive, personalized storybooks with a modern full-stack stack.
