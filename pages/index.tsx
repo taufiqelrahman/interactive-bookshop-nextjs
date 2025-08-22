@@ -84,7 +84,7 @@ const Index = (props: any): JSX.Element => {
                 </Link>
               </div>
               <div className="c-section--top__image">
-                <img src={`/static/images/guitars${props.isMobile ? '-sm' : ''}.png`} alt="guitars" />
+                <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
               </div>
             </div>
             <div className="c-section__create-now__books">
