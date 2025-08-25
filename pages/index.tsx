@@ -5,12 +5,12 @@ import LazyLoad from 'react-lazyload';
 // import { useSelector } from 'react-redux';
 import { Link } from 'react-scroll';
 
-import DefaultLayout from 'components/layouts/Default';
-import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation } from 'i18n';
+// import DefaultLayout from 'components/layouts/Default';
+// import NavBar from 'components/organisms/NavBar/mobile';
+// import { withTranslation } from 'i18n';
 import * as gtag from 'lib/gtag';
 // import api from 'services/api';
-import { wrapper } from 'store';
+// import { wrapper } from 'store';
 // import actions from 'store/actions';
 
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -21,7 +21,7 @@ const Showcase = dynamic(() => import('components/atoms/Showcase'));
 
 const Index = (props: any): JSX.Element => {
   // const { testimonials, occupations } = useSelector((state: AppState) => state.master);
-  const { isMobile, setSideNav, t } = props;
+  const { isMobile, t } = props;
 
   // const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
   // const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
@@ -65,7 +65,8 @@ const Index = (props: any): JSX.Element => {
   };
 
   return (
-    <DefaultLayout {...props} navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction={true} />}>
+    <div>
+      {/* <DefaultLayout {...props} navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction={true} />}> */}
       <Head>
         <title>When I Grow Up</title>
       </Head>
@@ -417,28 +418,30 @@ const Index = (props: any): JSX.Element => {
           }
         }
       `}</style>
-    </DefaultLayout>
+      {/* </DefaultLayout> */}
+    </div>
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(() => async () => {
-  // try {
-  //   const [{ data: testi }, { data: occupations }] = await Promise.all([
-  //     api().master.getTestimonials(),
-  //     api().master.getOccupations(),
-  //   ]);
+// export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+//   try {
+//     const [{ data: testi }, { data: occupations }] = await Promise.all([
+//       api().master.getTestimonials(),
+//       api().master.getOccupations(),
+//     ]);
 
-  //   store.dispatch(actions.loadTestimonials(false, testi.data));
-  //   store.dispatch(actions.loadOccupations(false, occupations.data));
-  // } catch (err: any) {
-  //   console.error('❌ Index getServerSideProps:', err.message);
-  // }
+//     store.dispatch(actions.loadTestimonials(false, testi.data));
+//     store.dispatch(actions.loadOccupations(false, occupations.data));
+//   } catch (err: any) {
+//     console.error('❌ Index getServerSideProps:', err.message);
+//   }
 
-  return {
-    props: {
-      namespacesRequired: ['page-index'],
-    },
-  };
-});
+//   return {
+//     props: {
+//       namespacesRequired: ['page-index'],
+//     },
+//   };
+// });
 
-export default withTranslation('page-index')(Index);
+// export default withTranslation('page-index')(Index);
+export default Index;

@@ -13,10 +13,10 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 
-import { appWithTranslation } from 'i18n';
+// import { appWithTranslation } from 'i18n';
 // import * as gtag from 'lib/gtag';
 // import api from 'services/api';
-import { wrapper } from 'store';
+// import { wrapper } from 'store';
 // import actions from 'store/actions';
 
 import 'styles/tailwind.css';
@@ -99,7 +99,7 @@ function WiguApp({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Head>
-        <meta key="robots" name="robots" content="noimageindex" />
+        {/* <meta key="robots" name="robots" content="noimageindex" />
         <meta key="theme-color" name="theme-color" content="#000000" />
         <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
         <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
@@ -107,14 +107,14 @@ function WiguApp({ Component, pageProps }: AppProps) {
           key="apple-mobile-web-app-status-bar-style"
           name="apple-mobile-web-app-status-bar-style"
           content="white"
-        />
+        /> */}
         <meta
           key="description"
           name="description"
           content="children books, custom books, parenting books, parenting, children, baby, creativity, growing up"
         />
         {/* PWA */}
-        <meta key="charSet" charSet="utf-8" />
+        {/* <meta key="charSet" charSet="utf-8" />
         <meta key="httpEquiv" httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta
           key="viewport"
@@ -125,53 +125,53 @@ function WiguApp({ Component, pageProps }: AppProps) {
           key="keyword"
           name="keywords"
           content="children books, custom books, parenting books, parenting, children, baby, creativity, growing up"
-        />
+        /> */}
         {/* <!-- Android  --> */}
-        <meta key="theme-color" name="theme-color" content="#de6236" />
-        <meta key="mobile-web-app-capable" name="mobile-web-app-capable" content="yes" />
+        {/* <meta key="theme-color" name="theme-color" content="#de6236" />
+        <meta key="mobile-web-app-capable" name="mobile-web-app-capable" content="yes" /> */}
 
         {/* <!-- iOS --> */}
-        <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
+        {/* <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
         <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
         <meta
           key="apple-mobile-web-app-status-bar-style"
           name="apple-mobile-web-app-status-bar-style"
           content="default"
-        />
+        /> */}
 
         {/* <!-- Windows  --> */}
-        <meta key="msapplication-navbutton-color" name="msapplication-navbutton-color" content="#de6236" />
+        {/* <meta key="msapplication-navbutton-color" name="msapplication-navbutton-color" content="#de6236" />
         <meta key="msapplication-TileColor" name="msapplication-TileColor" content="#de6236" />
         <meta
           key="msapplication-TileImage"
           name="msapplication-TileImage"
           content="/static/images/icons/icon-144x144.png"
         />
-        <meta key="msapplication-config" name="msapplication-config" content="browserconfig.xml" />
+        <meta key="msapplication-config" name="msapplication-config" content="browserconfig.xml" /> */}
 
         {/* <!-- Pinned Sites  --> */}
-        <meta key="application-name" name="application-name" content="When I Grow Up" />
+        {/* <meta key="application-name" name="application-name" content="When I Grow Up" />
         <meta key="msapplication-tooltip" name="msapplication-tooltip" content="When I Grow Up" />
-        <meta key="msapplication-starturl" name="msapplication-starturl" content="/" />
+        <meta key="msapplication-starturl" name="msapplication-starturl" content="/" /> */}
 
         {/* <!-- Tap highlighting  --> */}
-        <meta key="msapplication-tap-highlight" name="msapplication-tap-highlight" content="no" />
+        {/* <meta key="msapplication-tap-highlight" name="msapplication-tap-highlight" content="no" /> */}
 
         {/* <!-- UC Mobile Browser  --> */}
-        <meta key="full-screen" name="full-screen" content="yes" />
-        <meta key="browsermode" name="browsermode" content="application" />
+        {/* <meta key="full-screen" name="full-screen" content="yes" />
+        <meta key="browsermode" name="browsermode" content="application" /> */}
 
         {/* <!-- Disable night mode for this page  --> */}
-        <meta key="nightmode" name="nightmode" content="enable/disable" />
+        {/* <meta key="nightmode" name="nightmode" content="enable/disable" /> */}
 
         {/* <!-- Fitscreen  --> */}
         {/* <meta key="viewport" name="viewport" content="uc-fitscreen=yes" /> */}
 
         {/* <!-- Layout mode --> */}
-        <meta key="layoutmode" name="layoutmode" content="fitscreen/standard" />
+        {/* <meta key="layoutmode" name="layoutmode" content="fitscreen/standard" /> */}
 
         {/* <!-- imagemode - show image even in text only mode  --> */}
-        <meta key="imagemode" name="imagemode" content="force" />
+        {/* <meta key="imagemode" name="imagemode" content="force" /> */}
 
         {/* <!-- Orientation  --> */}
         {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
@@ -358,4 +358,5 @@ function WiguApp({ Component, pageProps }: AppProps) {
 //     },
 //   };
 // });
-export default wrapper.withRedux(appWithTranslation(WiguApp));
+// export default wrapper.withRedux(appWithTranslation(WiguApp));
+export default WiguApp;
