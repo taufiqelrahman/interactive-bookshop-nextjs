@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Card from 'components/atoms/Card';
 import Testimonial from 'components/molecules/Testimonial';
 import { withTranslation } from 'i18n';
-// import * as gtag from 'lib/gtag';
+import * as gtag from 'lib/gtag';
 
 const TestimonialSlider = (props: any) => {
   const [navRightClass, setNavRightClass] = useState(0);
@@ -33,11 +33,11 @@ const TestimonialSlider = (props: any) => {
     // eslint-disable-next-line no-extra-boolean-cast
     if (isNavigating || !!navRightClass) return;
     setIsNavigating(true);
-    // gtag.event({
-    //   action: 'testimonials',
-    //   category: 'engagement',
-    //   label: 'desktop',
-    // });
+    gtag.event({
+      action: 'testimonials',
+      category: 'engagement',
+      label: 'desktop',
+    });
     setTranslationX(translationX - 418);
   };
   const onNavLeft = () => {
