@@ -3,18 +3,18 @@
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import detectIt from 'detect-it';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import debounce from 'lodash.debounce';
 import type { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import cookies from 'next-cookies';
 import NProgress from 'nprogress';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { appWithTranslation, i18n, Router } from 'i18n';
-import * as gtag from 'lib/gtag';
+// import * as gtag from 'lib/gtag';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
@@ -28,7 +28,7 @@ import 'styles/fonts.min.css';
 const LOGIN_ROUTES = ['/login', '/register'];
 const PRIVATE_ROUTES = ['/orders/success', '/account', '/orders'];
 
-const Pixel = dynamic(() => import('components/atoms/Pixel'));
+// const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
 // disable when development
 // Sentry.init({
@@ -48,8 +48,8 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 function WiguApp({ Component, pageProps }: AppProps) {
   const [width, setWidth] = useState(0);
-  const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.users.user);
+  // const dispatch = useDispatch();
+  // const user = useSelector((state: any) => state.users.user);
   const isExpired = useSelector((state: any) => state.users.isExpired);
 
   const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
@@ -58,27 +58,27 @@ function WiguApp({ Component, pageProps }: AppProps) {
     [],
   );
 
-  const handleRouteChange = (url: string) => gtag.pageview(url);
+  // const handleRouteChange = (url: string) => gtag.pageview(url);
 
   useEffect(() => {
-    if (isExpired) {
-      Cookies.remove('user', { domain: process.env.DOMAIN });
-    }
+    // if (isExpired) {
+    //   Cookies.remove('user', { domain: process.env.DOMAIN });
+    // }
     dayjs.locale(i18n.language);
     setWidth(window.innerWidth);
-    Router.events.on('routeChangeComplete', handleRouteChange);
+    // Router.events.on('routeChangeComplete', handleRouteChange);
     window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
     return () => {
-      Router.events.off('routeChangeComplete', handleRouteChange);
+      // Router.events.off('routeChangeComplete', handleRouteChange);
       window.removeEventListener('resize', debouncedSetup as any);
     };
   }, [isExpired]);
 
-  useEffect(() => {
-    if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
-      dispatch(actions.thunkCreateCart());
-    }
-  }, [user, dispatch]);
+  // useEffect(() => {
+  //   if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
+  //     dispatch(actions.thunkCreateCart());
+  //   }
+  // }, [user, dispatch]);
 
   // useEffect(() => {
   //   const createCartForUser = () => {
@@ -176,7 +176,7 @@ function WiguApp({ Component, pageProps }: AppProps) {
         {/* <!-- Orientation  --> */}
         {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
       </Head>
-      <Pixel />
+      {/* <Pixel /> */}
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
         body {

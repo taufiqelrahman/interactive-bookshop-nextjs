@@ -8,7 +8,7 @@ import FieldGender from 'components/molecules/FieldGender';
 import FormTextField from 'components/molecules/FormTextField';
 // import FieldAge from 'components/molecules/FieldAge';
 import { withTranslation, Router } from 'i18n';
-import * as gtag from 'lib/gtag';
+// import * as gtag from 'lib/gtag';
 
 const BookForm = (props: any) => {
   const [isFormValid, setIsFormValid] = useState(false);
@@ -60,11 +60,11 @@ const BookForm = (props: any) => {
     // }
     // let PARAMS = data;
     // if (props.isMobile) PARAMS = { ...PARAMS, occupations: state.occupations };
-    gtag.event({
-      action: 'click_create',
-      category: 'engagement',
-      label: '/',
-    });
+    // gtag.event({
+    //   action: 'click_create',
+    //   category: 'engagement',
+    //   label: '/',
+    // });
     props.saveSelected(data);
     Router.push('/create');
   };
