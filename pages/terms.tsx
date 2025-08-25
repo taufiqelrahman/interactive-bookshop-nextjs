@@ -4,7 +4,6 @@ import Head from 'next/head';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation } from 'i18n';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Footer = dynamic(() => import('components/organisms/Footer'));

@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import helpContents from 'config/helpContents';
-import { withTranslation } from 'i18n';
+
 import actions from 'store/actions';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));

@@ -3,7 +3,7 @@ import cookies from 'next-cookies';
 
 import PreviewDesktop from 'components/organisms/Preview/desktop';
 import PreviewMobile from 'components/organisms/Preview/mobile';
-import { withTranslation } from 'i18n';
+
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import appConfig from 'config';
-import { withTranslation } from 'i18n';
+
 import { fullDate } from 'lib/format-date';
 
 import { retrieveInfo, previewImg } from './helper';

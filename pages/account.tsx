@@ -9,7 +9,7 @@ import Select from 'react-select';
 import TextField from 'components/atoms/TextField';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation } from 'i18n';
+
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';

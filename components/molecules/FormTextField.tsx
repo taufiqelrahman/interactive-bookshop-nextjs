@@ -2,7 +2,6 @@ import React from 'react';
 
 import Badge from 'components/atoms/Badge';
 import TextField from 'components/atoms/TextField';
-import { withTranslation } from 'i18n';
 
 const FormTextField: any = (props: any) => {
   return (

@@ -1,19 +1,20 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
-import { withTranslation } from 'i18n';
 
 const FieldAge = (props: any) => {
+  const { t } = useTranslation('form');
   const ages = [
-    { name: props.t('age-toddler'), code: 'toddler' },
-    { name: props.t('age-kid'), code: 'kid' },
+    { name: t('age-toddler'), code: 'toddler' },
+    { name: t('age-kid'), code: 'kid' },
   ];
   return (
     <div style={props.fieldStyle}>
       <div className="c-field-age">
         <div className="c-field-age__header">
-          {props.t('age-label')}
+          {t('age-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-age__options">
@@ -55,4 +56,4 @@ const FieldAge = (props: any) => {
 };
 FieldAge.displayName = 'FieldAge';
 
-export default withTranslation('form', { withRef: true })<any>(FieldAge);
+export default FieldAge;

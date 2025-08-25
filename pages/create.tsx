@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
-import { withTranslation } from 'i18n';
+
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';

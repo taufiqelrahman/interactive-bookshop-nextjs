@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 import Capsule from 'components/atoms/Capsule';
 import Card from 'components/atoms/Card';
 import appConfig from 'config';
-import { withTranslation } from 'i18n';
+
 import { mapKeyValue } from 'lib/format-array';
 import { date } from 'lib/format-date';
 // import Dot from 'components/atoms/Dot';

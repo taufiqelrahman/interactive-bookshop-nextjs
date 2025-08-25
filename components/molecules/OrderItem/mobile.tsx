@@ -3,7 +3,7 @@ import NumberFormat from 'react-number-format';
 
 import Card from 'components/atoms/Card';
 import Divider from 'components/atoms/Divider';
-import { withTranslation } from 'i18n';
+
 import { mapKeyValue } from 'lib/format-array';
 import { date } from 'lib/format-date';
 

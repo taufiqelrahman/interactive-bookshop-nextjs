@@ -1,10 +1,11 @@
+import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
 import React from 'react';
 
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
-import { withTranslation } from 'i18n';
 
 const FieldSkin = (props: any) => {
+  const { t } = useTranslation('form');
   const skins = [
     { name: 'light', color: '#ffdbb7' },
     { name: 'medium', color: '#c78d61' },
@@ -14,7 +15,7 @@ const FieldSkin = (props: any) => {
     <div style={props.style}>
       <div className="c-field-skin">
         <div className="c-field-skin__header">
-          {props.t('skin-label')}
+          {t('skin-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-skin__options">
@@ -63,4 +64,4 @@ const FieldSkin = (props: any) => {
 };
 FieldSkin.displayName = 'FieldSkin';
 
-export default withTranslation('form', { withRef: true })<any>(FieldSkin);
+export default FieldSkin;

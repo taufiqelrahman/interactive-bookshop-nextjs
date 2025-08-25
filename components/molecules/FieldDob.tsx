@@ -1,15 +1,17 @@
+import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
 import React from 'react';
 
 import DateField from 'components/atoms/DateField/desktop';
 import DateFieldMobile from 'components/atoms/DateField/mobile';
-import { withTranslation } from 'i18n';
+
 // import Badge from 'components/atoms/Badge';
 
 const FieldDob = (props: any) => {
+  const { t } = useTranslation('form');
   return (
     <div style={props.style} className="c-field-dob">
       <div className="c-field-dob__header">
-        {props.t('dob-label')}
+        {t('dob-label')}
         {/* {props.errors && <Badge>!</Badge>} */}
       </div>
       {props.isMobile ? <DateFieldMobile name="dob" {...props} /> : <DateField name="dob" {...props} />}
@@ -33,4 +35,4 @@ const FieldDob = (props: any) => {
 };
 FieldDob.displayName = 'FieldDob';
 
-export default withTranslation('form')(FieldDob);
+export default FieldDob;

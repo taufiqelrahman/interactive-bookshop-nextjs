@@ -1,11 +1,12 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState, useEffect } from 'react';
 
 import Badge from 'components/atoms/Badge';
 import Checkbox from 'components/atoms/Checkbox';
-import { withTranslation, i18n } from 'i18n';
 // import { useRouter } from 'next/router';
 
 const FieldOccupations = (props: any) => {
+  const { t, i18n } = useTranslation('form');
   const [occupations, setOccupations]: any = useState([]);
   // const router = useRouter();
   // const isIndexPage = router.pathname === '/';
@@ -50,7 +51,7 @@ const FieldOccupations = (props: any) => {
     <div style={props.style}>
       <div className="c-field-occupations">
         <div className="c-field-occupations__header">
-          {props.t('occupations-label')}
+          {t('occupations-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-occupations__options">
@@ -121,4 +122,4 @@ const FieldOccupations = (props: any) => {
 };
 FieldOccupations.displayName = 'FieldOccupations';
 
-export default withTranslation('form', { withRef: true })<any>(FieldOccupations);
+export default FieldOccupations;

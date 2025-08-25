@@ -1,9 +1,9 @@
+import { useTranslation } from 'next-i18next';
 import Picker from 'pickerjs';
 import { useEffect } from 'react';
 
-import { withTranslation } from 'i18n';
-
 const DatePicker = (props: any) => {
+  const { t } = useTranslation('common');
   useEffect(() => {
     const input: any = document.getElementById('c-date-picker__input');
     const pickerInstance = new Picker(input, {
@@ -13,9 +13,9 @@ const DatePicker = (props: any) => {
       inline: true,
       rows: 3,
       text: {
-        year: props.t('year'),
-        month: props.t('month'),
-        day: props.t('day'),
+        year: t('year'),
+        month: t('month'),
+        day: t('day'),
       },
       date: props.value,
     });
@@ -60,4 +60,4 @@ const DatePicker = (props: any) => {
   );
 };
 
-export default withTranslation('common')(DatePicker);
+export default DatePicker;
