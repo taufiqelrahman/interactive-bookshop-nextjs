@@ -1,23 +1,25 @@
 import detectIt from 'detect-it';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 // import { ShoppingCart } from 'react-feather';
+import { useTranslation } from 'next-i18next';
 import { useState, useRef, useEffect } from 'react';
 
 import Dot from 'components/atoms/Dot';
 import AccountDropdown from 'components/molecules/AccountDropdown';
 import CartDropdown from 'components/molecules/CartDropdown';
 import TranslationToggle from 'components/molecules/TranslationToggle';
-import { withTranslation, Link } from 'i18n';
 
 const NavBar = (props: any) => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const [isSticky, setSticky] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const guestMenu = [
-    { text: props.t('login'), path: '/login' },
-    { text: props.t('register'), path: '/register', className: 'text-brand' },
+    { text: t('login'), path: '/login' },
+    { text: t('register'), path: '/register', className: 'text-brand' },
   ];
   const ref = useRef<HTMLInputElement>(null);
   const handleScroll = () => {
@@ -62,7 +64,7 @@ const NavBar = (props: any) => {
   };
 
   const userFullName = props.users?.user?.name;
-  const userName = userFullName ? userFullName.split(' ')[0] : props.t('account');
+  const userName = userFullName ? userFullName.split(' ')[0] : t('account');
 
   return (
     <div className={`relative z-50 ${showCart || showAccount ? 'bg-white' : ''}`}>
@@ -86,7 +88,7 @@ const NavBar = (props: any) => {
                   <a>
                     <div className="c-nav-bar__menu__item c-nav-bar__menu__cart__button">
                       <span className="c-nav-bar__menu__icon icon-cart"></span>
-                      {props.t('cart')}
+                      {t('cart')}
                       {cartNotEmpty && <Dot color="red" />}
                     </div>
                   </a>
@@ -176,4 +178,4 @@ const NavBar = (props: any) => {
   );
 };
 
-export default withTranslation('common')(NavBar);
+export default NavBar;
