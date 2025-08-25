@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -10,14 +10,14 @@ import { withTranslation, Link } from 'i18n';
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-// interface ErrorProps {
-//   statusCode?: number;
-//   isMobile?: boolean;
-//   setSideNav?: (val: boolean) => void;
-//   t: (key: string) => string;
-// }
+interface ErrorProps {
+  statusCode?: number;
+  isMobile?: boolean;
+  setSideNav?: (val: boolean) => void;
+  t: (key: string) => string;
+}
 
-const ErrorPage: NextPage<any> = (props) => {
+const Error: NextPage<ErrorProps> = (props) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
 
@@ -120,8 +120,9 @@ const ErrorPage: NextPage<any> = (props) => {
   );
 };
 
-ErrorPage.getInitialProps = ({ res, err }: any) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const statusCode = res?.statusCode ?? 404;
+
   return {
     props: {
       statusCode,
@@ -130,4 +131,4 @@ ErrorPage.getInitialProps = ({ res, err }: any) => {
   };
 };
 
-export default withTranslation('common')(ErrorPage);
+export default withTranslation('common')(Error);
