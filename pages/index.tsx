@@ -7,7 +7,7 @@ import { Link } from 'react-scroll';
 
 // import DefaultLayout from 'components/layouts/Default';
 // import NavBar from 'components/organisms/NavBar/mobile';
-// import { withTranslation } from 'i18n';
+import { withTranslation } from 'i18n';
 import * as gtag from 'lib/gtag';
 // import api from 'services/api';
 // import { wrapper } from 'store';
@@ -423,25 +423,24 @@ const Index = (props: any): JSX.Element => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-//   try {
-//     const [{ data: testi }, { data: occupations }] = await Promise.all([
-//       api().master.getTestimonials(),
-//       api().master.getOccupations(),
-//     ]);
+export const getServerSideProps = () => {
+  // try {
+  //   const [{ data: testi }, { data: occupations }] = await Promise.all([
+  //     api().master.getTestimonials(),
+  //     api().master.getOccupations(),
+  //   ]);
 
-//     store.dispatch(actions.loadTestimonials(false, testi.data));
-//     store.dispatch(actions.loadOccupations(false, occupations.data));
-//   } catch (err: any) {
-//     console.error('❌ Index getServerSideProps:', err.message);
-//   }
+  //   store.dispatch(actions.loadTestimonials(false, testi.data));
+  //   store.dispatch(actions.loadOccupations(false, occupations.data));
+  // } catch (err: any) {
+  //   console.error('❌ Index getServerSideProps:', err.message);
+  // }
 
-//   return {
-//     props: {
-//       namespacesRequired: ['page-index'],
-//     },
-//   };
-// });
+  return {
+    props: {
+      namespacesRequired: ['page-index'],
+    },
+  };
+};
 
-// export default withTranslation('page-index')(Index);
-export default Index;
+export default withTranslation('page-index')(Index);
