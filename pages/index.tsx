@@ -1,29 +1,446 @@
-// pages/index.tsx
-import { GetServerSideProps, NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import React from 'react';
+import LazyLoad from 'react-lazyload';
+// import { useSelector } from 'react-redux';
+import { Link } from 'react-scroll';
 
-interface HomeProps {
-  timestamp: string;
-}
+// import DefaultLayout from 'components/layouts/Default';
+// import NavBar from 'components/organisms/NavBar/mobile';
+// import { withTranslation } from 'i18n';
+import * as gtag from 'lib/gtag';
+// import api from 'services/api';
+// import { wrapper } from 'store';
+// import actions from 'store/actions';
 
-const Home: NextPage<HomeProps> = ({ timestamp }) => {
+const Button = dynamic(() => import('components/atoms/Button'));
+// const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
+// const BookForm = dynamic(() => import('components/organisms/BookForm'));
+const Showcase = dynamic(() => import('components/atoms/Showcase'));
+// const Footer = dynamic(() => import('components/organisms/Footer'));
+
+const Index = (props: any): JSX.Element => {
+  // const { testimonials, occupations } = useSelector((state: AppState) => state.master);
+  const { isMobile } = props;
+
+  // const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
+  // const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
+
+  // const createCheckout = async () => {
+  //   let checkout = await graphql().checkout.create({
+  //     email: 'asd@asd.com',
+  //     // shippingAddress: {
+  //     //   // firstName: '',
+  //     //   lastName: 'asdasd',
+  //     //   address1: 'jl. aselih',
+  //     //   address2: 'cipedak',
+  //     //   city: 'jakarta selatan',
+  //     //   province: 'dki jakarta',
+  //     //   zip: '54321',
+  //     //   phone: '085747977734',
+  //     //   country: 'indonesia',
+  //     // },
+  //   });
+  //   const lineItemsToAdd = [
+  //     {
+  //       variantId: process.env.SHOPIFY_VARIANT_ID,
+  //       quantity: 1,
+  //     },
+  //   ];
+  //   checkout = await graphql().checkout.addLineItems(checkout.id, lineItemsToAdd);
+  //   console.log(checkout);
+  //   console.log(checkout.webUrl);
+  // };
+
+  // useEffect(() => {
+  //   createCheckout();
+  // }, []);
+
+  const landingTracker = () => {
+    gtag.event({
+      action: 'click_landing',
+      category: 'engagement',
+      label: isMobile ? 'mobile' : 'desktop',
+    });
+  };
+
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>✅ Index Works!</h1>
-      <p>Rendered at: {timestamp}</p>
+    <div>
+      {/* <DefaultLayout {...props} navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction={true} />}> */}
+      <Head>
+        <title>When I Grow Up</title>
+      </Head>
+      {/* {props.isMobile && <NavBar icon="menu" />} */}
+      <div className="c-section--top">
+        <div className="c-section__create-now">
+          <div className="u-container">
+            <div className="c-section--top__container">
+              <div className="c-section__content">
+                <h1>createnow-title</h1>
+                <div className="c-section__content__content">createnow-content</div>
+                <Link to="create-book" spy smooth offset={-100} duration={500} onClick={landingTracker}>
+                  <Button variant="outline" color="black" style={{ marginTop: 24 }}>
+                    createnow-button
+                  </Button>
+                </Link>
+              </div>
+              <div className="c-section--top__image">
+                <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
+              </div>
+            </div>
+            <div className="c-section__create-now__books">
+              <LazyLoad>
+                <img src="/static/images/book-decoration.png" alt="books" />
+              </LazyLoad>
+            </div>
+            <div className="c-section__create-now__dust">
+              <LazyLoad>
+                <img src="/static/images/dust-decoration.png" alt="dust" />
+              </LazyLoad>
+            </div>
+          </div>
+        </div>
+        <div className="c-section__start-story">
+          <div className="u-container">
+            <div>
+              <div className="c-section--top__container">
+                <div className="c-section--top__image c-section--top__image--kid">
+                  <Showcase isMobile={props.isMobile} />
+                  {/* <LazyLoad>
+                    <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
+                  </LazyLoad> */}
+                </div>
+                <div className="c-section__content text-white">
+                  <h1 className="mb-4">startstory-title</h1>
+                  <div className="c-section__content__content">startstory-content</div>
+                  {/* <a href="#create-book">
+                    <Button variant="outline" color="white">
+                      startstory-button
+                    </Button>
+                  </a> */}
+                </div>
+              </div>
+              {/* {!props.isMobile && (
+                <div className="c-section__start-story__socks">
+                  <img src="/static/images/socks.png" alt="socks" />
+                </div>
+              )} */}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="c-section--middle">
+        <div className="c-section__jobs--top">
+          {occupationsTop.map((job) => (
+            <div key={job.id} className="c-section__jobs__circle">
+              <LazyLoad>
+                <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+              </LazyLoad>
+            </div>
+          ))}
+        </div>
+        <div className="c-section__jobs--bottom">
+          {occupationsBottom.map(
+            (job) =>
+              job.name !== 'President' && (
+                <div key={job.id} className="c-section__jobs__circle">
+                  <LazyLoad>
+                    <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                  </LazyLoad>
+                </div>
+              ),
+          )}
+        </div>
+        <div className="c-section__content c-section__content--middle text-white">
+          <h1>choosenow-title</h1>
+          <div className="c-section__content__content">choosenow-content</div>
+          <a href="#create-book">
+            <Button variant="outline" color="white">
+              choosenow-button
+            </Button>
+          </a>
+        </div>
+      </div>
+      <div className="c-section--bottom">
+        <div className="c-section--bottom__testi">
+          <TestimonialSlider isMobile={isMobile} testimonials={testimonials} />
+        </div>
+        <div id="create-book">
+          <LazyLoad>
+            <div className="c-section--bottom__create-book">
+              <Element name="create-book">
+                <h2>createbook-header</h2>
+                <BookForm isMobile={isMobile} saveSelected={saveSelected} occupations={occupations} />
+              </Element>
+            </div>
+          </LazyLoad>
+        </div>
+      </div>
+      {isMobile && <Footer isMobile={isMobile} />} */}
+      <style jsx>{`
+        .c-section {
+          &--top {
+            /* background: url('/static/images/clouds.png') 0 35vh no-repeat,
+              linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%); */
+            background: linear-gradient(180deg, #f7d8a2 0%, #ffc4b3 33.41%, #3d77c7 70.5%);
+            @apply bg-contain;
+            /* @screen md {
+              background: url('/static/images/clouds.png') 0 80px no-repeat,
+                linear-gradient(180deg, #ffe2b0 -7.09%, #f1d096 32.55%, #536390 70.5%);
+            } */
+            &__container {
+              @apply relative flex w-full flex-col-reverse items-center;
+              z-index: 1;
+              .c-section__start-story & {
+                @apply flex-col;
+              }
+              @screen md {
+                flex-direction: row !important;
+              }
+            }
+            &__image {
+              &--kid {
+                margin: 0;
+                width: 80vw;
+                img {
+                  @apply m-auto;
+                  @screen md {
+                    @apply m-0;
+                  }
+                }
+              }
+              img {
+                @apply object-contain;
+              }
+              @screen md {
+                @apply flex w-7/12 justify-end;
+                margin-left: 0;
+                margin-top: 0;
+              }
+            }
+          }
+          &--middle {
+            @apply w-full;
+            padding-bottom: 227px;
+            /* background: linear-gradient(180deg, #536390 0%, #3ba99c 100%); */
+            background: linear-gradient(180deg, #3d77c7 0%, #228e79 100%);
+            @screen md {
+              padding-bottom: 240px;
+            }
+          }
+          &--bottom {
+            @apply relative z-10;
+            &__testi {
+              @apply overflow-hidden pb-4;
+              /* background: linear-gradient(180deg, #3ba99c 0%, #f4c574 100%); */
+              background: linear-gradient(180deg, #228e7a 0%, #bcb776 100%);
+              @screen md {
+                padding-bottom: 300px;
+              }
+            }
+            &__create-book {
+              /* @apply bg-no-repeat bg-cover; */
+              padding-top: 246px;
+              padding-bottom: 60px;
+              /* background-color: #f4c574;
+              background-image: url('/static/images/create-book-bg-small.png'); */
+              background:
+                url('/static/images/create-book-bg-mweb.png') no-repeat,
+                linear-gradient(180deg, #bcb776 0%, #ccba75 20%, #f4c574 100%);
+              background-size: cover;
+              min-height: 630px;
+              background-position: center top;
+              @screen md {
+                @apply pb-0 pt-0;
+                background:
+                  url('/static/images/create-book-bg-small.png') no-repeat,
+                  linear-gradient(180deg, #bcb776 0%, #ccba75 20%, #f4c574 100%);
+                background-position: center bottom;
+              }
+              @screen lg {
+                background-size: contain;
+              }
+              h2 {
+                @apply mb-8 text-center font-semibold text-white;
+                font-size: 28px;
+                line-height: 42px;
+                @screen md {
+                  font-size: 40px;
+                  line-height: 60px;
+                }
+              }
+            }
+          }
+          &__content {
+            @apply w-full text-center;
+            padding: 0 30px;
+            z-index: 10;
+            @screen md {
+              @apply w-5/12 text-left;
+              padding: 0;
+            }
+            h1 {
+              @apply mb-3 font-semibold;
+              font-size: 28px;
+              line-height: 42px;
+              @screen md {
+                @apply text-left;
+                font-size: 48px;
+                line-height: 55px;
+              }
+            }
+            h2 {
+              @apply mb-4 font-semibold;
+              font-size: 28px;
+              line-height: 42px;
+              @screen md {
+                @apply text-left;
+                font-size: 40px;
+                line-height: 58px;
+              }
+            }
+            &__content {
+              @apply font-opensans;
+              line-height: 22px;
+              @screen md {
+                @apply text-left;
+                line-height: 22px;
+                width: 350px;
+              }
+            }
+            &--middle {
+              @apply w-full text-center;
+              h1,
+              h2 {
+                @apply text-center;
+                margin-bottom: 12px;
+                @screen md {
+                  @apply mb-4;
+                }
+              }
+              div {
+                @apply text-center;
+                width: auto;
+              }
+            }
+          }
+          &__create-now {
+            @apply relative;
+            padding-top: 61px;
+            @screen md {
+              padding-top: 157px;
+            }
+            &__book {
+              @apply ml-auto mt-12 w-5/12;
+              img {
+                width: 93px;
+                height: 75px;
+                @screen md {
+                  width: 202px;
+                  height: 162px;
+                }
+              }
+            }
+            &__books {
+              @apply absolute hidden;
+              bottom: -20%;
+              width: 90vw;
+              left: 50%;
+              margin-left: -45vw;
+              right: 50%;
+              margin-right: -45vw;
+              @screen md {
+                @apply block;
+              }
+              @screen lg {
+                width: 70vw;
+                margin-left: -35vw;
+                margin-right: -35vw;
+              }
+            }
+            &__dust {
+              @apply absolute;
+              top: 38%;
+              width: 100vw;
+              left: 0;
+              @screen md {
+                @apply hidden;
+              }
+              img {
+                @apply w-full;
+              }
+            }
+            & .c-section--top__image {
+              @apply mb-8 pl-6;
+              @screen md {
+                @apply mb-0;
+              }
+            }
+          }
+          &__start-story {
+            padding-top: 97px;
+            padding-bottom: 121px;
+            @screen md {
+              padding-top: 240px;
+              padding-bottom: 194px;
+              & .c-section--top__image {
+                padding-right: 78px;
+              }
+            }
+            & .c-section__content {
+              @screen md {
+                padding-bottom: 81px;
+              }
+            }
+            &__socks {
+              @apply ml-auto mt-16;
+              width: 159px;
+              height: 138px;
+            }
+          }
+          &__jobs {
+            &--top {
+              @apply mx-auto flex justify-center;
+            }
+            &--bottom {
+              @apply mx-auto mb-12 mt-8 flex justify-center;
+            }
+            &__circle {
+              @apply mx-4 flex items-center justify-center bg-white;
+              width: 120px;
+              height: 120px;
+              border-radius: 50%;
+              padding: 12px;
+              img {
+                @apply w-full;
+              }
+            }
+          }
+        }
+      `}</style>
+      {/* </DefaultLayout> */}
     </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  console.log('>>> SSR running for /index');
-  console.log('>>> URL:', ctx.req.url);
-  console.log('>>> Headers:', ctx.req.headers);
+export const getServerSideProps = () => {
+  // try {
+  //   const [{ data: testi }, { data: occupations }] = await Promise.all([
+  //     api().master.getTestimonials(),
+  //     api().master.getOccupations(),
+  //   ]);
+
+  //   store.dispatch(actions.loadTestimonials(false, testi.data));
+  //   store.dispatch(actions.loadOccupations(false, occupations.data));
+  // } catch (err: any) {
+  //   console.error('❌ Index getServerSideProps:', err.message);
+  // }
 
   return {
     props: {
-      timestamp: new Date().toISOString(),
+      namespacesRequired: ['page-index'],
     },
   };
 };
 
-export default Home;
+export default Index;
