@@ -2,29 +2,29 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import React from 'react';
 import LazyLoad from 'react-lazyload';
-import { useSelector } from 'react-redux';
-import { Link, Element } from 'react-scroll';
+// import { useSelector } from 'react-redux';
+import { Link } from 'react-scroll';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { withTranslation } from 'i18n';
 import * as gtag from 'lib/gtag';
-import api from 'services/api';
-import { wrapper, AppState } from 'store';
-import actions from 'store/actions';
+// import api from 'services/api';
+import { wrapper } from 'store';
+// import actions from 'store/actions';
 
 const Button = dynamic(() => import('components/atoms/Button'));
-const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
-const BookForm = dynamic(() => import('components/organisms/BookForm'));
+// const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
+// const BookForm = dynamic(() => import('components/organisms/BookForm'));
 const Showcase = dynamic(() => import('components/atoms/Showcase'));
-const Footer = dynamic(() => import('components/organisms/Footer'));
+// const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Index = (props: any): JSX.Element => {
-  const { testimonials, occupations } = useSelector((state: AppState) => state.master);
-  const { isMobile, setSideNav, t, saveSelected } = props;
+  // const { testimonials, occupations } = useSelector((state: AppState) => state.master);
+  const { isMobile, setSideNav, t } = props;
 
-  const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
-  const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
+  // const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
+  // const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
 
   // const createCheckout = async () => {
   //   let checkout = await graphql().checkout.create({
@@ -128,7 +128,7 @@ const Index = (props: any): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className="c-section--middle">
+      {/* <div className="c-section--middle">
         <div className="c-section__jobs--top">
           {occupationsTop.map((job) => (
             <div key={job.id} className="c-section__jobs__circle">
@@ -153,11 +153,11 @@ const Index = (props: any): JSX.Element => {
         <div className="c-section__content c-section__content--middle text-white">
           <h1>{props.t('choosenow-title')}</h1>
           <div className="c-section__content__content">{props.t('choosenow-content')}</div>
-          {/* <a href="#create-book">
+          <a href="#create-book">
             <Button variant="outline" color="white">
               {props.t('choosenow-button')}
             </Button>
-          </a> */}
+          </a>
         </div>
       </div>
       <div className="c-section--bottom">
@@ -175,7 +175,7 @@ const Index = (props: any): JSX.Element => {
           </LazyLoad>
         </div>
       </div>
-      {isMobile && <Footer isMobile={isMobile} />}
+      {isMobile && <Footer isMobile={isMobile} />} */}
       <style jsx>{`
         .c-section {
           &--top {
@@ -421,18 +421,18 @@ const Index = (props: any): JSX.Element => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-  try {
-    const [{ data: testi }, { data: occupations }] = await Promise.all([
-      api().master.getTestimonials(),
-      api().master.getOccupations(),
-    ]);
+export const getServerSideProps = wrapper.getServerSideProps(() => async () => {
+  // try {
+  //   const [{ data: testi }, { data: occupations }] = await Promise.all([
+  //     api().master.getTestimonials(),
+  //     api().master.getOccupations(),
+  //   ]);
 
-    store.dispatch(actions.loadTestimonials(false, testi.data));
-    store.dispatch(actions.loadOccupations(false, occupations.data));
-  } catch (err: any) {
-    console.error('❌ Index getServerSideProps:', err.message);
-  }
+  //   store.dispatch(actions.loadTestimonials(false, testi.data));
+  //   store.dispatch(actions.loadOccupations(false, occupations.data));
+  // } catch (err: any) {
+  //   console.error('❌ Index getServerSideProps:', err.message);
+  // }
 
   return {
     props: {

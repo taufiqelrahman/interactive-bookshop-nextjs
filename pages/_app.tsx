@@ -1,23 +1,23 @@
 /* eslint-disable no-useless-escape */
-import * as Sentry from '@sentry/browser';
-import * as dayjs from 'dayjs';
-import 'dayjs/locale/id';
-import detectIt from 'detect-it';
-import Cookies from 'js-cookie';
-import debounce from 'lodash.debounce';
+// import * as Sentry from '@sentry/browser';
+// import * as dayjs from 'dayjs';
+// import 'dayjs/locale/id';
+// import detectIt from 'detect-it';
+// import Cookies from 'js-cookie';
+// import debounce from 'lodash.debounce';
 import type { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import cookies from 'next-cookies';
-import NProgress from 'nprogress';
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import cookies from 'next-cookies';
+// import NProgress from 'nprogress';
+import React, { useState } from 'react';
+// import { useDispatch } from 'react-redux';
 
-import { appWithTranslation, i18n, Router } from 'i18n';
-import * as gtag from 'lib/gtag';
-import api from 'services/api';
+import { appWithTranslation } from 'i18n';
+// import * as gtag from 'lib/gtag';
+// import api from 'services/api';
 import { wrapper } from 'store';
-import actions from 'store/actions';
+// import actions from 'store/actions';
 
 import 'styles/tailwind.css';
 import 'styles/nprogress.css';
@@ -25,60 +25,60 @@ import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import 'styles/fonts.min.css';
 
-const LOGIN_ROUTES = ['/login', '/register'];
-const PRIVATE_ROUTES = ['/orders/success', '/account', '/orders'];
+// const LOGIN_ROUTES = ['/login', '/register'];
+// const PRIVATE_ROUTES = ['/orders/success', '/account', '/orders'];
 
-const Pixel = dynamic(() => import('components/atoms/Pixel'));
+// const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
 // disable when development
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  beforeSend: (event, hint: any) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.error(hint);
-      return null;
-    }
-    return event;
-  },
-});
+// Sentry.init({
+//   dsn: process.env.SENTRY_DSN,
+//   beforeSend: (event, hint: any) => {
+//     if (process.env.NODE_ENV === 'development') {
+//       console.error(hint);
+//       return null;
+//     }
+//     return event;
+//   },
+// });
 
-Router.events.on('routeChangeStart', () => NProgress.start());
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+// Router.events.on('routeChangeStart', () => NProgress.start());
+// Router.events.on('routeChangeComplete', () => NProgress.done());
+// Router.events.on('routeChangeError', () => NProgress.done());
 
 function WiguApp({ Component, pageProps }: AppProps) {
-  const [width, setWidth] = useState(0);
-  const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.users.user);
-  const isExpired = useSelector((state: any) => state.users.isExpired);
+  const [width] = useState(1000);
+  // const dispatch = useDispatch();
+  // const user = useSelector((state: any) => state.users.user);
+  // const isExpired = useSelector((state: any) => state.users.isExpired);
 
-  const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
-  const debouncedSetup = useCallback(
-    debounce(() => debouncedFunctionRef.current(), 200),
-    [],
-  );
+  // const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
+  // const debouncedSetup = useCallback(
+  //   debounce(() => debouncedFunctionRef.current(), 200),
+  //   [],
+  // );
 
-  const handleRouteChange = (url: string) => gtag.pageview(url);
+  // const handleRouteChange = (url: string) => gtag.pageview(url);
 
-  useEffect(() => {
-    if (isExpired) {
-      Cookies.remove('user', { domain: process.env.DOMAIN });
-    }
-    dayjs.locale(i18n.language);
-    setWidth(window.innerWidth);
-    Router.events.on('routeChangeComplete', handleRouteChange);
-    window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
-    return () => {
-      Router.events.off('routeChangeComplete', handleRouteChange);
-      window.removeEventListener('resize', debouncedSetup as any);
-    };
-  }, [isExpired]);
+  // useEffect(() => {
+  //   if (isExpired) {
+  //     Cookies.remove('user', { domain: process.env.DOMAIN });
+  //   }
+  //   dayjs.locale(i18n.language);
+  //   setWidth(window.innerWidth);
+  //   Router.events.on('routeChangeComplete', handleRouteChange);
+  //   window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
+  //   return () => {
+  //     Router.events.off('routeChangeComplete', handleRouteChange);
+  //     window.removeEventListener('resize', debouncedSetup as any);
+  //   };
+  // }, [isExpired]);
 
-  useEffect(() => {
-    if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
-      dispatch(actions.thunkCreateCart());
-    }
-  }, [user, dispatch]);
+  // useEffect(() => {
+  //   if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
+  //     dispatch(actions.thunkCreateCart());
+  //   }
+  // }, [user, dispatch]);
 
   // useEffect(() => {
   //   const createCartForUser = () => {
@@ -90,9 +90,9 @@ function WiguApp({ Component, pageProps }: AppProps) {
   //   };
   //   createCartForUser();
   // }, [reduxStore.getState().users]);
-  Router.events.on('routeChangeComplete', () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  });
+  // Router.events.on('routeChangeComplete', () => {
+  //   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  // });
 
   if (!Component) return null;
 
@@ -176,8 +176,8 @@ function WiguApp({ Component, pageProps }: AppProps) {
         {/* <!-- Orientation  --> */}
         {/* <meta key="screen-orientation" name="screen-orientation" content="portrait" /> */}
       </Head>
-      <Pixel />
-      {!!width && <Component isMobile={width < 768} {...pageProps} />}
+      {/* <Pixel /> */}
+      {<Component isMobile={width < 768} {...pageProps} />}
       <style jsx global>{`
         body {
           @apply font-poppins text-dark-grey;
@@ -310,52 +310,52 @@ function WiguApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
-  try {
-    if (cookies(ctx).user) {
-      if (!store.getState().users?.user) {
-        try {
-          const { data: me } = await api(ctx.req).users.getMe();
-          store.dispatch(actions.setLogin(true));
-          store.dispatch(actions.loadUser(false, me));
-        } catch {
-          store.dispatch(actions.setExpired(true));
-        }
-      }
+// export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
+//   try {
+//     if (cookies(ctx).user) {
+//       if (!store.getState().users?.user) {
+//         try {
+//           const { data: me } = await api(ctx.req).users.getMe();
+//           store.dispatch(actions.setLogin(true));
+//           store.dispatch(actions.loadUser(false, me));
+//         } catch {
+//           store.dispatch(actions.setExpired(true));
+//         }
+//       }
 
-      if (LOGIN_ROUTES.includes(ctx.resolvedUrl)) {
-        return {
-          redirect: {
-            destination: '/',
-            permanent: false,
-          },
-        };
-      }
-    } else {
-      store.dispatch(actions.setLogin(false));
-      if (PRIVATE_ROUTES.includes(ctx.resolvedUrl)) {
-        const redirectTo = ctx.resolvedUrl.split('/')[1];
-        const login = `/login?from=${redirectTo}`;
-        return {
-          redirect: {
-            destination: login,
-            permanent: false,
-          },
-        };
-      }
-    }
+//       if (LOGIN_ROUTES.includes(ctx.resolvedUrl)) {
+//         return {
+//           redirect: {
+//             destination: '/',
+//             permanent: false,
+//           },
+//         };
+//       }
+//     } else {
+//       store.dispatch(actions.setLogin(false));
+//       if (PRIVATE_ROUTES.includes(ctx.resolvedUrl)) {
+//         const redirectTo = ctx.resolvedUrl.split('/')[1];
+//         const login = `/login?from=${redirectTo}`;
+//         return {
+//           redirect: {
+//             destination: login,
+//             permanent: false,
+//           },
+//         };
+//       }
+//     }
 
-    if (store.getState().default?.errorMessage) {
-      store.dispatch(actions.setErrorMessage(''));
-    }
-  } catch (err: any) {
-    console.error('🔥 WiguApp.getInitialProps crashed:', err);
-  }
+//     if (store.getState().default?.errorMessage) {
+//       store.dispatch(actions.setErrorMessage(''));
+//     }
+//   } catch (err: any) {
+//     console.error('🔥 WiguApp.getInitialProps crashed:', err);
+//   }
 
-  return {
-    props: {
-      namespacesRequired: [],
-    },
-  };
-});
+//   return {
+//     props: {
+//       namespacesRequired: [],
+//     },
+//   };
+// });
 export default wrapper.withRedux(appWithTranslation(WiguApp));
