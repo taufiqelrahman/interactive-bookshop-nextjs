@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import LazyLoad from 'react-lazyload';
 import { useSelector } from 'react-redux';
@@ -7,7 +8,6 @@ import { Link, Element } from 'react-scroll';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation } from 'i18n';
 import * as gtag from 'lib/gtag';
 import api from 'services/api';
 import { wrapper, AppState } from 'store';
@@ -20,8 +20,9 @@ const Showcase = dynamic(() => import('components/atoms/Showcase'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Index = (props: any): JSX.Element => {
+  const { t } = useTranslation('page-index');
   const { testimonials, occupations } = useSelector((state: AppState) => state.master);
-  const { isMobile, setSideNav, t, saveSelected } = props;
+  const { isMobile, setSideNav, saveSelected } = props;
 
   const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
   const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
@@ -75,8 +76,8 @@ const Index = (props: any): JSX.Element => {
           <div className="u-container">
             <div className="c-section--top__container">
               <div className="c-section__content">
-                <h1>{props.t('createnow-title')}</h1>
-                <div className="c-section__content__content">{props.t('createnow-content')}</div>
+                <h1>{t('createnow-title')}</h1>
+                <div className="c-section__content__content">{t('createnow-content')}</div>
                 <Link to="create-book" spy smooth offset={-100} duration={500} onClick={landingTracker}>
                   <Button variant="outline" color="black" style={{ marginTop: 24 }}>
                     {t('createnow-button')}
@@ -110,11 +111,11 @@ const Index = (props: any): JSX.Element => {
                   </LazyLoad> */}
                 </div>
                 <div className="c-section__content text-white">
-                  <h1 className="mb-4">{props.t('startstory-title')}</h1>
-                  <div className="c-section__content__content">{props.t('startstory-content')}</div>
+                  <h1 className="mb-4">{t('startstory-title')}</h1>
+                  <div className="c-section__content__content">{t('startstory-content')}</div>
                   {/* <a href="#create-book">
                     <Button variant="outline" color="white">
-                      {props.t('startstory-button')}
+                      {t('startstory-button')}
                     </Button>
                   </a> */}
                 </div>
@@ -151,11 +152,11 @@ const Index = (props: any): JSX.Element => {
           )}
         </div>
         <div className="c-section__content c-section__content--middle text-white">
-          <h1>{props.t('choosenow-title')}</h1>
-          <div className="c-section__content__content">{props.t('choosenow-content')}</div>
+          <h1>{t('choosenow-title')}</h1>
+          <div className="c-section__content__content">{t('choosenow-content')}</div>
           {/* <a href="#create-book">
             <Button variant="outline" color="white">
-              {props.t('choosenow-button')}
+              {t('choosenow-button')}
             </Button>
           </a> */}
         </div>
@@ -175,7 +176,7 @@ const Index = (props: any): JSX.Element => {
           </LazyLoad>
         </div>
       </div>
-      {isMobile && <Footer isMobile={isMobile} />}
+      {isMobile && <Footer />}
       <style jsx>{`
         .c-section {
           &--top {
@@ -435,10 +436,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   }
 
   return {
-    props: {
-      namespacesRequired: ['page-index'],
-    },
+    props: {},
   };
 });
 
-export default withTranslation('page-index')(Index);
+export default Index;

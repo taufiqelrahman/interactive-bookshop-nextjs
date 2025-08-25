@@ -1,11 +1,12 @@
+import { useTranslation } from 'next-i18next';
 import { useState, useEffect } from 'react';
 
 import Card from 'components/atoms/Card';
 import Testimonial from 'components/molecules/Testimonial';
-import { withTranslation } from 'i18n';
 import * as gtag from 'lib/gtag';
 
 const TestimonialSlider = (props: any) => {
+  const { t } = useTranslation('page-index');
   const [navRightClass, setNavRightClass] = useState(0);
   const [translationX, setTranslationX] = useState(0);
   const [isNavigating, setIsNavigating] = useState(false);
@@ -50,7 +51,7 @@ const TestimonialSlider = (props: any) => {
       <div className="c-testi-slider">
         <div className={`c-testi-slider__header ${props.isMobile ? '' : 'u-container'}`}>
           <div className="c-testi-slider__title">
-            <h2>{props.t('testi-header')}</h2>
+            <h2>{t('testi-header')}</h2>
           </div>
           {!props.isMobile && (
             <div className="c-testi-slider__nav">
@@ -160,4 +161,4 @@ const TestimonialSlider = (props: any) => {
   );
 };
 
-export default withTranslation('page-index')(TestimonialSlider);
+export default TestimonialSlider;

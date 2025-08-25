@@ -1,17 +1,20 @@
-import { withTranslation, Router } from 'i18n';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 const Stepper = ({ backButton = true, isMobile = false, ...props }: any) => {
+  const { t } = useTranslation('common');
+  const router = useRouter();
   return (
     <div className="c-stepper" style={props.style}>
       {backButton && (
         <div className="c-stepper__back">
-          <span className="icon-arrow_left" onClick={() => Router.back()} />
+          <span className="icon-arrow_left" onClick={() => router.back()} />
         </div>
       )}
       <div>
         {props.totalSteps && (
           <div className="c-stepper__steps">
-            {`${isMobile ? '' : `${props.t('step')} `}${props.step} ${props.t('of')} ${props.totalSteps}`}
+            {`${isMobile ? '' : `${t('step')} `}${props.step} ${t('of')} ${props.totalSteps}`}
           </div>
         )}
         <div className="c-stepper__title">
@@ -45,4 +48,4 @@ const Stepper = ({ backButton = true, isMobile = false, ...props }: any) => {
   );
 };
 
-export default withTranslation('common')(Stepper);
+export default Stepper;

@@ -1,11 +1,12 @@
 import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link } from 'i18n';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
@@ -18,22 +19,23 @@ interface ErrorProps {
 }
 
 const Error: NextPage<ErrorProps> = (props) => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
 
   const title = () => {
-    if (!props.statusCode) return props.t('whoops');
+    if (!props.statusCode) return t('whoops');
     return props.statusCode;
   };
 
   const message = () => {
     switch (props.statusCode) {
       case 404:
-        return props.t('error-message-404');
+        return t('error-message-404');
       case 500:
-        return props.t('error-message-500');
+        return t('error-message-500');
       default:
-        return props.t('error-message-general');
+        return t('error-message-general');
     }
   };
 
@@ -53,7 +55,7 @@ const Error: NextPage<ErrorProps> = (props) => {
             <div className="c-error__message">{message()}</div>
             <Link href="/">
               <a style={props.isMobile ? { width: '100%' } : {}}>
-                <Button width={props.isMobile ? '100%' : undefined}>{props.t('back-to-home')}</Button>
+                <Button width={props.isMobile ? '100%' : undefined}>{t('back-to-home')}</Button>
               </a>
             </Link>
           </div>
@@ -64,7 +66,7 @@ const Error: NextPage<ErrorProps> = (props) => {
           />
           <img alt="red planet" src="/static/images/red-planet.png" className="c-error__planet c-error__planet--red" />
         </div>
-        {props.isMobile && <Footer isMobile={props.isMobile} />}
+        {props.isMobile && <Footer />}
       </div>
       <style jsx>{`
         .c-error {
@@ -126,9 +128,8 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   return {
     props: {
       statusCode,
-      namespacesRequired: ['common'],
     },
   };
 };
 
-export default withTranslation('common')(Error);
+export default Error;

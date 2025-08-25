@@ -8,12 +8,13 @@ import debounce from 'lodash.debounce';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { Router } from 'next/router';
 import cookies from 'next-cookies';
+import { appWithTranslation, useTranslation } from 'next-i18next';
 import NProgress from 'nprogress';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { appWithTranslation, i18n, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 import api from 'services/api';
 import { wrapper } from 'store';
@@ -59,6 +60,8 @@ function WiguApp({ Component, pageProps }: AppProps) {
   );
 
   const handleRouteChange = (url: string) => gtag.pageview(url);
+
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     if (isExpired) {

@@ -1,11 +1,12 @@
 import DOMPurify from 'dompurify';
+import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
 import LazyLoad, { forceVisible } from 'react-lazyload';
 
-import { withTranslation } from 'i18n';
 // import 'styles/fonts.min.css'; // @todo change to module
 
 const BookPage = (props: any) => {
+  const { t } = useTranslation('common');
   const styleGenerator = (string: any): any => {
     let style: any = {
       width: '37%',
@@ -79,7 +80,7 @@ const BookPage = (props: any) => {
           <foreignObject x="0" y="0" width="100%" height="100%" style={{ overflow: 'visible' }}>
             <img className="c-book-page__image" src={props.mustLoad ? props.image : ''} alt="book page" />
             {props.isLast ? (
-              <div className="c-book-page__limit">{props.t('book-limit')}</div>
+              <div className="c-book-page__limit">{t('book-limit')}</div>
             ) : (
               props.contents.map((content, key) => {
                 const value = processContent(content, props.language);
@@ -147,4 +148,4 @@ const BookPage = (props: any) => {
   );
 };
 
-export default withTranslation('common')(BookPage);
+export default BookPage;

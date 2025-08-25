@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
 import Stepper from 'components/atoms/Stepper';
-import { Router } from 'i18n';
 
 const NavBar = (props: any) => {
   const router = useRouter();
@@ -17,7 +16,7 @@ const NavBar = (props: any) => {
         {props.menuAction ? (
           <span className="icon-menu" onClick={showSideNav} />
         ) : (
-          <span className="icon-arrow_left" onClick={() => (props.onBack ? props.onBack() : Router.back())} />
+          <span className="icon-arrow_left" onClick={() => (props.onBack ? props.onBack() : router.back())} />
         )}
       </div>
       <div className={`c-nav-bar__title ${indexOrError ? 'c-nav-bar__title--index' : ''}`}>

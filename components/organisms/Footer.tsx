@@ -1,9 +1,10 @@
-import React from 'react';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
+import React, { memo } from 'react';
 import LazyLoad from 'react-lazyload';
 
-import { withTranslation, Link } from 'i18n';
-
-const Footer = React.memo((props: any) => {
+const Footer = memo(() => {
+  const { t } = useTranslation('common');
   const socialMedia = [
     { icon: 'twitter_white', url: 'https://twitter.com' },
     { icon: 'instagram_white', url: 'https://instagram.com' },
@@ -30,16 +31,16 @@ const Footer = React.memo((props: any) => {
           <div className="c-footer__right">
             <div className="c-footer__right__menu">
               <Link href="/about">
-                <a>{props.t('about-us')}</a>
+                <a>{t('about-us')}</a>
               </Link>
               <Link href="/policies">
-                <a>{props.t('policies')}</a>
+                <a>{t('policies')}</a>
               </Link>
               <Link href="/terms">
-                <a>{props.t('terms')}</a>
+                <a>{t('terms')}</a>
               </Link>
               <Link href="/help">
-                <a>{props.t('help-contact-us')}</a>
+                <a>{t('help-contact-us')}</a>
               </Link>
             </div>
             <div className="c-footer__right__social">
@@ -139,4 +140,4 @@ const Footer = React.memo((props: any) => {
 });
 Footer.displayName = 'Footer';
 
-export default withTranslation('common')(Footer);
+export default Footer;

@@ -1,7 +1,10 @@
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
+
 import Divider from 'components/atoms/Divider';
-import { withTranslation, Link } from 'i18n';
 
 const AccountDropdown = (props: any) => {
+  const { t } = useTranslation('common');
   const signOut = () => {
     props.logout();
   };
@@ -10,12 +13,12 @@ const AccountDropdown = (props: any) => {
       <div className="c-account-dropdown">
         <div className="c-account-dropdown__item">
           <Link href="/orders">
-            <a>{props.t('my-orders')}</a>
+            <a>{t('my-orders')}</a>
           </Link>
         </div>
         <Divider style={{ borderColor: '#ededed', borderWidth: 1, margin: '0 18px' }} />
         <div className="c-account-dropdown__item c-account-dropdown__sign-out" onClick={signOut}>
-          {props.t('sign-out')}
+          {t('sign-out')}
         </div>
       </div>
       <style jsx>{`
@@ -38,4 +41,4 @@ const AccountDropdown = (props: any) => {
   );
 };
 
-export default withTranslation('common')(AccountDropdown);
+export default AccountDropdown;
