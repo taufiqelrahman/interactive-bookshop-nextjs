@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import * as Sentry from '@sentry/browser';
+// import * as Sentry from '@sentry/browser';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import detectIt from 'detect-it';
@@ -31,16 +31,16 @@ const PRIVATE_ROUTES = ['/orders/success', '/account', '/orders'];
 const Pixel = dynamic(() => import('components/atoms/Pixel'));
 
 // disable when development
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  beforeSend: (event, hint: any) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.error(hint);
-      return null;
-    }
-    return event;
-  },
-});
+// Sentry.init({
+//   dsn: process.env.SENTRY_DSN,
+//   beforeSend: (event, hint: any) => {
+//     if (process.env.NODE_ENV === 'development') {
+//       console.error(hint);
+//       return null;
+//     }
+//     return event;
+//   },
+// });
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
