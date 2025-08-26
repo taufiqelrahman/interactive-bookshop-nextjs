@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 // import FieldDob from 'components/molecules/FieldDob';
@@ -7,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
@@ -24,6 +24,7 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
 const CharacterCustomization = (props: any) => {
+  const { t } = useTranslation('form');
   const cart = useSelector((state: any) => state.cart);
   const master = useSelector((state: any) => state.master);
   const router = useRouter();
@@ -46,11 +47,11 @@ const CharacterCustomization = (props: any) => {
   };
   const quit = () => {
     setShowSheet(false);
-    Router.push('/');
+    router.push('/');
   };
   const onBack = () => {
     if (charStep === stepEnum.NAME_GENDER) {
-      Router.back();
+      router.back();
       return;
     }
     // if (charStep === stepEnum.DOB) unregister('Date of Birth');
@@ -103,10 +104,10 @@ const CharacterCustomization = (props: any) => {
         label: '/create',
       });
     }
-    Router.push('/preview');
+    router.push('/preview');
   };
   // const pickedJobs = () => {
-  //   const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : props.t(`common:${job}`)));
+  //   const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : t(`common:${job}`)));
   //   return array.join(', ');
   // };
   useEffect(() => {
@@ -128,23 +129,17 @@ const CharacterCustomization = (props: any) => {
     if (typeof selected.Occupations === 'string') {
       selected.Occupations = selected.Occupations.split(',');
     }
-    Router.prefetch('/preview');
+    router.prefetch('/preview');
   }, []);
   useEffect(() => {
-    if (!formState.isValid) showError(props.t('form-error'));
+    if (!formState.isValid) showError(t('form-error'));
   }, [errors]);
   const screenHeight = '100vh - 69px';
   return (
     <DefaultLayout
       {...props}
       navbar={
-        <NavBar
-          onBack={onBack}
-          isSteps={true}
-          title={props.t('common:character-customization')}
-          step={1}
-          totalSteps={2}
-        />
+        <NavBar onBack={onBack} isSteps={true} title={t('common:character-customization')} step={1} totalSteps={2} />
       }
     >
       <form className="c-char-custom" style={{ height: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
@@ -165,7 +160,7 @@ const CharacterCustomization = (props: any) => {
               {/* {watch('Occupations') && (
                 <div className="c-char-custom__message">
                   <div className="c-char-custom__message__jobs">{pickedJobs()}</div>
-                  {errors.Occupations && props.t('occupations-invalid')}
+                  {errors.Occupations && t('occupations-invalid')}
                 </div>
               )} */}
             </div>
@@ -180,9 +175,9 @@ const CharacterCustomization = (props: any) => {
                 {charStep === stepEnum.NAME_GENDER && (
                   <Fragment>
                     <FormTextField
-                      label={props.t('nickname-label')}
+                      label={t('nickname-label')}
                       name="Name"
-                      placeholder={props.t('name-placeholder')}
+                      placeholder={t('name-placeholder')}
                       schema={schema(props).name}
                       register={register}
                       errors={errors.Name}
@@ -249,10 +244,10 @@ const CharacterCustomization = (props: any) => {
                 )}
                 {charStep === stepEnum.DEDICATION && (
                   <FormTextArea
-                    label={props.t('dedication-label')}
-                    hint={props.t('dedication-hint')}
+                    label={t('dedication-label')}
+                    hint={t('dedication-hint')}
                     name="Dedication"
-                    placeholder={props.t('dedication-placeholder')}
+                    placeholder={t('dedication-placeholder')}
                     schema={schema(props).dedication}
                     register={register}
                     errors={errors.Dedication}
@@ -265,10 +260,10 @@ const CharacterCustomization = (props: any) => {
         </div>
         <div className="u-container">
           <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-            {props.t('next-button')}
+            {t('next-button')}
           </Button>
           <div onClick={cancel} className="c-char-custom__link">
-            {props.t('cancel-button')}
+            {t('cancel-button')}
           </div>
         </div>
       </form>
@@ -278,17 +273,17 @@ const CharacterCustomization = (props: any) => {
         closeSheet={() => setShowSheet(false)}
         content={
           <Fragment>
-            <h1 className="c-char-custom__sheet__title">{props.t('quit-customizing')}</h1>
-            <div className="c-char-custom__sheet__content">{props.t('quit-confirmation')}</div>
+            <h1 className="c-char-custom__sheet__title">{t('quit-customizing')}</h1>
+            <div className="c-char-custom__sheet__content">{t('quit-confirmation')}</div>
           </Fragment>
         }
         actions={
           <Fragment>
             <Button width="100%" onClick={quit} style={{ marginBottom: 12 }}>
-              {props.t('yes-quit')}
+              {t('yes-quit')}
             </Button>
             <Button width="100%" onClick={() => setShowSheet(false)} variant="outline" color="black">
-              {props.t('cancel-button')}
+              {t('cancel-button')}
             </Button>
           </Fragment>
         }
@@ -351,4 +346,4 @@ const CharacterCustomization = (props: any) => {
   );
 };
 
-export default withTranslation(['form', 'common'])(CharacterCustomization);
+export default CharacterCustomization;

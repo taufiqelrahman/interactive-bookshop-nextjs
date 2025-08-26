@@ -1,11 +1,12 @@
 import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useEffect, Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
-import { withTranslation, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
@@ -23,6 +24,8 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 
 const PreviewDesktop = (props: any): any => {
+  const { t } = useTranslation('common');
+  const router = useRouter();
   const cart = useSelector((state: any) => state.cart);
   const users = useSelector((state: any) => state.users);
   const master = useSelector((state: any) => state.master);
@@ -55,7 +58,7 @@ const PreviewDesktop = (props: any): any => {
   };
   const onSubmit = (data) => {
     if (!selected) {
-      Router.replace('/create');
+      router.replace('/create');
       return;
     }
     const cart = { ...selected, ...data };
@@ -72,7 +75,7 @@ const PreviewDesktop = (props: any): any => {
   };
   useEffect(() => {
     if (!formState.isValid) {
-      showError(props.t('form:form-error'));
+      showError(t('form:form-error'));
     }
   }, [errors]);
   useEffect(() => {
@@ -87,7 +90,7 @@ const PreviewDesktop = (props: any): any => {
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page">
-        <Stepper step={1} totalSteps={2} title={props.t('book-preferences')} />
+        <Stepper step={1} totalSteps={2} title={t('book-preferences')} />
         <div className="c-preview">
           <Card variant="border">
             <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
@@ -101,19 +104,19 @@ const PreviewDesktop = (props: any): any => {
               </div>
               <div className="c-preview__details">
                 <div className="c-preview__details--left">
-                  <h2>{props.t('book-specs')}</h2>
+                  <h2>{t('book-specs')}</h2>
                   <div className="c-preview__details__content">
                     <div className="c-preview__details__item">
-                      <span className="icon-ico_verified" /> {props.t('book-specs-1')}
+                      <span className="icon-ico_verified" /> {t('book-specs-1')}
                     </div>
                     <div className="c-preview__details__item">
-                      <span className="icon-ico_premium_account" /> {props.t('book-specs-2')}
+                      <span className="icon-ico_premium_account" /> {t('book-specs-2')}
                     </div>
                     <div className="c-preview__details__item">
-                      <span className="icon-ico_book" /> {props.t('book-specs-3')}
+                      <span className="icon-ico_book" /> {t('book-specs-3')}
                     </div>
                     <div className="c-preview__details__item">
-                      <span className="icon-gift" /> {props.t('manufacturing-time')}
+                      <span className="icon-gift" /> {t('manufacturing-time')}
                     </div>
                   </div>
                 </div>
@@ -122,7 +125,7 @@ const PreviewDesktop = (props: any): any => {
                     <FieldCover schema={schema(props).cover} errors={errors.Cover} register={register} />
                   </div>
                   <Button type="submit" width="320px">
-                    {props.t('form:continue-order-button')}
+                    {t('form:continue-order-button')}
                   </Button>
                 </div>
               </div>
@@ -131,20 +134,20 @@ const PreviewDesktop = (props: any): any => {
         </div>
       </div>
       <Modal
-        title={props.t('guest-order-title')}
+        title={t('guest-order-title')}
         isOpen={showModal}
         closeModal={() => setShowModal(false)}
         actions={
           <Fragment>
             <Button width="100%" onClick={() => saveToCookies(tempData)} style={{ marginBottom: 12 }}>
-              {props.t('login')}
+              {t('login')}
             </Button>
             <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
-              {props.t('continue-guest')}
+              {t('continue-guest')}
             </Button>
           </Fragment>
         }
-        content={props.t('guest-order-info')}
+        content={t('guest-order-info')}
       />
       <style jsx>{`
         .c-section {
@@ -206,4 +209,4 @@ const PreviewDesktop = (props: any): any => {
   );
 };
 
-export default withTranslation(['common', 'form'])(PreviewDesktop);
+export default PreviewDesktop;

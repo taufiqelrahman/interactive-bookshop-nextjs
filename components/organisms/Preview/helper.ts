@@ -7,7 +7,7 @@ export const schema = (props) => ({
   cover: {
     required: {
       value: true,
-      message: `${props.t('cover-label')} ${props.t('form:required-error')}`,
+      message: `${t('cover-label')} ${t('form:required-error')}`,
     },
   },
 });

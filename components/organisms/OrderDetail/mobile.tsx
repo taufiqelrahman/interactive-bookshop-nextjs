@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useState, useEffect, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
@@ -10,7 +12,6 @@ import { toast } from 'react-toastify';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import appConfig from 'config';
-import { withTranslation, Router } from 'i18n';
 import { fullDate } from 'lib/format-date';
 
 import { retrieveInfo } from './helper';
@@ -23,6 +24,8 @@ const Dot = dynamic(() => import('components/atoms/Dot'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderDetailMobile = (props: any): any => {
+  const { t } = useTranslation('page-orders');
+  const router = useRouter();
   const { isFetching, currentOrder: order } = useSelector((state: any) => state.orders);
   const [state, setState] = useState({
     showPreview: false,
@@ -51,7 +54,7 @@ const OrderDetailMobile = (props: any): any => {
   }, []);
   const onExit = () => {
     setState({ ...state, showPreview: false });
-    Router.push('/orders');
+    router.push('/orders');
   };
   const screenHeight = '100vh - 59px';
   const showNote = (event) => {
@@ -62,7 +65,7 @@ const OrderDetailMobile = (props: any): any => {
     const element: any = document.getElementById('payment-number');
     element.select();
     document.execCommand('copy');
-    toast.success(props.t('copy-success'));
+    toast.success(t('copy-success'));
   };
   return (
     <DefaultLayout
@@ -80,7 +83,7 @@ const OrderDetailMobile = (props: any): any => {
           variant="bar"
           style={{ zIndex: 42, position: 'fixed', top: 59 }}
         >
-          {props.t(currentOrder.state)}
+          {t(currentOrder.state)}
           {props.state === 'received' && <span className="icon-cross_check" />}
         </Capsule>
       )}
@@ -103,9 +106,9 @@ const OrderDetailMobile = (props: any): any => {
             content={
               <div className="c-detail">
                 <div className="c-detail__container">
-                  <h2>{props.t('book-details')}</h2>
+                  <h2>{t('book-details')}</h2>
                   <div className="c-detail__book">
-                    <div className="c-detail__label">{props.t('form:nickname-label')}</div>
+                    <div className="c-detail__label">{t('form:nickname-label')}</div>
                     <div className="c-detail__value">
                       {isFetching ? (
                         <Skeleton height={19} width={280} />
@@ -113,16 +116,16 @@ const OrderDetailMobile = (props: any): any => {
                         lineItems.map((item) => item.customAttributes.Name).join(', ') || '-'
                       )}
                     </div>
-                    <div className="c-detail__label">{props.t('common:quantity')}</div>
+                    <div className="c-detail__label">{t('common:quantity')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems.length} ${props.t('books')}`}
+                      {isFetching ? <Skeleton height={19} width={60} /> : `${lineItems.length} ${t('books')}`}
                     </div>
-                    <div className="c-detail__label">{props.t('common:dedication-note')}</div>
+                    <div className="c-detail__label">{t('common:dedication-note')}</div>
                     {isFetching ? (
                       <Skeleton height={21} width={100} />
                     ) : hasDedication ? (
                       <div className="c-detail__link" onClick={showNote}>
-                        {props.t('common:preview-note')}
+                        {t('common:preview-note')}
                       </div>
                     ) : (
                       '-'
@@ -132,44 +135,44 @@ const OrderDetailMobile = (props: any): any => {
                 {!isFetching && (
                   <Fragment>
                     <div className="c-detail__container">
-                      <h2>{props.t('order-state')}</h2>
+                      <h2>{t('order-state')}</h2>
                       <div className="c-detail__order">
-                        <div className="c-detail__label">{props.t('order-date')}</div>
+                        <div className="c-detail__label">{t('order-date')}</div>
                         <div className="c-detail__value">{fullDate(currentOrder.created_at)}</div>
-                        <div className="c-detail__label">{props.t('order-state')}</div>
-                        <div className="c-detail__value capitalize">{props.t(currentOrder.state)}</div>
-                        <div className="c-detail__label">{props.t('shipping-date')}</div>
+                        <div className="c-detail__label">{t('order-state')}</div>
+                        <div className="c-detail__value capitalize">{t(currentOrder.state)}</div>
+                        <div className="c-detail__label">{t('shipping-date')}</div>
                         <div className="c-detail__value">{fullDate(shippingDate) || '-'}</div>
-                        <div className="c-detail__label">{props.t('tracking-number')}</div>
+                        <div className="c-detail__label">{t('tracking-number')}</div>
                         <div className="c-detail__value">{trackingNumber}</div>
                       </div>
                       <div className="c-detail__order__info">
-                        <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>
+                        <div className="c-detail__order__info__item">{t('common:manufacturing-time')}</div>
                       </div>
                     </div>
                     <div className="c-detail__container">
-                      <h2>{props.t('shipping-address')}</h2>
+                      <h2>{t('shipping-address')}</h2>
                       <div className="c-detail__address">
-                        <div className="c-detail__label">{props.t('street-address')}</div>
+                        <div className="c-detail__label">{t('street-address')}</div>
                         <div className="c-detail__value">{shippingAddress.address1}</div>
-                        <div className="c-detail__label">{props.t('province')}</div>
+                        <div className="c-detail__label">{t('province')}</div>
                         <div className="c-detail__value">{shippingAddress.province}</div>
-                        <div className="c-detail__label">{props.t('postal-code')}</div>
+                        <div className="c-detail__label">{t('postal-code')}</div>
                         <div className="c-detail__value">{shippingAddress.zip}</div>
-                        <div className="c-detail__label">{props.t('city')}</div>
+                        <div className="c-detail__label">{t('city')}</div>
                         <div className="c-detail__value">{shippingAddress.city}</div>
                       </div>
                     </div>
                     <div className="c-detail__container">
                       <div className="c-detail__summary__header">
-                        <h2 style={{ marginBottom: 0 }}>{props.t('common:order-summary')}</h2>
+                        <h2 style={{ marginBottom: 0 }}>{t('common:order-summary')}</h2>
                         <Dot width="12px" color="red" />
                       </div>
                       <div className="flex items-baseline justify-between">
                         <div>
                           <div className="c-detail__summary__title">When I Grow Up</div>
                           <div className="c-detail__summary__label">
-                            {props.t('common:quantity')}: {lineItems.length}
+                            {t('common:quantity')}: {lineItems.length}
                           </div>
                         </div>
                         <div className="c-detail__summary__total">
@@ -184,7 +187,7 @@ const OrderDetailMobile = (props: any): any => {
                       {shippingLine && (
                         <div className="flex items-baseline justify-between" style={{ marginTop: 16 }}>
                           <div>
-                            <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
+                            <div className="c-detail__summary__title">{t('shipping-cost')}</div>
                             <div className="c-detail__summary__label">{shippingName}</div>
                           </div>
                           <div className="c-detail__summary__total">
@@ -205,7 +208,7 @@ const OrderDetailMobile = (props: any): any => {
                             style={{ marginTop: 18 }}
                           >
                             <div>
-                              <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>
+                              <div className="c-detail__summary__title">{t('common:discount-code')}</div>
                               <div className="c-detail__summary__label">{discount.code}</div>
                             </div>
                             <div className="c-detail__summary__total">
@@ -233,7 +236,7 @@ const OrderDetailMobile = (props: any): any => {
                           {payment.type ? (
                             <Fragment>
                               <div className="c-detail__summary__info__item">
-                                {props.t('awaiting-payment')} {payment.type}
+                                {t('awaiting-payment')} {payment.type}
                               </div>
                               {payment.instance ? (
                                 <div className="flex items-end justify-between">
@@ -255,12 +258,12 @@ const OrderDetailMobile = (props: any): any => {
                               ) : payment.url ? (
                                 <div className="c-detail__summary__info__link">
                                   <a href={payment.url} target="_blank" rel="noopener noreferrer">
-                                    {props.t('continue-payment')}
+                                    {t('continue-payment')}
                                   </a>
                                 </div>
                               ) : (
                                 <Fragment>
-                                  {props.t('processing-payment')}
+                                  {t('processing-payment')}
                                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                                     <Button className="mt-3" variant="whatsapp" width="100%">
                                       WhatsApp
@@ -271,7 +274,7 @@ const OrderDetailMobile = (props: any): any => {
                             </Fragment>
                           ) : (
                             <Fragment>
-                              <div>{props.t('payment-failure')}</div>
+                              <div>{t('payment-failure')}</div>
                               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                                 <Button className="mt-3" variant="whatsapp" width="100%">
                                   WhatsApp
@@ -306,7 +309,7 @@ const OrderDetailMobile = (props: any): any => {
               onClick={() => setState({ ...state, extendNote: true })}
               zIndexLevel={2}
               header={true}
-              title={props.t(`common:note-preview`)}
+              title={t(`common:note-preview`)}
               content={
                 <div className="c-detail__note">
                   {lineItems.map((item) => (
@@ -457,4 +460,4 @@ const OrderDetailMobile = (props: any): any => {
   );
 };
 
-export default withTranslation(['page-orders', 'form', 'common'])(OrderDetailMobile);
+export default OrderDetailMobile;

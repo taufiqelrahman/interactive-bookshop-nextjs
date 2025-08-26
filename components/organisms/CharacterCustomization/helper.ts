@@ -2,20 +2,20 @@ import { toast } from 'react-toastify';
 
 export const schema = (props) => ({
   occupations: {
-    required: { value: true, message: props.t('occupations-invalid') },
-    validate: (value) => value.length === 3 || props.t('occupations-invalid'),
+    required: { value: true, message: t('occupations-invalid') },
+    validate: (value) => value.length === 3 || t('occupations-invalid'),
   },
   name: {
-    required: { value: true, message: `${props.t('nickname-label')} ${props.t('required-error')}` },
-    maxLength: { value: 10, message: `${props.t('nickname-label')} ${props.t('less-than-error')} 10` },
-    validate: (value) => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
+    required: { value: true, message: `${t('nickname-label')} ${t('required-error')}` },
+    maxLength: { value: 10, message: `${t('nickname-label')} ${t('less-than-error')} 10` },
+    validate: (value) => !value.includes(' ') || `${t('nickname-label')} ${t('space-error')}`,
   },
-  age: { required: { value: true, message: `${props.t('age-label')} ${props.t('required-error')}` } },
+  age: { required: { value: true, message: `${t('age-label')} ${t('required-error')}` } },
   // dob: { required: false },
-  gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
-  hair: { required: { value: true, message: `${props.t('hair-label')} ${props.t('required-error')}` } },
-  skin: { required: { value: true, message: `${props.t('skin-label')} ${props.t('required-error')}` } },
-  language: { required: { value: true, message: `${props.t('language-label')} ${props.t('required-error')}` } },
+  gender: { required: { value: true, message: `${t('gender-label')} ${t('required-error')}` } },
+  hair: { required: { value: true, message: `${t('hair-label')} ${t('required-error')}` } },
+  skin: { required: { value: true, message: `${t('skin-label')} ${t('required-error')}` } },
+  language: { required: { value: true, message: `${t('language-label')} ${t('required-error')}` } },
   dedication: { required: false },
 });
 
