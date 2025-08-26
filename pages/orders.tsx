@@ -1,10 +1,11 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link } from 'i18n';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
@@ -17,19 +18,20 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Orders = (props: any): any => {
+  const { t } = useTranslation('page-orders');
   const orders = useSelector((state: any) => state.orders);
   const orderList = orders.isFetching ? [1, 2] : orders.orders;
   // const orderList = dummyOrders;
   return (
     <DefaultLayout
       {...props}
-      navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('my-orders')} />}
+      navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('my-orders')} />}
     >
       <Head>
-        <title>When I Grow Up | {props.t('my-orders')}</title>
+        <title>When I Grow Up | {t('my-orders')}</title>
       </Head>
       <div className={`u-container ${props.isMobile ? 'bg-light-grey' : 'u-container__page'}`}>
-        {!props.isMobile && <Stepper title={props.t('my-orders')} />}
+        {!props.isMobile && <Stepper title={t('my-orders')} />}
         <div className="c-orders-section">
           <div className="c-orders-section__left">
             {orderList.length > 0 ? (
@@ -47,11 +49,11 @@ const Orders = (props: any): any => {
             ) : (
               <div className="c-orders__empty">
                 <img src={`/static/images/empty-asset${props.isMobile ? '-sm' : ''}.png`} alt="empty" />
-                <div className="c-orders__empty__title">{props.t('orders-empty-title')}</div>
-                <div className="c-orders__empty__subtitle">{props.t('orders-empty-subtitle')}</div>
+                <div className="c-orders__empty__title">{t('orders-empty-title')}</div>
+                <div className="c-orders__empty__subtitle">{t('orders-empty-subtitle')}</div>
                 <Link href="/create">
                   <a>
-                    <Button className={props.isMobile ? 'w-full' : ''}>{props.t('orders-empty-cta')}</Button>
+                    <Button className={props.isMobile ? 'w-full' : ''}>{t('orders-empty-cta')}</Button>
                   </a>
                 </Link>
               </div>
@@ -59,7 +61,7 @@ const Orders = (props: any): any => {
           </div>
         </div>
       </div>
-      {props.isMobile && <Footer isMobile={props.isMobile} />}
+      {props.isMobile && <Footer />}
       <style jsx>{`
         .c-orders-section {
           @apply flex w-full overflow-scroll;
@@ -115,10 +117,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   }
 
   return {
-    props: {
-      namespacesRequired: ['page-orders'],
-    },
+    props: {},
   };
 });
 
-export default withTranslation('page-orders')(Orders);
+export default Orders;

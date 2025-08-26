@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useState, useEffect, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -8,7 +10,6 @@ import { toast } from 'react-toastify';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 import actions from 'store/actions';
 // import Footer from 'components/organisms/Footer';
@@ -19,6 +20,7 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
 const Login = (props: any): any => {
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const router = useRouter();
   const methods = useForm({ mode: 'onChange' });
@@ -35,13 +37,13 @@ const Login = (props: any): any => {
     email: { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
     password: { required: true },
     confirmPassword: {
-      required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: (value) => value === watch('password') || props.t('form:password-different'),
+      required: { value: true, message: `${t('form:password-label')} ${t('form:required-error')}` },
+      validate: (value) => value === watch('password') || t('form:password-different'),
     },
   };
   useEffect(() => {
     if (!formState.isValid) {
-      toast.error(props.t('form:form-error'));
+      toast.error(t('form:form-error'));
     }
   }, [errors]);
   useEffect(() => {
@@ -76,7 +78,7 @@ const Login = (props: any): any => {
           category: 'engagement',
           label: 'email',
         });
-        dispatch(actions.thunkLogin({ ...data, from: Router.query.from }));
+        dispatch(actions.thunkLogin({ ...data, from: router.query.from }));
         break;
       case stepEnum.FORGOT:
         dispatch(actions.thunkForgotPassword(data));
@@ -99,7 +101,7 @@ const Login = (props: any): any => {
         setLoginStep(stepEnum.EMAIL);
         break;
       case stepEnum.RESET:
-        Router.push('/');
+        router.push('/');
         break;
       default:
         break;
@@ -107,7 +109,7 @@ const Login = (props: any): any => {
   };
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const loginFacebook = () => {
-    const { from }: any = Router.query;
+    const { from }: any = router.query;
     if (from) localStorage.setItem('from', from);
     gtag.event({
       action: 'login',
@@ -117,7 +119,7 @@ const Login = (props: any): any => {
     window.location.href = `${process.env.API_URL}/redirect-facebook`;
   };
   const loginGoogle = () => {
-    const { from }: any = Router.query;
+    const { from }: any = router.query;
     if (from) localStorage.setItem('from', from);
     gtag.event({
       action: 'login',
@@ -135,13 +137,13 @@ const Login = (props: any): any => {
             onBack={onBack}
             setSideNav={props.setSideNav}
             menuAction={loginStep === stepEnum.WELCOME}
-            title={props.t('login')}
+            title={t('login')}
           />
         )
       }
     >
       <Head>
-        <title>When I Grow Up | {props.t('login')}</title>
+        <title>When I Grow Up | {t('login')}</title>
       </Head>
       <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-login">
@@ -150,7 +152,7 @@ const Login = (props: any): any => {
               {loginStep === stepEnum.WELCOME && (
                 <Fragment>
                   <img alt="welcome" className="c-login__image" src="/static/images/login-illus.png" />
-                  <h1 className="c-login__title">{isTransit ? props.t('please-wait') : props.t('welcome-back')}</h1>
+                  <h1 className="c-login__title">{isTransit ? t('please-wait') : t('welcome-back')}</h1>
                   <Button
                     name="google"
                     onClick={loginGoogle}
@@ -160,7 +162,7 @@ const Login = (props: any): any => {
                     style={{ margin: '12px 0' }}
                     isLoading={isTransit && router.query.social === 'google'}
                   >
-                    {`${props.t('login-with')} Google`}
+                    {`${t('login-with')} Google`}
                   </Button>
                   <Button
                     name="facebook"
@@ -171,7 +173,7 @@ const Login = (props: any): any => {
                     style={{ margin: '12px 0' }}
                     isLoading={isTransit && router.query.social === 'facebook'}
                   >
-                    {`${props.t('login-with')} Facebook`}
+                    {`${t('login-with')} Facebook`}
                   </Button>
                   <div
                     data-testid="email"
@@ -179,13 +181,13 @@ const Login = (props: any): any => {
                     className="c-login__link"
                     style={{ marginBottom: 24, marginTop: 24 }}
                   >
-                    {`${props.t('login-with')} Email`}
+                    {`${t('login-with')} Email`}
                   </div>
                   <Divider />
                   <Link href="/register">
                     <a className="c-login__link">
-                      <span>{props.t('no-account')}</span>
-                      {' ' + props.t('register')}
+                      <span>{t('no-account')}</span>
+                      {' ' + t('register')}
                     </a>
                   </Link>
                 </Fragment>
@@ -199,9 +201,9 @@ const Login = (props: any): any => {
                   {loginStep === stepEnum.EMAIL && (
                     <Fragment>
                       <div>
-                        <h1 className="c-login__title">{`${props.t('login-with')} Email`}</h1>
+                        <h1 className="c-login__title">{`${t('login-with')} Email`}</h1>
                         <FormTextField
-                          label={props.t('form:email-label')}
+                          label={t('form:email-label')}
                           name="email"
                           placeholder="example@yourdomain.com"
                           schema={schema.email}
@@ -210,9 +212,9 @@ const Login = (props: any): any => {
                           variant="full-width"
                         />
                         <FormTextField
-                          label={props.t('form:password-label')}
+                          label={t('form:password-label')}
                           name="password"
-                          placeholder={props.t('form:password-placeholder')}
+                          placeholder={t('form:password-placeholder')}
                           schema={schema.password}
                           register={register}
                           errors={errors.password}
@@ -226,15 +228,15 @@ const Login = (props: any): any => {
                           className="c-login__link"
                           style={{ margin: '12px 0', textAlign: 'left' }}
                         >
-                          {props.t('forgot-password')}
+                          {t('forgot-password')}
                         </div>
                       </div>
                       <div>
                         <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('login')}
+                          {t('login')}
                         </Button>
                         <div onClick={onBack} className="c-login__link">
-                          {props.t('go-back')}
+                          {t('go-back')}
                         </div>
                       </div>
                     </Fragment>
@@ -243,11 +245,11 @@ const Login = (props: any): any => {
                     <Fragment>
                       <div>
                         <h1 className="c-login__title" style={{ marginBottom: 12 }}>
-                          {props.t('form:reset-title')}
+                          {t('form:reset-title')}
                         </h1>
-                        <div className="c-login__subtitle">{props.t('form:reset-subtitle')}</div>
+                        <div className="c-login__subtitle">{t('form:reset-subtitle')}</div>
                         <FormTextField
-                          label={props.t('form:email-label')}
+                          label={t('form:email-label')}
                           name="email"
                           placeholder="example@yourdomain.com"
                           schema={schema.email}
@@ -259,10 +261,10 @@ const Login = (props: any): any => {
                       </div>
                       <div>
                         <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('form:reset-send')}
+                          {t('form:reset-send')}
                         </Button>
                         <div onClick={onBack} className="c-login__link">
-                          {props.t('go-back')}
+                          {t('go-back')}
                         </div>
                       </div>
                     </Fragment>
@@ -271,13 +273,13 @@ const Login = (props: any): any => {
                     <Fragment>
                       <div>
                         <h1 className="c-login__title" style={{ marginBottom: 12 }}>
-                          {props.t('form:reset-title')}
+                          {t('form:reset-title')}
                         </h1>
                         <div className="c-login__saved-email">{resetData.email}</div>
                         <FormTextField
-                          label={props.t('form:password-label')}
+                          label={t('form:password-label')}
                           name="password"
-                          placeholder={props.t('form:new-password-placeholder')}
+                          placeholder={t('form:new-password-placeholder')}
                           schema={schema.password}
                           register={register}
                           errors={errors.password}
@@ -286,9 +288,9 @@ const Login = (props: any): any => {
                           style={{ marginTop: 24 }}
                         />
                         <FormTextField
-                          label={props.t('form:confirm-password-label')}
+                          label={t('form:confirm-password-label')}
                           name="password_confirmation"
-                          placeholder={props.t('form:confirm-password-placeholder')}
+                          placeholder={t('form:confirm-password-placeholder')}
                           schema={schema.confirmPassword}
                           register={register}
                           errors={errors.password_confirmation}
@@ -299,10 +301,10 @@ const Login = (props: any): any => {
                       </div>
                       <div>
                         <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('form:reset-button')}
+                          {t('form:reset-button')}
                         </Button>
                         <div onClick={onBack} className="c-login__link">
-                          {props.t('go-back')}
+                          {t('go-back')}
                         </div>
                       </div>
                     </Fragment>
@@ -314,13 +316,13 @@ const Login = (props: any): any => {
                   <div>
                     <img alt="welcome" className="c-login__image" src="/static/images/welcome.png" />
                     <h1 className="c-login__title" style={{ marginBottom: 12 }}>
-                      {props.t('form:email-sent-title')}
+                      {t('form:email-sent-title')}
                     </h1>
-                    <div className="c-login__subtitle">{props.t('form:email-sent-subtitle')}</div>
+                    <div className="c-login__subtitle">{t('form:email-sent-subtitle')}</div>
                   </div>
                   <div>
                     <Button onClick={onBack} width="100%" style={{ margin: '30px 0' }}>
-                      {props.t('go-back')}
+                      {t('go-back')}
                     </Button>
                   </div>
                 </div>
@@ -400,4 +402,4 @@ const Login = (props: any): any => {
   );
 };
 
-export default withTranslation(['common', 'form'])(Login);
+export default Login;

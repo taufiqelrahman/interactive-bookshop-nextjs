@@ -1,12 +1,13 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cookies from 'next-cookies';
+import { useTranslation } from 'next-i18next';
 import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link } from 'i18n';
 import { formatPayment } from 'lib/format-payment';
 import api from 'services/api';
 import { wrapper } from 'store';
@@ -16,6 +17,7 @@ const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderSuccess = (props: any): any => {
+  const { t } = useTranslation('common');
   const users = useSelector((state: any) => state.users);
   const { isLoggedIn } = users;
   const orders = useSelector((state: any) => state.orders);
@@ -25,9 +27,9 @@ const OrderSuccess = (props: any): any => {
   const screenHeight = '100vh - 59px';
   const Wrapper: any = props.isMobile ? 'div' : Card;
   return (
-    <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={props.t('checkout')} />}>
+    <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={t('checkout')} />}>
       <Head>
-        <title>When I Grow Up | {props.t('checkout')}</title>
+        <title>When I Grow Up | {t('checkout')}</title>
       </Head>
       <div className="u-container" style={props.isMobile ? {} : { padding: '61px 0 ' }}>
         <div className="c-success">
@@ -36,27 +38,25 @@ const OrderSuccess = (props: any): any => {
               <div>
                 {/* <img alt="success" className="c-success__image" src="/static/images/success.png" /> */}
                 <img alt="success" className="c-success__image" src="/static/images/old_man.gif" />
-                <h1 className="c-success__title">
-                  {paymentProblem ? props.t('payment-problem') : props.t('order-success')}
-                </h1>
+                <h1 className="c-success__title">{paymentProblem ? t('payment-problem') : t('order-success')}</h1>
                 <div className="c-success__subtitle">
                   {paymentProblem
-                    ? props.t('payment-problem-content')
+                    ? t('payment-problem-content')
                     : isLoggedIn
-                      ? props.t('order-success-content')
-                      : props.t('order-success-content-guest')}
+                      ? t('order-success-content')
+                      : t('order-success-content-guest')}
                 </div>
               </div>
               <div className="c-success__actions">
                 <Link href={paymentProblem ? '/create' : `/orders/${id}`}>
                   <a>
                     <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
-                      {paymentProblem ? props.t('create-another') : props.t('go-to-orders')}
+                      {paymentProblem ? t('create-another') : t('go-to-orders')}
                     </Button>
                   </a>
                 </Link>
                 <Link href="/">
-                  <a className="c-success__link">{props.t('back-to-home')}</a>
+                  <a className="c-success__link">{t('back-to-home')}</a>
                 </Link>
               </div>
             </div>
@@ -144,10 +144,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   }
 
   return {
-    props: {
-      namespacesRequired: ['page-index'],
-    },
+    props: {},
   };
 });
 
-export default withTranslation('common')(OrderSuccess);
+export default OrderSuccess;

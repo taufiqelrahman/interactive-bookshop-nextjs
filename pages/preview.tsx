@@ -1,21 +1,24 @@
 import Head from 'next/head';
 import cookies from 'next-cookies';
+import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
 
 import PreviewDesktop from 'components/organisms/Preview/desktop';
 import PreviewMobile from 'components/organisms/Preview/mobile';
-
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
 
-const Preview = (props: any): any => (
-  <div>
-    <Head>
-      <title>When I Grow Up | {props.t('book-preferences')}</title>
-    </Head>
-    {props.isMobile ? <PreviewMobile {...props} /> : <PreviewDesktop {...props} />}
-  </div>
-);
+const Preview = (props: any): any => {
+  const { t } = useTranslation('common');
+  return (
+    <div>
+      <Head>
+        <title>When I Grow Up | {t('book-preferences')}</title>
+      </Head>
+      {props.isMobile ? <PreviewMobile {...props} /> : <PreviewDesktop {...props} />}
+    </div>
+  );
+};
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   let selected: any = cookies(ctx).pendingTrx;
@@ -43,10 +46,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   }
 
   return {
-    props: {
-      namespacesRequired: ['form'],
-    },
+    props: {},
   };
 });
 
-export default withTranslation('common')(Preview);
+export default Preview;

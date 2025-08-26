@@ -1,17 +1,19 @@
 import DOMPurify from 'dompurify';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import LazyLoad from 'react-lazyload';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link } from 'i18n';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Help = ({ isMobile, t, setSideNav }) => {
+const Help = ({ isMobile, setSideNav }) => {
+  const { t } = useTranslation('common');
   const names = [
     'Jasper Moon',
     'Lila Fern',
@@ -94,7 +96,7 @@ const Help = ({ isMobile, t, setSideNav }) => {
           </div>
         </div>
       </div>
-      {isMobile && <Footer isMobile={isMobile} />}
+      {isMobile && <Footer />}
       <style jsx>{`
         .c-about-us {
           &__title {
@@ -176,4 +178,4 @@ const Help = ({ isMobile, t, setSideNav }) => {
   );
 };
 
-export default withTranslation('common')(Help);
+export default Help;
