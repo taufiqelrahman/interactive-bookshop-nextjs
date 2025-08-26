@@ -16,7 +16,7 @@ const FieldGender = (props: any) => {
     <div style={props.style} className={props.className}>
       <div className="c-field-gender">
         <div className="c-field-gender__header">
-          {props.t('gender-label')}
+          {t('gender-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-gender__options">

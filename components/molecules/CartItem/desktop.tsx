@@ -1,4 +1,6 @@
 import debounce from 'lodash.debounce';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
@@ -9,11 +11,12 @@ import Divider from 'components/atoms/Divider';
 import Dot from 'components/atoms/Dot';
 import Modal from 'components/atoms/Modal';
 import Popover from 'components/atoms/Popover';
-import { withTranslation, Router } from 'i18n';
 
 import { previewImg, updateQuantity } from './helper';
 
 const CartItem = (props: any) => {
+  const { t } = useTranslation('common');
+  const router = useRouter();
   const [quantity, setQuantity] = useState(props.quantity);
   const [showModal, setShowModal] = useState(false);
   const onDecrease = () => {
@@ -44,7 +47,7 @@ const CartItem = (props: any) => {
       ...props.customAttributes,
       Occupations: props.customAttributes.Occupations.split(','),
     });
-    Router.push('/create');
+    router.push('/create');
   };
 
   return (
@@ -74,13 +77,13 @@ const CartItem = (props: any) => {
             <div className="c-cart-item__detail--top">
               <div className="c-cart-item__detail--top--left">
                 <div className="c-cart-item__detail__label">
-                  {props.isSkeleton ? <Skeleton /> : props.t('form:nickname-label')}
+                  {props.isSkeleton ? <Skeleton /> : t('form:nickname-label')}
                 </div>
                 <div className="c-cart-item__detail__value">
                   {props.isSkeleton ? <Skeleton /> : props.customAttributes.Name}
                 </div>
                 <div className="c-cart-item__detail__label">
-                  {props.isSkeleton ? <Skeleton /> : props.t('dream-occupation')}
+                  {props.isSkeleton ? <Skeleton /> : t('dream-occupation')}
                 </div>
                 <div className="c-cart-item__detail__value">
                   {props.isSkeleton ? <Skeleton /> : props.customAttributes.Occupations?.replace(/,/g, ', ')}
@@ -88,9 +91,9 @@ const CartItem = (props: any) => {
               </div>
               {!props.isSkeleton && props.customAttributes.Dedication && (
                 <div className="c-cart-item__detail--top--right">
-                  <div className="c-cart-item__detail__label">{props.t('dedication-note')}</div>
+                  <div className="c-cart-item__detail__label">{t('dedication-note')}</div>
                   <Popover content={props.customAttributes.Dedication}>
-                    <div className="c-cart-item__detail__link">{props.t('preview-note')}</div>
+                    <div className="c-cart-item__detail__link">{t('preview-note')}</div>
                   </Popover>
                 </div>
               )}
@@ -152,7 +155,7 @@ const CartItem = (props: any) => {
         </div>
       </Card>
       <Modal
-        title={props.t('form:delete-item')}
+        title={t('form:delete-item')}
         isOpen={showModal}
         closeModal={() => setShowModal(false)}
         actions={
@@ -162,14 +165,14 @@ const CartItem = (props: any) => {
               onClick={() => props.removeFromCart(props.cartId, props.id)}
               style={{ marginBottom: 12 }}
             >
-              {props.t('form:continue-button')}
+              {t('form:continue-button')}
             </Button>
             <Button width="100%" onClick={() => setShowModal(false)} variant="outline" color="black">
-              {props.t('form:cancel-button')}
+              {t('form:cancel-button')}
             </Button>
           </Fragment>
         }
-        content={props.t('form:delete-confirmation')}
+        content={t('form:delete-confirmation')}
       />
       <style jsx>{`
         .c-cart-item {
@@ -274,4 +277,4 @@ const CartItem = (props: any) => {
   );
 };
 
-export default withTranslation(['common', 'form'])(CartItem);
+export default CartItem;

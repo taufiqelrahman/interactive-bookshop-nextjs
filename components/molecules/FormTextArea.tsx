@@ -47,4 +47,4 @@ const FormTextArea = (props: any) => (
 );
 FormTextArea.displayName = 'FormTextArea';
 
-export default withTranslation('form', { withRef: true })<any>(FormTextArea);
+export default FormTextArea;
