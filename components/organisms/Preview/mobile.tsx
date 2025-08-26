@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useEffect, Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,8 +12,6 @@ import * as gtag from 'lib/gtag';
 import actions from 'store/actions';
 
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 
 // import BookPreview from 'components/BookPreview';
 // import Sheet from 'components/atoms/Sheet';
