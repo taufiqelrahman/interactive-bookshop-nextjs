@@ -1,12 +1,12 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 import { Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import appConfig from 'config';
-import { withTranslation } from 'i18n';
 import { fullDate } from 'lib/format-date';
 
 import { retrieveInfo, previewImg } from './helper';
@@ -22,6 +22,7 @@ const Capsule = dynamic(() => import('components/atoms/Capsule'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderDetailDesktop = (props: any): any => {
+  const { t } = useTranslation('page-orders');
   const { isFetching, currentOrder: order } = useSelector((state: any) => state.orders);
   const {
     currentOrder,
@@ -43,7 +44,7 @@ const OrderDetailDesktop = (props: any): any => {
     <DefaultLayout {...props}>
       <Head>
         <title>
-          When I Grow Up | {props.t('order-title')}: {orderNumber}
+          When I Grow Up | {t('order-title')}: {orderNumber}
         </title>
       </Head>
       <div className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}>
@@ -54,10 +55,10 @@ const OrderDetailDesktop = (props: any): any => {
                 <Skeleton height={42} width={500} />
               ) : (
                 <Fragment>
-                  {props.t('order-title')}: {orderNumber}
+                  {t('order-title')}: {orderNumber}
                   {currentOrder && (
                     <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
-                      {props.t(currentOrder.state)}
+                      {t(currentOrder.state)}
                       {props.state === 'received' && <span className="icon-cross_check" />}
                     </Capsule>
                   )}
@@ -70,7 +71,7 @@ const OrderDetailDesktop = (props: any): any => {
           <div className="c-detail-section__left">
             <Card variant="border" style={{ marginBottom: 12 }}>
               <div className="c-detail__container">
-                <h2>{props.t('book-details')}</h2>
+                <h2>{t('book-details')}</h2>
                 <div className="flex">
                   <div className="c-detail__book__left">
                     {isFetching ? (
@@ -82,7 +83,7 @@ const OrderDetailDesktop = (props: any): any => {
                     )}
                   </div>
                   <div className="c-detail__book__middle">
-                    <div className="c-detail__label">{props.t('form:nickname-label')}</div>
+                    <div className="c-detail__label">{t('form:nickname-label')}</div>
                     <div className="c-detail__value">
                       {isFetching ? (
                         <Skeleton height={22} width={250} />
@@ -91,7 +92,7 @@ const OrderDetailDesktop = (props: any): any => {
                       )}
                     </div>
                     <div className="c-detail__label" style={{ marginTop: 30 }}>
-                      {props.t('common:dedication-note')}
+                      {t('common:dedication-note')}
                     </div>
                     {isFetching ? (
                       <Skeleton height={24} width={115} />
@@ -104,16 +105,16 @@ const OrderDetailDesktop = (props: any): any => {
                           </Fragment>
                         ))}
                       >
-                        <div className="c-detail__link">{props.t('common:preview-note')}</div>
+                        <div className="c-detail__link">{t('common:preview-note')}</div>
                       </Popover>
                     ) : (
                       '-'
                     )}
                   </div>
                   <div className="c-detail__book__right">
-                    <div className="c-detail__label">{props.t('common:quantity')}</div>
+                    <div className="c-detail__label">{t('common:quantity')}</div>
                     <div className="c-detail__value">
-                      {isFetching ? <Skeleton height={22} width={60} /> : `${lineItems.length} ${props.t('books')}`}
+                      {isFetching ? <Skeleton height={22} width={60} /> : `${lineItems.length} ${t('books')}`}
                     </div>
                   </div>
                 </div>
@@ -121,54 +122,54 @@ const OrderDetailDesktop = (props: any): any => {
             </Card>
             <Card variant="border" style={{ marginBottom: 12 }}>
               <div className="c-detail__container">
-                <h2>{props.t('order-state')}</h2>
+                <h2>{t('order-state')}</h2>
                 <div className="flex">
                   <div className="c-detail__order__left">
-                    <div className="c-detail__label">{props.t('order-date')}</div>
+                    <div className="c-detail__label">{t('order-date')}</div>
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={22} width={170} /> : fullDate(currentOrder.created_at)}
                     </div>
-                    <div className="c-detail__label">{props.t('order-state')}</div>
+                    <div className="c-detail__label">{t('order-state')}</div>
                     <div className="c-detail__value capitalize">
-                      {isFetching ? <Skeleton height={22} width={170} /> : props.t(currentOrder.state)}
+                      {isFetching ? <Skeleton height={22} width={170} /> : t(currentOrder.state)}
                     </div>
                   </div>
                   <div className="c-detail__order__right">
-                    <div className="c-detail__label">{props.t('shipping-date')}</div>
+                    <div className="c-detail__label">{t('shipping-date')}</div>
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={22} width={170} /> : fullDate(shippingDate) || '-'}
                     </div>
-                    <div className="c-detail__label">{props.t('tracking-number')}</div>
+                    <div className="c-detail__label">{t('tracking-number')}</div>
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={22} width={170} /> : trackingNumber}
                     </div>
                   </div>
                 </div>
                 <div className="c-detail__order__info">
-                  <div className="c-detail__order__info__item">{props.t('common:manufacturing-time')}</div>
+                  <div className="c-detail__order__info__item">{t('common:manufacturing-time')}</div>
                 </div>
               </div>
             </Card>
             <Card variant="border" style={{ marginBottom: 12 }}>
               <div className="c-detail__container">
-                <h2>{props.t('shipping-address')}</h2>
+                <h2>{t('shipping-address')}</h2>
                 <div className="flex">
                   <div className="c-detail__address__left">
-                    <div className="c-detail__label">{props.t('street-address')}</div>
+                    <div className="c-detail__label">{t('street-address')}</div>
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.address1}
                     </div>
-                    <div className="c-detail__label">{props.t('province')}</div>
+                    <div className="c-detail__label">{t('province')}</div>
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.province}
                     </div>
                   </div>
                   <div className="c-detail__address__right">
-                    <div className="c-detail__label">{props.t('postal-code')}</div>
+                    <div className="c-detail__label">{t('postal-code')}</div>
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.zip}
                     </div>
-                    <div className="c-detail__label">{props.t('city')}</div>
+                    <div className="c-detail__label">{t('city')}</div>
                     <div className="c-detail__value">
                       {isFetching ? <Skeleton height={22} width={170} /> : shippingAddress.city}
                     </div>
@@ -180,7 +181,7 @@ const OrderDetailDesktop = (props: any): any => {
           <div className="c-detail-section__right">
             <Card variant="border">
               <div className="c-detail__container">
-                <h2>{props.t('common:order-summary')}</h2>
+                <h2>{t('common:order-summary')}</h2>
                 <div className="flex items-baseline justify-between overflow-hidden">
                   <div>
                     <div className="c-detail__summary__title">
@@ -190,7 +191,7 @@ const OrderDetailDesktop = (props: any): any => {
                       {isFetching ? (
                         <Skeleton height={18} width={72} />
                       ) : (
-                        `${props.t('common:quantity')}: ${lineItems.length}`
+                        `${t('common:quantity')}: ${lineItems.length}`
                       )}
                     </div>
                   </div>
@@ -210,7 +211,7 @@ const OrderDetailDesktop = (props: any): any => {
                 {shippingLine && (
                   <div className="flex items-baseline justify-between" style={{ marginTop: 16 }}>
                     <div>
-                      <div className="c-detail__summary__title">{props.t('shipping-cost')}</div>
+                      <div className="c-detail__summary__title">{t('shipping-cost')}</div>
                       <div className="c-detail__summary__label">{shippingName}</div>
                     </div>
                     <div className="c-detail__summary__total">
@@ -222,7 +223,7 @@ const OrderDetailDesktop = (props: any): any => {
                   discounts.map((discount) => (
                     <div key={discount.code} className="flex items-baseline justify-between" style={{ marginTop: 18 }}>
                       <div>
-                        <div className="c-detail__summary__title">{props.t('common:discount-code')}</div>
+                        <div className="c-detail__summary__title">{t('common:discount-code')}</div>
                         <div className="c-detail__summary__label">{discount.code}</div>
                       </div>
                       <div className="c-detail__summary__total">
@@ -257,7 +258,7 @@ const OrderDetailDesktop = (props: any): any => {
                           {isFetching ? (
                             <Skeleton height={24} width={120} />
                           ) : (
-                            `${props.t('awaiting-payment')} ${payment.type}`
+                            `${t('awaiting-payment')} ${payment.type}`
                           )}
                         </div>
                         {payment.instance ? (
@@ -277,13 +278,13 @@ const OrderDetailDesktop = (props: any): any => {
                               <Skeleton height={24} width={120} />
                             ) : (
                               <a href={payment.url} target="_blank" rel="noopener noreferrer">
-                                {props.t('continue-payment')}
+                                {t('continue-payment')}
                               </a>
                             )}
                           </div>
                         ) : (
                           <Fragment>
-                            {props.t('processing-payment')}
+                            {t('processing-payment')}
                             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                               <Button className="mt-3" variant="whatsapp" width="100%">
                                 WhatsApp
@@ -294,7 +295,7 @@ const OrderDetailDesktop = (props: any): any => {
                       </Fragment>
                     ) : (
                       <Fragment>
-                        <div>{props.t('payment-failure')}</div>
+                        <div>{t('payment-failure')}</div>
                         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                           <Button className="mt-3" variant="whatsapp" width="100%">
                             WhatsApp
@@ -466,4 +467,4 @@ const OrderDetailDesktop = (props: any): any => {
   );
 };
 
-export default withTranslation(['page-orders', 'form', 'common'])(OrderDetailDesktop);
+export default OrderDetailDesktop;

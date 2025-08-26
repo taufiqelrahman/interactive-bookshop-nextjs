@@ -1,10 +1,12 @@
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
 
 import Button from 'components/atoms/Button';
 import TranslationToggle from 'components/molecules/TranslationToggle';
-import { withTranslation, Link } from 'i18n';
 
 const SideNav = (props: any) => {
+  const { t } = useTranslation('common');
   const signOut = () => {
     props.thunkLogout();
     props.hide();
@@ -26,7 +28,7 @@ const SideNav = (props: any) => {
             </button>
             {props.users.isLoggedIn ? (
               <div className="c-side-nav__header__user">
-                <div className="c-side-nav__header__user--top">{props.t('signed-in-as')}</div>
+                <div className="c-side-nav__header__user--top">{t('signed-in-as')}</div>
                 <div>{props.users.user && props.users.user.email}</div>
               </div>
             ) : (
@@ -34,46 +36,46 @@ const SideNav = (props: any) => {
                 <Link href="/login">
                   <a>
                     <Button width="76px" variant="outline,rectangle">
-                      {props.t('login')}
+                      {t('login')}
                     </Button>
                   </a>
                 </Link>
-                <div className="c-side-nav__header__separator">{props.t('or')}</div>
+                <div className="c-side-nav__header__separator">{t('or')}</div>
                 <Link href="/register">
-                  <a className="c-side-nav__header__link">{props.t('register')}</a>
+                  <a className="c-side-nav__header__link">{t('register')}</a>
                 </Link>
               </div>
             )}
           </div>
           <div className="c-side-nav__menu">
             <Link href="/">
-              <a className="c-side-nav__menu__link">{props.t('home')}</a>
+              <a className="c-side-nav__menu__link">{t('home')}</a>
             </Link>
             <Link href="/cart">
-              <a className="c-side-nav__menu__link">{props.t('cart')}</a>
+              <a className="c-side-nav__menu__link">{t('cart')}</a>
             </Link>
             {props.users.isLoggedIn && (
               <Link href="/orders">
-                <a className="c-side-nav__menu__link">{props.t('my-orders')}</a>
+                <a className="c-side-nav__menu__link">{t('my-orders')}</a>
               </Link>
             )}
             {props.users.isLoggedIn && (
               <Link href="/account">
-                <a className="c-side-nav__menu__link">{props.t('account')}</a>
+                <a className="c-side-nav__menu__link">{t('account')}</a>
               </Link>
             )}
             <Link href="/help">
-              <a className="c-side-nav__menu__link">{props.t('help-title')}</a>
+              <a className="c-side-nav__menu__link">{t('help-title')}</a>
             </Link>
           </div>
         </div>
 
         <div className="c-side-nav__footer">
-          {props.t('site-language')}
+          {t('site-language')}
           <TranslationToggle white={true} style={{ marginTop: 6 }} />
           {props.users.isLoggedIn && (
             <div className="c-side-nav__footer__sign-out" onClick={signOut}>
-              {props.t('sign-out')}
+              {t('sign-out')}
             </div>
           )}
         </div>
@@ -143,4 +145,4 @@ const SideNav = (props: any) => {
   );
 };
 
-export default withTranslation('common')(SideNav);
+export default SideNav;

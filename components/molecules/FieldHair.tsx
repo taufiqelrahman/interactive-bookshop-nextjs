@@ -1,21 +1,22 @@
+import { useTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
-import { withTranslation } from 'i18n';
 
 const FieldHair = (props: any) => {
+  const { t } = useTranslation('form');
   const toddlerBoyHair = [
-    { name: 'short', image: 'short-toddler-boy' },
-    { name: 'curly', image: 'curly' },
+    { name: t('hair-short'), image: 'short-toddler-boy' },
+    { name: t('hair-curly'), image: 'curly' },
   ];
   const kidBoyHair = [
-    { name: 'short', image: 'short-kid-boy' },
-    { name: 'curly', image: 'curly' },
+    { name: t('hair-short'), image: 'short-kid-boy' },
+    { name: t('hair-curly'), image: 'curly' },
   ];
   const girlHair = [
-    { name: 'short', image: 'short-girl' },
-    { name: 'hijab', image: 'hijab' },
+    { name: t('hair-short'), image: 'short-girl' },
+    { name: t('hair-hijab'), image: 'hijab' },
   ];
   const hair = props.type === 'boy' ? (props.age === 'kid' ? kidBoyHair : toddlerBoyHair) : girlHair;
   useEffect(() => {
@@ -27,7 +28,7 @@ const FieldHair = (props: any) => {
     <div style={props.style}>
       <div className="c-field-hair">
         <div className="c-field-hair__header">
-          {props.t('hair-label')}
+          {t('hair-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-hair__options">
@@ -72,4 +73,4 @@ const FieldHair = (props: any) => {
 };
 FieldHair.displayName = 'FieldHair';
 
-export default withTranslation('form', { withRef: true })<any>(FieldHair);
+export default FieldHair;

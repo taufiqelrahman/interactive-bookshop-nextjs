@@ -1,6 +1,8 @@
 import debouncePromise from 'awesome-debounce-promise';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import React, { useState, useEffect, Fragment, ElementType } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -8,7 +10,6 @@ import { toast } from 'react-toastify';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link } from 'i18n';
 import api from 'services/api';
 import actions from 'store/actions';
 // import Footer from 'components/organisms/Footer';
@@ -43,6 +44,7 @@ enum RegisterStep {
 }
 
 const Register: React.FC<RegisterProps> = (props) => {
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const methods = useForm<RegisterFormData>({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
@@ -51,30 +53,30 @@ const Register: React.FC<RegisterProps> = (props) => {
   const registerEmail = () => setRegisterStep(RegisterStep.EMAIL);
   const schema = {
     email: {
-      required: { value: true, message: `Email ${props.t('form:required-error')}` },
-      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: props.t('form:email-invalid') },
+      required: { value: true, message: `Email ${t('form:required-error')}` },
+      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i, message: t('form:email-invalid') },
       validate: debouncePromise(async (value: string) => {
         const { data } = await api().users.checkEmail({ email: value });
-        return !data.exists || props.t('form:email-exists');
+        return !data.exists || t('form:email-exists');
       }, 500),
     },
     name: {
-      required: { value: true, message: `${props.t('form:name-label')} ${props.t('form:required-error')}` },
+      required: { value: true, message: `${t('form:name-label')} ${t('form:required-error')}` },
       maxLength: 255,
     },
-    phone: { required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` } },
+    phone: { required: { value: true, message: `${t('form:phone-label')} ${t('form:required-error')}` } },
     password: {
-      required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      minLength: { value: 6, message: props.t('form:minlength-6-error') },
+      required: { value: true, message: `${t('form:password-label')} ${t('form:required-error')}` },
+      minLength: { value: 6, message: t('form:minlength-6-error') },
     },
     confirmPassword: {
-      required: { value: true, message: `${props.t('form:password-label')} ${props.t('form:required-error')}` },
-      validate: (value: string) => value === watch('password') || props.t('form:password-different'),
+      required: { value: true, message: `${t('form:password-label')} ${t('form:required-error')}` },
+      validate: (value: string) => value === watch('password') || t('form:password-different'),
     },
   };
   useEffect(() => {
     if (!formState.isValid) {
-      toast.error(props.t('form:form-error'));
+      toast.error(t('form:form-error'));
     }
   }, [errors]);
   const onSubmit = async (data: RegisterFormData) => {
@@ -118,13 +120,13 @@ const Register: React.FC<RegisterProps> = (props) => {
             onBack={onBack}
             setSideNav={props.setSideNav}
             menuAction={registerStep === RegisterStep.WELCOME}
-            title={props.t('register')}
+            title={t('register')}
           />
         )
       }
     >
       <Head>
-        <title>When I Grow Up | {props.t('register')}</title>
+        <title>When I Grow Up | {t('register')}</title>
       </Head>
       <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-register">
@@ -133,7 +135,7 @@ const Register: React.FC<RegisterProps> = (props) => {
               {registerStep === RegisterStep.WELCOME ? (
                 <Fragment>
                   <img alt="welcome" className="c-register__image" src="/static/images/register-illus.png" />
-                  <h1 className="c-register__title">{props.t('lets-join')}</h1>
+                  <h1 className="c-register__title">{t('lets-join')}</h1>
                   <Button
                     onClick={registerEmail}
                     variant="outline"
@@ -141,13 +143,13 @@ const Register: React.FC<RegisterProps> = (props) => {
                     color="black"
                     style={{ margin: '30px 0' }}
                   >
-                    {`${props.t('register-with')} Email`}
+                    {`${t('register-with')} Email`}
                   </Button>
                   <Divider />
                   <Link href="/login">
                     <a className="c-register__link">
-                      <span>{props.t('have-account')}</span>
-                      {' ' + props.t('login')}
+                      <span>{t('have-account')}</span>
+                      {' ' + t('login')}
                     </a>
                   </Link>
                 </Fragment>
@@ -160,24 +162,24 @@ const Register: React.FC<RegisterProps> = (props) => {
                   {registerStep === RegisterStep.EMAIL && (
                     <Fragment>
                       <div>
-                        <h1 className="c-register__title">{`${props.t('register-with')} Email`}</h1>
+                        <h1 className="c-register__title">{`${t('register-with')} Email`}</h1>
                         <FormTextField
-                          label={props.t('form:email-label')}
+                          label={t('form:email-label')}
                           name="email"
                           placeholder="example@yourdomain.com"
                           schema={schema.email}
                           register={register}
                           errors={errors.email}
                           variant="full-width"
-                          hint={props.t('form:email-hint')}
+                          hint={t('form:email-hint')}
                         />
                       </div>
                       <div>
                         <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('form:continue-button')}
+                          {t('form:continue-button')}
                         </Button>
                         <div onClick={onBack} className="c-register__link">
-                          {props.t('go-back')}
+                          {t('go-back')}
                         </div>
                       </div>
                     </Fragment>
@@ -186,22 +188,22 @@ const Register: React.FC<RegisterProps> = (props) => {
                     <Fragment>
                       <div>
                         <h1 className="c-register__title" style={{ marginBottom: 8 }}>
-                          {`${props.t('register-with')} Email`}
+                          {`${t('register-with')} Email`}
                         </h1>
                         <div className="c-register__saved-email">{savedEmail}</div>
                         <FormTextField
-                          label={props.t('form:name-label')}
+                          label={t('form:name-label')}
                           name="name"
-                          placeholder={props.t('form:name-placeholder')}
+                          placeholder={t('form:name-placeholder')}
                           schema={schema.name}
                           register={register}
                           errors={errors.name}
                           variant="full-width"
                         />
                         <FormTextField
-                          label={props.t('form:phone-label')}
+                          label={t('form:phone-label')}
                           name="phone"
-                          placeholder={props.t('form:phone-placeholder')}
+                          placeholder={t('form:phone-placeholder')}
                           schema={schema.phone}
                           register={register}
                           errors={errors.phone}
@@ -209,9 +211,9 @@ const Register: React.FC<RegisterProps> = (props) => {
                           formStyle={{ marginTop: 24 }}
                         />
                         <FormTextField
-                          label={props.t('form:password-label')}
+                          label={t('form:password-label')}
                           name="password"
-                          placeholder={props.t('form:new-password-placeholder')}
+                          placeholder={t('form:new-password-placeholder')}
                           schema={schema.password}
                           register={register}
                           errors={errors.password}
@@ -220,9 +222,9 @@ const Register: React.FC<RegisterProps> = (props) => {
                           formStyle={{ marginTop: 24 }}
                         />
                         <FormTextField
-                          label={props.t('form:confirm-password-label')}
+                          label={t('form:confirm-password-label')}
                           name="password_confirmation"
-                          placeholder={props.t('form:confirm-password-placeholder')}
+                          placeholder={t('form:confirm-password-placeholder')}
                           schema={schema.confirmPassword}
                           register={register}
                           errors={errors.confirmPassword}
@@ -233,10 +235,10 @@ const Register: React.FC<RegisterProps> = (props) => {
                       </div>
                       <div>
                         <Button type="submit" width="100%" style={{ margin: '18px 0' }}>
-                          {props.t('form:create-account-button')}
+                          {t('form:create-account-button')}
                         </Button>
                         <div onClick={onBack} className="c-register__link">
-                          {props.t('go-back')}
+                          {t('go-back')}
                         </div>
                       </div>
                     </Fragment>
@@ -314,4 +316,4 @@ const Register: React.FC<RegisterProps> = (props) => {
   );
 };
 
-export default withTranslation(['common', 'form'])(Register);
+export default Register;

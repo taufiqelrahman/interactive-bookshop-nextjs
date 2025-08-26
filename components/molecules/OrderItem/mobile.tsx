@@ -1,15 +1,16 @@
+import { useTranslation } from 'next-i18next';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
 
 import Card from 'components/atoms/Card';
 import Divider from 'components/atoms/Divider';
-import { withTranslation } from 'i18n';
 import { mapKeyValue } from 'lib/format-array';
 import { date } from 'lib/format-date';
 
 import { previewImg } from './helper';
 
 const OrderItem = (props: any) => {
+  const { t } = useTranslation('page-orders');
   const lineItems = props.line_items.map((item) => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
@@ -37,7 +38,7 @@ const OrderItem = (props: any) => {
                   )}
                 </div>
                 <div className="c-order-item__detail__books">
-                  {props.isSkeleton ? <Skeleton height={19} width={70} /> : `${lineItems.length} ${props.t('books')}`}
+                  {props.isSkeleton ? <Skeleton height={19} width={70} /> : `${lineItems.length} ${t('books')}`}
                 </div>
               </div>
               {props.isSkeleton ? (
@@ -107,4 +108,4 @@ const OrderItem = (props: any) => {
   );
 };
 
-export default withTranslation('page-orders')(OrderItem);
+export default OrderItem;

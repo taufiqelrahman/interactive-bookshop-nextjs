@@ -4,8 +4,7 @@ import { toast } from 'react-toastify';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { Router, i18n } from 'i18n';
-import { encryptTokenClient } from 'lib/crypto';
+// import { encryptTokenClient } from 'lib/crypto';
 import api from 'services/api';
 import graphql from 'services/graphql';
 
@@ -62,7 +61,7 @@ export const thunkUpdateUser =
       .users.updateMe(data)
       .then(({ data }) => {
         dispatch(updateUser(false, data.user));
-        const isEnglish = i18n.language === 'en';
+        const isEnglish = true; // @todo should get locale from request
         let message = isEnglish ? 'Saved successfully' : 'Berhasil menyimpan';
         if (data.updated === 'email') {
           message = isEnglish
@@ -76,8 +75,9 @@ export const thunkUpdateUser =
         let message = '';
         if (err.response.data) {
           if (err.response.data.error === 'DIFFERENT_PHONE') {
-            message =
-              i18n.language === 'en' ? `Your old phone number did not match` : `Nomor telepon anda tidak sesuai`;
+            // eslint-disable-next-line no-constant-condition
+            message = true ? `Your old phone number did not match` : `Nomor telepon anda tidak sesuai`;
+            // @todo should get locale from request
           }
         } else {
           message = err.message;
@@ -115,11 +115,12 @@ export const thunkLogin =
     return api()
       .users.login(userData)
       .then(({ data }) => {
-        const token = encryptTokenClient(data.token);
-        Cookies.set('user', token, { domain: process.env.DOMAIN });
+        // const token = encryptTokenClient(data.token);
+        Cookies.set('user', data.token, { domain: process.env.DOMAIN });
         dispatch(setExpired(false));
         dispatch(login(false, data));
-        Router.push(`/${userData.from || ''}`);
+        // @todo should router.push() outside this function afterwards
+        // Router.push(`/${userData.from || ''}`);
       })
       .catch((err) => {
         dispatch(login(false));
@@ -131,7 +132,8 @@ export const thunkLogin =
 function redirectSocialLogin() {
   const fromQuery = localStorage.getItem('from');
   if (fromQuery) localStorage.removeItem('from');
-  Router.push(`/${fromQuery || ''}`);
+  // @todo should router.push() outside this function afterwards
+  // Router.push(`/${fromQuery || ''}`);
 }
 
 function loginFacebook(isFetching, state = null): types.UsersActionTypes {
@@ -148,8 +150,8 @@ export const thunkLoginFacebook =
     return api()
       .users.loginFacebook(data)
       .then(({ data }) => {
-        const token = encryptTokenClient(data.token);
-        Cookies.set('user', token, { domain: process.env.DOMAIN });
+        // const token = encryptTokenClient(data.token);
+        Cookies.set('user', data.token, { domain: process.env.DOMAIN });
         dispatch(setExpired(false));
         dispatch(loginFacebook(false, data));
         redirectSocialLogin();
@@ -157,7 +159,8 @@ export const thunkLoginFacebook =
       .catch((err) => {
         dispatch(loginFacebook(false));
         dispatch(setErrorMessage(err.message));
-        Router.push('/login');
+        // @todo should router.push() outside this function afterwards
+        // Router.push('/login');
         captureException(err);
       });
   };
@@ -176,8 +179,8 @@ export const thunkLoginGoogle =
     return api()
       .users.loginGoogle(data)
       .then(({ data }) => {
-        const token = encryptTokenClient(data.token);
-        Cookies.set('user', token, { domain: process.env.DOMAIN });
+        // const token = encryptTokenClient(data.token);
+        Cookies.set('user', data.token, { domain: process.env.DOMAIN });
         dispatch(setExpired(false));
         dispatch(loginGoogle(false, data));
         redirectSocialLogin();
@@ -185,7 +188,8 @@ export const thunkLoginGoogle =
       .catch((err) => {
         dispatch(loginGoogle(false));
         dispatch(setErrorMessage(err.message));
-        Router.push('/login');
+        // @todo should router.push() outside this function afterwards
+        // Router.push('/login');
         captureException(err);
       });
   };
@@ -207,7 +211,8 @@ export const thunkLogout =
         Cookies.remove('user', { domain: process.env.DOMAIN });
         dispatch(logout(false, data));
         dispatch(loadCart(false, null));
-        Router.push('/');
+        // @todo should router.push() outside this function afterwards
+        // Router.push('/');
       })
       .catch((err) => {
         dispatch(logout(false));
@@ -233,7 +238,8 @@ export const thunkRegister =
       })
       .then(() => {
         dispatch(register(false));
-        Router.push('/');
+        // @todo should router.push() outside this function afterwards
+        // Router.push('/');
       })
       .catch((err) => {
         dispatch(register(false));
@@ -278,7 +284,8 @@ export const thunkResetPassword =
       .users.resetPassword(data)
       .then(() => {
         dispatch(resetPassword(false));
-        Router.push('/login');
+        // @todo should router.push() outside this function afterwards
+        // Router.push('/login');
       })
       .catch((err) => {
         dispatch(resetPassword(false));
@@ -303,7 +310,9 @@ export const thunkSendOtp =
         dispatch(sendOtp(false));
         const { user } = (getState() as any).users;
         const message =
-          i18n.language === 'en'
+          // i18n.language === 'en'
+          // eslint-disable-next-line no-constant-condition
+          true // @todo should get locale from request
             ? `A verification code has been sent to ${user.phone}`
             : `Kode verifikasi telah dikirim ke ${user.phone}`;
         toast.success(message);

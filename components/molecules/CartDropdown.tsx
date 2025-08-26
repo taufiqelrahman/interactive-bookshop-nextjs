@@ -1,9 +1,11 @@
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import NumberFormat from 'react-number-format';
 
 import { previewImg } from 'components/molecules/CartItem/helper';
-import { withTranslation, Link } from 'i18n';
 
 const CartDropdown = (props: any) => {
+  const { t } = useTranslation('common');
   const cartNotEmpty = !!props.items && props.items.length > 0;
   return (
     <div onClick={(e) => e.stopPropagation()}>
@@ -13,7 +15,7 @@ const CartDropdown = (props: any) => {
             <div className="c-cart-dropdown__header">
               <div className="c-cart-dropdown__quantity">{props.items.length} item(s)</div>
               <Link href="/cart">
-                <a>{props.t('cart-link')}</a>
+                <a>{t('cart-link')}</a>
               </Link>
             </div>
             <div className="c-cart-dropdown__content">
@@ -30,10 +32,10 @@ const CartDropdown = (props: any) => {
                       />
                       <div>
                         <div className="c-cart-dropdown__item__name">
-                          {props.t('for')} {item.customAttributes.Name}
+                          {t('for')} {item.customAttributes.Name}
                         </div>
                         <div className="c-cart-dropdown__item__quantity">
-                          {item.quantity} {props.t('page-orders:books')}
+                          {item.quantity} {t('page-orders:books')}
                         </div>
                       </div>
                     </div>
@@ -51,7 +53,7 @@ const CartDropdown = (props: any) => {
             </div>
           </div>
         ) : (
-          props.t('cart-empty')
+          t('cart-empty')
         )}
       </div>
       <style jsx>{`
@@ -115,4 +117,4 @@ const CartDropdown = (props: any) => {
   );
 };
 
-export default withTranslation(['common', 'page-orders'])(CartDropdown);
+export default CartDropdown;

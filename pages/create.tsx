@@ -1,20 +1,23 @@
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 
 import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
-import { withTranslation } from 'i18n';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
 
-const Create = (props: any): any => (
-  <div>
-    <Head>
-      <title>When I Grow Up | {props.t('character-customization')}</title>
-    </Head>
-    {props.isMobile ? <CharCustomMobile {...props} /> : <CharCustom {...props} />}
-  </div>
-);
+const Create = (props: any): any => {
+  const { t } = useTranslation('common');
+  return (
+    <div>
+      <Head>
+        <title>When I Grow Up | {t('character-customization')}</title>
+      </Head>
+      {props.isMobile ? <CharCustomMobile {...props} /> : <CharCustom {...props} />}
+    </div>
+  );
+};
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   try {
@@ -26,10 +29,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   }
 
   return {
-    props: {
-      namespacesRequired: ['common'],
-    },
+    props: {},
   };
 });
 
-export default withTranslation('common')(Create);
+export default Create;

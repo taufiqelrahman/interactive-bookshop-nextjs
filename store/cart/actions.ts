@@ -2,7 +2,6 @@ import { captureException } from '@sentry/browser';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { Router } from 'i18n';
 import { mapKeyValue } from 'lib/format-array';
 import api from 'services/api';
 import graphql from 'services/graphql';
@@ -249,7 +248,8 @@ export const thunkAddToCart =
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
         dispatch(addToCart(false, { ...cart, lineItems }));
-        Router.replace('/cart');
+        // @todo should router.push() outside this function afterwards
+        // Router.replace('/cart');
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {
@@ -283,7 +283,8 @@ export const thunkUpdateCart =
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
         dispatch(updateCart(false, { ...cart, lineItems }));
-        if (Router.pathname !== '/cart') Router.replace('/cart');
+        // @todo should router.push() outside this function afterwards
+        // if (Router.pathname !== '/cart') Router.replace('/cart');
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {

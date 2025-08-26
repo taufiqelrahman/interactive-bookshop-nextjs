@@ -1,4 +1,6 @@
 import debounce from 'lodash.debounce';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
@@ -7,11 +9,12 @@ import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
 import Divider from 'components/atoms/Divider';
 import Sheet from 'components/atoms/Sheet';
-import { withTranslation, Router } from 'i18n';
 
 import { previewImg, updateQuantity } from './helper';
 
 const CartItemMobile = (props: any) => {
+  const { t } = useTranslation('common');
+  const router = useRouter();
   const [quantity, setQuantity] = useState(props.quantity);
   const [showSheet, setShowSheet] = useState(false);
   const onDecrease = () => {
@@ -41,7 +44,7 @@ const CartItemMobile = (props: any) => {
       quantity: props.quantity,
       ...props.customAttributes,
     });
-    Router.push('/create?edit=true');
+    router.push('/create?edit=true');
   };
   const deleteItem = () => {
     setShowSheet(false);
@@ -145,17 +148,17 @@ const CartItemMobile = (props: any) => {
         closeSheet={() => setShowSheet(false)}
         content={
           <Fragment>
-            <h1 className="c-cart-item__sheet__title">{props.t('form:delete-item')}</h1>
-            <div className="c-cart-item__sheet__content">{props.t('form:delete-confirmation')}</div>
+            <h1 className="c-cart-item__sheet__title">{t('form:delete-item')}</h1>
+            <div className="c-cart-item__sheet__content">{t('form:delete-confirmation')}</div>
           </Fragment>
         }
         actions={
           <Fragment>
             <Button width="100%" onClick={deleteItem} style={{ marginBottom: 12 }}>
-              {props.t('form:continue-button')}
+              {t('form:continue-button')}
             </Button>
             <Button width="100%" onClick={() => setShowSheet(false)} variant="outline" color="black">
-              {props.t('form:cancel-button')}
+              {t('form:cancel-button')}
             </Button>
           </Fragment>
         }
@@ -259,4 +262,4 @@ const CartItemMobile = (props: any) => {
   );
 };
 
-export default withTranslation(['common', 'form'])(CartItemMobile);
+export default CartItemMobile;

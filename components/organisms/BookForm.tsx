@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -7,10 +9,11 @@ import Card from 'components/atoms/Card';
 import FieldGender from 'components/molecules/FieldGender';
 import FormTextField from 'components/molecules/FormTextField';
 // import FieldAge from 'components/molecules/FieldAge';
-import { withTranslation, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 
 const BookForm = (props: any) => {
+  const { t } = useTranslation('form');
+  const router = useRouter();
   const [isFormValid, setIsFormValid] = useState(false);
   // const stepEnum = { OCCUPATIONS: 0, DETAIL: 1 };
   // const [state, setState] = useState({
@@ -21,16 +24,16 @@ const BookForm = (props: any) => {
   const { register, handleSubmit, errors, formState, watch } = methods;
   const schema = {
     // occupations: {
-    //   required: { value: true, message: props.t('occupations-invalid') },
-    //   validate: value => value.length === 3 || props.t('occupations-invalid'),
+    //   required: { value: true, message: t('occupations-invalid') },
+    //   validate: value => value.length === 3 || t('occupations-invalid'),
     // },
     name: {
-      required: { value: true, message: `${props.t('nickname-label')} ${props.t('required-error')}` },
-      maxLength: { value: 10, message: `${props.t('nickname-label')} ${props.t('less-than-error')} 10` },
-      validate: (value) => !value.includes(' ') || `${props.t('nickname-label')} ${props.t('space-error')}`,
+      required: { value: true, message: `${t('nickname-label')} ${t('required-error')}` },
+      maxLength: { value: 10, message: `${t('nickname-label')} ${t('less-than-error')} 10` },
+      validate: (value) => !value.includes(' ') || `${t('nickname-label')} ${t('space-error')}`,
     },
     // age: { required: true },
-    gender: { required: { value: true, message: `${props.t('gender-label')} ${props.t('required-error')}` } },
+    gender: { required: { value: true, message: `${t('gender-label')} ${t('required-error')}` } },
   };
 
   useEffect(() => {
@@ -43,7 +46,7 @@ const BookForm = (props: any) => {
   // }, [state.step]);
   useEffect(() => {
     // register({ name: 'Occupations' }, schema.occupations);
-    Router.prefetch('/create');
+    router.prefetch('/create');
   }, []);
 
   // const next = async () => {
@@ -66,7 +69,7 @@ const BookForm = (props: any) => {
       label: '/',
     });
     props.saveSelected(data);
-    Router.push('/create');
+    router.push('/create');
   };
 
   return (
@@ -88,7 +91,7 @@ const BookForm = (props: any) => {
                       formState={formState}
                     />
                     <Button type="submit" width="100%" disabled={!isFormValid}>
-                      {props.t('next-button')}
+                      {t('next-button')}
                     </Button>
                   </div>
                 )} */}
@@ -96,9 +99,9 @@ const BookForm = (props: any) => {
                 <div key={2} className="c-book-form__container c-book-form__container__mobile">
                   <div>
                     <FormTextField
-                      label={props.t('nickname-label')}
+                      label={t('nickname-label')}
                       name="Name"
-                      placeholder={props.t('name-placeholder')}
+                      placeholder={t('name-placeholder')}
                       schema={schema.name}
                       register={register}
                       errors={errors.Name}
@@ -108,7 +111,7 @@ const BookForm = (props: any) => {
                     {/* <FieldAge schema={schema.age} errors={errors.Age} register={register} /> */}
                   </div>
                   <Button type="submit" width="100%" disabled={!isFormValid}>
-                    {props.t('continue-button')}
+                    {t('continue-button')}
                   </Button>
                 </div>
                 {/* )} */}
@@ -129,9 +132,9 @@ const BookForm = (props: any) => {
                 <div className="c-book-form__second-row">
                   <div className="c-book-form__second-row__inputs">
                     <FormTextField
-                      label={props.t('nickname-label')}
+                      label={t('nickname-label')}
                       name="Name"
-                      placeholder={props.t('name-placeholder')}
+                      placeholder={t('name-placeholder')}
                       schema={schema.name}
                       register={register}
                       errors={errors.Name}
@@ -149,7 +152,7 @@ const BookForm = (props: any) => {
                   </div>
                   <div className="c-book-form__second-row__button">
                     <Button width="100%" type="submit" disabled={!isFormValid} style={{ marginTop: 24 }}>
-                      {props.t('continue-button')}
+                      {t('continue-button')}
                     </Button>
                   </div>
                 </div>
@@ -219,4 +222,4 @@ const BookForm = (props: any) => {
   );
 };
 
-export default withTranslation('form')(BookForm);
+export default BookForm;

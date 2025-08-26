@@ -1,17 +1,21 @@
 import DOMPurify from 'dompurify';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LazyLoad from 'react-lazyload';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link } from 'i18n';
+import { wrapper } from 'store';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Help = ({ isMobile, t, setSideNav }) => {
+const Help = ({ isMobile, setSideNav }) => {
+  const { t } = useTranslation('common');
   const names = [
     'Jasper Moon',
     'Lila Fern',
@@ -84,7 +88,7 @@ const Help = ({ isMobile, t, setSideNav }) => {
               <LazyLoad>
                 <img
                   className="c-about-us__powered__image"
-                  src="/static/images/tjetak.png"
+                  src="https://picsum.photos/100/20"
                   alt="tjetak"
                   width="100"
                   height="20"
@@ -94,7 +98,7 @@ const Help = ({ isMobile, t, setSideNav }) => {
           </div>
         </div>
       </div>
-      {isMobile && <Footer isMobile={isMobile} />}
+      {isMobile && <Footer />}
       <style jsx>{`
         .c-about-us {
           &__title {
@@ -176,4 +180,12 @@ const Help = ({ isMobile, t, setSideNav }) => {
   );
 };
 
-export default withTranslation('common')(Help);
+export const getServerSideProps = wrapper.getServerSideProps(() => async (ctx) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ['common'])),
+    },
+  };
+});
+
+export default Help;

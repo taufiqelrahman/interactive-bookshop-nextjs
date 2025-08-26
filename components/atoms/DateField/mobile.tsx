@@ -1,12 +1,13 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState, useEffect, Fragment } from 'react';
 
 import Button from 'components/atoms/Button';
 import Sheet from 'components/atoms/Sheet';
-import { withTranslation } from 'i18n';
 
 import DatePicker from '../DatePicker';
 
 const DateField = (props: any) => {
+  const { t } = useTranslation('form');
   const [picker, setPicker] = useState(null);
   const [state, setState] = useState({
     date: null,
@@ -78,7 +79,7 @@ const DateField = (props: any) => {
           isOpen={sheetData.show}
           closeSheet={() => setSheetData({ ...sheetData, show: false })}
           header={true}
-          title={props.t(`select-date`)}
+          title={t(`select-date`)}
           variant="rounded"
           content={
             <Fragment>
@@ -88,7 +89,7 @@ const DateField = (props: any) => {
           actions={
             <Fragment>
               <Button width="100%" onClick={(event: any) => onSelect(event)}>
-                {props.t('select-button')}
+                {t('select-button')}
               </Button>
             </Fragment>
           }
@@ -127,4 +128,4 @@ const DateField = (props: any) => {
 };
 DateField.displayName = 'DateFieldMobile';
 
-export default withTranslation('form')(DateField);
+export default DateField;

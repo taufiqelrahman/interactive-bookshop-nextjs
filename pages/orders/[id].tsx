@@ -40,9 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   }
 
   return {
-    props: {
-      namespacesRequired: ['page-orders'],
-    },
+    props: {},
   };
 });
 

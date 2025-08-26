@@ -1,11 +1,11 @@
 import detectIt from 'detect-it';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { withTranslation, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
@@ -29,6 +29,7 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 
 const CharacterCustomization = (props: any) => {
+  const { t } = useTranslation('form');
   const cart = useSelector((state: any) => state.cart);
   const master = useSelector((state: any) => state.master);
   const router = useRouter();
@@ -37,7 +38,7 @@ const CharacterCustomization = (props: any) => {
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
   useEffect(() => {
     if (!formState.isValid) {
-      showError(props.t('form-error'));
+      showError(t('form-error'));
     }
   }, [errors]);
   const isDev = process.env.NODE_ENV === 'development';
@@ -67,7 +68,7 @@ const CharacterCustomization = (props: any) => {
     }
     const jobIds = getJobIds(data.Occupations, occupations);
     props.saveSelected({ ...selected, ...data, jobIds });
-    Router.push('/preview');
+    router.push('/preview');
   };
 
   const ref = useRef<HTMLInputElement>(null);
@@ -81,9 +82,9 @@ const CharacterCustomization = (props: any) => {
   };
   useEffect(() => {
     // setTimeout(() => {
-    //   register({ name: 'Date of Birth' }, schema(props).dob);
-    Router.prefetch('/preview');
-    register({ name: 'Occupations' }, schema(props).occupations);
+    //   register({ name: 'Date of Birth' }, schema(t).dob);
+    router.prefetch('/preview');
+    register({ name: 'Occupations' }, schema(t).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
     window.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
@@ -100,34 +101,29 @@ const CharacterCustomization = (props: any) => {
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page--large">
-        <Stepper
-          step={1}
-          totalSteps={2}
-          title={props.t('common:character-customization')}
-          style={{ marginBottom: 30 }}
-        />
+        <Stepper step={1} totalSteps={2} title={t('common:character-customization')} style={{ marginBottom: 30 }} />
         <div className="c-char-custom">
           <div className="c-char-custom__left">
             <Card variant="border">
               <form className="c-char-custom__left__container" onSubmit={handleSubmit(onSubmit)}>
                 <FormTextField
-                  label={props.t('nickname-label')}
+                  label={t('nickname-label')}
                   name="Name"
-                  placeholder={props.t('name-placeholder')}
-                  schema={schema(props).name}
+                  placeholder={t('name-placeholder')}
+                  schema={schema(t).name}
                   register={register}
                   errors={errors.Name}
                   defaultValue={selected.Name}
                 />
                 <FieldGender
-                  schema={schema(props).gender}
+                  schema={schema(t).gender}
                   register={register}
                   errors={errors.Gender}
                   style={{ marginTop: 24 }}
                   defaultChecked={selected.Gender}
                 />
                 <FieldAge
-                  schema={schema(props).age}
+                  schema={schema(t).age}
                   register={register}
                   errors={errors.Age}
                   fieldStyle={{ marginTop: 24 }}
@@ -143,7 +139,7 @@ const CharacterCustomization = (props: any) => {
                 /> */}
                 {!!watch('Gender') && (
                   <FieldHair
-                    schema={schema(props).hair}
+                    schema={schema(t).hair}
                     register={register}
                     unregister={unregister}
                     errors={errors.Hair}
@@ -154,7 +150,7 @@ const CharacterCustomization = (props: any) => {
                   />
                 )}
                 <FieldSkin
-                  schema={schema(props).skin}
+                  schema={schema(t).skin}
                   register={register}
                   errors={errors.Skin}
                   style={{ marginTop: 24, marginBottom: 24 }}
@@ -174,18 +170,18 @@ const CharacterCustomization = (props: any) => {
                 />
                 <Divider />
                 <FieldLanguage
-                  schema={schema(props).language}
+                  schema={schema(t).language}
                   register={register}
                   errors={errors.Language}
                   style={{ marginTop: 24 }}
                   defaultChecked={selected.Language}
                 />
                 <FormTextArea
-                  label={props.t('dedication-label')}
-                  hint={props.t('dedication-hint')}
+                  label={t('dedication-label')}
+                  hint={t('dedication-hint')}
                   name="Dedication"
-                  placeholder={props.t('dedication-placeholder')}
-                  schema={schema(props).dedication}
+                  placeholder={t('dedication-placeholder')}
+                  schema={schema(t).dedication}
                   register={register}
                   errors={errors.Dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}
@@ -193,7 +189,7 @@ const CharacterCustomization = (props: any) => {
                 />
                 <Divider />
                 <Button type="submit" width="100%" style={{ marginTop: 24 }}>
-                  {props.t('save-button')}
+                  {t('save-button')}
                 </Button>
               </form>
             </Card>
@@ -269,4 +265,4 @@ const CharacterCustomization = (props: any) => {
   );
 };
 
-export default withTranslation(['form', 'common'])(CharacterCustomization);
+export default CharacterCustomization;

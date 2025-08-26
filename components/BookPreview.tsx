@@ -3,11 +3,11 @@ import debounce from 'lodash.debounce';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
 
 import initBook from 'assets/flipbook.js';
 import BookPage from 'components/atoms/BookPage';
-import { i18n } from 'i18n';
 import * as gtag from 'lib/gtag';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
@@ -15,6 +15,7 @@ import * as gtag from 'lib/gtag';
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
 const BookPreview = (props: any) => {
+  const { i18n } = useTranslation();
   const [, setBook] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [bookClicked, setBookClicked] = useState(false);

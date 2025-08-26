@@ -1,25 +1,26 @@
 /* eslint-disable no-irregular-whitespace */
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation } from 'i18n';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Terms = (props: any): any => {
+  const { t } = useTranslation('common');
   return (
     <DefaultLayout
       {...props}
-      navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('terms')} />}
+      navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('terms')} />}
     >
       <Head>
-        <title>When I Grow Up | {props.t('terms')}</title>
+        <title>When I Grow Up | {t('terms')}</title>
       </Head>
       <div className={`u-container__page ${props.isMobile ? 'pt-0' : 'u-container pb-0'}`}>
-        {!props.isMobile && <Stepper title={props.t('terms')} />}
+        {!props.isMobile && <Stepper title={t('terms')} />}
         <div className="c-terms">
           <div className="c-terms__paragraph">
             Fusce cursus mi et magna sodales lacinia. Pellentesque accumsan commodo pellentesque. Suspendisse et mi
@@ -46,7 +47,7 @@ const Terms = (props: any): any => {
           </div>
         </div>
       </div>
-      {props.isMobile && <Footer isMobile={props.isMobile} />}
+      {props.isMobile && <Footer />}
       <style jsx>{`
         .c-terms {
           @apply mb-5 p-6;
@@ -84,4 +85,4 @@ const Terms = (props: any): any => {
   );
 };
 
-export default withTranslation('common')(Terms);
+export default Terms;

@@ -6,7 +6,7 @@ import Products from './products';
 import Users from './users';
 import Master from './master';
 import Message from './message';
-import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
+// import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
 
 export interface AdapterObject {
   default: AxiosInstance;
@@ -28,12 +28,12 @@ const createSecureAdapter = (req?): AxiosAdapter => {
   if (req) {
     // if server-side
     const userCookie = (req as any).headers.cookie.split(';').filter((cookie) => cookie.includes('user='));
-    const cryptedToken = userCookie[0] && userCookie[0].split('=')[1];
-    token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
+    token = userCookie[0] && userCookie[0].split('=')[1];
+    // token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
   } else {
     // if client-side
-    const cryptedToken = Cookies.get('user');
-    token = !!cryptedToken ? decryptTokenClient(cryptedToken) : '';
+    token = Cookies.get('user');
+    // token = !!cryptedToken ? decryptTokenClient(cryptedToken) : '';
   }
   const secureOptions = {
     ...options,

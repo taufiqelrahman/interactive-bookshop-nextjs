@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 
 import Toggle from 'components/atoms/Toggle';
-import { i18n } from 'i18n';
 import * as gtag from 'lib/gtag';
 
 const TranslationToggle = (props: any) => {
   const router = useRouter();
+  const { i18n } = useTranslation();
   const isIndexPage = router.pathname === '/';
   const [isEnglish, setEnglish] = useState(true);
 

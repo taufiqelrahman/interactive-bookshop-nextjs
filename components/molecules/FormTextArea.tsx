@@ -2,7 +2,6 @@ import React from 'react';
 
 import Badge from 'components/atoms/Badge';
 import TextArea from 'components/atoms/TextArea';
-import { withTranslation } from 'i18n';
 
 const FormTextArea = (props: any) => (
   <div style={props.style}>
@@ -48,4 +47,4 @@ const FormTextArea = (props: any) => (
 );
 FormTextArea.displayName = 'FormTextArea';
 
-export default withTranslation('form', { withRef: true })<any>(FormTextArea);
+export default FormTextArea;

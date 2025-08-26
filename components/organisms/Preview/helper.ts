@@ -1,13 +1,11 @@
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
-import { Router } from 'i18n';
-
-export const schema = (props) => ({
+export const schema = (t) => ({
   cover: {
     required: {
       value: true,
-      message: `${props.t('cover-label')} ${props.t('form:required-error')}`,
+      message: `${t('cover-label')} ${t('form:required-error')}`,
     },
   },
 });
@@ -37,5 +35,6 @@ export const getFromCookies = () => {
 export const saveToCookies = (cart) => {
   // save pending trx
   Cookies.set('pendingTrx', JSON.stringify(cart));
-  Router.push('/login?from=preview');
+  // @todo should router.push() outside this function afterwards
+  // Router.push('/login?from=preview');
 };

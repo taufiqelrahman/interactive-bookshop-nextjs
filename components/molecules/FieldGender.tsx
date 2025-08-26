@@ -1,21 +1,22 @@
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
-import { withTranslation } from 'i18n';
 
 const FieldGender = (props: any) => {
+  const { t } = useTranslation('form');
   const genders = [
     // { name: 'boy', image: 'boy' },
     // { name: 'girl', image: 'girl' },
-    { name: props.t('gender-boy'), code: 'boy' },
-    { name: props.t('gender-girl'), code: 'girl' },
+    { name: t('gender-boy'), code: 'boy' },
+    { name: t('gender-girl'), code: 'girl' },
   ];
   return (
     <div style={props.style} className={props.className}>
       <div className="c-field-gender">
         <div className="c-field-gender__header">
-          {props.t('gender-label')}
+          {t('gender-label')}
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-gender__options">
@@ -61,4 +62,4 @@ const FieldGender = (props: any) => {
 };
 FieldGender.displayName = 'FieldGender';
 
-export default withTranslation('form', { withRef: true })<any>(FieldGender);
+export default FieldGender;

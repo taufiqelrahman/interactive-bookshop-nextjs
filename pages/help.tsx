@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -9,7 +10,6 @@ import { toast } from 'react-toastify';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import helpContents from 'config/helpContents';
-import { withTranslation } from 'i18n';
 import actions from 'store/actions';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -22,6 +22,7 @@ const Divider = dynamic(() => import('components/atoms/Divider'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Help = (props: any): any => {
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const defaultStore = useSelector((state: any) => state.default);
   const methods = useForm({ mode: 'onChange' });
@@ -30,15 +31,15 @@ const Help = (props: any): any => {
   const onSubmit = async (data) => {
     await dispatch(actions.thunkSendMessage(data));
     reset();
-    toast.success(props.t('form:copy-success-help'));
+    toast.success(t('form:copy-success-help'));
   };
   const schema = {
     email: {
-      required: { value: true, message: `Email ${props.t('form:required-error')}` },
-      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: props.t('form:email-invalid') },
+      required: { value: true, message: `Email ${t('form:required-error')}` },
+      pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, message: t('form:email-invalid') },
     },
     message: {
-      required: { value: true, message: `${props.t('form:message-label')} ${props.t('form:required-error')}` },
+      required: { value: true, message: `${t('form:message-label')} ${t('form:required-error')}` },
     },
   };
   // const Marker = (props: any) => <div>{props.text}</div>;
@@ -46,22 +47,20 @@ const Help = (props: any): any => {
   return (
     <DefaultLayout
       {...props}
-      navbar={
-        props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('help-title')} />
-      }
+      navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('help-title')} />}
     >
       <Head>
-        <title>When I Grow Up | {props.t('help-title')}</title>
+        <title>When I Grow Up | {t('help-title')}</title>
       </Head>
       <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
         {props.isMobile ? (
           <img className="c-help-section__image mb-2" src="/static/images/help.png" alt="help" />
         ) : (
-          <Stepper title={props.t('help-title')} />
+          <Stepper title={t('help-title')} />
         )}
         <div className="c-help-section">
           <div className="c-help-section__left">
-            {props.isMobile && <div className="c-help-section__title">{props.t('faq')}</div>}
+            {props.isMobile && <div className="c-help-section__title">{t('faq')}</div>}
             {helpContents &&
               helpContents.map((content) => (
                 <Accordion
@@ -75,7 +74,7 @@ const Help = (props: any): any => {
               ))}
             <Wrapper variant="border">
               <div className="c-help-section__contact-us">
-                <h2>{props.t('contact-us')}</h2>
+                <h2>{t('contact-us')}</h2>
                 <div className={props.isMobile ? '' : 'flex'}>
                   {/* <div className="c-help-section__map">
                     <GoogleMapReact
@@ -108,21 +107,21 @@ const Help = (props: any): any => {
                     margin: props.isMobile ? '18px 0 2px' : '30px 0 24px',
                   }}
                 />
-                <h2>{props.t('got-question')}</h2>
+                <h2>{t('got-question')}</h2>
                 <form className="c-help-section__form" onSubmit={handleSubmit(onSubmit)}>
                   <FormTextField
-                    label={props.t('form:your-email-label')}
+                    label={t('form:your-email-label')}
                     name="email"
-                    placeholder={props.t('form:email-placeholder')}
+                    placeholder={t('form:email-placeholder')}
                     schema={schema.email}
                     register={register}
                     errors={errors.email}
                     variant="full-width"
                   />
                   <FormTextArea
-                    label={props.t('form:message-label')}
+                    label={t('form:message-label')}
                     name="message"
-                    placeholder={props.t('form:message-placeholder')}
+                    placeholder={t('form:message-placeholder')}
                     schema={schema.message}
                     register={register}
                     errors={errors.message}
@@ -135,7 +134,7 @@ const Help = (props: any): any => {
                     style={{ margin: '12px 0' }}
                     isLoading={isFetching}
                   >
-                    {props.t('form:send-button')}
+                    {t('form:send-button')}
                   </Button>
                 </form>
               </div>
@@ -146,7 +145,7 @@ const Help = (props: any): any => {
           </div>
         </div>
       </div>
-      {props.isMobile && <Footer isMobile={props.isMobile} />}
+      {props.isMobile && <Footer />}
       <style jsx>{`
         .c-help-section {
           @apply flex w-full;
@@ -246,4 +245,4 @@ const Help = (props: any): any => {
   );
 };
 
-export default withTranslation(['common', 'form'])(Help);
+export default Help;

@@ -1,6 +1,7 @@
 import debouncePromise from 'awesome-debounce-promise';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +10,6 @@ import Select from 'react-select';
 import TextField from 'components/atoms/TextField';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation } from 'i18n';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
@@ -21,6 +21,7 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Account = (props: any): any => {
+  const { t } = useTranslation('form');
   const dispatch = useDispatch();
   const master = useSelector((state: any) => state.master);
   const methods = useForm({ mode: 'onChange' });
@@ -52,32 +53,32 @@ const Account = (props: any): any => {
   });
   const schema = {
     name: {
-      required: { value: true, message: `${props.t('name-label')} ${props.t('form:required-error')}` },
+      required: { value: true, message: `${t('name-label')} ${t('form:required-error')}` },
     },
     email: {
-      required: { value: true, message: `Email ${props.t('form:required-error')}` },
+      required: { value: true, message: `Email ${t('form:required-error')}` },
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i,
-        message: `Email ${props.t('form:invalid-error')}`,
+        message: `Email ${t('form:invalid-error')}`,
       },
       validate: debouncePromise(async (value) => {
         const { data } = await api().users.checkEmailChange({ email: value });
-        return !data.exists || props.t('form:email-exists');
+        return !data.exists || t('form:email-exists');
       }, 500), // watch for duplicate email
     },
     phone: {
-      required: { value: true, message: `${props.t('form:phone-label')} ${props.t('form:required-error')}` },
-      minLength: { value: 7, message: `${props.t('form:phone-label')} ${props.t('form:invalid-error')}` },
+      required: { value: true, message: `${t('form:phone-label')} ${t('form:required-error')}` },
+      minLength: { value: 7, message: `${t('form:phone-label')} ${t('form:invalid-error')}` },
     },
     password: {
-      required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
+      required: { value: true, message: `${t('password-label')} ${t('form:required-error')}` },
     },
     confirmNewPassword: {
-      required: { value: true, message: `${props.t('password-label')} ${props.t('form:required-error')}` },
-      validate: (value) => value === watch('newPassword') || props.t('form:password-different'),
+      required: { value: true, message: `${t('password-label')} ${t('form:required-error')}` },
+      validate: (value) => value === watch('newPassword') || t('form:password-different'),
     },
     address: {
-      required: { value: true, message: `${props.t('address-label')} ${props.t('form:required-error')}` },
+      required: { value: true, message: `${t('address-label')} ${t('form:required-error')}` },
     },
   };
   const customStyles = {
@@ -191,22 +192,20 @@ const Account = (props: any): any => {
     <DefaultLayout
       {...props}
       navbar={
-        props.isMobile && (
-          <NavBar setSideNav={props.setSideNav} menuAction={true} title={props.t('common:profile-title')} />
-        )
+        props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('common:profile-title')} />
       }
     >
       <Head>
-        <title>When I Grow Up | {props.t('common:profile-title')}</title>
+        <title>When I Grow Up | {t('common:profile-title')}</title>
       </Head>
       <div className={props.isMobile ? '' : 'u-container u-container__page'}>
-        {!props.isMobile && <Stepper title={props.t('common:profile-title')} />}
+        {!props.isMobile && <Stepper title={t('common:profile-title')} />}
         <div className="c-account">
           <Wrapper variant="border">
             <div className="c-account__container">
               <div className="c-account__row">
                 <div className="c-account__header">
-                  <div className="c-account__title">{props.t('name-label')}</div>
+                  <div className="c-account__title">{t('name-label')}</div>
                   {!state.name.isEdit && (
                     <div className="c-account__action" onClick={() => editField('name', false, user.name)}>
                       Edit
@@ -229,10 +228,10 @@ const Account = (props: any): any => {
                         variant="rectangle,small-text"
                         disabled={errors.name || watch('name') === user.name}
                       >
-                        {props.t('form:update-button')}
+                        {t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('name', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                        {t('form:cancel-button')}
                       </div>
                     </div>
                   </form>
@@ -242,7 +241,7 @@ const Account = (props: any): any => {
               </div>
               <div className="c-account__row">
                 <div className="c-account__header">
-                  <div className="c-account__title">{props.t('email-label')}</div>
+                  <div className="c-account__title">{t('email-label')}</div>
                   {!state.email.isEdit && (
                     <div className="c-account__action" onClick={() => editField('email', false, user.email)}>
                       Change
@@ -266,10 +265,10 @@ const Account = (props: any): any => {
                         variant="rectangle,small-text"
                         disabled={errors.email || watch('email') === user.email}
                       >
-                        {props.t('form:update-button')}
+                        {t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('email', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                        {t('form:cancel-button')}
                       </div>
                     </div>
                   </form>
@@ -279,17 +278,17 @@ const Account = (props: any): any => {
               </div>
               <div className="c-account__row">
                 <div className="c-account__header">
-                  <div className="c-account__title">{props.t('phone-label')}</div>
+                  <div className="c-account__title">{t('phone-label')}</div>
                   {!user.phone && !state.phone.isEdit && (
                     <div className="c-account__action" onClick={() => editField('phone', false, user.phone)}>
                       Add
                     </div>
                   )}
                 </div>
-                {user.phone && <div className="c-account__subheader">{props.t('phone-warning')}</div>}
+                {user.phone && <div className="c-account__subheader">{t('phone-warning')}</div>}
                 {state.phone.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    {/* <div className="c-account__label">{props.t('old-number')}</div> */}
+                    {/* <div className="c-account__label">{t('old-number')}</div> */}
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -298,7 +297,7 @@ const Account = (props: any): any => {
                       name="newPhone"
                       errors={errors.newPhone}
                     />
-                    {/* <div className="c-account__label">{props.t('new-number')}</div>
+                    {/* <div className="c-account__label">{t('new-number')}</div>
                       <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                         variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -314,10 +313,10 @@ const Account = (props: any): any => {
                         // type="button"
                         // onClick={onChangePhone}
                       >
-                        {props.t('form:update-button')}
+                        {t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('phone', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                        {t('form:cancel-button')}
                       </div>
                     </div>
                   </form>
@@ -328,7 +327,7 @@ const Account = (props: any): any => {
               </div>
               <div className="c-account__row">
                 <div className="c-account__header">
-                  <div className="c-account__title">{props.t('password-label')}</div>
+                  <div className="c-account__title">{t('password-label')}</div>
                   {!state.password.isEdit && (
                     <div className="c-account__action" onClick={() => editField('password', false)}>
                       Change
@@ -337,7 +336,7 @@ const Account = (props: any): any => {
                 </div>
                 {state.password.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="c-account__label">{props.t('old-password')}</div>
+                    <div className="c-account__label">{t('old-password')}</div>
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -346,7 +345,7 @@ const Account = (props: any): any => {
                       errors={errors.password}
                       isPassword={true}
                     />
-                    <div className="c-account__label">{props.t('new-password')}</div>
+                    <div className="c-account__label">{t('new-password')}</div>
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -355,7 +354,7 @@ const Account = (props: any): any => {
                       errors={errors.newPassword}
                       isPassword={true}
                     />
-                    <div className="c-account__label">{props.t('confirm-new-password')}</div>
+                    <div className="c-account__label">{t('confirm-new-password')}</div>
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -377,10 +376,10 @@ const Account = (props: any): any => {
                           !watch('confirmNewPassword')
                         }
                       >
-                        {props.t('form:update-button')}
+                        {t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('password', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                        {t('form:cancel-button')}
                       </div>
                     </div>
                   </form>
@@ -390,7 +389,7 @@ const Account = (props: any): any => {
               </div>
               <div className="c-account__row">
                 <div className="c-account__header" style={{ marginBottom: props.isMobile ? 10 : 6 }}>
-                  <div className="c-account__title">{props.t('address-label')}</div>
+                  <div className="c-account__title">{t('address-label')}</div>
                   {!state.address.isEdit && (
                     <div className="c-account__action" onClick={() => editField('address', false)}>
                       Change
@@ -399,7 +398,7 @@ const Account = (props: any): any => {
                 </div>
                 {state.address.isEdit ? (
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="c-account__label">{props.t('address1')}</div>
+                    <div className="c-account__label">{t('address1')}</div>
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -408,7 +407,7 @@ const Account = (props: any): any => {
                       name="address1"
                       errors={errors.address1}
                     />
-                    <div className="c-account__label">{props.t('address2')}</div>
+                    <div className="c-account__label">{t('address2')}</div>
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -417,7 +416,7 @@ const Account = (props: any): any => {
                       name="address2"
                       errors={errors.address2}
                     />
-                    <div className="c-account__label">{props.t('city')}</div>
+                    <div className="c-account__label">{t('city')}</div>
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : { marginBottom: 12 }}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -426,18 +425,18 @@ const Account = (props: any): any => {
                       name="city"
                       errors={errors.city}
                     />
-                    <div className="c-account__label">{props.t('province')}</div>
+                    <div className="c-account__label">{t('province')}</div>
                     <Select
                       styles={customStyles}
                       className="c-account_province"
                       instanceId="province"
-                      placeholder={props.t('select-province')}
+                      placeholder={t('select-province')}
                       defaultValue={setDefaultProvince()}
                       options={provinces()}
                       onChange={onChangeProvince}
                     />
                     {/* {errors.province} */}
-                    <div className="c-account__label">{props.t('zip')}</div>
+                    <div className="c-account__label">{t('zip')}</div>
                     <TextField
                       style={props.isMobile ? { marginBottom: 6 } : {}}
                       variant={`open-sans,${props.isMobile ? 'full-width' : 'large'}`}
@@ -448,10 +447,10 @@ const Account = (props: any): any => {
                     />
                     <div className="flex items-center" style={{ marginTop: 6 }}>
                       <Button width="101px" variant="rectangle,small-text" disabled={disabledUpdateAddress()}>
-                        {props.t('form:update-button')}
+                        {t('form:update-button')}
                       </Button>
                       <div onClick={() => editField('address', true)} className="c-account__link">
-                        {props.t('form:cancel-button')}
+                        {t('form:cancel-button')}
                       </div>
                     </div>
                   </form>
@@ -463,18 +462,18 @@ const Account = (props: any): any => {
           </Wrapper>
         </div>
       </div>
-      {props.isMobile && <Footer isMobile={props.isMobile} />}
+      {props.isMobile && <Footer />}
       {/* <Modal
-        title={props.t('common:otp-verify')}
+        title={t('common:otp-verify')}
         isOpen={showModal}
         closeModal={() => setShowModal(false)}
         actions={
           <Fragment>
             <Button width="100%" onClick={handleSubmit(onSubmit)} disabled={!watch('otp')} style={{ marginBottom: 12 }}>
-              {props.t('continue-button')}
+              {t('continue-button')}
             </Button>
             <Button width="100%" onClick={() => setShowModal(false)} variant="outline" color="black">
-              {props.t('cancel-button')}
+              {t('cancel-button')}
             </Button>
           </Fragment>
         }
@@ -489,12 +488,12 @@ const Account = (props: any): any => {
               // }}
               style={{ marginBottom: 18 }}
             >
-              {props.t('common:otp-verify-text')}
+              {t('common:otp-verify-text')}
             </div>
-            <div className="font-semibold">{props.t('common:otp-code')}</div>
+            <div className="font-semibold">{t('common:otp-code')}</div>
             <TextField variant="full-width" name="otp" style={{ margin: '6px 0 24px' }} />
             <div className="c-account__action" onClick={() => props.thunkSendOtp()}>
-              {props.t('common:otp-resend')}
+              {t('common:otp-resend')}
             </div>
           </Fragment>
         }
@@ -596,7 +595,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   } catch (err) {
     console.log(err.message);
   }
-  return { props: { namespacesRequired: ['form', 'common'] } };
+  return { props: {} };
 });
 
-export default withTranslation(['form', 'common'])(Account);
+export default Account;

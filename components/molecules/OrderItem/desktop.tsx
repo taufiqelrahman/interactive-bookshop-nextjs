@@ -1,10 +1,10 @@
+import { useTranslation } from 'next-i18next';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
 
 import Capsule from 'components/atoms/Capsule';
 import Card from 'components/atoms/Card';
 import appConfig from 'config';
-import { withTranslation } from 'i18n';
 import { mapKeyValue } from 'lib/format-array';
 import { date } from 'lib/format-date';
 // import Dot from 'components/atoms/Dot';
@@ -12,6 +12,7 @@ import { date } from 'lib/format-date';
 import { previewImg } from './helper';
 
 const OrderItem = (props: any) => {
+  const { t } = useTranslation('page-orders');
   const lineItems = (props.line_items || []).map((item) => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
@@ -43,19 +44,19 @@ const OrderItem = (props: any) => {
                   <Skeleton height={30} width={135} />
                 ) : (
                   <Capsule color={appConfig.stateColor[props.state]}>
-                    {props.t(props.state)}
+                    {t(props.state)}
                     {props.state === 'done' && <span className="icon-cross_check" />}
                   </Capsule>
                 )}
               </div>
             </div>
             <div className="c-order-item__detail__occupation">
-              {props.isSkeleton ? <Skeleton height={22} width={80} /> : `${lineItems.length} ${props.t('books')}`}
+              {props.isSkeleton ? <Skeleton height={22} width={80} /> : `${lineItems.length} ${t('books')}`}
             </div>
             <div className="c-order-item__detail--middle">
               <div style={{ marginRight: 100 }}>
                 <div className="c-order-item__detail__label">
-                  {props.isSkeleton ? <Skeleton height={20} width={60} /> : props.t('order-id')}
+                  {props.isSkeleton ? <Skeleton height={20} width={60} /> : t('order-id')}
                 </div>
                 <div className="c-order-item__detail__value">
                   {props.isSkeleton ? <Skeleton height={25} width={150} /> : props.name.replace('#', '')}
@@ -63,7 +64,7 @@ const OrderItem = (props: any) => {
               </div>
               <div>
                 <div className="c-order-item__detail__label">
-                  {props.isSkeleton ? <Skeleton height={20} width={75} /> : props.t('order-date')}
+                  {props.isSkeleton ? <Skeleton height={20} width={75} /> : t('order-date')}
                 </div>
                 <div className="c-order-item__detail__value">
                   {props.isSkeleton ? <Skeleton height={25} width={250} /> : date(props.created_at)}
@@ -154,4 +155,4 @@ const OrderItem = (props: any) => {
   );
 };
 
-export default withTranslation('page-orders')(OrderItem);
+export default OrderItem;

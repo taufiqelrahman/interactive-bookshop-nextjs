@@ -1,12 +1,13 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import { Fragment, useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { useSelector, useDispatch } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
-import { withTranslation, Link } from 'i18n';
 import * as gtag from 'lib/gtag';
 import { wrapper } from 'store';
 import actions from 'store/actions';
@@ -19,7 +20,8 @@ const Dot = dynamic(() => import('components/atoms/Dot'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const Cart = ({ isMobile, t, setSideNav }) => {
+const Cart = ({ isMobile, setSideNav }) => {
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.users);
   const cart = useSelector((state: any) => state.cart);
@@ -307,10 +309,8 @@ const Cart = ({ isMobile, t, setSideNav }) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(() => async () => {
   return {
-    props: {
-      namespacesRequired: ['common'],
-    },
+    props: {},
   };
 });
 
-export default withTranslation('common')(Cart);
+export default Cart;

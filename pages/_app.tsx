@@ -8,12 +8,13 @@ import debounce from 'lodash.debounce';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { Router } from 'next/router';
 import cookies from 'next-cookies';
+import { appWithTranslation } from 'next-i18next';
 import NProgress from 'nprogress';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { appWithTranslation, i18n, Router } from 'i18n';
 import * as gtag from 'lib/gtag';
 import api from 'services/api';
 import { wrapper } from 'store';
@@ -64,7 +65,7 @@ function WiguApp({ Component, pageProps }: AppProps) {
     if (isExpired) {
       Cookies.remove('user', { domain: process.env.DOMAIN });
     }
-    dayjs.locale(i18n.language);
+    dayjs.locale(pageProps.currentLocale);
     setWidth(window.innerWidth);
     Router.events.on('routeChangeComplete', handleRouteChange);
     window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
@@ -353,9 +354,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   }
 
   return {
-    props: {
-      namespacesRequired: [],
-    },
+    props: { currentLocale: ctx.locale },
   };
 });
 export default wrapper.withRedux(appWithTranslation(WiguApp));
