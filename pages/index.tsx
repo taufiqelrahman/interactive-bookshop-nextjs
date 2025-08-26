@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React from 'react';
 import LazyLoad from 'react-lazyload';
 import { useSelector } from 'react-redux';
@@ -422,7 +423,7 @@ const Index = (props: any): JSX.Element => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   try {
     const [{ data: testi }, { data: occupations }] = await Promise.all([
       api().master.getTestimonials(),
@@ -436,7 +437,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   }
 
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ['common', 'page-index', 'form'])),
+    },
   };
 });
 

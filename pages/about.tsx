@@ -3,10 +3,12 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import LazyLoad from 'react-lazyload';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
+import { wrapper } from 'store';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -86,7 +88,7 @@ const Help = ({ isMobile, setSideNav }) => {
               <LazyLoad>
                 <img
                   className="c-about-us__powered__image"
-                  src="/static/images/tjetak.png"
+                  src="https://picsum.photos/100/20"
                   alt="tjetak"
                   width="100"
                   height="20"
@@ -177,5 +179,13 @@ const Help = ({ isMobile, setSideNav }) => {
     </DefaultLayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(() => async (ctx) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ['common'])),
+    },
+  };
+});
 
 export default Help;
