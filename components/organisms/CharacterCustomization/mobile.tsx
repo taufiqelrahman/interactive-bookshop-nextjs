@@ -77,7 +77,7 @@ const CharacterCustomization = (props: any) => {
   const selected = cart.selected || defaultSelected;
   const registerOccupations = () => {
     // setTimeout(() => {
-    register({ name: 'Occupations' }, schema(props).occupations);
+    register({ name: 'Occupations' }, schema(t).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
   };
@@ -178,14 +178,14 @@ const CharacterCustomization = (props: any) => {
                       label={t('nickname-label')}
                       name="Name"
                       placeholder={t('name-placeholder')}
-                      schema={schema(props).name}
+                      schema={schema(t).name}
                       register={register}
                       errors={errors.Name}
                       defaultValue={selected.Name}
                       variant="full-width"
                     />
                     <FieldGender
-                      schema={schema(props).gender}
+                      schema={schema(t).gender}
                       register={register}
                       errors={errors.Gender}
                       isMobile={true}
@@ -195,7 +195,7 @@ const CharacterCustomization = (props: any) => {
                 )}
                 {charStep === stepEnum.AGE && (
                   <FieldAge
-                    schema={schema(props).age}
+                    schema={schema(t).age}
                     register={register}
                     errors={errors.Age}
                     defaultChecked={selected.Age}
@@ -214,7 +214,7 @@ const CharacterCustomization = (props: any) => {
                 )} */}
                 {charStep === stepEnum.HAIR && (
                   <FieldHair
-                    schema={schema(props).hair}
+                    schema={schema(t).hair}
                     register={register}
                     unregister={unregister}
                     errors={errors.Hair}
@@ -226,7 +226,7 @@ const CharacterCustomization = (props: any) => {
                 )}
                 {charStep === stepEnum.SKIN && (
                   <FieldSkin
-                    schema={schema(props).skin}
+                    schema={schema(t).skin}
                     errors={errors.Skin}
                     isMobile={true}
                     defaultChecked={selected.Skin}
@@ -235,7 +235,7 @@ const CharacterCustomization = (props: any) => {
                 )}
                 {charStep === stepEnum.LANGUAGE && (
                   <FieldLanguage
-                    schema={schema(props).language}
+                    schema={schema(t).language}
                     register={register}
                     errors={errors.Language}
                     isMobile={true}
@@ -248,7 +248,7 @@ const CharacterCustomization = (props: any) => {
                     hint={t('dedication-hint')}
                     name="Dedication"
                     placeholder={t('dedication-placeholder')}
-                    schema={schema(props).dedication}
+                    schema={schema(t).dedication}
                     register={register}
                     errors={errors.Dedication}
                     defaultValue={selected.Dedication}

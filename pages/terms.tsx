@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
+import { useTranslation } from 'next-i18next';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';

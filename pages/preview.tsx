@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import cookies from 'next-cookies';
-import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
+import { useTranslation } from 'next-i18next';
 
 import PreviewDesktop from 'components/organisms/Preview/desktop';
 import PreviewMobile from 'components/organisms/Preview/mobile';

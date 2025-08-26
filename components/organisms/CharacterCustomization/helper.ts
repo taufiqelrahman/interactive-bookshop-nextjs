@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export const schema = (props) => ({
+export const schema = (t) => ({
   occupations: {
     required: { value: true, message: t('occupations-invalid') },
     validate: (value) => value.length === 3 || t('occupations-invalid'),

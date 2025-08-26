@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';

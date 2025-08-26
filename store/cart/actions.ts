@@ -283,7 +283,8 @@ export const thunkUpdateCart =
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
         dispatch(updateCart(false, { ...cart, lineItems }));
-        if (Router.pathname !== '/cart') Router.replace('/cart');
+        // @todo should router.push() outside this function afterwards
+        // if (Router.pathname !== '/cart') Router.replace('/cart');
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {

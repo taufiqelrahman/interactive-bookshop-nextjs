@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 import DateField from 'components/atoms/DateField/desktop';

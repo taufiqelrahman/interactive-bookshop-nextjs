@@ -82,9 +82,9 @@ const CharacterCustomization = (props: any) => {
   };
   useEffect(() => {
     // setTimeout(() => {
-    //   register({ name: 'Date of Birth' }, schema(props).dob);
+    //   register({ name: 'Date of Birth' }, schema(t).dob);
     router.prefetch('/preview');
-    register({ name: 'Occupations' }, schema(props).occupations);
+    register({ name: 'Occupations' }, schema(t).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
     // }, 500);
     window.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
@@ -110,20 +110,20 @@ const CharacterCustomization = (props: any) => {
                   label={t('nickname-label')}
                   name="Name"
                   placeholder={t('name-placeholder')}
-                  schema={schema(props).name}
+                  schema={schema(t).name}
                   register={register}
                   errors={errors.Name}
                   defaultValue={selected.Name}
                 />
                 <FieldGender
-                  schema={schema(props).gender}
+                  schema={schema(t).gender}
                   register={register}
                   errors={errors.Gender}
                   style={{ marginTop: 24 }}
                   defaultChecked={selected.Gender}
                 />
                 <FieldAge
-                  schema={schema(props).age}
+                  schema={schema(t).age}
                   register={register}
                   errors={errors.Age}
                   fieldStyle={{ marginTop: 24 }}
@@ -139,7 +139,7 @@ const CharacterCustomization = (props: any) => {
                 /> */}
                 {!!watch('Gender') && (
                   <FieldHair
-                    schema={schema(props).hair}
+                    schema={schema(t).hair}
                     register={register}
                     unregister={unregister}
                     errors={errors.Hair}
@@ -150,7 +150,7 @@ const CharacterCustomization = (props: any) => {
                   />
                 )}
                 <FieldSkin
-                  schema={schema(props).skin}
+                  schema={schema(t).skin}
                   register={register}
                   errors={errors.Skin}
                   style={{ marginTop: 24, marginBottom: 24 }}
@@ -170,7 +170,7 @@ const CharacterCustomization = (props: any) => {
                 />
                 <Divider />
                 <FieldLanguage
-                  schema={schema(props).language}
+                  schema={schema(t).language}
                   register={register}
                   errors={errors.Language}
                   style={{ marginTop: 24 }}
@@ -181,7 +181,7 @@ const CharacterCustomization = (props: any) => {
                   hint={t('dedication-hint')}
                   name="Dedication"
                   placeholder={t('dedication-placeholder')}
-                  schema={schema(props).dedication}
+                  schema={schema(t).dedication}
                   register={register}
                   errors={errors.Dedication}
                   style={{ marginTop: 24, marginBottom: 24 }}

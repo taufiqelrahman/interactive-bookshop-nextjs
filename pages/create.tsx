@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useTranslation } from 'next-i18next/dist/types/appWithTranslation';
+import { useTranslation } from 'next-i18next';
 
 import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
