@@ -17,7 +17,7 @@ const Terms = (props: any): any => {
       navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('terms')} />}
     >
       <Head>
-        <title>When I Grow Up | {t('terms')}</title>
+        <title>Interactive Bookshop Next.js | {t('terms')}</title>
       </Head>
       <div className={`u-container__page ${props.isMobile ? 'pt-0' : 'u-container pb-0'}`}>
         {!props.isMobile && <Stepper title={t('terms')} />}
@@ -31,7 +31,7 @@ const Terms = (props: any): any => {
             blandit magna.{' '}
             <strong>
               <u>
-                <a href="mailto:hello@whenigrowup.co.id">bibendum@whenigrowup.co.id</a>
+                <a href="mailto:hello@lorem.co.id">bibendum@lorem.co.id</a>
               </u>
             </strong>
             .

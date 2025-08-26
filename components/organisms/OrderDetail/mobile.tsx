@@ -73,7 +73,7 @@ const OrderDetailMobile = (props: any): any => {
       navbar={<NavBar setSideNav={props.setSideNav} menuAction={false} title={orderNumber} style={{ zIndex: 42 }} />}
     >
       <Head>
-        <title>When I Grow Up | {orderNumber}</title>
+        <title>Interactive Bookshop Next.js | {orderNumber}</title>
       </Head>
       {isFetching ? (
         <Skeleton height={30} width={'100%'} />
@@ -170,7 +170,7 @@ const OrderDetailMobile = (props: any): any => {
                       </div>
                       <div className="flex items-baseline justify-between">
                         <div>
-                          <div className="c-detail__summary__title">When I Grow Up</div>
+                          <div className="c-detail__summary__title">Interactive Bookshop Next.js</div>
                           <div className="c-detail__summary__label">
                             {t('common:quantity')}: {lineItems.length}
                           </div>

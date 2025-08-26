@@ -12,7 +12,7 @@ const Create = (props: any): any => {
   return (
     <div>
       <Head>
-        <title>When I Grow Up | {t('character-customization')}</title>
+        <title>Interactive Bookshop Next.js | {t('character-customization')}</title>
       </Head>
       {props.isMobile ? <CharCustomMobile {...props} /> : <CharCustom {...props} />}
     </div>

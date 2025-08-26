@@ -102,7 +102,11 @@ function WiguApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta key="robots" name="robots" content="noimageindex" />
         <meta key="theme-color" name="theme-color" content="#000000" />
-        <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
+        <meta
+          key="apple-mobile-web-app-title"
+          name="apple-mobile-web-app-title"
+          content="Interactive Bookshop Next.js"
+        />
         <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
         <meta
           key="apple-mobile-web-app-status-bar-style"
@@ -132,7 +136,11 @@ function WiguApp({ Component, pageProps }: AppProps) {
         <meta key="mobile-web-app-capable" name="mobile-web-app-capable" content="yes" />
 
         {/* <!-- iOS --> */}
-        <meta key="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="When I Grow Up" />
+        <meta
+          key="apple-mobile-web-app-title"
+          name="apple-mobile-web-app-title"
+          content="Interactive Bookshop Next.js"
+        />
         <meta key="apple-mobile-web-app-capable" name="apple-mobile-web-app-capable" content="yes" />
         <meta
           key="apple-mobile-web-app-status-bar-style"
@@ -151,8 +159,8 @@ function WiguApp({ Component, pageProps }: AppProps) {
         <meta key="msapplication-config" name="msapplication-config" content="browserconfig.xml" />
 
         {/* <!-- Pinned Sites  --> */}
-        <meta key="application-name" name="application-name" content="When I Grow Up" />
-        <meta key="msapplication-tooltip" name="msapplication-tooltip" content="When I Grow Up" />
+        <meta key="application-name" name="application-name" content="Interactive Bookshop Next.js" />
+        <meta key="msapplication-tooltip" name="msapplication-tooltip" content="Interactive Bookshop Next.js" />
         <meta key="msapplication-starturl" name="msapplication-starturl" content="/" />
 
         {/* <!-- Tap highlighting  --> */}

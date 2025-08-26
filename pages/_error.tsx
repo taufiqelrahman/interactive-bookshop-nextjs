@@ -46,7 +46,7 @@ const Error: NextPage<ErrorProps> = (props) => {
       style={{ display: 'flex' }}
     >
       <Head>
-        <title>When I Grow Up | {title()}</title>
+        <title>Interactive Bookshop Next.js | {title()}</title>
       </Head>
       <div className="w-full">
         <div className="relative">

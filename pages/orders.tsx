@@ -28,7 +28,7 @@ const Orders = (props: any): any => {
       navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('my-orders')} />}
     >
       <Head>
-        <title>When I Grow Up | {t('my-orders')}</title>
+        <title>Interactive Bookshop Next.js | {t('my-orders')}</title>
       </Head>
       <div className={`u-container ${props.isMobile ? 'bg-light-grey' : 'u-container__page'}`}>
         {!props.isMobile && <Stepper title={t('my-orders')} />}

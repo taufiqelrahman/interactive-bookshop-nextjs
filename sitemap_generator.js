@@ -4,10 +4,10 @@ const sitemap = require('nextjs-sitemap-generator');
 
 sitemap({
   alternateUrls: {
-    id: 'https://whenigrowup.co.id',
-    en: 'https://whenigrowup.co.id/en',
+    id: 'https://interactive-bookshop-nextjs.vercel.app',
+    en: 'https://interactive-bookshop-nextjs.vercel.app',
   },
-  baseUrl: 'https://whenigrowup.co.id',
+  baseUrl: 'https://interactive-bookshop-nextjs.vercel.app',
   // ignoredPaths: ['admin'],
   // extraPaths: ['/extraPath'],
   pagesDirectory: __dirname + '/pages',

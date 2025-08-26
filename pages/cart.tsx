@@ -65,7 +65,7 @@ const Cart = ({ isMobile, setSideNav }) => {
       navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction title={t('cart-title')} />}
     >
       <Head>
-        <title>When I Grow Up | {t('cart-title')}</title>
+        <title>Interactive Bookshop Next.js | {t('cart-title')}</title>
       </Head>
 
       <div className={isMobile ? 'bg-light-grey' : 'u-container u-container__page'}>
@@ -112,7 +112,7 @@ const Cart = ({ isMobile, setSideNav }) => {
                       </div>
                       <div className="flex items-baseline justify-between">
                         <div>
-                          <div className="c-cart__summary__title">When I Grow Up</div>
+                          <div className="c-cart__summary__title">Interactive Bookshop Next.js</div>
                           <div className="c-cart__summary__quantity">
                             {t('quantity')}: {items.length}
                           </div>

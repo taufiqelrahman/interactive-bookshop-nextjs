@@ -20,11 +20,11 @@ const Footer = memo(() => {
               <img alt="item" className="c-footer__left__logo" width="58" src="/static/images/logo-white.png" />
             </LazyLoad>
             <div className="c-footer__left__info">
-              <div className="c-footer__left__name">When I Grow Up</div>
+              <div className="c-footer__left__name">Interactive Bookshop Next.js</div>
               <div className="c-footer__left__address">
-                CoHive - Sahid Sudirman Residence
+                Lorem Ipsum
                 <br />
-                Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Jakarta 10250
+                Jakarta Indonesia
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ const OrderSuccess = (props: any): any => {
   return (
     <DefaultLayout {...props} navbar={props.isMobile && <NavBar title={t('checkout')} />}>
       <Head>
-        <title>When I Grow Up | {t('checkout')}</title>
+        <title>Interactive Bookshop Next.js | {t('checkout')}</title>
       </Head>
       <div className="u-container" style={props.isMobile ? {} : { padding: '61px 0 ' }}>
         <div className="c-success">

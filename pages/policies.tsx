@@ -17,7 +17,7 @@ const Policies = (props: any): any => {
       navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('policies')} />}
     >
       <Head>
-        <title>When I Grow Up | {t('policies')}</title>
+        <title>Interactive Bookshop Next.js | {t('policies')}</title>
       </Head>
       <div className={`u-container__page ${props.isMobile ? 'pt-0' : 'u-container pb-0'}`}>
         {!props.isMobile && <Stepper title={t('policies')} />}

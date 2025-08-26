@@ -51,16 +51,16 @@ const Help = ({ isMobile, setSideNav }) => {
       navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction title={t('about-us')} />}
     >
       <Head>
-        <title>When I Grow Up | {t('about-us')}</title>
+        <title>Interactive Bookshop Next.js | {t('about-us')}</title>
       </Head>
       <div className={`u-container__page ${isMobile ? 'pt-0' : 'u-container pb-0'}`}>
         {!isMobile && <Stepper title={t('about-us')} />}
         <div className="c-about-us">
           <div className="c-about-us--long">
-            <strong>When I Grow Up</strong> adalah personalized book publisher ...
+            <strong>Interactive Bookshop Next.js</strong> adalah personalized book publisher ...
           </div>
           <div className="c-about-us--long">
-            <strong>When I Grow Up</strong> dibangun karena di zaman yang serba digital ...
+            <strong>Interactive Bookshop Next.js</strong> dibangun karena di zaman yang serba digital ...
           </div>
           <div className="c-about-us--quote">
             <span>&ldquo;</span>Misi kami ingin terus meningkatan literasi anak bangsa.<span>&rdquo;</span>

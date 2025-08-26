@@ -50,7 +50,7 @@ const Help = (props: any): any => {
       navbar={props.isMobile && <NavBar setSideNav={props.setSideNav} menuAction={true} title={t('help-title')} />}
     >
       <Head>
-        <title>When I Grow Up | {t('help-title')}</title>
+        <title>Interactive Bookshop Next.js | {t('help-title')}</title>
       </Head>
       <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
         {props.isMobile ? (
@@ -91,13 +91,13 @@ const Help = (props: any): any => {
                     </GoogleMapReact>
                   </div> */}
                   <div className="c-help-section__info">
-                    <h2 style={props.isMobile ? {} : { marginBottom: 16 }}>When I Grow Up</h2>
+                    <h2 style={props.isMobile ? {} : { marginBottom: 16 }}>Interactive Bookshop Next.js</h2>
                     <div className="c-help-section__address">
-                      CoHive - Sahid Sudirman Residence
+                      Lorem Ipsum
                       <br />
-                      Jl. Jend. Sudirman No.86, Tanah Abang, Kota Jakarta Pusat, Jakarta 10250
+                      Jakarta Indonesia
                     </div>
-                    <div className="c-help-section__phone">(+62) 877-7771-7119</div>
+                    <div className="c-help-section__phone">(+62) 877-xxxx-xxxx</div>
                   </div>
                 </div>
                 <Divider

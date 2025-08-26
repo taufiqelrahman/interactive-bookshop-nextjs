@@ -44,7 +44,7 @@ const OrderDetailDesktop = (props: any): any => {
     <DefaultLayout {...props}>
       <Head>
         <title>
-          When I Grow Up | {t('order-title')}: {orderNumber}
+          Interactive Bookshop Next.js | {t('order-title')}: {orderNumber}
         </title>
       </Head>
       <div className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}>
@@ -185,7 +185,7 @@ const OrderDetailDesktop = (props: any): any => {
                 <div className="flex items-baseline justify-between overflow-hidden">
                   <div>
                     <div className="c-detail__summary__title">
-                      {isFetching ? <Skeleton height={24} width={190} /> : 'When I Grow Up'}
+                      {isFetching ? <Skeleton height={24} width={190} /> : 'Interactive Bookshop Next.js'}
                     </div>
                     <div className="c-detail__summary__label">
                       {isFetching ? (

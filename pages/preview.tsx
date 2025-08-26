@@ -13,7 +13,7 @@ const Preview = (props: any): any => {
   return (
     <div>
       <Head>
-        <title>When I Grow Up | {t('book-preferences')}</title>
+        <title>Interactive Bookshop Next.js | {t('book-preferences')}</title>
       </Head>
       {props.isMobile ? <PreviewMobile {...props} /> : <PreviewDesktop {...props} />}
     </div>

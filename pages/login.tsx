@@ -143,7 +143,7 @@ const Login = (props: any): any => {
       }
     >
       <Head>
-        <title>When I Grow Up | {t('login')}</title>
+        <title>Interactive Bookshop Next.js | {t('login')}</title>
       </Head>
       <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-login">

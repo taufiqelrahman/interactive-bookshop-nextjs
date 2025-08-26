@@ -196,7 +196,7 @@ const Account = (props: any): any => {
       }
     >
       <Head>
-        <title>When I Grow Up | {t('common:profile-title')}</title>
+        <title>Interactive Bookshop Next.js | {t('common:profile-title')}</title>
       </Head>
       <div className={props.isMobile ? '' : 'u-container u-container__page'}>
         {!props.isMobile && <Stepper title={t('common:profile-title')} />}

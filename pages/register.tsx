@@ -126,7 +126,7 @@ const Register: React.FC<RegisterProps> = (props) => {
       }
     >
       <Head>
-        <title>When I Grow Up | {t('register')}</title>
+        <title>Interactive Bookshop Next.js | {t('register')}</title>
       </Head>
       <div className={`u-container ${props.isMobile ? 'u-container__page' : 'u-container__page--large'}`}>
         <div className="c-register">

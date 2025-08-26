@@ -69,7 +69,7 @@ const Index = (props: any): JSX.Element => {
   return (
     <DefaultLayout {...props} navbar={isMobile && <NavBar setSideNav={setSideNav} menuAction={true} />}>
       <Head>
-        <title>When I Grow Up</title>
+        <title>Interactive Bookshop Next.js</title>
       </Head>
       {/* {props.isMobile && <NavBar icon="menu" />} */}
       <div className="c-section--top">

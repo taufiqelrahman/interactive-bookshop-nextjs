@@ -3,7 +3,7 @@ export default [
     id: 1,
     title: 'Mengapa harus dalam bentuk buku cerita?',
     content:
-      'Memang, sangat mudah mengalihkan perhatian anak agar diam dengan gadget. Namun sayang, bonding/ ikatan orang tua - anak akan susah terbentuk. Belum lagi radiasi dan sinar biru yang dihasilkannya kurang baik bagi kesehatan anak. Karena itu, buku cerita WIGU (When I Grow Up) hadir agar orang tua-anak dapat berinteraksi bersama. Dengan berdongeng, Anda bisa ajak si kecil untuk masuk ke dalam cerita sebagai pemeran utama dan menikmati petualangan tentang cita-citanya. Dengan membaca bersama, tingkat kegemaran membaca anak bertambah. Sehingga, pengetahuannya makin luas, imajinasinya berkembang, konsentrasinya makin tajam, kemampuan sosial-emosinya terasah, dan masih banyak manfaat lainnya.',
+      'Memang, sangat mudah mengalihkan perhatian anak agar diam dengan gadget. Namun sayang, bonding/ ikatan orang tua - anak akan susah terbentuk. Belum lagi radiasi dan sinar biru yang dihasilkannya kurang baik bagi kesehatan anak. Karena itu, buku cerita WIGU (Interactive Bookshop Next.js) hadir agar orang tua-anak dapat berinteraksi bersama. Dengan berdongeng, Anda bisa ajak si kecil untuk masuk ke dalam cerita sebagai pemeran utama dan menikmati petualangan tentang cita-citanya. Dengan membaca bersama, tingkat kegemaran membaca anak bertambah. Sehingga, pengetahuannya makin luas, imajinasinya berkembang, konsentrasinya makin tajam, kemampuan sosial-emosinya terasah, dan masih banyak manfaat lainnya.',
   },
   {
     id: 2,
