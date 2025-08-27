@@ -1,4 +1,5 @@
 import DOMPurify from 'dompurify';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
 import LazyLoad, { forceVisible } from 'react-lazyload';
@@ -78,7 +79,7 @@ const BookPage = (props: any) => {
       <LazyLoad overflow>
         <svg className="c-book-page__svg" xmlns="http://www.w3.org/2000/svg">
           <foreignObject x="0" y="0" width="100%" height="100%" style={{ overflow: 'visible' }}>
-            <img className="c-book-page__image" src={props.mustLoad ? props.image : ''} alt="book page" />
+            <Image className="c-book-page__image" src={props.mustLoad ? props.image : ''} alt="book page" />
             {props.isLast ? (
               <div className="c-book-page__limit">{t('book-limit')}</div>
             ) : (

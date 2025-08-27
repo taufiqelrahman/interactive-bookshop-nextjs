@@ -3,8 +3,9 @@ import debounce from 'lodash.debounce';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
+import { useEffect, useState, useRef, Fragment } from 'react';
 
 import initBook from 'assets/flipbook.js';
 import BookPage from 'components/atoms/BookPage';
@@ -99,10 +100,7 @@ const BookPreview = (props: BookPreviewProps) => {
   };
 
   let debouncedFunctionRef = useRef<() => void>(() => setupBook());
-  const debouncedSetup = useCallback(
-    debounce(() => debouncedFunctionRef && debouncedFunctionRef.current(), 300),
-    [],
-  );
+  const debouncedSetup = debounce(() => debouncedFunctionRef && debouncedFunctionRef.current(), 300);
 
   const ref = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
@@ -262,7 +260,7 @@ const BookPreview = (props: BookPreviewProps) => {
         <Fragment>
           {!bookClicked && (
             <div className="c-book-preview__try">
-              <img src="/static/images/try-me.png" alt="try me" />
+              <Image src="/static/images/try-me.png" alt="try me" />
             </div>
           )}
           <div className="c-book-preview__container">

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import NumberFormat from 'react-number-format';
@@ -23,7 +24,7 @@ const CartDropdown = (props: any) => {
                 return (
                   <div key={i} className="c-cart-dropdown__item">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={previewImg(item.customAttributes)}
                         alt="item"
                         className="c-cart-dropdown__item__image"
