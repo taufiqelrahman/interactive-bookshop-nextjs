@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
@@ -26,7 +27,7 @@ const OrderItem = (props: any) => {
               <Skeleton height={180} width={142} />
             ) : (
               <div className="c-order-item__preview__image">
-                <img src={previewImg(lineItems[0])} alt="item preview" />
+                <Image src={previewImg(lineItems[0])} alt="item preview" />
               </div>
             )}
           </div>

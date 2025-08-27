@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import React, { memo } from 'react';
@@ -17,7 +18,7 @@ const Footer = memo(() => {
         <div className="u-container c-footer__container">
           <div className="c-footer__left">
             <LazyLoad>
-              <img alt="item" className="c-footer__left__logo" width="58" src="/static/images/logo-white.png" />
+              <Image alt="item" className="c-footer__left__logo" width="58" src="/static/images/logo-white.png" />
             </LazyLoad>
             <div className="c-footer__left__info">
               <div className="c-footer__left__name">Interactive Bookshop Next.js</div>
