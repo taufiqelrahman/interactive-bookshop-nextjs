@@ -14,9 +14,38 @@ import * as gtag from 'lib/gtag';
 
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
-const BookPreview = (props: any) => {
+interface BookPageType {
+  occupation: {
+    id: number;
+    name: string;
+  };
+  occupation_id: number;
+  page_number: number;
+  [key: string]: any;
+}
+
+interface SelectedType {
+  Name: string;
+  Language: string;
+  Gender: string;
+  Dedication: string;
+  Age: string;
+  Skin: string;
+  Hair: string;
+  [key: string]: any;
+}
+
+interface BookPreviewProps {
+  isMobile: boolean;
+  bookPages: BookPageType[];
+  selected: SelectedType;
+  cover?: string;
+  enableLazy?: boolean;
+}
+
+const BookPreview = (props: BookPreviewProps) => {
   const { i18n } = useTranslation();
-  const [, setBook] = useState(null);
+  const [, setBook] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [bookClicked, setBookClicked] = useState(false);
   const [state, setState] = useState({
@@ -69,13 +98,13 @@ const BookPreview = (props: any) => {
     setBook(flipBookInstance);
   };
 
-  let debouncedFunctionRef: any = useRef(() => setupBook());
+  let debouncedFunctionRef = useRef<() => void>(() => setupBook());
   const debouncedSetup = useCallback(
-    debounce(() => debouncedFunctionRef && (debouncedFunctionRef.current as any)(), 300),
+    debounce(() => debouncedFunctionRef && debouncedFunctionRef.current(), 300),
     [],
   );
 
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
     const svgPages = document.getElementsByClassName('c-book-page__svg');
     if (!svgPages.length) return;
@@ -139,19 +168,18 @@ const BookPreview = (props: any) => {
   //   updatePageInfo();
   // };
 
-  let pageByOccupations = {};
+  let pageByOccupations: Record<string, BookPageType[]> = {};
   if (props.bookPages.length > 0) {
-    pageByOccupations = groupby(props.bookPages, (page) => page.occupation_id);
-    pageByOccupations = sortby(pageByOccupations, (group) => props.bookPages.indexOf(group[0]));
+    pageByOccupations = groupby(props.bookPages, (page: BookPageType) => page.occupation_id);
+    pageByOccupations = sortby(pageByOccupations, (group: BookPageType[]) => props.bookPages.indexOf(group[0]));
   }
-  // console.log(pageByOccupations);
-  const bookPages = [];
+  const bookPages: Record<string, Record<string, BookPageType[]>> = {};
   Object.keys(pageByOccupations).forEach((occupation) => {
-    bookPages[occupation] = groupby(pageByOccupations[occupation], (page) => page.page_number);
+    bookPages[occupation] = groupby(pageByOccupations[occupation], (page: BookPageType) => page.page_number);
   });
-  let jointPages: any = [];
-  bookPages.forEach((jobs: Array<any>, index) => {
-    if (index === bookPages.length - 1 && jobs[1] && jobs[2]) {
+  let jointPages: BookPageType[][] = [];
+  Object.values(bookPages).forEach((jobs, index, arr) => {
+    if (index === arr.length - 1 && jobs[1] && jobs[2]) {
       jointPages = [...jointPages, jobs[1], jobs[2]];
       return;
     }
@@ -160,7 +188,7 @@ const BookPreview = (props: any) => {
     });
   });
 
-  const getImage = (job, pageNumber) => {
+  const getImage = (job: string, pageNumber: number) => {
     const { Gender, Age, Skin, Hair } = props.selected;
     const pagePath = props.isMobile ? 'pages-sm' : 'pages';
     let jobPath = `${job}/page-${pageNumber}`;
