@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React from 'react';
@@ -86,17 +87,17 @@ const Index = (props: any): JSX.Element => {
                 </Link>
               </div>
               <div className="c-section--top__image">
-                <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
+                <Image src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
               </div>
             </div>
             <div className="c-section__create-now__books">
               <LazyLoad>
-                <img src="/static/images/book-decoration.png" alt="books" />
+                <Image src="/static/images/book-decoration.png" alt="books" />
               </LazyLoad>
             </div>
             <div className="c-section__create-now__dust">
               <LazyLoad>
-                <img src="/static/images/dust-decoration.png" alt="dust" />
+                <Image src="/static/images/dust-decoration.png" alt="dust" />
               </LazyLoad>
             </div>
           </div>
@@ -135,7 +136,7 @@ const Index = (props: any): JSX.Element => {
           {occupationsTop.map((job) => (
             <div key={job.id} className="c-section__jobs__circle">
               <LazyLoad>
-                <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                <Image src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
               </LazyLoad>
             </div>
           ))}
@@ -146,7 +147,7 @@ const Index = (props: any): JSX.Element => {
               job.name !== 'President' && (
                 <div key={job.id} className="c-section__jobs__circle">
                   <LazyLoad>
-                    <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                    <Image src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
                   </LazyLoad>
                 </div>
               ),

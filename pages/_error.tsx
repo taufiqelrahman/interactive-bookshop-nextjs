@@ -1,6 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -59,12 +60,16 @@ const Error: NextPage<ErrorProps> = (props) => {
               </a>
             </Link>
           </div>
-          <img
+          <Image
             alt="blue planet"
             src="/static/images/blue-planet.png"
             className="c-error__planet c-error__planet--blue"
           />
-          <img alt="red planet" src="/static/images/red-planet.png" className="c-error__planet c-error__planet--red" />
+          <Image
+            alt="red planet"
+            src="/static/images/red-planet.png"
+            className="c-error__planet c-error__planet--red"
+          />
         </div>
         {props.isMobile && <Footer />}
       </div>
