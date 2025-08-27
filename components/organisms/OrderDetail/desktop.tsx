@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
@@ -78,7 +79,7 @@ const OrderDetailDesktop = (props: any): any => {
                       <Skeleton height={136} width={136} />
                     ) : (
                       <div className="c-detail__book__image">
-                        <img src={previewImg(lineItems[0].customAttributes)} alt="item preview" />
+                        <Image src={previewImg(lineItems[0].customAttributes)} alt="item preview" />
                       </div>
                     )}
                   </div>

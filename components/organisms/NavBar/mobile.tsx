@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import Stepper from 'components/atoms/Stepper';
@@ -21,7 +22,7 @@ const NavBar = (props: any) => {
       </div>
       <div className={`c-nav-bar__title ${indexOrError ? 'c-nav-bar__title--index' : ''}`}>
         {indexOrError ? (
-          <img src="/static/images/logo.png" alt="logo" width="33" height="33" />
+          <Image src="/static/images/logo.png" alt="logo" width="33" height="33" />
         ) : props.isSteps ? (
           <Stepper
             step={props.step}
