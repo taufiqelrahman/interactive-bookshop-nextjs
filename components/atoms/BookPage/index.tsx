@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect } from 'react';
 import LazyLoad, { forceVisible } from 'react-lazyload';
 
-import { getBookPageStyle } from './helpers';
+import { getBookPageStyle, processBookPageContent } from './helpers';
 
 // import 'styles/fonts.min.css'; // @todo change to module
 
@@ -32,7 +32,7 @@ interface BookPageProps {
 const BookPage = (props: BookPageProps) => {
   const { t } = useTranslation('common');
 
-  const styleGenerator = useCallback(
+  const generateStyle = useCallback(
     (styleString: string | undefined) =>
       getBookPageStyle({
         styleString,
@@ -44,39 +44,27 @@ const BookPage = (props: BookPageProps) => {
     [props.isMobile, props.isWhiteCover, props.name, props.contents],
   );
 
-  const processContent = (content, language) => {
-    const isEnglish = language === 'english';
-    let processed = isEnglish ? content.english : content.indonesia;
-    const {
-      contents: [firstContent],
-      name,
-      gender,
-      dedication,
-    } = props;
-    if (!name) return processed;
-    if (firstContent.occupation.name === 'Front Cover') {
-      processed = processed.split('[name]').join((name || '').toUpperCase());
-    } else {
-      processed = processed.split('[name]').join(name.replace(/^./, name[0].toUpperCase()));
-    }
-    if (isEnglish) {
-      const isBoy = gender === 'boy';
-      processed = processed.split('[child]').join(isBoy ? 'boy' : 'girl');
-      processed = processed.split('[child:1]').join(isBoy ? 'he' : 'she');
-      processed = processed.split('[child:2]').join(isBoy ? 'his' : 'her');
-      processed = processed.split('[child:3]').join(isBoy ? 'him' : 'her');
-    }
-    if (firstContent.occupation.name === 'Back Cover') {
-      processed = dedication;
-    }
-    return processed;
-  };
+  const processContent = useCallback(
+    (content, language) =>
+      processBookPageContent({
+        content,
+        language,
+        contents: props.contents,
+        name: props.name,
+        gender: props.gender,
+        dedication: props.dedication,
+      }),
+    [props.contents, props.name, props.gender, props.dedication],
+  );
+
   // useEffect(() => {
   //   if (!props.enableLazy) forceVisible();
   // }, [props.enableLazy]);
+
   useEffect(() => {
     if (!props.isMobile) forceVisible();
   }, [props.isMobile]);
+
   return (
     <div id={props.id} className={`c-book-page ${props.className || ''}`} style={props.style}>
       <LazyLoad overflow>
@@ -92,7 +80,7 @@ const BookPage = (props: BookPageProps) => {
                   <div
                     key={key}
                     className="c-book-page__content"
-                    style={styleGenerator(content.style)}
+                    style={generateStyle(content.style)}
                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value) }}
                   />
                 );

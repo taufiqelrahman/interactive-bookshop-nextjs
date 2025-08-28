@@ -1,4 +1,59 @@
-import React from 'react';
+interface ProcessBookPageContentArgs {
+  content: any;
+  language: string;
+  contents: BookPageContent[];
+  name?: string;
+  gender?: string;
+  dedication?: string;
+}
+
+/**
+ * Process and personalize book page content string based on language, name, gender, and dedication.
+ */
+
+/**
+ * Process and personalize book page content string based on language, name, gender, and dedication.
+ * - Replaces [name] and [child*] placeholders with personalized values.
+ * - Handles special cases for Front Cover and Back Cover.
+ */
+export function processBookPageContent(args: ProcessBookPageContentArgs): string {
+  const { content, language, contents, name, gender, dedication } = args;
+
+  // Determine language and get the base content string
+  const isEnglish = language === 'english';
+  let processed = isEnglish ? content.english : content.indonesia;
+
+  // Get the first content block for special cover logic
+  const [firstContent] = contents;
+
+  // If no name, return the base processed string
+  if (!name) return processed;
+
+  // Replace [name] placeholder
+  if (firstContent.occupation.name === 'Front Cover') {
+    // On front cover, use uppercase name
+    processed = processed.split('[name]').join((name || '').toUpperCase());
+  } else {
+    // Else, capitalize only the first letter
+    processed = processed.split('[name]').join(name.replace(/^./, name[0].toUpperCase()));
+  }
+
+  // Replace [child*] placeholders for English
+  if (isEnglish) {
+    const isBoy = gender === 'boy';
+    processed = processed.split('[child]').join(isBoy ? 'boy' : 'girl');
+    processed = processed.split('[child:1]').join(isBoy ? 'he' : 'she');
+    processed = processed.split('[child:2]').join(isBoy ? 'his' : 'her');
+    processed = processed.split('[child:3]').join(isBoy ? 'him' : 'her');
+  }
+
+  // If Back Cover, use dedication text
+  if (firstContent.occupation.name === 'Back Cover') {
+    processed = dedication;
+  }
+
+  return processed;
+}
 
 interface BookPageContent {
   occupation: { name: string };
