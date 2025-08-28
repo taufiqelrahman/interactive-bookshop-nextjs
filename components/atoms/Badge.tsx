@@ -1,4 +1,11 @@
-const Badge = (props: any) => {
+import React from 'react';
+
+interface BadgeProps {
+  color?: string;
+  children?: React.ReactNode;
+}
+
+const Badge = (props: BadgeProps) => {
   const colorClass = props.color ? `c-badge--${props.color}` : '';
   return (
     <div className={`c-badge ${colorClass}`}>
