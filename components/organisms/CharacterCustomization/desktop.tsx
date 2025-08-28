@@ -1,6 +1,5 @@
 import detectIt from 'detect-it';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useRef, useState } from 'react';
@@ -197,7 +196,7 @@ const CharacterCustomization = (props: any) => {
           </div>
           <div className={`c-char-custom__right ${stickyClassName()}`} ref={ref}>
             <div className="c-char-custom__char">
-              <Image id="preview-char" src="/static/images/empty.png" alt="character preview" />
+              <img id="preview-char" src="/static/images/empty.png" alt="character preview" />
             </div>
           </div>
         </div>

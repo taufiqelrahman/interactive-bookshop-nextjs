@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState, Fragment } from 'react';
@@ -169,7 +168,7 @@ const CharacterCustomization = (props: any) => {
             <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
               <div className="u-container c-char-custom__preview">
                 <div>
-                  <Image id="preview-char" src="/static/images/empty.png" alt="character preview" />
+                  <img id="preview-char" src="/static/images/empty.png" alt="character preview" />
                 </div>
               </div>
               <div className="u-container c-char-custom__tab">
