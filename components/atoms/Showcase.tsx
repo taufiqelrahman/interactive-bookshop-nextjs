@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import { Swipeable } from 'react-swipeable';
@@ -21,7 +20,7 @@ const Showcase = (props: any) => {
           {images.map((img, index) => (
             <LazyLoad key={index}>
               {index === isActive && (
-                <Image
+                <img
                   src={`/static/images/showcase${props.isMobile ? '-sm' : ''}/${img}`}
                   alt={`showcase-${index + 1}`}
                 />
@@ -50,7 +49,7 @@ const Showcase = (props: any) => {
           </div>
           {images.map((img, index) => (
             <div key={index} className={`c-showcase__thumb ${index === isActive ? 'c-showcase__thumb--active' : ''}`}>
-              <Image
+              <img
                 src={`/static/images/showcase-xs/${img}`}
                 alt={`thumb-${index + 1}`}
                 onClick={() => setIsActive(index)}
