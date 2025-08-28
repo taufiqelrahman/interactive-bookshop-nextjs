@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useSelector } from 'react-redux';
@@ -49,7 +48,7 @@ const Orders = (props: any): any => {
               ))
             ) : (
               <div className="c-orders__empty">
-                <Image src={`/static/images/empty-asset${props.isMobile ? '-sm' : ''}.png`} alt="empty" />
+                <img src={`/static/images/empty-asset${props.isMobile ? '-sm' : ''}.png`} alt="empty" />
                 <div className="c-orders__empty__title">{t('orders-empty-title')}</div>
                 <div className="c-orders__empty__subtitle">{t('orders-empty-subtitle')}</div>
                 <Link href="/create">

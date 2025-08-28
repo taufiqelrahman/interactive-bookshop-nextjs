@@ -1,7 +1,6 @@
 import debouncePromise from 'awesome-debounce-promise';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import React, { useState, useEffect, Fragment, ElementType } from 'react';
@@ -135,7 +134,7 @@ const Register: React.FC<RegisterProps> = (props) => {
             <div className="c-register__container">
               {registerStep === RegisterStep.WELCOME ? (
                 <Fragment>
-                  <Image alt="welcome" className="c-register__image" src="/static/images/register-illus.png" />
+                  <img alt="welcome" className="c-register__image" src="/static/images/register-illus.png" />
                   <h1 className="c-register__title">{t('lets-join')}</h1>
                   <Button
                     onClick={registerEmail}

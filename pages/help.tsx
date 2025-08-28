@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,7 +54,7 @@ const Help = (props: any): any => {
       </Head>
       <div className={`u-container__page ${props.isMobile ? '' : 'u-container'}`}>
         {props.isMobile ? (
-          <Image className="c-help-section__image mb-2" src="/static/images/help.png" alt="help" />
+          <img className="c-help-section__image mb-2" src="/static/images/help.png" alt="help" />
         ) : (
           <Stepper title={t('help-title')} />
         )}
@@ -142,7 +141,7 @@ const Help = (props: any): any => {
             </Wrapper>
           </div>
           <div className="c-help-section__right">
-            <Image src="/static/images/help-balloon.png" alt="help" />
+            <img src="/static/images/help-balloon.png" alt="help" />
           </div>
         </div>
       </div>

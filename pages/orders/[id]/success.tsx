@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cookies from 'next-cookies';
@@ -38,7 +37,7 @@ const OrderSuccess = (props: any): any => {
             <div className="c-success__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
                 {/* <img alt="success" className="c-success__image" src="/static/images/success.png" /> */}
-                <Image alt="success" className="c-success__image" src="/static/images/old_man.gif" />
+                <img alt="success" className="c-success__image" src="/static/images/old_man.gif" />
                 <h1 className="c-success__title">{paymentProblem ? t('payment-problem') : t('order-success')}</h1>
                 <div className="c-success__subtitle">
                   {paymentProblem

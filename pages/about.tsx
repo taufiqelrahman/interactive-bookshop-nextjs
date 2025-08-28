@@ -1,7 +1,6 @@
 import DOMPurify from 'dompurify';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -74,7 +73,7 @@ const Help = ({ isMobile, setSideNav }) => {
           </Link>
         </div>
         <LazyLoad>
-          <Image className="c-about-us__image c-about-us--long" src="/static/images/about-us.png" alt="about-us" />
+          <img className="c-about-us__image c-about-us--long" src="/static/images/about-us.png" alt="about-us" />
         </LazyLoad>
         <div className="c-about-us c-about-us__team c-about-us--long">
           <div
@@ -87,7 +86,7 @@ const Help = ({ isMobile, setSideNav }) => {
           <div className="c-about-us__powered__container">
             <a href="https://www.tjetak.com/" rel="noreferrer noopener" target="_blank">
               <LazyLoad>
-                <Image
+                <img
                   className="c-about-us__powered__image"
                   src="https://picsum.photos/100/20"
                   alt="tjetak"
