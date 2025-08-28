@@ -37,7 +37,7 @@ interface SelectedType {
 }
 
 interface BookPreviewProps {
-  isMobile: boolean;
+  isMobile?: boolean;
   bookPages: BookPageType[];
   selected: SelectedType;
   cover?: string;
