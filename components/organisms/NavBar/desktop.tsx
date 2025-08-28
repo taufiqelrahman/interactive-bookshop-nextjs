@@ -1,5 +1,4 @@
 import detectIt from 'detect-it';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 // import { ShoppingCart } from 'react-feather';
@@ -75,7 +74,7 @@ const NavBar = (props: any) => {
             <Link href="/">
               <a className="c-nav-bar__logo">
                 {/* <img src={`/static/images/logo${isSticky || !isIndexPage ? '' : '-black'}.png`} alt="logo" /> */}
-                <Image src={`/static/images/logo.png`} alt="logo" />
+                <img src={`/static/images/logo.png`} alt="logo" />
               </a>
             </Link>
             <div className="c-nav-bar__menu">
