@@ -2,12 +2,19 @@ import { useState } from 'react';
 
 import Card from 'components/atoms/Card';
 
-const Accordion = (props: any) => {
+interface AccordionProps {
+  title: string;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+  isMobile?: boolean;
+}
+
+const Accordion = (props: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   return (
     <div style={props.style}>
       <Wrapper variant="border">

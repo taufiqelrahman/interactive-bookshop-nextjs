@@ -1,4 +1,13 @@
-const Card = (props: any) => {
+import React from 'react';
+
+interface CardProps {
+  variant?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+}
+
+const Card = (props: CardProps) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
