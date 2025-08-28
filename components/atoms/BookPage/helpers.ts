@@ -72,3 +72,26 @@ export function getBookPageStyle(args: BookPageStyleArgs): React.CSSProperties {
 
   return style;
 }
+
+/**
+ * Calculate the height of the book preview area based on window size and book aspect ratio.
+ * - Uses a different width calculation for desktop vs mobile/tablet.
+ * - Applies a fixed padding and a fixed book aspect ratio.
+ * - Returns the calculated height for a single book page.
+ */
+export const calcHeight = (): number => {
+  // Determine the container width: 75% for desktop, ~92% for mobile/tablet
+  const isDesktop = window.innerWidth > 1023;
+  const containerWidth = isDesktop ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
+
+  // Padding to subtract from total width (e.g., for margins)
+  const padding = 60;
+
+  // Book aspect ratio: width/height = 495/700
+  const bookRatio = 495 / 700;
+
+  // Calculate the height for one page (container is split in half for two pages)
+  const availableWidth = (containerWidth - padding) / 2;
+  const height = availableWidth * bookRatio;
+  return height;
+};

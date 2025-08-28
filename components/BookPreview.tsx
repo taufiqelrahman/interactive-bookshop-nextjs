@@ -5,11 +5,12 @@ import sortby from 'lodash.sortby';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState, useRef, Fragment } from 'react';
+import { useEffect, useState, useRef, Fragment, useCallback } from 'react';
 
 import initBook from 'assets/flipbook.js';
 import BookPage from 'components/atoms/BookPage';
 import * as gtag from 'lib/gtag';
+import { calcHeight } from './atoms/BookPage/helpers';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
@@ -58,14 +59,6 @@ const BookPreview = (props: BookPreviewProps) => {
   //   lastPage: false,
   // });
 
-  const calcHeight = () => {
-    // const image: any = document.querySelector('.c-flipbook__page img');
-    const containerWidth = window.innerWidth > 1023 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
-    // const containerMargin = (window.innerWidth - containerWidth) / 2;
-    const padding = 60;
-    const bookRatio = 495 / 700;
-    return ((containerWidth - padding) / 2) * bookRatio;
-  };
   const updateHeight = () => {
     const height = calcHeight();
     setState({ ...state, height, loaded: true });
