@@ -1,15 +1,36 @@
 import DOMPurify from 'dompurify';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import LazyLoad, { forceVisible } from 'react-lazyload';
-
 // import 'styles/fonts.min.css'; // @todo change to module
 
-const BookPage = (props: any) => {
+interface BookPageContent {
+  occupation: { name: string };
+  [key: string]: any;
+}
+
+interface BookPageProps {
+  isMobile?: boolean;
+  isWhiteCover?: boolean;
+  name?: string;
+  gender?: string;
+  dedication?: string;
+  contents: BookPageContent[];
+  image?: string;
+  style?: React.CSSProperties;
+  className?: string;
+  mustLoad?: boolean;
+  height?: string | number;
+  language?: string;
+  id: string;
+  [key: string]: unknown;
+}
+
+const BookPage = (props: BookPageProps) => {
   const { t } = useTranslation('common');
-  const styleGenerator = (string: any): any => {
-    let style: any = {
+  const styleGenerator = (string: string | undefined): React.CSSProperties => {
+    let style: React.CSSProperties = {
       width: '37%',
       fontSize: props.isMobile ? '2vw' : '0.8vw',
       lineHeight: props.isMobile ? '2.5vw' : '1vw',
@@ -18,9 +39,10 @@ const BookPage = (props: any) => {
       fontWeight: 300,
     };
     if (string) style = { ...style, ...JSON.parse(string) };
-    if (props.isMobile && style.fontSizeMobile) style = { ...style, fontSize: style.fontSizeMobile };
-    if (props.isMobile && style.lineHeightMobile) style = { ...style, lineHeight: style.lineHeightMobile };
-    if (props.isMobile && style.widthMobile) style = { ...style, width: style.widthMobile };
+    if (props.isMobile && (style as any).fontSizeMobile) style = { ...style, fontSize: (style as any).fontSizeMobile };
+    if (props.isMobile && (style as any).lineHeightMobile)
+      style = { ...style, lineHeight: (style as any).lineHeightMobile };
+    if (props.isMobile && (style as any).widthMobile) style = { ...style, width: (style as any).widthMobile };
     if (props.isWhiteCover) style = { ...style, color: 'black' };
     const [firstContent] = props.contents;
     if (firstContent.occupation.name === 'Front Cover') {
@@ -73,7 +95,7 @@ const BookPage = (props: any) => {
   // }, [props.enableLazy]);
   useEffect(() => {
     if (!props.isMobile) forceVisible();
-  }, []);
+  }, [props.isMobile]);
   return (
     <div id={props.id} className={`c-book-page ${props.className || ''}`} style={props.style}>
       <LazyLoad overflow>
