@@ -270,7 +270,7 @@ const BookPreview = (props: BookPreviewProps) => {
                 return (
                   <BookPage
                     key={index}
-                    id={index + 1}
+                    id={(index + 1).toString()}
                     isLast={index === jointPages.length - 1}
                     className="c-flipbook__page"
                     // className={`c-flipbook__page ${pageClass(index)}`}

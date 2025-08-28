@@ -1,8 +1,11 @@
 import DOMPurify from 'dompurify';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import LazyLoad, { forceVisible } from 'react-lazyload';
+
+import { getBookPageStyle } from './helpers';
+
 // import 'styles/fonts.min.css'; // @todo change to module
 
 interface BookPageContent {
@@ -23,46 +26,25 @@ interface BookPageProps {
   mustLoad?: boolean;
   height?: string | number;
   language?: string;
-  id: string;
+  id?: string;
   [key: string]: unknown;
 }
 
 const BookPage = (props: BookPageProps) => {
   const { t } = useTranslation('common');
-  const styleGenerator = (string: string | undefined): React.CSSProperties => {
-    let style: React.CSSProperties = {
-      width: '37%',
-      fontSize: props.isMobile ? '2vw' : '0.8vw',
-      lineHeight: props.isMobile ? '2.5vw' : '1vw',
-      fontFamily: 'Jost',
-      textAlign: 'center',
-      fontWeight: 300,
-    };
-    if (string) style = { ...style, ...JSON.parse(string) };
-    if (props.isMobile && (style as any).fontSizeMobile) style = { ...style, fontSize: (style as any).fontSizeMobile };
-    if (props.isMobile && (style as any).lineHeightMobile)
-      style = { ...style, lineHeight: (style as any).lineHeightMobile };
-    if (props.isMobile && (style as any).widthMobile) style = { ...style, width: (style as any).widthMobile };
-    if (props.isWhiteCover) style = { ...style, color: 'black' };
-    const [firstContent] = props.contents;
-    if (firstContent.occupation.name === 'Front Cover') {
-      style = {
-        ...style,
-        fontSize: props.isMobile ? '9vw' : '3.5vw',
-        lineHeight: props.isMobile ? '7.5vw' : '3vw',
-      };
-      if (props.name && props.name.length > 4) {
-        style = {
-          ...style,
-          width: '90%',
-          left: '15%',
-          marginLeft: '-10%',
-          marginRight: '-10%',
-        };
-      }
-    }
-    return style;
-  };
+
+  const styleGenerator = useCallback(
+    (styleString: string | undefined) =>
+      getBookPageStyle({
+        styleString,
+        isMobile: props.isMobile,
+        isWhiteCover: props.isWhiteCover,
+        name: props.name,
+        contents: props.contents,
+      }),
+    [props.isMobile, props.isWhiteCover, props.name, props.contents],
+  );
+
   const processContent = (content, language) => {
     const isEnglish = language === 'english';
     let processed = isEnglish ? content.english : content.indonesia;
