@@ -13,7 +13,7 @@ interface Occupation {
 
 interface FieldOccupationsProps {
   style?: React.CSSProperties;
-  errors?: { message?: string };
+  errors?: any;
   setValue: (field: string, value: string[]) => void;
   triggerValidation: (field: string) => void;
   formState: { isSubmitted?: boolean };
@@ -21,6 +21,7 @@ interface FieldOccupationsProps {
   occupations: Occupation[];
   isMobile?: boolean;
   gender?: string;
+  register?: any;
 }
 
 const FieldOccupations = (props: FieldOccupationsProps) => {

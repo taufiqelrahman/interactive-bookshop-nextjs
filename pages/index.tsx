@@ -23,7 +23,7 @@ const Footer = dynamic(() => import('components/organisms/Footer'));
 const Index = (props: any): JSX.Element => {
   const { t } = useTranslation('page-index');
   const { testimonials, occupations } = useSelector((state: AppState) => state.master);
-  const { isMobile, setSideNav, saveSelected } = props;
+  const { isMobile, setSideNav } = props;
 
   const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
   const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
@@ -171,7 +171,7 @@ const Index = (props: any): JSX.Element => {
             <div className="c-section--bottom__create-book">
               <Element name="create-book">
                 <h2>{t('createbook-header')}</h2>
-                <BookForm isMobile={isMobile} saveSelected={saveSelected} occupations={occupations} />
+                <BookForm isMobile={isMobile} />
               </Element>
             </div>
           </LazyLoad>
