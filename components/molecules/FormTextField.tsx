@@ -19,7 +19,7 @@ const FormTextField = (props: any) => (
           @apply mb-0;
         }
         &__label {
-          @apply mb-3 flex text-sm font-semibold;
+          @apply mb-3 flex text-base font-semibold;
           @screen md {
             @apply text-base;
           }

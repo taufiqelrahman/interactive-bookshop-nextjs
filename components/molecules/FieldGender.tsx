@@ -46,7 +46,7 @@ const FieldGender = (props: any) => {
             @apply mb-0;
           }
           &__header {
-            @apply mb-3 flex font-semibold;
+            @apply mb-3 flex text-base font-semibold;
           }
           &__options {
             @apply flex flex-wrap;

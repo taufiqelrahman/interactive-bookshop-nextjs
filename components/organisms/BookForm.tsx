@@ -129,8 +129,8 @@ const BookForm = (props: any) => {
                   occupations={props.occupations}
                   formState={formState}
                 /> */}
-                <div className="c-book-form__second-row">
-                  <div className="c-book-form__second-row__inputs">
+                <div className="c-book-form__second-row items-end">
+                  <div className="c-book-form__second-row__inputs flex items-center">
                     <FormTextField
                       label={t('nickname-label')}
                       name="Name"
@@ -151,7 +151,7 @@ const BookForm = (props: any) => {
                     {/* <FieldAge schema={schema.age} errors={errors.Age} register={register} /> */}
                   </div>
                   <div className="c-book-form__second-row__button">
-                    <Button width="100%" type="submit" disabled={!isFormValid} style={{ marginTop: 24 }}>
+                    <Button width="100%" type="submit" disabled={!isFormValid}>
                       {t('continue-button')}
                     </Button>
                   </div>
@@ -176,12 +176,12 @@ const BookForm = (props: any) => {
           &__second-row {
             @apply flex flex-col;
             @screen lg {
-              @apply flex-row items-start justify-between;
+              @apply flex-row items-end justify-between;
             }
             &__inputs {
               @apply flex w-full flex-col;
               @screen md {
-                @apply flex-row items-start justify-between;
+                @apply flex-row justify-between;
               }
               @screen lg {
                 @apply w-2/3;
