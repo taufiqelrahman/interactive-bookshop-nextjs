@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
@@ -10,8 +11,10 @@ import FieldGender from 'components/molecules/FieldGender';
 import FormTextField from 'components/molecules/FormTextField';
 // import FieldAge from 'components/molecules/FieldAge';
 import * as gtag from 'lib/gtag';
+import actions from 'store/actions';
 
 const BookForm = (props: any) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation('form');
   const router = useRouter();
   const [isFormValid, setIsFormValid] = useState(false);
@@ -68,7 +71,7 @@ const BookForm = (props: any) => {
       category: 'engagement',
       label: '/',
     });
-    props.saveSelected(data);
+    dispatch(actions.saveSelected(data));
     router.push('/create');
   };
 
