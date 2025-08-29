@@ -1,15 +1,11 @@
 import { useTranslation } from 'next-i18next';
 import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 
 import Badge from 'components/atoms/Badge';
 import Checkbox from 'components/atoms/Checkbox';
+import { Occupation } from 'store/master/types';
 // import { useRouter } from 'next/router';
-
-interface Occupation {
-  id: string | number;
-  name: string;
-  indonesia?: string;
-}
 
 interface FieldOccupationsProps {
   style?: React.CSSProperties;
@@ -18,7 +14,6 @@ interface FieldOccupationsProps {
   triggerValidation: (field: string) => void;
   formState: { isSubmitted?: boolean };
   defaultValue?: string[];
-  occupations: Occupation[];
   isMobile?: boolean;
   gender?: string;
   register?: any;
@@ -26,49 +21,69 @@ interface FieldOccupationsProps {
 
 const FieldOccupations = (props: FieldOccupationsProps) => {
   const { t, i18n } = useTranslation('form');
-  const [occupations, setOccupations] = useState<string[]>([]);
-  // const router = useRouter();
-  // const isIndexPage = router.pathname === '/';
-  const setValue = useCallback(
-    (value: string[]) => {
-      setOccupations(value);
-      props.setValue('Occupations', value);
-      if (props.formState.isSubmitted || value.length > 2) {
+
+  const master = useSelector((state: any) => state.master);
+  const { occupations } = master;
+  // State for selected occupation names
+  const [selectedOccupations, setSelectedOccupations] = useState<string[]>([]);
+
+  /**
+   * Update selected occupations and trigger validation if needed.
+   * Triggers validation if form is submitted or more than 2 occupations are selected.
+   */
+  const updateSelectedOccupations = useCallback(
+    (newSelections: string[]) => {
+      setSelectedOccupations(newSelections);
+      props.setValue('Occupations', newSelections);
+      if (props.formState.isSubmitted || newSelections.length > 2) {
         props.triggerValidation('Occupations');
       }
     },
     [props],
   );
-  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked, value } = event.target;
-    let newValue: string[] = [...occupations];
+
+  /**
+   * Handle checkbox change for an occupation.
+   * Adds or removes the occupation from the selected list.
+   */
+  const handleOccupationCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked, value: occupationName } = event.target;
+    let updatedSelections = [...selectedOccupations];
     if (checked) {
-      newValue = [...newValue, value];
+      updatedSelections = [...updatedSelections, occupationName];
     } else {
-      const index = occupations.findIndex((job) => job === value);
-      if (index === -1) return;
-      newValue.splice(index, 1);
+      updatedSelections = updatedSelections.filter((job) => job !== occupationName);
     }
-    setValue(newValue);
+    updateSelectedOccupations(updatedSelections);
   };
-  const occupationsOpts = (): Occupation[] => {
-    let occupationsOpts = [...props.occupations];
+
+  /**
+   * Get the list of occupations to display, filtered by gender and device type.
+   */
+  const getFilteredOccupations = (): Occupation[] => {
+    let filtered = [...occupations];
+    // Remove 'President' for boys on mobile or for everyone on desktop
     if ((props.isMobile && props.gender === 'boy') || !props.isMobile) {
-      occupationsOpts = occupationsOpts.filter((job) => job.name !== 'President');
+      filtered = filtered.filter((job) => job.name !== 'President');
     }
+    // Remove 'Ballerina' for boys
     if (props.gender === 'boy') {
-      occupationsOpts = occupationsOpts.filter((job) => job.name !== 'Ballerina');
+      filtered = filtered.filter((job) => job.name !== 'Ballerina');
     }
-    return occupationsOpts;
+    return filtered;
   };
+
+  // Initialize selected occupations from defaultValue
   useEffect(() => {
-    if (props.defaultValue) setOccupations(props.defaultValue);
+    if (props.defaultValue) setSelectedOccupations(props.defaultValue);
   }, [props.defaultValue]);
+
+  // Remove 'Ballerina' if gender changes to boy and it was selected
   useEffect(() => {
-    if (props.gender === 'boy' && occupations.includes('Ballerina')) {
-      setValue(occupations.filter((job) => job !== 'Ballerina'));
+    if (props.gender === 'boy' && selectedOccupations.includes('Ballerina')) {
+      updateSelectedOccupations(selectedOccupations.filter((job) => job !== 'Ballerina'));
     }
-  }, [props.gender, occupations, setValue]);
+  }, [props.gender, selectedOccupations, updateSelectedOccupations]);
   return (
     <div style={props.style}>
       <div className="c-field-occupations">
@@ -77,14 +92,14 @@ const FieldOccupations = (props: FieldOccupationsProps) => {
           {props.errors && <Badge>!</Badge>}
         </div>
         <div className="c-field-occupations__options">
-          {occupationsOpts().map((job) => (
+          {getFilteredOccupations().map((job) => (
             <div key={job.id} className="c-field-occupations__options__box">
               <Checkbox
                 value={job.name}
                 errors={props.errors}
                 inset={true}
-                handleCheck={handleCheck}
-                checked={occupations.includes(job.name)}
+                handleCheck={handleOccupationCheck}
+                checked={selectedOccupations.includes(job.name)}
                 name="Occupations"
               >
                 <span>{i18n.language === 'en' ? job.name : job.indonesia}</span>
