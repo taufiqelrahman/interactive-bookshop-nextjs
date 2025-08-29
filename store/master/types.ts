@@ -10,10 +10,12 @@ interface Testimonial {
   image_url: string;
 }
 
-interface Occupation {
+export interface Occupation {
+  id: string;
   name: string;
   description: string;
   page_count: number;
+  indonesia: string;
 }
 
 interface BookContent {

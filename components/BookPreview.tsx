@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import detectIt from 'detect-it';
 import debounce from 'lodash.debounce';
 import groupby from 'lodash.groupby';
@@ -9,6 +10,7 @@ import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
 import initBook from 'assets/flipbook.js';
 import BookPage from 'components/atoms/BookPage';
 import * as gtag from 'lib/gtag';
+
 import { calcHeight } from './atoms/BookPage/helpers';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';

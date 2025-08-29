@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as gtag from 'lib/gtag';
+import actions from 'store/actions';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 
@@ -30,6 +31,7 @@ const Stepper = dynamic(() => import('components/atoms/Stepper'));
 
 const CharacterCustomization = (props: any) => {
   const { t } = useTranslation('form');
+  const dispatch = useDispatch();
   const cart = useSelector((state: any) => state.cart);
   const master = useSelector((state: any) => state.master);
   const router = useRouter();
@@ -67,7 +69,7 @@ const CharacterCustomization = (props: any) => {
       });
     }
     const jobIds = getJobIds(data.Occupations, occupations);
-    props.saveSelected({ ...selected, ...data, jobIds });
+    dispatch(actions.saveSelected({ ...selected, ...data, jobIds }));
     router.push('/preview');
   };
 
@@ -164,7 +166,6 @@ const CharacterCustomization = (props: any) => {
                   errors={errors.Occupations}
                   style={{ maxWidth: 550, marginBottom: 24 }}
                   defaultValue={selected.Occupations}
-                  occupations={occupations}
                   formState={formState}
                   gender={watch('Gender')}
                 />
