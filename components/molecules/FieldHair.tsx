@@ -7,22 +7,23 @@ import Radio from 'components/atoms/Radio';
 const FieldHair = (props: any) => {
   const { t } = useTranslation('form');
   const toddlerBoyHair = [
-    { name: t('hair-short'), image: 'short-toddler-boy' },
-    { name: t('hair-curly'), image: 'curly' },
+    { name: t('short'), image: 'short-toddler-boy' },
+    { name: t('curly'), image: 'curly' },
   ];
   const kidBoyHair = [
-    { name: t('hair-short'), image: 'short-kid-boy' },
-    { name: t('hair-curly'), image: 'curly' },
+    { name: t('short'), image: 'short-kid-boy' },
+    { name: t('curly'), image: 'curly' },
   ];
   const girlHair = [
-    { name: t('hair-short'), image: 'short-girl' },
-    { name: t('hair-hijab'), image: 'hijab' },
+    { name: t('short'), image: 'short-girl' },
+    { name: t('hijab'), image: 'hijab' },
   ];
   const hair = props.type === 'boy' ? (props.age === 'kid' ? kidBoyHair : toddlerBoyHair) : girlHair;
   useEffect(() => {
     return () => {
       props.unregister('Hair');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.type]);
   return (
     <div style={props.style}>
