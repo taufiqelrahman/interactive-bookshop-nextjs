@@ -1,6 +1,16 @@
-import * as types from './types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initState: types.MasterState = {
+import { Occupation } from './types';
+
+export interface MasterState {
+  isFetching: boolean;
+  testimonials: any[];
+  occupations: Occupation[];
+  bookPages: any[];
+  provinces: any[];
+}
+
+const initialState: MasterState = {
   isFetching: false,
   testimonials: [],
   occupations: [],
@@ -8,38 +18,29 @@ const initState: types.MasterState = {
   provinces: [],
 };
 
-const reducer = (state: types.MasterState = initState, action: types.MasterActionTypes): any => {
-  switch (action.type) {
-    case types.LOAD_TESTIMONIALS: {
-      return {
-        ...state,
-        testimonials: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    case types.LOAD_OCCUPATIONS: {
-      return {
-        ...state,
-        occupations: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    case types.LOAD_BOOK_PAGES: {
-      return {
-        ...state,
-        bookPages: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    case types.LOAD_PROVINCES: {
-      return {
-        ...state,
-        provinces: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    default:
-      return state;
-  }
-};
-export default reducer;
+const masterSlice = createSlice({
+  name: 'master',
+  initialState,
+  reducers: {
+    loadTestimonials(state, action: PayloadAction<{ data: any[]; isFetching: boolean }>) {
+      state.testimonials = action.payload.data;
+      state.isFetching = action.payload.isFetching;
+    },
+    loadOccupations(state, action: PayloadAction<{ data: Occupation[]; isFetching: boolean }>) {
+      state.occupations = action.payload.data;
+      state.isFetching = action.payload.isFetching;
+    },
+    loadBookPages(state, action: PayloadAction<{ data: any[]; isFetching: boolean }>) {
+      state.bookPages = action.payload.data;
+      state.isFetching = action.payload.isFetching;
+    },
+    loadProvinces(state, action: PayloadAction<{ data: any[]; isFetching: boolean }>) {
+      state.provinces = action.payload.data;
+      state.isFetching = action.payload.isFetching;
+    },
+  },
+});
+
+export const { loadTestimonials, loadOccupations, loadBookPages, loadProvinces } = masterSlice.actions;
+
+export default masterSlice.reducer;
