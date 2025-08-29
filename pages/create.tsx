@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
@@ -19,7 +20,7 @@ const Create = (props: any): any => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   try {
     store.dispatch(actions.loadOccupations(true));
     const { data: occupations } = await api().master.getOccupations();
@@ -29,7 +30,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
   }
 
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ['common', 'form'])),
+    },
   };
 });
 
