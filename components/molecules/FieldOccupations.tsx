@@ -1,25 +1,46 @@
 import { useTranslation } from 'next-i18next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Badge from 'components/atoms/Badge';
 import Checkbox from 'components/atoms/Checkbox';
 // import { useRouter } from 'next/router';
 
-const FieldOccupations = (props: any) => {
+interface Occupation {
+  id: string | number;
+  name: string;
+  indonesia?: string;
+}
+
+interface FieldOccupationsProps {
+  style?: React.CSSProperties;
+  errors?: { message?: string };
+  setValue: (field: string, value: string[]) => void;
+  triggerValidation: (field: string) => void;
+  formState: { isSubmitted?: boolean };
+  defaultValue?: string[];
+  occupations: Occupation[];
+  isMobile?: boolean;
+  gender?: string;
+}
+
+const FieldOccupations = (props: FieldOccupationsProps) => {
   const { t, i18n } = useTranslation('form');
-  const [occupations, setOccupations]: any = useState([]);
+  const [occupations, setOccupations] = useState<string[]>([]);
   // const router = useRouter();
   // const isIndexPage = router.pathname === '/';
-  const setValue = (value) => {
-    setOccupations(value);
-    props.setValue('Occupations', value);
-    if (props.formState.isSubmitted || value.length > 2) {
-      props.triggerValidation('Occupations');
-    }
-  };
-  const handleCheck = (event) => {
+  const setValue = useCallback(
+    (value: string[]) => {
+      setOccupations(value);
+      props.setValue('Occupations', value);
+      if (props.formState.isSubmitted || value.length > 2) {
+        props.triggerValidation('Occupations');
+      }
+    },
+    [props],
+  );
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = event.target;
-    let newValue: Array<string> = [...occupations];
+    let newValue: string[] = [...occupations];
     if (checked) {
       newValue = [...newValue, value];
     } else {
@@ -29,24 +50,24 @@ const FieldOccupations = (props: any) => {
     }
     setValue(newValue);
   };
-  const occupationsOpts = () => {
+  const occupationsOpts = (): Occupation[] => {
     let occupationsOpts = [...props.occupations];
     if ((props.isMobile && props.gender === 'boy') || !props.isMobile) {
-      occupationsOpts = [...props.occupations.filter((job) => job.name !== 'President')];
+      occupationsOpts = occupationsOpts.filter((job) => job.name !== 'President');
     }
     if (props.gender === 'boy') {
-      occupationsOpts = [...occupationsOpts.filter((job) => job.name !== 'Ballerina')];
+      occupationsOpts = occupationsOpts.filter((job) => job.name !== 'Ballerina');
     }
     return occupationsOpts;
   };
   useEffect(() => {
     if (props.defaultValue) setOccupations(props.defaultValue);
-  }, []);
+  }, [props.defaultValue]);
   useEffect(() => {
     if (props.gender === 'boy' && occupations.includes('Ballerina')) {
       setValue(occupations.filter((job) => job !== 'Ballerina'));
     }
-  }, [props.gender]);
+  }, [props.gender, occupations, setValue]);
   return (
     <div style={props.style}>
       <div className="c-field-occupations">
