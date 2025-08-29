@@ -11,8 +11,8 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
 import api from 'services/api';
-import { wrapper, AppState } from 'store';
-import actions from 'store/actions';
+import { RootState, wrapper } from 'store';
+import { loadOccupations, loadTestimonials } from 'store/master/reducers';
 
 const Button = dynamic(() => import('components/atoms/Button'));
 const TestimonialSlider = dynamic(() => import('components/organisms/TestimonialSlider'));
@@ -22,7 +22,7 @@ const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Index = (props: any): JSX.Element => {
   const { t } = useTranslation('page-index');
-  const { testimonials, occupations } = useSelector((state: AppState) => state.master);
+  const { testimonials, occupations } = useSelector((state: RootState) => state.master);
   const { isMobile, setSideNav } = props;
 
   const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
@@ -430,8 +430,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
       api().master.getOccupations(),
     ]);
 
-    store.dispatch(actions.loadTestimonials(false, testi.data));
-    store.dispatch(actions.loadOccupations(false, occupations.data));
+    store.dispatch(loadTestimonials({ isFetching: false, data: testi.data }));
+    store.dispatch(loadOccupations({ isFetching: false, data: occupations.data }));
   } catch (err: any) {
     console.error('❌ Index getServerSideProps:', err.message);
   }

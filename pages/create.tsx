@@ -6,7 +6,7 @@ import CharCustom from 'components/organisms/CharacterCustomization/desktop';
 import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
 import api from 'services/api';
 import { wrapper } from 'store';
-import actions from 'store/actions';
+import { loadOccupations } from 'store/master/reducers';
 
 const Create = (props: any): any => {
   const { t } = useTranslation('common');
@@ -22,9 +22,9 @@ const Create = (props: any): any => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   try {
-    store.dispatch(actions.loadOccupations(true));
+    store.dispatch(loadOccupations({ isFetching: true, data: [] }));
     const { data: occupations } = await api().master.getOccupations();
-    store.dispatch(actions.loadOccupations(false, occupations.data));
+    store.dispatch(loadOccupations({ isFetching: false, data: occupations.data }));
   } catch (err: any) {
     console.log(err.message);
   }

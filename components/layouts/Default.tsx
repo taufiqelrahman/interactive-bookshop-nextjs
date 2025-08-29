@@ -18,7 +18,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: any) => {
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.users);
   const cart = useSelector((state: any) => state.cart);
-  const { isSideNavOpen, errorMessage } = useSelector((state: any) => state.default);
+  const { isSideNavOpen, errorMessage } = useSelector((state: any) => state.common);
 
   const hideSideNav = () => {
     dispatch(actions.setSideNav(false));

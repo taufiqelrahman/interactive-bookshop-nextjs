@@ -24,7 +24,7 @@ const Footer = dynamic(() => import('components/organisms/Footer'));
 const Help = (props: any): any => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
-  const defaultStore = useSelector((state: any) => state.default);
+  const defaultStore = useSelector((state: any) => state.common);
   const methods = useForm({ mode: 'onChange' });
   const { register, handleSubmit, errors, reset } = methods;
   const { isFetching } = defaultStore;

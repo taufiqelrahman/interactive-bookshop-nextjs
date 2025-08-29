@@ -354,7 +354,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
       }
     }
 
-    if (store.getState().default?.errorMessage) {
+    if (store.getState().common?.errorMessage) {
       store.dispatch(actions.setErrorMessage(''));
     }
   } catch (err: any) {

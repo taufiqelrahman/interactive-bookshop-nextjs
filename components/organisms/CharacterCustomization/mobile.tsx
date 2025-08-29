@@ -152,7 +152,6 @@ const CharacterCustomization = (props: any) => {
                 register={register}
                 errors={errors.Occupations}
                 defaultValue={selected.Occupations}
-                occupations={occupations}
                 isMobile={true}
                 formState={formState}
                 gender={watch('Gender') || selected.Gender}
