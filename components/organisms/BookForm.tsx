@@ -13,7 +13,10 @@ import FormTextField from 'components/molecules/FormTextField';
 import * as gtag from 'lib/gtag';
 import actions from 'store/actions';
 
-const BookForm = (props: any) => {
+interface Props {
+  isMobile?: boolean;
+}
+const BookForm = (props: Props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation('form');
   const router = useRouter();
