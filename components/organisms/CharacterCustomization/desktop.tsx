@@ -96,7 +96,7 @@ const CharacterCustomization = (props: any) => {
   }, []);
   useEffect(() => {
     loadImg(previewImg(selected, watch));
-  }, [previewImg(selected, watch)]);
+  }, [selected, watch]);
   const containerWidth = window.innerWidth > 1023 ? window.innerWidth * 0.75 : (window.innerWidth * 11) / 12;
   const containerMargin = (window.innerWidth - containerWidth) / 2;
   const charWidth = containerWidth * 0.3 - containerWidth * 0.08;
