@@ -2,10 +2,16 @@ import { useTranslation } from 'next-i18next';
 import Picker from 'pickerjs';
 import { useEffect } from 'react';
 
-const DatePicker = (props: any) => {
+interface DatePickerProps {
+  value?: string | Date;
+  setPicker: (picker: Picker) => void;
+}
+
+const DatePicker: React.FC<DatePickerProps> = (props) => {
   const { t } = useTranslation('common');
   useEffect(() => {
-    const input: any = document.getElementById('c-date-picker__input');
+    const input = document.getElementById('c-date-picker__input') as HTMLInputElement | null;
+    if (!input) return;
     const pickerInstance = new Picker(input, {
       format: 'DD MM YYYY',
       container: '.c-date-picker',
@@ -19,7 +25,7 @@ const DatePicker = (props: any) => {
       },
       date: props.value,
     });
-    props.setPicker(pickerInstance as any);
+    props.setPicker(pickerInstance);
   }, []);
   return (
     <div className="c-date-picker">
