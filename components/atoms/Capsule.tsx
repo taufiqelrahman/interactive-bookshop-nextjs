@@ -1,6 +1,15 @@
-const Capsule = (props: any) => {
+import React, { CSSProperties, ReactNode } from 'react';
+
+interface CapsuleProps {
+  color?: string;
+  variant?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+
+const Capsule: React.FC<CapsuleProps> = (props) => {
   const colorVariant = props.color ? `c-capsule--${props.color}` : '';
-  const variantClass = props.color ? `c-capsule--${props.variant}` : '';
+  const variantClass = props.variant ? `c-capsule--${props.variant}` : '';
   return (
     <span className={`c-capsule ${colorVariant} ${variantClass}`} style={props.style}>
       {props.children}
