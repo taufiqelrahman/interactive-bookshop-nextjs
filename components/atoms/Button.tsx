@@ -1,6 +1,23 @@
+import React, { CSSProperties, ReactNode, MouseEvent } from 'react';
+
 import Loader from './Loader';
 
-const Button = (props: any) => {
+interface ButtonProps {
+  variant?: string;
+  color?: string;
+  disabled?: boolean;
+  isLoading?: boolean;
+  style?: CSSProperties;
+  className?: string;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  name?: string;
+  width?: string;
+  children?: ReactNode;
+}
+
+const Button: React.FC<ButtonProps> = (props) => {
+  // Generate class for variant(s)
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
@@ -12,7 +29,7 @@ const Button = (props: any) => {
     <div style={props.style} className={props.className}>
       <button
         aria-label="button"
-        type={props.type ? props.type : null}
+        type={props.type}
         className={`c-button ${variantClass()} ${colorClass} ${disabledClass}`}
         onClick={props.onClick}
         disabled={props.disabled || props.isLoading}
