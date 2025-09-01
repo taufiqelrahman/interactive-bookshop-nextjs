@@ -1,4 +1,11 @@
-const Floating = (props: any) => {
+import React, { ReactNode } from 'react';
+
+interface FloatingProps {
+  color?: string;
+  children?: ReactNode;
+}
+
+const Floating: React.FC<FloatingProps> = (props) => {
   const colorClass = props.color ? `c-floating--${props.color}` : '';
   return (
     <div className={`c-floating ${colorClass}`}>
