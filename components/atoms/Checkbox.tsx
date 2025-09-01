@@ -1,7 +1,18 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { ReactNode, CSSProperties, ChangeEvent } from 'react';
 
-const Checkbox = (props: any) => {
+interface CheckboxProps {
+  name: string;
+  value: string;
+  checked: boolean;
+  handleCheck: (event: ChangeEvent<HTMLInputElement>) => void;
+  errors?: { message?: string } | null;
+  inset?: boolean;
+  children?: ReactNode;
+  style?: CSSProperties;
+}
+
+const Checkbox: React.FC<CheckboxProps> = (props) => {
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const checkboxClass = () => {
