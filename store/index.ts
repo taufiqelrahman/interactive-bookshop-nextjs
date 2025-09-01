@@ -24,6 +24,7 @@ const rootReducer = (state: ReturnType<typeof combinedReducer> | undefined, acti
     return {
       ...state,
       ...action.payload,
+      cart: state?.cart, // preserve cart value on client side navigation
     };
   } else {
     return combinedReducer(state, action);
