@@ -1,4 +1,12 @@
-const Dot = (props: any) => {
+import React, { CSSProperties } from 'react';
+
+interface DotProps {
+  color?: string;
+  width?: string;
+  style?: CSSProperties;
+}
+
+const Dot: React.FC<DotProps> = (props) => {
   const colorVariant = props.color ? `c-dot--${props.color}` : '';
   return (
     <div>
