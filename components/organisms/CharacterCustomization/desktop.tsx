@@ -70,7 +70,11 @@ const CharacterCustomization = (props: any) => {
     }
     const jobIds = getJobIds(data.Occupations, occupations);
     dispatch(actions.saveSelected({ ...selected, ...data, jobIds }));
-    router.push('/preview');
+
+    router.push({
+      pathname: '/preview',
+      query: { jobIds: jobIds.join(',') }, // save jobids in url query
+    });
   };
 
   const ref = useRef<HTMLInputElement>(null);
