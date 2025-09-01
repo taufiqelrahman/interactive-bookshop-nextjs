@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
-const Divider = (props: any) => (
+interface DividerProps {
+  style?: CSSProperties;
+}
+
+const Divider: React.FC<DividerProps> = (props) => (
   <div>
     <hr className="c-divider" style={props.style} />
     <style jsx>{`
