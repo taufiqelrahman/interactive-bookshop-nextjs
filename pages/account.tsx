@@ -119,11 +119,11 @@ const Account = (props: any): any => {
   };
   const Wrapper: any = props.isMobile ? 'div' : Card;
   const disabledUpdateAddress = () =>
-    errors.address1 ||
-    errors.address2 ||
-    errors.city ||
-    errors.province ||
-    errors.zip ||
+    !!errors.address1 ||
+    !!errors.address2 ||
+    !!errors.city ||
+    !!errors.province ||
+    !!errors.zip ||
     (watch('address1') === userAddress.address1 &&
       watch('address2') === userAddress.address2 &&
       watch('city') === userAddress.city &&
@@ -226,7 +226,7 @@ const Account = (props: any): any => {
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.name || watch('name') === user.name}
+                        disabled={!!errors.name || watch('name') === user.name}
                       >
                         {t('form:update-button')}
                       </Button>
@@ -263,7 +263,7 @@ const Account = (props: any): any => {
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.email || watch('email') === user.email}
+                        disabled={!!errors.email || watch('email') === user.email}
                       >
                         {t('form:update-button')}
                       </Button>
@@ -309,7 +309,7 @@ const Account = (props: any): any => {
                       <Button
                         width="101px"
                         variant="rectangle,small-text"
-                        disabled={errors.newPhone || watch('newPhone') === user.phone}
+                        disabled={!!errors.newPhone || watch('newPhone') === user.phone}
                         // type="button"
                         // onClick={onChangePhone}
                       >
@@ -368,9 +368,9 @@ const Account = (props: any): any => {
                         width="101px"
                         variant="rectangle,small-text"
                         disabled={
-                          errors.password ||
-                          errors.newPassword ||
-                          errors.confirmNewPassword ||
+                          !!errors.password ||
+                          !!errors.newPassword ||
+                          !!errors.confirmNewPassword ||
                           !watch('password') ||
                           !watch('newPassword') ||
                           !watch('confirmNewPassword')
