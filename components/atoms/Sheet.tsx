@@ -1,4 +1,21 @@
-const Sheet = (props: any) => {
+import React, { ReactNode, CSSProperties, MouseEvent } from 'react';
+
+interface SheetProps {
+  name?: string;
+  style?: CSSProperties;
+  variant?: string;
+  overlay?: string;
+  zIndexLevel?: number;
+  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  closeSheet: () => void;
+  isOpen: boolean;
+  header?: boolean;
+  title?: ReactNode;
+  content?: ReactNode;
+  actions?: ReactNode;
+}
+
+const Sheet: React.FC<SheetProps> = (props) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
