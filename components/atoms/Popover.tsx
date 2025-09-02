@@ -1,6 +1,11 @@
-import { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 
-const Popover = (props: any) => {
+interface PopoverProps {
+  content: ReactNode;
+  children: ReactNode;
+}
+
+const Popover: React.FC<PopoverProps> = (props) => {
   const [visible, setVisible] = useState(false);
   return (
     <div>
