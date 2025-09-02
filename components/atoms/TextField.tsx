@@ -1,7 +1,19 @@
-import React, { Fragment, useState } from 'react';
+import React, { forwardRef, Fragment, useState } from 'react';
 import NumberFormat from 'react-number-format';
 
-const TextField = React.forwardRef((props: any, ref: any) => {
+interface TextFieldProps {
+  name: string;
+  placeholder?: string;
+  defaultValue?: string;
+  hint?: string;
+  errors?: any | null;
+  style?: React.CSSProperties;
+  variant?: string;
+  isPassword?: boolean;
+  type?: string;
+}
+
+const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => {
     setShowPassword(!showPassword);
