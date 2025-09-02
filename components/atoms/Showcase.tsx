@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import { Swipeable } from 'react-swipeable';
 
-const Showcase = (props: any) => {
+interface ShowcaseProps {
+  isMobile?: boolean;
+}
+
+const Showcase: React.FC<ShowcaseProps> = (props) => {
   const [isActive, setIsActive] = useState(0);
   const images = ['first-attempt.jpg', 'bian-deva.jpg', 'bian-shadow.jpg', 'hook.jpg', 'deva.jpg'];
   const onClickLeft = () => {
