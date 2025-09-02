@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -54,7 +55,9 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   }
 
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ['common', 'form'])),
+    },
   };
 });
 
