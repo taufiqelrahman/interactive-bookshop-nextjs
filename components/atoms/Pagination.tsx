@@ -1,6 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Pagination = (props: any) => {
+interface PaginationProps {
+  pages: any[];
+  current: number;
+}
+
+const Pagination: React.FC<PaginationProps> = (props) => {
   const [translation, setTranslation] = useState(0);
   // const dotCount = () => {
   //   let length = props.pages.length;
