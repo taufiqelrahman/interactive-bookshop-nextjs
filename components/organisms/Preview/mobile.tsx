@@ -107,7 +107,7 @@ const PreviewMobile = (props: any): any => {
             <span className="icon-chevron_right" />
           </div>
           <div className="c-preview__cover">
-            <FieldCover schema={schema(props).cover} register={register} errors={errors.Cover} />
+            <FieldCover schema={schema(t).cover} register={register} errors={errors.Cover} />
           </div>
           <Button type="submit" width="648px" style={{ margin: '12px 0 18px' }}>
             {t('form:continue-button')}

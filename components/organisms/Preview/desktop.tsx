@@ -122,7 +122,7 @@ const PreviewDesktop = (props: any): any => {
                 </div>
                 <div className="c-preview__details--right">
                   <div className="c-preview__cover">
-                    <FieldCover schema={schema(props).cover} errors={errors.Cover} register={register} />
+                    <FieldCover schema={schema(t).cover} errors={errors.Cover} register={register} />
                   </div>
                   <Button type="submit" width="320px">
                     {t('form:continue-order-button')}
