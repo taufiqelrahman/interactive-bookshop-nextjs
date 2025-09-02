@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
-export const schema = (t) => ({
+type TranslateFn = (key: string) => string;
+
+export const schema = (t: TranslateFn) => ({
   cover: {
     required: {
       value: true,
@@ -10,7 +12,19 @@ export const schema = (t) => ({
   },
 });
 
-export const dummySelected = {
+export interface DummySelected {
+  age: string;
+  dedication: string;
+  dob: string;
+  gender: string;
+  hair: string;
+  languange: string;
+  name: string;
+  occupations: string[];
+  skin: string;
+}
+
+export const dummySelected: DummySelected = {
   age: 'Kid',
   dedication: '',
   dob: '05-01-2019',
@@ -22,17 +36,18 @@ export const dummySelected = {
   skin: 'light',
 };
 
-export const showError = (error) => {
+export const showError = (error: string) => {
   window.scrollTo(0, 0);
   toast.error(error);
 };
 
-export const getFromCookies = () => {
-  if (!Cookies.get('pendingTrx')) return null;
-  return JSON.parse(Cookies.get('pendingTrx') || '');
+export const getFromCookies = (): unknown | null => {
+  const cookie = Cookies.get('pendingTrx');
+  if (!cookie) return null;
+  return JSON.parse(cookie);
 };
 
-export const saveToCookies = (cart) => {
+export const saveToCookies = (cart: unknown) => {
   // save pending trx
   Cookies.set('pendingTrx', JSON.stringify(cart));
   // @todo should router.push() outside this function afterwards
