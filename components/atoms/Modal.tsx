@@ -1,4 +1,20 @@
-const Modal = (props: any) => {
+import React, { ReactNode, CSSProperties, MouseEvent } from 'react';
+
+interface ModalProps {
+  name?: string;
+  style?: CSSProperties;
+  variant?: string;
+  overlay?: string;
+  zIndexLevel?: number;
+  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  closeModal: () => void;
+  isOpen: boolean;
+  title?: ReactNode;
+  content?: ReactNode;
+  actions?: ReactNode;
+}
+
+const Modal: React.FC<ModalProps> = (props) => {
   const variantClass = () => {
     if (!props.variant) return '';
     const variants = props.variant.split(',');
@@ -6,7 +22,7 @@ const Modal = (props: any) => {
   };
   const overlayClass = props.overlay ? `c-modal__overlay--${props.overlay}` : '';
   const zIndexMultiplier = props.zIndexLevel ? 5 * props.zIndexLevel : 1;
-  const onClose = (event) => {
+  const onClose = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     props.closeModal();
   };
