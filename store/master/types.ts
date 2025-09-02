@@ -23,7 +23,7 @@ interface BookContent {
   style: string;
 }
 
-interface BookPage {
+export interface BookPage {
   order: number;
   occupation: Occupation;
   book_contens: BookContent[];

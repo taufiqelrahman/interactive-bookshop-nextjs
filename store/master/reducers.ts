@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Occupation } from './types';
+import { BookPage, Occupation } from './types';
 
 export interface MasterState {
   isFetching: boolean;
   testimonials: any[];
   occupations: Occupation[];
-  bookPages: any[];
+  bookPages: BookPage[];
   provinces: any[];
 }
 
@@ -30,7 +30,7 @@ const masterSlice = createSlice({
       state.occupations = action.payload.data;
       state.isFetching = action.payload.isFetching;
     },
-    loadBookPages(state, action: PayloadAction<{ data: any[]; isFetching: boolean }>) {
+    loadBookPages(state, action: PayloadAction<{ data: BookPage[]; isFetching: boolean }>) {
       state.bookPages = action.payload.data;
       state.isFetching = action.payload.isFetching;
     },
