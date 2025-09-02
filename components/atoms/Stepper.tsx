@@ -1,7 +1,17 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import React, { CSSProperties, ReactNode } from 'react';
 
-const Stepper = ({ backButton = true, isMobile = false, ...props }: any) => {
+interface StepperProps {
+  backButton?: boolean;
+  isMobile?: boolean;
+  style?: CSSProperties;
+  totalSteps?: number;
+  step?: number;
+  title?: ReactNode;
+}
+
+const Stepper: React.FC<StepperProps> = ({ backButton = true, isMobile = false, ...props }) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   return (
