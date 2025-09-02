@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 
-const TextArea = React.forwardRef((props: any, ref: any) => (
+interface TextAreaProps {
+  name: string;
+  placeholder?: string;
+  defaultValue?: string;
+  hint?: string;
+  errors?: { message?: string } | null;
+}
+
+const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>((props, ref: ForwardedRef<HTMLTextAreaElement>) => (
   <div className={`c-text-area ${props.errors ? 'c-text-area--error' : ''}`}>
     <textarea name={props.name} placeholder={props.placeholder} rows={3} ref={ref} defaultValue={props.defaultValue} />
     <div className="c-text-area__message">{props.errors ? props.errors.message : props.hint}</div>
