@@ -9,7 +9,7 @@ import PreviewDesktop from 'components/organisms/Preview/desktop';
 import PreviewMobile from 'components/organisms/Preview/mobile';
 import api from 'services/api';
 import { wrapper } from 'store';
-import actions from 'store/actions';
+import { loadBookPages } from 'store/master/reducers';
 
 const Preview = (props: any): any => {
   const { t } = useTranslation('common');
@@ -46,10 +46,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
       [firstJobId] = jobIds;
     }
     if (!firstJobId) return;
-    store.dispatch(actions.loadBookPages(true));
+    store.dispatch(loadBookPages({ isFetching: true, data: [] }));
     const PARAMS = { jobs: firstJobId.toString() };
-    const { data } = await api().master.getBookPages(PARAMS);
-    store.dispatch(actions.loadBookPages(false, data.data));
+    const { data: bookPages } = await api().master.getBookPages(PARAMS);
+    store.dispatch(loadBookPages({ isFetching: false, data: bookPages.data }));
   } catch (err: any) {
     console.log(err.message);
   }
