@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 // import { ConnectForm } from 'lib/form-connect';
 // import { useFormContext } from 'react-hook-form';
 
-const Radio = React.forwardRef((props: any, ref: any) => {
+interface RadioProps {
+  name: string;
+  value: string;
+  defaultChecked?: boolean;
+  label?: string;
+  type?: string;
+  imageUrl?: string;
+  style?: React.CSSProperties;
+  errors?: { message?: string } | null;
+  inset?: boolean;
+  children?: React.ReactNode;
+  variant?: string;
+}
+
+const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   // const { register } = useFormContext();
   const errorClass = props.errors ? 'c-radio__button--error' : '';
   const variantClass = props.variant ? `c-radio__button--${props.variant}` : '';
