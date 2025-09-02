@@ -4,10 +4,11 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect, Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import * as gtag from 'lib/gtag';
+import actions from 'store/actions';
 
 import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
 
@@ -25,6 +26,7 @@ const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false
 
 const PreviewDesktop = (props: any): any => {
   const { t } = useTranslation('common');
+  const dispatch = useDispatch();
   const router = useRouter();
   const cart = useSelector((state: any) => state.cart);
   const users = useSelector((state: any) => state.users);
@@ -37,7 +39,7 @@ const PreviewDesktop = (props: any): any => {
   const selected = cart.selected || dummySelected || {};
   const addToCart = (cart) => {
     if (selected.id) {
-      props.thunkUpdateCart(cart);
+      dispatch(actions.thunkUpdateCart(cart));
     } else {
       gtag.event({
         action: 'click_create',
@@ -53,7 +55,7 @@ const PreviewDesktop = (props: any): any => {
         cartItem: cart,
         isLoggedIn: users.isLoggedIn,
       });
-      props.thunkAddToCart(cart);
+      dispatch(actions.thunkAddToCart(cart));
     }
   };
   const onSubmit = (data) => {
@@ -81,7 +83,7 @@ const PreviewDesktop = (props: any): any => {
   useEffect(() => {
     const fromCookies = getFromCookies();
     if (fromCookies) {
-      props.saveSelected(fromCookies);
+      dispatch(actions.saveSelected(fromCookies));
       Cookies.remove('pendingTrx');
       // setEnableLazy(false);
     }
