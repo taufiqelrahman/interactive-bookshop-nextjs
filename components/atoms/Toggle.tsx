@@ -1,4 +1,13 @@
-const Toggle = (props: any) => {
+import React, { CSSProperties, ReactNode, ChangeEvent } from 'react';
+
+interface ToggleProps {
+  value: boolean;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  style?: CSSProperties;
+  children?: ReactNode;
+}
+
+const Toggle: React.FC<ToggleProps> = (props) => {
   return (
     <div>
       <label className="c-toggle" style={props.style}>
