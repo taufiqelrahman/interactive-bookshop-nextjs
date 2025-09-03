@@ -26,7 +26,9 @@ interface BookContent {
 export interface BookPage {
   order: number;
   occupation: Occupation;
-  book_contens: BookContent[];
+  book_contents: BookContent[];
+  occupation_id: number;
+  page_number: number;
 }
 
 interface Province {

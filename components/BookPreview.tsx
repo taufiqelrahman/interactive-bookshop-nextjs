@@ -8,24 +8,15 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
 
 import initBook from 'assets/flipbook.js';
-import BookPage from 'components/atoms/BookPage';
+import BookPageComponent from 'components/atoms/BookPage';
 import * as gtag from 'lib/gtag';
+import type { BookPage } from 'store/master/types';
 
 import { calcHeight } from './atoms/BookPage/helpers';
 // import dummyPages from '_mocks/bookPages';
 // import CircleType from 'circletype';
 
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
-
-interface BookPageType {
-  occupation: {
-    id: number;
-    name: string;
-  };
-  occupation_id: number;
-  page_number: number;
-  [key: string]: any;
-}
 
 interface SelectedType {
   Name: string;
@@ -40,7 +31,7 @@ interface SelectedType {
 
 interface BookPreviewProps {
   isMobile?: boolean;
-  bookPages: BookPageType[];
+  bookPages: BookPage[];
   selected: SelectedType;
   cover?: string;
   enableLazy?: boolean;
@@ -163,16 +154,16 @@ const BookPreview = (props: BookPreviewProps) => {
   //   updatePageInfo();
   // };
 
-  let pageByOccupations: Record<string, BookPageType[]> = {};
+  let pageByOccupations: Record<string, BookPage[]> = {};
   if (props.bookPages.length > 0) {
-    pageByOccupations = groupby(props.bookPages, (page: BookPageType) => page.occupation_id);
-    pageByOccupations = sortby(pageByOccupations, (group: BookPageType[]) => props.bookPages.indexOf(group[0]));
+    pageByOccupations = groupby(props.bookPages, (page: BookPage) => page.occupation_id);
+    pageByOccupations = sortby(pageByOccupations, (group: BookPage[]) => props.bookPages.indexOf(group[0]));
   }
-  const bookPages: Record<string, Record<string, BookPageType[]>> = {};
+  const bookPages: Record<string, Record<string, BookPage[]>> = {};
   Object.keys(pageByOccupations).forEach((occupation) => {
-    bookPages[occupation] = groupby(pageByOccupations[occupation], (page: BookPageType) => page.page_number);
+    bookPages[occupation] = groupby(pageByOccupations[occupation], (page: BookPage) => page.page_number);
   });
-  let jointPages: BookPageType[][] = [];
+  let jointPages: BookPage[][] = [];
   Object.values(bookPages).forEach((jobs, index, arr) => {
     if (index === arr.length - 1 && jobs[1] && jobs[2]) {
       jointPages = [...jointPages, jobs[1], jobs[2]];
@@ -227,7 +218,7 @@ const BookPreview = (props: BookPreviewProps) => {
             {jointPages.map((page, index) => {
               const [firstPage] = page;
               return (
-                <BookPage
+                <BookPageComponent
                   key={index}
                   isLast={index === jointPages.length - 1}
                   style={{
@@ -265,7 +256,7 @@ const BookPreview = (props: BookPreviewProps) => {
               {jointPages.map((page, index) => {
                 const [firstPage] = page;
                 return (
-                  <BookPage
+                  <BookPageComponent
                     key={index}
                     id={(index + 1).toString()}
                     isLast={index === jointPages.length - 1}
