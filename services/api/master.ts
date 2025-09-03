@@ -44,19 +44,23 @@ export default class Products {
         data: [
           {
             occupation: { id: '1', name: 'Doctor', description: 'Heals patients', page_count: 5, indonesia: 'Dokter' },
-            book_contens: [
+            book_contents: [
               { value: 'Page 1 content', style: 'normal' },
               { value: 'Page 2 content', style: 'normal' },
             ],
             order: 1,
+            occupation_id: 1,
+            page_number: 1,
           },
           {
             occupation: { id: '2', name: 'Chef', description: 'Cooks food', page_count: 3, indonesia: 'Koki' },
-            book_contens: [
+            book_contents: [
               { value: 'Page 1 content', style: 'normal' },
               { value: 'Page 2 content', style: 'normal' },
             ],
             order: 2,
+            occupation_id: 2,
+            page_number: 2,
           },
           {
             occupation: {
@@ -66,11 +70,13 @@ export default class Products {
               page_count: 4,
               indonesia: 'Guru',
             },
-            book_contens: [
+            book_contents: [
               { value: 'Page 1 content', style: 'normal' },
               { value: 'Page 2 content', style: 'normal' },
             ],
             order: 3,
+            occupation_id: 3,
+            page_number: 3,
           },
           {
             occupation: {
@@ -80,11 +86,13 @@ export default class Products {
               page_count: 4,
               indonesia: 'Astronot',
             },
-            book_contens: [
+            book_contents: [
               { value: 'Page 1 content', style: 'normal' },
               { value: 'Page 2 content', style: 'normal' },
             ],
             order: 4,
+            occupation_id: 4,
+            page_number: 4,
           },
           {
             occupation: {
@@ -94,11 +102,13 @@ export default class Products {
               page_count: 4,
               indonesia: 'Pilot',
             },
-            book_contens: [
+            book_contents: [
               { value: 'Page 1 content', style: 'normal' },
               { value: 'Page 2 content', style: 'normal' },
             ],
             order: 5,
+            occupation_id: 5,
+            page_number: 5,
           },
           {
             occupation: {
@@ -108,11 +118,13 @@ export default class Products {
               page_count: 4,
               indonesia: 'Polisi',
             },
-            book_contens: [
+            book_contents: [
               { value: 'Page 1 content', style: 'normal' },
               { value: 'Page 2 content', style: 'normal' },
             ],
             order: 6,
+            occupation_id: 6,
+            page_number: 6,
           },
         ] as BookPage[],
         ...params,
