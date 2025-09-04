@@ -17,7 +17,7 @@ export interface Cart {
   cart_items: CartItem[];
 }
 
-interface CartItem {
+export interface CartItem {
   id: number;
   cart_id: number;
   product_id: number;
@@ -25,6 +25,13 @@ interface CartItem {
   price: number;
   created_at: string;
   updated_at: string;
+  Name: string;
+  Language: string;
+  Gender: string;
+  Dedication: string;
+  Age: string;
+  Skin: string;
+  Hair: string;
 }
 
 export interface CartState {
