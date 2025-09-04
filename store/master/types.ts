@@ -14,19 +14,12 @@ export interface Occupation {
   id: string;
   name: string;
   description: string;
-  page_count: number;
   indonesia: string;
-}
-
-interface BookContent {
-  value: string;
-  style: string;
 }
 
 export interface BookPage {
   order: number;
   occupation: Occupation;
-  book_contents: BookContent[];
   occupation_id: number;
   page_number: number;
   style: string;
