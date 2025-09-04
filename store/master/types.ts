@@ -18,7 +18,6 @@ export interface Occupation {
 }
 
 export interface BookPage {
-  order: number;
   occupation: Occupation;
   occupation_id: number;
   page_number: number;
