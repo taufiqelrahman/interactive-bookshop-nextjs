@@ -1,5 +1,7 @@
+import { BookPage } from 'store/master/types';
+
 interface ProcessBookPageContentArgs {
-  content: any;
+  currentContent: BookPage;
   language: string;
   contents: BookPageContent[];
   name?: string;
@@ -17,11 +19,11 @@ interface ProcessBookPageContentArgs {
  * - Handles special cases for Front Cover and Back Cover.
  */
 export function processBookPageContent(args: ProcessBookPageContentArgs): string {
-  const { content, language, contents, name, gender, dedication } = args;
+  const { currentContent, language, contents, name, gender, dedication } = args;
 
   // Determine language and get the base content string
   const isEnglish = language === 'english';
-  let processed = isEnglish ? content.english : content.indonesia;
+  let processed = isEnglish ? currentContent.englishText : currentContent.indonesiaText;
 
   // Get the first content block for special cover logic
   const [firstContent] = contents;

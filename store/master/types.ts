@@ -30,6 +30,8 @@ export interface BookPage {
   occupation_id: number;
   page_number: number;
   style: string;
+  englishText: string;
+  indonesiaText: string;
 }
 
 interface Province {
