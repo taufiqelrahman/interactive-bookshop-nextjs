@@ -44,7 +44,7 @@ const BookPage = (props: BookPageProps) => {
   const processContent = useCallback(
     (content, language) =>
       processBookPageContent({
-        content,
+        currentContent: content,
         language,
         contents: props.contents,
         name: props.name,
