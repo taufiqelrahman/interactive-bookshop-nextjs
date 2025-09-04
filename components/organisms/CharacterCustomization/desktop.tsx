@@ -48,7 +48,7 @@ const CharacterCustomization = (props: any) => {
   const defaultSelected: Character = isDev
     ? {
         Occupations: ['Teacher', 'Pilot', 'Police'],
-        Name: 'Kadhgihbkt',
+        Name: 'Fatimah',
         Age: 'kid',
         Gender: 'girl',
         Skin: 'light',
