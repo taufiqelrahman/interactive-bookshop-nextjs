@@ -55,7 +55,7 @@ export const BOOK_PAGES = [
     indonesiaText: 'Konten Halaman 1',
   },
   {
-    occupation: { id: '1', name: 'Doctor', description: 'Heals patients' },
+    occupation: OCCUPATIONS[0],
     order: 1,
     occupation_id: 3,
     page_number: 1,
@@ -63,7 +63,7 @@ export const BOOK_PAGES = [
     indonesiaText: 'Konten Halaman 1',
   },
   {
-    occupation: { id: '1', name: 'Doctor', description: 'Heals patients' },
+    occupation: OCCUPATIONS[0],
     order: 1,
     occupation_id: 3,
     page_number: 2,
@@ -71,7 +71,7 @@ export const BOOK_PAGES = [
     indonesiaText: 'Konten Halaman 2',
   },
   {
-    occupation: { id: '2', name: 'Chef', description: 'Cooks food' },
+    occupation: OCCUPATIONS[1],
     order: 2,
     occupation_id: 4,
     page_number: 1,
@@ -79,7 +79,7 @@ export const BOOK_PAGES = [
     indonesiaText: 'Konten Halaman 1',
   },
   {
-    occupation: { id: '2', name: 'Chef', description: 'Cooks food' },
+    occupation: OCCUPATIONS[1],
     order: 2,
     occupation_id: 4,
     page_number: 2,
@@ -87,11 +87,7 @@ export const BOOK_PAGES = [
     indonesiaText: 'Konten Halaman 2',
   },
   {
-    occupation: {
-      id: '3',
-      name: 'Teacher',
-      description: 'Educates students',
-    },
+    occupation: OCCUPATIONS[2],
     order: 3,
     occupation_id: 5,
     page_number: 1,
@@ -99,11 +95,7 @@ export const BOOK_PAGES = [
     indonesiaText: 'Konten Halaman 3',
   },
   {
-    occupation: {
-      id: '3',
-      name: 'Teacher',
-      description: 'Educates students',
-    },
+    occupation: OCCUPATIONS[2],
     order: 3,
     occupation_id: 5,
     page_number: 2,
