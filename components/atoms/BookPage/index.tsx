@@ -3,14 +3,11 @@ import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect } from 'react';
 import LazyLoad, { forceVisible } from 'react-lazyload';
 
+import type { BookPage as BookPageType } from 'store/master/types';
+
 import { getBookPageStyle, processBookPageContent } from './helpers';
 
 // import 'styles/fonts.min.css'; // @todo change to module
-
-interface BookPageContent {
-  occupation: { name: string };
-  [key: string]: any;
-}
 
 interface BookPageProps {
   isMobile?: boolean;
@@ -18,7 +15,7 @@ interface BookPageProps {
   name?: string;
   gender?: string;
   dedication?: string;
-  contents: BookPageContent[];
+  contents: BookPageType[];
   image?: string;
   style?: React.CSSProperties;
   className?: string;
