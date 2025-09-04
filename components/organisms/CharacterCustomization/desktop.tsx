@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import * as gtag from 'lib/gtag';
 import actions from 'store/actions';
+import { Character } from 'store/cart/types';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 
@@ -44,7 +45,7 @@ const CharacterCustomization = (props: any) => {
     }
   }, [errors]);
   const isDev = process.env.NODE_ENV === 'development';
-  const defaultSelected = isDev
+  const defaultSelected: Character = isDev
     ? {
         Occupations: ['Teacher', 'Pilot', 'Police'],
         Name: 'Kadhgihbkt',
@@ -57,7 +58,7 @@ const CharacterCustomization = (props: any) => {
         'Date of Birth': '03-01-2019',
         Hair: 'short',
       }
-    : {};
+    : ({} as Character);
   const selected = cart.selected || defaultSelected;
   const { occupations } = master;
   const onSubmit = (data) => {
