@@ -118,7 +118,7 @@ export function getBookPageStyle(args: BookPageStyleArgs): React.CSSProperties {
       lineHeight: isMobile ? '10vw' : '4.5vw',
     };
     // If name is long, adjust width and margins for better fit
-    if (name && name.length > 4) {
+    if (name) {
       style = {
         ...style,
         width: '90%',
