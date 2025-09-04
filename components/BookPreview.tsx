@@ -5,11 +5,12 @@ import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState, useCallback, useRef, Fragment } from 'react';
+import { useEffect, useState, useRef, Fragment } from 'react';
 
 import initBook from 'assets/flipbook.js';
 import BookPageComponent from 'components/atoms/BookPage';
 import * as gtag from 'lib/gtag';
+import { CartItem } from 'store/cart/types';
 import type { BookPage } from 'store/master/types';
 
 import { calcHeight } from './atoms/BookPage/helpers';
@@ -18,23 +19,12 @@ import { calcHeight } from './atoms/BookPage/helpers';
 
 const Pagination = dynamic(() => import('components/atoms/Pagination'));
 
-interface SelectedType {
-  Name: string;
-  Language: string;
-  Gender: string;
-  Dedication: string;
-  Age: string;
-  Skin: string;
-  Hair: string;
-  [key: string]: any;
-}
-
 interface BookPreviewProps {
   isMobile?: boolean;
   bookPages: BookPage[];
-  selected: SelectedType;
+  selected: CartItem;
   cover?: string;
-  enableLazy?: boolean;
+  // enableLazy?: boolean;
 }
 
 const BookPreview = (props: BookPreviewProps) => {
@@ -85,10 +75,7 @@ const BookPreview = (props: BookPreviewProps) => {
   };
 
   let debouncedFunctionRef = useRef<() => void>(() => setupBook());
-  const debouncedSetup = useCallback(
-    debounce(() => debouncedFunctionRef && debouncedFunctionRef.current(), 300),
-    [],
-  );
+  const debouncedSetup = debounce(() => debouncedFunctionRef && debouncedFunctionRef.current(), 300);
 
   const ref = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
