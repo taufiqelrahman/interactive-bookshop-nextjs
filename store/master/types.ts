@@ -29,6 +29,7 @@ export interface BookPage {
   book_contents: BookContent[];
   occupation_id: number;
   page_number: number;
+  style: string;
 }
 
 interface Province {
