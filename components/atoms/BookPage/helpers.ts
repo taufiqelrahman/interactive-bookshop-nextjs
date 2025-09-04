@@ -79,11 +79,13 @@ export function getBookPageStyle(args: BookPageStyleArgs): React.CSSProperties {
   // Base style
   let style: React.CSSProperties = {
     width: '37%',
-    fontSize: isMobile ? '2vw' : '0.8vw',
-    lineHeight: isMobile ? '2.5vw' : '1vw',
+    fontSize: isMobile ? '4vw' : '1.5vw',
+    lineHeight: isMobile ? '5vw' : '2vw',
     fontFamily: 'Jost',
     textAlign: 'center',
-    fontWeight: 300,
+    top: '50%',
+    fontWeight: 'bolder',
+    color: 'white',
   };
 
   // Merge in style overrides from JSON string if provided
@@ -113,7 +115,7 @@ export function getBookPageStyle(args: BookPageStyleArgs): React.CSSProperties {
     style = {
       ...style,
       fontSize: isMobile ? '9vw' : '3.5vw',
-      lineHeight: isMobile ? '7.5vw' : '3vw',
+      lineHeight: isMobile ? '10vw' : '4.5vw',
     };
     // If name is long, adjust width and margins for better fit
     if (name && name.length > 4) {
