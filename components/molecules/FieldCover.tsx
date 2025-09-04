@@ -7,9 +7,9 @@ import Radio from 'components/atoms/Radio';
 const FieldCover = (props: any) => {
   const { t } = useTranslation('form');
   const colors = [
-    { name: t('cover-blue'), color: '#445ca4' },
-    { name: t('cover-white'), color: '#efeef4' },
-    { name: t('cover-magenta'), color: '#de3636' },
+    { name: t('blue'), color: '#445ca4' },
+    { name: t('white'), color: '#efeef4' },
+    { name: t('magenta'), color: '#de3636' },
   ];
   return (
     <div style={props.style}>
