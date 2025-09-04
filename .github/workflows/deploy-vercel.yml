@@ -18,11 +18,10 @@ jobs:
         with:
           version: 10
 
-      - name: Install Node.js
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version: 22
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
