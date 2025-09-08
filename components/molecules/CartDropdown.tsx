@@ -1,10 +1,27 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import React from 'react';
 import NumberFormat from 'react-number-format';
 
 import { previewImg } from 'components/molecules/CartItem/helper';
 
-const CartDropdown = (props: any) => {
+interface CartDropdownItem {
+  customAttributes: {
+    Name?: string;
+    [key: string]: any;
+  };
+  quantity: number;
+  variant: {
+    price: number | string;
+    [key: string]: any;
+  };
+}
+
+interface CartDropdownProps {
+  items: CartDropdownItem[];
+}
+
+const CartDropdown = (props: CartDropdownProps) => {
   const { t } = useTranslation('common');
   const cartNotEmpty = !!props.items && props.items.length > 0;
   return (
