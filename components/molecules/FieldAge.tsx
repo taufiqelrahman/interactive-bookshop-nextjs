@@ -4,7 +4,16 @@ import React from 'react';
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
 
-const FieldAge = (props: any) => {
+interface FieldAgeProps {
+  fieldStyle?: React.CSSProperties;
+  errors?: any;
+  defaultChecked?: any;
+  register: (schema: any) => React.Ref<any>;
+  schema?: any;
+  [key: string]: any;
+}
+
+const FieldAge = (props: FieldAgeProps) => {
   const { t } = useTranslation('form');
   const ages = [
     { name: t('age-toddler'), code: 'toddler' },
