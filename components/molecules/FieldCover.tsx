@@ -4,7 +4,15 @@ import React from 'react';
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
 
-const FieldCover = (props: any) => {
+interface FieldCoverProps {
+  style?: React.CSSProperties;
+  errors?: any;
+  register: (schema: any) => React.Ref<any>;
+  schema?: any;
+  [key: string]: any;
+}
+
+const FieldCover = (props: FieldCoverProps) => {
   const { t } = useTranslation('form');
   const colors = [
     { name: t('blue'), color: '#445ca4' },
