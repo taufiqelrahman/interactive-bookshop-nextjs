@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, ReactNode, CSSProperties } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -8,17 +8,27 @@ import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';
 import actions from 'store/actions';
+import { CartState } from 'store/cart/types';
+import { State } from 'store/types';
+import { UsersState } from 'store/users/types';
 
-const DefaultLayout = ({ children, navbar, isMobile, style }: any) => {
+interface DefaultLayoutProps {
+  children: ReactNode;
+  navbar?: ReactNode;
+  isMobile?: boolean;
+  style?: CSSProperties;
+}
+
+const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps) => {
   const [navbarHeight, setNavbarHeight] = useState(60);
   const router = useRouter();
   const isIndexPage = router.pathname === '/';
   const showWhatsapp = ['/', '/login', '/register', '/help', '/account'].includes(router.pathname);
 
   const dispatch = useDispatch();
-  const users = useSelector((state: any) => state.users);
-  const cart = useSelector((state: any) => state.cart);
-  const { isSideNavOpen, errorMessage } = useSelector((state: any) => state.common);
+  const users = useSelector((state: { users: UsersState }) => state.users);
+  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  const { isSideNavOpen, errorMessage } = useSelector((state: { common: State }) => state.common);
 
   const hideSideNav = () => {
     dispatch(actions.setSideNav(false));
@@ -33,7 +43,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: any) => {
     // reset overlay
     hideSideNav();
     // set top margin for fixed navbar
-    const navbarDiv: any = document.querySelector('.c-nav-bar');
+    const navbarDiv = document.querySelector('.c-nav-bar') as HTMLElement | null;
     if (navbarDiv) setNavbarHeight(navbarDiv.clientHeight);
 
     if (!window.fbq) return;
@@ -60,7 +70,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: any) => {
           users={users}
           cartItems={cart.cart?.lineItems}
           thunkLogout={() => dispatch(actions.thunkLogout())}
-          thunkLoadCart={() => dispatch(actions.thunkLoadCart(cart.cart?.id))}
+          thunkLoadCart={() => dispatch(actions.thunkLoadCart(cart.cart?.id.toString() || ''))}
         />
       )}
 

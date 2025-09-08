@@ -15,6 +15,7 @@ export interface Cart {
   updated_at: string;
   deleted_at: string;
   cart_items: CartItem[];
+  lineItems: CartItem[];
 }
 
 export interface Character {
