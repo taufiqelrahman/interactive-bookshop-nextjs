@@ -1,9 +1,14 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import React from 'react';
 
 import Divider from 'components/atoms/Divider';
 
-const AccountDropdown = (props: any) => {
+interface AccountDropdownProps {
+  logout: () => void;
+}
+
+const AccountDropdown = (props: AccountDropdownProps) => {
   const { t } = useTranslation('common');
   const signOut = () => {
     props.logout();
