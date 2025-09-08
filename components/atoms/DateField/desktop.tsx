@@ -3,15 +3,30 @@ import Select from 'react-select';
 
 import { customStyles, dates, months, years } from './helper';
 
-const DateField = (props: any) => {
-  const [date, setDate]: any = useState(null);
-  const [month, setMonth]: any = useState(null);
-  const [year, setYear]: any = useState(null);
+interface Option {
+  label: string;
+  value: string;
+}
+
+interface DateFieldProps {
+  name: string;
+  setValue: (field: string, value: string) => void;
+  triggerValidation: (field: string) => void;
+  defaultValue: string;
+  errors?: { message?: string } | null;
+}
+
+const DateField = (props: DateFieldProps) => {
+  const [date, setDate] = useState<Option | null>(null);
+  const [month, setMonth] = useState<Option | null>(null);
+  const [year, setYear] = useState<Option | null>(null);
+
   const setFullDate = () => {
     if (!date || !month || !year) return;
-    props.setValue(props.name, `${(date as any).value}-${(month as any).value}-${(year as any).value}`);
+    props.setValue(props.name, `${date.value}-${month.value}-${year.value}`);
     props.triggerValidation(props.name);
   };
+
   const setDefaultDate = () => {
     const parsed = props.defaultValue.split('-');
     if (parsed.length !== 3) return;
@@ -19,7 +34,8 @@ const DateField = (props: any) => {
     setMonth({ label: parsed[1], value: parsed[1] });
     setYear({ label: parsed[2], value: parsed[2] });
   };
-  const handleChange = (selectedOption, setter) => {
+
+  const handleChange = (selectedOption: Option | null, setter: (option: Option | null) => void) => {
     setter(selectedOption);
   };
   useEffect(() => {
