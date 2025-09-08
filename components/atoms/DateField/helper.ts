@@ -31,7 +31,7 @@ export const customStyles = {
   }),
 };
 
-const padNumber = (number) => {
+const padNumber = (number: number): string => {
   let s = String(number);
   while (s.length < 2) {
     s = `0${s}`;
@@ -39,15 +39,20 @@ const padNumber = (number) => {
   return s;
 };
 
-const generateNumberOpts = (range: any) => {
-  const numbers = [...(Array(range + 1) as any).keys()];
+export interface Option {
+  value: string;
+  label: string;
+}
+
+const generateNumberOpts = (range: number): Option[] => {
+  const numbers = Array.from({ length: range + 1 }, (_, i) => i);
   numbers.shift();
   return numbers.map((num) => ({ value: padNumber(num), label: padNumber(num) }));
 };
 
-export const dates = (month) => {
-  const selectedMonth = month ? (month as any).value : 1;
-  let range;
+export const dates = (month: Option | null): Option[] => {
+  const selectedMonth = month ? Number(month.value) : 1;
+  let range: number;
   if (selectedMonth % 2 === 1) {
     range = 31;
   } else {
@@ -60,11 +65,12 @@ export const dates = (month) => {
   return generateNumberOpts(range);
 };
 
-export const months = generateNumberOpts(12);
+export const months: Option[] = generateNumberOpts(12);
 
-export const years = () => {
+export const years = (): Option[] => {
   const now = new Date().getUTCFullYear();
-  return Array(now - (now - 20))
-    .fill('')
-    .map((_v, idx) => ({ value: now - idx, label: now - idx }));
+  return Array.from({ length: 20 }, (_, idx) => {
+    const year = now - idx;
+    return { value: String(year), label: String(year) };
+  });
 };
