@@ -6,15 +6,34 @@ import Sheet from 'components/atoms/Sheet';
 
 import DatePicker from '../DatePicker';
 
-const DateField = (props: any) => {
+interface DateFieldState {
+  date: string | null;
+  month: string | null;
+  year: string | null;
+}
+
+interface SheetData {
+  show: boolean;
+  value: string | null;
+}
+
+interface DateFieldProps {
+  name: string;
+  setValue: (field: string, value: string) => void;
+  triggerValidation: (field: string) => void;
+  defaultValue: string;
+  errors?: { message?: string } | null;
+}
+
+const DateField = (props: DateFieldProps) => {
   const { t } = useTranslation('form');
-  const [picker, setPicker] = useState(null);
-  const [state, setState] = useState({
+  const [picker, setPicker] = useState<unknown>(null);
+  const [state, setState] = useState<DateFieldState>({
     date: null,
     month: null,
     year: null,
   });
-  const [sheetData, setSheetData] = useState({
+  const [sheetData, setSheetData] = useState<SheetData>({
     show: false,
     value: null,
   });
@@ -40,22 +59,25 @@ const DateField = (props: any) => {
     if (props.defaultValue) setDefaultDate();
   }, []);
   const openSheet = () => {
-    setSheetData({
-      ...sheetData,
+    setSheetData((prev) => ({
+      ...prev,
       show: true,
       value: null,
-    });
+    }));
   };
-  const onSelect = (event: any) => {
+
+  const onSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const { day, month, year } = (picker as any).data;
-    setState({
-      ...state,
+    if (!picker || typeof picker !== 'object' || !('data' in picker)) return;
+    const pickerData = (picker as { data: any }).data;
+    const { day, month, year } = pickerData;
+    setState((prev) => ({
+      ...prev,
       date: day.item.textContent,
       month: month.item.textContent,
       year: year.item.textContent,
-    });
-    setSheetData({ ...sheetData, show: false });
+    }));
+    setSheetData((prev) => ({ ...prev, show: false }));
   };
   return (
     <div>
