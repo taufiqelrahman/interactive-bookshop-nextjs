@@ -65,14 +65,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps
 
   return (
     <div>
-      {navbar || (
-        <NavBar
-          users={users}
-          cartItems={cart.cart?.lineItems}
-          thunkLogout={() => dispatch(actions.thunkLogout())}
-          thunkLoadCart={() => dispatch(actions.thunkLoadCart(cart.cart?.id.toString() || ''))}
-        />
-      )}
+      {navbar || <NavBar />}
 
       {isMobile && (
         <SideNav
