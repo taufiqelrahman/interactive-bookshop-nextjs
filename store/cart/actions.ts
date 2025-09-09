@@ -4,7 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 
 import { mapKeyValue } from 'lib/format-array';
 import api from 'services/api';
-import graphql from 'services/graphql';
+import shopify from 'services/shopify';
 
 import { setErrorMessage } from '../actions';
 import { loadUser } from '../users/actions';
@@ -49,10 +49,10 @@ function createCheckout(user: { email: string; address?: Record<string, any> }) 
     delete shippingAddress.last_name;
     PARAMS = { ...PARAMS, shippingAddress };
   }
-  return graphql().checkout.create(PARAMS);
+  return shopify().checkout.create(PARAMS);
 }
 function createCheckoutGuest() {
-  return graphql().checkout.create();
+  return shopify().checkout.create();
 }
 export const thunkCreateCart =
   (callback?): ThunkAction<void, types.CartState, null, Action<string>> =>
@@ -92,7 +92,7 @@ export const thunkTransferCart =
     dispatch(transferCart(true));
     const localStorageCart = JSON.parse(localStorage.getItem('cart') || '{}');
     localStorage.removeItem('cart');
-    const localCartResponse = await graphql().checkout.get(localStorageCart.id);
+    const localCartResponse = await shopify().checkout.get(localStorageCart.id);
     if (!localCartResponse || !localCartResponse.lineItems) return;
     const localCartItems = localCartResponse.lineItems.map((item: any) => ({
       variantId: item.variant.id,
@@ -100,7 +100,7 @@ export const thunkTransferCart =
       quantity: item.quantity,
     }));
     if (localCartItems.length === 0) return;
-    return graphql()
+    return shopify()
       .checkout.addLineItems(dbId, localCartItems)
       .then((cart) => {
         if (!cart) return;
@@ -140,7 +140,7 @@ export const thunkLoadCart =
       dispatch(thunkTransferCart(id));
       return;
     }
-    return graphql()
+    return shopify()
       .checkout.get(id)
       .then((cart) => {
         if (!cart) return;
@@ -174,7 +174,7 @@ export const thunkLoadCart =
 // ): Promise<any> => {
 //   dispatch(removeDiscount(true));
 //   const { cart } = (getState() as any).users.user;
-//   return graphql()
+//   return shopify()
 //     .checkout.removeDiscount(cart.checkout_id)
 //     .then(cart => {
 //       dispatch(removeDiscount(false, cart));
@@ -199,7 +199,7 @@ export const thunkLoadCart =
 // ): Promise<any> => {
 //   dispatch(addDiscount(true));
 //   const { cart } = (getState() as any).users.user;
-//   return graphql()
+//   return shopify()
 //     .checkout.addDiscount(cart.checkout_id, code)
 //     .then(cart => {
 //       dispatch(addDiscount(false, cart));
@@ -244,7 +244,7 @@ export const thunkAddToCart =
       },
     ] as ShopifyBuy.CheckoutLineItemInput[];
     const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') || '{}');
-    return graphql()
+    return shopify()
       .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
       .then((cart: ShopifyBuy.Checkout) => {
         if (!cart) return;
@@ -277,7 +277,7 @@ export const thunkUpdateCart =
     }));
     const lineItemsToUpdate = [{ id: productId, quantity, customAttributes }];
     const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') || '{}');
-    return graphql()
+    return shopify()
       .checkout.updateLineItems(user ? checkoutId : id, lineItemsToUpdate)
       .then((cart) => {
         if (!cart) return;
@@ -308,7 +308,7 @@ export const thunkRemoveFromCart =
   (id: string, itemId: string): ThunkAction<void, types.CartState, null, Action<string>> =>
   (dispatch) => {
     dispatch(removeFromCart(true));
-    return graphql()
+    return shopify()
       .checkout.removeLineItems(id, itemId)
       .then((cart) => {
         if (!cart) return;

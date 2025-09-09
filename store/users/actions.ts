@@ -6,7 +6,7 @@ import { ThunkAction } from 'redux-thunk';
 
 // import { encryptTokenClient } from 'lib/crypto';
 import api from 'services/api';
-import graphql from 'services/graphql';
+import shopify from 'services/shopify';
 
 import { setErrorMessage } from '../actions';
 import { thunkLoadCart, loadCart } from '../cart/actions';
@@ -231,7 +231,7 @@ export const thunkRegister =
   (userData): ThunkAction<void, types.UsersState, null, Action<string>> =>
   async (dispatch): Promise<any> => {
     dispatch(register(true));
-    const checkout = await graphql().checkout.create();
+    const checkout = await shopify().checkout.create();
     return api()
       .users.register({
         ...userData,
