@@ -2,6 +2,8 @@ import Client from 'shopify-buy';
 
 import Checkout from './checkout';
 
+export const IS_SHOPIFY_AVAILABLE = !!process.env.SHOPIFY_URL && !!process.env.STOREFRONT_API_KEY;
+
 /**
  * Build a Shopify client adapter using the given domain and token.
  * @param domain - Shopify store domain
@@ -28,11 +30,11 @@ function getShopifyAdapter() {
  * Main GraphQL service for Shopify, exposing domain-specific services.
  * Add more services as needed.
  */
-const getGraphqlService = () => {
+const getShopifyService = () => {
   const shopifyAdapter = getShopifyAdapter();
   return {
     checkout: new Checkout(shopifyAdapter),
   };
 };
 
-export default getGraphqlService;
+export default getShopifyService;

@@ -1,3 +1,5 @@
+import { IS_SHOPIFY_AVAILABLE } from '.';
+
 export default class Checkout {
   adapter: ShopifyBuy;
   basePath: string;
@@ -32,57 +34,59 @@ export default class Checkout {
   }
 
   addLineItems(checkoutId: ShopifyBuy.ID, lineItems: ShopifyBuy.CheckoutLineItemInput[]): Promise<ShopifyBuy.Checkout> {
-    // return this.adapter.checkout.addLineItems(checkoutId, lineItems);
-    return Promise.resolve({
-      id: checkoutId,
-      lineItems: lineItems.map((item, idx) => ({
-        ...item,
-        id: `lineitem_${idx}`,
-        title: (item as any).title || 'Product',
-        discountAllocations: [],
-      })),
-      completedAt: null,
-      createdAt: new Date().toISOString(),
-      currencyCode: 'USD',
-      email: '',
-      lineItemsSubtotalPrice: { amount: 100000, currencyCode: 'USD' },
-      note: null,
-      order: null,
-      orderStatusUrl: null,
-      ready: true,
-      requiresShipping: true,
-      shippingAddress: null,
-      shippingLine: null,
-      subtotalPrice: { amount: 100000, currencyCode: 'USD' },
-      taxExempt: false,
-      taxesIncluded: false,
-      totalPrice: { amount: 100000, currencyCode: 'USD' },
-      totalTax: { amount: 0, currencyCode: 'USD' },
-      updatedAt: new Date().toISOString(),
-      webUrl: '',
-      discountApplications: [],
-      customAttributes: [],
-      userErrors: [],
-      completed: false,
-      paymentDue: { amount: 0, currencyCode: 'USD' },
-      paymentDueV2: { amount: 0, currencyCode: 'USD' },
-      phone: '',
-      presentmentCurrencyCode: 'USD',
-      shippingDiscountAllocations: [],
-      shippingLineHandle: '',
-      subtotalPriceV2: { amount: 100000, currencyCode: 'USD' },
-      totalDuties: null,
-      totalPriceV2: { amount: 100000, currencyCode: 'USD' },
-      totalTaxV2: { amount: 0, currencyCode: 'USD' },
-      appliedGiftCards: [],
-      buyerIdentity: {
-        countryCode: null,
+    if (!IS_SHOPIFY_AVAILABLE) {
+      return Promise.resolve({
+        id: checkoutId,
+        lineItems: lineItems.map((item, idx) => ({
+          ...item,
+          id: `lineitem_${idx}`,
+          title: (item as any).title || 'Product',
+          discountAllocations: [],
+        })),
+        completedAt: null,
+        createdAt: new Date().toISOString(),
+        currencyCode: 'USD',
         email: '',
+        lineItemsSubtotalPrice: { amount: 100000, currencyCode: 'USD' },
+        note: null,
+        order: null,
+        orderStatusUrl: null,
+        ready: true,
+        requiresShipping: true,
+        shippingAddress: null,
+        shippingLine: null,
+        subtotalPrice: { amount: 100000, currencyCode: 'USD' },
+        taxExempt: false,
+        taxesIncluded: false,
+        totalPrice: { amount: 100000, currencyCode: 'USD' },
+        totalTax: { amount: 0, currencyCode: 'USD' },
+        updatedAt: new Date().toISOString(),
+        webUrl: '',
+        discountApplications: [],
+        customAttributes: [],
+        userErrors: [],
+        completed: false,
+        paymentDue: { amount: 0, currencyCode: 'USD' },
+        paymentDueV2: { amount: 0, currencyCode: 'USD' },
         phone: '',
-        customer: null,
-        deliveryAddressPreferences: [],
-      },
-    } as ShopifyBuy.Checkout);
+        presentmentCurrencyCode: 'USD',
+        shippingDiscountAllocations: [],
+        shippingLineHandle: '',
+        subtotalPriceV2: { amount: 100000, currencyCode: 'USD' },
+        totalDuties: null,
+        totalPriceV2: { amount: 100000, currencyCode: 'USD' },
+        totalTaxV2: { amount: 0, currencyCode: 'USD' },
+        appliedGiftCards: [],
+        buyerIdentity: {
+          countryCode: null,
+          email: '',
+          phone: '',
+          customer: null,
+          deliveryAddressPreferences: [],
+        },
+      } as ShopifyBuy.Checkout);
+    }
+    return this.adapter.checkout.addLineItems(checkoutId, lineItems);
   }
 
   updateLineItems(id, data): Promise<any> {
