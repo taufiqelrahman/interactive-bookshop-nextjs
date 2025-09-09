@@ -27,6 +27,7 @@
     "@sentry/browser": "^5.20.1",
     "@sentry/core": "^10.5.0",
     "@types/react-redux": "^7.1.5",
+    "@types/shopify-buy": "^3.0.0",
     "apollo-boost": "^0.4.7",
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.19",
