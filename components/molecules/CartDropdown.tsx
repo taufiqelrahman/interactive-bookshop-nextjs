@@ -4,21 +4,10 @@ import React from 'react';
 import NumberFormat from 'react-number-format';
 
 import { previewImg } from 'components/molecules/CartItem/helper';
-
-interface CartDropdownItem {
-  customAttributes: {
-    Name?: string;
-    [key: string]: any;
-  };
-  quantity: number;
-  variant: {
-    price: number | string;
-    [key: string]: any;
-  };
-}
+import { Cart } from 'store/cart/types';
 
 interface CartDropdownProps {
-  items: CartDropdownItem[];
+  items: Cart['lineItems'];
 }
 
 const CartDropdown = (props: CartDropdownProps) => {
@@ -58,7 +47,7 @@ const CartDropdown = (props: CartDropdownProps) => {
                     </div>
                     <div className="c-cart-dropdown__item__total">
                       <NumberFormat
-                        value={item.variant.price}
+                        value={item.variant.price.amount}
                         thousandSeparator={true}
                         prefix={'Rp'}
                         displayType="text"
