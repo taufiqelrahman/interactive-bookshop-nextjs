@@ -19,7 +19,7 @@ const NavBar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const users = useSelector((state: { users: UsersState }) => state.users);
-  const cartItems = useSelector((state: { cart: CartState }) => state.cart.cart.lineItems);
+  const cartItems = useSelector((state: { cart: CartState }) => state.cart.cart?.lineItems);
   const isIndexPage = router.pathname === '/';
   const [isSticky, setSticky] = useState(false);
   const [showCart, setShowCart] = useState(false);
