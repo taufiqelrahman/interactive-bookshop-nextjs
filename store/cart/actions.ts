@@ -11,7 +11,9 @@ import { loadUser } from '../users/actions';
 
 import * as types from './types';
 
-function mapItems(items) {
+function mapItems(items: ShopifyBuy.CheckoutLineItem[]): (ShopifyBuy.CheckoutLineItem & {
+  customAttributes: any;
+})[] {
   return items.map((item) => ({
     ...item,
     customAttributes: mapKeyValue(item.customAttributes),
@@ -217,7 +219,7 @@ function updateCart(isFetching, cart = null): types.CartActionTypes {
   };
 }
 
-function addToCart(isFetching, cart = null): types.CartActionTypes {
+function addToCart(isFetching: boolean, cart?: types.Cart): types.CartActionTypes {
   return {
     type: types.ADD_TO_CART,
     payload: cart,
@@ -240,14 +242,14 @@ export const thunkAddToCart =
         quantity: 1,
         customAttributes,
       },
-    ];
+    ] as ShopifyBuy.CheckoutLineItemInput[];
     const { id, checkout_id: checkoutId } = user ? user.cart : JSON.parse(localStorage.getItem('cart') || '{}');
     return graphql()
       .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
-      .then((cart) => {
+      .then((cart: ShopifyBuy.Checkout) => {
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
-        dispatch(addToCart(false, { ...cart, lineItems }));
+        dispatch(addToCart(false, { ...cart, lineItems } as types.Cart));
         // @todo should router.push() outside this function afterwards
         // Router.replace('/cart');
       })
