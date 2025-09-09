@@ -37,7 +37,7 @@ const PreviewDesktop = (props: any): any => {
   const [tempData, setTempData] = useState(null);
   const { register, handleSubmit, errors, formState, watch } = methods;
   const selected = cart.selected || dummySelected || {};
-  const addToCart = (cart) => {
+  const addToCart = async (cart) => {
     if (selected.id) {
       dispatch(actions.thunkUpdateCart(cart));
     } else {
@@ -55,7 +55,8 @@ const PreviewDesktop = (props: any): any => {
         cartItem: cart,
         isLoggedIn: users.isLoggedIn,
       });
-      dispatch(actions.thunkAddToCart(cart));
+      await dispatch(actions.thunkAddToCart(cart));
+      router.push('/cart');
     }
   };
   const onSubmit = (data) => {
