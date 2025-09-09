@@ -4,15 +4,22 @@ import { useRouter } from 'next/router';
 // import { ShoppingCart } from 'react-feather';
 import { useTranslation } from 'next-i18next';
 import { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Dot from 'components/atoms/Dot';
 import AccountDropdown from 'components/molecules/AccountDropdown';
 import CartDropdown from 'components/molecules/CartDropdown';
 import TranslationToggle from 'components/molecules/TranslationToggle';
+import actions from 'store/actions';
+import { CartState } from 'store/cart/types';
+import { UsersState } from 'store/users/types';
 
-const NavBar = (props: any) => {
+const NavBar = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
+  const dispatch = useDispatch();
+  const users = useSelector((state: { users: UsersState }) => state.users);
+  const cartItems = useSelector((state: { cart: CartState }) => state.cart.cart.lineItems);
   const isIndexPage = router.pathname === '/';
   const [isSticky, setSticky] = useState(false);
   const [showCart, setShowCart] = useState(false);
@@ -28,11 +35,11 @@ const NavBar = (props: any) => {
     }
   };
   useEffect(() => {
-    const { user } = props.users;
+    const { user } = users;
     if (user && user.cart) {
-      props.thunkLoadCart(user.cart.checkout_id);
+      dispatch(actions.thunkLoadCart(user.cart.checkout_id));
     } else if (!user && localStorage.getItem('cart')) {
-      props.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true);
+      dispatch(actions.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true));
     }
     document.body.classList.remove('overlay-active');
 
@@ -47,7 +54,7 @@ const NavBar = (props: any) => {
     return isSticky ? 'c-nav-bar--sticky' : '';
   };
 
-  const cartNotEmpty = !!props.cartItems && props.cartItems.length > 0;
+  const cartNotEmpty = !!cartItems && cartItems.length > 0;
 
   const toggleShow = (state, action) => {
     action(state);
@@ -59,11 +66,11 @@ const NavBar = (props: any) => {
   };
 
   const logout = () => {
-    props.thunkLogout();
+    dispatch(actions.thunkLogout());
     toggleShow(false, setShowAccount);
   };
 
-  const userFullName = props.users?.user?.name;
+  const userFullName = users?.user?.name;
   const userName = userFullName ? userFullName.split(' ')[0] : t('account');
 
   return (
@@ -92,10 +99,10 @@ const NavBar = (props: any) => {
                       {cartNotEmpty && <Dot color="red" />}
                     </div>
                   </a>
-                  {showCart && <CartDropdown items={props.cartItems} />}
+                  {showCart && <CartDropdown items={cartItems} />}
                 </div>
               </Link>
-              {props.users.isLoggedIn ? (
+              {users.isLoggedIn ? (
                 <Link href="/account">
                   <div
                     className="c-nav-bar__menu__account"
