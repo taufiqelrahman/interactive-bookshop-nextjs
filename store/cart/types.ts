@@ -8,14 +8,16 @@ export const TRANSFER_CART = 'TRANSFER_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
 
-export interface Cart {
-  id: number;
+export interface Cart extends ShopifyBuy.Checkout {
+  id: string;
   user_id: number;
   created_at: string;
   updated_at: string;
   deleted_at: string;
   cart_items: CartItem[];
-  lineItems: CartItem[];
+  lineItems: (ShopifyBuy.CheckoutLineItem & {
+    customAttributes: any;
+  })[];
 }
 
 export interface Character {
