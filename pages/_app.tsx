@@ -19,12 +19,12 @@ import * as gtag from 'lib/gtag';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
-
 import 'styles/tailwind.css';
 import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import 'styles/fonts.min.css';
+import { User } from 'store/users/types';
 
 const LOGIN_ROUTES = ['/login', '/register'];
 const PRIVATE_ROUTES = ['/orders/success', '/account', '/orders'];
@@ -326,7 +326,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
         try {
           const { data: me } = await api(ctx.req).users.getMe();
           store.dispatch(actions.setLogin(true));
-          store.dispatch(actions.loadUser(false, me));
+          // @todo fix typing
+          store.dispatch(actions.loadUser(false, me as unknown as User));
         } catch {
           store.dispatch(actions.setExpired(true));
         }
