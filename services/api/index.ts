@@ -1,4 +1,4 @@
-import axios, { AxiosAdapter, AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
 import Cart from './cart';
 import Orders from './orders';
@@ -8,57 +8,73 @@ import Master from './master';
 import Message from './message';
 // import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
 
+// AdapterObject defines the structure for API adapters (default and secure)
 export interface AdapterObject {
   default: AxiosInstance;
   secure: AxiosInstance;
 }
 
-const options = {
+// Base configuration for axios requests
+const axiosBaseConfig = {
   baseURL: `${process.env.API_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
 };
-const createAdapter = (): AxiosAdapter => {
-  return axios.create(options);
+
+// Create a default axios instance (no auth)
+const createDefaultAdapter = (): AxiosInstance => {
+  return axios.create(axiosBaseConfig);
 };
 
-const createSecureAdapter = (req?): AxiosAdapter => {
-  let token;
-  if (req) {
-    // if server-side
-    const userCookie = (req as any).headers.cookie.split(';').filter((cookie) => cookie.includes('user='));
-    token = userCookie[0] && userCookie[0].split('=')[1];
-    // token = !!cryptedToken ? decryptTokenServer(cryptedToken) : '';
+// Create a secure axios instance (with auth token from cookie)
+const createSecureAdapter = (req?: any): AxiosInstance => {
+  let userToken: string | undefined;
+
+  if (req && req.headers && req.headers.cookie) {
+    // Server-side: extract 'user' token from cookies in request headers
+    const cookies = req.headers.cookie.split(';').map((cookie: string) => cookie.trim());
+    const userCookie = cookies.find((cookie: string) => cookie.startsWith('user='));
+    userToken = userCookie ? userCookie.split('=')[1] : undefined;
+    // Optionally decrypt token here if needed
+    // userToken = userToken ? decryptTokenServer(userToken) : '';
   } else {
-    // if client-side
-    token = Cookies.get('user');
-    // token = !!cryptedToken ? decryptTokenClient(cryptedToken) : '';
+    // Client-side: get 'user' token from browser cookies
+    userToken = Cookies.get('user');
+    // Optionally decrypt token here if needed
+    // userToken = userToken ? decryptTokenClient(userToken) : '';
   }
-  const secureOptions = {
-    ...options,
+
+  // Merge base config with Authorization header
+  const secureConfig = {
+    ...axiosBaseConfig,
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      ...axiosBaseConfig.headers,
+      Authorization: userToken ? `Bearer ${userToken}` : '',
     },
   };
-  return axios.create(secureOptions);
+  return axios.create(secureConfig);
 };
 
-const apiService = (req?) => {
-  const instance = createAdapter();
-  const secure = createSecureAdapter(req);
-  const adapter = {
-    default: instance,
-    secure: secure,
+// Factory function to create API service instances for each resource
+// Optionally accepts a request object for SSR/Node
+const apiService = (req?: any) => {
+  // Create adapters for default and secure requests
+  const defaultAdapter = createDefaultAdapter();
+  const secureAdapter = createSecureAdapter(req);
+  const adapters: AdapterObject = {
+    default: defaultAdapter,
+    secure: secureAdapter,
   };
+
+  // Return service instances for each resource
   return {
-    cart: new Cart(adapter),
-    orders: new Orders(adapter),
-    products: new Products(adapter),
-    users: new Users(adapter),
-    master: new Master(adapter),
-    message: new Message(adapter),
+    cart: new Cart(adapters),
+    orders: new Orders(adapters),
+    products: new Products(adapters),
+    users: new Users(adapters),
+    master: new Master(adapters),
+    message: new Message(adapters),
   };
 };
 
