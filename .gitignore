@@ -10,3 +10,4 @@ public/static/images/pages-xs
 coverage
 report.*
 __mocks
+todos.md
