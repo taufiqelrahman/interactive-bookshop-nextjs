@@ -12,7 +12,7 @@ import { Router } from 'next/router';
 import cookies from 'next-cookies';
 import { appWithTranslation } from 'next-i18next';
 import NProgress from 'nprogress';
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as gtag from 'lib/gtag';
@@ -54,10 +54,7 @@ function WiguApp({ Component, pageProps }: AppProps) {
   const isExpired = useSelector((state: any) => state.users.isExpired);
 
   const debouncedFunctionRef = useRef<any>(() => setWidth(window.innerWidth));
-  const debouncedSetup = useCallback(
-    debounce(() => debouncedFunctionRef.current(), 200),
-    [],
-  );
+  const debouncedSetup = debounce(() => debouncedFunctionRef.current(), 200);
 
   const handleRouteChange = (url: string) => gtag.pageview(url);
 
@@ -81,16 +78,15 @@ function WiguApp({ Component, pageProps }: AppProps) {
     }
   }, [user, dispatch]);
 
-  // useEffect(() => {
-  //   const createCartForUser = () => {
-  //     const { dispatch, getState } = reduxStore;
-  //     const { user } = getState().users;
-  //     if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
-  //       dispatch(actions.thunkCreateCart());
-  //     }
-  //   };
-  //   createCartForUser();
-  // }, [reduxStore.getState().users]);
+  useEffect(() => {
+    const createCartForUser = () => {
+      if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
+        dispatch(actions.thunkCreateCart());
+      }
+    };
+    createCartForUser();
+  }, [dispatch, user]);
+
   Router.events.on('routeChangeComplete', () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   });
