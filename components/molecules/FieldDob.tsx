@@ -4,9 +4,17 @@ import React from 'react';
 import DateField from 'components/atoms/DateField/desktop';
 import DateFieldMobile from 'components/atoms/DateField/mobile';
 
-// import Badge from 'components/atoms/Badge';
+interface FieldDobProps {
+  style?: React.CSSProperties;
+  isMobile?: boolean;
+  errors?: { message?: string } | null;
+  name?: string;
+  setValue: (field: string, value: string) => void;
+  triggerValidation: (field: string) => void;
+  defaultValue: string;
+}
 
-const FieldDob = (props: any) => {
+const FieldDob = (props: FieldDobProps) => {
   const { t } = useTranslation('form');
   return (
     <div style={props.style} className="c-field-dob">
