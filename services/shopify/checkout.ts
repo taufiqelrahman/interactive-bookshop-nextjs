@@ -1,4 +1,4 @@
-import { mockShopifyCheckout } from './__mocks__/mocks';
+import { mockShippingAddress, mockShopifyCheckout } from './__mocks__/mocks';
 
 import { IS_SHOPIFY_AVAILABLE } from '.';
 
@@ -10,16 +10,33 @@ export default class Checkout {
     this.adapter = adapter;
   }
 
-  create(data?): Promise<any> {
+  create(data?: {
+    email?: string;
+    lineItems?: ShopifyBuy.CheckoutLineItemInput[];
+    shippingAddress?: ShopifyBuy.MailingAddressInput;
+    customAttributes?: ShopifyBuy.AttributeInput[];
+    presentmentCurrencyCode?: ShopifyBuy.CurrencyCode;
+  }): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
-        data: {
-          id: 'chk_123',
-          items: data?.items || [],
-          total: 100000,
-          status: 'created',
-          ...data,
+        id: 'chk_123',
+        lineItems:
+          data?.lineItems?.map((item, idx) => ({
+            ...item,
+            id: `lineitem_${idx}`,
+            title: (item as any).title || 'Product',
+            discountAllocations: [],
+            customAttributes: (item as any).customAttributes || [],
+          })) || [],
+        shippingAddress: data?.shippingAddress
+          ? { ...mockShippingAddress, ...data.shippingAddress }
+          : mockShippingAddress,
+        customAttributes: data?.customAttributes || [],
+        buyerIdentity: {
+          email: data?.email || '',
+          ...mockShopifyCheckout.buyerIdentity,
         },
+        ...mockShopifyCheckout,
       });
     }
     return this.adapter.checkout.create(data);

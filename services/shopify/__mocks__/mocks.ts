@@ -41,3 +41,22 @@ export const mockShopifyCheckout = {
     deliveryAddressPreferences: [],
   },
 };
+
+export const mockShippingAddress = {
+  id: 'mock_address_id',
+  formatted: ['123 Main St, City, Country'],
+  address1: '',
+  address2: '',
+  city: '',
+  company: '',
+  country: '',
+  countryCodeV2: '',
+  firstName: '',
+  lastName: '',
+  latitude: null,
+  longitude: null,
+  phone: '',
+  province: '',
+  provinceCode: '',
+  zip: '',
+};
