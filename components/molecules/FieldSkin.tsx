@@ -4,7 +4,16 @@ import React from 'react';
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
 
-const FieldSkin = (props: any) => {
+interface FieldSkinProps {
+  style?: React.CSSProperties;
+  isMobile?: boolean;
+  errors?: boolean;
+  register: (schema: any) => (ref: HTMLInputElement | null) => void;
+  schema: any;
+  defaultChecked?: string;
+}
+
+const FieldSkin = (props: FieldSkinProps) => {
   const { t } = useTranslation('form');
   const skins = [
     { name: 'light', color: '#ffdbb7' },
