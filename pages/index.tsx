@@ -28,36 +28,6 @@ const Index = (props: any): JSX.Element => {
   const occupationsTop = isMobile ? occupations.slice(0, 1) : occupations.slice(0, 5);
   const occupationsBottom = isMobile ? occupations.slice(1, 3) : occupations.slice(5, 9);
 
-  // const createCheckout = async () => {
-  //   let checkout = await graphql().checkout.create({
-  //     email: 'asd@asd.com',
-  //     // shippingAddress: {
-  //     //   // firstName: '',
-  //     //   lastName: 'asdasd',
-  //     //   address1: 'jl. aselih',
-  //     //   address2: 'cipedak',
-  //     //   city: 'jakarta selatan',
-  //     //   province: 'dki jakarta',
-  //     //   zip: '54321',
-  //     //   phone: '085747977734',
-  //     //   country: 'indonesia',
-  //     // },
-  //   });
-  //   const lineItemsToAdd = [
-  //     {
-  //       variantId: process.env.SHOPIFY_VARIANT_ID,
-  //       quantity: 1,
-  //     },
-  //   ];
-  //   checkout = await graphql().checkout.addLineItems(checkout.id, lineItemsToAdd);
-  //   console.log(checkout);
-  //   console.log(checkout.webUrl);
-  // };
-
-  // useEffect(() => {
-  //   createCheckout();
-  // }, []);
-
   const landingTracker = () => {
     gtag.event({
       action: 'click_landing',
