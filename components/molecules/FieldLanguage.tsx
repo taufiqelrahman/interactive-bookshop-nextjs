@@ -4,7 +4,15 @@ import React from 'react';
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
 
-const FieldLanguage = (props: any) => {
+interface FieldLanguageProps {
+  isMobile?: boolean;
+  errors?: any;
+  register: (schema: any) => (ref: HTMLInputElement | null) => void;
+  schema: any;
+  defaultChecked?: string;
+}
+
+const FieldLanguage = (props: FieldLanguageProps) => {
   const { t } = useTranslation('form');
   return (
     <div>
