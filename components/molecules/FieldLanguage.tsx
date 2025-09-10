@@ -10,7 +10,7 @@ interface FieldLanguageProps {
   register: (schema: any) => (ref: HTMLInputElement | null) => void;
   schema: any;
   defaultChecked?: string;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 }
 
 const FieldLanguage = (props: FieldLanguageProps) => {
