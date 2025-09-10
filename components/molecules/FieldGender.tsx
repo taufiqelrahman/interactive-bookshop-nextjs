@@ -7,7 +7,7 @@ import Radio from 'components/atoms/Radio';
 interface FieldGenderProps {
   style?: React.CSSProperties;
   className?: string;
-  errors?: { message?: string } | null;
+  errors?: any;
   register: (schema: any) => (ref: HTMLInputElement | null) => void;
   schema: any;
   defaultChecked?: string;

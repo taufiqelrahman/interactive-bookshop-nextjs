@@ -4,7 +4,19 @@ import React, { useEffect } from 'react';
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
 
-const FieldHair = (props: any) => {
+interface FieldHairProps {
+  style?: React.CSSProperties;
+  isMobile?: boolean;
+  errors?: any;
+  register: (schema: any) => (ref: HTMLInputElement | null) => void;
+  unregister: (name: string) => void;
+  schema: any;
+  defaultChecked?: string;
+  type: string;
+  age: string;
+}
+
+const FieldHair = (props: FieldHairProps) => {
   const { t } = useTranslation('form');
   const toddlerBoyHair = [
     { name: t('short'), image: 'short-toddler-boy' },
