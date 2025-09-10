@@ -3,7 +3,19 @@ import React from 'react';
 import Badge from 'components/atoms/Badge';
 import TextArea from 'components/atoms/TextArea';
 
-const FormTextArea = (props: any) => (
+interface FormTextAreaProps {
+  style?: React.CSSProperties;
+  label?: string;
+  hint?: string;
+  name: string;
+  placeholder?: string;
+  register: (schema: any) => (ref: HTMLTextAreaElement | null) => void;
+  schema: any;
+  errors?: any;
+  defaultValue?: string;
+}
+
+const FormTextArea = (props: FormTextAreaProps) => (
   <div style={props.style}>
     <div className="c-form-text-area">
       <div className="c-form-text-area__label">
