@@ -4,7 +4,16 @@ import React from 'react';
 import Badge from 'components/atoms/Badge';
 import Radio from 'components/atoms/Radio';
 
-const FieldGender = (props: any) => {
+interface FieldGenderProps {
+  style?: React.CSSProperties;
+  className?: string;
+  errors?: { message?: string } | null;
+  register: (schema: any) => (ref: HTMLInputElement | null) => void;
+  schema: any;
+  defaultChecked?: string;
+}
+
+const FieldGender = (props: FieldGenderProps) => {
   const { t } = useTranslation('form');
   const genders = [
     // { name: 'boy', image: 'boy' },
