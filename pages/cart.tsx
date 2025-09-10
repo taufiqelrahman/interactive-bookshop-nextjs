@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Fragment, useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { useSelector, useDispatch } from 'react-redux';
@@ -307,9 +308,11 @@ const Cart = ({ isMobile, setSideNav }) => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(() => async () => {
+export const getServerSideProps = wrapper.getServerSideProps(() => async (ctx) => {
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(ctx.locale, ['common'])),
+    },
   };
 });
 
