@@ -7,7 +7,7 @@ import Radio from 'components/atoms/Radio';
 interface FieldSkinProps {
   style?: React.CSSProperties;
   isMobile?: boolean;
-  errors?: boolean;
+  errors?: any;
   register: (schema: any) => (ref: HTMLInputElement | null) => void;
   schema: any;
   defaultChecked?: string;
