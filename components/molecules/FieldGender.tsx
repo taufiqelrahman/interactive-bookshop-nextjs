@@ -11,6 +11,7 @@ interface FieldGenderProps {
   register: (schema: any) => (ref: HTMLInputElement | null) => void;
   schema: any;
   defaultChecked?: string;
+  isMobile?: boolean;
 }
 
 const FieldGender = (props: FieldGenderProps) => {
