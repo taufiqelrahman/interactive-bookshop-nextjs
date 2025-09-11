@@ -19,6 +19,7 @@ const NavBar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const users = useSelector((state: { users: UsersState }) => state.users);
+  const cart = useSelector((state: { cart: CartState }) => state.cart.cart);
   const cartItems = useSelector((state: { cart: CartState }) => state.cart.cart?.lineItems);
   const isIndexPage = router.pathname === '/';
   const [isSticky, setSticky] = useState(false);
@@ -35,6 +36,7 @@ const NavBar = () => {
     }
   };
   useEffect(() => {
+    if (!showCart || cart) return;
     const { user } = users;
     if (user && user.cart) {
       dispatch(actions.thunkLoadCart(user.cart.checkout_id));
@@ -48,7 +50,7 @@ const NavBar = () => {
     return () => {
       window.removeEventListener('scroll', () => handleScroll);
     };
-  }, []);
+  }, [showCart]);
 
   const stickyClassName = () => {
     return isSticky ? 'c-nav-bar--sticky' : '';
