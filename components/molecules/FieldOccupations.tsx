@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import Badge from 'components/atoms/Badge';
 import Checkbox from 'components/atoms/Checkbox';
+import { RootState } from 'store';
 import { Occupation } from 'store/master/types';
 // import { useRouter } from 'next/router';
 
@@ -22,7 +23,7 @@ interface FieldOccupationsProps {
 const FieldOccupations = (props: FieldOccupationsProps) => {
   const { t, i18n } = useTranslation('form');
 
-  const master = useSelector((state: any) => state.master);
+  const master = useSelector((state: RootState) => state.master);
   const { occupations } = master;
   // State for selected occupation names
   const [selectedOccupations, setSelectedOccupations] = useState<string[]>([]);
