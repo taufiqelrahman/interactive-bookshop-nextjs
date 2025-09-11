@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
-import { wrapper } from 'store';
+import { RootState, wrapper } from 'store';
 import actions from 'store/actions';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -25,20 +25,21 @@ const Cart = ({ isMobile, setSideNav }) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.users);
-  const cart = useSelector((state: any) => state.cart);
+  const cart = useSelector((state: RootState) => state.cart);
 
-  const items = cart.cart ? cart.cart.lineItems : cart.isFetching ? [1, 2] : [];
+  const items = cart.cart ? cart.cart.lineItems : [];
   const itemsAmount = cart.cart ? cart.cart.lineItemsSubtotalPrice.amount : 0;
   const hasShippingLine = cart.cart && cart.cart.shippingLine;
-  const discounts = cart.cart ? cart.cart.discountApplications : [];
+  // const discounts = cart.cart ? cart.cart.discountApplications : [];
 
   useEffect(() => {
+    if (cart) return;
     if (users.user && users.user.cart) {
       dispatch(actions.thunkLoadCart(users.user.cart.checkout_id));
     } else if (!users.user && localStorage.getItem('cart')) {
       dispatch(actions.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as string).id, true));
     }
-  }, [dispatch, users.user]);
+  }, [cart, dispatch, users.user]);
 
   const continuePayment = () => {
     window.location.href = cart.cart ? cart.cart.webUrl : '';
@@ -89,14 +90,11 @@ const Cart = ({ isMobile, setSideNav }) => {
                   />
                 ) : (
                   <CartItem
-                    key={item.id || item}
+                    key={item.id}
                     {...item}
                     style={{ marginBottom: 12 }}
                     isSkeleton={cart.isFetching}
                     cartId={cart.cart && cart.cart.id}
-                    removeFromCart={(id) => dispatch(actions.thunkRemoveFromCart(id, item.id))}
-                    saveSelected={(data) => dispatch(actions.saveSelected(data))}
-                    updateCart={(data) => dispatch(actions.thunkUpdateCart(data))}
                   />
                 ),
               )}
@@ -134,7 +132,7 @@ const Cart = ({ isMobile, setSideNav }) => {
                           </div>
                           <div className="c-cart__summary__total">
                             <NumberFormat
-                              value={cart.cart.shippingLine.price}
+                              value={cart.cart.shippingLine.price.amount}
                               thousandSeparator
                               prefix="Rp"
                               displayType="text"
@@ -142,7 +140,7 @@ const Cart = ({ isMobile, setSideNav }) => {
                           </div>
                         </div>
                       )}
-                      {discounts.map((discount) => (
+                      {/* {discounts.map((discount) => (
                         <div
                           key={discount.code}
                           className="flex items-baseline justify-between"
@@ -161,7 +159,7 @@ const Cart = ({ isMobile, setSideNav }) => {
                             />
                           </div>
                         </div>
-                      ))}
+                      ))} */}
                       <Divider style={{ borderColor: '#EDEDED', margin: '24px 0 24px' }} />
                     </Fragment>
                   )}
@@ -171,7 +169,7 @@ const Cart = ({ isMobile, setSideNav }) => {
                       {isMobile && <span className="icon-info" />}
                     </div>
                     <NumberFormat
-                      value={cart.cart && cart.cart.totalPrice}
+                      value={cart.cart && cart.cart.totalPrice.amount}
                       thousandSeparator
                       prefix="Rp"
                       displayType="text"

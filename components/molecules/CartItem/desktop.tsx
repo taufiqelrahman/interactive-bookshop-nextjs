@@ -4,6 +4,8 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
+import { useDispatch } from 'react-redux';
+import { CheckoutLineItem } from 'shopify-buy';
 
 import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
@@ -11,11 +13,19 @@ import Divider from 'components/atoms/Divider';
 import Dot from 'components/atoms/Dot';
 import Modal from 'components/atoms/Modal';
 import Popover from 'components/atoms/Popover';
+import actions from 'store/actions';
 
 import { previewImg, updateQuantity } from './helper';
 
-const CartItem = (props: any) => {
+interface CartItemProps extends CheckoutLineItem {
+  cartId: string;
+  style?: React.CSSProperties;
+  isSkeleton?: boolean;
+}
+
+const CartItem = (props: CartItemProps) => {
   const { t } = useTranslation('common');
+  const dispatch = useDispatch();
   const router = useRouter();
   const [quantity, setQuantity] = useState(props.quantity);
   const [showModal, setShowModal] = useState(false);
@@ -40,13 +50,22 @@ const CartItem = (props: any) => {
     }
     debouncedChange();
   }, [quantity]);
+
+  //convert customAttributes to object
+  const customAttributes = props.customAttributes.reduce((obj, item) => {
+    obj[item.key] = item.value;
+    return obj;
+  }, {}) as Record<string, any>;
+
   const editItem = () => {
-    props.saveSelected({
-      id: props.id,
-      quantity: props.quantity,
-      ...props.customAttributes,
-      Occupations: props.customAttributes.Occupations.split(','),
-    });
+    dispatch(
+      actions.saveSelected({
+        id: props.id,
+        quantity: props.quantity,
+        ...customAttributes,
+        Occupations: customAttributes.Occupations.split(','),
+      }),
+    );
     router.push('/create');
   };
 
@@ -59,7 +78,7 @@ const CartItem = (props: any) => {
               <Skeleton height={100} width={100} />
             ) : (
               <div className="c-cart-item__preview__image">
-                <img src={previewImg(props.customAttributes)} alt="item preview" />
+                <img src={previewImg(customAttributes)} alt="item preview" />
               </div>
             )}
             {props.isSkeleton ? (
@@ -68,8 +87,8 @@ const CartItem = (props: any) => {
               </div>
             ) : (
               <div className="c-cart-item__preview__cover">
-                <Dot width="16px" color={props.customAttributes.Cover} />
-                {props.customAttributes.Cover}
+                <Dot width="16px" color={customAttributes.Cover} />
+                {customAttributes.Cover}
               </div>
             )}
           </div>
@@ -80,19 +99,19 @@ const CartItem = (props: any) => {
                   {props.isSkeleton ? <Skeleton /> : t('form:nickname-label')}
                 </div>
                 <div className="c-cart-item__detail__value">
-                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Name}
+                  {props.isSkeleton ? <Skeleton /> : customAttributes.Name}
                 </div>
                 <div className="c-cart-item__detail__label">
                   {props.isSkeleton ? <Skeleton /> : t('dream-occupation')}
                 </div>
                 <div className="c-cart-item__detail__value">
-                  {props.isSkeleton ? <Skeleton /> : props.customAttributes.Occupations?.replace(/,/g, ', ')}
+                  {props.isSkeleton ? <Skeleton /> : customAttributes.Occupations?.replace(/,/g, ', ')}
                 </div>
               </div>
-              {!props.isSkeleton && props.customAttributes.Dedication && (
+              {!props.isSkeleton && customAttributes.Dedication && (
                 <div className="c-cart-item__detail--top--right">
                   <div className="c-cart-item__detail__label">{t('dedication-note')}</div>
-                  <Popover content={props.customAttributes.Dedication}>
+                  <Popover content={customAttributes.Dedication}>
                     <div className="c-cart-item__detail__link">{t('preview-note')}</div>
                   </Popover>
                 </div>
@@ -107,7 +126,7 @@ const CartItem = (props: any) => {
                   <Fragment>
                     <div className="c-cart-item__detail__price--original">Rp250,000.00</div>
                     <NumberFormat
-                      value={props.variant.price}
+                      value={props.variant.price.amount}
                       thousandSeparator={true}
                       prefix={'Rp'}
                       displayType="text"
@@ -162,7 +181,7 @@ const CartItem = (props: any) => {
           <Fragment>
             <Button
               width="100%"
-              onClick={() => props.removeFromCart(props.cartId, props.id)}
+              onClick={() => dispatch(actions.thunkRemoveFromCart(props.cartId, props.id))}
               style={{ marginBottom: 12 }}
             >
               {t('form:continue-button')}
