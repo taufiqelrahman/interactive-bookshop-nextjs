@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import DefaultLayout from 'components/layouts/Default';
 import appConfig from 'config';
 import { fullDate } from 'lib/format-date';
+import { RootState } from 'store';
 
 import { retrieveInfo, previewImg } from './helper';
 
@@ -23,7 +24,7 @@ const Button = dynamic(() => import('components/atoms/Button'));
 
 const OrderDetailDesktop = (props: any): any => {
   const { t } = useTranslation('page-orders');
-  const { isFetching, currentOrder: order } = useSelector((state: any) => state.orders);
+  const { isFetching, currentOrder: order } = useSelector((state: RootState) => state.orders);
   const {
     currentOrder,
     shippingAddress,
