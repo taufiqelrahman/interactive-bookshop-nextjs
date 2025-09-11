@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
+import { RootState } from 'store';
+import { CartItem } from 'store/cart/types';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 
@@ -25,8 +27,8 @@ const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
 const CharacterCustomization = (props: any) => {
   const { t } = useTranslation('form');
-  const cart = useSelector((state: any) => state.cart);
-  const master = useSelector((state: any) => state.master);
+  const cart = useSelector((state: RootState) => state.cart);
+  const master = useSelector((state: RootState) => state.master);
   const router = useRouter();
   const stepEnum = {
     NAME_GENDER: 0,
@@ -74,7 +76,7 @@ const CharacterCustomization = (props: any) => {
         Hair: 'short',
       }
     : {};
-  const selected = cart.selected || defaultSelected;
+  const selected = cart.selected || (defaultSelected as CartItem);
   const registerOccupations = () => {
     // setTimeout(() => {
     register({ name: 'Occupations' }, schema(t).occupations);
@@ -127,7 +129,7 @@ const CharacterCustomization = (props: any) => {
       setCharStep(stepEnum.AGE);
     }
     if (typeof selected.Occupations === 'string') {
-      selected.Occupations = selected.Occupations.split(',');
+      selected.Occupations = (selected.Occupations as string).split(',');
     }
     router.prefetch('/preview');
   }, []);
