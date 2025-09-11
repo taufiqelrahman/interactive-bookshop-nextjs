@@ -248,8 +248,8 @@ export const thunkAddToCart =
       .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
       .then((cart: ShopifyBuy.Checkout) => {
         if (!cart) return;
-        const lineItems = mapItems(cart.lineItems);
-        dispatch(addToCart(false, { ...cart, lineItems } as types.Cart));
+        dispatch(addToCart(false, cart as types.Cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {
