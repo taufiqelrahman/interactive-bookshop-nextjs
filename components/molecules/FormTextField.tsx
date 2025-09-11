@@ -3,7 +3,24 @@ import React from 'react';
 import Badge from 'components/atoms/Badge';
 import TextField from 'components/atoms/TextField';
 
-const FormTextField = (props: any) => (
+interface FormTextFieldProps {
+  formStyle?: React.CSSProperties;
+  className?: string;
+  label?: string;
+  errors?: any;
+  register: (schema?: any) => (ref: HTMLInputElement | null) => void;
+  schema?: any;
+  name: string;
+  placeholder?: string;
+  defaultValue?: string;
+  hint?: string;
+  style?: React.CSSProperties;
+  variant?: string;
+  isPassword?: boolean;
+  type?: string;
+}
+
+const FormTextField = (props: FormTextFieldProps) => (
   <div style={props.formStyle} className={props.className}>
     <div className="c-form-text-field">
       <div className="c-form-text-field__label">
