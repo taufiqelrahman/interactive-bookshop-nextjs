@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as gtag from 'lib/gtag';
+import { RootState } from 'store';
 import actions from 'store/actions';
 import { Character } from 'store/cart/types';
 
@@ -33,8 +34,8 @@ const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const CharacterCustomization = (props: any) => {
   const { t } = useTranslation('form');
   const dispatch = useDispatch();
-  const cart = useSelector((state: any) => state.cart);
-  const master = useSelector((state: any) => state.master);
+  const cart = useSelector((state: RootState) => state.cart);
+  const master = useSelector((state: RootState) => state.master);
   const router = useRouter();
   const [isSticky, setSticky] = useState(false);
   const methods = useForm({ mode: 'onChange' });
