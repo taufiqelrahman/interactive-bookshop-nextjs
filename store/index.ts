@@ -44,7 +44,7 @@ export const makeStore = () =>
 // Types
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppDispatch = AppStore['dispatch'];
-export type RootState = ReturnType<AppStore['getState']>;
+export type RootState = ReturnType<typeof combinedReducer>;
 
 // Next.js wrapper
 export const wrapper = createWrapper<AppStore>(makeStore, {
