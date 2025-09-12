@@ -1,6 +1,5 @@
 /* eslint-disable no-useless-escape */
 import * as Sentry from '@sentry/browser';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import detectIt from 'detect-it';
@@ -184,7 +183,6 @@ function WiguApp({ Component, pageProps }: AppProps) {
       </Head>
       <Pixel />
       {!!width && <Component isMobile={width < 768} {...pageProps} />}
-      <SpeedInsights />
       <style jsx global>{`
         body {
           @apply font-poppins text-dark-grey;
