@@ -1,6 +1,15 @@
 import DOMPurify from 'dompurify';
 
-const Testimonial = (props: any) => {
+interface TestimonialProps {
+  testi: {
+    message: string;
+    image_url: string;
+    name: string;
+    company: string;
+  };
+}
+
+const Testimonial: React.FC<TestimonialProps> = (props) => {
   const data = props.testi;
   return (
     <div className="c-testimonial">
