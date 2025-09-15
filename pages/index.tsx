@@ -20,7 +20,13 @@ const BookForm = dynamic(() => import('components/organisms/BookForm'));
 const Showcase = dynamic(() => import('components/atoms/Showcase'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Index = (props: any): JSX.Element => {
+interface IndexProps {
+  isMobile?: boolean;
+  setSideNav?: (open: boolean) => void;
+  [key: string]: unknown;
+}
+
+const Index: React.FC<IndexProps> = (props) => {
   const { t } = useTranslation('page-index');
   const { testimonials, occupations } = useSelector((state: RootState) => state.master);
   const { isMobile, setSideNav } = props;
@@ -402,8 +408,12 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
 
     store.dispatch(loadTestimonials({ isFetching: false, data: testi.data }));
     store.dispatch(loadOccupations({ isFetching: false, data: occupations.data }));
-  } catch (err: any) {
-    console.error('❌ Index getServerSideProps:', err.message);
+  } catch (err: unknown) {
+    if (err && typeof err === 'object' && 'message' in err) {
+      console.error('❌ Index getServerSideProps:', (err as { message: string }).message);
+    } else {
+      console.error('❌ Index getServerSideProps:', err);
+    }
   }
 
   return {
