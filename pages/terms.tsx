@@ -9,7 +9,13 @@ import NavBar from 'components/organisms/NavBar/mobile';
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Terms = (props: any): any => {
+interface TermsProps {
+  isMobile?: boolean;
+  setSideNav?: (open: boolean) => void;
+  [key: string]: unknown;
+}
+
+const Terms: React.FC<TermsProps> = (props) => {
   const { t } = useTranslation('common');
   return (
     <DefaultLayout
