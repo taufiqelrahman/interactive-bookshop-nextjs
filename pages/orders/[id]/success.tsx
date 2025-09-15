@@ -10,7 +10,7 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import { formatPayment } from 'lib/format-payment';
 import api from 'services/api';
-import { wrapper } from 'store';
+import { RootState, wrapper } from 'store';
 import actions from 'store/actions';
 
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -23,9 +23,9 @@ interface OrderSuccessProps {
 
 const OrderSuccess: React.FC<OrderSuccessProps> = (props) => {
   const { t } = useTranslation('common');
-  const users = useSelector((state: any) => state.users);
+  const users = useSelector((state: RootState) => state.users);
   const { isLoggedIn } = users;
-  const orders = useSelector((state: any) => state.orders);
+  const orders = useSelector((state: RootState) => state.orders);
   const { paymentProblem } = orders;
   const router = useRouter();
   const { id } = router.query;
