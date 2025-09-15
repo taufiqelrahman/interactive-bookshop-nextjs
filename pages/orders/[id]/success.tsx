@@ -16,7 +16,12 @@ import actions from 'store/actions';
 const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const OrderSuccess = (props: any): any => {
+interface OrderSuccessProps {
+  isMobile?: boolean;
+  [key: string]: unknown;
+}
+
+const OrderSuccess: React.FC<OrderSuccessProps> = (props) => {
   const { t } = useTranslation('common');
   const users = useSelector((state: any) => state.users);
   const { isLoggedIn } = users;
