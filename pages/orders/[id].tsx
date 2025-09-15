@@ -7,7 +7,12 @@ import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
 
-const OrderDetail = (props: any): any => {
+interface OrderDetailProps {
+  isMobile?: boolean;
+  [key: string]: unknown;
+}
+
+const OrderDetail: React.FC<OrderDetailProps> = (props) => {
   if (props.isMobile) {
     return <OrderDetailMobile {...props} />;
   } else {
@@ -28,8 +33,12 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     order.state = state.name;
     order.payment = payment ? formatPayment(payment) : null;
     store.dispatch(actions.loadOrder(false, order));
-  } catch (err: any) {
-    console.log(err.message);
+  } catch (err: unknown) {
+    if (err && typeof err === 'object' && 'message' in err) {
+      console.log((err as { message: string }).message);
+    } else {
+      console.log(err);
+    }
     if (!ctx.res) return;
     return {
       redirect: {
