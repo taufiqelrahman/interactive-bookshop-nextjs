@@ -5,7 +5,14 @@ import { useEffect, useState } from 'react';
 import Toggle from 'components/atoms/Toggle';
 import * as gtag from 'lib/gtag';
 
-const TranslationToggle = (props: any) => {
+interface TranslationToggleProps {
+  style?: React.CSSProperties;
+  isSticky?: boolean;
+  white?: boolean;
+  [key: string]: unknown;
+}
+
+const TranslationToggle: React.FC<TranslationToggleProps> = (props) => {
   const router = useRouter();
   const { i18n } = useTranslation();
   const isIndexPage = router.pathname === '/';
