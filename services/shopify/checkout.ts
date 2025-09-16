@@ -167,6 +167,20 @@ export default class Checkout {
   }
 
   removeDiscount(id: ShopifyBuy.ID): Promise<ShopifyBuy.Checkout> {
+    if (!IS_SHOPIFY_AVAILABLE) {
+      return Promise.resolve({
+        id,
+        lineItems: [],
+        shippingAddress: mockShippingAddress,
+        customAttributes: [],
+        buyerIdentity: {
+          email: 'john@example.com',
+          ...mockShopifyCheckout.buyerIdentity,
+        },
+        discountApplications: [],
+        ...mockShopifyCheckout,
+      });
+    }
     return this.adapter.checkout.removeDiscount(id);
   }
 }
