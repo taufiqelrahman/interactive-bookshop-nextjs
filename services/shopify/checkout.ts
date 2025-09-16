@@ -1,3 +1,5 @@
+import ShopifyBuy from 'shopify-buy';
+
 import { mockShippingAddress, mockShopifyCheckout } from './__mocks__/mocks';
 
 import { IS_SHOPIFY_AVAILABLE } from '.';
@@ -42,15 +44,18 @@ export default class Checkout {
     return this.adapter.checkout.create(data);
   }
 
-  get(id): Promise<any> {
+  get(id: ShopifyBuy.ID): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
-        data: {
-          id,
-          items: [{ id: 'item_1', name: 'Book 1', qty: 1, price: 100000 }],
-          total: 100000,
-          status: 'created',
+        id: id,
+        lineItems: [],
+        shippingAddress: mockShippingAddress,
+        customAttributes: [],
+        buyerIdentity: {
+          email: '',
+          ...mockShopifyCheckout.buyerIdentity,
         },
+        ...mockShopifyCheckout,
       });
     }
     return this.adapter.checkout.fetch(id);
