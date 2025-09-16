@@ -139,7 +139,7 @@ export default class Checkout {
     return this.adapter.checkout.addDiscount(id, code);
   }
 
-  // removeDiscount(id): Promise<any> {
-  //   return this.adapter.checkout.removeDiscount(id);
-  // }
+  removeDiscount(id: ShopifyBuy.ID): Promise<ShopifyBuy.Checkout> {
+    return this.adapter.checkout.removeDiscount(id);
+  }
 }
