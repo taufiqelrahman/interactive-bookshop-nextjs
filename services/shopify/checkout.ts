@@ -101,16 +101,19 @@ export default class Checkout {
     return this.adapter.checkout.addLineItems(checkoutId, lineItems);
   }
 
-  updateLineItems(id, data): Promise<any> {
+  updateLineItems(id: ShopifyBuy.ID, data: ShopifyBuy.CheckoutLineItemUpdateInput[]): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
-        data: {
-          id,
-          items: data.items || [],
-          total: 100000,
-          status: 'items updated',
+        id,
+        lineItems: [],
+        shippingAddress: mockShippingAddress,
+        customAttributes: [],
+        buyerIdentity: {
+          email: 'john@example.com',
+          ...mockShopifyCheckout.buyerIdentity,
         },
-      });
+        ...mockShopifyCheckout,
+      } as ShopifyBuy.Checkout);
     }
     return this.adapter.checkout.updateLineItems(id, data);
   }
