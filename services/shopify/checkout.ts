@@ -52,7 +52,7 @@ export default class Checkout {
         shippingAddress: mockShippingAddress,
         customAttributes: [],
         buyerIdentity: {
-          email: '',
+          email: 'john@example.com',
           ...mockShopifyCheckout.buyerIdentity,
         },
         ...mockShopifyCheckout,
