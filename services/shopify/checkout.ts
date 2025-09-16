@@ -118,14 +118,18 @@ export default class Checkout {
     return this.adapter.checkout.updateLineItems(id, data);
   }
 
-  removeLineItems(id, itemId): Promise<any> {
+  removeLineItems(id: ShopifyBuy.ID, itemId: string[]): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
-        data: {
-          id,
-          removedItemId: itemId,
-          status: 'item removed',
+        id,
+        lineItems: [],
+        shippingAddress: mockShippingAddress,
+        customAttributes: [],
+        buyerIdentity: {
+          email: 'john@example.com',
+          ...mockShopifyCheckout.buyerIdentity,
         },
+        ...mockShopifyCheckout,
       });
     }
     return this.adapter.checkout.removeLineItems(id, itemId);
