@@ -136,6 +136,33 @@ export default class Checkout {
   }
 
   addDiscount(id: ShopifyBuy.ID, code: string): Promise<ShopifyBuy.Checkout> {
+    if (!IS_SHOPIFY_AVAILABLE) {
+      return Promise.resolve({
+        id,
+        lineItems: [],
+        shippingAddress: mockShippingAddress,
+        customAttributes: [],
+        buyerIdentity: {
+          email: 'john@example.com',
+          ...mockShopifyCheckout.buyerIdentity,
+        },
+        discountApplications: [
+          {
+            code,
+            type: 'discount_code',
+            value: {
+              amount: '10.00',
+              currencyCode: 'USD',
+              type: 'fixed_amount',
+            },
+            allocationMethod: 'across',
+            targetSelection: 'all',
+            targetType: 'line_item',
+          },
+        ],
+        ...mockShopifyCheckout,
+      } as ShopifyBuy.Checkout);
+    }
     return this.adapter.checkout.addDiscount(id, code);
   }
 
