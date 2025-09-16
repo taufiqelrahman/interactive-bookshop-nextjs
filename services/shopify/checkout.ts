@@ -135,9 +135,9 @@ export default class Checkout {
     return this.adapter.checkout.removeLineItems(id, itemId);
   }
 
-  // addDiscount(id, code): Promise<any> {
-  //   return this.adapter.checkout.addDiscount(id, code);
-  // }
+  addDiscount(id: ShopifyBuy.ID, code: string): Promise<ShopifyBuy.Checkout> {
+    return this.adapter.checkout.addDiscount(id, code);
+  }
 
   // removeDiscount(id): Promise<any> {
   //   return this.adapter.checkout.removeDiscount(id);
