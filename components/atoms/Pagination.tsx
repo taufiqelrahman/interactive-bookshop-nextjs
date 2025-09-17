@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
+import { BookPage } from 'store/master/types';
+
 interface PaginationProps {
-  pages: never[];
+  pages: BookPage[][];
   current: number;
 }
 
