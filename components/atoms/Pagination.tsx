@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 interface PaginationProps {
-  pages: any[];
+  pages: never[];
   current: number;
 }
 
 const Pagination: React.FC<PaginationProps> = (props) => {
+  const { current, pages } = props;
   const [translation, setTranslation] = useState(0);
   // const dotCount = () => {
   //   let length = props.pages.length;
@@ -14,7 +15,6 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   // };
   const renderClass = (order): string => {
     let className = 'c-pagination__dot';
-    const { current, pages } = props;
     if (order === current) className += ' c-pagination__dot--active';
     if (pages.length - current < 2) {
       if (order === pages.length - 8) className += ' c-pagination--micro c-pagination__dot--large';
@@ -46,17 +46,17 @@ const Pagination: React.FC<PaginationProps> = (props) => {
     return className;
   };
   useEffect(() => {
-    if (props.current > 7) {
-      if (props.pages.length - props.current < 2) return;
-      setTranslation(-10 * (props.current - 7));
+    if (current > 7) {
+      if (pages.length - current < 2) return;
+      setTranslation(-10 * (current - 7));
     } else {
       setTranslation(0);
     }
-  }, [props.current]);
+  }, [current, pages.length]);
   return (
     <div className="c-pagination">
       <div className="c-pagination__container">
-        {props.pages.map((_, index) => {
+        {pages.map((_, index) => {
           return <div key={index} className={renderClass(index + 1)} />;
         })}
       </div>
