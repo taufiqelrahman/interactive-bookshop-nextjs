@@ -7,7 +7,7 @@ import Radio from 'components/atoms/Radio';
 interface FieldAgeProps {
   fieldStyle?: React.CSSProperties;
   errors?: any;
-  defaultCheckedValue?: any;
+  defaultCheckedValue?: string;
   register: (schema: any) => React.Ref<any>;
   schema?: any;
   [key: string]: any;
