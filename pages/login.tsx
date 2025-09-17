@@ -19,7 +19,13 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const FormTextField = dynamic(() => import('components/molecules/FormTextField'));
 
-const Login = (props: any): any => {
+interface LoginProps {
+  isMobile?: boolean;
+  setSideNav?: (open: boolean) => void;
+  [key: string]: unknown;
+}
+
+const Login: React.FC<LoginProps> = (props) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const router = useRouter();
@@ -47,7 +53,14 @@ const Login = (props: any): any => {
     }
   }, [errors]);
   useEffect(() => {
-    const { reset, token, email, social, code, state }: any = router.query;
+    const { reset, token, email, social, code, state } = router.query as {
+      reset?: string;
+      token?: string;
+      email?: string;
+      social?: string;
+      code?: string;
+      state?: string;
+    };
     const DATA = { code, state };
     if (reset === '1') {
       setLoginStep(4);
@@ -107,9 +120,9 @@ const Login = (props: any): any => {
         break;
     }
   };
-  const Wrapper: any = props.isMobile ? 'div' : Card;
+  const Wrapper = props.isMobile ? 'div' : Card;
   const loginFacebook = () => {
-    const { from }: any = router.query;
+    const { from } = router.query as { from?: string };
     if (from) localStorage.setItem('from', from);
     gtag.event({
       action: 'login',
@@ -119,7 +132,7 @@ const Login = (props: any): any => {
     window.location.href = `${process.env.API_URL}/redirect-facebook`;
   };
   const loginGoogle = () => {
-    const { from }: any = router.query;
+    const { from } = router.query as { from?: string };
     if (from) localStorage.setItem('from', from);
     gtag.event({
       action: 'login',
