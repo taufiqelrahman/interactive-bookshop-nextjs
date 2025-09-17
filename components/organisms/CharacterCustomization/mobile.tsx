@@ -199,7 +199,7 @@ const CharacterCustomization = (props: any) => {
                     schema={schema(t).age}
                     register={register}
                     errors={errors.Age}
-                    defaultChecked={selected.Age}
+                    defaultCheckedValue={selected.Age}
                   />
                 )}
                 {/* {charStep === stepEnum.DOB && (

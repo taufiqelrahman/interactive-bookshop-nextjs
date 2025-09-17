@@ -135,7 +135,7 @@ const CharacterCustomization = (props: any) => {
                   register={register}
                   errors={errors.Age}
                   fieldStyle={{ marginTop: 24 }}
-                  defaultChecked={selected.Age}
+                  defaultCheckedValue={selected.Age}
                 />
                 {/* <FieldDob
                   name="Date of Birth"

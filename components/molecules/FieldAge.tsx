@@ -7,7 +7,7 @@ import Radio from 'components/atoms/Radio';
 interface FieldAgeProps {
   fieldStyle?: React.CSSProperties;
   errors?: any;
-  defaultChecked?: any;
+  defaultCheckedValue?: any;
   register: (schema: any) => React.Ref<any>;
   schema?: any;
   [key: string]: any;
@@ -34,7 +34,7 @@ const FieldAge = (props: FieldAgeProps) => {
               label={age.name}
               name="Age"
               style={{ height: 44, minWidth: 92 }}
-              defaultChecked={props.defaultChecked === age.code}
+              defaultChecked={props.defaultCheckedValue === age.code}
               ref={props.register(props.schema)}
               {...props}
             />
