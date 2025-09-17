@@ -118,7 +118,7 @@ export default class Checkout {
     return this.adapter.checkout.updateLineItems(id, data);
   }
 
-  removeLineItems(id: ShopifyBuy.ID, itemId: string[]): Promise<ShopifyBuy.Checkout> {
+  removeLineItems(id: ShopifyBuy.ID, itemIds: string[]): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
         id,
@@ -132,7 +132,7 @@ export default class Checkout {
         ...mockShopifyCheckout,
       });
     }
-    return this.adapter.checkout.removeLineItems(id, itemId);
+    return this.adapter.checkout.removeLineItems(id, itemIds);
   }
 
   addDiscount(id: ShopifyBuy.ID, code: string): Promise<ShopifyBuy.Checkout> {
