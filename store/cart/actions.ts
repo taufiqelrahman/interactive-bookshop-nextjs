@@ -1,6 +1,7 @@
 import { captureException } from '@sentry/browser';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import ShopifyBuy from 'shopify-buy';
 
 import { mapKeyValue } from 'lib/format-array';
 import api from 'services/api';
@@ -227,7 +228,7 @@ function addToCart(isFetching: boolean, cart?: types.Cart): types.CartActionType
   };
 }
 export const thunkAddToCart =
-  (newProduct: Record<string, unknown>): ThunkAction<void, types.CartState, null, Action<string>> =>
+  (newProduct: Record<string, any>): ThunkAction<void, types.CartState, null, Action<string>> =>
   async (dispatch, getState) => {
     dispatch(addToCart(true));
     const { user } = (getState() as any).users;
@@ -263,7 +264,7 @@ export const thunkAddToCart =
   };
 
 export const thunkUpdateCart =
-  (product: Record<string, unknown>): ThunkAction<void, types.CartState, null, Action<string>> =>
+  (product: Record<string, any>): ThunkAction<void, types.CartState, null, Action<string>> =>
   async (dispatch, getState) => {
     dispatch(updateCart(true));
     const { user } = (getState() as any).users;
@@ -309,7 +310,7 @@ export const thunkRemoveFromCart =
   (dispatch) => {
     dispatch(removeFromCart(true));
     return shopify()
-      .checkout.removeLineItems(id, itemId)
+      .checkout.removeLineItems(id, [itemId])
       .then((cart) => {
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
