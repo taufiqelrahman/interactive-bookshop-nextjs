@@ -1,4 +1,5 @@
 import { useTranslation } from 'next-i18next';
+import Picker from 'pickerjs';
 import React, { useState, useEffect, Fragment } from 'react';
 
 import Button from 'components/atoms/Button';
@@ -27,7 +28,7 @@ interface DateFieldProps {
 
 const DateField = (props: DateFieldProps) => {
   const { t } = useTranslation('form');
-  const [picker, setPicker] = useState<unknown>(null);
+  const [picker, setPicker] = useState<Picker>(null);
   const [state, setState] = useState<DateFieldState>({
     date: null,
     month: null,
@@ -69,6 +70,7 @@ const DateField = (props: DateFieldProps) => {
   const onSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!picker || typeof picker !== 'object' || !('data' in picker)) return;
+    // @todo fix type
     const pickerData = (picker as { data: any }).data;
     const { day, month, year } = pickerData;
     setState((prev) => ({
@@ -110,7 +112,7 @@ const DateField = (props: DateFieldProps) => {
           }
           actions={
             <Fragment>
-              <Button width="100%" onClick={(event: any) => onSelect(event)}>
+              <Button width="100%" onClick={(event: React.MouseEvent<HTMLButtonElement>) => onSelect(event)}>
                 {t('select-button')}
               </Button>
             </Fragment>
