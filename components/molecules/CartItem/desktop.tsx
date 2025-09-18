@@ -52,10 +52,12 @@ const CartItem = (props: CartItemProps) => {
   }, [quantity]);
 
   //convert customAttributes to object
-  const customAttributes = props.customAttributes.reduce((obj, item) => {
-    obj[item.key] = item.value;
-    return obj;
-  }, {}) as Record<string, any>;
+  // const customAttributes = props.customAttributes.reduce((obj, item) => {
+  //   obj[item.key] = item.value;
+  //   return obj;
+  // }, {}) as Record<string, any>;
+  // @todo: fix type issue
+  const customAttributes = props.customAttributes as Record<string, any>;
 
   const editItem = () => {
     dispatch(
