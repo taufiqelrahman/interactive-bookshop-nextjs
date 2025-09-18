@@ -37,12 +37,6 @@ const NavBar = () => {
   };
   useEffect(() => {
     if (!showCart || cart) return;
-    const { user } = users;
-    if (user && user.cart) {
-      dispatch(actions.thunkLoadCart(user.cart.checkout_id));
-    } else if (!user && localStorage.getItem('cart')) {
-      dispatch(actions.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true));
-    }
     document.body.classList.remove('overlay-active');
 
     if (!isIndexPage) return;
