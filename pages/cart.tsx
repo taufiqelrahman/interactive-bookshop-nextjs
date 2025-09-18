@@ -14,8 +14,7 @@ import { RootState, wrapper } from 'store';
 import actions from 'store/actions';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
-const CartItem = dynamic(() => import('components/molecules/CartItem/desktop'));
-const CartItemMobile = dynamic(() => import('components/molecules/CartItem/mobile'));
+const CartItem = dynamic(() => import('components/molecules/CartItem'));
 const Card = dynamic(() => import('components/atoms/Card'));
 const Dot = dynamic(() => import('components/atoms/Dot'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
@@ -76,28 +75,15 @@ const Cart = ({ isMobile, setSideNav }) => {
         {items.length > 0 ? (
           <div className="c-cart-section" style={isMobile ? { height: `calc(${screenHeight})` } : {}}>
             <div className="c-cart-section__items">
-              {items.map((item) =>
-                isMobile ? (
-                  <CartItemMobile
-                    key={item.id || item}
-                    {...item}
-                    style={{ marginBottom: 12 }}
-                    isSkeleton={cart.isFetching}
-                    cartId={cart.cart && cart.cart.id}
-                    removeFromCart={(id) => dispatch(actions.thunkRemoveFromCart(id, item.id))}
-                    saveSelected={(data) => dispatch(actions.saveSelected(data))}
-                    updateCart={(data) => dispatch(actions.thunkUpdateCart(data))}
-                  />
-                ) : (
-                  <CartItem
-                    key={item.id}
-                    {...item}
-                    style={{ marginBottom: 12 }}
-                    isSkeleton={cart.isFetching}
-                    cartId={cart.cart && cart.cart.id}
-                  />
-                ),
-              )}
+              {items.map((item) => (
+                <CartItem
+                  key={item.id}
+                  {...item}
+                  style={{ marginBottom: 12 }}
+                  isSkeleton={cart.isFetching}
+                  cartId={cart.cart && cart.cart.id}
+                />
+              ))}
             </div>
 
             <div className="c-cart-section__summary">
