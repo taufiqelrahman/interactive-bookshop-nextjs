@@ -8,6 +8,9 @@ export const TRANSFER_CART = 'TRANSFER_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const SAVE_SELECTED = 'SAVE_SELECTED';
 
+export type CartLineItem = ShopifyBuy.CheckoutLineItem & {
+  customAttributes: Record<string, any>;
+};
 export interface Cart extends ShopifyBuy.Checkout {
   id: string;
   user_id: number;
@@ -15,9 +18,7 @@ export interface Cart extends ShopifyBuy.Checkout {
   updated_at: string;
   deleted_at: string;
   cart_items: CartItem[];
-  lineItems: (ShopifyBuy.CheckoutLineItem & {
-    customAttributes: any;
-  })[];
+  lineItems: CartLineItem[];
 }
 
 export interface Character {
