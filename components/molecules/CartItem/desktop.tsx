@@ -5,7 +5,6 @@ import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
 import { useDispatch } from 'react-redux';
-import { CheckoutLineItem } from 'shopify-buy';
 
 import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
@@ -14,10 +13,11 @@ import Dot from 'components/atoms/Dot';
 import Modal from 'components/atoms/Modal';
 import Popover from 'components/atoms/Popover';
 import actions from 'store/actions';
+import { CartLineItem } from 'store/cart/types';
 
 import { previewImg, updateQuantity } from './helper';
 
-interface CartItemProps extends CheckoutLineItem {
+interface CartItemProps extends CartLineItem {
   cartId: string;
   style?: React.CSSProperties;
   isSkeleton?: boolean;
@@ -25,6 +25,7 @@ interface CartItemProps extends CheckoutLineItem {
 
 const CartItem = (props: CartItemProps) => {
   const { t } = useTranslation('common');
+  const { customAttributes } = props;
   const dispatch = useDispatch();
   const router = useRouter();
   const [quantity, setQuantity] = useState(props.quantity);
@@ -50,14 +51,6 @@ const CartItem = (props: CartItemProps) => {
     }
     debouncedChange();
   }, [quantity]);
-
-  //convert customAttributes to object
-  // const customAttributes = props.customAttributes.reduce((obj, item) => {
-  //   obj[item.key] = item.value;
-  //   return obj;
-  // }, {}) as Record<string, any>;
-  // @todo: fix type issue
-  const customAttributes = props.customAttributes as Record<string, any>;
 
   const editItem = () => {
     dispatch(
