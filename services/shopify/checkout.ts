@@ -48,13 +48,7 @@ export default class Checkout {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
         id: id,
-        lineItems: [],
-        shippingAddress: mockShippingAddress,
-        customAttributes: [],
-        buyerIdentity: {
-          email: 'john@example.com',
-          ...mockShopifyCheckout.buyerIdentity,
-        },
+        lineItems: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart') as any).lineItems : [],
         ...mockShopifyCheckout,
       });
     }
