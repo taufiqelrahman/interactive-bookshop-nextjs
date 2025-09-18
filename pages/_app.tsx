@@ -75,17 +75,12 @@ function WiguApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
       dispatch(actions.thunkCreateCart());
+    } else if (user && user.cart) {
+      dispatch(actions.thunkLoadCart(user.cart.checkout_id));
+    } else if (!user && localStorage.getItem('cart')) {
+      dispatch(actions.thunkLoadCart(JSON.parse(localStorage.getItem('cart') as any).id, true));
     }
   }, [user, dispatch]);
-
-  useEffect(() => {
-    const createCartForUser = () => {
-      if ((user && user.email && !user.cart) || (!user && !localStorage.getItem('cart'))) {
-        dispatch(actions.thunkCreateCart());
-      }
-    };
-    createCartForUser();
-  }, [dispatch, user]);
 
   Router.events.on('routeChangeComplete', () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
