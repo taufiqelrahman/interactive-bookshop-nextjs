@@ -1,7 +1,8 @@
+// @todo refactor
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
+import { useEffect, useState, useRef, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
 import { useDispatch } from 'react-redux';
@@ -42,10 +43,7 @@ const CartItem = (props: CartItemProps) => {
   };
   const debouncedFunctionRef = useRef();
   (debouncedFunctionRef.current as any) = () => updateQuantity(props, quantity);
-  const debouncedChange = useCallback(
-    debounce(() => (debouncedFunctionRef.current as any)(), 1000),
-    [],
-  );
+  const debouncedChange = debounce(() => (debouncedFunctionRef.current as any)(), 1000);
   const isFirstRun = useRef(true);
   useEffect(() => {
     if (isFirstRun.current) {
