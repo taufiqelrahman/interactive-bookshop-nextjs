@@ -18,7 +18,7 @@ import { useResponsive } from 'lib/hooks/useResponsive';
 import actions from 'store/actions';
 import { CartLineItem } from 'store/cart/types';
 
-import { previewImg, updateQuantity } from './helper';
+import { previewImg } from './helper';
 
 interface CartItemProps extends CartLineItem {
   cartId: string;
@@ -27,6 +27,7 @@ interface CartItemProps extends CartLineItem {
 }
 
 const CartItem = (props: CartItemProps) => {
+  console.log({ props });
   const { isMobile } = useResponsive();
   const { t } = useTranslation('common');
   const { customAttributes } = props;
@@ -57,7 +58,8 @@ const CartItem = (props: CartItemProps) => {
     }
   };
   const debouncedFunctionRef = useRef();
-  (debouncedFunctionRef.current as any) = () => updateQuantity(props, quantity);
+  (debouncedFunctionRef.current as any) = () =>
+    dispatch(actions.thunkUpdateCart({ id: props.id, quantity, ...customAttributes }));
   const debouncedChange = debounce(() => (debouncedFunctionRef.current as any)(), 1000);
   const isFirstRun = useRef(true);
   useEffect(() => {
