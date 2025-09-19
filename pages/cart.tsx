@@ -295,7 +295,7 @@ const Cart = ({ isMobile, setSideNav }) => {
 export const getServerSideProps = wrapper.getServerSideProps(() => async (ctx) => {
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale, ['common'])),
+      ...(await serverSideTranslations(ctx.locale, ['common', 'form'])),
     },
   };
 });
