@@ -27,7 +27,7 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const PreviewDesktop = (props: any): any => {
+const PreviewContainer = (props: any): any => {
   const { t } = useTranslation('common');
   const { isMobile } = useResponsive();
   const dispatch = useDispatch();
@@ -361,4 +361,4 @@ const PreviewDesktop = (props: any): any => {
   );
 };
 
-export default PreviewDesktop;
+export default PreviewContainer;
