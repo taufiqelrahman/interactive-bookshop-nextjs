@@ -12,7 +12,7 @@ import * as gtag from 'lib/gtag';
 import { useResponsive } from 'lib/hooks/useResponsive';
 import actions from 'store/actions';
 
-import { dummySelected, schema, showError, saveToCookies, getFromCookies } from './helper';
+import { dummySelected, schema, showError, getFromCookies } from './helper';
 
 // import Modal from 'components/atoms/Modal';
 // import Button from 'components/atoms/Button';
@@ -70,6 +70,11 @@ const PreviewContainer = (props: any): any => {
       await dispatch(actions.thunkAddToCart(cart));
       router.push('/cart');
     }
+  };
+  const saveToCookies = (cart: unknown) => {
+    // save pending trx
+    Cookies.set('pendingTrx', JSON.stringify(cart));
+    router.push('/login?from=preview');
   };
   const onSubmit = (data) => {
     if (!selected) {

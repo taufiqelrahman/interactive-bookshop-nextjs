@@ -46,10 +46,3 @@ export const getFromCookies = (): unknown | null => {
   if (!cookie) return null;
   return JSON.parse(cookie);
 };
-
-export const saveToCookies = (cart: unknown) => {
-  // save pending trx
-  Cookies.set('pendingTrx', JSON.stringify(cart));
-  // @todo should router.push() outside this function afterwards
-  // Router.push('/login?from=preview');
-};
