@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import PreviewDesktop from 'components/organisms/Preview/desktop';
-import PreviewMobile from 'components/organisms/Preview/mobile';
 import api from 'services/api';
 import { wrapper } from 'store';
 import { loadBookPages } from 'store/master/reducers';
@@ -29,7 +28,7 @@ const Preview = (props: any): any => {
       <Head>
         <title>Interactive Bookshop Next.js | {t('book-preferences')}</title>
       </Head>
-      {props.isMobile ? <PreviewMobile {...props} /> : <PreviewDesktop {...props} />}
+      <PreviewDesktop {...props} />
     </div>
   );
 };
