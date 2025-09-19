@@ -33,10 +33,25 @@ const CartItem = (props: CartItemProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [quantity, setQuantity] = useState(props.quantity);
+  const deleteItem = () => dispatch(actions.thunkRemoveFromCart(props.cartId, props.id));
+
+  // desktop only
   const [showModal, setShowModal] = useState(false);
+
+  // mobile only
+  const [showSheet, setShowSheet] = useState(false);
+  const onDelete = () => {
+    setShowSheet(false);
+    deleteItem();
+  };
+
   const onDecrease = () => {
     if (quantity === 1) {
-      setShowModal(true);
+      if (isMobile) {
+        setShowSheet(true);
+      } else {
+        setShowModal(true);
+      }
     } else if (quantity > 0) {
       setQuantity(quantity - 1);
     }
@@ -63,15 +78,6 @@ const CartItem = (props: CartItemProps) => {
       }),
     );
     router.push('/create');
-  };
-
-  const deleteItem = () => dispatch(actions.thunkRemoveFromCart(props.cartId, props.id));
-
-  // mobile only
-  const [showSheet, setShowSheet] = useState(false);
-  const onDelete = () => {
-    setShowSheet(false);
-    deleteItem();
   };
 
   if (isMobile) {
