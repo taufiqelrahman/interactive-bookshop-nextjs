@@ -65,11 +65,13 @@ const CartItem = (props: CartItemProps) => {
     router.push('/create');
   };
 
+  const deleteItem = () => dispatch(actions.thunkRemoveFromCart(props.cartId, props.id));
+
   // mobile only
   const [showSheet, setShowSheet] = useState(false);
-  const deleteItem = () => {
+  const onDelete = () => {
     setShowSheet(false);
-    dispatch(actions.thunkRemoveFromCart(props.cartId, props.id));
+    deleteItem();
   };
 
   if (isMobile) {
@@ -183,7 +185,7 @@ const CartItem = (props: CartItemProps) => {
           }
           actions={
             <Fragment>
-              <Button width="100%" onClick={deleteItem} style={{ marginBottom: 12 }}>
+              <Button width="100%" onClick={onDelete} style={{ marginBottom: 12 }}>
                 {t('form:continue-button')}
               </Button>
               <Button width="100%" onClick={() => setShowSheet(false)} variant="outline" color="black">
@@ -401,11 +403,7 @@ const CartItem = (props: CartItemProps) => {
         closeModal={() => setShowModal(false)}
         actions={
           <Fragment>
-            <Button
-              width="100%"
-              onClick={() => dispatch(actions.thunkRemoveFromCart(props.cartId, props.id))}
-              style={{ marginBottom: 12 }}
-            >
+            <Button width="100%" onClick={deleteItem} style={{ marginBottom: 12 }}>
               {t('form:continue-button')}
             </Button>
             <Button width="100%" onClick={() => setShowModal(false)} variant="outline" color="black">
