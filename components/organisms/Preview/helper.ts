@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
+import { CartItem } from 'store/cart/types';
+
 type TranslateFn = (key: string) => string;
 
 export const schema = (t: TranslateFn) => ({
@@ -41,8 +43,12 @@ export const showError = (error: string) => {
   toast.error(error);
 };
 
-export const getFromCookies = (): unknown | null => {
+export const getFromCookies = (): CartItem | null => {
   const cookie = Cookies.get('pendingTrx');
   if (!cookie) return null;
-  return JSON.parse(cookie);
+  try {
+    return JSON.parse(cookie) as CartItem;
+  } catch {
+    return null;
+  }
 };
