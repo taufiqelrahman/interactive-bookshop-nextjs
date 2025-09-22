@@ -67,14 +67,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps
     <div>
       {navbar || <NavBar />}
 
-      {isMobile && (
-        <SideNav
-          isOpen={isSideNavOpen}
-          hide={hideSideNav}
-          users={users}
-          thunkLogout={() => dispatch(actions.thunkLogout())}
-        />
-      )}
+      {isMobile && <SideNav isOpen={isSideNavOpen} hide={hideSideNav} users={users} />}
 
       <div className={`c-layout ${isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`} style={style}>
         <ToastContainer

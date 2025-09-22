@@ -1,14 +1,28 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Button from 'components/atoms/Button';
 import TranslationToggle from 'components/molecules/TranslationToggle';
+import actions from 'store/actions';
 
-const SideNav = (props: any) => {
+interface SideNavProps {
+  isOpen: boolean;
+  hide: () => void;
+  users: {
+    isLoggedIn: boolean;
+    user?: {
+      email?: string;
+    };
+  };
+}
+
+const SideNav: React.FC<SideNavProps> = (props) => {
   const { t } = useTranslation('common');
+  const dispatch = useDispatch();
   const signOut = () => {
-    props.thunkLogout();
+    dispatch(actions.thunkLogout());
     props.hide();
   };
   useEffect(() => {
