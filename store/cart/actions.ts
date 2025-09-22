@@ -327,7 +327,7 @@ export const thunkRemoveFromCart =
       });
   };
 
-export function saveSelected(selected = null): types.CartActionTypes {
+export function saveSelected(selected: types.CartItem | null): types.CartActionTypes {
   return {
     type: types.SAVE_SELECTED,
     payload: selected,
