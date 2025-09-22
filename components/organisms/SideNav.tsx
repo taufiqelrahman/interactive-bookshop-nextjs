@@ -6,28 +6,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/atoms/Button';
 import TranslationToggle from 'components/molecules/TranslationToggle';
 import actions from 'store/actions';
+import { State } from 'store/types';
 import { UsersState } from 'store/users/types';
 
 interface SideNavProps {
-  isOpen: boolean;
   hide: () => void;
 }
 
 const SideNav: React.FC<SideNavProps> = (props) => {
   const { t } = useTranslation('common');
   const users = useSelector((state: { users: UsersState }) => state.users);
+  const { isSideNavOpen } = useSelector((state: { common: State }) => state.common);
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(actions.thunkLogout());
     props.hide();
   };
   useEffect(() => {
-    if (props.isOpen) {
+    if (isSideNavOpen) {
       document.body.classList.add('overlay-active');
     } else {
       document.body.classList.remove('overlay-active');
     }
-  }, [props.isOpen]);
+  }, [isSideNavOpen]);
   return (
     <div className="c-side-nav">
       <div className="c-side-nav__container">
@@ -93,11 +94,11 @@ const SideNav: React.FC<SideNavProps> = (props) => {
       <style jsx>{`
         .c-side-nav {
           @apply fixed left-0 top-0 z-50 h-screen overflow-x-hidden text-white;
-          width: ${props.isOpen ? '90vw' : 0};
+          width: ${isSideNavOpen ? '90vw' : 0};
           background-color: #de6236;
           transition: width 0.3s ease-in;
           &__container {
-            opacity: ${props.isOpen ? 1 : 0};
+            opacity: ${isSideNavOpen ? 1 : 0};
             transition: opacity 0.3s ease-in;
             @apply flex h-full flex-col justify-between;
             padding: 32px 58px;
