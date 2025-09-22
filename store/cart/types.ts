@@ -34,7 +34,7 @@ export interface Character {
 }
 
 export interface CartItem extends Character {
-  id: number;
+  id: string;
   cart_id: number;
   product_id: number;
   quantity: number;
