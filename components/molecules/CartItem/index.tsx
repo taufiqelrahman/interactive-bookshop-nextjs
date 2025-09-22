@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useRef, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from 'components/atoms/Button';
 import Card from 'components/atoms/Card';
@@ -15,6 +15,7 @@ import Modal from 'components/atoms/Modal';
 import Popover from 'components/atoms/Popover';
 import Sheet from 'components/atoms/Sheet';
 import { useResponsive } from 'lib/hooks/useResponsive';
+import { RootState } from 'store';
 import actions from 'store/actions';
 import { CartLineItem } from 'store/cart/types';
 
@@ -27,11 +28,11 @@ interface CartItemProps extends CartLineItem {
 }
 
 const CartItem = (props: CartItemProps) => {
-  console.log({ props });
   const { isMobile } = useResponsive();
   const { t } = useTranslation('common');
   const { customAttributes } = props;
   const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart);
   const router = useRouter();
   const [quantity, setQuantity] = useState(props.quantity);
   const deleteItem = () => dispatch(actions.thunkRemoveFromCart(props.cartId, props.id));
@@ -73,6 +74,7 @@ const CartItem = (props: CartItemProps) => {
   const editItem = () => {
     dispatch(
       actions.saveSelected({
+        ...cart.selected,
         id: props.id,
         quantity: props.quantity,
         ...customAttributes,
