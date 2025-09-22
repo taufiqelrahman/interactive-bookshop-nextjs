@@ -30,7 +30,7 @@ export const dummy = {
   occupations: ['4', '5', '6'],
 };
 
-export const previewImg = (data, watch, isMobile = false) => {
+export const previewImg = (data, watch, isMobile = false): string => {
   const filePath = `/static/images/child${isMobile ? '-sm' : ''}`;
   const { Gender, Age, Skin, Hair } = data;
   const pickedGender = watch('Gender') || Gender || 'boy';
