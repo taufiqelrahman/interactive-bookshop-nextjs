@@ -67,7 +67,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps
     <div>
       {navbar || <NavBar />}
 
-      {isMobile && <SideNav isOpen={isSideNavOpen} hide={hideSideNav} users={users} />}
+      {isMobile && <SideNav isOpen={isSideNavOpen} hide={hideSideNav} />}
 
       <div className={`c-layout ${isMobile || isIndexPage ? '' : 'h-min-screen bg-light-grey'}`} style={style}>
         <ToastContainer

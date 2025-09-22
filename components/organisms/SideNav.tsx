@@ -1,25 +1,21 @@
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from 'components/atoms/Button';
 import TranslationToggle from 'components/molecules/TranslationToggle';
 import actions from 'store/actions';
+import { UsersState } from 'store/users/types';
 
 interface SideNavProps {
   isOpen: boolean;
   hide: () => void;
-  users: {
-    isLoggedIn: boolean;
-    user?: {
-      email?: string;
-    };
-  };
 }
 
 const SideNav: React.FC<SideNavProps> = (props) => {
   const { t } = useTranslation('common');
+  const users = useSelector((state: { users: UsersState }) => state.users);
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(actions.thunkLogout());
@@ -40,10 +36,10 @@ const SideNav: React.FC<SideNavProps> = (props) => {
             <button aria-label="close button" className="c-side-nav__button--close" onClick={props.hide}>
               <span className="icon-ui_cross" />
             </button>
-            {props.users.isLoggedIn ? (
+            {users.isLoggedIn ? (
               <div className="c-side-nav__header__user">
                 <div className="c-side-nav__header__user--top">{t('signed-in-as')}</div>
-                <div>{props.users.user && props.users.user.email}</div>
+                <div>{users.user && users.user.email}</div>
               </div>
             ) : (
               <div className="c-side-nav__header__guest">
@@ -68,12 +64,12 @@ const SideNav: React.FC<SideNavProps> = (props) => {
             <Link href="/cart">
               <a className="c-side-nav__menu__link">{t('cart')}</a>
             </Link>
-            {props.users.isLoggedIn && (
+            {users.isLoggedIn && (
               <Link href="/orders">
                 <a className="c-side-nav__menu__link">{t('my-orders')}</a>
               </Link>
             )}
-            {props.users.isLoggedIn && (
+            {users.isLoggedIn && (
               <Link href="/account">
                 <a className="c-side-nav__menu__link">{t('account')}</a>
               </Link>
@@ -87,7 +83,7 @@ const SideNav: React.FC<SideNavProps> = (props) => {
         <div className="c-side-nav__footer">
           {t('site-language')}
           <TranslationToggle white={true} style={{ marginTop: 6 }} />
-          {props.users.isLoggedIn && (
+          {users.isLoggedIn && (
             <div className="c-side-nav__footer__sign-out" onClick={signOut}>
               {t('sign-out')}
             </div>
@@ -125,7 +121,7 @@ const SideNav: React.FC<SideNavProps> = (props) => {
             &--close {
               @apply absolute;
               left: -38px;
-              transform: translateY(${props.users.isLoggedIn ? '45%' : '75%'});
+              transform: translateY(${users.isLoggedIn ? '45%' : '75%'});
             }
           }
           &__menu {
