@@ -9,18 +9,17 @@ import actions from 'store/actions';
 import { State } from 'store/types';
 import { UsersState } from 'store/users/types';
 
-interface SideNavProps {
-  hide: () => void;
-}
-
-const SideNav: React.FC<SideNavProps> = (props) => {
+const SideNav: React.FC = () => {
   const { t } = useTranslation('common');
   const users = useSelector((state: { users: UsersState }) => state.users);
   const { isSideNavOpen } = useSelector((state: { common: State }) => state.common);
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(actions.thunkLogout());
-    props.hide();
+    hideSideNav();
+  };
+  const hideSideNav = () => {
+    dispatch(actions.setSideNav(false));
   };
   useEffect(() => {
     if (isSideNavOpen) {
@@ -34,7 +33,7 @@ const SideNav: React.FC<SideNavProps> = (props) => {
       <div className="c-side-nav__container">
         <div>
           <div className="c-side-nav__header">
-            <button aria-label="close button" className="c-side-nav__button--close" onClick={props.hide}>
+            <button aria-label="close button" className="c-side-nav__button--close" onClick={hideSideNav}>
               <span className="icon-ui_cross" />
             </button>
             {users.isLoggedIn ? (
