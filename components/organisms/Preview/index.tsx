@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, Fragment, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
@@ -12,7 +13,7 @@ import * as gtag from 'lib/gtag';
 import { useResponsive } from 'lib/hooks/useResponsive';
 import actions from 'store/actions';
 
-import { dummySelected, schema, showError, getFromCookies } from './helper';
+import { dummySelected, schema, getFromCookies } from './helper';
 
 // import Modal from 'components/atoms/Modal';
 // import Button from 'components/atoms/Button';
@@ -99,9 +100,10 @@ const PreviewContainer = (props: any): any => {
   };
   useEffect(() => {
     if (!formState.isValid) {
-      showError(t('form:form-error'));
+      window.scrollTo(0, 0);
+      toast.error(t('form:form-error'));
     }
-  }, [errors]);
+  }, [errors, formState.isValid, t]);
   useEffect(() => {
     const fromCookies = getFromCookies();
     if (fromCookies) {
