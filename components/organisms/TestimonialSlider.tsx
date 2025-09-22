@@ -5,18 +5,31 @@ import Card from 'components/atoms/Card';
 import Testimonial from 'components/molecules/Testimonial';
 import * as gtag from 'lib/gtag';
 
-const TestimonialSlider = (props: any) => {
+interface Testimonial {
+  id: string | number;
+  message: string;
+  image_url: string;
+  name: string;
+  company: string;
+}
+
+interface TestimonialSliderProps {
+  testimonials: Testimonial[];
+  isMobile?: boolean;
+}
+
+const TestimonialSlider: React.FC<TestimonialSliderProps> = (props) => {
   const { t } = useTranslation('page-index');
-  const [navRightClass, setNavRightClass] = useState(0);
+  const [navRightClass, setNavRightClass] = useState('');
   const [translationX, setTranslationX] = useState(0);
   const [isNavigating, setIsNavigating] = useState(false);
 
   const calculateRightBound = () => {
-    const lastChild = (window as any).document.querySelector('.c-testi-slider__slide:last-child');
+    const lastChild = window.document.querySelector('.c-testi-slider__slide:last-child');
     return lastChild && lastChild.getBoundingClientRect().right;
   };
 
-  const decideNavRightClass = (): any => {
+  const decideNavRightClass = (): string => {
     return calculateRightBound() < window.innerWidth ? 'c-testi-slider__nav--inactive' : '';
   };
 
