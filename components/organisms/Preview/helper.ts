@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
 
 import { CartItem } from 'store/cart/types';
 
@@ -36,11 +35,6 @@ export const dummySelected: DummySelected = {
   name: 'asd',
   occupations: ['astronaut', 'doctor', 'nurse'],
   skin: 'light',
-};
-
-export const showError = (error: string) => {
-  window.scrollTo(0, 0);
-  toast.error(error);
 };
 
 export const getFromCookies = (): CartItem | null => {
