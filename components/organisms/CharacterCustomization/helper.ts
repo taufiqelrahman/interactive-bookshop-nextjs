@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
 
+import { Occupation } from 'store/master/types';
+
 export const schema = (t) => ({
   occupations: {
     required: { value: true, message: t('occupations-invalid') },
@@ -43,9 +45,9 @@ export const previewImg = (data, watch, isMobile = false): string => {
   return `${filePath}/${pickedGender}/${pickedAge}/${pickedHair}/${pickedSkin}.png`;
 };
 
-export const getJobIds = (names, list) => {
+export const getJobIds = (names: string[], list: Occupation[]): string[] => {
   return names.map((job) => {
-    return list.find((occ) => occ.name === job).id;
+    return list.find((occ) => occ.name === job)?.id;
   });
 };
 
