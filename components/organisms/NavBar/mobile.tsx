@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 
 import Stepper from 'components/atoms/Stepper';
 
 const NavBar = (props: any) => {
   const router = useRouter();
-  const isIndexPage = router.pathname === '/';
-  const isErrorPage = router.pathname === '/_error';
+  const isIndexPage = useMemo(() => router.pathname === '/', [router.pathname]);
+  const isErrorPage = useMemo(() => router.pathname === '/_error', [router.pathname]);
   const indexOrError = isIndexPage || isErrorPage;
   const showSideNav = () => {
     props.setSideNav(true);
