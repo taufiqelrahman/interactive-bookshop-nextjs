@@ -51,8 +51,8 @@ export const getJobIds = (names: string[], list: Occupation[]): string[] => {
   });
 };
 
-export const loadImg = (source) => {
-  const image: any = document.getElementById('preview-char');
+export const loadImg = (source: string) => {
+  const image: HTMLImageElement | null = document.getElementById('preview-char') as HTMLImageElement;
   if (!image) return;
   image.src = '/static/images/empty.png';
   const downloadingImage = new Image();
