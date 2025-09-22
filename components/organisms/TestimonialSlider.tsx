@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import Card from 'components/atoms/Card';
 import Testimonial from 'components/molecules/Testimonial';
@@ -29,19 +29,19 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = (props) => {
     return lastChild && lastChild.getBoundingClientRect().right;
   };
 
-  const decideNavRightClass = (): string => {
+  const decideNavRightClass = useMemo((): string => {
     return calculateRightBound() < window.innerWidth ? 'c-testi-slider__nav--inactive' : '';
-  };
+  }, []);
 
   useEffect(() => {
     const setNavTimeout = setTimeout(() => {
-      setNavRightClass(decideNavRightClass());
+      setNavRightClass(decideNavRightClass);
       setIsNavigating(false);
     }, 500);
     return () => {
       clearTimeout(setNavTimeout);
     };
-  }, [translationX]);
+  }, [decideNavRightClass, translationX]);
 
   const onNavRight = () => {
     // eslint-disable-next-line no-extra-boolean-cast
