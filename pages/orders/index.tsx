@@ -107,11 +107,11 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     store.dispatch(actions.loadOrders(true));
     const { data: orderData } = await api().orders.loadOrders();
     const { order_states: orderStates, orders: rawOrders } = orderData.data;
-    const states = orderStates.reduce((acc, cur) => {
+    const statesDict = orderStates.reduce((acc, cur) => {
       acc[cur.shopify_order_id] = cur.state.name;
       return acc;
     }, {});
-    const orders: Order[] = rawOrders.map((order) => ({ ...order, state: states[order.id] }));
+    const orders: Order[] = rawOrders.map((order) => ({ ...order, state: statesDict[order.id] }));
     store.dispatch(actions.loadOrders(false, orders));
   } catch (err: any) {
     console.log(err.message);
