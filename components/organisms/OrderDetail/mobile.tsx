@@ -13,6 +13,7 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import appConfig from 'config';
 import { fullDate } from 'lib/format-date';
+import { RootState } from 'store';
 
 import { retrieveInfo } from './helper';
 // import dummyOrder from '_mocks/orderDetail';
@@ -26,7 +27,7 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const OrderDetailMobile = (props: any): any => {
   const { t } = useTranslation('page-orders');
   const router = useRouter();
-  const { isFetching, currentOrder: order } = useSelector((state: any) => state.orders);
+  const { isFetching, currentOrder: order } = useSelector((state: RootState) => state.orders);
   const [state, setState] = useState({
     showPreview: false,
     extendPreview: false,
