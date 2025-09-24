@@ -1,5 +1,19 @@
+import { Order } from 'store/orders/types';
 import { AdapterObject } from './index';
 
+interface LoadOrderResponse {
+  data: {
+    data: {
+      orders: Order[];
+      order_states: {
+        shopify_order_id: string;
+        state: {
+          name: string;
+        };
+      }[];
+    };
+  };
+}
 export default class Orders {
   adapter: AdapterObject;
   basePath: string;
@@ -47,7 +61,7 @@ export default class Orders {
     });
   }
 
-  loadOrders() {
+  loadOrders(): Promise<LoadOrderResponse> {
     // return this.adapter.secure.get(this.basePath);
     return Promise.resolve({
       data: {
