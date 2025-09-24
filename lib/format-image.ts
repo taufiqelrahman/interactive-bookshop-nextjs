@@ -4,4 +4,6 @@ export const getPreviewUrl = (attributes) => {
   return `${filePath}/${Gender || 'boy'}/${Age || 'kid'}/${Hair || 'short'}/${Skin || 'light'}.png`;
 };
 
-export default { getPreviewUrl };
+const formatImage = { getPreviewUrl };
+
+export default formatImage;
