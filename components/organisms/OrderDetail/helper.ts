@@ -1,6 +1,8 @@
 import { mapKeyValue } from 'lib/format-array';
 import { getPreviewUrl } from 'lib/format-image';
 
+const WHATSAPP_BASE_URL = 'https://wa.me/628xxx?text=';
+
 export const retrieveInfo = (order) => {
   if (!Object.keys(order).length) return {};
   const {
@@ -21,7 +23,7 @@ export const retrieveInfo = (order) => {
     customAttributes: mapKeyValue(item.properties || []),
   }));
   const hasDedication = lineItems.some((item) => !!item.customAttributes.Dedication);
-  const whatsappUrl = `https://wa.me/6287777717119?text=Saya%20ingin%20bertanya%20terkait%20pesanan%20${order.name}`;
+  const whatsappUrl = `${WHATSAPP_BASE_URL}Saya%20ingin%20bertanya%20terkait%20pesanan%20${order.name}`;
   return {
     currentOrder: order,
     shippingAddress,
