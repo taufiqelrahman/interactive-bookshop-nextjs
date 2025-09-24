@@ -9,6 +9,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
+import { Order } from 'store/orders/types';
 // import dummyOrders from '_mocks/orders';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -110,7 +111,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
       acc[cur.shopify_order_id] = cur.state.name;
       return acc;
     }, {});
-    const orders = rawOrders.map((order) => ({ ...order, state: states[order.id] }));
+    const orders: Order[] = rawOrders.map((order) => ({ ...order, state: states[order.id] }));
     store.dispatch(actions.loadOrders(false, orders));
   } catch (err: any) {
     console.log(err.message);
