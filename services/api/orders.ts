@@ -90,6 +90,7 @@ export default class Orders {
               shopify_order_id: 'gid://shopify/Order/1234567890',
               order_number: 'ORD001',
               created_at: new Date().toISOString(),
+              name: 'Test Order 1',
             },
             {
               id: 'gid://shopify/Order/0987654321',
@@ -100,6 +101,7 @@ export default class Orders {
               shopify_order_id: 'gid://shopify/Order/0987654321',
               order_number: 'ORD002',
               created_at: new Date().toISOString(),
+              name: 'Test Order 2',
             },
           ],
         },
