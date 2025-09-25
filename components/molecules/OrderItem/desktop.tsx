@@ -7,11 +7,17 @@ import Card from 'components/atoms/Card';
 import appConfig from 'config';
 import { mapKeyValue } from 'lib/format-array';
 import { date } from 'lib/format-date';
-// import Dot from 'components/atoms/Dot';
+import { Order } from 'store/orders/types';
 
 import { previewImg } from './helper';
 
-const OrderItem = (props: any) => {
+interface OrderItemProps extends Order {
+  style?: React.CSSProperties;
+  isSkeleton?: boolean;
+  [key: string]: any;
+}
+
+const OrderItem = (props: OrderItemProps) => {
   const { t } = useTranslation('page-orders');
   const lineItems = (props.line_items || []).map((item) => ({
     ...item,
