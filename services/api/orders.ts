@@ -82,7 +82,7 @@ export default class Orders {
           ],
           orders: [
             {
-              id: 1,
+              id: 'gid://shopify/Order/1234567890',
               user_id: 1,
               state_id: 1,
               updated_at: new Date().toISOString(),
@@ -92,7 +92,7 @@ export default class Orders {
               created_at: new Date().toISOString(),
             },
             {
-              id: 2,
+              id: 'gid://shopify/Order/0987654321',
               user_id: 1,
               state_id: 2,
               updated_at: new Date().toISOString(),
