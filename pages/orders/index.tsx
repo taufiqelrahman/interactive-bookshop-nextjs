@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import api from 'services/api';
-import { wrapper } from 'store';
+import { wrapper, RootState } from 'store';
 import actions from 'store/actions';
 import { Order } from 'store/orders/types';
 // import dummyOrders from '_mocks/orders';
@@ -18,9 +18,15 @@ const OrderItemMobile = dynamic(() => import('components/molecules/OrderItem/mob
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Orders = (props: any): any => {
+interface OrdersProps {
+  isMobile?: boolean;
+  setSideNav?: (open: boolean) => void;
+  [key: string]: unknown;
+}
+
+const Orders: React.FC<OrdersProps> = (props) => {
   const { t } = useTranslation('page-orders');
-  const orders = useSelector((state: any) => state.orders);
+  const orders = useSelector((state: RootState) => state.orders);
   const orderList = orders.isFetching ? [1, 2] : orders.orders;
   // const orderList = dummyOrders;
   return (
@@ -113,8 +119,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     }, {});
     const orders: Order[] = rawOrders.map((order) => ({ ...order, state: statesDict[order.id] }));
     store.dispatch(actions.loadOrders(false, orders));
-  } catch (err: any) {
-    console.log(err.message);
+  } catch (err: unknown) {
+    console.log((err as { message: string }).message);
   }
 
   return {
