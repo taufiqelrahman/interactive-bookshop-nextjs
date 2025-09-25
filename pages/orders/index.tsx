@@ -13,8 +13,7 @@ import { Order } from 'store/orders/types';
 // import dummyOrders from '_mocks/orders';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
-const OrderItem = dynamic(() => import('components/molecules/OrderItem/desktop'));
-const OrderItemMobile = dynamic(() => import('components/molecules/OrderItem/mobile'));
+const OrderItem = dynamic(() => import('components/molecules/OrderItem'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
@@ -45,11 +44,7 @@ const Orders: React.FC<OrdersProps> = (props) => {
               orderList.map((item) => (
                 <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
                   <a>
-                    {props.isMobile ? (
-                      <OrderItemMobile {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
-                    ) : (
-                      <OrderItem {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
-                    )}
+                    <OrderItem {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
                   </a>
                 </Link>
               ))
