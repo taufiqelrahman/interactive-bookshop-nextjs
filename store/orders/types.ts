@@ -13,6 +13,7 @@ export interface Order {
   updated_at: string;
   deleted_at: string | null;
   state?: string;
+  name: string;
 }
 
 export interface OrdersState {
