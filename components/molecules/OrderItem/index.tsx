@@ -8,10 +8,9 @@ import Divider from 'components/atoms/Divider';
 import appConfig from 'config';
 import { mapKeyValue } from 'lib/format-array';
 import { date } from 'lib/format-date';
+import { getPreviewUrl } from 'lib/format-image';
 import { useResponsive } from 'lib/hooks/useResponsive';
 import { Order } from 'store/orders/types';
-
-import { previewImg } from './helper';
 
 interface OrderItemProps extends Order {
   style?: React.CSSProperties;
@@ -26,6 +25,10 @@ const OrderItem = (props: OrderItemProps) => {
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));
+  const previewImg = (item) => {
+    if (!item.customAttributes) return '';
+    return getPreviewUrl(item.customAttributes);
+  };
 
   if (isMobile) {
     return (
