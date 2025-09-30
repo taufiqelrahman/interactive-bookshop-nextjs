@@ -21,7 +21,7 @@ const Features: React.FC<FeaturesProps> = (props) => {
                 <a
                   className="c-features__item"
                   style={{
-                    background: `url(\'${item.images[0].filepath}\')`,
+                    background: `url(\\'${item.images[0].filepath}\\')`,
                   }}
                 >
                   {item.name}
