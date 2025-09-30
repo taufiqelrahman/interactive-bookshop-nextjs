@@ -1,6 +1,16 @@
 import Link from 'next/link';
 
-const Features = (props: any) => {
+interface Feature {
+  slug: string;
+  name: string;
+  images: { filepath: string }[];
+}
+
+interface FeaturesProps {
+  features: Feature[];
+}
+
+const Features: React.FC<FeaturesProps> = (props) => {
   return (
     <div>
       <div className="c-features">
