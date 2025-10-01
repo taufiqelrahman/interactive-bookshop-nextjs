@@ -31,7 +31,7 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 
-const CharacterCustomization = (props: any) => {
+const CharacterCustomization = () => {
   const { t } = useTranslation('form');
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
@@ -107,7 +107,7 @@ const CharacterCustomization = (props: any) => {
   const containerMargin = (window.innerWidth - containerWidth) / 2;
   const charWidth = containerWidth * 0.3 - containerWidth * 0.08;
   return (
-    <DefaultLayout {...props}>
+    <DefaultLayout>
       <div className="u-container u-container__page--large">
         <Stepper step={1} totalSteps={2} title={t('common:character-customization')} style={{ marginBottom: 30 }} />
         <div className="c-char-custom">
