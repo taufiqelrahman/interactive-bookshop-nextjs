@@ -4,12 +4,13 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 // import FieldDob from 'components/molecules/FieldDob';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
 import { RootState } from 'store';
+import actions from 'store/actions';
 import { CartItem } from 'store/cart/types';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
@@ -84,6 +85,7 @@ const CharacterCustomization = (props: any) => {
     // }, 500);
   };
   const { occupations } = master;
+  const dispatch = useDispatch();
   const onSubmit = (data) => {
     let PARAMS = { ...selected, ...data };
     if (charStep === stepEnum.OCCUPATIONS) {
@@ -94,7 +96,7 @@ const CharacterCustomization = (props: any) => {
     //   const jobIds = getJobIds(selected.Occupations, occupations);
     //   PARAMS = { ...PARAMS, jobIds };
     // }
-    props.saveSelected(PARAMS);
+    dispatch(actions.saveSelected(PARAMS));
     if (charStep !== stepEnum.DEDICATION) {
       setCharStep(charStep + 1);
       return;
