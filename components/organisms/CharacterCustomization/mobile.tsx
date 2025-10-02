@@ -26,7 +26,7 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const CharacterCustomization = (props: any) => {
+const CharacterCustomization = () => {
   const { t } = useTranslation('form');
   const cart = useSelector((state: RootState) => state.cart);
   const master = useSelector((state: RootState) => state.master);
@@ -141,7 +141,6 @@ const CharacterCustomization = (props: any) => {
   const screenHeight = '100vh - 69px';
   return (
     <DefaultLayout
-      {...props}
       navbar={
         <NavBar onBack={onBack} isSteps={true} title={t('common:character-customization')} step={1} totalSteps={2} />
       }
@@ -212,7 +211,6 @@ const CharacterCustomization = (props: any) => {
                     errors={errors['Date of Birth']}
                     style={{ marginTop: 12 }}
                     defaultValue={selected['Date of Birth']}
-                    {...props}
                   />
                 )} */}
                 {charStep === stepEnum.HAIR && (
