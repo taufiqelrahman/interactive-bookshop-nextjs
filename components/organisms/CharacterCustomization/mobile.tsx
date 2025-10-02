@@ -25,22 +25,22 @@ const FieldLanguage = dynamic(() => import('components/molecules/FieldLanguage')
 const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
+const STEP_ENUM = {
+  NAME_GENDER: 0,
+  AGE: 1,
+  // DOB: 3,
+  HAIR: 2,
+  SKIN: 3,
+  OCCUPATIONS: 4,
+  LANGUAGE: 5,
+  DEDICATION: 6,
+};
 
 const CharacterCustomization = () => {
   const { t } = useTranslation('form');
   const cart = useSelector((state: RootState) => state.cart);
   const master = useSelector((state: RootState) => state.master);
   const router = useRouter();
-  const stepEnum = {
-    NAME_GENDER: 0,
-    AGE: 1,
-    // DOB: 3,
-    HAIR: 2,
-    SKIN: 3,
-    OCCUPATIONS: 4,
-    LANGUAGE: 5,
-    DEDICATION: 6,
-  };
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
   const methods = useForm({ mode: 'onChange' });
@@ -53,12 +53,12 @@ const CharacterCustomization = () => {
     router.push('/');
   };
   const onBack = () => {
-    if (charStep === stepEnum.NAME_GENDER) {
+    if (charStep === STEP_ENUM.NAME_GENDER) {
       router.back();
       return;
     }
     // if (charStep === stepEnum.DOB) unregister('Date of Birth');
-    if (charStep === stepEnum.OCCUPATIONS) unregister('Occupations');
+    if (charStep === STEP_ENUM.OCCUPATIONS) unregister('Occupations');
     setCharStep(charStep - 1);
   };
 
@@ -88,7 +88,7 @@ const CharacterCustomization = () => {
   const dispatch = useDispatch();
   const onSubmit = (data) => {
     let PARAMS = { ...selected, ...data };
-    if (charStep === stepEnum.OCCUPATIONS) {
+    if (charStep === STEP_ENUM.OCCUPATIONS) {
       const jobIds = getJobIds(data.Occupations, occupations);
       PARAMS = { ...PARAMS, jobIds };
     }
@@ -97,7 +97,7 @@ const CharacterCustomization = () => {
     //   PARAMS = { ...PARAMS, jobIds };
     // }
     dispatch(actions.saveSelected(PARAMS));
-    if (charStep !== stepEnum.DEDICATION) {
+    if (charStep !== STEP_ENUM.DEDICATION) {
       setCharStep(charStep + 1);
       return;
     }
@@ -119,16 +119,16 @@ const CharacterCustomization = () => {
     loadImg(previewImg(selected, watch, true));
   }, [previewImg(selected, watch, true)]);
   useEffect(() => {
-    if ([stepEnum.AGE, stepEnum.SKIN, stepEnum.LANGUAGE].includes(charStep)) {
+    if ([STEP_ENUM.AGE, STEP_ENUM.SKIN, STEP_ENUM.LANGUAGE].includes(charStep)) {
       loadImg(previewImg(selected, watch, true));
     }
-    if (charStep === stepEnum.OCCUPATIONS) registerOccupations();
-    if (charStep === stepEnum.LANGUAGE) unregister('Occupations');
+    if (charStep === STEP_ENUM.OCCUPATIONS) registerOccupations();
+    if (charStep === STEP_ENUM.LANGUAGE) unregister('Occupations');
   }, [charStep]);
   useEffect(() => {
     const { Name, Gender } = selected;
     if (!router.query.edit && Name && Gender) {
-      setCharStep(stepEnum.AGE);
+      setCharStep(STEP_ENUM.AGE);
     }
     if (typeof selected.Occupations === 'string') {
       selected.Occupations = (selected.Occupations as string).split(',');
@@ -147,7 +147,7 @@ const CharacterCustomization = () => {
     >
       <form className="c-char-custom" style={{ height: `calc(${screenHeight})` }} onSubmit={handleSubmit(onSubmit)}>
         <div className="c-char-custom__container">
-          {charStep === stepEnum.OCCUPATIONS ? (
+          {charStep === STEP_ENUM.OCCUPATIONS ? (
             <div className="u-container u-container__page">
               <FieldOccupations
                 setValue={setValue}
@@ -174,7 +174,7 @@ const CharacterCustomization = () => {
                 </div>
               </div>
               <div className="u-container c-char-custom__tab">
-                {charStep === stepEnum.NAME_GENDER && (
+                {charStep === STEP_ENUM.NAME_GENDER && (
                   <Fragment>
                     <FormTextField
                       label={t('nickname-label')}
@@ -195,7 +195,7 @@ const CharacterCustomization = () => {
                     />
                   </Fragment>
                 )}
-                {charStep === stepEnum.AGE && (
+                {charStep === STEP_ENUM.AGE && (
                   <FieldAge
                     schema={schema(t).age}
                     register={register}
@@ -213,7 +213,7 @@ const CharacterCustomization = () => {
                     defaultValue={selected['Date of Birth']}
                   />
                 )} */}
-                {charStep === stepEnum.HAIR && (
+                {charStep === STEP_ENUM.HAIR && (
                   <FieldHair
                     schema={schema(t).hair}
                     register={register}
@@ -225,7 +225,7 @@ const CharacterCustomization = () => {
                     defaultChecked={selected.Hair}
                   />
                 )}
-                {charStep === stepEnum.SKIN && (
+                {charStep === STEP_ENUM.SKIN && (
                   <FieldSkin
                     schema={schema(t).skin}
                     errors={errors.Skin}
@@ -234,7 +234,7 @@ const CharacterCustomization = () => {
                     register={register}
                   />
                 )}
-                {charStep === stepEnum.LANGUAGE && (
+                {charStep === STEP_ENUM.LANGUAGE && (
                   <FieldLanguage
                     schema={schema(t).language}
                     register={register}
@@ -243,7 +243,7 @@ const CharacterCustomization = () => {
                     defaultChecked={selected.Language}
                   />
                 )}
-                {charStep === stepEnum.DEDICATION && (
+                {charStep === STEP_ENUM.DEDICATION && (
                   <FormTextArea
                     label={t('dedication-label')}
                     hint={t('dedication-hint')}
