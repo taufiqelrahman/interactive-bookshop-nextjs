@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, Fragment, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 // import FieldDob from 'components/molecules/FieldDob';
 import { useDispatch, useSelector } from 'react-redux';
@@ -114,13 +114,14 @@ const CharacterCustomization = () => {
   //   const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : t(`common:${job}`)));
   //   return array.join(', ');
   // };
+  const previewImgUrl = useMemo(() => previewImg(selected, watch, true), [selected, watch]);
   useEffect(() => {
     // if (charStep === stepEnum.OCCUPATIONS) return;
-    loadImg(previewImg(selected, watch, true));
-  }, [previewImg(selected, watch, true)]);
+    loadImg(previewImgUrl);
+  }, [previewImgUrl]);
   useEffect(() => {
     if ([STEP_ENUM.AGE, STEP_ENUM.SKIN, STEP_ENUM.LANGUAGE].includes(charStep)) {
-      loadImg(previewImg(selected, watch, true));
+      loadImg(previewImgUrl);
     }
     if (charStep === STEP_ENUM.OCCUPATIONS) registerOccupations();
     if (charStep === STEP_ENUM.LANGUAGE) unregister('Occupations');
