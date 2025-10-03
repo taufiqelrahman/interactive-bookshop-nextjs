@@ -2,8 +2,7 @@ import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import CharCustom from 'components/organisms/CharacterCustomization/desktop';
-import CharCustomMobile from 'components/organisms/CharacterCustomization/mobile';
+import CharCustom from 'components/organisms/CharacterCustomization';
 import api from 'services/api';
 import { wrapper } from 'store';
 import { loadOccupations } from 'store/master/reducers';
@@ -15,7 +14,7 @@ const Create = (props: any): any => {
       <Head>
         <title>Interactive Bookshop Next.js | {t('character-customization')}</title>
       </Head>
-      {props.isMobile ? <CharCustomMobile {...props} /> : <CharCustom {...props} />}
+      <CharCustom {...props} />
     </div>
   );
 };
