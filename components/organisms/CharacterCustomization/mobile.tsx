@@ -125,7 +125,8 @@ const CharacterCustomization = () => {
     }
     if (charStep === STEP_ENUM.OCCUPATIONS) registerOccupations();
     if (charStep === STEP_ENUM.LANGUAGE) unregister('Occupations');
-  }, [charStep]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [charStep, previewImgUrl]);
   useEffect(() => {
     const { Name, Gender } = selected;
     if (!router.query.edit && Name && Gender) {
