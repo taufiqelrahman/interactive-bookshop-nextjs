@@ -27,7 +27,7 @@ export default class Orders {
   //   return this.adapter.secure.post(`${this.basePath}`, data)
   // }
 
-  loadOrder(orderNumber) {
+  loadOrder(orderNumber: string) {
     // return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`);
     return Promise.resolve({
       data: {
@@ -38,7 +38,7 @@ export default class Orders {
           updated_at: new Date().toISOString(),
           deleted_at: null,
           shopify_order_id: 'gid://shopify/Order/1234567890',
-          order_number: 'ORD001',
+          order_number: orderNumber,
           created_at: new Date().toISOString(),
           name: 'Test Order',
         } as Order,
