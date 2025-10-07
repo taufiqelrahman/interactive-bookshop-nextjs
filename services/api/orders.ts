@@ -32,7 +32,7 @@ export default class Orders {
     return Promise.resolve({
       data: {
         data: {
-          id: 1,
+          id: 'gid://shopify/Order/1234567890',
           user_id: 1,
           state_id: 1,
           updated_at: new Date().toISOString(),
@@ -40,7 +40,8 @@ export default class Orders {
           shopify_order_id: 'gid://shopify/Order/1234567890',
           order_number: 'ORD001',
           created_at: new Date().toISOString(),
-        },
+          name: 'Test Order',
+        } as Order,
       },
     });
   }
@@ -49,7 +50,7 @@ export default class Orders {
     // return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`);
     return Promise.resolve({
       data: {
-        id: 1,
+        id: 'gid://shopify/Order/1234567890',
         user_id: 1,
         state_id: 1,
         updated_at: new Date().toISOString(),
@@ -57,7 +58,8 @@ export default class Orders {
         shopify_order_id: 'gid://shopify/Order/1234567890',
         order_number: 'ORD001',
         created_at: new Date().toISOString(),
-      },
+        name: 'Test Order Guest',
+      } as Order,
     });
   }
 
