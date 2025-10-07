@@ -25,7 +25,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     store.dispatch(actions.loadOrder(true));
     let orderData;
     if (cookies(ctx).user) {
-      ({ data: orderData } = await api(ctx.req).orders.loadOrder(ctx.query.id));
+      ({ data: orderData } = await api(ctx.req).orders.loadOrder(ctx.query.id as string));
     } else {
       ({ data: orderData } = await api().orders.loadOrderGuest(ctx.query.id));
     }
