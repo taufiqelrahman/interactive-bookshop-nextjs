@@ -4,6 +4,7 @@ import OrderDetailDesktop from 'components/organisms/OrderDetail/desktop';
 import OrderDetailMobile from 'components/organisms/OrderDetail/mobile';
 import { formatPayment } from 'lib/format-payment';
 import api from 'services/api';
+import { OrderResponse } from 'services/api/orders';
 import { wrapper } from 'store';
 import actions from 'store/actions';
 
@@ -23,11 +24,13 @@ const OrderDetail: React.FC<OrderDetailProps> = (props) => {
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   try {
     store.dispatch(actions.loadOrder(true));
-    let orderData;
+    let orderData: OrderResponse;
     if (cookies(ctx).user) {
-      ({ data: orderData } = await api(ctx.req).orders.loadOrder(ctx.query.id as string));
+      const data = await api(ctx.req).orders.loadOrder(ctx.query.id as string);
+      orderData = data.data;
     } else {
-      ({ data: orderData } = await api().orders.loadOrderGuest(ctx.query.id));
+      const data = await api().orders.loadOrderGuest(ctx.query.id);
+      orderData = data.data;
     }
     const { order, state, payment } = orderData.data;
     order.state = state.name;
