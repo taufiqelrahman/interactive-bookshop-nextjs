@@ -14,6 +14,13 @@ interface LoadOrderResponse {
     };
   };
 }
+
+export interface OrderResponse {
+  data: {
+    order: Order;
+  };
+}
+
 export default class Orders {
   adapter: AdapterObject;
   basePath: string;
@@ -27,39 +34,45 @@ export default class Orders {
   //   return this.adapter.secure.post(`${this.basePath}`, data)
   // }
 
-  loadOrder(orderNumber: string) {
+  loadOrder(orderNumber: string): Promise<{ data: OrderResponse }> {
     // return this.adapter.secure.get(`${this.basePath}/${orderNumber}/detail`);
     return Promise.resolve({
       data: {
         data: {
-          id: 'gid://shopify/Order/1234567890',
-          user_id: 1,
-          state_id: 1,
-          updated_at: new Date().toISOString(),
-          deleted_at: null,
-          shopify_order_id: 'gid://shopify/Order/1234567890',
-          order_number: orderNumber,
-          created_at: new Date().toISOString(),
-          name: 'Test Order',
-        } as Order,
+          order: {
+            id: 'gid://shopify/Order/1234567890',
+            user_id: 1,
+            state_id: 1,
+            updated_at: new Date().toISOString(),
+            deleted_at: null,
+            shopify_order_id: 'gid://shopify/Order/1234567890',
+            order_number: orderNumber,
+            created_at: new Date().toISOString(),
+            name: 'Test Order',
+          } as Order,
+        },
       },
     });
   }
 
-  loadOrderGuest(orderNumber) {
+  loadOrderGuest(orderNumber): Promise<{ data: OrderResponse }> {
     // return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`);
     return Promise.resolve({
       data: {
-        id: 'gid://shopify/Order/1234567890',
-        user_id: 1,
-        state_id: 1,
-        updated_at: new Date().toISOString(),
-        deleted_at: null,
-        shopify_order_id: 'gid://shopify/Order/1234567890',
-        order_number: 'ORD001',
-        created_at: new Date().toISOString(),
-        name: 'Test Order Guest',
-      } as Order,
+        data: {
+          order: {
+            id: 'gid://shopify/Order/1234567890',
+            user_id: 1,
+            state_id: 1,
+            updated_at: new Date().toISOString(),
+            deleted_at: null,
+            shopify_order_id: 'gid://shopify/Order/1234567890',
+            order_number: 'ORD001',
+            created_at: new Date().toISOString(),
+            name: 'Test Order Guest',
+          } as Order,
+        },
+      },
     });
   }
 
