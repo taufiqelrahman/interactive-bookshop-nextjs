@@ -18,6 +18,18 @@ interface LoadOrderResponse {
 export interface OrderResponse {
   data: {
     order: Order;
+    state?: {
+      name: string;
+    };
+    payment?: {
+      id: string;
+      amount: string;
+      currency: string;
+      payment_method: string;
+      status: string;
+      created_at: string;
+      updated_at: string;
+    };
   };
 }
 
