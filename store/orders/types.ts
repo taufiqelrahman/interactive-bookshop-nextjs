@@ -14,6 +14,12 @@ export interface Order {
   deleted_at: string | null;
   state?: string;
   name: string;
+  payment?: {
+    type: string;
+    instance: string;
+    number: string;
+    url: string;
+  };
 }
 
 export interface OrdersState {
