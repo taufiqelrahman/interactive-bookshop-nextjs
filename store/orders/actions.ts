@@ -43,7 +43,7 @@ export const thunkLoadOrder =
     return api()
       .orders.loadOrder(orderNumber)
       .then(({ data }) => {
-        dispatch(loadOrder(false, data.data));
+        dispatch(loadOrder(false, data.data.order));
       })
       .catch((err) => {
         dispatch(loadOrder(false));
