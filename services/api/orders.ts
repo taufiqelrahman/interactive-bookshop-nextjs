@@ -1,7 +1,7 @@
 import { Order } from 'store/orders/types';
 import { AdapterObject } from './index';
 
-interface LoadOrderResponse {
+interface OrdersResponse {
   data: {
     data: {
       orders: Order[];
@@ -88,7 +88,7 @@ export default class Orders {
     });
   }
 
-  loadOrders(): Promise<LoadOrderResponse> {
+  loadOrders(): Promise<OrdersResponse> {
     // return this.adapter.secure.get(this.basePath);
     return Promise.resolve({
       data: {
