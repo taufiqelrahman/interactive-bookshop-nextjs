@@ -1,5 +1,6 @@
 import { Order } from 'store/orders/types';
 import { AdapterObject } from './index';
+import { ORDER } from './__mocks__/order';
 
 interface OrdersResponse {
   data: {
@@ -109,25 +110,15 @@ export default class Orders {
           ],
           orders: [
             {
-              id: 'gid://shopify/Order/1234567890',
-              user_id: 1,
+              ...ORDER,
               state_id: 1,
-              updated_at: new Date().toISOString(),
-              deleted_at: null,
-              shopify_order_id: 'gid://shopify/Order/1234567890',
               order_number: 'ORD001',
-              created_at: new Date().toISOString(),
               name: 'Test Order 1',
             },
             {
-              id: 'gid://shopify/Order/0987654321',
-              user_id: 1,
+              ...ORDER,
               state_id: 2,
-              updated_at: new Date().toISOString(),
-              deleted_at: null,
-              shopify_order_id: 'gid://shopify/Order/0987654321',
               order_number: 'ORD002',
-              created_at: new Date().toISOString(),
               name: 'Test Order 2',
             },
           ],
