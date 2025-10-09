@@ -53,14 +53,9 @@ export default class Orders {
       data: {
         data: {
           order: {
-            id: 'gid://shopify/Order/1234567890',
-            user_id: 1,
+            ...ORDER,
             state_id: 1,
-            updated_at: new Date().toISOString(),
-            deleted_at: null,
-            shopify_order_id: 'gid://shopify/Order/1234567890',
             order_number: orderNumber,
-            created_at: new Date().toISOString(),
             name: 'Test Order',
           } as Order,
         },
