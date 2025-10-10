@@ -23,7 +23,7 @@ export default class Cart {
   //   return this.adapter.secure.delete(`${this.basePath}`, data)
   // }
 
-  createCart(checkoutId: string): Promise<{ data: User['cart'] }> {
+  createCart({ checkoutId }: { checkoutId: string }): Promise<{ data: User['cart'] }> {
     // return this.adapter.secure.post(`${this.basePath}`, data);
     return Promise.resolve({
       data: {
