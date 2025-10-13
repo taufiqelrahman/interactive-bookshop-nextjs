@@ -2,16 +2,9 @@ import { useTranslation } from 'next-i18next';
 import { useState, useEffect, useCallback } from 'react';
 
 import Card from 'components/atoms/Card';
-import Testimonial from 'components/molecules/Testimonial';
+import TestimonialComponent from 'components/molecules/Testimonial';
 import * as gtag from 'lib/gtag';
-
-interface Testimonial {
-  id: string | number;
-  message: string;
-  image_url: string;
-  name: string;
-  company: string;
-}
+import { Testimonial } from 'store/master/types';
 
 interface TestimonialSliderProps {
   testimonials: Testimonial[];
@@ -84,7 +77,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = (props) => {
         <div className="c-testi-slider__slides">
           {props.testimonials.map((testi) => (
             <Card key={testi.id} className="c-testi-slider__slide">
-              <Testimonial testi={testi} />
+              <TestimonialComponent testi={testi} />
             </Card>
           ))}
         </div>
