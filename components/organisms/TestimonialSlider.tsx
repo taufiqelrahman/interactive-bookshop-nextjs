@@ -77,7 +77,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = (props) => {
         <div className="c-testi-slider__slides">
           {props.testimonials.map((testi) => (
             <Card key={testi.id} className="c-testi-slider__slide">
-              <TestimonialComponent testi={testi} />
+              <TestimonialComponent data={testi} />
             </Card>
           ))}
         </div>

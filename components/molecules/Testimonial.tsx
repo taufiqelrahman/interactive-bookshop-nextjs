@@ -1,16 +1,12 @@
 import DOMPurify from 'dompurify';
 
+import { Testimonial } from 'store/master/types';
+
 interface TestimonialProps {
-  testi: {
-    message: string;
-    image_url: string;
-    name: string;
-    company: string;
-  };
+  data: Testimonial;
 }
 
-const Testimonial: React.FC<TestimonialProps> = (props) => {
-  const data = props.testi;
+const TestimonialComponent = ({ data }: TestimonialProps) => {
   return (
     <div className="c-testimonial">
       {/* <div className="c-testimonial__container"> */}
@@ -76,4 +72,4 @@ const Testimonial: React.FC<TestimonialProps> = (props) => {
   );
 };
 
-export default Testimonial;
+export default TestimonialComponent;
