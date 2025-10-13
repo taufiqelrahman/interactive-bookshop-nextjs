@@ -4,6 +4,7 @@ export const LOAD_BOOK_PAGES = 'LOAD_BOOK_PAGES';
 export const LOAD_PROVINCES = 'LOAD_PROVINCES';
 
 export interface Testimonial {
+  id: string | number;
   name: string;
   company: string;
   message: string;
