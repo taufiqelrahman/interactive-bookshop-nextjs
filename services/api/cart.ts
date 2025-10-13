@@ -2,6 +2,12 @@ import { User } from 'store/users/types';
 import { AdapterObject } from './index';
 import { CART } from './__mocks__/cart';
 
+interface CartResponse {
+  data: {
+    data: User['cart'];
+  };
+}
+
 export default class Cart {
   adapter: AdapterObject;
   basePath: string;
@@ -23,7 +29,7 @@ export default class Cart {
   //   return this.adapter.secure.delete(`${this.basePath}`, data)
   // }
 
-  createCart({ checkoutId }: { checkoutId: string }): Promise<{ data: { data: User['cart'] } }> {
+  createCart({ checkoutId }: { checkoutId: string }): Promise<CartResponse> {
     // return this.adapter.secure.post(`${this.basePath}`, data);
     return Promise.resolve({
       data: {
