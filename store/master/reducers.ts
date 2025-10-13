@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { BookPage, Occupation } from './types';
+import { BookPage, Occupation, Testimonial } from './types';
 
 export interface MasterState {
   isFetching: boolean;
-  testimonials: any[];
+  testimonials: Testimonial[];
   occupations: Occupation[];
   bookPages: BookPage[];
   provinces: any[];
@@ -22,7 +22,7 @@ const masterSlice = createSlice({
   name: 'master',
   initialState,
   reducers: {
-    loadTestimonials(state, action: PayloadAction<{ data: any[]; isFetching: boolean }>) {
+    loadTestimonials(state, action: PayloadAction<{ data: Testimonial[]; isFetching: boolean }>) {
       state.testimonials = action.payload.data;
       state.isFetching = action.payload.isFetching;
     },
