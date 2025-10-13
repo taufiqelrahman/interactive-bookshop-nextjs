@@ -1,4 +1,4 @@
-import { BookPage, Occupation } from 'store/master/types';
+import { BookPage, Occupation, Testimonial } from 'store/master/types';
 
 export const OCCUPATIONS = [
   { id: '1', name: 'Doctor', description: 'Heals patients', indonesia: 'Dokter' },
@@ -92,3 +92,21 @@ export const BOOK_PAGES = [
     indonesiaText: 'Contoh teks bahasa Indonesia',
   },
 ] as BookPage[];
+
+export const TESTIMONIALS = [
+  {
+    id: 1,
+    name: 'Sarah Johnson',
+    company: 'Parent of Emma, Age 6',
+    message:
+      'This personalized book made my daughter feel like the hero of her own adventure. She asks to read it every night!',
+    image_url: '/static/images/testimonial-1.jpg',
+  },
+  {
+    id: 2,
+    name: 'Michael Chen',
+    company: 'Father of two',
+    message: 'Amazing quality and storytelling. My kids love seeing themselves in the book. Highly recommend!',
+    image_url: '/static/images/testimonial-2.jpg',
+  },
+] as Testimonial[];

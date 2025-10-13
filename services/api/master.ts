@@ -1,6 +1,6 @@
 import { BookPage, Occupation, Testimonial } from 'store/master/types';
 import { AdapterObject } from './index';
-import { BOOK_PAGES, OCCUPATIONS } from './__mocks__/master';
+import { BOOK_PAGES, OCCUPATIONS, TESTIMONIALS } from './__mocks__/master';
 
 export default class Products {
   adapter: AdapterObject;
@@ -13,23 +13,7 @@ export default class Products {
     // return this.adapter.default.get('/testimonials');
     return Promise.resolve({
       data: {
-        data: [
-          {
-            id: 1,
-            name: 'Sarah Johnson',
-            company: 'Parent of Emma, Age 6',
-            message:
-              'This personalized book made my daughter feel like the hero of her own adventure. She asks to read it every night!',
-            image_url: '/static/images/testimonial-1.jpg',
-          },
-          {
-            id: 2,
-            name: 'Michael Chen',
-            company: 'Father of two',
-            message: 'Amazing quality and storytelling. My kids love seeing themselves in the book. Highly recommend!',
-            image_url: '/static/images/testimonial-2.jpg',
-          },
-        ] as Testimonial[],
+        data: TESTIMONIALS,
       },
     });
   }
