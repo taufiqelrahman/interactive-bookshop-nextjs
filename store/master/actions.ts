@@ -74,7 +74,7 @@ export function loadBookPages(isFetching, bookPages = []): types.MasterActionTyp
 //     });
 // };
 
-export function loadProvinces(isFetching, provinces = []): types.MasterActionTypes {
+export function loadProvinces(isFetching, provinces: types.Province[] = []): types.MasterActionTypes {
   return {
     type: types.LOAD_PROVINCES,
     payload: provinces,
