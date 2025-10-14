@@ -1,3 +1,5 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import * as types from './types';
 
 const initialState: types.ProductsState = {
@@ -6,24 +8,20 @@ const initialState: types.ProductsState = {
   currentProduct: null,
 };
 
-const reducer = (state = initialState, action: types.ProductsActionTypes): types.ProductsState => {
-  switch (action.type) {
-    case types.LOAD_PRODUCTS: {
-      return {
-        ...state,
-        products: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    case types.SHOW_PRODUCT: {
-      return {
-        ...state,
-        currentProduct: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    default:
-      return state;
-  }
-};
-export default reducer;
+const productsSlice = createSlice({
+  name: 'products',
+  initialState,
+  reducers: {
+    loadProducts: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Product[] }>) => {
+      state.products = action.payload.payload;
+      state.isFetching = action.payload.isFetching;
+    },
+    showProduct: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Product | null }>) => {
+      state.currentProduct = action.payload.payload;
+      state.isFetching = action.payload.isFetching;
+    },
+  },
+});
+
+export const { loadProducts, showProduct } = productsSlice.actions;
+export default productsSlice.reducer;

@@ -4,49 +4,36 @@ import { ThunkAction } from 'redux-thunk';
 
 import api from '../../services/api';
 
+import { loadProducts, showProduct } from './reducers';
 import * as types from './types';
 
-function loadProducts(isFetching, products = null): types.ProductsActionTypes {
-  return {
-    type: types.LOAD_PRODUCTS,
-    payload: products,
-    isFetching,
-  };
-}
 export const thunkLoadProducts =
   (): ThunkAction<void, types.ProductsState, null, Action<string>> =>
   (dispatch): any => {
-    dispatch(loadProducts(true));
+    dispatch(loadProducts({ isFetching: true, payload: [] }));
     return api()
       .products.get()
       .then(({ data }) => {
-        dispatch(loadProducts(false, data.data));
+        dispatch(loadProducts({ isFetching: false, payload: data.data }));
       })
       .catch((err) => {
-        dispatch(loadProducts(false));
+        dispatch(loadProducts({ isFetching: false, payload: null }));
         captureException(err);
         throw err;
       });
   };
 
-function showProduct(isFetching, currentProduct = null): types.ProductsActionTypes {
-  return {
-    type: types.SHOW_PRODUCT,
-    payload: currentProduct,
-    isFetching,
-  };
-}
 export const thunkShowProduct =
   (slug, req = null): ThunkAction<void, types.ProductsState, null, Action<string>> =>
   (dispatch): any => {
-    dispatch(showProduct(true));
+    dispatch(showProduct({ isFetching: true, payload: null }));
     return api(req)
       .products.show(slug)
       .then(({ data }) => {
-        dispatch(showProduct(false, data.data));
+        dispatch(showProduct({ isFetching: false, payload: data.data }));
       })
       .catch((err) => {
-        dispatch(showProduct(false));
+        dispatch(showProduct({ isFetching: false, payload: null }));
         captureException(err);
         throw err;
       });
