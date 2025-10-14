@@ -27,7 +27,7 @@ export interface BookPage {
   indonesiaText: string;
 }
 
-interface Province {
+export interface Province {
   name: string;
   code: string;
 }
