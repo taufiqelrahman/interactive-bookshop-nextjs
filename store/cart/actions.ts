@@ -6,9 +6,9 @@ import ShopifyBuy from 'shopify-buy';
 import { mapKeyValue } from 'lib/format-array';
 import api from 'services/api';
 import shopify from 'services/shopify';
+import { loadUser } from 'store/users/reducers';
 
 import { setErrorMessage } from '../actions';
-import { loadUser } from '../users/actions';
 
 import { addToCart, createCart, loadCart, removeFromCart, transferCart, updateCart } from './reducers';
 import * as types from './types';
@@ -65,7 +65,7 @@ export const thunkCreateCart =
       .cart.createCart({ checkoutId: cart.id })
       .then(({ data }) => {
         dispatch(createCart({ isFetching: false }));
-        dispatch(loadUser(false, { ...user, cart: data.data }));
+        dispatch(loadUser({ isFetching: false, payload: { ...user, cart: data.data } }));
         if (callback) dispatch(callback);
       })
       .catch((err) => {

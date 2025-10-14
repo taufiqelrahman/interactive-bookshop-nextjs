@@ -24,6 +24,7 @@ import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import 'styles/fonts.min.css';
+import { loadUser, setExpired, setLogin } from 'store/users/reducers';
 import { User } from 'store/users/types';
 
 const LOGIN_ROUTES = ['/login', '/register'];
@@ -316,11 +317,11 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
       if (!store.getState().users?.user) {
         try {
           const { data: me } = await api(ctx.req).users.getMe();
-          store.dispatch(actions.setLogin(true));
+          store.dispatch(setLogin(true));
           // @todo fix typing
-          store.dispatch(actions.loadUser(false, me as unknown as User));
+          store.dispatch(loadUser({ isFetching: false, payload: me as unknown as User }));
         } catch {
-          store.dispatch(actions.setExpired(true));
+          store.dispatch(setExpired(true));
         }
       }
 
@@ -333,7 +334,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
         };
       }
     } else {
-      store.dispatch(actions.setLogin(false));
+      store.dispatch(setLogin(false));
       if (PRIVATE_ROUTES.includes(ctx.resolvedUrl)) {
         const redirectTo = ctx.resolvedUrl.split('/')[1];
         const login = `/login?from=${redirectTo}`;
