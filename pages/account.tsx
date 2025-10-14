@@ -13,6 +13,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
+import { loadProvinces } from 'store/master/reducers';
 // import Modal from 'components/atoms/Modal';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
@@ -589,9 +590,9 @@ const Account = (props: any): any => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   try {
-    store.dispatch(actions.loadProvinces(true));
+    store.dispatch(loadProvinces({ isFetching: true, data: [] }));
     const { data: provinces } = await api().master.getProvinces();
-    store.dispatch(actions.loadProvinces(false, provinces.data));
+    store.dispatch(loadProvinces({ isFetching: false, data: provinces.data }));
   } catch (err) {
     console.log(err.message);
   }
