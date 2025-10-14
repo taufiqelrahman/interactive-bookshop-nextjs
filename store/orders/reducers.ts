@@ -1,3 +1,5 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import * as types from './types';
 
 const initialState: types.OrdersState = {
@@ -7,30 +9,23 @@ const initialState: types.OrdersState = {
   paymentProblem: false,
 };
 
-const reducer = (state = initialState, action: types.OrdersActionTypes): types.OrdersState => {
-  switch (action.type) {
-    case types.LOAD_ORDER: {
-      return {
-        ...state,
-        currentOrder: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    case types.LOAD_ORDERS: {
-      return {
-        ...state,
-        orders: action.payload,
-        isFetching: action.isFetching,
-      };
-    }
-    case types.SET_PAYMENT_PROBLEM: {
-      return {
-        ...state,
-        paymentProblem: action.payload,
-      };
-    }
-    default:
-      return state;
-  }
-};
-export default reducer;
+const ordersSlice = createSlice({
+  name: 'orders',
+  initialState,
+  reducers: {
+    loadOrder: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Order | null }>) => {
+      state.currentOrder = action.payload.payload;
+      state.isFetching = action.payload.isFetching;
+    },
+    loadOrders: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Order[] }>) => {
+      state.orders = action.payload.payload;
+      state.isFetching = action.payload.isFetching;
+    },
+    setPaymentProblem: (state, action: PayloadAction<boolean>) => {
+      state.paymentProblem = action.payload;
+    },
+  },
+});
+
+export const { loadOrder, loadOrders, setPaymentProblem } = ordersSlice.actions;
+export default ordersSlice.reducer;
