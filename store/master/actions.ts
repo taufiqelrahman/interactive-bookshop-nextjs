@@ -7,7 +7,7 @@ import { setErrorMessage } from '../actions';
 
 import * as types from './types';
 
-export function loadTestimonials(isFetching, testimonials = []): types.MasterActionTypes {
+export function loadTestimonials(isFetching, testimonials: types.Testimonial[] = []): types.MasterActionTypes {
   return {
     type: types.LOAD_TESTIMONIALS,
     payload: testimonials,
@@ -30,7 +30,7 @@ export const thunkLoadTestimonials =
       });
   };
 
-export function loadOccupations(isFetching, occupations = []): types.MasterActionTypes {
+export function loadOccupations(isFetching, occupations: types.Occupation[] = []): types.MasterActionTypes {
   return {
     type: types.LOAD_OCCUPATIONS,
     payload: occupations,
@@ -53,7 +53,7 @@ export const thunkLoadOccupations =
       });
   };
 
-export function loadBookPages(isFetching, bookPages = []): types.MasterActionTypes {
+export function loadBookPages(isFetching, bookPages: types.BookPage[] = []): types.MasterActionTypes {
   return {
     type: types.LOAD_BOOK_PAGES,
     payload: bookPages,
