@@ -5,7 +5,7 @@ import { ThunkAction } from 'redux-thunk';
 import api from '../../services/api';
 import { setErrorMessage } from '../actions';
 
-import { loadTestimonials } from './reducers';
+import { loadOccupations, loadProvinces, loadTestimonials } from './reducers';
 import * as types from './types';
 
 export const thunkLoadTestimonials =
@@ -24,36 +24,22 @@ export const thunkLoadTestimonials =
       });
   };
 
-export function loadOccupations(isFetching, occupations: types.Occupation[] = []): types.MasterActionTypes {
-  return {
-    type: types.LOAD_OCCUPATIONS,
-    payload: occupations,
-    isFetching,
-  };
-}
 export const thunkLoadOccupations =
   (): ThunkAction<void, types.MasterState, null, Action<string>> =>
   (dispatch): any => {
-    dispatch(loadOccupations(true));
+    dispatch(loadOccupations({ isFetching: true, data: [] }));
     return api()
       .master.getOccupations()
       .then(({ data }) => {
-        dispatch(loadOccupations(false, data.data));
+        dispatch(loadOccupations({ isFetching: false, data: data.data }));
       })
       .catch((err) => {
-        dispatch(loadOccupations(false));
+        dispatch(loadOccupations({ isFetching: false, data: [] }));
         dispatch(setErrorMessage(err.message));
         captureException(err);
       });
   };
 
-export function loadBookPages(isFetching, bookPages: types.BookPage[] = []): types.MasterActionTypes {
-  return {
-    type: types.LOAD_BOOK_PAGES,
-    payload: bookPages,
-    isFetching,
-  };
-}
 // export const thunkLoadBookPages = (): ThunkAction<void, types.MasterState, null, Action<string>> => (dispatch): any => {
 //   dispatch(loadBookPages(true));
 //   return api()
@@ -68,24 +54,17 @@ export function loadBookPages(isFetching, bookPages: types.BookPage[] = []): typ
 //     });
 // };
 
-export function loadProvinces(isFetching, provinces: types.Province[] = []): types.MasterActionTypes {
-  return {
-    type: types.LOAD_PROVINCES,
-    payload: provinces,
-    isFetching,
-  };
-}
 export const thunkLoadProvinces =
   (): ThunkAction<void, types.MasterState, null, Action<string>> =>
   (dispatch): any => {
-    dispatch(loadProvinces(true));
+    dispatch(loadProvinces({ isFetching: true, data: [] }));
     return api()
       .master.getProvinces()
       .then(({ data }) => {
-        dispatch(loadProvinces(false, data.data));
+        dispatch(loadProvinces({ isFetching: false, data: data.data }));
       })
       .catch((err) => {
-        dispatch(loadProvinces(false));
+        dispatch(loadProvinces({ isFetching: false, data: [] }));
         dispatch(setErrorMessage(err.message));
         captureException(err);
       });
