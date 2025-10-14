@@ -5,26 +5,20 @@ import { ThunkAction } from 'redux-thunk';
 import api from '../../services/api';
 import { setErrorMessage } from '../actions';
 
+import { loadTestimonials } from './reducers';
 import * as types from './types';
 
-export function loadTestimonials(isFetching, testimonials: types.Testimonial[] = []): types.MasterActionTypes {
-  return {
-    type: types.LOAD_TESTIMONIALS,
-    payload: testimonials,
-    isFetching,
-  };
-}
 export const thunkLoadTestimonials =
   (): ThunkAction<void, types.MasterState, null, Action<string>> =>
   (dispatch): any => {
-    dispatch(loadTestimonials(true));
+    dispatch(loadTestimonials({ isFetching: true, data: [] }));
     return api()
       .master.getTestimonials()
       .then(({ data }) => {
-        dispatch(loadTestimonials(false, data.data));
+        dispatch(loadTestimonials({ isFetching: false, data: data.data }));
       })
       .catch((err) => {
-        dispatch(loadTestimonials(false));
+        dispatch(loadTestimonials({ isFetching: false, data: [] }));
         dispatch(setErrorMessage(err.message));
         captureException(err);
       });
