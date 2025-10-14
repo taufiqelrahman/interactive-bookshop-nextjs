@@ -10,7 +10,7 @@ export default class Products {
     this.basePath = '/products';
   }
 
-  get() {
+  get(): Promise<{ data: { data: Product[] } }> {
     // return this.adapter.default.get(`${this.basePath}`);
     return Promise.resolve({
       data: {
@@ -34,7 +34,7 @@ export default class Products {
                 updated_at: new Date().toISOString(),
               },
             ],
-          } as Product,
+          },
           {
             id: 2,
             name: 'Space Explorer Book',
@@ -55,8 +55,8 @@ export default class Products {
                 updated_at: new Date().toISOString(),
               },
             ],
-          } as Product,
-        ],
+          },
+        ] as Product[],
       },
     });
   }
