@@ -2,6 +2,7 @@ import debouncePromise from 'awesome-debounce-promise';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import React, { useState, useEffect, Fragment, ElementType } from 'react';
 import { useForm } from 'react-hook-form';
@@ -45,6 +46,7 @@ enum RegisterStep {
 
 const Register: React.FC<RegisterProps> = (props) => {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const dispatch = useDispatch();
   const methods = useForm<RegisterFormData>({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
@@ -93,6 +95,7 @@ const Register: React.FC<RegisterProps> = (props) => {
             phone: data.phone.replace(/\s/g, ''),
           }),
         );
+        router.push('/');
         break;
       default:
         break;

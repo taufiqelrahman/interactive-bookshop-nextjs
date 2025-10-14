@@ -181,8 +181,6 @@ export const thunkRegister =
       })
       .then(() => {
         dispatch(register({ isFetching: false }));
-        // @todo should router.push() outside this function afterwards
-        // Router.push('/');
       })
       .catch((err) => {
         dispatch(register({ isFetching: false }));
