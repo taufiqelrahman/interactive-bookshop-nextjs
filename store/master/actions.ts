@@ -2,8 +2,9 @@ import { captureException } from '@sentry/core';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
+import { setErrorMessage } from 'store/reducers';
+
 import api from '../../services/api';
-import { setErrorMessage } from '../actions';
 
 import { loadOccupations, loadProvinces, loadTestimonials } from './reducers';
 import * as types from './types';
