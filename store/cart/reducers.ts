@@ -35,8 +35,12 @@ const cartSlice = createSlice({
     saveSelected: (state, action: PayloadAction<types.CartItem | null>) => {
       state.selected = action.payload;
     },
+    createCart: (state, action: PayloadAction<{ isFetching: boolean }>) => {
+      state.isFetching = action.payload.isFetching;
+    },
   },
 });
 
-export const { loadCart, addToCart, transferCart, updateCart, removeFromCart, saveSelected } = cartSlice.actions;
+export const { loadCart, addToCart, transferCart, updateCart, removeFromCart, saveSelected, createCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

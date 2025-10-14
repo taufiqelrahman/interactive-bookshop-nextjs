@@ -10,7 +10,7 @@ import shopify from 'services/shopify';
 import { setErrorMessage } from '../actions';
 import { loadUser } from '../users/actions';
 
-import { addToCart, loadCart, removeFromCart, transferCart, updateCart } from './reducers';
+import { addToCart, createCart, loadCart, removeFromCart, transferCart, updateCart } from './reducers';
 import * as types from './types';
 
 function mapItems(items: ShopifyBuy.CheckoutLineItem[]): (ShopifyBuy.CheckoutLineItem & {
@@ -22,12 +22,6 @@ function mapItems(items: ShopifyBuy.CheckoutLineItem[]): (ShopifyBuy.CheckoutLin
   }));
 }
 
-function createCart(isFetching): types.CartActionTypes {
-  return {
-    type: types.CREATE_CART,
-    isFetching,
-  };
-}
 interface CheckoutParams {
   email: string;
   shippingAddress?: {
@@ -59,23 +53,23 @@ function createCheckoutGuest() {
 export const thunkCreateCart =
   (callback?): ThunkAction<void, types.CartState, null, Action<string>> =>
   async (dispatch, getState): Promise<any> => {
-    dispatch(createCart(true));
+    dispatch(createCart({ isFetching: true }));
     const { user } = (getState() as any).users;
     const cart = user ? await createCheckout(user) : await createCheckoutGuest();
     if (!user) {
       localStorage.setItem('cart', JSON.stringify(cart));
-      dispatch(createCart(false));
+      dispatch(createCart({ isFetching: false }));
       return;
     }
     return api()
       .cart.createCart({ checkoutId: cart.id })
       .then(({ data }) => {
-        dispatch(createCart(false));
+        dispatch(createCart({ isFetching: false }));
         dispatch(loadUser(false, { ...user, cart: data.data }));
         if (callback) dispatch(callback);
       })
       .catch((err) => {
-        dispatch(createCart(false));
+        dispatch(createCart({ isFetching: false }));
         captureException(err);
       });
   };
@@ -111,14 +105,6 @@ export const thunkTransferCart =
       });
   };
 
-// export function loadCartFromStorage(): types.CartActionTypes {
-//   const cart = JSON.parse(localStorage.getItem('cart') as any);
-//   return {
-//     type: types.LOAD_CART,
-//     payload: { ...cart, lineItems: mapItems(cart.lineItems) },
-//     isFetching: false,
-//   };
-// }
 export const thunkLoadCart =
   (id: string, isLocal = false, retryLeft = 3): ThunkAction<void, types.CartState, null, Action<string>> =>
   (dispatch) => {
