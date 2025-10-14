@@ -12,6 +12,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
 import { useResponsive } from 'lib/hooks/useResponsive';
 import actions from 'store/actions';
+import { saveSelected } from 'store/cart/reducers';
 
 import { dummySelected, schema, getFromCookies } from './helper';
 
@@ -107,7 +108,7 @@ const PreviewContainer = (props: any): any => {
   useEffect(() => {
     const fromCookies = getFromCookies();
     if (fromCookies) {
-      dispatch(actions.saveSelected(fromCookies));
+      dispatch(saveSelected(fromCookies));
       Cookies.remove('pendingTrx');
       // setEnableLazy(false);
     }

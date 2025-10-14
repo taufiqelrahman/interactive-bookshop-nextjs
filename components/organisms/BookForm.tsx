@@ -11,7 +11,7 @@ import FieldGender from 'components/molecules/FieldGender';
 import FormTextField from 'components/molecules/FormTextField';
 // import FieldAge from 'components/molecules/FieldAge';
 import * as gtag from 'lib/gtag';
-import actions from 'store/actions';
+import { saveSelected } from 'store/cart/reducers';
 
 interface Props {
   isMobile?: boolean;
@@ -74,7 +74,7 @@ const BookForm = (props: Props) => {
       category: 'engagement',
       label: '/',
     });
-    dispatch(actions.saveSelected(data));
+    dispatch(saveSelected(data));
     router.push('/create');
   };
 

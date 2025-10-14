@@ -10,7 +10,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
 import { useResponsive } from 'lib/hooks/useResponsive';
 import { RootState } from 'store';
-import actions from 'store/actions';
+import { saveSelected } from 'store/cart/reducers';
 import { CartItem, Character } from 'store/cart/types';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
@@ -92,7 +92,7 @@ const CharacterCustomization = () => {
         let PARAMS = { ...selected, ...data };
         jobIds = getJobIds(data.Occupations, occupations);
         PARAMS = { ...PARAMS, jobIds };
-        dispatch(actions.saveSelected(PARAMS));
+        dispatch(saveSelected(PARAMS));
         if (charStep !== STEP_ENUM.DEDICATION) {
           setCharStep(charStep + 1);
           return;
@@ -100,7 +100,7 @@ const CharacterCustomization = () => {
       }
     } else {
       jobIds = getJobIds(data.Occupations, occupations);
-      dispatch(actions.saveSelected({ ...selected, ...data, jobIds }));
+      dispatch(saveSelected({ ...selected, ...data, jobIds }));
     }
 
     router.push({

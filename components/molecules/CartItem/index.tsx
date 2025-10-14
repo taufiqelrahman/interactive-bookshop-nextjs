@@ -17,6 +17,7 @@ import Sheet from 'components/atoms/Sheet';
 import { useResponsive } from 'lib/hooks/useResponsive';
 import { RootState } from 'store';
 import actions from 'store/actions';
+import { saveSelected } from 'store/cart/reducers';
 import { CartLineItem } from 'store/cart/types';
 
 import { previewImg } from './helper';
@@ -73,7 +74,7 @@ const CartItem = (props: CartItemProps) => {
 
   const editItem = () => {
     dispatch(
-      actions.saveSelected({
+      saveSelected({
         ...cart.selected,
         id: props.id,
         quantity: props.quantity,

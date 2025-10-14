@@ -10,6 +10,7 @@ import shopify from 'services/shopify';
 import { setErrorMessage } from '../actions';
 import { loadUser } from '../users/actions';
 
+import { addToCart, loadCart, removeFromCart, transferCart, updateCart } from './reducers';
 import * as types from './types';
 
 function mapItems(items: ShopifyBuy.CheckoutLineItem[]): (ShopifyBuy.CheckoutLineItem & {
@@ -79,18 +80,10 @@ export const thunkCreateCart =
       });
   };
 
-function transferCart(isFetching, cart = null): types.CartActionTypes {
-  return {
-    type: types.TRANSFER_CART,
-    payload: cart,
-    isFetching,
-  };
-}
-
 export const thunkTransferCart =
   (dbId: string): ThunkAction<void, types.CartState, null, Action<string>> =>
   async (dispatch) => {
-    dispatch(transferCart(true));
+    dispatch(transferCart({ isFetching: true, payload: null }));
     const localStorageCart = JSON.parse(localStorage.getItem('cart') || '{}');
     localStorage.removeItem('cart');
     const localCartResponse = await shopify().checkout.get(localStorageCart.id);
@@ -106,25 +99,18 @@ export const thunkTransferCart =
       .then((cart) => {
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
-        dispatch(transferCart(false, { ...cart, lineItems }));
+        dispatch(transferCart({ isFetching: false, payload: { ...cart, lineItems } as types.Cart }));
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {
           dispatch(thunkCreateCart());
         } else {
-          dispatch(transferCart(false));
+          dispatch(transferCart({ isFetching: false, payload: null }));
           captureException(err);
         }
       });
   };
 
-export function loadCart(isFetching, cart = null): types.CartActionTypes {
-  return {
-    type: types.LOAD_CART,
-    payload: cart,
-    isFetching,
-  };
-}
 // export function loadCartFromStorage(): types.CartActionTypes {
 //   const cart = JSON.parse(localStorage.getItem('cart') as any);
 //   return {
@@ -136,7 +122,7 @@ export function loadCart(isFetching, cart = null): types.CartActionTypes {
 export const thunkLoadCart =
   (id: string, isLocal = false, retryLeft = 3): ThunkAction<void, types.CartState, null, Action<string>> =>
   (dispatch) => {
-    dispatch(loadCart(true));
+    dispatch(loadCart({ isFetching: true, payload: null }));
     if (!isLocal && localStorage.getItem('cart')) {
       dispatch(thunkTransferCart(id));
       return;
@@ -146,13 +132,13 @@ export const thunkLoadCart =
       .then((cart) => {
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
-        dispatch(loadCart(false, { ...cart, lineItems }));
+        dispatch(loadCart({ isFetching: false, payload: { ...cart, lineItems } as types.Cart }));
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {
           dispatch(thunkCreateCart());
         } else {
-          dispatch(loadCart(false));
+          dispatch(loadCart({ isFetching: false, payload: null }));
           if (retryLeft > 0) {
             thunkLoadCart(id, isLocal, retryLeft - 1);
           } else {
@@ -162,13 +148,6 @@ export const thunkLoadCart =
       });
   };
 
-// function removeDiscount(isFetching, cart = null): types.CartActionTypes {
-//   return {
-//     type: types.ADD_DISCOUNT,
-//     payload: cart,
-//     isFetching,
-//   };
-// }
 // export const thunkRemoveDiscount = (): ThunkAction<void, types.CartState, null, Action<string>> => async (
 //   dispatch,
 //   getState,
@@ -187,13 +166,6 @@ export const thunkLoadCart =
 //     });
 // };
 
-// function addDiscount(isFetching, cart = null): types.CartActionTypes {
-//   return {
-//     type: types.ADD_DISCOUNT,
-//     payload: cart,
-//     isFetching,
-//   };
-// }
 // export const thunkAddDiscount = (code): ThunkAction<void, types.CartState, null, Action<string>> => async (
 //   dispatch,
 //   getState,
@@ -212,25 +184,10 @@ export const thunkLoadCart =
 //     });
 // };
 
-function updateCart(isFetching, cart = null): types.CartActionTypes {
-  return {
-    type: types.UPDATE_CART,
-    payload: cart,
-    isFetching,
-  };
-}
-
-function addToCart(isFetching: boolean, cart?: types.Cart): types.CartActionTypes {
-  return {
-    type: types.ADD_TO_CART,
-    payload: cart,
-    isFetching,
-  };
-}
 export const thunkAddToCart =
   (newProduct: Record<string, any>): ThunkAction<void, types.CartState, null, Action<string>> =>
   async (dispatch, getState) => {
-    dispatch(addToCart(true));
+    dispatch(addToCart({ isFetching: true, payload: null }));
     const { user } = (getState() as any).users;
     delete newProduct.jobIds;
     const customAttributes = Object.keys(newProduct).map((data) => ({
@@ -249,14 +206,14 @@ export const thunkAddToCart =
       .checkout.addLineItems(user ? checkoutId : id, lineItemsToAdd)
       .then((cart: ShopifyBuy.Checkout) => {
         if (!cart) return;
-        dispatch(addToCart(false, cart as types.Cart));
+        dispatch(addToCart({ isFetching: false, payload: cart as types.Cart }));
         localStorage.setItem('cart', JSON.stringify(cart));
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {
           dispatch(thunkCreateCart(thunkAddToCart(newProduct)));
         } else {
-          dispatch(addToCart(false));
+          dispatch(addToCart({ isFetching: false, payload: null }));
           dispatch(setErrorMessage(err.message));
           captureException(err);
         }
@@ -266,7 +223,7 @@ export const thunkAddToCart =
 export const thunkUpdateCart =
   (product: Record<string, any>): ThunkAction<void, types.CartState, null, Action<string>> =>
   async (dispatch, getState) => {
-    dispatch(updateCart(true));
+    dispatch(updateCart({ isFetching: true, payload: null }));
     const { user } = (getState() as any).users;
     const { id: productId, quantity } = product;
     delete product.id;
@@ -283,7 +240,7 @@ export const thunkUpdateCart =
       .then((cart) => {
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
-        dispatch(updateCart(false, { ...cart, lineItems }));
+        dispatch(updateCart({ isFetching: false, payload: { ...cart, lineItems } as types.Cart }));
         // @todo should router.push() outside this function afterwards
         // if (Router.pathname !== '/cart') Router.replace('/cart');
       })
@@ -291,45 +248,31 @@ export const thunkUpdateCart =
         if (err.message.includes('exist') || err.message.includes('completed')) {
           dispatch(thunkCreateCart(thunkAddToCart(product)));
         } else {
-          dispatch(updateCart(false));
+          dispatch(updateCart({ isFetching: false, payload: null }));
           dispatch(setErrorMessage(err.message));
           captureException(err);
         }
       });
   };
 
-function removeFromCart(isFetching, cart = null): types.CartActionTypes {
-  return {
-    type: types.REMOVE_FROM_CART,
-    payload: cart,
-    isFetching,
-  };
-}
 export const thunkRemoveFromCart =
   (id: string, itemId: string): ThunkAction<void, types.CartState, null, Action<string>> =>
   (dispatch) => {
-    dispatch(removeFromCart(true));
+    dispatch(removeFromCart({ isFetching: true, payload: null }));
     return shopify()
       .checkout.removeLineItems(id, [itemId])
       .then((cart) => {
         if (!cart) return;
         const lineItems = mapItems(cart.lineItems);
-        dispatch(removeFromCart(false, { ...cart, lineItems }));
+        dispatch(removeFromCart({ isFetching: false, payload: { ...cart, lineItems } as types.Cart }));
       })
       .catch((err) => {
         if (err.message.includes('exist') || err.message.includes('completed')) {
           dispatch(thunkCreateCart());
         } else {
-          dispatch(removeFromCart(false));
+          dispatch(removeFromCart({ isFetching: false, payload: null }));
           dispatch(setErrorMessage(err.message));
           captureException(err);
         }
       });
   };
-
-export function saveSelected(selected: types.CartItem | null): types.CartActionTypes {
-  return {
-    type: types.SAVE_SELECTED,
-    payload: selected,
-  };
-}
