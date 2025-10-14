@@ -1,3 +1,5 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import * as types from './types';
 
 const initialState: types.CartState = {
@@ -6,28 +8,35 @@ const initialState: types.CartState = {
   selected: null,
 };
 
-const reducer = (state = initialState, action: types.CartActionTypes): types.CartState => {
-  switch (action.type) {
-    // case types.ADD_DISCOUNT:
-    // case types.REMOVE_DISCOUNT:
-    case types.LOAD_CART:
-    case types.ADD_TO_CART:
-    case types.TRANSFER_CART:
-    case types.UPDATE_CART:
-    case types.REMOVE_FROM_CART:
-      return {
-        ...state,
-        isFetching: action.isFetching,
-        cart: action.payload,
-      };
-    case types.SAVE_SELECTED: {
-      return {
-        ...state,
-        selected: action.payload,
-      };
-    }
-    default:
-      return state;
-  }
-};
-export default reducer;
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState,
+  reducers: {
+    loadCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+      state.isFetching = action.payload.isFetching;
+      state.cart = action.payload.payload;
+    },
+    addToCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+      state.isFetching = action.payload.isFetching;
+      state.cart = action.payload.payload;
+    },
+    transferCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+      state.isFetching = action.payload.isFetching;
+      state.cart = action.payload.payload;
+    },
+    updateCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+      state.isFetching = action.payload.isFetching;
+      state.cart = action.payload.payload;
+    },
+    removeFromCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+      state.isFetching = action.payload.isFetching;
+      state.cart = action.payload.payload;
+    },
+    saveSelected: (state, action: PayloadAction<types.CartItem | null>) => {
+      state.selected = action.payload;
+    },
+  },
+});
+
+export const { loadCart, addToCart, transferCart, updateCart, removeFromCart, saveSelected } = cartSlice.actions;
+export default cartSlice.reducer;
