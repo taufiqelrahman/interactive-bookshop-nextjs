@@ -7,9 +7,10 @@ import { ThunkAction } from 'redux-thunk';
 // import { encryptTokenClient } from 'lib/crypto';
 import api from 'services/api';
 import shopify from 'services/shopify';
+import { loadCart } from 'store/cart/reducers';
 
 import { setErrorMessage } from '../actions';
-import { thunkLoadCart, loadCart } from '../cart/actions';
+import { thunkLoadCart } from '../cart/actions';
 
 import * as types from './types';
 
@@ -211,7 +212,7 @@ export const thunkLogout =
       .then(({ data }) => {
         Cookies.remove('user', { domain: process.env.DOMAIN });
         dispatch(logout(false, data));
-        dispatch(loadCart(false, null));
+        dispatch(loadCart({ isFetching: false, payload: null }));
         // @todo should router.push() outside this function afterwards
         // Router.push('/');
       })
