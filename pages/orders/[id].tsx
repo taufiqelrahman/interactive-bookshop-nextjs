@@ -6,7 +6,7 @@ import { formatPayment } from 'lib/format-payment';
 import api from 'services/api';
 import { OrderResponse } from 'services/api/orders';
 import { wrapper } from 'store';
-import actions from 'store/actions';
+import { loadOrder } from 'store/orders/reducers';
 
 interface OrderDetailProps {
   isMobile?: boolean;
@@ -23,7 +23,7 @@ const OrderDetail: React.FC<OrderDetailProps> = (props) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   try {
-    store.dispatch(actions.loadOrder(true));
+    store.dispatch(loadOrder({ isFetching: true, payload: null }));
     let orderData: OrderResponse;
     if (cookies(ctx).user) {
       const data = await api(ctx.req).orders.loadOrder(ctx.query.id as string);
@@ -35,7 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     const { order, state, payment } = orderData.data;
     order.state = state.name;
     order.payment = payment ? formatPayment(payment) : null;
-    store.dispatch(actions.loadOrder(false, order));
+    store.dispatch(loadOrder({ isFetching: false, payload: order }));
   } catch (err: unknown) {
     if (err && typeof err === 'object' && 'message' in err) {
       console.log((err as { message: string }).message);

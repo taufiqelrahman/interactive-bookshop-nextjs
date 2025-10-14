@@ -1,8 +1,3 @@
-// export const CHECKOUT = 'CHECKOUT';
-export const LOAD_ORDER = 'LOAD_ORDER';
-export const LOAD_ORDERS = 'LOAD_ORDERS';
-export const SET_PAYMENT_PROBLEM = 'SET_PAYMENT_PROBLEM';
-
 export interface Order {
   id: string;
   order_number: string;
@@ -28,25 +23,3 @@ export interface OrdersState {
   currentOrder: Order | null;
   paymentProblem: boolean;
 }
-
-// interface Checkout {
-//   type: typeof CHECKOUT;
-//   payload: Order | null;
-//   isFetching: boolean;
-// }
-interface LoadOrder {
-  type: typeof LOAD_ORDER;
-  payload: Order | null;
-  isFetching: boolean;
-}
-interface LoadOrders {
-  type: typeof LOAD_ORDERS;
-  payload: Order[];
-  isFetching: boolean;
-}
-interface SetPaymentProblem {
-  type: typeof SET_PAYMENT_PROBLEM;
-  payload: boolean;
-}
-
-export type OrdersActionTypes = LoadOrder | LoadOrders | SetPaymentProblem;

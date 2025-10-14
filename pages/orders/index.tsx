@@ -8,9 +8,8 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import api from 'services/api';
 import { wrapper, RootState } from 'store';
-import actions from 'store/actions';
+import { loadOrders } from 'store/orders/reducers';
 import { Order } from 'store/orders/types';
-// import dummyOrders from '_mocks/orders';
 
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const OrderItem = dynamic(() => import('components/molecules/OrderItem'));
@@ -105,7 +104,7 @@ const Orders: React.FC<OrdersProps> = (props) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   try {
-    store.dispatch(actions.loadOrders(true));
+    store.dispatch(loadOrders({ isFetching: true, payload: [] }));
     const { data: orderData } = await api().orders.loadOrders();
     const { order_states: orderStates, orders: rawOrders } = orderData.data;
     const statesDict = orderStates.reduce((acc, cur) => {
@@ -113,7 +112,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
       return acc;
     }, {});
     const orders: Order[] = rawOrders.map((order) => ({ ...order, state: statesDict[order.id] }));
-    store.dispatch(actions.loadOrders(false, orders));
+    store.dispatch(loadOrders({ isFetching: false, payload: orders }));
   } catch (err: unknown) {
     console.log((err as { message: string }).message);
   }

@@ -4,15 +4,8 @@ import { ThunkAction } from 'redux-thunk';
 
 import api from '../../services/api';
 
+import { loadOrder, loadOrders } from './reducers';
 import * as types from './types';
-
-// function checkout(isFetching, order = null): types.OrdersActionTypes {
-//   return {
-//     type: types.CHECKOUT,
-//     payload: order,
-//     isFetching,
-//   };
-// }
 
 // export const thunkCheckout = (newOrder): ThunkAction<void, types.OrdersState, null, Action<string>> => (
 //   dispatch,
@@ -29,51 +22,30 @@ import * as types from './types';
 //     });
 // };
 
-export function loadOrder(isFetching: boolean, order: types.Order | null = null): types.OrdersActionTypes {
-  return {
-    type: types.LOAD_ORDER,
-    payload: order,
-    isFetching,
-  };
-}
 export const thunkLoadOrder =
   (orderNumber: string): ThunkAction<void, types.OrdersState, null, Action<string>> =>
   (dispatch) => {
-    dispatch(loadOrder(true));
+    dispatch(loadOrder({ isFetching: true, payload: null }));
     return api()
       .orders.loadOrder(orderNumber)
       .then(({ data }) => {
-        dispatch(loadOrder(false, data.data.order));
+        dispatch(loadOrder({ isFetching: false, payload: data.data.order }));
       })
       .catch((err) => {
-        dispatch(loadOrder(false));
+        dispatch(loadOrder({ isFetching: false, payload: null }));
         captureException(err);
       });
   };
 
-export function loadOrders(isFetching: boolean, orders: types.Order[] = []): types.OrdersActionTypes {
-  return {
-    type: types.LOAD_ORDERS,
-    payload: orders,
-    isFetching,
-  };
-}
 export const thunkLoadOrders = (): ThunkAction<void, types.OrdersState, null, Action<string>> => (dispatch) => {
-  dispatch(loadOrders(true));
+  dispatch(loadOrders({ isFetching: true, payload: [] }));
   return api()
     .orders.loadOrders()
     .then(({ data }) => {
-      dispatch(loadOrders(false, data.data.orders));
+      dispatch(loadOrders({ isFetching: false, payload: data.data.orders }));
     })
     .catch((err) => {
-      dispatch(loadOrders(false));
+      dispatch(loadOrders({ isFetching: false, payload: [] }));
       captureException(err);
     });
 };
-
-export function setPaymentProblem(status): types.OrdersActionTypes {
-  return {
-    type: types.SET_PAYMENT_PROBLEM,
-    payload: status,
-  };
-}

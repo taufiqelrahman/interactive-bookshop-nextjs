@@ -11,7 +11,7 @@ import NavBar from 'components/organisms/NavBar/mobile';
 import { formatPayment } from 'lib/format-payment';
 import api from 'services/api';
 import { RootState, wrapper } from 'store';
-import actions from 'store/actions';
+import { loadOrder, setPaymentProblem } from 'store/orders/reducers';
 
 const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -122,7 +122,7 @@ const OrderSuccess: React.FC<OrderSuccessProps> = (props) => {
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   try {
-    store.dispatch(actions.loadOrder(true));
+    store.dispatch(loadOrder({ isFetching: true, payload: null }));
     let orderData;
     if (cookies(ctx).user) {
       ({ data: orderData } = await api(ctx.req).orders.loadOrder(ctx.query.id as string));
@@ -132,10 +132,10 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     const { order, state, payment } = orderData.data;
     order.state = state.name;
     order.payment = payment ? formatPayment(payment) : null;
-    store.dispatch(actions.loadOrder(false, order));
+    store.dispatch(loadOrder({ isFetching: false, payload: order }));
     let paymentProblem = false;
     if (!payment) paymentProblem = true;
-    store.dispatch(actions.setPaymentProblem(paymentProblem));
+    store.dispatch(setPaymentProblem(paymentProblem));
   } catch (err: any) {
     console.log(err.message);
     if (!ctx.res) return;
