@@ -52,37 +52,49 @@ const Login: React.FC<LoginProps> = (props) => {
       toast.error(t('form:form-error'));
     }
   }, [errors]);
+
   useEffect(() => {
-    const { reset, token, email, social, code, state } = router.query as {
-      reset?: string;
-      token?: string;
-      email?: string;
-      social?: string;
-      code?: string;
-      state?: string;
-    };
-    const DATA = { code, state };
-    if (reset === '1') {
-      setLoginStep(4);
-      setResetData({ email, token });
-    } else if (social === 'google') {
-      setIsTransit(true);
-      dispatch(actions.thunkLoginGoogle(DATA));
-    } else if (social === 'facebook') {
-      setIsTransit(true);
-      dispatch(actions.thunkLoginFacebook(DATA));
-    } else {
-      setLoginStep(0);
-      setResetData({ email: '', token: '' });
-    }
-  }, [router.query]);
+    (async () => {
+      try {
+        const { reset, token, email, social, code, state } = router.query as {
+          reset?: string;
+          token?: string;
+          email?: string;
+          social?: string;
+          code?: string;
+          state?: string;
+        };
+        const fromQuery = localStorage.getItem('from');
+        if (fromQuery) localStorage.removeItem('from');
+        const DATA = { code, state };
+        if (reset === '1') {
+          setLoginStep(4);
+          setResetData({ email, token });
+        } else if (social === 'google') {
+          setIsTransit(true);
+          dispatch(actions.thunkLoginGoogle(DATA));
+          router.push(`/${fromQuery || ''}`);
+        } else if (social === 'facebook') {
+          setIsTransit(true);
+          await dispatch(actions.thunkLoginFacebook(DATA));
+          router.push(`/${fromQuery || ''}`);
+        } else {
+          setLoginStep(0);
+          setResetData({ email: '', token: '' });
+        }
+      } catch {
+        router.push('/login');
+      }
+    })();
+  }, [router]);
+
   const loginEmail = () => {
     setLoginStep(stepEnum.EMAIL);
   };
   const forgotPassword = () => {
     setLoginStep(stepEnum.FORGOT);
   };
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { email, token } = resetData;
     switch (loginStep) {
       case stepEnum.EMAIL:
@@ -91,14 +103,16 @@ const Login: React.FC<LoginProps> = (props) => {
           category: 'engagement',
           label: 'email',
         });
-        dispatch(actions.thunkLogin({ ...data, from: router.query.from }));
+        await dispatch(actions.thunkLogin({ ...data, from: router.query.from }));
+        router.push(`/${data.from || ''}`);
         break;
       case stepEnum.FORGOT:
         dispatch(actions.thunkForgotPassword(data));
         setLoginStep(stepEnum.SENT);
         break;
       case stepEnum.RESET:
-        dispatch(actions.thunkResetPassword({ ...data, email, token }));
+        await dispatch(actions.thunkResetPassword({ ...data, email, token }));
+        router.push('/login');
         break;
       default:
         break;

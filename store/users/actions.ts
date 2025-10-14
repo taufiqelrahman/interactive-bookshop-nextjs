@@ -80,7 +80,7 @@ export const thunkUpdateUser =
 
 export const thunkLogin =
   (userData): ThunkAction<void, types.UsersState, null, Action<string>> =>
-  (dispatch): any => {
+  (dispatch) => {
     dispatch(login({ isFetching: true, payload: null }));
     return api()
       .users.login(userData)
@@ -89,8 +89,6 @@ export const thunkLogin =
         Cookies.set('user', data.token, { domain: process.env.DOMAIN });
         dispatch(setExpired(false));
         dispatch(login({ isFetching: false, payload: !!data }));
-        // @todo should router.push() outside this function afterwards
-        // Router.push(`/${userData.from || ''}`);
       })
       .catch((err) => {
         dispatch(login({ isFetching: false, payload: null }));
@@ -98,13 +96,6 @@ export const thunkLogin =
         captureException(err);
       });
   };
-
-function redirectSocialLogin() {
-  const fromQuery = localStorage.getItem('from');
-  if (fromQuery) localStorage.removeItem('from');
-  // @todo should router.push() outside this function afterwards
-  // Router.push(`/${fromQuery || ''}`);
-}
 
 export const thunkLoginFacebook =
   (data): ThunkAction<void, types.UsersState, null, Action<string>> =>
@@ -117,13 +108,10 @@ export const thunkLoginFacebook =
         Cookies.set('user', data.token, { domain: process.env.DOMAIN });
         dispatch(setExpired(false));
         dispatch(loginFacebook({ isFetching: false, payload: !!data }));
-        redirectSocialLogin();
       })
       .catch((err) => {
         dispatch(loginFacebook({ isFetching: false, payload: null }));
         dispatch(setErrorMessage(err.message));
-        // @todo should router.push() outside this function afterwards
-        // Router.push('/login');
         captureException(err);
       });
   };
@@ -139,13 +127,10 @@ export const thunkLoginGoogle =
         Cookies.set('user', data.token, { domain: process.env.DOMAIN });
         dispatch(setExpired(false));
         dispatch(loginGoogle({ isFetching: false, payload: !!data }));
-        redirectSocialLogin();
       })
       .catch((err) => {
         dispatch(loginGoogle({ isFetching: false, payload: null }));
         dispatch(setErrorMessage(err.message));
-        // @todo should router.push() outside this function afterwards
-        // Router.push('/login');
         captureException(err);
       });
   };
@@ -160,8 +145,6 @@ export const thunkLogout =
         Cookies.remove('user', { domain: process.env.DOMAIN });
         dispatch(logout({ isFetching: false, payload: !!data }));
         dispatch(loadCart({ isFetching: false, payload: null }));
-        // @todo should router.push() outside this function afterwards
-        // Router.push('/');
       })
       .catch((err) => {
         dispatch(logout({ isFetching: false, payload: null }));
@@ -213,8 +196,6 @@ export const thunkResetPassword =
       .users.resetPassword(data)
       .then(() => {
         dispatch(resetPassword({ isFetching: false }));
-        // @todo should router.push() outside this function afterwards
-        // Router.push('/login');
       })
       .catch((err) => {
         dispatch(resetPassword({ isFetching: false }));

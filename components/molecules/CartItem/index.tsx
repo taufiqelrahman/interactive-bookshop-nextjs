@@ -60,8 +60,10 @@ const CartItem = (props: CartItemProps) => {
     }
   };
   const debouncedFunctionRef = useRef();
-  (debouncedFunctionRef.current as any) = () =>
-    dispatch(actions.thunkUpdateCart({ id: props.id, quantity, ...customAttributes }));
+  (debouncedFunctionRef.current as any) = async () => {
+    await dispatch(actions.thunkUpdateCart({ id: props.id, quantity, ...customAttributes }));
+    if (router.pathname !== '/cart') router.replace('/cart');
+  };
   const debouncedChange = debounce(() => (debouncedFunctionRef.current as any)(), 1000);
   const isFirstRun = useRef(true);
   useEffect(() => {

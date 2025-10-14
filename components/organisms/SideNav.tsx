@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,12 +13,14 @@ import { UsersState } from 'store/users/types';
 
 const SideNav: React.FC = () => {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const users = useSelector((state: { users: UsersState }) => state.users);
   const { isSideNavOpen } = useSelector((state: { common: State }) => state.common);
   const dispatch = useDispatch();
-  const signOut = () => {
-    dispatch(actions.thunkLogout());
+  const signOut = async () => {
+    await dispatch(actions.thunkLogout());
     hideSideNav();
+    router.push('/');
   };
   const hideSideNav = () => {
     dispatch(setSideNav(false));

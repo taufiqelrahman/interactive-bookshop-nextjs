@@ -61,9 +61,10 @@ const NavBar = () => {
     }
   };
 
-  const logout = () => {
-    dispatch(actions.thunkLogout());
+  const logout = async () => {
+    await dispatch(actions.thunkLogout());
     toggleShow(false, setShowAccount);
+    router.push('/');
   };
 
   const userFullName = users?.user?.name;
