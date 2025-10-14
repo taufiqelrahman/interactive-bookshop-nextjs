@@ -7,8 +7,8 @@ import Floating from 'components/atoms/Floating';
 import Footer from 'components/organisms/Footer';
 import NavBar from 'components/organisms/NavBar/desktop';
 import SideNav from 'components/organisms/SideNav';
-import actions from 'store/actions';
 import { CartState } from 'store/cart/types';
+import { setErrorMessage, setSideNav } from 'store/reducers';
 import { State } from 'store/types';
 import { UsersState } from 'store/users/types';
 
@@ -31,7 +31,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps
   const { isSideNavOpen, errorMessage } = useSelector((state: { common: State }) => state.common);
 
   const hideSideNav = () => {
-    dispatch(actions.setSideNav(false));
+    dispatch(setSideNav(false));
   };
 
   const hideOverlay = () => {
@@ -58,7 +58,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps
     if (errorMessage) {
       toast.error(errorMessage);
       setTimeout(() => {
-        dispatch(actions.setErrorMessage(''));
+        dispatch(setErrorMessage(''));
       }, 5000);
     }
   }, [errorMessage]);

@@ -8,23 +8,11 @@ import * as cartActions from './cart/actions';
 import * as masterActions from './master/actions';
 import * as ordersActions from './orders/actions';
 import * as productsActions from './products/actions';
+import { sendMessage, setErrorMessage } from './reducers';
 import * as types from './types';
 import * as usersActions from './users/actions';
 
-export const setErrorMessage = (message: string): types.ActionTypes => {
-  return {
-    type: types.SET_ERROR_MESSAGE,
-    payload: message,
-  };
-};
-
-function sendMessage(isFetching): types.ActionTypes {
-  return {
-    type: types.SEND_MESSAGE,
-    payload: isFetching,
-  };
-}
-export const thunkSendMessage =
+const thunkSendMessage =
   (data: Record<string, unknown>): ThunkAction<void, types.State, null, Action<string>> =>
   (dispatch, getState) => {
     const { user } = (getState() as unknown as { users: { user: { id: string } | null } }).users;
@@ -43,18 +31,13 @@ export const thunkSendMessage =
       });
   };
 
-export default {
+const actions = {
   ...cartActions,
   ...ordersActions,
   ...productsActions,
   ...usersActions,
   ...masterActions,
-  setSideNav(state: boolean): types.ActionTypes {
-    return {
-      type: types.SET_SIDE_NAV,
-      payload: state,
-    };
-  },
-  setErrorMessage,
   thunkSendMessage,
 };
+
+export default actions;

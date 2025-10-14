@@ -8,8 +8,8 @@ import { ThunkAction } from 'redux-thunk';
 import api from 'services/api';
 import shopify from 'services/shopify';
 import { loadCart } from 'store/cart/reducers';
+import { setErrorMessage } from 'store/reducers';
 
-import { setErrorMessage } from '../actions';
 import { thunkLoadCart } from '../cart/actions';
 
 import {

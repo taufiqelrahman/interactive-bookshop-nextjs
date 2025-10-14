@@ -1,3 +1,5 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import * as types from './types';
 
 const initState: types.State = {
@@ -6,28 +8,21 @@ const initState: types.State = {
   isFetching: false,
 };
 
-const reducer = (state: types.State = initState, action: types.ActionTypes): any => {
-  switch (action.type) {
-    case types.SET_SIDE_NAV: {
-      return {
-        ...state,
-        isSideNavOpen: action.payload,
-      };
-    }
-    case types.SET_ERROR_MESSAGE: {
-      return {
-        ...state,
-        errorMessage: action.payload,
-      };
-    }
-    case types.SEND_MESSAGE: {
-      return {
-        ...state,
-        isFetching: action.payload,
-      };
-    }
-    default:
-      return state;
-  }
-};
-export default reducer;
+const mainSlice = createSlice({
+  name: 'main',
+  initialState: initState,
+  reducers: {
+    setSideNav: (state, action: PayloadAction<boolean>) => {
+      state.isSideNavOpen = action.payload;
+    },
+    setErrorMessage: (state, action: PayloadAction<string>) => {
+      state.errorMessage = action.payload;
+    },
+    sendMessage: (state, action: PayloadAction<boolean>) => {
+      state.isFetching = action.payload;
+    },
+  },
+});
+
+export const { setSideNav, setErrorMessage, sendMessage } = mainSlice.actions;
+export default mainSlice.reducer;

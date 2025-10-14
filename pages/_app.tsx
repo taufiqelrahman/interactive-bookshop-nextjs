@@ -24,6 +24,7 @@ import 'styles/nprogress.css';
 import 'styles/icomoon/style.min.css';
 import 'reset-css';
 import 'styles/fonts.min.css';
+import { setErrorMessage } from 'store/reducers';
 import { loadUser, setExpired, setLogin } from 'store/users/reducers';
 import { User } from 'store/users/types';
 
@@ -348,7 +349,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     }
 
     if (store.getState().common?.errorMessage) {
-      store.dispatch(actions.setErrorMessage(''));
+      store.dispatch(setErrorMessage(''));
     }
   } catch (err: any) {
     console.error('🔥 WiguApp.getInitialProps crashed:', err);
