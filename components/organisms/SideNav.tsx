@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'components/atoms/Button';
 import TranslationToggle from 'components/molecules/TranslationToggle';
 import actions from 'store/actions';
+import { setSideNav } from 'store/reducers';
 import { State } from 'store/types';
 import { UsersState } from 'store/users/types';
 
@@ -19,7 +20,7 @@ const SideNav: React.FC = () => {
     hideSideNav();
   };
   const hideSideNav = () => {
-    dispatch(actions.setSideNav(false));
+    dispatch(setSideNav(false));
   };
   useEffect(() => {
     if (isSideNavOpen) {

@@ -6,9 +6,8 @@ import ShopifyBuy from 'shopify-buy';
 import { mapKeyValue } from 'lib/format-array';
 import api from 'services/api';
 import shopify from 'services/shopify';
+import { setErrorMessage } from 'store/reducers';
 import { loadUser } from 'store/users/reducers';
-
-import { setErrorMessage } from '../actions';
 
 import { addToCart, createCart, loadCart, removeFromCart, transferCart, updateCart } from './reducers';
 import * as types from './types';
