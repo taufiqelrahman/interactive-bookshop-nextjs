@@ -71,7 +71,7 @@ export default class Orders {
           order: {
             ...ORDER,
             state_id: 1,
-            order_number: 'ORD001',
+            order_number: orderNumber,
             name: 'Test Order Guest',
           } as Order,
         },
