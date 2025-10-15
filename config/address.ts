@@ -1,4 +1,4 @@
-export default {
+const addressConfig = {
   provinces: [
     'Aceh',
     'Bali',
@@ -36,3 +36,5 @@ export default {
     'Yogyakarta',
   ],
 };
+
+export default addressConfig;

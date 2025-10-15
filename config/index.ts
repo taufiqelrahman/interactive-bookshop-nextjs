@@ -1,4 +1,4 @@
-export default {
+const config = {
   stateColor: {
     created: 'yellow',
     paid: 'blue',
@@ -10,3 +10,5 @@ export default {
     refunded: 'grey',
   },
 };
+
+export default config;

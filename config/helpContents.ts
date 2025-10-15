@@ -1,4 +1,4 @@
-export default [
+const helpContents = [
   {
     id: 1,
     title: 'Mengapa harus dalam bentuk buku cerita?',
@@ -30,3 +30,5 @@ export default [
       'Si kecil dapat memilih (atau Anda bisa ikut memilihkan) 3 profesi di dalam 1 cerita. Ada 8 macam profesi yang bisa dipilih, yaitu Astronot, Guru, Dokter, Musisi, Koki, Balerina, Pilot, dan Polisi.',
   },
 ];
+
+export default helpContents;
