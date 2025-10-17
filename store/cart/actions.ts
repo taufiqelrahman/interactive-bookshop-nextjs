@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import ShopifyBuy from 'shopify-buy';
 
-import { mapKeyValue } from 'lib/format-array';
+import { KeyValueItem, mapKeyValue } from 'lib/format-array';
 import api from 'services/api';
 import shopify from 'services/shopify';
 import { setErrorMessage } from 'store/reducers';
@@ -12,12 +12,10 @@ import { loadUser } from 'store/users/reducers';
 import { addToCart, createCart, loadCart, removeFromCart, transferCart, updateCart } from './reducers';
 import * as types from './types';
 
-function mapItems(items: ShopifyBuy.CheckoutLineItem[]): (ShopifyBuy.CheckoutLineItem & {
-  customAttributes: any;
-})[] {
+function mapItems(items: ShopifyBuy.CheckoutLineItem[]) {
   return items.map((item) => ({
     ...item,
-    customAttributes: mapKeyValue(item.customAttributes),
+    customAttributes: mapKeyValue(item.customAttributes as KeyValueItem[]),
   }));
 }
 
