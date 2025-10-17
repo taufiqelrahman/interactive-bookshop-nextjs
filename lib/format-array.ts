@@ -1,4 +1,4 @@
-interface KeyValueItem {
+export interface KeyValueItem {
   key?: string;
   name?: string;
   value: any;
