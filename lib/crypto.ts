@@ -43,8 +43,10 @@ export const decryptTokenServer = (cryptedToken: string): string => {
   return result;
 };
 
-export default {
+const cryptoUtils = {
   encryptTokenClient,
   decryptTokenClient,
   decryptTokenServer,
 };
+
+export default cryptoUtils;
