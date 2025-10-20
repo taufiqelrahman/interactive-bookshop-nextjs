@@ -1,3 +1,5 @@
+import ShopifyBuy from 'shopify-buy';
+
 declare global {
   interface Window {
     gtag: (command: 'config' | 'event', targetId: string, config?: Record<string, any>) => void;
@@ -8,7 +10,7 @@ interface EventParams {
   action: string;
   category: string;
   label?: string;
-  value?: number | null;
+  value?: ShopifyBuy.MoneyV2 | null;
 }
 
 export const GA_TRACKING_ID: string | undefined = process.env.GA_TRACKING_ID;
