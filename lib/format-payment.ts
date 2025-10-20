@@ -17,6 +17,13 @@ interface PaymentData {
   payment_code?: string;
   redirect_url?: string;
   actions?: PaymentAction[];
+  id: string;
+  amount: string;
+  currency: string;
+  payment_method: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
 }
 
 interface FormattedPayment {
