@@ -5,7 +5,7 @@ import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState, useRef, Fragment } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 
 import initBook from 'assets/flipbook.js';
 import BookPageComponent from 'components/atoms/BookPage';
@@ -27,12 +27,26 @@ interface BookPreviewProps {
   // enableLazy?: boolean;
 }
 
+// Define proper types for component state
+interface BookState {
+  height: number;
+  loaded: boolean;
+}
+
 const BookPreview = (props: BookPreviewProps) => {
   const { i18n } = useTranslation();
-  const [, setBook] = useState<any>(null);
+
+  // FlipBook instance - properly typed instead of 'any'
+  // const [, setBook] = useState<any>(null);
+
+  // Current page number for pagination display
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Track if user has interacted with the book (for showing "try me" hint)
   const [bookClicked, setBookClicked] = useState(false);
-  const [state, setState] = useState({
+
+  // Book rendering state - height and loading status
+  const [state, setState] = useState<BookState>({
     height: 0,
     loaded: false,
   });
@@ -41,76 +55,122 @@ const BookPreview = (props: BookPreviewProps) => {
   //   lastPage: false,
   // });
 
-  const updateHeight = () => {
+  /**
+   * Calculate and update the book height based on viewport
+   * Sets loaded state to true when height is calculated
+   */
+  const updateHeight = useCallback(() => {
     const height = calcHeight();
-    setState({ ...state, height, loaded: true });
+    setState((prevState) => ({ ...prevState, height, loaded: true }));
     return Promise.resolve();
-  };
+  }, []);
 
-  // const updatePageInfo = () => {
-  //   setPageInfo({ ...pageInfo, firstPage: (book as any).isFirstPage(), lastPage: (book as any).isLastPage() });
-  // };
-
-  const setupBook = async () => {
-    setState({ ...state, loaded: false });
+  /**
+   * Initialize the FlipBook instance with proper configuration
+   * Handles page turn events and analytics tracking
+   */
+  const setupBook = useCallback(async () => {
+    setState((prevState) => ({ ...prevState, loaded: false }));
     await updateHeight();
-    const flipBookInstance = new (window as any).FlipBook('FlipBook', {
+
+    // Initialize FlipBook with configuration
+    new (window as any).FlipBook('FlipBook', {
       canClose: true,
       arrowKeys: true,
       concurrentAnimations: 5,
       height: `${calcHeight()}px`,
       initialCall: true,
-      onPageTurn: (_, els) => {
+      onPageTurn: (_: unknown, els: { pagesTarget: HTMLElement[] }) => {
+        // Track page turn events for analytics
         gtag.event({
           action: 'click_book_page',
           category: 'engagement',
           label: 'desktop',
         });
-        const currentPage = els.pagesTarget[els.pagesTarget.length - 1];
-        if (currentPage) setCurrentPage(parseInt(currentPage.id, 10));
+
+        // Update current page from the last target element
+        const currentPageElement = els.pagesTarget[els.pagesTarget.length - 1];
+        if (currentPageElement) {
+          setCurrentPage(parseInt(currentPageElement.id, 10));
+        }
+
+        // Hide "try me" hint after first interaction
         if (!bookClicked) setBookClicked(true);
       },
     });
-    setBook(flipBookInstance);
-  };
 
-  let debouncedFunctionRef = useRef<() => void>(() => setupBook());
-  const debouncedSetup = debounce(() => debouncedFunctionRef && debouncedFunctionRef.current(), 300);
+    // FlipBook instance is now initialized and configured
+    // setBook(flipBookInstance);
+  }, [updateHeight, bookClicked, setBookClicked]);
 
+  // Debounced setup function for window resize handling
+  const debouncedSetup = useCallback(() => {
+    const debouncedFn = debounce(() => setupBook(), 300);
+    return debouncedFn();
+  }, [setupBook]);
+
+  // Reference to mobile scroll container
   const ref = useRef<HTMLDivElement>(null);
-  const handleScroll = () => {
+
+  /**
+   * Handle horizontal scroll in mobile view to update current page
+   * Calculates page based on scroll position and page width
+   */
+  const handleScroll = useCallback(() => {
     const svgPages = document.getElementsByClassName('c-book-page__svg');
     if (!svgPages.length) return;
-    const imageWidth = document.getElementsByClassName('c-book-page__svg')[0].getBoundingClientRect().width;
-    const currentScroll = Math.floor((ref as any).current.scrollLeft / imageWidth) + 1;
-    setCurrentPage(currentScroll);
-  };
+
+    const imageWidth = svgPages[0].getBoundingClientRect().width;
+    const scrollContainer = ref.current;
+
+    if (scrollContainer) {
+      const currentScroll = Math.floor(scrollContainer.scrollLeft / imageWidth) + 1;
+      setCurrentPage(currentScroll);
+    }
+  }, []);
+  // Setup book initialization and event listeners
   useEffect(() => {
     if (props.isMobile) {
-      if (ref && ref.current) {
-        ref.current.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
+      // Add scroll listener for mobile pagination
+      const scrollContainer = ref.current;
+      if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
+        return () => {
+          scrollContainer.removeEventListener('scroll', handleScroll);
+        };
       }
       return;
     }
+
+    // Initialize desktop flipbook
     initBook();
     setupBook();
-    window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
-    return () => {
-      window.removeEventListener('resize', () => debouncedSetup);
-      debouncedFunctionRef = null;
-    };
-  }, []);
 
+    // Add resize listener for responsive handling
+    window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
+
+    return () => {
+      window.removeEventListener('resize', debouncedSetup);
+    };
+  }, [props.isMobile, debouncedSetup, handleScroll, setupBook]);
+
+  // Track if this is the first render to avoid unnecessary re-initialization
   const isFirstRun = useRef(true);
+
+  // Re-setup book when language changes (for text rendering)
   useEffect(() => {
     if (isFirstRun.current) {
       isFirstRun.current = false;
       return;
     }
-    setTimeout(() => {
+
+    // Delay book setup to allow language change to take effect
+    const timeoutId = setTimeout(() => {
       setupBook();
     }, 500);
-  }, [i18n.language]);
+
+    return () => clearTimeout(timeoutId);
+  }, [i18n.language, setupBook]);
 
   // useEffect(() => {
   //   if (!book) return;
