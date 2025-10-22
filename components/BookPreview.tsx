@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 import groupby from 'lodash.groupby';
 import sortby from 'lodash.sortby';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 
@@ -295,7 +296,7 @@ const BookPreview = (props: BookPreviewProps) => {
         <Fragment>
           {!bookClicked && (
             <div className="c-book-preview__try">
-              <img src="/static/images/try-me.png" alt="try me" />
+              <Image src="/static/images/try-me.png" alt="try me" width={100} height={50} />
             </div>
           )}
           <div className="c-book-preview__container">
