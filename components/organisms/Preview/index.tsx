@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useEffect, Fragment, useState } from 'react';
+import React, { useEffect, Fragment, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -11,16 +11,14 @@ import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
 import { useResponsive } from 'lib/hooks/useResponsive';
+import { RootState } from 'store';
 import actions from 'store/actions';
 import { saveSelected } from 'store/cart/reducers';
+import { CartItem } from 'store/cart/types';
 
 import { dummySelected, schema, getFromCookies } from './helper';
 
-// import Modal from 'components/atoms/Modal';
-// import Button from 'components/atoms/Button';
-// import FieldCover from 'components/molecules/FieldCover';
-// import BookPreview from 'components/BookPreview';
-
+// Dynamic imports for better performance and code splitting
 const Modal = dynamic(() => import('components/atoms/Modal'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Card = dynamic(() => import('components/atoms/Card'));
@@ -29,111 +27,216 @@ const FieldCover = dynamic(() => import('components/molecules/FieldCover'));
 const BookPreview = dynamic(() => import('components/BookPreview'), { ssr: false });
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const PreviewContainer = (props: any): any => {
+/**
+ * Form data structure for cover selection
+ */
+interface PreviewFormData {
+  /** Selected book cover option */
+  Cover: string;
+}
+
+/**
+ * Props interface for the Preview component
+ */
+interface PreviewContainerProps {
+  /** Whether the component is being rendered on mobile device */
+  isMobile?: boolean;
+  /** Additional props passed from layout */
+  [key: string]: unknown;
+}
+
+/**
+ * Preview Container Component
+ *
+ * A comprehensive preview interface for character book creation that handles
+ * both mobile and desktop layouts. Users can preview their book, select covers,
+ * and proceed to cart with proper authentication handling.
+ *
+ * Key Features:
+ * - Responsive mobile/desktop layouts
+ * - Book cover selection with real-time preview
+ * - Guest checkout vs authenticated user workflows
+ * - Form validation with error handling
+ * - Analytics tracking and Facebook Pixel integration
+ * - Cookie-based cart persistence for authentication flows
+ * - Dynamic component loading for performance
+ */
+const PreviewContainer: React.FC<PreviewContainerProps> = (props): JSX.Element => {
+  // Hooks for internationalization, responsive design, routing, and Redux
   const { t } = useTranslation('common');
   const { isMobile } = useResponsive();
   const dispatch = useDispatch();
   const router = useRouter();
-  const cart = useSelector((state: any) => state.cart);
-  const users = useSelector((state: any) => state.users);
-  const master = useSelector((state: any) => state.master);
-  // const [enableLazy, setEnableLazy] = useState(true);
-  const methods = useForm({ mode: 'onChange' });
 
-  // desktop only
-  const [showModal, setShowModal] = useState(false);
+  // Redux state selectors with proper typing
+  const cart = useSelector((state: RootState) => state.cart);
+  const users = useSelector((state: RootState) => state.users);
+  const master = useSelector((state: RootState) => state.master);
 
-  // mobile only
-  const [showSheet, setShowSheet] = useState(false);
-  const [showSpecs, setShowSpecs] = useState(false);
-  const screenHeight = '100vh - 69px';
-
-  const [tempData, setTempData] = useState(null);
+  // Form management with React Hook Form
+  const methods = useForm<PreviewFormData>({ mode: 'onChange' });
   const { register, handleSubmit, errors, formState, watch } = methods;
-  const selected = cart.selected || dummySelected || {};
-  const addToCart = async (cart) => {
-    if (selected.id) {
-      dispatch(actions.thunkUpdateCart(cart));
-    } else {
-      gtag.event({
-        action: 'click_create',
-        category: 'engagement',
-        label: '/preview',
-      });
-      gtag.event({
-        action: 'add_to_cart',
-        category: 'ecommerce',
-        label: 'desktop',
-      });
-      (window as any).fbq('track', 'AddToCart', {
-        cartItem: cart,
-        isLoggedIn: users.isLoggedIn,
-      });
-      await dispatch(actions.thunkAddToCart(cart));
-      router.push('/cart');
-    }
-  };
-  const saveToCookies = (cart: unknown) => {
-    // save pending trx
-    Cookies.set('pendingTrx', JSON.stringify(cart));
-    router.push('/login?from=preview');
-  };
-  const onSubmit = (data) => {
-    if (!selected) {
-      router.replace('/create');
-      return;
-    }
-    const cart = { ...selected, ...data };
-    if (!users.isLoggedIn) {
-      setTempData(cart);
-      if (isMobile) {
-        setShowSheet(true);
-      } else {
-        setShowModal(true);
+
+  // Component state management
+  /** Controls modal visibility for desktop guest checkout */
+  const [showModal, setShowModal] = useState<boolean>(false);
+  /** Controls bottom sheet visibility for mobile guest checkout */
+  const [showSheet, setShowSheet] = useState<boolean>(false);
+  /** Controls book specifications sheet visibility on mobile */
+  const [showSpecs, setShowSpecs] = useState<boolean>(false);
+  /** Temporary cart data storage for guest checkout flow */
+  const [tempData, setTempData] = useState<CartItem | null>(null);
+
+  // Derived state and constants
+  /** Mobile screen height calculation for full viewport usage */
+  const screenHeight = '100vh - 69px';
+  /** Selected character data with fallback to dummy data */
+  const selected = cart.selected || dummySelected;
+  /** Book pages data from master state */
+  const bookPages = master.bookPages;
+
+  /**
+   * Add item to cart - handles both new items and updates
+   * Includes analytics tracking and navigation logic
+   */
+  const addToCart = useCallback(
+    async (cartItem: CartItem) => {
+      try {
+        // Check if updating existing cart item or adding new one
+        if ('id' in selected && selected.id) {
+          await dispatch(actions.thunkUpdateCart(cartItem));
+        } else {
+          // Analytics tracking for new cart additions
+          gtag.event({
+            action: 'click_create',
+            category: 'engagement',
+            label: '/preview',
+          });
+          gtag.event({
+            action: 'add_to_cart',
+            category: 'ecommerce',
+            label: isMobile ? 'mobile' : 'desktop',
+          });
+
+          // Facebook Pixel tracking
+          (window as any).fbq('track', 'AddToCart', {
+            cartItem,
+            isLoggedIn: users.isLoggedIn,
+          });
+
+          await dispatch(actions.thunkAddToCart(cartItem));
+          router.push('/cart');
+        }
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        toast.error(t('cart-error'));
       }
-      // saveToCookies(cart);
-      return;
+    },
+    [selected, dispatch, isMobile, users.isLoggedIn, router, t],
+  );
+
+  /**
+   * Save cart data to cookies and redirect to login
+   * Used when user needs to authenticate before checkout
+   */
+  const saveToCookies = useCallback(
+    (cartData: CartItem) => {
+      try {
+        Cookies.set('pendingTrx', JSON.stringify(cartData));
+        router.push('/login?from=preview');
+      } catch (error) {
+        console.error('Error saving to cookies:', error);
+        toast.error(t('save-error'));
+      }
+    },
+    [router, t],
+  );
+
+  /**
+   * Continue checkout as guest user
+   * Adds temporary cart data without requiring authentication
+   */
+  const continueAsGuest = useCallback(() => {
+    if (tempData) {
+      addToCart(tempData);
     }
-    addToCart(cart);
-  };
-  const continueAsGuest = () => {
-    addToCart(tempData);
-  };
+  }, [tempData, addToCart]);
+
+  /**
+   * Handle form submission for cover selection
+   * Manages authentication flow and cart processing
+   */
+  const onSubmit = useCallback(
+    (data: PreviewFormData) => {
+      if (!selected) {
+        router.replace('/create');
+        return;
+      }
+
+      const cartData = { ...selected, ...data } as CartItem;
+
+      if (!users.isLoggedIn) {
+        setTempData(cartData);
+        if (isMobile) {
+          setShowSheet(true);
+        } else {
+          setShowModal(true);
+        }
+        return;
+      }
+
+      addToCart(cartData);
+    },
+    [selected, users.isLoggedIn, isMobile, router, addToCart],
+  );
+
+  /**
+   * Handle form validation errors
+   * Scrolls to top and shows error message
+   */
   useEffect(() => {
-    if (!formState.isValid) {
+    if (!formState.isValid && Object.keys(errors).length > 0) {
       window.scrollTo(0, 0);
       toast.error(t('form:form-error'));
     }
   }, [errors, formState.isValid, t]);
+
+  /**
+   * Handle cookie-based cart restoration
+   * Restores cart data from cookies after login redirect
+   */
   useEffect(() => {
     const fromCookies = getFromCookies();
     if (fromCookies) {
       dispatch(saveSelected(fromCookies));
       Cookies.remove('pendingTrx');
-      // setEnableLazy(false);
     }
-  }, []);
-  const bookPages = master.bookPages;
+  }, [dispatch]);
 
+  // Mobile layout rendering
   if (isMobile) {
     return (
       <DefaultLayout
         {...props}
         navbar={<NavBar isSteps={true} title={t('book-preferences')} step={2} totalSteps={2} />}
       >
-        <div className="c-preview" style={{ height: `calc(${screenHeight})` }}>
+        <main className="c-preview" style={{ height: `calc(${screenHeight})` }} role="main">
           <BookPreview
-            selected={selected || {}}
+            selected={selected as CartItem}
             isMobile={props.isMobile}
             bookPages={bookPages}
             cover={watch('Cover')}
-            // enableLazy={enableLazy}
           />
-          <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)}>
-            <div className="c-preview__specs" onClick={() => setShowSpecs(true)}>
+          <form className="c-preview__tab u-container" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <button
+              type="button"
+              className="c-preview__specs"
+              onClick={() => setShowSpecs(true)}
+              aria-label={t('book-specs')}
+            >
               <div>{t('book-specs')}</div>
               <span className="icon-chevron_right" />
-            </div>
+            </button>
             <div className="c-preview__cover">
               <FieldCover schema={schema(t).cover} register={register} errors={errors.Cover} />
             </div>
@@ -141,7 +244,7 @@ const PreviewContainer = (props: any): any => {
               {t('form:continue-button')}
             </Button>
           </form>
-        </div>
+        </main>
         <Sheet
           name="guest-sheet"
           isOpen={showSheet}
@@ -186,59 +289,75 @@ const PreviewContainer = (props: any): any => {
           header={true}
           title={t(`book-specs`)}
         />
+        {/* Mobile-specific styles */}
         <style jsx>{`
           .c-preview {
             @apply flex flex-col justify-between;
+
             &__tab {
               border-top: 1px solid #efeef4;
-              border-radius: 24px 24px 0px 0px;
+              border-radius: 24px 24px 0 0;
               padding-top: 20px;
             }
+
             &__cover {
-              @apply flex;
+              @apply flex justify-center;
             }
+
             &__link {
-              @apply cursor-pointer text-center text-sm font-semibold;
+              @apply mb-4 cursor-pointer text-center text-sm font-semibold;
               color: #445ca4;
-              margin-bottom: 18px;
             }
+
             &__sheet {
               &__title {
-                @apply font-semibold;
-                font-size: 27px;
-                line-height: 32px;
+                @apply text-2xl font-semibold leading-8;
+
+                @screen sm {
+                  font-size: 27px;
+                  line-height: 32px;
+                }
               }
+
               &__content {
-                @apply font-opensans text-sm;
-                line-height: 20px;
-                margin-top: 12px;
+                @apply mt-3 font-opensans text-sm leading-5;
               }
             }
+
             &__specs {
-              @apply mb-6 flex cursor-pointer items-center justify-between font-opensans text-sm;
-              box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
-              border-radius: 4px;
-              padding: 12px;
-              div {
-                line-height: 19px;
+              @apply mb-6 flex cursor-pointer items-center justify-between rounded bg-white p-3 font-opensans text-sm shadow-md;
+              transition: all 0.3s ease;
+
+              &:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                transform: translateY(-1px);
               }
+
+              &:active {
+                transform: translateY(0);
+              }
+
+              div {
+                line-height: 1.4;
+              }
+
               span {
-                @apply text-xl;
+                @apply text-xl text-gray-600;
               }
             }
           }
         `}</style>
+
+        {/* Global styles for sheet components */}
         <style jsx global>{`
           .c-sheet__content {
-            @apply font-opensans text-sm;
-            line-height: 22px;
-            padding-top: 16px;
-            padding-bottom: 16px;
+            @apply py-4 font-opensans text-sm leading-6;
+
             &__item {
-              @apply mb-2 flex;
-              align-items: baseline;
+              @apply mb-2 flex items-baseline;
+
               span {
-                @apply mr-3;
+                @apply mr-3 text-blue-600;
               }
             }
           }
@@ -247,20 +366,16 @@ const PreviewContainer = (props: any): any => {
     );
   }
 
+  // Desktop layout rendering
   return (
     <DefaultLayout {...props}>
       <div className="u-container u-container__page">
         <Stepper step={1} totalSteps={2} title={t('book-preferences')} />
-        <div className="c-preview">
+        <main className="c-preview" role="main">
           <Card variant="border">
-            <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)}>
+            <form className="c-preview__container" onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="c-preview__book">
-                <BookPreview
-                  selected={selected || {}}
-                  bookPages={bookPages}
-                  cover={watch('Cover')}
-                  // enableLazy={enableLazy}
-                />
+                <BookPreview selected={selected as CartItem} bookPages={bookPages} cover={watch('Cover')} />
               </div>
               <div className="c-preview__details">
                 <div className="c-preview__details--left">
@@ -291,7 +406,7 @@ const PreviewContainer = (props: any): any => {
               </div>
             </form>
           </Card>
-        </div>
+        </main>
       </div>
       <Modal
         title={t('guest-order-title')}
@@ -309,57 +424,67 @@ const PreviewContainer = (props: any): any => {
         }
         content={t('guest-order-info')}
       />
+      {/* Desktop-specific styles */}
       <style jsx>{`
-        .c-section {
-          @apply w-full;
-        }
         .c-preview {
-          @apply mx-auto w-full;
-          margin-top: 30px;
+          @apply mx-auto mt-8 w-full;
+
           &__container {
-            @apply overflow-hidden;
+            @apply overflow-hidden text-center;
             padding: 42px 30px 30px;
-            text-align: center;
           }
+
+          &__book {
+            @apply mb-8;
+          }
+
           &__cover {
             @apply flex justify-center;
           }
+
           &__link {
-            @apply cursor-pointer font-semibold;
+            @apply cursor-pointer font-semibold transition-colors duration-200;
             color: #445ca4;
+
+            &:hover {
+              color: #334c8a;
+            }
+
             span {
               @apply font-normal;
             }
           }
+
           &__details {
-            @apply flex;
+            @apply flex gap-8;
             margin-top: 30px;
+
             &--left,
             &--right {
               @apply w-1/2;
             }
+
             &--left {
-              @apply text-left;
-              padding-right: 32px;
+              @apply pr-8 text-left;
             }
+
             &--right {
-              @apply flex flex-col;
-              justify-content: space-evenly;
+              @apply flex flex-col justify-between space-y-6;
             }
+
             h2 {
-              @apply font-semibold;
-              line-height: 24px;
-              margin-bottom: 6px;
+              @apply mb-2 text-xl font-semibold leading-6;
             }
+
             &__content {
-              @apply font-opensans;
-              line-height: 22px;
+              @apply font-opensans leading-6;
             }
+
             &__item {
-              @apply mb-1 flex;
-              align-items: baseline;
+              @apply mb-2 flex items-baseline;
+
               span {
-                @apply mr-2;
+                @apply mr-3 text-blue-600;
               }
             }
           }
