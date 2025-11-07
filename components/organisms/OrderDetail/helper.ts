@@ -13,9 +13,9 @@ const WHATSAPP_BASE_URL = 'https://wa.me/628xxx?text=' as const;
  */
 interface EnhancedLineItem {
   /** All original line item properties */
-  [key: string]: unknown;
+  [key: string]: any;
   /** Parsed custom attributes from item properties */
-  customAttributes: Record<string, unknown>;
+  customAttributes: Record<string, any>;
 }
 
 /**
@@ -23,15 +23,15 @@ interface EnhancedLineItem {
  */
 interface OrderInfo {
   /** Original order object */
-  currentOrder: Record<string, unknown>;
+  currentOrder: Record<string, any>;
   /** Shipping address information */
-  shippingAddress: Record<string, unknown>;
+  shippingAddress: Record<string, any>;
   /** Date when order was shipped */
   shippingDate: string | null;
   /** Package tracking number */
   trackingNumber: string;
   /** Shipping line object */
-  shippingLine: Record<string, unknown> | null;
+  shippingLine: Record<string, any> | null;
   /** Shipping service name */
   shippingName: string;
   /** Shipping cost amount */
@@ -43,11 +43,11 @@ interface OrderInfo {
   /** Whether any item has a dedication message */
   hasDedication: boolean;
   /** Applied discount information */
-  discounts: unknown[];
+  discounts: any[];
   /** Total discount amount */
-  totalDiscounts: unknown;
+  totalDiscounts: any;
   /** Payment information */
-  payment: Record<string, unknown>;
+  payment: Record<string, any>;
   /** Pre-formatted WhatsApp support URL */
   whatsappUrl: string;
 }
@@ -155,7 +155,7 @@ export const retrieveInfo = (order: Record<string, any>): OrderInfo | Record<str
  *
  * @see {@link getPreviewUrl} for underlying image URL generation logic
  */
-export const previewImg = (item: Record<string, unknown>): string => {
+export const previewImg = (item: Record<string, any>): string => {
   try {
     // Type assertion for compatibility with getPreviewUrl - the function handles validation internally
     return getPreviewUrl(item as any);
@@ -182,7 +182,7 @@ export const previewImg = (item: Record<string, unknown>): string => {
  */
 export const getOrderStatus = (order: Record<string, any>): string => {
   if (!order || typeof order !== 'object') {
-    return 'unknown';
+    return 'any';
   }
 
   const { fulfillments = [], financial_status, fulfillment_status } = order;
