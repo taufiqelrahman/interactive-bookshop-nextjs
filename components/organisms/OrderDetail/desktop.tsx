@@ -1,7 +1,8 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
-import { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useSelector } from 'react-redux';
 
@@ -12,8 +13,7 @@ import { RootState } from 'store';
 
 import { retrieveInfo, previewImg } from './helper';
 
-// import dummyOrder from '_mocks/orderDetail';
-
+// Dynamic imports for better code splitting and performance
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Card = dynamic(() => import('components/atoms/Card'));
 const NumberFormat = dynamic(() => import('react-number-format'));
@@ -22,9 +22,46 @@ const Popover = dynamic(() => import('components/atoms/Popover'));
 const Capsule = dynamic(() => import('components/atoms/Capsule'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const OrderDetailDesktop = (props: any): any => {
+/**
+ * Props interface for the OrderDetailDesktop component
+ */
+interface OrderDetailDesktopProps {
+  /** Whether the component is being rendered on mobile device */
+  isMobile?: boolean;
+  /** Current order state from URL/navigation */
+  state?: string;
+  /** Additional props passed from layout */
+  [key: string]: any;
+}
+
+/**
+ * Order Detail Desktop Component
+ *
+ * A comprehensive desktop layout for displaying detailed order information including
+ * book details, shipping information, order status, and payment summary. Handles
+ * loading states with skeleton placeholders and provides interactive elements for
+ * payment continuation and support contact.
+ *
+ * Key Features:
+ * - Responsive desktop layout with left-right column structure
+ * - Real-time loading states with skeleton UI
+ * - Interactive dedication preview with popover
+ * - Payment status handling with action buttons
+ * - WhatsApp support integration
+ * - Formatted currency display with NumberFormat
+ * - Dynamic order state visualization
+ */
+const OrderDetailDesktop: React.FC<OrderDetailDesktopProps> = (props): JSX.Element => {
+  // Internationalization hook for localized text
   const { t } = useTranslation('page-orders');
+
+  // Redux state selector for order data and loading state
   const { isFetching, currentOrder: order } = useSelector((state: RootState) => state.orders);
+
+  // Process raw order data into structured format using helper utility
+  const orderInfo = useMemo(() => retrieveInfo(order || {}), [order]);
+
+  // Destructure processed order information for easier access
   const {
     currentOrder,
     shippingAddress,
@@ -40,15 +77,70 @@ const OrderDetailDesktop = (props: any): any => {
     totalDiscounts,
     payment,
     whatsappUrl,
-  } = retrieveInfo(order || {});
+  } = orderInfo;
+  /**
+   * Renders the book preview image with proper error handling
+   */
+  const renderBookImage = () => {
+    if (isFetching) {
+      return <Skeleton height={136} width={136} />;
+    }
+
+    if (!lineItems.length || !lineItems[0]?.customAttributes) {
+      return <div className="c-detail__book__image c-detail__book__image--placeholder">No Image</div>;
+    }
+
+    const imageUrl = previewImg(lineItems[0].customAttributes);
+
+    return (
+      <div className="c-detail__book__image">
+        <Image
+          src={imageUrl}
+          alt={`Preview for ${lineItems[0]?.customAttributes?.Name || 'book'}`}
+          width={136}
+          height={136}
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      </div>
+    );
+  };
+
+  /**
+   * Renders the dedication preview section with popover functionality
+   */
+  const renderDedicationPreview = () => {
+    if (isFetching) {
+      return <Skeleton height={24} width={115} />;
+    }
+
+    if (!hasDedication) {
+      return '-';
+    }
+
+    return (
+      <Popover
+        content={lineItems.map((item) => (
+          <Fragment key={item.id}>
+            <h5>{item.customAttributes?.Name}</h5>
+            <div>{item.customAttributes?.Dedication}</div>
+          </Fragment>
+        ))}
+      >
+        <div className="c-detail__link">{t('common:preview-note')}</div>
+      </Popover>
+    );
+  };
+
   return (
     <DefaultLayout {...props}>
       <Head>
         <title>
-          Interactive Bookshop Next.js | {t('order-title')}: {orderNumber}
+          Interactive Bookshop Next.js | {t('order-title')}: {orderNumber || 'Loading...'}
         </title>
       </Head>
-      <div className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'}>
+      <main className={props.isMobile ? 'bg-dark-grey' : 'u-container u-container__page'} role="main">
         <Stepper
           title={
             <div className="flex items-center">
@@ -75,13 +167,7 @@ const OrderDetailDesktop = (props: any): any => {
                 <h2>{t('book-details')}</h2>
                 <div className="flex">
                   <div className="c-detail__book__left">
-                    {isFetching ? (
-                      <Skeleton height={136} width={136} />
-                    ) : (
-                      <div className="c-detail__book__image">
-                        <img src={previewImg(lineItems[0].customAttributes)} alt="item preview" />
-                      </div>
-                    )}
+                    {isFetching ? <Skeleton height={136} width={136} /> : renderBookImage()}
                   </div>
                   <div className="c-detail__book__middle">
                     <div className="c-detail__label">{t('form:nickname-label')}</div>
@@ -95,22 +181,7 @@ const OrderDetailDesktop = (props: any): any => {
                     <div className="c-detail__label" style={{ marginTop: 30 }}>
                       {t('common:dedication-note')}
                     </div>
-                    {isFetching ? (
-                      <Skeleton height={24} width={115} />
-                    ) : hasDedication ? (
-                      <Popover
-                        content={lineItems.map((item) => (
-                          <Fragment key={item.id}>
-                            <h5>{item.customAttributes.Name}</h5>
-                            <div>{item.customAttributes.Dedication}</div>
-                          </Fragment>
-                        ))}
-                      >
-                        <div className="c-detail__link">{t('common:preview-note')}</div>
-                      </Popover>
-                    ) : (
-                      '-'
-                    )}
+                    {renderDedicationPreview()}
                   </div>
                   <div className="c-detail__book__right">
                     <div className="c-detail__label">{t('common:quantity')}</div>
@@ -310,157 +381,186 @@ const OrderDetailDesktop = (props: any): any => {
             </Card>
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* Component-scoped styles using styled-jsx */}
       <style jsx>{`
         .c-detail {
+          /* Main section layout - responsive flexbox */
           &-section {
             @apply flex w-full flex-col;
+            padding: 31px 0;
+
             @screen lg {
               @apply flex-row;
             }
-            padding: 31px 0;
+
+            /* Left column - main content (60% on desktop) */
             &__left {
               @apply w-full;
+
               @screen lg {
                 @apply w-3/5;
                 margin-right: 30px;
               }
             }
+
+            /* Right column - summary sidebar (40% on desktop) */
             &__right {
               @apply w-full;
+
               @screen lg {
                 @apply w-2/5;
               }
             }
           }
+          /* Card container - consistent padding and headers */
           &__container {
             padding: 20px 24px;
+
             h2 {
-              @apply font-semibold;
-              font-size: 20px;
-              line-height: 30px;
-              margin-bottom: 24px;
+              @apply mb-6 text-xl font-semibold leading-8;
             }
           }
+
+          /* Book details section - responsive grid layout */
           &__book {
+            /* Image column - responsive visibility */
             &__left {
               @apply w-3/12 opacity-100;
               margin-right: 12px;
+
               @screen md {
                 @apply w-0 opacity-0;
                 margin-right: 0;
               }
+
               @screen lg {
                 @apply w-4/12 opacity-100;
                 margin-right: 12px;
               }
             }
+
+            /* Middle content - character details */
             &__middle {
               @apply w-4/12;
               margin-right: 12px;
+
               @screen md {
                 @apply w-6/12;
               }
+
               @screen lg {
                 @apply w-4/12;
               }
-              @apply w-4/12;
             }
+
+            /* Right content - quantity info */
             &__right {
               @apply w-5/12;
+
               @screen md {
                 @apply w-6/12;
               }
+
               @screen lg {
                 @apply w-3/12;
               }
-              @apply w-5/12;
             }
+
+            /* Book preview image styling */
             &__image {
-              @apply overflow-hidden;
+              @apply overflow-hidden rounded-xl border-2;
               padding: 4px;
               background: #f3bf45;
-              border-radius: 12px;
               height: 136px;
               max-width: 136px;
-              border: 2px solid #ededed;
+              border-color: #ededed;
+
+              /* Placeholder state for missing images */
+              &--placeholder {
+                @apply flex items-center justify-center bg-gray-200 text-sm text-gray-500;
+              }
             }
           }
+          /* Order status section - two column layout */
           &__order {
             &__left {
               @apply w-7/12;
             }
+
             &__right {
               @apply w-5/12;
             }
+
+            /* Info panel - highlighted background */
             &__info {
-              @apply text-sm;
-              line-height: 22px;
-              background: #f6f5f8;
-              border-radius: 12px;
-              padding: 18px;
+              @apply rounded-xl bg-gray-100 p-4 text-sm leading-6;
+
               &__item {
-                line-height: 20px;
+                @apply leading-5;
               }
             }
           }
+
+          /* Address section - two column layout */
           &__address {
             &__left {
               @apply w-7/12;
             }
+
             &__right {
               @apply w-5/12;
             }
           }
+          /* Order summary section - pricing and payment */
           &__summary {
             &__label {
-              @apply text-xs;
-              color: #8c89a6;
+              @apply text-xs text-gray-500;
             }
+
             &__subtotal {
               @apply flex justify-between font-semibold;
             }
+
             &__title {
-              @apply mb-1;
-              line-height: 24px;
+              @apply mb-1 leading-6;
             }
+
+            /* Payment info panel */
             &__info {
-              @apply text-sm;
-              margin-top: 24px;
-              line-height: 22px;
-              background: #f6f5f8;
-              border-radius: 12px;
-              padding: 18px;
+              @apply mt-6 rounded-xl bg-gray-100 p-4 text-sm leading-6;
+
               &__item {
-                @apply flex items-center;
-                line-height: 20px;
-                margin-bottom: 18px;
+                @apply mb-4 flex items-center leading-5;
               }
+
               &__payment {
-                @apply text-base font-semibold;
-                line-height: 24px;
+                @apply text-base font-semibold leading-6;
               }
+
               &__link {
-                @apply font-semibold;
-                color: #445ca4;
+                @apply font-semibold text-blue-600 hover:text-blue-800;
+                transition: color 0.2s ease;
               }
             }
           }
+          /* Common UI elements */
           &__label {
-            @apply text-xs font-semibold;
-            line-height: 18px;
-            margin-bottom: 3px;
-            color: #999;
+            @apply mb-1 text-xs font-semibold leading-5 text-gray-500;
           }
+
           &__value {
-            @apply overflow-hidden font-opensans;
-            line-height: 22px;
-            margin-bottom: 13px;
+            @apply mb-3 overflow-hidden font-opensans leading-6;
           }
+
           &__link {
-            @apply cursor-pointer font-semibold;
-            color: #445ca4;
-            line-height: 24px;
+            @apply cursor-pointer font-semibold leading-6 text-blue-600;
+            transition: color 0.2s ease;
+
+            &:hover {
+              @apply text-blue-800;
+            }
           }
         }
       `}</style>
