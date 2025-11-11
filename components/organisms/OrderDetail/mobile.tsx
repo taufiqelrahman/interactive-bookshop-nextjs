@@ -29,9 +29,9 @@ const Button = dynamic(() => import('components/atoms/Button'));
  */
 interface OrderDetailMobileProps {
   /** Function to control side navigation state */
-  setSideNav: (isOpen: boolean) => void;
+  setSideNav?: (isOpen: boolean) => void;
   /** Whether the current device is mobile */
-  isMobile: boolean;
+  isMobile?: boolean;
   /** Order state passed from parent component */
   state?: string;
 }

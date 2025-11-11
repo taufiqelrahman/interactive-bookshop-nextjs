@@ -9,7 +9,7 @@ import Stepper from 'components/atoms/Stepper';
  */
 interface MobileNavBarProps {
   /** Function to control side navigation visibility */
-  setSideNav: (isOpen: boolean) => void;
+  setSideNav?: (isOpen: boolean) => void;
   /** Whether to show menu icon instead of back arrow */
   menuAction?: boolean;
   /** Custom back button handler function */
