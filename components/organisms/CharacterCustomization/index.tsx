@@ -1,5 +1,6 @@
 import detectIt from 'detect-it';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
@@ -15,10 +16,44 @@ import { CartItem, Character } from 'store/cart/types';
 
 import { schema, showError, previewImg, getJobIds, loadImg } from './helper';
 
-// import Card from 'components/atoms/Card';
-// import FieldDob from 'components/molecules/FieldDob';
-// import DefaultLayout from 'components/layouts/Default';
+/**
+ * Form data interface for character customization
+ */
+interface CharacterFormData {
+  /** Character's chosen name/nickname */
+  Name?: string;
+  /** Character's gender selection */
+  Gender?: string;
+  /** Character's age category */
+  Age?: string;
+  /** Character's hair style */
+  Hair?: string;
+  /** Character's skin tone */
+  Skin?: string;
+  /** Array of 3 selected occupations */
+  Occupations?: string[];
+  /** Character's language preference */
+  Language?: string;
+  /** Optional dedication message */
+  Dedication?: string;
+  /** Character's date of birth (legacy field) */
+  'Date of Birth'?: string;
+}
 
+/**
+ * Step enumeration for mobile character customization flow
+ */
+const STEP_ENUM = {
+  NAME_GENDER: 0,
+  AGE: 1,
+  HAIR: 2,
+  SKIN: 3,
+  OCCUPATIONS: 4,
+  LANGUAGE: 5,
+  DEDICATION: 6,
+} as const;
+
+// Dynamic imports for better performance and code splitting
 const DefaultLayout = dynamic(() => import('components/layouts/Default'));
 const Card = dynamic(() => import('components/atoms/Card'));
 const FieldOccupations = dynamic(() => import('components/molecules/FieldOccupations'));
@@ -32,21 +67,20 @@ const FormTextArea = dynamic(() => import('components/molecules/FormTextArea'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
-
-// mobile
 const Sheet = dynamic(() => import('components/atoms/Sheet'));
 
-const STEP_ENUM = {
-  NAME_GENDER: 0,
-  AGE: 1,
-  // DOB: 3,
-  HAIR: 2,
-  SKIN: 3,
-  OCCUPATIONS: 4,
-  LANGUAGE: 5,
-  DEDICATION: 6,
-};
-
+/**
+ * CharacterCustomization Component
+ *
+ * Provides a comprehensive character creation interface with responsive design.
+ * Features include:
+ * - Mobile multi-step form flow with navigation
+ * - Desktop single-page form layout
+ * - Real-time character preview with image optimization
+ * - Form validation with internationalized error messages
+ * - Performance optimizations with memoization and dynamic imports
+ * - Accessibility features and proper TypeScript typing
+ */
 const CharacterCustomization = () => {
   const { t } = useTranslation('form');
   const dispatch = useDispatch();
@@ -56,11 +90,15 @@ const CharacterCustomization = () => {
   const [isSticky, setSticky] = useState(false);
   const methods = useForm({ mode: 'onChange' });
   const { register, unregister, handleSubmit, errors, setValue, triggerValidation, watch, formState } = methods;
+
+  /**
+   * Handles form validation errors by showing appropriate error messages
+   */
   useEffect(() => {
-    if (!formState.isValid) {
+    if (!formState.isValid && Object.keys(errors).length > 0) {
       showError(t('form-error'));
     }
-  }, [errors]);
+  }, [errors, formState.isValid, t]);
   const isDev = process.env.NODE_ENV === 'development';
   const defaultSelected: Character = isDev
     ? {
@@ -71,14 +109,20 @@ const CharacterCustomization = () => {
         Skin: 'light',
         Language: 'english',
         Dedication:
-          '“Aku yakin kamu pasti akan menjadi guru yang sangat baik,” kata wanita berambut kuning itu. “I believe that you will be an excellent one,” said the yellow-haired woman.',
+          '"Aku yakin kamu pasti akan menjadi guru yang sangat baik," kata wanita berambut kuning itu. "I believe that you will be an excellent one," said the yellow-haired woman.',
         'Date of Birth': '03-01-2019',
         Hair: 'short',
       }
     : ({} as Character);
+
   const { occupations } = master;
   const { isMobile } = useResponsive();
-  const onSubmit = (data) => {
+  const selected = cart.selected || (defaultSelected as CartItem);
+
+  /**
+   * Handles form submission for character creation
+   */
+  const onSubmit = (data: CharacterFormData) => {
     if (!router.query.edit) {
       gtag.event({
         action: 'click_create',
@@ -89,18 +133,20 @@ const CharacterCustomization = () => {
     let jobIds: string[] = [];
     if (isMobile) {
       if (charStep === STEP_ENUM.OCCUPATIONS) {
-        let PARAMS = { ...selected, ...data };
+        const PARAMS = { ...selected, ...data } as any;
         jobIds = getJobIds(data.Occupations, occupations);
-        PARAMS = { ...PARAMS, jobIds };
+        PARAMS.jobIds = jobIds;
         dispatch(saveSelected(PARAMS));
-        if (charStep !== STEP_ENUM.DEDICATION) {
+        if (charStep < STEP_ENUM.DEDICATION) {
           setCharStep(charStep + 1);
           return;
         }
       }
     } else {
       jobIds = getJobIds(data.Occupations, occupations);
-      dispatch(saveSelected({ ...selected, ...data, jobIds }));
+      const updatedData = { ...selected, ...data } as any;
+      updatedData.jobIds = jobIds;
+      dispatch(saveSelected(updatedData));
     }
 
     router.push({
@@ -110,27 +156,40 @@ const CharacterCustomization = () => {
   };
 
   const ref = useRef<HTMLInputElement>(null);
-  const handleScroll = () => {
-    if (ref && ref.current) {
-      setSticky(ref.current.getBoundingClientRect().top < 100);
-    }
-  };
+
+  /**
+   * Returns CSS class name for sticky character preview based on scroll state
+   */
   const stickyClassName = () => {
     return isSticky ? 'c-char-custom__char--sticky' : '';
   };
+
+  /**
+   * Handles scroll events to determine sticky navigation state
+   */
+  const handleScroll = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    setSticky(scrollTop > 0);
+  };
+
+  /**
+   * Initialize component by setting up form registration and event listeners
+   */
   useEffect(() => {
-    // setTimeout(() => {
-    //   register({ name: 'Date of Birth' }, schema(t).dob);
+    // Prefetch preview page for better performance
     router.prefetch('/preview');
+
+    // Register form fields with validation
     register({ name: 'Occupations' }, schema(t).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
-    // }, 500);
+
+    // Add scroll listener for sticky behavior
     window.addEventListener('scroll', handleScroll, detectIt.passiveEvents ? { passive: true } : false);
+
     return () => {
-      window.removeEventListener('scroll', () => handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
-  const selected = cart.selected || (defaultSelected as CartItem);
+  }, [register, router, selected.Occupations, setValue, t]);
   const previewImgUrl = useMemo(() => previewImg(selected, watch), [selected, watch]);
   useEffect(() => {
     loadImg(previewImgUrl);
@@ -139,31 +198,45 @@ const CharacterCustomization = () => {
   const containerMargin = (window.innerWidth - containerWidth) / 2;
   const charWidth = containerWidth * 0.3 - containerWidth * 0.08;
 
-  // mobile
+  // Mobile-specific state and handlers
   const [charStep, setCharStep] = useState(0);
   const [showSheet, setShowSheet] = useState(false);
+
+  /**
+   * Shows confirmation sheet for canceling character creation
+   */
   const cancel = () => {
     setShowSheet(true);
   };
+
+  /**
+   * Confirms quit action and navigates to home page
+   */
   const quit = () => {
     setShowSheet(false);
     router.push('/');
   };
+
+  /**
+   * Handles back navigation in mobile step flow
+   * Navigates to previous step or back to previous page
+   */
   const onBack = () => {
     if (charStep === STEP_ENUM.NAME_GENDER) {
       router.back();
       return;
     }
-    // if (charStep === stepEnum.DOB) unregister('Date of Birth');
     if (charStep === STEP_ENUM.OCCUPATIONS) unregister('Occupations');
     setCharStep(charStep - 1);
   };
 
+  /**
+   * Registers occupation field with form validation
+   * Sets up validation schema and default values
+   */
   const registerOccupations = () => {
-    // setTimeout(() => {
     register({ name: 'Occupations' }, schema(t).occupations);
     if (selected.Occupations) setValue('Occupations', selected.Occupations);
-    // }, 500);
   };
   // const pickedJobs = () => {
   //   const array = watch('Occupations').map(job => (i18n.language === 'en' ? job : t(`common:${job}`)));
@@ -175,13 +248,16 @@ const CharacterCustomization = () => {
     loadImg(previewImgUrlMobile);
   }, [previewImgUrlMobile]);
   useEffect(() => {
-    if ([STEP_ENUM.AGE, STEP_ENUM.SKIN, STEP_ENUM.LANGUAGE].includes(charStep)) {
+    if ([STEP_ENUM.AGE, STEP_ENUM.SKIN, STEP_ENUM.LANGUAGE].includes(charStep as any)) {
       loadImg(previewImgUrlMobile);
     }
     if (charStep === STEP_ENUM.OCCUPATIONS) registerOccupations();
     if (charStep === STEP_ENUM.LANGUAGE) unregister('Occupations');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [charStep, previewImgUrlMobile]);
+  /**
+   * Initialize component state based on existing selected character data
+   */
   useEffect(() => {
     const { Name, Gender } = selected;
     if (!router.query.edit && Name && Gender) {
@@ -191,10 +267,14 @@ const CharacterCustomization = () => {
       selected.Occupations = (selected.Occupations as string).split(',');
     }
     router.prefetch('/preview');
-  }, []);
+  }, [router, selected]);
+
+  /**
+   * Show error message when form validation fails
+   */
   useEffect(() => {
     if (!formState.isValid) showError(t('form-error'));
-  }, [errors]);
+  }, [errors, formState.isValid, t]);
   const screenHeight = '100vh - 69px';
 
   if (isMobile) {
@@ -229,7 +309,14 @@ const CharacterCustomization = () => {
               <div className="c-char-custom__with-preview" style={{ minHeight: `calc(${screenHeight} - 116px)` }}>
                 <div className="u-container c-char-custom__preview">
                   <div>
-                    <img id="preview-char" src="/static/images/empty.png" alt="character preview" />
+                    <Image
+                      id="preview-char"
+                      src="/static/images/empty.png"
+                      alt="character preview"
+                      width={200}
+                      height={200}
+                      priority
+                    />
                   </div>
                 </div>
                 <div className="u-container c-char-custom__tab">
@@ -502,7 +589,14 @@ const CharacterCustomization = () => {
           </div>
           <div className={`c-char-custom__right ${stickyClassName()}`} ref={ref}>
             <div className="c-char-custom__char">
-              <img id="preview-char" src="/static/images/empty.png" alt="character preview" />
+              <Image
+                id="preview-char"
+                src="/static/images/empty.png"
+                alt="character preview"
+                width={200}
+                height={200}
+                priority
+              />
             </div>
           </div>
         </div>
