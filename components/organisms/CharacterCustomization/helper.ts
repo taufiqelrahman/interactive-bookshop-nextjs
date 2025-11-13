@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 
+import { ValidationRule } from 'lib/validation';
 import { Character } from 'store/cart/types';
 import { Occupation } from 'store/master/types';
 
@@ -7,18 +8,6 @@ import { Occupation } from 'store/master/types';
  * Translation function type for internationalization
  */
 type TranslationFunction = (key: string) => string;
-
-/**
- * Form validation rule interface
- */
-interface ValidationRule {
-  /** Whether the field is required */
-  required?: { value: boolean; message: string };
-  /** Maximum length constraint */
-  maxLength?: { value: number; message: string };
-  /** Custom validation function */
-  validate?: (value: any) => boolean | string;
-}
 
 /**
  * Complete form validation schema interface

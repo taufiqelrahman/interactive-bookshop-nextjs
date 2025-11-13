@@ -9,6 +9,7 @@ import Card from 'components/atoms/Card';
 import FieldGender from 'components/molecules/FieldGender';
 import FormTextField from 'components/molecules/FormTextField';
 import * as gtag from 'lib/gtag';
+import { ValidationRule } from 'lib/validation';
 import { saveSelected } from 'store/cart/reducers';
 
 /**
@@ -19,18 +20,6 @@ interface BookFormData {
   Name: string;
   /** Character's gender selection */
   Gender: string;
-}
-
-/**
- * Validation rule structure for form fields
- */
-interface ValidationRule {
-  /** Field is required */
-  required?: { value: boolean; message: string };
-  /** Maximum character length */
-  maxLength?: { value: number; message: string };
-  /** Custom validation function */
-  validate?: (value: string) => boolean | string;
 }
 
 /**

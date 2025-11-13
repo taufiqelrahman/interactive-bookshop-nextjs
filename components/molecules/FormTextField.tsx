@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 
 import Badge from 'components/atoms/Badge';
 import TextField from 'components/atoms/TextField';
+import { ValidationRule } from 'lib/validation';
 
 /**
  * Form validation error object structure
@@ -14,18 +15,7 @@ interface FormError {
 /**
  * Form field registration function type
  */
-type RegisterFunction = (schema?: ValidationSchema) => (ref: HTMLInputElement | null) => void;
-
-/**
- * Validation schema for form fields
- */
-interface ValidationSchema {
-  required?: boolean | string;
-  pattern?: RegExp;
-  minLength?: number;
-  maxLength?: number;
-  validate?: (value: string) => boolean | string;
-}
+type RegisterFunction = (schema?: ValidationRule) => (ref: HTMLInputElement | null) => void;
 
 /**
  * Props interface for FormTextField component
@@ -42,7 +32,7 @@ interface FormTextFieldProps {
   /** Form registration function from react-hook-form */
   register: RegisterFunction;
   /** Validation schema for the form field */
-  schema?: ValidationSchema;
+  schema?: ValidationRule;
   /** Field name for form submission and validation */
   name: string;
   /** Placeholder text for the input field */
