@@ -49,7 +49,12 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-function WiguApp({ Component, pageProps }: AppProps) {
+interface CustomPageProps {
+  currentLocale?: string;
+  [key: string]: any;
+}
+
+function WiguApp({ Component, pageProps }: AppProps<CustomPageProps>) {
   const [width, setWidth] = useState(0);
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.users.user);
@@ -64,7 +69,7 @@ function WiguApp({ Component, pageProps }: AppProps) {
     if (isExpired) {
       Cookies.remove('user', { domain: process.env.DOMAIN });
     }
-    dayjs.locale(pageProps.currentLocale);
+    dayjs.locale(pageProps.currentLocale || 'en');
     setWidth(window.innerWidth);
     Router.events.on('routeChangeComplete', handleRouteChange);
     window.addEventListener('resize', debouncedSetup, detectIt.passiveEvents ? { passive: true } : false);
@@ -72,6 +77,7 @@ function WiguApp({ Component, pageProps }: AppProps) {
       Router.events.off('routeChangeComplete', handleRouteChange);
       window.removeEventListener('resize', debouncedSetup as any);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExpired]);
 
   useEffect(() => {

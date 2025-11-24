@@ -205,7 +205,7 @@ const BookPreview = (props: BookPreviewProps) => {
   let pageByOccupations: Record<string, BookPage[]> = {};
   if (props.bookPages.length > 0) {
     const grouped = groupby(props.bookPages, (page: BookPage) => page.occupation_id);
-    const sortedEntries = sortby(Object.entries(grouped), ([_, group]) => props.bookPages.indexOf(group[0]));
+    const sortedEntries = sortby(Object.entries(grouped), ([, group]) => props.bookPages.indexOf(group[0]));
     pageByOccupations = Object.fromEntries(sortedEntries);
   }
   const bookPages: Record<string, Record<string, BookPage[]>> = {};

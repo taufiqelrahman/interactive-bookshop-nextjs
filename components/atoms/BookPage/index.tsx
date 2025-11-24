@@ -42,10 +42,10 @@ const BookPage = (props: BookPageProps) => {
   );
 
   const processContent = useCallback(
-    (content, language) =>
+    (content: BookPageType, language?: string) =>
       processBookPageContent({
         currentContent: content,
-        language,
+        language: language || 'english',
         contents: props.contents,
         name: props.name,
         gender: props.gender,
