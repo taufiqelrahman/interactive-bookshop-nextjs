@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'react/no-deprecated': 'off', // Allow deprecated methods in test files temporarily
     'no-undef': 'off',
     'import/order': [
       'error',
