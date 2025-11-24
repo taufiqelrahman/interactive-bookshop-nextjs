@@ -17,23 +17,23 @@ export const thunkLoadProducts =
         dispatch(loadProducts({ isFetching: false, payload: data.data }));
       })
       .catch((err) => {
-        dispatch(loadProducts({ isFetching: false, payload: null }));
+        dispatch(loadProducts({ isFetching: false, payload: undefined }));
         captureException(err);
         throw err;
       });
   };
 
 export const thunkShowProduct =
-  (slug, req = null): ThunkAction<void, types.ProductsState, null, Action<string>> =>
+  (slug: any, req: any = null): ThunkAction<void, types.ProductsState, null, Action<string>> =>
   (dispatch): any => {
-    dispatch(showProduct({ isFetching: true, payload: null }));
+    dispatch(showProduct({ isFetching: true, payload: undefined }));
     return api(req)
       .products.show(slug)
       .then(({ data }) => {
         dispatch(showProduct({ isFetching: false, payload: data.data }));
       })
       .catch((err) => {
-        dispatch(showProduct({ isFetching: false, payload: null }));
+        dispatch(showProduct({ isFetching: false, payload: undefined }));
         captureException(err);
         throw err;
       });

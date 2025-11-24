@@ -12,12 +12,12 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    loadProducts: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Product[] }>) => {
-      state.products = action.payload.payload;
+    loadProducts: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Product[] | undefined }>) => {
+      state.products = action.payload.payload || [];
       state.isFetching = action.payload.isFetching;
     },
-    showProduct: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Product | null }>) => {
-      state.currentProduct = action.payload.payload;
+    showProduct: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Product | null | undefined }>) => {
+      state.currentProduct = action.payload.payload || null;
       state.isFetching = action.payload.isFetching;
     },
   },

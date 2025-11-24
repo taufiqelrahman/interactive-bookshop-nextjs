@@ -44,7 +44,7 @@ const Login: React.FC<LoginProps> = (props) => {
     password: { required: true },
     confirmPassword: {
       required: { value: true, message: `${t('form:password-label')} ${t('form:required-error')}` },
-      validate: (value) => value === watch('password') || t('form:password-different'),
+      validate: (value: string) => value === watch('password') || t('form:password-different'),
     },
   };
   useEffect(() => {
@@ -69,7 +69,7 @@ const Login: React.FC<LoginProps> = (props) => {
         const DATA = { code, state };
         if (reset === '1') {
           setLoginStep(4);
-          setResetData({ email, token });
+          setResetData({ email: email || '', token: token || '' });
         } else if (social === 'google') {
           setIsTransit(true);
           dispatch(actions.thunkLoginGoogle(DATA));
@@ -94,7 +94,7 @@ const Login: React.FC<LoginProps> = (props) => {
   const forgotPassword = () => {
     setLoginStep(stepEnum.FORGOT);
   };
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: { email?: string; password?: string; confirmPassword?: string; from?: string }) => {
     const { email, token } = resetData;
     switch (loginStep) {
       case stepEnum.EMAIL:

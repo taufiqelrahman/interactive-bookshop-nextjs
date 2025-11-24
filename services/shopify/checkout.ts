@@ -6,7 +6,7 @@ import { IS_SHOPIFY_AVAILABLE } from '.';
 
 export default class Checkout {
   adapter: ShopifyBuy;
-  basePath: string;
+  basePath: string = '';
 
   constructor(adapter: ShopifyBuy) {
     this.adapter = adapter;
@@ -21,6 +21,7 @@ export default class Checkout {
   }): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
+        ...mockShopifyCheckout,
         id: 'chk_123',
         lineItems:
           data?.lineItems?.map((item, idx) => ({
@@ -35,11 +36,10 @@ export default class Checkout {
           : mockShippingAddress,
         customAttributes: data?.customAttributes || [],
         buyerIdentity: {
-          email: data?.email || '',
           ...mockShopifyCheckout.buyerIdentity,
+          email: data?.email || '',
         },
-        ...mockShopifyCheckout,
-      });
+      } as any);
     }
     return this.adapter.checkout.create(data);
   }
@@ -47,10 +47,10 @@ export default class Checkout {
   get(id: ShopifyBuy.ID): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
+        ...mockShopifyCheckout,
         id: id,
         lineItems: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart') as any).lineItems : [],
-        ...mockShopifyCheckout,
-      });
+      } as any);
     }
     return this.adapter.checkout.fetch(id);
   }
@@ -93,10 +93,10 @@ export default class Checkout {
                 storeAvailability: [],
                 metafields: [],
               },
-            }) as ShopifyBuy.CheckoutLineItem,
+            }) as any,
         ),
         ...mockShopifyCheckout,
-      } as ShopifyBuy.Checkout);
+      } as any);
     }
     return this.adapter.checkout.addLineItems(checkoutId, lineItems);
   }
@@ -104,16 +104,16 @@ export default class Checkout {
   updateLineItems(id: ShopifyBuy.ID, data: ShopifyBuy.CheckoutLineItemUpdateInput[]): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
+        ...mockShopifyCheckout,
         id,
         lineItems: [],
         shippingAddress: mockShippingAddress,
         customAttributes: [],
         buyerIdentity: {
-          email: 'john@example.com',
           ...mockShopifyCheckout.buyerIdentity,
+          email: 'john@example.com',
         },
-        ...mockShopifyCheckout,
-      } as ShopifyBuy.Checkout);
+      } as any);
     }
     return this.adapter.checkout.updateLineItems(id, data);
   }
@@ -121,16 +121,16 @@ export default class Checkout {
   removeLineItems(id: ShopifyBuy.ID, itemIds: string[]): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
+        ...mockShopifyCheckout,
         id,
         lineItems: [],
         shippingAddress: mockShippingAddress,
         customAttributes: [],
         buyerIdentity: {
-          email: 'john@example.com',
           ...mockShopifyCheckout.buyerIdentity,
+          email: 'john@example.com',
         },
-        ...mockShopifyCheckout,
-      });
+      } as any);
     }
     return this.adapter.checkout.removeLineItems(id, itemIds);
   }
@@ -138,13 +138,14 @@ export default class Checkout {
   addDiscount(id: ShopifyBuy.ID, code: string): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
+        ...mockShopifyCheckout,
         id,
         lineItems: [],
         shippingAddress: mockShippingAddress,
         customAttributes: [],
         buyerIdentity: {
-          email: 'john@example.com',
           ...mockShopifyCheckout.buyerIdentity,
+          email: 'john@example.com',
         },
         discountApplications: [
           {
@@ -160,8 +161,7 @@ export default class Checkout {
             targetType: 'line_item',
           },
         ],
-        ...mockShopifyCheckout,
-      } as ShopifyBuy.Checkout);
+      } as any);
     }
     return this.adapter.checkout.addDiscount(id, code);
   }
@@ -169,17 +169,17 @@ export default class Checkout {
   removeDiscount(id: ShopifyBuy.ID): Promise<ShopifyBuy.Checkout> {
     if (!IS_SHOPIFY_AVAILABLE) {
       return Promise.resolve({
+        ...mockShopifyCheckout,
         id,
         lineItems: [],
         shippingAddress: mockShippingAddress,
         customAttributes: [],
         buyerIdentity: {
-          email: 'john@example.com',
           ...mockShopifyCheckout.buyerIdentity,
+          email: 'john@example.com',
         },
         discountApplications: [],
-        ...mockShopifyCheckout,
-      });
+      } as any);
     }
     return this.adapter.checkout.removeDiscount(id);
   }

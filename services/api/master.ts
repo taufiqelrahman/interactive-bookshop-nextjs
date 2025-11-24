@@ -5,7 +5,7 @@ import { BOOK_PAGES, OCCUPATIONS, PROVINCES, TESTIMONIALS } from './__mocks__/ma
 export default class Products {
   adapter: AdapterObject;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
   }
 
@@ -27,7 +27,7 @@ export default class Products {
     });
   }
 
-  getBookPages(params): Promise<{ data: { data: BookPage[] } }> {
+  getBookPages(params: any): Promise<{ data: { data: BookPage[] } }> {
     // return this.adapter.default.get(`/book-pages?${queryString.stringify(params)}`);
     return Promise.resolve({
       data: {

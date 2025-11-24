@@ -47,7 +47,7 @@ const CartDropdown = (props: CartDropdownProps) => {
                     </div>
                     <div className="c-cart-dropdown__item__total">
                       <NumberFormat
-                        value={item.variant.price.amount}
+                        value={item.variant?.price.amount || 0}
                         thousandSeparator={true}
                         prefix={'Rp'}
                         displayType="text"

@@ -130,15 +130,19 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
       ({ data: orderData } = await api().orders.loadOrderGuest(ctx.query.id));
     }
     const { order, state, payment } = orderData.data;
-    order.state = state.name;
-    order.payment = payment ? formatPayment(payment) : null;
+    order.state = state?.name;
+    order.payment = payment ? formatPayment(payment) : undefined;
     store.dispatch(loadOrder({ isFetching: false, payload: order }));
     let paymentProblem = false;
     if (!payment) paymentProblem = true;
     store.dispatch(setPaymentProblem(paymentProblem));
   } catch (err: any) {
     console.log(err.message);
-    if (!ctx.res) return;
+    if (!ctx.res) {
+      return {
+        props: {},
+      };
+    }
 
     return {
       redirect: {

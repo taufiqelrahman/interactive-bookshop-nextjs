@@ -15,7 +15,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   //   if (props.pages.length > 8) length = 9;
   //   return new Array(length).fill(0);
   // };
-  const renderClass = (order): string => {
+  const renderClass = (order: number): string => {
     let className = 'c-pagination__dot';
     if (order === current) className += ' c-pagination__dot--active';
     if (pages.length - current < 2) {

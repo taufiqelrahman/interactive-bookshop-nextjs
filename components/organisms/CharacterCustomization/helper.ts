@@ -140,16 +140,16 @@ export const previewImg = (data: Character, watch: WatchFunction, isMobile: bool
   const basePath = `/static/images/child${isMobile ? '-sm' : ''}`;
 
   // Extract current data with fallbacks to defaults
-  const currentGender = watch('Gender') || data.Gender || DEFAULT_CHARACTER.Gender;
-  const currentAge = watch('Age') || data.Age || DEFAULT_CHARACTER.Age;
-  const currentSkin = watch('Skin') || data.Skin || DEFAULT_CHARACTER.Skin;
-  let currentHair = watch('Hair') || data.Hair || DEFAULT_CHARACTER.Hair;
+  const currentGender = watch('Gender') || data.Gender || DEFAULT_CHARACTER.Gender || 'boy';
+  const currentAge = watch('Age') || data.Age || DEFAULT_CHARACTER.Age || 'kid';
+  const currentSkin = watch('Skin') || data.Skin || DEFAULT_CHARACTER.Skin || 'light';
+  const currentHair = watch('Hair') || data.Hair || DEFAULT_CHARACTER.Hair || 'short';
 
   // Apply gender-specific hair style validation
-  currentHair = validateHairStyleForGender(currentHair, currentGender);
+  const validatedHair = validateHairStyleForGender(currentHair, currentGender);
 
   // Construct complete image path
-  return `${basePath}/${currentGender}/${currentAge}/${currentHair}/${currentSkin}.png`;
+  return `${basePath}/${currentGender}/${currentAge}/${validatedHair}/${currentSkin}.png`;
 };
 
 /**
@@ -228,9 +228,9 @@ export const loadImg = (source: string): void => {
   const imageLoader = new Image();
 
   // Handle successful image load
-  imageLoader.onload = function handleImageLoad(this: HTMLImageElement) {
-    if (previewElement && this.src) {
-      previewElement.src = this.src;
+  imageLoader.onload = function handleImageLoad() {
+    if (previewElement && imageLoader.src) {
+      previewElement.src = imageLoader.src;
     }
   };
 

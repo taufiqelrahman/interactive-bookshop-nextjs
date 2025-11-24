@@ -132,7 +132,7 @@ const CartItem = (props: CartItemProps) => {
                     <Fragment>
                       <div className="c-cart-item__detail__price--original">Rp250,000.00</div>
                       <NumberFormat
-                        value={props.variant.price.amount}
+                        value={props.variant?.price.amount || 0}
                         thousandSeparator={true}
                         prefix={'Rp'}
                         displayType="text"
@@ -363,7 +363,7 @@ const CartItem = (props: CartItemProps) => {
                   <Fragment>
                     <div className="c-cart-item__detail__price--original">Rp250,000.00</div>
                     <NumberFormat
-                      value={props.variant.price.amount}
+                      value={props.variant?.price.amount || 0}
                       thousandSeparator={true}
                       prefix={'Rp'}
                       displayType="text"

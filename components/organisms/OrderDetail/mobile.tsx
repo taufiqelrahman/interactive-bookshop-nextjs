@@ -402,7 +402,7 @@ const OrderDetailMobile = (props: OrderDetailMobileProps): JSX.Element => {
         <Skeleton height={30} width={'100%'} />
       ) : (
         <Capsule
-          color={appConfig.stateColor[currentOrder.state]}
+          color={appConfig.stateColor[currentOrder.state as keyof typeof appConfig.stateColor]}
           variant="bar"
           style={{ zIndex: 42, position: 'fixed', top: 59 }}
         >

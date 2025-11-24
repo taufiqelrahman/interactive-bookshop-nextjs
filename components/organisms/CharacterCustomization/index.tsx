@@ -134,7 +134,7 @@ const CharacterCustomization = () => {
     if (isMobile) {
       if (charStep === STEP_ENUM.OCCUPATIONS) {
         const PARAMS = { ...selected, ...data } as any;
-        jobIds = getJobIds(data.Occupations, occupations);
+        jobIds = getJobIds(data.Occupations || [], occupations).filter((id): id is string => id !== undefined);
         PARAMS.jobIds = jobIds;
         dispatch(saveSelected(PARAMS));
         if (charStep < STEP_ENUM.DEDICATION) {
@@ -143,7 +143,7 @@ const CharacterCustomization = () => {
         }
       }
     } else {
-      jobIds = getJobIds(data.Occupations, occupations);
+      jobIds = getJobIds(data.Occupations || [], occupations).filter((id): id is string => id !== undefined);
       const updatedData = { ...selected, ...data } as any;
       updatedData.jobIds = jobIds;
       dispatch(saveSelected(updatedData));

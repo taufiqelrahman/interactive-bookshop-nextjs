@@ -35,6 +35,6 @@ export interface CartItem extends Character {
 
 export interface CartState {
   isFetching: boolean;
-  cart?: Cart;
+  cart?: Cart | null;
   selected: CartItem | null;
 }

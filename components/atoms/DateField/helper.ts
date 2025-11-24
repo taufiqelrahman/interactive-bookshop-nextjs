@@ -1,5 +1,5 @@
 export const customStyles = {
-  menu: (provided) => ({
+  menu: (provided: any) => ({
     ...provided,
     marginTop: 0,
     border: '2px solid #333',
@@ -10,14 +10,14 @@ export const customStyles = {
   indicatorSeparator: () => ({
     display: 'none',
   }),
-  option: (provided) => ({
+  option: (provided: any) => ({
     ...provided,
     '&:hover': {
       background: '#333',
       color: 'white',
     },
   }),
-  control: (provided, state) => ({
+  control: (provided: any, state: any) => ({
     ...provided,
     borderWidth: 2,
     borderType: 'solid',

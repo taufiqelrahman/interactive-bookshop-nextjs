@@ -14,7 +14,7 @@ const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
-const Help = ({ isMobile, setSideNav }) => {
+const Help = ({ isMobile, setSideNav }: { isMobile?: boolean; setSideNav?: (open: boolean) => void }) => {
   const { t } = useTranslation('common');
   const names = [
     'Jasper Moon',
@@ -183,7 +183,7 @@ const Help = ({ isMobile, setSideNav }) => {
 export const getServerSideProps = wrapper.getServerSideProps(() => async (ctx) => {
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale, ['common'])),
+      ...(await serverSideTranslations(ctx.locale || 'en', ['common'])),
     },
   };
 });

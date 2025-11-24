@@ -30,7 +30,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
 
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale, ['common', 'form'])),
+      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'form'])),
     },
   };
 });

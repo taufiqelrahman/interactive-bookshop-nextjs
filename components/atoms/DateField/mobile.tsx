@@ -28,7 +28,7 @@ interface DateFieldProps {
 
 const DateField = (props: DateFieldProps) => {
   const { t } = useTranslation('form');
-  const [picker, setPicker] = useState<Picker>(null);
+  const [picker, setPicker] = useState<Picker | null>(null);
   const [state, setState] = useState<DateFieldState>({
     date: null,
     month: null,
@@ -107,7 +107,7 @@ const DateField = (props: DateFieldProps) => {
           variant="rounded"
           content={
             <Fragment>
-              <DatePicker value={sheetData.value} setPicker={setPicker} />
+              <DatePicker value={sheetData.value || undefined} setPicker={setPicker} />
             </Fragment>
           }
           actions={

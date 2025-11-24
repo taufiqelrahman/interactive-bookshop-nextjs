@@ -48,7 +48,7 @@ function createCheckoutGuest() {
   return shopify().checkout.create();
 }
 export const thunkCreateCart =
-  (callback?): ThunkAction<void, types.CartState, null, Action<string>> =>
+  (callback?: any): ThunkAction<void, types.CartState, null, Action<string>> =>
   async (dispatch, getState): Promise<any> => {
     dispatch(createCart({ isFetching: true }));
     const { user } = (getState() as any).users;

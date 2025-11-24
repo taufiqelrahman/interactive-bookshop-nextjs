@@ -1,3 +1,3 @@
 import { getPreviewUrl } from 'lib/format-image';
 
-export const previewImg = (attributes) => getPreviewUrl(attributes);
+export const previewImg = (attributes: any) => getPreviewUrl(attributes);

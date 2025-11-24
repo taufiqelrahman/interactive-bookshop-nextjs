@@ -21,11 +21,11 @@ interface OrderItemProps extends Order {
 const OrderItem = (props: OrderItemProps) => {
   const { isMobile } = useResponsive();
   const { t } = useTranslation('page-orders');
-  const lineItems = (props.line_items || []).map((item) => ({
+  const lineItems = (props.line_items || []).map((item: any) => ({
     ...item,
     customAttributes: mapKeyValue(item.properties || []),
   }));
-  const previewImg = (item) => {
+  const previewImg = (item: any) => {
     if (!item.customAttributes) return '';
     return getPreviewUrl(item.customAttributes);
   };
@@ -50,7 +50,7 @@ const OrderItem = (props: OrderItemProps) => {
                     {props.isSkeleton ? (
                       <Skeleton height={24} width={180} />
                     ) : (
-                      lineItems.map((item) => item.customAttributes.Name).join(', ')
+                      lineItems.map((item: any) => item.customAttributes.Name).join(', ')
                     )}
                   </div>
                   <div className="c-order-item__detail__books">
@@ -142,15 +142,15 @@ const OrderItem = (props: OrderItemProps) => {
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={350} />
                 ) : (
-                  <h2>{lineItems.map((item) => item.customAttributes.Name).join(', ')}</h2>
+                  <h2>{lineItems.map((item: any) => item.customAttributes.Name).join(', ')}</h2>
                 )}
               </div>
               <div className="c-order-item__detail--top--right">
                 {props.isSkeleton ? (
                   <Skeleton height={30} width={135} />
                 ) : (
-                  <Capsule color={appConfig.stateColor[props.state]}>
-                    {t(props.state)}
+                  <Capsule color={appConfig.stateColor[props.state as keyof typeof appConfig.stateColor]}>
+                    {t(props.state || '')}
                     {props.state === 'done' && <span className="icon-cross_check" />}
                   </Capsule>
                 )}

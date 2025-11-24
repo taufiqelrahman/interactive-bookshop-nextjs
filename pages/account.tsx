@@ -76,14 +76,14 @@ const Account = (props: any): any => {
     },
     confirmNewPassword: {
       required: { value: true, message: `${t('password-label')} ${t('form:required-error')}` },
-      validate: (value) => value === watch('newPassword') || t('form:password-different'),
+      validate: (value: string) => value === watch('newPassword') || t('form:password-different'),
     },
     address: {
       required: { value: true, message: `${t('address-label')} ${t('form:required-error')}` },
     },
   };
   const customStyles = {
-    menu: (provided) => ({
+    menu: (provided: any) => ({
       ...provided,
       marginTop: 0,
       border: '2px solid #333',
@@ -95,7 +95,7 @@ const Account = (props: any): any => {
     indicatorSeparator: () => ({
       display: 'none',
     }),
-    option: (provided) => ({
+    option: (provided: any) => ({
       ...provided,
       '&:hover': {
         background: '#333',
@@ -103,7 +103,7 @@ const Account = (props: any): any => {
       },
       width: props.isMobile ? '100%' : '400px',
     }),
-    control: (provided, state) => ({
+    control: (provided: any, state: any) => ({
       ...provided,
       borderWidth: 2,
       borderType: 'solid',
@@ -131,9 +131,9 @@ const Account = (props: any): any => {
       watch('province') &&
       watch('province').label === userAddress.province &&
       watch('zip') === userAddress.zip);
-  const editField = (type, isClear, value?): any => {
-    const newState = { ...state };
-    Object.keys(newState).forEach((key) => {
+  const editField = (type: string, isClear: boolean, value?: any): any => {
+    const newState: any = { ...state };
+    Object.keys(newState).forEach((key: string) => {
       newState[key].isEdit = false;
     });
     setState({
@@ -152,7 +152,7 @@ const Account = (props: any): any => {
   const provinces = () => {
     const { provinces } = master;
     if (provinces.length === 0) return [];
-    return provinces.map((prov) => ({
+    return provinces.map((prov: any) => ({
       value: prov.name,
       label: prov.name,
     }));
@@ -164,11 +164,11 @@ const Account = (props: any): any => {
   //   props.thunkSendOtp();
   //   setShowModal(true);
   // };
-  const onChangeProvince = (e) => {
+  const onChangeProvince = (e: any) => {
     triggerValidation('province');
     setValue('province', e);
   };
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     let PARAMS = data;
     if (data.province) PARAMS = { ...data, province: data.province.value };
     if (data.newPhone) PARAMS = { ...data, phone: data.newPhone.replace(/^\s+|\s+$/gm, '') };
@@ -594,7 +594,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     const { data: provinces } = await api().master.getProvinces();
     store.dispatch(loadProvinces({ isFetching: false, data: provinces.data }));
   } catch (err) {
-    console.log(err.message);
+    console.log((err as Error).message);
   }
   return { props: {} };
 });
