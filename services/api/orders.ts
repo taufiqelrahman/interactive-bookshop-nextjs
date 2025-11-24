@@ -38,7 +38,7 @@ export default class Orders {
   adapter: AdapterObject;
   basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
     this.basePath = '/orders';
   }
@@ -63,7 +63,7 @@ export default class Orders {
     });
   }
 
-  loadOrderGuest(orderNumber): Promise<{ data: OrderResponse }> {
+  loadOrderGuest(orderNumber: any): Promise<{ data: OrderResponse }> {
     // return this.adapter.default.get(`${this.basePath}/${orderNumber}/guest`);
     return Promise.resolve({
       data: {

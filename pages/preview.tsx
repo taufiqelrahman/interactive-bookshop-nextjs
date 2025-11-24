@@ -37,14 +37,26 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
   try {
     // get jobids from url query
     const { jobIds } = ctx.query;
-    if (!jobIds) return;
+    if (!jobIds) {
+      return {
+        props: {
+          ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'form'])),
+        },
+      };
+    }
     let firstJobId: string | undefined;
     if (typeof jobIds === 'string') {
       [firstJobId] = jobIds.split(',');
     } else if (Array.isArray(jobIds)) {
       [firstJobId] = jobIds;
     }
-    if (!firstJobId) return;
+    if (!firstJobId) {
+      return {
+        props: {
+          ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'form'])),
+        },
+      };
+    }
     store.dispatch(loadBookPages({ isFetching: true, data: [] }));
     const PARAMS = { jobs: firstJobId.toString() };
     const { data: bookPages } = await api().master.getBookPages(PARAMS);
@@ -55,7 +67,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
 
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale, ['common', 'form'])),
+      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'form'])),
     },
   };
 });

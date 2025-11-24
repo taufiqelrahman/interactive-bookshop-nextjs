@@ -12,28 +12,28 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    loadCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+    loadCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null | undefined }>) => {
       state.isFetching = action.payload.isFetching;
-      state.cart = action.payload.payload;
+      state.cart = action.payload.payload || null;
     },
-    addToCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+    addToCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null | undefined }>) => {
       state.isFetching = action.payload.isFetching;
-      state.cart = action.payload.payload;
+      state.cart = action.payload.payload || null;
     },
-    transferCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+    transferCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null | undefined }>) => {
       state.isFetching = action.payload.isFetching;
-      state.cart = action.payload.payload;
+      state.cart = action.payload.payload || null;
     },
-    updateCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+    updateCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null | undefined }>) => {
       state.isFetching = action.payload.isFetching;
-      state.cart = action.payload.payload;
+      state.cart = action.payload.payload || null;
     },
-    removeFromCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null }>) => {
+    removeFromCart: (state, action: PayloadAction<{ isFetching: boolean; payload: types.Cart | null | undefined }>) => {
       state.isFetching = action.payload.isFetching;
-      state.cart = action.payload.payload;
+      state.cart = action.payload.payload || null;
     },
-    saveSelected: (state, action: PayloadAction<types.CartItem | null>) => {
-      state.selected = action.payload;
+    saveSelected: (state, action: PayloadAction<Partial<types.CartItem> | null>) => {
+      state.selected = action.payload as types.CartItem | null;
     },
     createCart: (state, action: PayloadAction<{ isFetching: boolean }>) => {
       state.isFetching = action.payload.isFetching;

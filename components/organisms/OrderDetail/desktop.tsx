@@ -150,7 +150,10 @@ const OrderDetailDesktop: React.FC<OrderDetailDesktopProps> = (props): JSX.Eleme
                 <Fragment>
                   {t('order-title')}: {orderNumber}
                   {currentOrder && (
-                    <Capsule color={appConfig.stateColor[currentOrder.state]} style={{ height: 30, marginLeft: 18 }}>
+                    <Capsule
+                      color={appConfig.stateColor[currentOrder.state as keyof typeof appConfig.stateColor]}
+                      style={{ height: 30, marginLeft: 18 }}
+                    >
                       {t(currentOrder.state)}
                       {props.state === 'received' && <span className="icon-cross_check" />}
                     </Capsule>

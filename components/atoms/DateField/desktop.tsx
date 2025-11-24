@@ -35,7 +35,8 @@ const DateField = (props: DateFieldProps) => {
     setYear({ label: parsed[2], value: parsed[2] });
   };
 
-  const handleChange = (selectedOption: Option | null, setter: (option: Option | null) => void) => {
+  const handleChange = (selectedOption: Option | Option[] | null, setter: (option: Option | null) => void) => {
+    if (Array.isArray(selectedOption)) return;
     setter(selectedOption);
   };
   useEffect(() => {

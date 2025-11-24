@@ -23,7 +23,7 @@ const Pagination = dynamic(() => import('components/atoms/Pagination'));
 interface BookPreviewProps {
   isMobile?: boolean;
   bookPages: BookPage[];
-  selected: CartItem;
+  selected: CartItem | any;
   cover?: string;
   // enableLazy?: boolean;
 }
@@ -204,8 +204,9 @@ const BookPreview = (props: BookPreviewProps) => {
 
   let pageByOccupations: Record<string, BookPage[]> = {};
   if (props.bookPages.length > 0) {
-    pageByOccupations = groupby(props.bookPages, (page: BookPage) => page.occupation_id);
-    pageByOccupations = sortby(pageByOccupations, (group: BookPage[]) => props.bookPages.indexOf(group[0]));
+    const grouped = groupby(props.bookPages, (page: BookPage) => page.occupation_id);
+    const sortedEntries = sortby(Object.entries(grouped), ([_, group]) => props.bookPages.indexOf(group[0]));
+    pageByOccupations = Object.fromEntries(sortedEntries);
   }
   const bookPages: Record<string, Record<string, BookPage[]>> = {};
   Object.keys(pageByOccupations).forEach((occupation) => {

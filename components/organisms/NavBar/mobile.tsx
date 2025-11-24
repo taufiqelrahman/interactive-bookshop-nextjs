@@ -62,7 +62,7 @@ const NavBar = (props: MobileNavBarProps): JSX.Element => {
    * Opens the side navigation drawer when menu icon is clicked
    */
   const handleShowSideNav = useCallback(() => {
-    props.setSideNav(true);
+    props.setSideNav?.(true);
   }, [props]);
 
   /**

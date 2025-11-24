@@ -12,7 +12,7 @@ export default class Cart {
   adapter: AdapterObject;
   basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
     this.basePath = '/cart';
   }
@@ -37,7 +37,7 @@ export default class Cart {
           ...CART,
           id: checkoutId,
           checkout_id: checkoutId,
-        } as User['cart'],
+        } as any,
       },
     });
   }

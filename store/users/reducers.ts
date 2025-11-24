@@ -13,7 +13,7 @@ const usersSlice = createSlice({
   name: 'users',
   initialState: initState,
   reducers: {
-    loadUser: (state, action: PayloadAction<{ isFetching: boolean; payload: types.User | null }>) => {
+    loadUser: (state, action: PayloadAction<{ isFetching: boolean; payload: types.User | null | undefined }>) => {
       state.user = action.payload.payload || state.user;
       state.isFetching = action.payload.isFetching;
     },
@@ -23,20 +23,20 @@ const usersSlice = createSlice({
     setExpired: (state, action: PayloadAction<boolean>) => {
       state.isExpired = action.payload;
     },
-    login: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean }>) => {
-      state.isLoggedIn = action.payload.payload;
+    login: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean | undefined }>) => {
+      state.isLoggedIn = action.payload.payload || false;
       state.isFetching = action.payload.isFetching;
     },
-    loginFacebook: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean }>) => {
-      state.isLoggedIn = action.payload.payload;
+    loginFacebook: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean | undefined }>) => {
+      state.isLoggedIn = action.payload.payload || false;
       state.isFetching = action.payload.isFetching;
     },
-    loginGoogle: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean }>) => {
-      state.isLoggedIn = action.payload.payload;
+    loginGoogle: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean | undefined }>) => {
+      state.isLoggedIn = action.payload.payload || false;
       state.isFetching = action.payload.isFetching;
     },
-    logout: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean }>) => {
-      state.isLoggedIn = action.payload.payload;
+    logout: (state, action: PayloadAction<{ isFetching: boolean; payload: boolean | undefined }>) => {
+      state.isLoggedIn = action.payload.payload || false;
       state.isFetching = action.payload.isFetching;
     },
     forgotPassword: (state, action: PayloadAction<{ isFetching: boolean }>) => {

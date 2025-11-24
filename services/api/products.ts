@@ -5,7 +5,7 @@ export default class Products {
   adapter: AdapterObject;
   basePath: string;
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
     this.basePath = '/products';
   }
@@ -61,7 +61,7 @@ export default class Products {
     });
   }
 
-  show(slug): Promise<{ data: { data: Product } }> {
+  show(slug: any): Promise<{ data: { data: Product } }> {
     // return this.adapter.default.get(`${this.basePath}/${slug}/slug`);
     return Promise.resolve({
       data: {

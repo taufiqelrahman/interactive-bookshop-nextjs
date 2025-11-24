@@ -33,8 +33,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
       orderData = data.data;
     }
     const { order, state, payment } = orderData.data;
-    order.state = state.name;
-    order.payment = payment ? formatPayment(payment) : null;
+    order.state = state?.name;
+    order.payment = payment ? formatPayment(payment) : undefined;
     store.dispatch(loadOrder({ isFetching: false, payload: order }));
   } catch (err: unknown) {
     if (err && typeof err === 'object' && 'message' in err) {
@@ -42,7 +42,6 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     } else {
       console.log(err);
     }
-    if (!ctx.res) return;
     return {
       redirect: {
         destination: '/login?from=orders',

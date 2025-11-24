@@ -257,7 +257,7 @@ const PreviewContainer: React.FC<PreviewContainerProps> = (props): JSX.Element =
           }
           actions={
             <Fragment>
-              <Button width="100%" onClick={() => saveToCookies(tempData)} style={{ marginBottom: 12 }}>
+              <Button width="100%" onClick={() => tempData && saveToCookies(tempData)} style={{ marginBottom: 12 }}>
                 {t('login')}
               </Button>
               <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
@@ -414,7 +414,7 @@ const PreviewContainer: React.FC<PreviewContainerProps> = (props): JSX.Element =
         closeModal={() => setShowModal(false)}
         actions={
           <Fragment>
-            <Button width="100%" onClick={() => saveToCookies(tempData)} style={{ marginBottom: 12 }}>
+            <Button width="100%" onClick={() => tempData && saveToCookies(tempData)} style={{ marginBottom: 12 }}>
               {t('login')}
             </Button>
             <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">

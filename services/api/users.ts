@@ -4,29 +4,29 @@ import { CART } from './__mocks__/cart';
 
 export default class Products {
   adapter: AdapterObject;
-  basePath: string;
+  basePath: string = '';
 
-  constructor(adapter) {
+  constructor(adapter: AdapterObject) {
     this.adapter = adapter;
   }
 
-  register(data): Promise<void> {
+  register(data: any): Promise<void> {
     // return this.adapter.default.post('/register', data);
     console.log({ data });
     return Promise.resolve();
   }
 
-  checkEmail(data): Promise<{ data: { exists: boolean } }> {
+  checkEmail(data: any): Promise<{ data: { exists: boolean } }> {
     // return this.adapter.default.post('/check-email', data);
     return Promise.resolve({ data: { exists: data.email === 'existing@example.com' } });
   }
 
-  checkEmailChange(data): Promise<{ data: { exists: boolean } }> {
+  checkEmailChange(data: any): Promise<{ data: { exists: boolean } }> {
     // return this.adapter.secure.post('/check-email-change', data);
     return Promise.resolve({ data: { exists: data.email === 'existing@example.com' } });
   }
 
-  login(data): Promise<{ data: { token: string; user: User } }> {
+  login(data: any): Promise<{ data: { token: string; user: User } }> {
     // return this.adapter.default.post('/login', data);
     return Promise.resolve({
       data: {
@@ -39,7 +39,7 @@ export default class Products {
             id: 'chk_login_123',
             checkout_id: 'chk_login_123',
           },
-        } as User,
+        } as any,
       },
     });
   }
@@ -49,13 +49,13 @@ export default class Products {
     return Promise.resolve({ data: { success: true } });
   }
 
-  forgotPassword(data): Promise<void> {
+  forgotPassword(data: any): Promise<void> {
     // return this.adapter.default.post('/forgot-password', data);
     console.log({ data });
     return Promise.resolve();
   }
 
-  resetPassword(data): Promise<void> {
+  resetPassword(data: any): Promise<void> {
     // return this.adapter.default.post('/reset-password', data);
     console.log({ data });
     return Promise.resolve();
@@ -72,11 +72,11 @@ export default class Products {
           id: 'chk_123',
           checkout_id: 'chk_123',
         },
-      } as User,
+      } as any,
     });
   }
 
-  updateMe(data): Promise<{ data: { user: User; updated: string | true } }> {
+  updateMe(data: any): Promise<{ data: { user: User; updated: string | true } }> {
     // return this.adapter.secure.post('/me', data);
     return Promise.resolve({ data: { ...data, updated: true } });
   }
@@ -86,7 +86,7 @@ export default class Products {
     return Promise.resolve();
   }
 
-  loginFacebook(data): Promise<{ data: { token: string; user: User } }> {
+  loginFacebook(data: any): Promise<{ data: { token: string; user: User } }> {
     // return this.adapter.default.post('/login-facebook', data);
     return Promise.resolve({
       data: {
@@ -96,7 +96,7 @@ export default class Products {
     });
   }
 
-  loginGoogle(data): Promise<{ data: { token: string; user: User } }> {
+  loginGoogle(data: any): Promise<{ data: { token: string; user: User } }> {
     // return this.adapter.default.post('/login-google', data);
     return Promise.resolve({
       data: {

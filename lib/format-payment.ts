@@ -106,13 +106,13 @@ function processNumber(payment: PaymentData): string {
     store,
   } = payment;
   if (vaNumbers && vaNumbers.length && vaNumbers[0]) {
-    number = vaNumbers[0].va_number;
+    number = vaNumbers[0].va_number || '';
   } else if (permataVaNumber) {
     number = permataVaNumber;
   } else if (paymentType === 'echannel') {
-    number = `${billerCode}${billKey}`;
+    number = `${billerCode || ''}${billKey || ''}`;
   } else if (paymentType === 'cstore') {
-    number = paymentCode;
+    number = paymentCode || '';
     if (store) number = 'Alfamart';
   }
   return number;

@@ -40,7 +40,7 @@ const Orders: React.FC<OrdersProps> = (props) => {
         <div className="c-orders-section">
           <div className="c-orders-section__left">
             {orderList.length > 0 ? (
-              orderList.map((item) => (
+              orderList.map((item: any) => (
                 <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
                   <a>
                     <OrderItem {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
@@ -107,7 +107,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
     store.dispatch(loadOrders({ isFetching: true, payload: [] }));
     const { data: orderData } = await api().orders.loadOrders();
     const { order_states: orderStates, orders: rawOrders } = orderData.data;
-    const statesDict = orderStates.reduce((acc, cur) => {
+    const statesDict = orderStates.reduce((acc: any, cur: any) => {
       acc[cur.shopify_order_id] = cur.state.name;
       return acc;
     }, {});

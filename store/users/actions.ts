@@ -27,9 +27,9 @@ import {
 import * as types from './types';
 
 export const thunkLoadUser =
-  (req?): any =>
-  (dispatch): any => {
-    dispatch(loadUser({ isFetching: true, payload: null }));
+  (req?: any): any =>
+  (dispatch: any): any => {
+    dispatch(loadUser({ isFetching: true, payload: undefined }));
     return api(req)
       .users.getMe()
       .then(({ data }) => {
@@ -38,16 +38,16 @@ export const thunkLoadUser =
         if (data.cart) dispatch(thunkLoadCart(data.cart.checkout_id));
       })
       .catch((err) => {
-        dispatch(loadUser({ isFetching: false, payload: null }));
+        dispatch(loadUser({ isFetching: false, payload: undefined }));
         dispatch(setErrorMessage(err.message));
         captureException(err);
       });
   };
 
 export const thunkUpdateUser =
-  (data): any =>
-  (dispatch): any => {
-    dispatch(loadUser({ isFetching: true, payload: null }));
+  (data: any): any =>
+  (dispatch: any): any => {
+    dispatch(loadUser({ isFetching: true, payload: undefined }));
     return api()
       .users.updateMe(data)
       .then(({ data }) => {
@@ -62,7 +62,7 @@ export const thunkUpdateUser =
         toast.success(message);
       })
       .catch((err) => {
-        dispatch(loadUser({ isFetching: false, payload: null }));
+        dispatch(loadUser({ isFetching: false, payload: undefined }));
         let message = '';
         if (err.response.data) {
           if (err.response.data.error === 'DIFFERENT_PHONE') {
@@ -79,9 +79,9 @@ export const thunkUpdateUser =
   };
 
 export const thunkLogin =
-  (userData): ThunkAction<void, types.UsersState, null, Action<string>> =>
-  (dispatch) => {
-    dispatch(login({ isFetching: true, payload: null }));
+  (userData: any): ThunkAction<void, types.UsersState, null, Action<string>> =>
+  (dispatch: any) => {
+    dispatch(login({ isFetching: true, payload: undefined }));
     return api()
       .users.login(userData)
       .then(({ data }) => {
@@ -91,16 +91,16 @@ export const thunkLogin =
         dispatch(login({ isFetching: false, payload: !!data }));
       })
       .catch((err) => {
-        dispatch(login({ isFetching: false, payload: null }));
+        dispatch(login({ isFetching: false, payload: undefined }));
         dispatch(setErrorMessage(err.response && err.response.data));
         captureException(err);
       });
   };
 
 export const thunkLoginFacebook =
-  (data): ThunkAction<void, types.UsersState, null, Action<string>> =>
-  (dispatch): any => {
-    dispatch(loginFacebook({ isFetching: true, payload: null }));
+  (data: any): ThunkAction<void, types.UsersState, null, Action<string>> =>
+  (dispatch: any): any => {
+    dispatch(loginFacebook({ isFetching: true, payload: undefined }));
     return api()
       .users.loginFacebook(data)
       .then(({ data }) => {
@@ -110,16 +110,16 @@ export const thunkLoginFacebook =
         dispatch(loginFacebook({ isFetching: false, payload: !!data }));
       })
       .catch((err) => {
-        dispatch(loginFacebook({ isFetching: false, payload: null }));
+        dispatch(loginFacebook({ isFetching: false, payload: undefined }));
         dispatch(setErrorMessage(err.message));
         captureException(err);
       });
   };
 
 export const thunkLoginGoogle =
-  (data): ThunkAction<void, types.UsersState, null, Action<string>> =>
-  (dispatch): any => {
-    dispatch(loginGoogle({ isFetching: true, payload: null }));
+  (data: any): ThunkAction<void, types.UsersState, null, Action<string>> =>
+  (dispatch: any): any => {
+    dispatch(loginGoogle({ isFetching: true, payload: undefined }));
     return api()
       .users.loginGoogle(data)
       .then(({ data }) => {
@@ -129,7 +129,7 @@ export const thunkLoginGoogle =
         dispatch(loginGoogle({ isFetching: false, payload: !!data }));
       })
       .catch((err) => {
-        dispatch(loginGoogle({ isFetching: false, payload: null }));
+        dispatch(loginGoogle({ isFetching: false, payload: undefined }));
         dispatch(setErrorMessage(err.message));
         captureException(err);
       });
@@ -137,23 +137,23 @@ export const thunkLoginGoogle =
 
 export const thunkLogout =
   (): ThunkAction<void, types.UsersState, null, Action<string>> =>
-  (dispatch): any => {
-    dispatch(logout({ isFetching: true, payload: null }));
+  (dispatch: any): any => {
+    dispatch(logout({ isFetching: true, payload: undefined }));
     return api()
       .users.logout()
       .then(({ data }) => {
         Cookies.remove('user', { domain: process.env.DOMAIN });
         dispatch(logout({ isFetching: false, payload: !!data }));
-        dispatch(loadCart({ isFetching: false, payload: null }));
+        dispatch(loadCart({ isFetching: false, payload: undefined }));
       })
       .catch((err) => {
-        dispatch(logout({ isFetching: false, payload: null }));
+        dispatch(logout({ isFetching: false, payload: undefined }));
         captureException(err);
       });
   };
 
 export const thunkRegister =
-  (userData): ThunkAction<void, types.UsersState, null, Action<string>> =>
+  (userData: any): ThunkAction<void, types.UsersState, null, Action<string>> =>
   async (dispatch): Promise<any> => {
     dispatch(register({ isFetching: true }));
     const checkout = await shopify().checkout.create();
@@ -173,8 +173,8 @@ export const thunkRegister =
   };
 
 export const thunkForgotPassword =
-  (data): ThunkAction<void, types.UsersState, null, Action<string>> =>
-  (dispatch): any => {
+  (data: any): ThunkAction<void, types.UsersState, null, Action<string>> =>
+  (dispatch: any): any => {
     dispatch(forgotPassword({ isFetching: true }));
     return api()
       .users.forgotPassword(data)
@@ -189,8 +189,8 @@ export const thunkForgotPassword =
   };
 
 export const thunkResetPassword =
-  (data): ThunkAction<void, types.UsersState, null, Action<string>> =>
-  (dispatch): any => {
+  (data: any): ThunkAction<void, types.UsersState, null, Action<string>> =>
+  (dispatch: any): any => {
     dispatch(resetPassword({ isFetching: true }));
     return api()
       .users.resetPassword(data)

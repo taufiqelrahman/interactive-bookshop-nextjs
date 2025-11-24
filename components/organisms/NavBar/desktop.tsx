@@ -180,7 +180,7 @@ const NavBar = (): JSX.Element => {
               {cartNotEmpty && <Dot color="red" />}
             </div>
           </a>
-          {showCart && <CartDropdown items={cartItems} />}
+          {showCart && <CartDropdown items={cartItems || []} />}
         </div>
       </Link>
     ),
@@ -281,7 +281,7 @@ const NavBar = (): JSX.Element => {
 
             /* Navigation menu container and items */
             &__menu {
-              @apply flex h-full items-center text-xs text-dark-grey;
+              @apply flex h-full items-center gap-3 text-xs text-dark-grey;
 
               /* Base menu item styling */
               &__item {
@@ -302,7 +302,7 @@ const NavBar = (): JSX.Element => {
               /* Cart and account dropdown containers */
               &__cart,
               &__account {
-                @apply relative flex h-full items-center;
+                @apply relative flex h-full items-center px-4;
 
                 /* Button styling for dropdowns */
                 &__button {

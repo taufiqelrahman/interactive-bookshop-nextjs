@@ -51,7 +51,7 @@ export function processBookPageContent(args: ProcessBookPageContentArgs): string
 
   // If Back Cover, use dedication text
   if (firstContent.occupation.name === 'Back Cover') {
-    processed = dedication;
+    processed = dedication || '';
   }
 
   return processed;

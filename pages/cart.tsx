@@ -20,7 +20,7 @@ const Dot = dynamic(() => import('components/atoms/Dot'));
 const Divider = dynamic(() => import('components/atoms/Divider'));
 const Button = dynamic(() => import('components/atoms/Button'));
 
-const Cart = ({ isMobile, setSideNav }) => {
+const Cart = ({ isMobile, setSideNav }: { isMobile?: boolean; setSideNav?: (open: boolean) => void }) => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.users);
@@ -81,7 +81,7 @@ const Cart = ({ isMobile, setSideNav }) => {
                   {...item}
                   style={{ marginBottom: 12 }}
                   isSkeleton={cart.isFetching}
-                  cartId={cart.cart && cart.cart.id}
+                  cartId={cart.cart?.id || ''}
                 />
               ))}
             </div>
@@ -118,7 +118,7 @@ const Cart = ({ isMobile, setSideNav }) => {
                           </div>
                           <div className="c-cart__summary__total">
                             <NumberFormat
-                              value={cart.cart.shippingLine.price.amount}
+                              value={cart.cart?.shippingLine?.price?.amount || 0}
                               thousandSeparator
                               prefix="Rp"
                               displayType="text"
@@ -295,7 +295,7 @@ const Cart = ({ isMobile, setSideNav }) => {
 export const getServerSideProps = wrapper.getServerSideProps(() => async (ctx) => {
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale, ['common', 'form'])),
+      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'form'])),
     },
   };
 });

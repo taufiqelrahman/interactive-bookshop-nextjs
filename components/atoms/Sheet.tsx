@@ -23,7 +23,7 @@ const Sheet: React.FC<SheetProps> = (props) => {
   };
   const overlayClass = props.overlay ? `c-sheet__overlay--${props.overlay}` : '';
   const zIndexMultiplier = props.zIndexLevel ? 5 * props.zIndexLevel : 1;
-  const onClose = (event) => {
+  const onClose = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     props.closeSheet();
   };
