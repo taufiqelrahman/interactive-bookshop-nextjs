@@ -27,11 +27,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Create .env file for CI
+        run: |
+          cat > .env << EOF
+          APP_URL=http://localhost:3000
+          API_URL=http://localhost:8000/api
+          DOMAIN=.localhost
+          PORT=3000
+          SECRET_KEY=0123456789abcdef0123456789abcdef
+          SECRET_IV=0123456789abcdef
+          NODE_ENV=test
+          EOF
+
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run unit tests
-        run: pnpm run test --ci --passWithNoTests
+        run: pnpm run test:ci
 
       - name: Build application
         run: pnpm run build
