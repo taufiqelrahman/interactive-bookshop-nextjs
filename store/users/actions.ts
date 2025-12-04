@@ -1,10 +1,10 @@
 import { captureException } from '@sentry/core';
-import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
 // import { encryptTokenClient } from 'lib/crypto';
+import { setSecureCookie, removeSecureCookie } from 'lib/secure-cookies';
 import api from 'services/api';
 import shopify from 'services/shopify';
 import { loadCart } from 'store/cart/reducers';
@@ -86,7 +86,7 @@ export const thunkLogin =
       .users.login(userData)
       .then(({ data }) => {
         // const token = encryptTokenClient(data.token);
-        Cookies.set('user', data.token, { domain: process.env.DOMAIN });
+        setSecureCookie('user', data.token);
         dispatch(setExpired(false));
         dispatch(login({ isFetching: false, payload: !!data }));
       })
@@ -105,7 +105,7 @@ export const thunkLoginFacebook =
       .users.loginFacebook(data)
       .then(({ data }) => {
         // const token = encryptTokenClient(data.token);
-        Cookies.set('user', data.token, { domain: process.env.DOMAIN });
+        setSecureCookie('user', data.token);
         dispatch(setExpired(false));
         dispatch(loginFacebook({ isFetching: false, payload: !!data }));
       })
@@ -124,7 +124,7 @@ export const thunkLoginGoogle =
       .users.loginGoogle(data)
       .then(({ data }) => {
         // const token = encryptTokenClient(data.token);
-        Cookies.set('user', data.token, { domain: process.env.DOMAIN });
+        setSecureCookie('user', data.token);
         dispatch(setExpired(false));
         dispatch(loginGoogle({ isFetching: false, payload: !!data }));
       })
@@ -142,7 +142,7 @@ export const thunkLogout =
     return api()
       .users.logout()
       .then(({ data }) => {
-        Cookies.remove('user', { domain: process.env.DOMAIN });
+        removeSecureCookie('user');
         dispatch(logout({ isFetching: false, payload: !!data }));
         dispatch(loadCart({ isFetching: false, payload: undefined }));
       })

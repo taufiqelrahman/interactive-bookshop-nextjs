@@ -3,7 +3,6 @@ import * as Sentry from '@sentry/browser';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/id';
 import detectIt from 'detect-it';
-import Cookies from 'js-cookie';
 import debounce from 'lodash.debounce';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
@@ -16,6 +15,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as gtag from 'lib/gtag';
+import { removeSecureCookie } from 'lib/secure-cookies';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
@@ -67,7 +67,7 @@ function WiguApp({ Component, pageProps }: AppProps<CustomPageProps>) {
 
   useEffect(() => {
     if (isExpired) {
-      Cookies.remove('user', { domain: process.env.DOMAIN });
+      removeSecureCookie('user');
     }
     dayjs.locale(pageProps.currentLocale || 'en');
     setWidth(window.innerWidth);

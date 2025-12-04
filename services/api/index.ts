@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import Cookies from 'js-cookie';
+import { getSecureCookie } from 'lib/secure-cookies';
 import Cart from './cart';
 import Orders from './orders';
 import Products from './products';
@@ -40,7 +40,7 @@ const createSecureAdapter = (req?: any): AxiosInstance => {
     // userToken = userToken ? decryptTokenServer(userToken) : '';
   } else {
     // Client-side: get 'user' token from browser cookies
-    userToken = Cookies.get('user');
+    userToken = getSecureCookie('user');
     // Optionally decrypt token here if needed
     // userToken = userToken ? decryptTokenClient(userToken) : '';
   }
