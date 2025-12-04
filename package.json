@@ -32,7 +32,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.19",
     "awesome-debounce-promise": "^2.1.0",
-    "axios": "^0.19.0",
+    "axios": "^1.7.7",
     "circletype": "^2.3.0",
     "crypto": "^1.0.1",
     "crypto-js": "^3.1.9-1",
