@@ -27,15 +27,11 @@
     "test:e2e:codegen": "playwright codegen http://localhost:3000"
   },
   "dependencies": {
-    "@apollo/react-hooks": "^3.1.3",
     "@reduxjs/toolkit": "^2.8.2",
     "@sentry/browser": "^5.20.1",
     "@sentry/core": "^10.5.0",
     "@types/react-redux": "^7.1.5",
     "@types/shopify-buy": "^3.0.0",
-    "apollo-boost": "^0.4.7",
-    "apollo-client": "^2.6.10",
-    "apollo-link-context": "^1.0.19",
     "awesome-debounce-promise": "^2.1.0",
     "axios": "^1.7.7",
     "circletype": "^2.3.0",
@@ -46,7 +42,6 @@
     "dompurify": "^2.2.2",
     "express": "^4.17.1",
     "google-map-react": "^1.1.6",
-    "graphql": "^14.5.8",
     "js-cookie": "^2.2.1",
     "lodash.debounce": "^4.0.8",
     "lodash.groupby": "^4.6.0",

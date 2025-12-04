@@ -27,7 +27,8 @@ function getShopifyAdapter() {
 }
 
 /**
- * Main GraphQL service for Shopify, exposing domain-specific services.
+ * Main Shopify service, exposing domain-specific services.
+ * Uses Shopify Buy SDK for storefront operations.
  * Add more services as needed.
  */
 const getShopifyService = () => {

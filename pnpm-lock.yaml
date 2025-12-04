@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@apollo/react-hooks':
-        specifier: ^3.1.3
-        version: 3.1.5(@types/react@18.2.0)(apollo-client@2.6.10(graphql@14.7.0))(apollo-utilities@1.3.4(graphql@14.7.0))(graphql@14.7.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@reduxjs/toolkit':
         specifier: ^2.8.2
         version: 2.8.2(react-redux@7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
@@ -26,15 +23,6 @@ importers:
       '@types/shopify-buy':
         specifier: ^3.0.0
         version: 3.0.0
-      apollo-boost:
-        specifier: ^0.4.7
-        version: 0.4.9(graphql@14.7.0)
-      apollo-client:
-        specifier: ^2.6.10
-        version: 2.6.10(graphql@14.7.0)
-      apollo-link-context:
-        specifier: ^1.0.19
-        version: 1.0.20(graphql@14.7.0)
       awesome-debounce-promise:
         specifier: ^2.1.0
         version: 2.1.0
@@ -65,9 +53,6 @@ importers:
       google-map-react:
         specifier: ^1.1.6
         version: 1.1.7(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      graphql:
-        specifier: ^14.5.8
-        version: 14.7.0
       js-cookie:
         specifier: ^2.2.1
         version: 2.2.1
@@ -321,24 +306,6 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       ajv: '>=8'
-
-  '@apollo/react-common@3.1.4':
-    resolution: {integrity: sha512-X5Kyro73bthWSCBJUC5XYQqMnG0dLWuDZmVkzog9dynovhfiVCV4kPSdgSIkqnb++cwCzOVuQ4rDKVwo2XRzQA==}
-    peerDependencies:
-      '@types/react': ^16.8.0
-      apollo-client: ^2.6.4
-      apollo-utilities: ^1.3.2
-      graphql: ^14.3.1
-      react: ^16.8.0
-
-  '@apollo/react-hooks@3.1.5':
-    resolution: {integrity: sha512-y0CJ393DLxIIkksRup4nt+vSjxalbZBXnnXxYbviq/woj+zKa431zy0yT4LqyRKpFy9ahMIwxBnBwfwIoupqLQ==}
-    peerDependencies:
-      '@types/react': ^16.8.0
-      apollo-client: ^2.6.4
-      graphql: ^14.3.1
-      react: ^16.8.0
-      react-dom: ^16.8.0
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -1856,9 +1823,6 @@ packages:
   '@types/yargs@15.0.19':
     resolution: {integrity: sha512-2XUaGVmyQjgyAZldf0D0c14vvo/yv0MhQBSTJcejMMaitsn3nxCB6TmH4G0ZQf+uxROOa9mpanoSm8h6SG/1ZA==}
 
-  '@types/zen-observable@0.8.7':
-    resolution: {integrity: sha512-LKzNTjj+2j09wAo/vvVjzgw5qckJJzhdGgWHW7j69QIGdq/KnZrMAMIHQiWGl3Ccflh5/CudBAntTPYdprPltA==}
-
   '@typescript-eslint/eslint-plugin@8.40.0':
     resolution: {integrity: sha512-w/EboPlBwnmOBtRbiOvzjD+wdiZdgFeo17lkltrtn7X37vagKKWJABvyfsJXTlHe6XBzugmYgd4A4nW+k8Mixw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -2070,12 +2034,6 @@ packages:
   '@webassemblyjs/wast-printer@1.9.0':
     resolution: {integrity: sha512-2J0nE95rHXHyQ24cWjMKJ1tqB/ds8z/cyeOZxJhcb+rW+SQASVjuznUSmdz5GpVJTzU8JkhYut0D3siFDD6wsA==}
 
-  '@wry/context@0.4.4':
-    resolution: {integrity: sha512-LrKVLove/zw6h2Md/KZyWxIkFM6AoyKp71OqpH9Hiip1csjPVoD3tPxlbQUNxEnHENks3UGgNpSBCAfq9KWuag==}
-
-  '@wry/equality@0.1.11':
-    resolution: {integrity: sha512-mwEVBDUVODlsQQ5dfuLUS5/Tf7jqUKyhKYHmVi4fPB6bDMOfWvUPJmKgS1Z7Za/sOI3vzWt4+O7yCiL/70MogA==}
-
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
 
@@ -2213,52 +2171,6 @@ packages:
   anymatch@3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
-
-  apollo-boost@0.4.9:
-    resolution: {integrity: sha512-05y5BKcDaa8w47f8d81UVwKqrAjn8uKLv6QM9fNdldoNzQ+rnOHgFlnrySUZRz9QIT3vPftQkEz2UEASp1Mi5g==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-
-  apollo-cache-inmemory@1.6.6:
-    resolution: {integrity: sha512-L8pToTW/+Xru2FFAhkZ1OA9q4V4nuvfoPecBM34DecAugUZEBhI2Hmpgnzq2hTKZ60LAMrlqiASm0aqAY6F8/A==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-
-  apollo-cache@1.3.5:
-    resolution: {integrity: sha512-1XoDy8kJnyWY/i/+gLTEbYLnoiVtS8y7ikBr/IfmML4Qb+CM7dEEbIUOjnY716WqmZ/UpXIxTfJsY7rMcqiCXA==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-
-  apollo-client@2.6.10:
-    resolution: {integrity: sha512-jiPlMTN6/5CjZpJOkGeUV0mb4zxx33uXWdj/xQCfAMkuNAC3HN7CvYDyMHHEzmcQ5GV12LszWoQ/VlxET24CtA==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-
-  apollo-link-context@1.0.20:
-    resolution: {integrity: sha512-MLLPYvhzNb8AglNsk2NcL9AvhO/Vc9hn2ZZuegbhRHGet3oGr0YH9s30NS9+ieoM0sGT11p7oZ6oAILM/kiRBA==}
-
-  apollo-link-error@1.1.13:
-    resolution: {integrity: sha512-jAZOOahJU6bwSqb2ZyskEK1XdgUY9nkmeclCrW7Gddh1uasHVqmoYc4CKdb0/H0Y1J9lvaXKle2Wsw/Zx1AyUg==}
-
-  apollo-link-http-common@0.2.16:
-    resolution: {integrity: sha512-2tIhOIrnaF4UbQHf7kjeQA/EmSorB7+HyJIIrUjJOKBgnXwuexi8aMecRlqTIDWcyVXCeqLhUnztMa6bOH/jTg==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-
-  apollo-link-http@1.5.17:
-    resolution: {integrity: sha512-uWcqAotbwDEU/9+Dm9e1/clO7hTB2kQ/94JYcGouBVLjoKmTeJTUPQKcJGpPwUjZcSqgYicbFqQSoJIW0yrFvg==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-
-  apollo-link@1.2.14:
-    resolution: {integrity: sha512-p67CMEFP7kOG1JZ0ZkYZwRDa369w5PIjtMjvrQd/HnIV8FRsHRqLqK+oAZQnFa1DDdZtOtHTi+aMIW6EatC2jg==}
-    peerDependencies:
-      graphql: ^0.11.3 || ^0.12.3 || ^0.13.0 || ^14.0.0 || ^15.0.0
-
-  apollo-utilities@1.3.4:
-    resolution: {integrity: sha512-pk2hiWrCXMAy2fRPwEyhvka+mqwzeP60Jr1tRYi5xru+3ko94HI9o6lK0CT33/w4RDlxWchmdhDCrvdr+pHCig==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
 
   aproba@1.2.0:
     resolution: {integrity: sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==}
@@ -4246,17 +4158,6 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  graphql-tag@2.12.6:
-    resolution: {integrity: sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-
-  graphql@14.7.0:
-    resolution: {integrity: sha512-l0xWZpoPKpppFzMfvVyFmp9vLN7w/ZZJPefUicMCepfJeQ8sMcztloGYY9DfjVPo6tIUDzU5Hw3MUbIjj9AVVA==}
-    engines: {node: '>= 6.x'}
-    deprecated: 'No longer supported; please update to a newer version. Details: https://github.com/graphql/graphql-js#version-support'
-
   growly@1.3.0:
     resolution: {integrity: sha512-+xGQY0YyAWCnqy7Cd++hc2JqMYzlm0dG30Jd0beaA64sROr8C4nt8Yc9V5Ro3avlSUDTN0ulqP/VBKi1/lLygw==}
 
@@ -4891,9 +4792,6 @@ packages:
   isurl@1.0.0:
     resolution: {integrity: sha512-1P/yWsxPlDtn7QeRD+ULKQPaIaN6yF368GZ2vDfv0AL0NwpStafjWCDDdn0k8wgFMWpVAqG7oJhxHnlud42i9w==}
     engines: {node: '>= 4'}
-
-  iterall@1.3.0:
-    resolution: {integrity: sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==}
 
   iterator.prototype@1.1.5:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
@@ -5769,9 +5667,6 @@ packages:
   opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
-
-  optimism@0.10.3:
-    resolution: {integrity: sha512-9A5pqGoQk49H6Vhjb9kPgAeeECfUDF6aIICbMDL23kDLStBn1MWk3YvcZ4xWF9CsSf6XEgvRLkXy4xof/56vVw==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -7553,9 +7448,6 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  ts-invariant@0.4.4:
-    resolution: {integrity: sha512-uEtWkFM/sdZvRNNDL3Ehu4WVpwaulhwQszV8mrtcdeE8nN00BV9mAmQ88RkrBhFgl9gMgvjJLAQcZbnPXI9mlA==}
-
   tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
 
@@ -8073,12 +7965,6 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zen-observable-ts@0.8.21:
-    resolution: {integrity: sha512-Yj3yXweRc8LdRMrCC8nIc4kkjWecPAUVh0TI0OUrWXx6aX790vLcDlWca6I4vsyCGH3LpWxq0dJRcMOFoVqmeg==}
-
-  zen-observable@0.8.15:
-    resolution: {integrity: sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==}
-
 snapshots:
 
   '@adobe/css-tools@4.4.4': {}
@@ -8094,30 +7980,6 @@ snapshots:
       json-schema: 0.4.0
       jsonpointer: 5.0.1
       leven: 3.1.0
-
-  '@apollo/react-common@3.1.4(@types/react@18.2.0)(apollo-client@2.6.10(graphql@14.7.0))(apollo-utilities@1.3.4(graphql@14.7.0))(graphql@14.7.0)(react@18.2.0)':
-    dependencies:
-      '@types/react': 18.2.0
-      apollo-client: 2.6.10(graphql@14.7.0)
-      apollo-utilities: 1.3.4(graphql@14.7.0)
-      graphql: 14.7.0
-      react: 18.2.0
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
-
-  '@apollo/react-hooks@3.1.5(@types/react@18.2.0)(apollo-client@2.6.10(graphql@14.7.0))(apollo-utilities@1.3.4(graphql@14.7.0))(graphql@14.7.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@apollo/react-common': 3.1.4(@types/react@18.2.0)(apollo-client@2.6.10(graphql@14.7.0))(apollo-utilities@1.3.4(graphql@14.7.0))(graphql@14.7.0)(react@18.2.0)
-      '@types/react': 18.2.0
-      '@wry/equality': 0.1.11
-      apollo-client: 2.6.10(graphql@14.7.0)
-      graphql: 14.7.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
-    transitivePeerDependencies:
-      - apollo-utilities
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -10037,8 +9899,6 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@types/zen-observable@0.8.7': {}
-
   '@typescript-eslint/eslint-plugin@8.40.0(@typescript-eslint/parser@8.40.0(eslint@8.57.1)(typescript@4.9.5))(eslint@8.57.1)(typescript@4.9.5)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
@@ -10284,15 +10144,6 @@ snapshots:
       '@webassemblyjs/wast-parser': 1.9.0
       '@xtuc/long': 4.2.2
 
-  '@wry/context@0.4.4':
-    dependencies:
-      '@types/node': 12.20.55
-      tslib: 1.14.1
-
-  '@wry/equality@0.1.11':
-    dependencies:
-      tslib: 1.14.1
-
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
@@ -10414,91 +10265,6 @@ snapshots:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
-
-  apollo-boost@0.4.9(graphql@14.7.0):
-    dependencies:
-      apollo-cache: 1.3.5(graphql@14.7.0)
-      apollo-cache-inmemory: 1.6.6(graphql@14.7.0)
-      apollo-client: 2.6.10(graphql@14.7.0)
-      apollo-link: 1.2.14(graphql@14.7.0)
-      apollo-link-error: 1.1.13(graphql@14.7.0)
-      apollo-link-http: 1.5.17(graphql@14.7.0)
-      graphql: 14.7.0
-      graphql-tag: 2.12.6(graphql@14.7.0)
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
-
-  apollo-cache-inmemory@1.6.6(graphql@14.7.0):
-    dependencies:
-      apollo-cache: 1.3.5(graphql@14.7.0)
-      apollo-utilities: 1.3.4(graphql@14.7.0)
-      graphql: 14.7.0
-      optimism: 0.10.3
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
-
-  apollo-cache@1.3.5(graphql@14.7.0):
-    dependencies:
-      apollo-utilities: 1.3.4(graphql@14.7.0)
-      graphql: 14.7.0
-      tslib: 1.14.1
-
-  apollo-client@2.6.10(graphql@14.7.0):
-    dependencies:
-      '@types/zen-observable': 0.8.7
-      apollo-cache: 1.3.5(graphql@14.7.0)
-      apollo-link: 1.2.14(graphql@14.7.0)
-      apollo-utilities: 1.3.4(graphql@14.7.0)
-      graphql: 14.7.0
-      symbol-observable: 1.2.0
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
-      zen-observable: 0.8.15
-
-  apollo-link-context@1.0.20(graphql@14.7.0):
-    dependencies:
-      apollo-link: 1.2.14(graphql@14.7.0)
-      tslib: 1.14.1
-    transitivePeerDependencies:
-      - graphql
-
-  apollo-link-error@1.1.13(graphql@14.7.0):
-    dependencies:
-      apollo-link: 1.2.14(graphql@14.7.0)
-      apollo-link-http-common: 0.2.16(graphql@14.7.0)
-      tslib: 1.14.1
-    transitivePeerDependencies:
-      - graphql
-
-  apollo-link-http-common@0.2.16(graphql@14.7.0):
-    dependencies:
-      apollo-link: 1.2.14(graphql@14.7.0)
-      graphql: 14.7.0
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
-
-  apollo-link-http@1.5.17(graphql@14.7.0):
-    dependencies:
-      apollo-link: 1.2.14(graphql@14.7.0)
-      apollo-link-http-common: 0.2.16(graphql@14.7.0)
-      graphql: 14.7.0
-      tslib: 1.14.1
-
-  apollo-link@1.2.14(graphql@14.7.0):
-    dependencies:
-      apollo-utilities: 1.3.4(graphql@14.7.0)
-      graphql: 14.7.0
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
-      zen-observable-ts: 0.8.21
-
-  apollo-utilities@1.3.4(graphql@14.7.0):
-    dependencies:
-      '@wry/equality': 0.1.11
-      fast-json-stable-stringify: 2.1.0
-      graphql: 14.7.0
-      ts-invariant: 0.4.4
-      tslib: 1.14.1
 
   aproba@1.2.0: {}
 
@@ -13083,15 +12849,6 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphql-tag@2.12.6(graphql@14.7.0):
-    dependencies:
-      graphql: 14.7.0
-      tslib: 2.8.1
-
-  graphql@14.7.0:
-    dependencies:
-      iterall: 1.3.0
-
   growly@1.3.0:
     optional: true
 
@@ -13710,8 +13467,6 @@ snapshots:
     dependencies:
       has-to-string-tag-x: 1.4.1
       is-object: 1.0.2
-
-  iterall@1.3.0: {}
 
   iterator.prototype@1.1.5:
     dependencies:
@@ -14985,10 +14740,6 @@ snapshots:
   opencollective-postinstall@2.0.3: {}
 
   opener@1.5.2: {}
-
-  optimism@0.10.3:
-    dependencies:
-      '@wry/context': 0.4.4
 
   optionator@0.9.4:
     dependencies:
@@ -16883,10 +16634,6 @@ snapshots:
     dependencies:
       typescript: 4.9.5
 
-  ts-invariant@0.4.4:
-    dependencies:
-      tslib: 1.14.1
-
   tsconfig-paths@3.15.0:
     dependencies:
       '@types/json5': 0.0.29
@@ -17563,10 +17310,3 @@ snapshots:
       fd-slicer: 1.1.0
 
   yocto-queue@0.1.0: {}
-
-  zen-observable-ts@0.8.21:
-    dependencies:
-      tslib: 1.14.1
-      zen-observable: 0.8.15
-
-  zen-observable@0.8.15: {}

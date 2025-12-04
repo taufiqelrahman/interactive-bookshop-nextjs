@@ -7,7 +7,7 @@
 ![Next.js](https://img.shields.io/badge/Next.js-12.3.4-black)
 ![React](https://img.shields.io/badge/React-18.2.0-blue)
 
-**Interactive Bookshop Next.js** is an open-source web application for creating **personalized children's books** with e-commerce support. Built with a **Next.js 12 + React 18 + Redux + GraphQL + Shopify + PWA** stack with **TypeScript strict mode**, it's ideal for learning modern full-stack development and contributing to a real project.
+**Interactive Bookshop Next.js** is an open-source web application for creating **personalized children's books** with e-commerce support. Built with a **Next.js 12 + React 18 + Redux + Shopify + PWA** stack with **TypeScript strict mode**, it's ideal for learning modern full-stack development and contributing to a real project.
 
 ---
 
@@ -16,7 +16,7 @@
 - **Character Customization**: Personalize characters with appearances, traits, and occupations
 - **Interactive Story Builder**: Real-time preview of book pages
 - **E-commerce Integration**: Shopify Buy SDK for cart & order management
-- **GraphQL API**: Apollo Client for clean queries & mutations
+- **REST API Integration**: Axios for clean API communication
 - **PWA Ready**: Offline-first, installable, push notifications
 - **Error Tracking**: Integrated Sentry for logging & monitoring
 - **Responsive Design**: Mobile-first UI with Tailwind CSS
@@ -40,7 +40,7 @@
 **Backend & Services**
 
 - Express.js custom server
-- GraphQL API via Apollo Client
+- REST API via Axios
 - Shopify Buy SDK
 - Sentry for error monitoring
 
@@ -73,7 +73,7 @@ git clone https://github.com/<your-username>/interactive-bookshop-nextjs.git
 cd interactive-bookshop-nextjs
 pnpm install
 cp .env.example .env.local
-# Configure your GraphQL endpoint, Shopify API keys, Sentry DSN, etc.
+# Configure your API endpoint, Shopify API keys, Sentry DSN, etc.
 pnpm run tinker
 ```
 
@@ -114,7 +114,7 @@ See [E2E Testing Guide](./docs/E2E_TESTING.md) for detailed testing documentatio
 ├── pages/           # Next.js pages & API routes
 ├── e2e/             # Playwright E2E tests
 ├── store/           # Redux store & slices
-├── services/        # GraphQL, Shopify, Sentry
+├── services/        # API, Shopify, Sentry
 ├── lib/             # Utilities
 ├── styles/          # Global styles
 ├── public/          # Static assets
