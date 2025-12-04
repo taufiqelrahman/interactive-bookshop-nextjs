@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-
 import { CartItem } from 'store/cart/types';
 
 /**
@@ -87,54 +85,52 @@ export const dummySelected: DummySelected = {
 };
 
 /**
- * Cookie-based cart data retrieval utility
+ * LocalStorage-based cart data retrieval utility
  *
- * Safely retrieves and parses cart data from browser cookies, typically used
+ * Safely retrieves and parses cart data from browser localStorage, typically used
  * for restoring cart state after authentication redirects. Handles JSON parsing
  * errors gracefully to prevent application crashes.
  *
- * @returns Parsed CartItem object if cookie exists and is valid, null otherwise
+ * @returns Parsed CartItem object if data exists and is valid, null otherwise
  *
  * @example
  * ```typescript
- * const savedCart = getFromCookies();
+ * const savedCart = getFromLocalStorage();
  * if (savedCart) {
  *   dispatch(saveSelected(savedCart));
  *   // Restore user's cart after login redirect
  * }
  * ```
- *
- * @see {@link https://github.com/js-cookie/js-cookie} for cookie handling details
  */
-export const getFromCookies = (): CartItem | null => {
-  try {
-    const cookie = Cookies.get('pendingTrx');
+export const getFromLocalStorage = (): CartItem | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
-    // Return null if cookie doesn't exist or is empty
-    if (!cookie || cookie.trim() === '') {
+  try {
+    const data = localStorage.getItem('pendingTrx');
+
+    if (!data || data.trim() === '') {
       return null;
     }
 
-    // Attempt to parse the JSON data
-    const parsedData = JSON.parse(cookie);
+    const parsedData = JSON.parse(data);
 
-    // Basic validation to ensure we have a cart-like object
     if (!parsedData || typeof parsedData !== 'object') {
-      console.warn('Invalid cart data format in cookies');
+      console.warn('Invalid cart data format in localStorage');
       return null;
     }
 
     return parsedData as CartItem;
   } catch (error) {
-    // Log parsing errors for debugging while gracefully handling failure
-    console.warn('Failed to parse cart data from cookies:', error);
-
-    // Clean up corrupted cookie to prevent repeated errors
-    Cookies.remove('pendingTrx');
-
+    console.warn('Failed to parse cart data from localStorage:', error);
+    localStorage.removeItem('pendingTrx');
     return null;
   }
 };
+
+// Backward compatibility alias
+export const getFromCookies = getFromLocalStorage;
 
 // /**
 //  * Cookie storage configuration constants

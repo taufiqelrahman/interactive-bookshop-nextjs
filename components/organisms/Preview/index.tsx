@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -16,7 +15,7 @@ import actions from 'store/actions';
 import { saveSelected } from 'store/cart/reducers';
 import { CartItem } from 'store/cart/types';
 
-import { dummySelected, schema, getFromCookies } from './helper';
+import { dummySelected, schema, getFromLocalStorage } from './helper';
 
 // Dynamic imports for better performance and code splitting
 const Modal = dynamic(() => import('components/atoms/Modal'));
@@ -136,16 +135,16 @@ const PreviewContainer: React.FC<PreviewContainerProps> = (props): JSX.Element =
   );
 
   /**
-   * Save cart data to cookies and redirect to login
+   * Save cart data to localStorage and redirect to login
    * Used when user needs to authenticate before checkout
    */
-  const saveToCookies = useCallback(
+  const saveToLocalStorage = useCallback(
     (cartData: CartItem) => {
       try {
-        Cookies.set('pendingTrx', JSON.stringify(cartData));
+        localStorage.setItem('pendingTrx', JSON.stringify(cartData));
         router.push('/login?from=preview');
       } catch (error) {
-        console.error('Error saving to cookies:', error);
+        console.error('Error saving to localStorage:', error);
         toast.error(t('save-error'));
       }
     },
@@ -202,14 +201,14 @@ const PreviewContainer: React.FC<PreviewContainerProps> = (props): JSX.Element =
   }, [errors, formState.isValid, t]);
 
   /**
-   * Handle cookie-based cart restoration
-   * Restores cart data from cookies after login redirect
+   * Handle localStorage-based cart restoration
+   * Restores cart data from localStorage after login redirect
    */
   useEffect(() => {
-    const fromCookies = getFromCookies();
-    if (fromCookies) {
-      dispatch(saveSelected(fromCookies));
-      Cookies.remove('pendingTrx');
+    const fromLocalStorage = getFromLocalStorage();
+    if (fromLocalStorage) {
+      dispatch(saveSelected(fromLocalStorage));
+      localStorage.removeItem('pendingTrx');
     }
   }, [dispatch]);
 
@@ -257,7 +256,11 @@ const PreviewContainer: React.FC<PreviewContainerProps> = (props): JSX.Element =
           }
           actions={
             <Fragment>
-              <Button width="100%" onClick={() => tempData && saveToCookies(tempData)} style={{ marginBottom: 12 }}>
+              <Button
+                width="100%"
+                onClick={() => tempData && saveToLocalStorage(tempData)}
+                style={{ marginBottom: 12 }}
+              >
                 {t('login')}
               </Button>
               <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
@@ -414,7 +417,7 @@ const PreviewContainer: React.FC<PreviewContainerProps> = (props): JSX.Element =
         closeModal={() => setShowModal(false)}
         actions={
           <Fragment>
-            <Button width="100%" onClick={() => tempData && saveToCookies(tempData)} style={{ marginBottom: 12 }}>
+            <Button width="100%" onClick={() => tempData && saveToLocalStorage(tempData)} style={{ marginBottom: 12 }}>
               {t('login')}
             </Button>
             <Button width="100%" onClick={() => continueAsGuest()} variant="outline" color="black">
