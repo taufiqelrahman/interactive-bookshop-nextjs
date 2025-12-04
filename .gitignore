@@ -11,3 +11,8 @@ coverage
 report.*
 __mocks
 todos.md
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/

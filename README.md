@@ -46,7 +46,8 @@
 
 **Dev & Testing**
 
-- Jest + React Testing Library (unit, integration, E2E)
+- Jest + React Testing Library (unit tests)
+- Playwright (E2E tests)
 - ESLint + Prettier
 - Husky + lint-staged
 - Bundle Analyzer
@@ -83,15 +84,26 @@ Visit http://localhost:3000 to explore the app.
 ### 📜 Scripts
 
 ```bash
-- pnpm run dev - Start dev server
-- pnpm run tinker - Dev + lint concurrently
-- pnpm run build - Production build
-- pnpm run start - Start server
-- pnpm run deploy - Build + start
-- pnpm run test - Run tests
-- pnpm run lint - ESLint & Stylelint
-- pnpm run analyze - Bundle analysis
+# Development
+pnpm run dev              # Start dev server
+pnpm run tinker           # Dev + lint concurrently
+pnpm run build            # Production build
+pnpm run start            # Start production server
+pnpm run deploy           # Build + start
+
+# Testing
+pnpm run test             # Run unit tests
+pnpm run test:e2e         # Run E2E tests with Playwright
+pnpm run test:e2e:ui      # Run E2E tests in UI mode
+pnpm run test:e2e:debug   # Debug E2E tests
+
+# Code Quality
+pnpm run lint             # ESLint & Stylelint
+pnpm run format           # Prettier formatting
+pnpm run analyze          # Bundle analysis
 ```
+
+See [E2E Testing Guide](./docs/E2E_TESTING.md) for detailed testing documentation.
 
 ⸻
 
@@ -100,13 +112,15 @@ Visit http://localhost:3000 to explore the app.
 ```bash
 ├── components/      # Atoms, Molecules, Organisms
 ├── pages/           # Next.js pages & API routes
+├── e2e/             # Playwright E2E tests
 ├── store/           # Redux store & slices
 ├── services/        # GraphQL, Shopify, Sentry
 ├── lib/             # Utilities
 ├── styles/          # Global styles
-├── public/          # Static assets & demo screenshot
+├── public/          # Static assets
 ├── config/          # App configuration
-└── _mocks/          # Test mocks
+├── docs/            # Documentation
+└── .github/         # CI/CD workflows
 ```
 
 ⸻

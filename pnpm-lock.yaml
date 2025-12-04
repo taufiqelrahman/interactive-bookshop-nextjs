@@ -159,6 +159,9 @@ importers:
       '@next/bundle-analyzer':
         specifier: ^9.5.5
         version: 9.5.5
+      '@playwright/test':
+        specifier: ^1.57.0
+        version: 1.57.0
       '@styled-jsx/plugin-sass':
         specifier: ^4.1.1
         version: 4.1.1(sass@1.90.0)
@@ -249,6 +252,9 @@ importers:
       nextjs-sitemap-generator:
         specifier: ^1.0.0
         version: 1.3.1
+      playwright:
+        specifier: ^1.57.0
+        version: 1.57.0
       postcss:
         specifier: ^8.5.6
         version: 8.5.6
@@ -1535,6 +1541,11 @@ packages:
   '@pkgr/core@0.2.9':
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+
+  '@playwright/test@1.57.0':
+    resolution: {integrity: sha512-6TyEnHgd6SArQO8UO2OMTxshln3QMWBtPGrOCgs3wVEmQmwyuNtB10IZMfmYDE0riwNR1cu4q+pPcxMVtaG3TA==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   '@reduxjs/toolkit@2.8.2':
     resolution: {integrity: sha512-MYlOhQ0sLdw4ud48FoC5w0dH9VfWQjtCjreKwYTT3l+r427qYC5Y8PihNutepr8XrNaBUDQo9khWUwQxZaqt5A==}
@@ -4049,6 +4060,11 @@ packages:
     os: [darwin]
     deprecated: Upgrade to fsevents v2 to mitigate potential security issues
 
+  fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -6036,6 +6052,16 @@ packages:
   pkg-dir@5.0.0:
     resolution: {integrity: sha512-NPE8TDbzl/3YQYY7CSS228s3g2ollTFnc+Qi3tqmqJp9Vg2ovUpixcJEo2HJScN2Ez+kEaal6y70c0ehqJBJeA==}
     engines: {node: '>=10'}
+
+  playwright-core@1.57.0:
+    resolution: {integrity: sha512-agTcKlMw/mjBWOnD6kFZttAAGHgi/Nw0CZ2o6JqWSbMlI219lAFLZZCyqByTsvVAJq5XA5H8cA6PrvBRpBWEuQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  playwright@1.57.0:
+    resolution: {integrity: sha512-ilYQj1s8sr2ppEJ2YVadYBN0Mb3mdo9J0wQ+UuDhzYqURwSoW4n1Xs5vs7ORwgDGmyEh33tRMeS8KhdkMoLXQw==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   please-upgrade-node@3.2.0:
     resolution: {integrity: sha512-gQR3WpIgNIKwBMVLkpMUeR3e1/E1y42bqDQZfql+kDeXd8COYfM8PQA4X6y7a8u9Ua9FHmsrrmirW2vHs45hWg==}
@@ -9252,16 +9278,16 @@ snapshots:
       '@jimp/utils': 0.16.13
       jpeg-js: 0.4.4
 
-  '@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0)':
+  '@jimp/plugin-blit@0.14.0(@jimp/custom@0.16.13)':
     dependencies:
       '@babel/runtime': 7.28.3
-      '@jimp/custom': 0.14.0
+      '@jimp/custom': 0.16.13
       '@jimp/utils': 0.14.0
 
-  '@jimp/plugin-blur@0.14.0(@jimp/custom@0.14.0)':
+  '@jimp/plugin-blur@0.14.0(@jimp/custom@0.16.13)':
     dependencies:
       '@babel/runtime': 7.28.3
-      '@jimp/custom': 0.14.0
+      '@jimp/custom': 0.16.13
       '@jimp/utils': 0.14.0
 
   '@jimp/plugin-circle@0.14.0(@jimp/custom@0.14.0)':
@@ -9270,10 +9296,10 @@ snapshots:
       '@jimp/custom': 0.14.0
       '@jimp/utils': 0.14.0
 
-  '@jimp/plugin-color@0.14.0(@jimp/custom@0.14.0)':
+  '@jimp/plugin-color@0.14.0(@jimp/custom@0.16.13)':
     dependencies:
       '@babel/runtime': 7.28.3
-      '@jimp/custom': 0.14.0
+      '@jimp/custom': 0.16.13
       '@jimp/utils': 0.14.0
       tinycolor2: 1.6.0
 
@@ -9281,24 +9307,24 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.3
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-scale': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
+      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-scale': 0.14.0(@jimp/custom@0.16.13)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
       '@jimp/utils': 0.14.0
 
   '@jimp/plugin-cover@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-scale@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0)))':
     dependencies:
       '@babel/runtime': 7.28.3
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-crop': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-scale': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
+      '@jimp/plugin-crop': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-scale': 0.14.0(@jimp/custom@0.16.13)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
       '@jimp/utils': 0.14.0
 
-  '@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0)':
+  '@jimp/plugin-crop@0.14.0(@jimp/custom@0.16.13)':
     dependencies:
       '@babel/runtime': 7.28.3
-      '@jimp/custom': 0.14.0
+      '@jimp/custom': 0.16.13
       '@jimp/utils': 0.14.0
 
   '@jimp/plugin-displace@0.14.0(@jimp/custom@0.14.0)':
@@ -9323,7 +9349,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.3
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-rotate': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
+      '@jimp/plugin-rotate': 0.14.0(@jimp/custom@0.16.13)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
       '@jimp/utils': 0.14.0
 
   '@jimp/plugin-gaussian@0.14.0(@jimp/custom@0.14.0)':
@@ -9354,16 +9380,16 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.3
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/utils': 0.14.0
       load-bmfont: 1.4.2
     transitivePeerDependencies:
       - debug
 
-  '@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0)':
+  '@jimp/plugin-resize@0.14.0(@jimp/custom@0.16.13)':
     dependencies:
       '@babel/runtime': 7.28.3
-      '@jimp/custom': 0.14.0
+      '@jimp/custom': 0.16.13
       '@jimp/utils': 0.14.0
 
   '@jimp/plugin-resize@0.16.13(@jimp/custom@0.16.13)':
@@ -9372,49 +9398,49 @@ snapshots:
       '@jimp/custom': 0.16.13
       '@jimp/utils': 0.16.13
 
-  '@jimp/plugin-rotate@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))':
+  '@jimp/plugin-rotate@0.14.0(@jimp/custom@0.16.13)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))':
     dependencies:
       '@babel/runtime': 7.28.3
-      '@jimp/custom': 0.14.0
-      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-crop': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/custom': 0.16.13
+      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-crop': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/utils': 0.14.0
 
-  '@jimp/plugin-scale@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))':
+  '@jimp/plugin-scale@0.14.0(@jimp/custom@0.16.13)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))':
     dependencies:
       '@babel/runtime': 7.28.3
-      '@jimp/custom': 0.14.0
-      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/custom': 0.16.13
+      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/utils': 0.14.0
 
   '@jimp/plugin-shadow@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-blur@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))':
     dependencies:
       '@babel/runtime': 7.28.3
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-blur': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/plugin-blur': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/utils': 0.14.0
 
   '@jimp/plugin-threshold@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-color@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))':
     dependencies:
       '@babel/runtime': 7.28.3
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-color': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/plugin-color': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/utils': 0.14.0
 
   '@jimp/plugins@0.14.0(@jimp/custom@0.14.0)':
     dependencies:
       '@babel/runtime': 7.28.3
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-blur': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/plugin-blit': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-blur': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/plugin-circle': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-color': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/plugin-color': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/plugin-contain': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-scale@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0)))
       '@jimp/plugin-cover': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-scale@0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0)))
-      '@jimp/plugin-crop': 0.14.0(@jimp/custom@0.14.0)
+      '@jimp/plugin-crop': 0.14.0(@jimp/custom@0.16.13)
       '@jimp/plugin-displace': 0.14.0(@jimp/custom@0.14.0)
       '@jimp/plugin-dither': 0.14.0(@jimp/custom@0.14.0)
       '@jimp/plugin-fisheye': 0.14.0(@jimp/custom@0.14.0)
@@ -9424,9 +9450,9 @@ snapshots:
       '@jimp/plugin-mask': 0.14.0(@jimp/custom@0.14.0)
       '@jimp/plugin-normalize': 0.14.0(@jimp/custom@0.14.0)
       '@jimp/plugin-print': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))
-      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.14.0)
-      '@jimp/plugin-rotate': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
-      '@jimp/plugin-scale': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
+      '@jimp/plugin-resize': 0.14.0(@jimp/custom@0.16.13)
+      '@jimp/plugin-rotate': 0.14.0(@jimp/custom@0.16.13)(@jimp/plugin-blit@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-crop@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
+      '@jimp/plugin-scale': 0.14.0(@jimp/custom@0.16.13)(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
       '@jimp/plugin-shadow': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-blur@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
       '@jimp/plugin-threshold': 0.14.0(@jimp/custom@0.14.0)(@jimp/plugin-color@0.14.0(@jimp/custom@0.14.0))(@jimp/plugin-resize@0.14.0(@jimp/custom@0.14.0))
       timm: 1.7.1
@@ -9650,6 +9676,10 @@ snapshots:
     optional: true
 
   '@pkgr/core@0.2.9': {}
+
+  '@playwright/test@1.57.0':
+    dependencies:
+      playwright: 1.57.0
 
   '@reduxjs/toolkit@2.8.2(react-redux@7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -12797,6 +12827,9 @@ snapshots:
       nan: 2.23.0
     optional: true
 
+  fsevents@2.3.2:
+    optional: true
+
   fsevents@2.3.3:
     optional: true
 
@@ -15199,6 +15232,14 @@ snapshots:
   pkg-dir@5.0.0:
     dependencies:
       find-up: 5.0.0
+
+  playwright-core@1.57.0: {}
+
+  playwright@1.57.0:
+    dependencies:
+      playwright-core: 1.57.0
+    optionalDependencies:
+      fsevents: 2.3.2
 
   please-upgrade-node@3.2.0:
     dependencies:
