@@ -18,6 +18,10 @@ module.exports = {
   // Module file extensions for importing
   // moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
-    'components(.*)$': '<rootDir>/components$1',
+    '^components(.*)$': '<rootDir>/components$1',
+    '^lib(.*)$': '<rootDir>/lib$1',
+    '^store(.*)$': '<rootDir>/store$1',
+    '^services(.*)$': '<rootDir>/services$1',
+    '^config(.*)$': '<rootDir>/config$1',
   },
 };
