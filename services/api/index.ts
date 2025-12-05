@@ -6,7 +6,6 @@ import Products from './products';
 import Users from './users';
 import Master from './master';
 import Message from './message';
-// import { decryptTokenClient, decryptTokenServer } from 'lib/crypto';
 
 // AdapterObject defines the structure for API adapters (default and secure)
 export interface AdapterObject {
@@ -36,13 +35,9 @@ const createSecureAdapter = (req?: any): AxiosInstance => {
     const cookies = req.headers.cookie.split(';').map((cookie: string) => cookie.trim());
     const userCookie = cookies.find((cookie: string) => cookie.startsWith('user='));
     userToken = userCookie ? userCookie.split('=')[1] : undefined;
-    // Optionally decrypt token here if needed
-    // userToken = userToken ? decryptTokenServer(userToken) : '';
   } else {
     // Client-side: get 'user' token from browser cookies
     userToken = getSecureCookie('user');
-    // Optionally decrypt token here if needed
-    // userToken = userToken ? decryptTokenClient(userToken) : '';
   }
 
   // Merge base config with Authorization header

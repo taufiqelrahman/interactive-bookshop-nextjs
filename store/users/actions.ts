@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-// import { encryptTokenClient } from 'lib/crypto';
 import { setSecureCookie, removeSecureCookie } from 'lib/secure-cookies';
 import api from 'services/api';
 import shopify from 'services/shopify';
