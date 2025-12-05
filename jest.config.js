@@ -1,6 +1,11 @@
 module.exports = {
   // roots: ['<rootDir>'],
-  testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/components/**/?(*.)+(test).+(ts|tsx|js)'],
+  testMatch: [
+    '**/__tests__/**/*.+(ts|tsx|js)',
+    '**/components/**/?(*.)+(test).+(ts|tsx|js)',
+    '**/lib/**/?(*.)+(test).+(ts|tsx)',
+    '**/store/**/?(*.)+(test).+(ts|tsx)',
+  ],
   testPathIgnorePatterns: ['/node_modules/', '/e2e/', '/__tests__/e2e/'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
