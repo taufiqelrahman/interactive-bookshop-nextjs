@@ -1,6 +1,7 @@
 # Interactive Bookshop Next.js 🚀📚
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/taufiqelrahman/interactive-bookshop-nextjs/ci.yml?branch=master)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/actions)
+[![Coverage](https://img.shields.io/badge/coverage-97.79%25-brightgreen)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs)
 [![Good First Issue](https://img.shields.io/badge/good%20first%20issue-friendly-brightgreen)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![Node Version](https://img.shields.io/badge/node-22.x-brightgreen)](https://nodejs.org/)
 ![TypeScript](https://img.shields.io/badge/TS-4.9.5%20strict-blue)
@@ -46,8 +47,8 @@
 
 **Dev & Testing**
 
-- Jest + React Testing Library (unit tests)
-- Playwright (E2E tests)
+- Jest 26.6.3 + React Testing Library (143 unit tests, 97.79% coverage)
+- Playwright 1.57.0 (19 E2E tests across 5 browsers)
 - ESLint + Prettier
 - Husky + lint-staged
 - Bundle Analyzer
@@ -92,8 +93,8 @@ pnpm run start            # Start production server
 pnpm run deploy           # Build + start
 
 # Testing
-pnpm run test             # Run unit tests
-pnpm run test:e2e         # Run E2E tests with Playwright
+pnpm run test             # Run unit tests with coverage (143 tests, 97.79%)
+pnpm run test:e2e         # Run E2E tests with Playwright (19 tests)
 pnpm run test:e2e:ui      # Run E2E tests in UI mode
 pnpm run test:e2e:debug   # Debug E2E tests
 
@@ -101,6 +102,23 @@ pnpm run test:e2e:debug   # Debug E2E tests
 pnpm run lint             # ESLint & Stylelint
 pnpm run format           # Prettier formatting
 pnpm run analyze          # Bundle analysis
+```
+
+### 🧪 Test Coverage
+
+```
+Overall Coverage: 97.79% statements | 90.78% branch | 95.74% functions | 98.23% lines
+
+Test Suites: 17 passed
+├─ Unit Tests: 143 passed
+│  ├─ Components (atoms): 10 tests (90.24% coverage)
+│  ├─ Lib utilities: 49 tests (100% coverage)
+│  └─ Store/Redux: 84 tests (100% coverage)
+└─ E2E Tests: 19 tests across 5 browsers
+   ├─ Authentication & user flows
+   ├─ Book customization & preview
+   ├─ Cart & checkout
+   └─ Order management
 ```
 
 See [E2E Testing Guide](./docs/E2E_TESTING.md) for detailed testing documentation.
