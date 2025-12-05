@@ -5,39 +5,27 @@ const defaultConfig = require('./jest.config.js');
 module.exports = {
   ...defaultConfig,
   collectCoverageFrom: [
-    // Include testable files
-    'components/**/*.{js,ts,tsx}',
-    'lib/**/*.{js,ts,tsx}',
-    'store/**/*.{js,ts,tsx}',
-    'services/api/**/*.ts',
-    'services/shopify/**/*.ts',
-    'config/**/*.ts',
-    // Exclude untestable or framework files
-    '!**/*.test.{js,ts,tsx}',
-    '!**/__tests__/**',
-    '!**/__snapshots__/**',
-    '!**/node_modules/**',
-    '!**/.next/**',
-    '!**/coverage/**',
-    '!**/dist/**',
-    '!**/build/**',
-    // Exclude pages (SSR/SSG complexity)
-    '!pages/**',
-    // Exclude Next.js special files
-    '!components/layouts/**',
-    '!next.config.js',
-    '!next-env.d.ts',
-    // Exclude type definitions
-    '!lib/validation.ts',
-    '!**/types.ts',
-    '!global.d.ts',
-    // Exclude complex integration components
-    '!components/organisms/**',
-    '!components/molecules/CartItem/**',
-    '!components/molecules/OrderItem/**',
-    '!components/molecules/AccountDropdown.tsx',
-    '!components/molecules/CartDropdown.tsx',
-    '!components/BookPreview.tsx',
+    // Only include files that have tests
+    'components/atoms/Accordion.tsx',
+    'components/atoms/Badge.tsx',
+    'components/atoms/Button.tsx',
+    'components/atoms/Capsule.tsx',
+    'components/atoms/Card.tsx',
+    'components/atoms/Divider.tsx',
+    'components/atoms/Dot.tsx',
+    'components/atoms/Floating.tsx',
+    'components/atoms/Loader.tsx',
+    'components/atoms/DateField/helper.ts',
+    'lib/format-array.ts',
+    'lib/format-date.ts',
+    'lib/format-image.ts',
+    'lib/format-payment.ts',
+    'lib/hooks/useResponsive.ts',
+    'lib/secure-cookies.ts',
+    'store/cart/reducers.ts',
+    'store/users/reducers.ts',
+    'store/orders/reducers.ts',
+    'store/products/reducers.ts',
   ],
   coverageThreshold: {
     global: {

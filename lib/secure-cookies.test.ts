@@ -4,9 +4,29 @@
 
 import Cookies from 'js-cookie';
 
-import { getSecureCookie, setSecureCookie, removeSecureCookie } from './secure-cookies';
+import {
+  getSecureCookie,
+  setSecureCookie,
+  removeSecureCookie,
+  generateCSRFToken,
+  setCSRFToken,
+  getCSRFToken,
+  validateCSRFToken,
+} from './secure-cookies';
 
 jest.mock('js-cookie');
+
+// Mock crypto.getRandomValues for CSRF token generation
+Object.defineProperty(global, 'crypto', {
+  value: {
+    getRandomValues: (arr: Uint8Array) => {
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = Math.floor(Math.random() * 256);
+      }
+      return arr;
+    },
+  },
+});
 
 describe('lib/secure-cookies', () => {
   beforeEach(() => {
@@ -90,6 +110,79 @@ describe('lib/secure-cookies', () => {
         domain: undefined,
         path: '/custom',
       });
+    });
+  });
+
+  describe('generateCSRFToken', () => {
+    it('should generate a random token', () => {
+      const token1 = generateCSRFToken();
+      const token2 = generateCSRFToken();
+
+      expect(token1).toBeDefined();
+      expect(token2).toBeDefined();
+      expect(typeof token1).toBe('string');
+      expect(token1).not.toBe(token2); // Should be different each time
+    });
+  });
+
+  describe('setCSRFToken', () => {
+    it('should set CSRF token cookie', () => {
+      const { setCSRFToken } = require('./secure-cookies');
+      const token = setCSRFToken();
+
+      expect(token).toBeDefined();
+      expect(typeof token).toBe('string');
+      expect(Cookies.set).toHaveBeenCalled();
+    });
+
+    it('should use provided token', () => {
+      const { setCSRFToken } = require('./secure-cookies');
+      const customToken = 'my-custom-token';
+      const result = setCSRFToken(customToken);
+
+      expect(result).toBe(customToken);
+      expect(Cookies.set).toHaveBeenCalled();
+    });
+  });
+
+  describe('getCSRFToken', () => {
+    it('should get CSRF token from cookie', () => {
+      const { getCSRFToken } = require('./secure-cookies');
+      (Cookies.get as jest.Mock).mockReturnValue('csrf-token-value');
+
+      const result = getCSRFToken();
+
+      expect(result).toBe('csrf-token-value');
+      expect(Cookies.get).toHaveBeenCalledWith('csrf-token');
+    });
+  });
+
+  describe('validateCSRFToken', () => {
+    it('should validate matching token', () => {
+      const { validateCSRFToken } = require('./secure-cookies');
+      (Cookies.get as jest.Mock).mockReturnValue('valid-token');
+
+      const result = validateCSRFToken('valid-token');
+
+      expect(result).toBe(true);
+    });
+
+    it('should reject non-matching token', () => {
+      const { validateCSRFToken } = require('./secure-cookies');
+      (Cookies.get as jest.Mock).mockReturnValue('valid-token');
+
+      const result = validateCSRFToken('invalid-token');
+
+      expect(result).toBe(false);
+    });
+
+    it('should reject when no token is stored', () => {
+      const { validateCSRFToken } = require('./secure-cookies');
+      (Cookies.get as jest.Mock).mockReturnValue(undefined);
+
+      const result = validateCSRFToken('any-token');
+
+      expect(result).toBe(false);
     });
   });
 });
