@@ -11,4 +11,6 @@ module.exports = {
     'services/**/*.{js,ts,tsx}',
     'store/**/*.{js,ts,tsx}',
   ],
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'json-summary'],
+  coverageDirectory: 'coverage',
 };

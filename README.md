@@ -1,7 +1,7 @@
 # Interactive Bookshop Next.js 🚀📚
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/taufiqelrahman/interactive-bookshop-nextjs/ci.yml?branch=master)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/actions)
-[![Coverage](https://img.shields.io/badge/coverage-97.79%25-brightgreen)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs)
+[![codecov](https://codecov.io/gh/taufiqelrahman/interactive-bookshop-nextjs/branch/master/graph/badge.svg)](https://codecov.io/gh/taufiqelrahman/interactive-bookshop-nextjs)
 [![Good First Issue](https://img.shields.io/badge/good%20first%20issue-friendly-brightgreen)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![Node Version](https://img.shields.io/badge/node-22.x-brightgreen)](https://nodejs.org/)
 ![TypeScript](https://img.shields.io/badge/TS-4.9.5%20strict-blue)
