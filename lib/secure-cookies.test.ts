@@ -127,7 +127,6 @@ describe('lib/secure-cookies', () => {
 
   describe('setCSRFToken', () => {
     it('should set CSRF token cookie', () => {
-      const { setCSRFToken } = require('./secure-cookies');
       const token = setCSRFToken();
 
       expect(token).toBeDefined();
@@ -136,7 +135,6 @@ describe('lib/secure-cookies', () => {
     });
 
     it('should use provided token', () => {
-      const { setCSRFToken } = require('./secure-cookies');
       const customToken = 'my-custom-token';
       const result = setCSRFToken(customToken);
 
@@ -147,7 +145,6 @@ describe('lib/secure-cookies', () => {
 
   describe('getCSRFToken', () => {
     it('should get CSRF token from cookie', () => {
-      const { getCSRFToken } = require('./secure-cookies');
       (Cookies.get as jest.Mock).mockReturnValue('csrf-token-value');
 
       const result = getCSRFToken();
@@ -159,7 +156,6 @@ describe('lib/secure-cookies', () => {
 
   describe('validateCSRFToken', () => {
     it('should validate matching token', () => {
-      const { validateCSRFToken } = require('./secure-cookies');
       (Cookies.get as jest.Mock).mockReturnValue('valid-token');
 
       const result = validateCSRFToken('valid-token');
@@ -168,7 +164,6 @@ describe('lib/secure-cookies', () => {
     });
 
     it('should reject non-matching token', () => {
-      const { validateCSRFToken } = require('./secure-cookies');
       (Cookies.get as jest.Mock).mockReturnValue('valid-token');
 
       const result = validateCSRFToken('invalid-token');
@@ -177,7 +172,6 @@ describe('lib/secure-cookies', () => {
     });
 
     it('should reject when no token is stored', () => {
-      const { validateCSRFToken } = require('./secure-cookies');
       (Cookies.get as jest.Mock).mockReturnValue(undefined);
 
       const result = validateCSRFToken('any-token');
