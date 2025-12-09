@@ -7,7 +7,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "debug": "node server.js",
     "lint": "eslint --ext js,ts,jsx,tsx --fix --ignore-path .eslintignore .",
     "format": "prettier --write '**/*.{js,ts,tsx,css,scss,json,md}'",
     "build": "next build",
