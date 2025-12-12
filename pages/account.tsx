@@ -22,7 +22,7 @@ const Button = dynamic(() => import('components/atoms/Button'));
 const Footer = dynamic(() => import('components/organisms/Footer'));
 
 const Account = (props: any): any => {
-  const { t } = useTranslation('form');
+  const { t, i18n } = useTranslation('form');
   const dispatch = useDispatch();
   const master = useSelector((state: any) => state.master);
   const methods = useForm({ mode: 'onChange' });
@@ -172,7 +172,7 @@ const Account = (props: any): any => {
     let PARAMS = data;
     if (data.province) PARAMS = { ...data, province: data.province.value };
     if (data.newPhone) PARAMS = { ...data, phone: data.newPhone.replace(/^\s+|\s+$/gm, '') };
-    dispatch(actions.thunkUpdateUser(PARAMS));
+    dispatch(actions.thunkUpdateUser(PARAMS, i18n.language));
     if (showModal) setShowModal(false);
     const field = Object.keys(data)[0];
     if (['address1', 'address2', 'city', 'country', 'province', 'zip'].includes(field)) {
@@ -493,7 +493,7 @@ const Account = (props: any): any => {
             </div>
             <div className="font-semibold">{t('common:otp-code')}</div>
             <TextField variant="full-width" name="otp" style={{ margin: '6px 0 24px' }} />
-            <div className="c-account__action" onClick={() => props.thunkSendOtp()}>
+            <div className="c-account__action" onClick={() => props.thunkSendOtp(i18n.language)}>
               {t('common:otp-resend')}
             </div>
           </Fragment>

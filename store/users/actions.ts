@@ -44,14 +44,14 @@ export const thunkLoadUser =
   };
 
 export const thunkUpdateUser =
-  (data: any): any =>
+  (data: any, language = 'en'): any =>
   (dispatch: any): any => {
     dispatch(loadUser({ isFetching: true, payload: undefined }));
     return api()
       .users.updateMe(data)
       .then(({ data }) => {
         dispatch(loadUser({ isFetching: false, payload: data.user }));
-        const isEnglish = true; // @todo should get locale from request
+        const isEnglish = language === 'en';
         let message = isEnglish ? 'Saved successfully' : 'Berhasil menyimpan';
         if (data.updated === 'email') {
           message = isEnglish
@@ -65,9 +65,7 @@ export const thunkUpdateUser =
         let message = '';
         if (err.response.data) {
           if (err.response.data.error === 'DIFFERENT_PHONE') {
-            // eslint-disable-next-line no-constant-condition
-            message = true ? `Your old phone number did not match` : `Nomor telepon anda tidak sesuai`;
-            // @todo should get locale from request
+            message = language === 'en' ? 'Your old phone number did not match' : 'Nomor telepon anda tidak sesuai';
           }
         } else {
           message = err.message;
@@ -204,7 +202,7 @@ export const thunkResetPassword =
   };
 
 export const thunkSendOtp =
-  (): ThunkAction<void, types.UsersState, null, Action<string>> =>
+  (language = 'en'): ThunkAction<void, types.UsersState, null, Action<string>> =>
   (dispatch, getState): any => {
     dispatch(sendOtp({ isFetching: true }));
     return api()
@@ -213,9 +211,7 @@ export const thunkSendOtp =
         dispatch(sendOtp({ isFetching: false }));
         const { user } = (getState() as any).users;
         const message =
-          // i18n.language === 'en'
-          // eslint-disable-next-line no-constant-condition
-          true // @todo should get locale from request
+          language === 'en'
             ? `A verification code has been sent to ${user.phone}`
             : `Kode verifikasi telah dikirim ke ${user.phone}`;
         toast.success(message);
