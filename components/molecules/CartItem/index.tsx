@@ -1,5 +1,6 @@
 // @todo refactor
 import debounce from 'lodash.debounce';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState, useRef, Fragment } from 'react';
@@ -118,7 +119,13 @@ const CartItem = (props: CartItemProps) => {
                     <Skeleton height={72} width={72} />
                   ) : (
                     <div className="c-cart-item__detail__image">
-                      <img src={previewImg(props.customAttributes)} alt="item preview" />
+                      <Image
+                        src={previewImg(props.customAttributes)}
+                        alt="item preview"
+                        width={72}
+                        height={72}
+                        unoptimized
+                      />
                     </div>
                   )}
                 </div>
@@ -315,7 +322,7 @@ const CartItem = (props: CartItemProps) => {
               <Skeleton height={100} width={100} />
             ) : (
               <div className="c-cart-item__preview__image">
-                <img src={previewImg(customAttributes)} alt="item preview" />
+                <Image src={previewImg(customAttributes)} alt="item preview" width={100} height={100} unoptimized />
               </div>
             )}
             {props.isSkeleton ? (

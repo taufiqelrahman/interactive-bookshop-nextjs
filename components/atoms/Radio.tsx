@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { forwardRef } from 'react';
 // import { ConnectForm } from 'lib/form-connect';
 // import { useFormContext } from 'react-hook-form';
@@ -33,7 +34,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={`c-radio__button ${variantClass} ${errorClass}`} style={props.style}>
           {props.type === 'image' ? (
-            <img src={props.imageUrl} alt="radio button" />
+            <Image src={props.imageUrl || ''} alt="radio button" width={100} height={100} />
           ) : (
             props.type !== 'plain' && props.label
           )}

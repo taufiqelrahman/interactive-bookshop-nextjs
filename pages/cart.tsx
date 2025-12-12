@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -175,7 +176,12 @@ const Cart = ({ isMobile, setSideNav }: { isMobile?: boolean; setSideNav?: (open
           </div>
         ) : (
           <div className="c-cart__empty" style={isMobile ? { height: `calc(${screenHeight})` } : {}}>
-            <img src={`/static/images/empty-asset${isMobile ? '-sm' : ''}.png`} alt="empty" />
+            <Image
+              src={`/static/images/empty-asset${isMobile ? '-sm' : ''}.png`}
+              alt="empty"
+              width={isMobile ? 250 : 400}
+              height={isMobile ? 250 : 400}
+            />
             <div className="c-cart__empty__title">{t('cart-empty-title')}</div>
             <div className="c-cart__empty__subtitle">{t('cart-empty-subtitle')}</div>
             <Link href="/create">

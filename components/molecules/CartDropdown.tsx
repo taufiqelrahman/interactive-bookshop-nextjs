@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
@@ -29,12 +30,13 @@ const CartDropdown = (props: CartDropdownProps) => {
                 return (
                   <div key={i} className="c-cart-dropdown__item">
                     <div className="flex items-center">
-                      <img
+                      <Image
                         src={previewImg(item.customAttributes)}
                         alt="item"
                         className="c-cart-dropdown__item__image"
-                        width="44"
-                        height="44"
+                        width={44}
+                        height={44}
+                        unoptimized
                       />
                       <div>
                         <div className="c-cart-dropdown__item__name">

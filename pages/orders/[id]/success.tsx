@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import cookies from 'next-cookies';
@@ -42,7 +43,14 @@ const OrderSuccess: React.FC<OrderSuccessProps> = (props) => {
             <div className="c-success__container" style={props.isMobile ? { height: `calc(${screenHeight})` } : {}}>
               <div>
                 {/* <img alt="success" className="c-success__image" src="/static/images/success.png" /> */}
-                <img alt="success" className="c-success__image" src="/static/images/old_man.gif" />
+                <Image
+                  alt="success"
+                  className="c-success__image"
+                  src="/static/images/old_man.gif"
+                  width={300}
+                  height={300}
+                  priority
+                />
                 <h1 className="c-success__title">{paymentProblem ? t('payment-problem') : t('order-success')}</h1>
                 <div className="c-success__subtitle">
                   {paymentProblem

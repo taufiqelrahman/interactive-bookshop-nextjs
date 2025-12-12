@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -178,7 +179,14 @@ const Login: React.FC<LoginProps> = (props) => {
             <div className="c-login__container">
               {loginStep === stepEnum.WELCOME && (
                 <Fragment>
-                  <img alt="welcome" className="c-login__image" src="/static/images/login-illus.png" />
+                  <Image
+                    alt="welcome"
+                    className="c-login__image"
+                    src="/static/images/login-illus.png"
+                    width={400}
+                    height={400}
+                    priority
+                  />
                   <h1 className="c-login__title">{isTransit ? t('please-wait') : t('welcome-back')}</h1>
                   <Button
                     name="google"
@@ -341,7 +349,13 @@ const Login: React.FC<LoginProps> = (props) => {
               {loginStep === stepEnum.SENT && (
                 <div className="c-login__form">
                   <div>
-                    <img alt="welcome" className="c-login__image" src="/static/images/welcome.png" />
+                    <Image
+                      alt="welcome"
+                      className="c-login__image"
+                      src="/static/images/welcome.png"
+                      width={400}
+                      height={400}
+                    />
                     <h1 className="c-login__title" style={{ marginBottom: 12 }}>
                       {t('form:email-sent-title')}
                     </h1>

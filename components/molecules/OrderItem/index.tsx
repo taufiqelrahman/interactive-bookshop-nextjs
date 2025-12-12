@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import Skeleton from 'react-loading-skeleton';
 import NumberFormat from 'react-number-format';
@@ -61,7 +62,7 @@ const OrderItem = (props: OrderItemProps) => {
                   <Skeleton height={47} width={47} />
                 ) : (
                   <div className="c-order-item__detail__image">
-                    <img src={previewImg(lineItems[0])} alt="item preview" />
+                    <Image src={previewImg(lineItems[0])} alt="item preview" width={47} height={47} unoptimized />
                   </div>
                 )}
               </div>
@@ -132,7 +133,7 @@ const OrderItem = (props: OrderItemProps) => {
               <Skeleton height={180} width={142} />
             ) : (
               <div className="c-order-item__preview__image">
-                <img src={previewImg(lineItems[0])} alt="item preview" />
+                <Image src={previewImg(lineItems[0])} alt="item preview" width={142} height={180} unoptimized />
               </div>
             )}
           </div>

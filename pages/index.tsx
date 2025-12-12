@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React from 'react';
@@ -62,17 +63,23 @@ const Index: React.FC<IndexProps> = (props) => {
                 </Link>
               </div>
               <div className="c-section--top__image">
-                <img src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`} alt="pilots" />
+                <Image
+                  src={`/static/images/pilots${props.isMobile ? '-sm' : ''}.png`}
+                  alt="pilots"
+                  width={props.isMobile ? 300 : 500}
+                  height={props.isMobile ? 300 : 500}
+                  priority
+                />
               </div>
             </div>
             <div className="c-section__create-now__books">
               <LazyLoad>
-                <img src="/static/images/book-decoration.png" alt="books" />
+                <Image src="/static/images/book-decoration.png" alt="books" width={200} height={200} />
               </LazyLoad>
             </div>
             <div className="c-section__create-now__dust">
               <LazyLoad>
-                <img src="/static/images/dust-decoration.png" alt="dust" />
+                <Image src="/static/images/dust-decoration.png" alt="dust" width={150} height={150} />
               </LazyLoad>
             </div>
           </div>
@@ -111,7 +118,12 @@ const Index: React.FC<IndexProps> = (props) => {
           {occupationsTop.map((job) => (
             <div key={job.id} className="c-section__jobs__circle">
               <LazyLoad>
-                <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                <Image
+                  src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`}
+                  alt={job.name}
+                  width={180}
+                  height={180}
+                />
               </LazyLoad>
             </div>
           ))}
@@ -122,7 +134,12 @@ const Index: React.FC<IndexProps> = (props) => {
               job.name !== 'President' && (
                 <div key={job.id} className="c-section__jobs__circle">
                   <LazyLoad>
-                    <img src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`} alt={job.name} />
+                    <Image
+                      src={`/static/images/jobs-lg/${(job.name || '').toLowerCase()}.png`}
+                      alt={job.name}
+                      width={180}
+                      height={180}
+                    />
                   </LazyLoad>
                 </div>
               ),

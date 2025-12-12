@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ReactNode, CSSProperties, ChangeEvent } from 'react';
 
@@ -36,7 +37,12 @@ const Checkbox: React.FC<CheckboxProps> = (props) => {
       <label htmlFor={`${props.name}-${props.value}`}>
         <div className={checkboxClass()}>
           {props.value !== 'President' && (
-            <img src={`/static/images/jobs/${(props.value || '').toLowerCase()}.png`} alt="props.value" />
+            <Image
+              src={`/static/images/jobs/${(props.value || '').toLowerCase()}.png`}
+              alt="props.value"
+              width={180}
+              height={180}
+            />
           )}
         </div>
         {props.children}
