@@ -325,8 +325,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
         try {
           const { data: me } = await api(ctx.req).users.getMe();
           store.dispatch(setLogin(true));
-          // @todo fix typing
-          store.dispatch(loadUser({ isFetching: false, payload: me as unknown as User }));
+          store.dispatch(loadUser({ isFetching: false, payload: me as User }));
         } catch {
           store.dispatch(setExpired(true));
         }

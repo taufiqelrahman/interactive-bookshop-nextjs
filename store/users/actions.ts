@@ -32,8 +32,7 @@ export const thunkLoadUser =
     return api(req)
       .users.getMe()
       .then(({ data }) => {
-        // @todo fix typing
-        dispatch(loadUser({ isFetching: false, payload: data as unknown as types.User }));
+        dispatch(loadUser({ isFetching: false, payload: data as types.User }));
         if (data.cart) dispatch(thunkLoadCart(data.cart.checkout_id));
       })
       .catch((err) => {
