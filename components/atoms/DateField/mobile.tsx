@@ -7,6 +7,16 @@ import Sheet from 'components/atoms/Sheet';
 
 import DatePicker from '../DatePicker';
 
+interface PickerData {
+  day: { item: HTMLElement };
+  month: { item: HTMLElement };
+  year: { item: HTMLElement };
+}
+
+interface PickerWithData extends Picker {
+  data: PickerData;
+}
+
 interface DateFieldState {
   date: string | null;
   month: string | null;
@@ -70,9 +80,9 @@ const DateField = (props: DateFieldProps) => {
   const onSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!picker || typeof picker !== 'object' || !('data' in picker)) return;
-    // @todo fix type
-    const pickerData = (picker as { data: any }).data;
-    const { day, month, year } = pickerData;
+
+    const pickerWithData = picker as PickerWithData;
+    const { day, month, year } = pickerWithData.data;
     setState((prev) => ({
       ...prev,
       date: day.item.textContent,
