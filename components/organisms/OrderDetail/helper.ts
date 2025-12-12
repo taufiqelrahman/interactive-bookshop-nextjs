@@ -4,9 +4,9 @@ import { getPreviewUrl } from 'lib/format-image';
 /**
  * WhatsApp contact configuration
  * Base URL for WhatsApp Web API with Indonesian phone number
- * Note: Replace 'xxx' with actual phone number digits
+ * Uses environment variable for phone number configuration
  */
-const WHATSAPP_BASE_URL = 'https://wa.me/628xxx?text=' as const;
+const WHATSAPP_BASE_URL = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '628xxxxxxxxxx'}?text=` as const;
 
 /**
  * Enhanced line item with custom attributes

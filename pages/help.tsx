@@ -93,11 +93,11 @@ const Help = (props: any): any => {
                   <div className="c-help-section__info">
                     <h2 style={props.isMobile ? {} : { marginBottom: 16 }}>Interactive Bookshop Next.js</h2>
                     <div className="c-help-section__address">
-                      Lorem Ipsum
-                      <br />
-                      Jakarta Indonesia
+                      {process.env.NEXT_PUBLIC_CONTACT_ADDRESS || 'Jakarta, Indonesia'}
                     </div>
-                    <div className="c-help-section__phone">(+62) 877-xxxx-xxxx</div>
+                    <div className="c-help-section__phone">
+                      {process.env.NEXT_PUBLIC_CONTACT_PHONE || '+62 21 xxxx xxxx'}
+                    </div>
                   </div>
                 </div>
                 <Divider
