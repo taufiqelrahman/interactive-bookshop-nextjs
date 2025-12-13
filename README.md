@@ -4,11 +4,11 @@
 [![codecov](https://codecov.io/gh/taufiqelrahman/interactive-bookshop-nextjs/branch/master/graph/badge.svg)](https://codecov.io/gh/taufiqelrahman/interactive-bookshop-nextjs)
 [![Good First Issue](https://img.shields.io/badge/good%20first%20issue-friendly-brightgreen)](https://github.com/taufiqelrahman/interactive-bookshop-nextjs/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![Node Version](https://img.shields.io/badge/node-22.x-brightgreen)](https://nodejs.org/)
-![TypeScript](https://img.shields.io/badge/TS-4.9.5%20strict-blue)
-![Next.js](https://img.shields.io/badge/Next.js-12.3.4-black)
+![TypeScript](https://img.shields.io/badge/TS-5.7.2%20strict-blue)
+![Next.js](https://img.shields.io/badge/Next.js-14.2.32-black)
 ![React](https://img.shields.io/badge/React-18.2.0-blue)
 
-**Interactive Bookshop Next.js** is an open-source web application for creating **personalized children's books** with e-commerce support. Built with a **Next.js 12 + React 18 + Redux + Shopify + PWA** stack with **TypeScript strict mode**, it's ideal for learning modern full-stack development and contributing to a real project.
+**Interactive Bookshop Next.js** is an open-source web application for creating **personalized children's books** with e-commerce support. Built with a **Next.js 14 + React 18 + Redux + Shopify + PWA** stack with **TypeScript strict mode**, it's ideal for learning modern full-stack development and contributing to a real project.
 
 ---
 
@@ -23,7 +23,9 @@
 - **Responsive Design**: Mobile-first UI with Tailwind CSS
 - **Multi-language Support**: Internationalization via next-i18next
 - **Type-Safe**: Full TypeScript strict mode with 300+ type fixes
-- **Modern Stack**: Next.js 12 + React 18 for improved performance
+- **Modern Stack**: Next.js 14 + React 18 for improved performance
+- **Optimized Images**: Next.js Image component for automatic optimization
+- **Code Splitting**: Dynamic imports for reduced bundle size (~40KB saved)
 
 ---
 
@@ -31,8 +33,8 @@
 
 **Frontend**
 
-- Next.js 12.3.4 (SSR/SSG with Pages Router)
-- React 18.2.0 + TypeScript 4.9.5 (strict mode)
+- Next.js 14.2.32 (SSR/SSG with Pages Router)
+- React 18.2.0 + TypeScript 5.7.2 (strict mode)
 - Redux Toolkit 2.8.2 + Thunk
 - Tailwind CSS 2.2.19 + Styled-JSX 5.0.7
 - React Hook Form 4.7.1
