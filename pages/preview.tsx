@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -5,10 +6,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import PreviewContainer from 'components/organisms/Preview';
 import api from 'services/api';
 import { wrapper } from 'store';
 import { loadBookPages } from 'store/master/reducers';
+
+const PreviewContainer = dynamic(() => import('components/organisms/Preview'), { ssr: false });
 
 const Preview = (props: any): any => {
   const { t } = useTranslation('common');
