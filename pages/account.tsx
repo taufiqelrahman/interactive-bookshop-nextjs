@@ -5,17 +5,16 @@ import { useTranslation } from 'next-i18next';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
 
-import TextField from 'components/atoms/TextField';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import api from 'services/api';
 import { wrapper } from 'store';
 import actions from 'store/actions';
 import { loadProvinces } from 'store/master/reducers';
-// import Modal from 'components/atoms/Modal';
 
+const TextField = dynamic(() => import('components/atoms/TextField'));
+const Select = dynamic(() => import('react-select'), { ssr: false });
 const Stepper = dynamic(() => import('components/atoms/Stepper'));
 const Card = dynamic(() => import('components/atoms/Card'));
 const Button = dynamic(() => import('components/atoms/Button'));
@@ -188,6 +187,7 @@ const Account = (props: any): any => {
     } else {
       unregister('province');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.address.isEdit]);
   return (
     <DefaultLayout
