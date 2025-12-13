@@ -1,12 +1,14 @@
+import dynamic from 'next/dynamic';
 import cookies from 'next-cookies';
 
-import OrderDetailDesktop from 'components/organisms/OrderDetail/desktop';
-import OrderDetailMobile from 'components/organisms/OrderDetail/mobile';
 import { formatPayment } from 'lib/format-payment';
 import api from 'services/api';
 import { OrderResponse } from 'services/api/orders';
 import { wrapper } from 'store';
 import { loadOrder } from 'store/orders/reducers';
+
+const OrderDetailDesktop = dynamic(() => import('components/organisms/OrderDetail/desktop'));
+const OrderDetailMobile = dynamic(() => import('components/organisms/OrderDetail/mobile'));
 
 interface OrderDetailProps {
   isMobile?: boolean;
