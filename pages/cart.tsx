@@ -185,9 +185,7 @@ const Cart = ({ isMobile, setSideNav }: { isMobile?: boolean; setSideNav?: (open
             <div className="c-cart__empty__title">{t('cart-empty-title')}</div>
             <div className="c-cart__empty__subtitle">{t('cart-empty-subtitle')}</div>
             <Link href="/create">
-              <a>
-                <Button className={isMobile ? 'w-full' : ''}>{t('cart-empty-cta')}</Button>
-              </a>
+              <Button className={isMobile ? 'w-full' : ''}>{t('cart-empty-cta')}</Button>
             </Link>
           </div>
         )}

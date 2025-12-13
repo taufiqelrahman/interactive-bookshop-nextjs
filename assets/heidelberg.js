@@ -4,8 +4,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // /* global Hammer */
 
-const init = function() {
-  (function(factory) {
+const init = function () {
+  (function (factory) {
     // expose Heidelberg
     // if (typeof module === 'object' && module.exports) {
     //   require('browsernizr/test/css/transformstylepreserve3d');
@@ -21,14 +21,14 @@ const init = function() {
 
     window.Heidelberg = factory(require('jquery'), Modernizr);
     // }
-  })(function($, Modernizr) {
+  })(function ($, Modernizr) {
     'use strict';
 
     function Heidelberg(el, options) {
       // Allow developer to omit new when instantiating
       if (!(this instanceof Heidelberg)) {
         if (el.length) {
-          Array.prototype.forEach.call(el, function(n) {
+          Array.prototype.forEach.call(el, function (n) {
             return new Heidelberg(n, options);
           });
         } else {
@@ -46,8 +46,8 @@ const init = function() {
         concurrentAnimations: null,
         limitPageTurns: true,
         initialActivePage: 0,
-        onPageTurn: function() {},
-        onSpreadSetup: function() {},
+        onPageTurn: function () {},
+        onSpreadSetup: function () {},
       };
 
       this.options = $.extend({}, defaults, options);
@@ -60,12 +60,12 @@ const init = function() {
       this.init();
     }
 
-    Heidelberg.prototype.init = function() {
+    Heidelberg.prototype.init = function () {
       const el = this.el;
       const els = {};
       const options = this.options;
 
-      setTimeout(function() {
+      setTimeout(function () {
         el.addClass('is-ready');
       }, 0);
 
@@ -120,14 +120,14 @@ const init = function() {
 
       els.previousTrigger.on(
         'click',
-        function() {
+        function () {
           this.turnPage('back');
         }.bind(this),
       );
 
       els.nextTrigger.on(
         'click',
-        function() {
+        function () {
           els.pageFirst.removeClass('is-calling');
           clearInterval(initInterval);
           this.turnPage('forwards');
@@ -143,7 +143,7 @@ const init = function() {
         const hammerLeft = new Hammer(document.querySelector('.Heidelberg-Page:nth-child(2n)'), opts);
         hammerLeft.on(
           'swiperight',
-          function(evt) {
+          function (evt) {
             this.turnPage('back');
             // evt.gesture.stopDetect();
             evt.preventDefault();
@@ -153,7 +153,7 @@ const init = function() {
         const hammerRight = new Hammer(document.querySelector('.Heidelberg-Page:nth-child(odd)'), opts);
         hammerRight.on(
           'swipeleft',
-          function(evt) {
+          function (evt) {
             this.turnPage('forwards');
             // evt.gesture.stopDetect();
             evt.preventDefault();
@@ -171,7 +171,7 @@ const init = function() {
 
       if (options.arrowKeys) {
         $(document).keydown(
-          function(e) {
+          function (e) {
             if (e.keyCode == forwardsKeycode) {
               this.turnPage('forwards');
               clearInterval(initInterval);
@@ -186,7 +186,7 @@ const init = function() {
       }
     };
 
-    Heidelberg.prototype.isLastPage = function() {
+    Heidelberg.prototype.isLastPage = function () {
       const el = this.el;
       const els = {};
       const index = {};
@@ -196,7 +196,7 @@ const init = function() {
       return els.pages.last().index() == index.activeLeft;
     };
 
-    Heidelberg.prototype.isFirstPage = function() {
+    Heidelberg.prototype.isFirstPage = function () {
       const el = this.el;
       const els = {};
       const index = {};
@@ -206,7 +206,7 @@ const init = function() {
       return els.pages.first().index() == index.activeRight;
     };
 
-    Heidelberg.prototype.turnPage = function(arg) {
+    Heidelberg.prototype.turnPage = function (arg) {
       const el = this.el;
       const els = {};
       const options = this.options;
@@ -289,7 +289,7 @@ const init = function() {
 
       els.pagesAnimating.on(
         'webkitTransitionEnd oTransitionEnd msTransitionEnd transitionend',
-        function() {
+        function () {
           els.pagesAnimating.removeClass('is-animating');
           els.pagesActive.removeClass('was-active');
         }.bind(document),
@@ -311,15 +311,13 @@ const init = function() {
       }
     };
 
-    Heidelberg.prototype.setupSpreads = function() {
+    Heidelberg.prototype.setupSpreads = function () {
       const el = this.el;
       const options = this.options;
 
-      $('.Heidelberg-Spread', el).each(function() {
+      $('.Heidelberg-Spread', el).each(function () {
         const spreadEl = $(this);
-        const pageEl = $('<div />')
-          .addClass('Heidelberg-Page with-Spread')
-          .html(spreadEl.clone());
+        const pageEl = $('<div />').addClass('Heidelberg-Page with-Spread').html(spreadEl.clone());
         spreadEl.after(pageEl);
         spreadEl.replaceWith(pageEl.clone());
       });

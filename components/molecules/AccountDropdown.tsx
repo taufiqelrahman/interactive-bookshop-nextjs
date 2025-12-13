@@ -17,9 +17,7 @@ const AccountDropdown = (props: AccountDropdownProps) => {
     <div onClick={(e) => e.stopPropagation()}>
       <div className="c-account-dropdown">
         <div className="c-account-dropdown__item">
-          <Link href="/orders">
-            <a>{t('my-orders')}</a>
-          </Link>
+          <Link href="/orders">{t('my-orders')}</Link>
         </div>
         <Divider style={{ borderColor: '#ededed', borderWidth: 1, margin: '0 18px' }} />
         <div className="c-account-dropdown__item c-account-dropdown__sign-out" onClick={signOut}>

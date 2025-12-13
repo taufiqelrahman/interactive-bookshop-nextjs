@@ -96,20 +96,16 @@ const SideNav: React.FC = (): JSX.Element => {
             ) : (
               // Guest user authentication options
               <div className="c-side-nav__header__guest">
-                <Link href="/login">
-                  <a aria-label="Go to login page">
-                    <Button width="76px" variant="outline,rectangle">
-                      {t('login')}
-                    </Button>
-                  </a>
+                <Link href="/login" aria-label="Go to login page">
+                  <Button width="76px" variant="outline,rectangle">
+                    {t('login')}
+                  </Button>
                 </Link>
                 <div className="c-side-nav__header__separator" aria-hidden="true">
                   {t('or')}
                 </div>
-                <Link href="/register">
-                  <a className="c-side-nav__header__link" aria-label="Go to registration page">
-                    {t('register')}
-                  </a>
+                <Link href="/register" className="c-side-nav__header__link" aria-label="Go to registration page">
+                  {t('register')}
                 </Link>
               </div>
             )}
@@ -118,41 +114,36 @@ const SideNav: React.FC = (): JSX.Element => {
           {/* Main navigation menu with contextual links */}
           <nav className="c-side-nav__menu" role="menu">
             {/* Primary navigation links available to all users */}
-            <Link href="/">
-              <a className="c-side-nav__menu__link" role="menuitem" aria-label="Go to home page">
-                {t('home')}
-              </a>
+            <Link href="/" className="c-side-nav__menu__link" role="menuitem" aria-label="Go to home page">
+              {t('home')}
             </Link>
 
-            <Link href="/cart">
-              <a className="c-side-nav__menu__link" role="menuitem" aria-label="View shopping cart">
-                {t('cart')}
-              </a>
+            <Link href="/cart" className="c-side-nav__menu__link" role="menuitem" aria-label="View shopping cart">
+              {t('cart')}
             </Link>
 
             {/* Authenticated user only - Order history */}
             {users.isLoggedIn && (
-              <Link href="/orders">
-                <a className="c-side-nav__menu__link" role="menuitem" aria-label="View order history">
-                  {t('my-orders')}
-                </a>
+              <Link href="/orders" className="c-side-nav__menu__link" role="menuitem" aria-label="View order history">
+                {t('my-orders')}
               </Link>
             )}
 
             {/* Authenticated user only - Account management */}
             {users.isLoggedIn && (
-              <Link href="/account">
-                <a className="c-side-nav__menu__link" role="menuitem" aria-label="Manage account settings">
-                  {t('account')}
-                </a>
+              <Link
+                href="/account"
+                className="c-side-nav__menu__link"
+                role="menuitem"
+                aria-label="Manage account settings"
+              >
+                {t('account')}
               </Link>
             )}
 
             {/* Help section available to all users */}
-            <Link href="/help">
-              <a className="c-side-nav__menu__link" role="menuitem" aria-label="Get help and support">
-                {t('help-title')}
-              </a>
+            <Link href="/help" className="c-side-nav__menu__link" role="menuitem" aria-label="Get help and support">
+              {t('help-title')}
             </Link>
           </nav>
         </div>

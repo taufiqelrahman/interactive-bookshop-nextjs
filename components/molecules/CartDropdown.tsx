@@ -21,9 +21,7 @@ const CartDropdown = (props: CartDropdownProps) => {
           <div className="c-cart-dropdown__container">
             <div className="c-cart-dropdown__header">
               <div className="c-cart-dropdown__quantity">{props.items.length} item(s)</div>
-              <Link href="/cart">
-                <a>{t('cart-link')}</a>
-              </Link>
+              <Link href="/cart">{t('cart-link')}</Link>
             </div>
             <div className="c-cart-dropdown__content">
               {props.items.map((item, i) => {

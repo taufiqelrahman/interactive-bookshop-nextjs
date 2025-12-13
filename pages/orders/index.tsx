@@ -43,9 +43,7 @@ const Orders: React.FC<OrdersProps> = (props) => {
             {orderList.length > 0 ? (
               orderList.map((item: any) => (
                 <Link key={item.id || item} href={item.id ? `/orders/${item.name.replace('#', '')}` : ''}>
-                  <a>
-                    <OrderItem {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
-                  </a>
+                  <OrderItem {...item} style={{ marginBottom: 12 }} isSkeleton={orders.isFetching} />
                 </Link>
               ))
             ) : (
@@ -59,9 +57,7 @@ const Orders: React.FC<OrdersProps> = (props) => {
                 <div className="c-order-list__empty__title">{t('order-empty-title')}</div>
                 <div className="c-orders__empty__subtitle">{t('orders-empty-subtitle')}</div>
                 <Link href="/create">
-                  <a>
-                    <Button className={props.isMobile ? 'w-full' : ''}>{t('orders-empty-cta')}</Button>
-                  </a>
+                  <Button className={props.isMobile ? 'w-full' : ''}>{t('orders-empty-cta')}</Button>
                 </Link>
               </div>
             )}

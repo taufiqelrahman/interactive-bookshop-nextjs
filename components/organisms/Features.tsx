@@ -87,19 +87,19 @@ const Features: React.FC<FeaturesProps> = ({ features, className = '', title, ba
             const featureUrl = getFeatureUrl(feature.slug);
 
             return (
-              <Link key={featureKey} href={featureUrl}>
-                <a
-                  className="c-features__item"
-                  style={{
-                    backgroundImage: imageUrl ? `url('${imageUrl}')` : 'none',
-                  }}
-                  aria-label={`View details for ${feature.name}`}
-                  title={feature.name}
-                >
-                  <span className="c-features__item-name" aria-hidden="false">
-                    {feature.name}
-                  </span>
-                </a>
+              <Link
+                key={featureKey}
+                href={featureUrl}
+                className="c-features__item"
+                style={{
+                  backgroundImage: imageUrl ? `url('${imageUrl}')` : 'none',
+                }}
+                aria-label={`View details for ${feature.name}`}
+                title={feature.name}
+              >
+                <span className="c-features__item-name" aria-hidden="false">
+                  {feature.name}
+                </span>
               </Link>
             );
           })}

@@ -68,9 +68,7 @@ const Help = ({ isMobile, setSideNav }: { isMobile?: boolean; setSideNav?: (open
           </div>
           <div className="c-about-us--long">Perlu kita ketahui bahwa gemar membaca ...</div>
           <Link href="/create">
-            <a>
-              <Button className="text-center">{t('cart-empty-cta')}</Button>
-            </a>
+            <Button className="text-center">{t('cart-empty-cta')}</Button>
           </Link>
         </div>
         <LazyLoad>

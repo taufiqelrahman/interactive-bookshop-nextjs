@@ -116,17 +116,17 @@ const Footer = memo<FooterProps>(
             <div className="c-footer__right">
               {/* Footer navigation menu */}
               <nav className="c-footer__right__menu" role="navigation" aria-label="Footer navigation">
-                <Link href="/about">
-                  <a aria-label="Learn more about us">{t('about-us')}</a>
+                <Link href="/about" aria-label="Learn more about us">
+                  {t('about-us')}
                 </Link>
-                <Link href="/policies">
-                  <a aria-label="Read our policies">{t('policies')}</a>
+                <Link href="/policies" aria-label="Read our policies">
+                  {t('policies')}
                 </Link>
-                <Link href="/terms">
-                  <a aria-label="Read our terms of service">{t('terms')}</a>
+                <Link href="/terms" aria-label="Read our terms of service">
+                  {t('terms')}
                 </Link>
-                <Link href="/help">
-                  <a aria-label="Get help or contact us">{t('help-contact-us')}</a>
+                <Link href="/help" aria-label="Get help or contact us">
+                  {t('help-contact-us')}
                 </Link>
               </nav>
 

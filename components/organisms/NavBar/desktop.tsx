@@ -167,22 +167,18 @@ const NavBar = (): JSX.Element => {
    */
   const renderCartMenu = useMemo(
     () => (
-      <Link href="/cart">
-        <div
-          className="c-nav-bar__menu__cart"
-          onMouseEnter={() => toggleShow(true, setShowCart)}
-          onMouseLeave={() => toggleShow(false, setShowCart)}
-        >
-          <a>
-            <div className="c-nav-bar__menu__item c-nav-bar__menu__cart__button">
-              <span className="c-nav-bar__menu__icon icon-cart"></span>
-              {t('cart')}
-              {cartNotEmpty && <Dot color="red" />}
-            </div>
-          </a>
-          {showCart && <CartDropdown items={cartItems || []} />}
-        </div>
-      </Link>
+      <div
+        className="c-nav-bar__menu__cart"
+        onMouseEnter={() => toggleShow(true, setShowCart)}
+        onMouseLeave={() => toggleShow(false, setShowCart)}
+      >
+        <Link href="/cart" className="c-nav-bar__menu__item c-nav-bar__menu__cart__button">
+          <span className="c-nav-bar__menu__icon icon-cart"></span>
+          {t('cart')}
+          {cartNotEmpty && <Dot color="red" />}
+        </Link>
+        {showCart && <CartDropdown items={cartItems || []} />}
+      </div>
     ),
     [toggleShow, t, cartNotEmpty, showCart, cartItems],
   );
@@ -193,21 +189,17 @@ const NavBar = (): JSX.Element => {
    */
   const renderAccountMenu = useMemo(
     () => (
-      <Link href="/account">
-        <div
-          className="c-nav-bar__menu__account"
-          onMouseEnter={() => toggleShow(true, setShowAccount)}
-          onMouseLeave={() => toggleShow(false, setShowAccount)}
-        >
-          <a>
-            <div className="c-nav-bar__menu__item c-nav-bar__menu__button">
-              <span className="c-nav-bar__menu__icon icon-account"></span>
-              {userName}
-            </div>
-          </a>
-          {showAccount && <AccountDropdown logout={handleLogout} />}
-        </div>
-      </Link>
+      <div
+        className="c-nav-bar__menu__account"
+        onMouseEnter={() => toggleShow(true, setShowAccount)}
+        onMouseLeave={() => toggleShow(false, setShowAccount)}
+      >
+        <Link href="/account" className="c-nav-bar__menu__item c-nav-bar__menu__button">
+          <span className="c-nav-bar__menu__icon icon-account"></span>
+          {userName}
+        </Link>
+        {showAccount && <AccountDropdown logout={handleLogout} />}
+      </div>
     ),
     [toggleShow, userName, showAccount, handleLogout],
   );
@@ -219,8 +211,8 @@ const NavBar = (): JSX.Element => {
   const renderGuestMenu = useMemo(
     () =>
       guestMenu.map((menu, index) => (
-        <Link key={index} href={menu.path}>
-          <a className={`c-nav-bar__menu__item ${menu.className || ''}`}>{menu.text}</a>
+        <Link key={index} href={menu.path} className={`c-nav-bar__menu__item ${menu.className || ''}`}>
+          {menu.text}
         </Link>
       )),
     [guestMenu],
@@ -231,10 +223,8 @@ const NavBar = (): JSX.Element => {
       <div className={stickyClassName} ref={navBarRef}>
         <div className="c-nav-bar">
           <div className="u-container u-container__spread">
-            <Link href="/">
-              <a className="c-nav-bar__logo">
-                <Image src="/static/images/logo.png" alt="Interactive Bookshop Logo" width={54} height={40} priority />
-              </a>
+            <Link href="/" className="c-nav-bar__logo">
+              <Image src="/static/images/logo.png" alt="Interactive Bookshop Logo" width={54} height={40} priority />
             </Link>
             <div className="c-nav-bar__menu">
               {/* Language translation toggle */}

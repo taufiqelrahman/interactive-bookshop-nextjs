@@ -62,14 +62,12 @@ const OrderSuccess: React.FC<OrderSuccessProps> = (props) => {
               </div>
               <div className="c-success__actions">
                 <Link href={paymentProblem ? '/create' : `/orders/${id}`}>
-                  <a>
-                    <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
-                      {paymentProblem ? t('create-another') : t('go-to-orders')}
-                    </Button>
-                  </a>
+                  <Button type="submit" width="397px" style={{ margin: '18px 0' }}>
+                    {paymentProblem ? t('create-another') : t('go-to-orders')}
+                  </Button>
                 </Link>
-                <Link href="/">
-                  <a className="c-success__link">{t('back-to-home')}</a>
+                <Link href="/" className="c-success__link">
+                  {t('back-to-home')}
                 </Link>
               </div>
             </div>

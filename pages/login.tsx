@@ -219,11 +219,9 @@ const Login: React.FC<LoginProps> = (props) => {
                     {`${t('login-with')} Email`}
                   </div>
                   <Divider />
-                  <Link href="/register">
-                    <a className="c-login__link">
-                      <span>{t('no-account')}</span>
-                      {' ' + t('register')}
-                    </a>
+                  <Link href="/register" className="c-login__link">
+                    <span>{t('no-account')}</span>
+                    {' ' + t('register')}
                   </Link>
                 </Fragment>
               )}

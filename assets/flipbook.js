@@ -6,10 +6,10 @@
 //
 ///////////////////////////////////
 
-const init = function() {
-  (function(factory) {
+const init = function () {
+  (function (factory) {
     window.FlipBook = factory();
-  })(function() {
+  })(function () {
     'use strict';
     const Modernizr = window.Modernizr || { csstransforms3d: true };
     if (typeof Modernizr.preserve3d !== 'boolean') Modernizr.preserve3d = true;
@@ -18,7 +18,7 @@ const init = function() {
       // Allow developer to omit new when instantiating
       if (!(this instanceof FlipBook)) {
         if (!el.length) return new FlipBook(el, options);
-        Array.prototype.forEach.call(el, n => new FlipBook(n, options));
+        Array.prototype.forEach.call(el, (n) => new FlipBook(n, options));
       }
 
       // OPTIONS
@@ -29,7 +29,7 @@ const init = function() {
         arrowKeys: true,
         initialActivePage: 0,
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onPageTurn: function() {},
+        onPageTurn: function () {},
         initialCall: false,
         width: '100%',
         height: '283px',
@@ -68,7 +68,7 @@ const init = function() {
       this.init();
     }
 
-    FlipBook.prototype.getActivePages = function() {
+    FlipBook.prototype.getActivePages = function () {
       const activePages = [];
       this.pages = this.el.querySelectorAll(`.${this.classNames.page}, .${this.classNames.hiddenCover}`);
       Array.from(this.pages).forEach((page, index) => {
@@ -101,7 +101,7 @@ const init = function() {
       });
     }
 
-    FlipBook.prototype.init = function() {
+    FlipBook.prototype.init = function () {
       const { el, options, classNames } = this;
       el.classList.add(classNames.isReady);
 
@@ -139,8 +139,8 @@ const init = function() {
 
       if (options.previousButton) pagesLeft = [...pagesLeft, options.previousButton];
       if (options.nextButton) pagesRight = [...pagesRight, options.nextButton];
-      pagesLeft.forEach(el => el.addEventListener('click', () => this.turnPage('back')));
-      pagesRight.forEach(el =>
+      pagesLeft.forEach((el) => el.addEventListener('click', () => this.turnPage('back')));
+      pagesRight.forEach((el) =>
         el.addEventListener('click', () => {
           this.turnPage('forward');
           if (options.initialCall) clearInterval(initInterval);
@@ -149,28 +149,28 @@ const init = function() {
       if (options.arrowKeys) handleArrowKeys(options, initInterval, this.turnPage.bind(this));
     };
 
-    FlipBook.prototype.isLastPage = function() {
+    FlipBook.prototype.isLastPage = function () {
       const activeLeft = this.getActivePages()[0];
       return this.pages.last().index() === activeLeft;
     };
 
-    FlipBook.prototype.isFirstPage = function() {
+    FlipBook.prototype.isFirstPage = function () {
       const activeRight = this.getActivePages()[0];
       return this.pages.first().index() === activeRight;
     };
 
     function handleAnimationEnd(pagesAnimating, pagesActive, context) {
-      pagesAnimating.forEach(page => {
+      pagesAnimating.forEach((page) => {
         if (!page) return;
         const endEvents = ['webkitTransitionEnd', 'oTransitionEnd', 'msTransitionEnd', 'transitionend'];
-        endEvents.forEach(trans => {
+        endEvents.forEach((trans) => {
           const _ = context;
           page.addEventListener(trans, () => {
-            pagesAnimating.forEach(page => {
+            pagesAnimating.forEach((page) => {
               if (!page) return;
               page.classList.remove(_.classNames.isAnimating);
             });
-            pagesActive.forEach(page => {
+            pagesActive.forEach((page) => {
               page.classList.remove(_.classNames.wasActive);
             });
           });
@@ -194,7 +194,7 @@ const init = function() {
       }
     }
 
-    FlipBook.prototype.turnPage = function(direction) {
+    FlipBook.prototype.turnPage = function (direction) {
       const { el, options, classNames } = this;
 
       const pagesActive = el.querySelectorAll(`.${classNames.page}.${classNames.isActive}`);
@@ -246,17 +246,17 @@ const init = function() {
       if (targetSibling !== -1) pagesTarget = [...pagesTarget, children.item(targetSibling)];
       pagesAnimating = [pagesAnimatingIn, pagesAnimatingOut];
 
-      pagesActive.forEach(page => {
+      pagesActive.forEach((page) => {
         page.classList.remove(classNames.isActive);
         page.classList.add(classNames.wasActive);
       });
-      pagesTarget.forEach(page => {
+      pagesTarget.forEach((page) => {
         if (!page) return;
         page.classList.add(classNames.isActive);
       });
 
       if (Modernizr.csstransforms3d) {
-        pagesAnimating.forEach(page => {
+        pagesAnimating.forEach((page) => {
           if (!page) return;
           page.classList.add(classNames.isAnimating);
         });

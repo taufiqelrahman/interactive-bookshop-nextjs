@@ -54,10 +54,8 @@ const Error: NextPage<ErrorProps> = (props) => {
           <div className="c-error">
             <div className="c-error__title">{title()}</div>
             <div className="c-error__message">{message()}</div>
-            <Link href="/">
-              <a style={props.isMobile ? { width: '100%' } : {}}>
-                <Button width={props.isMobile ? '100%' : undefined}>{t('back-to-home')}</Button>
-              </a>
+            <Link href="/" style={props.isMobile ? { width: '100%' } : {}}>
+              <Button width={props.isMobile ? '100%' : undefined}>{t('back-to-home')}</Button>
             </Link>
           </div>
           <Image

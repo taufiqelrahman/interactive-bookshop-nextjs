@@ -157,11 +157,9 @@ const Register: React.FC<RegisterProps> = (props) => {
                     {`${t('register-with')} Email`}
                   </Button>
                   <Divider />
-                  <Link href="/login">
-                    <a className="c-register__link">
-                      <span>{t('have-account')}</span>
-                      {' ' + t('login')}
-                    </a>
+                  <Link href="/login" className="c-register__link">
+                    <span>{t('have-account')}</span>
+                    {' ' + t('login')}
                   </Link>
                 </Fragment>
               ) : (
