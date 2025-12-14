@@ -1,8 +1,6 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import withPWA from 'next-pwa';
 
-import nextI18NextConfig from './next-i18next.config.js';
-
 export default withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })(
@@ -15,6 +13,10 @@ export default withBundleAnalyzer({
       publicExcludes: ['!static/images'],
     },
     reactStrictMode: true,
-    i18n: nextI18NextConfig.i18n,
+    i18n: {
+      defaultLocale: 'en',
+      locales: ['en', 'id'],
+      localeDetection: true,
+    },
   }),
 );

@@ -11,6 +11,7 @@ import { Link, Element } from 'react-scroll';
 import DefaultLayout from 'components/layouts/Default';
 import NavBar from 'components/organisms/NavBar/mobile';
 import * as gtag from 'lib/gtag';
+import { serverSideConfig } from 'next-i18next.config';
 import api from 'services/api';
 import { RootState, wrapper } from 'store';
 import { loadOccupations, loadTestimonials } from 'store/master/reducers';
@@ -435,7 +436,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
 
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'page-index', 'form'])),
+      ...(await serverSideTranslations(ctx.locale || 'en', ['common', 'page-index', 'form'], serverSideConfig)),
     },
   };
 });
