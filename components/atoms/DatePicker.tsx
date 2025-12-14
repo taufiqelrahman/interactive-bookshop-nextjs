@@ -9,6 +9,7 @@ interface DatePickerProps {
 
 const DatePicker: React.FC<DatePickerProps> = (props) => {
   const { t } = useTranslation('common');
+  const { value, setPicker } = props;
   useEffect(() => {
     const input = document.getElementById('c-date-picker__input') as HTMLInputElement | null;
     if (!input) return;
@@ -23,10 +24,10 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
         month: t('month'),
         day: t('day'),
       },
-      date: props.value,
+      date: value,
     });
-    props.setPicker(pickerInstance);
-  }, []);
+    setPicker(pickerInstance);
+  }, [value, setPicker, t]);
   return (
     <div className="c-date-picker">
       <input type="text" id="c-date-picker__input" />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Select from 'react-select';
 
 import { customStyles, dates, months, years } from './helper';
@@ -21,19 +21,19 @@ const DateField = (props: DateFieldProps) => {
   const [month, setMonth] = useState<Option | null>(null);
   const [year, setYear] = useState<Option | null>(null);
 
-  const setFullDate = () => {
+  const setFullDate = useCallback(() => {
     if (!date || !month || !year) return;
     props.setValue(props.name, `${date.value}-${month.value}-${year.value}`);
     props.triggerValidation(props.name);
-  };
+  }, [date, month, year, props]);
 
-  const setDefaultDate = () => {
+  const setDefaultDate = useCallback(() => {
     const parsed = props.defaultValue.split('-');
     if (parsed.length !== 3) return;
     setDate({ label: parsed[0], value: parsed[0] });
     setMonth({ label: parsed[1], value: parsed[1] });
     setYear({ label: parsed[2], value: parsed[2] });
-  };
+  }, [props.defaultValue]);
 
   const handleChange = (selectedOption: Option | Option[] | null, setter: (option: Option | null) => void) => {
     if (Array.isArray(selectedOption)) return;
@@ -41,12 +41,12 @@ const DateField = (props: DateFieldProps) => {
   };
   useEffect(() => {
     setFullDate();
-  }, [date, month, year]);
+  }, [date, month, year, setFullDate]);
   useEffect(() => {
     setTimeout(() => {
       if (props.defaultValue) setDefaultDate();
     }, 1000);
-  }, []);
+  }, [props.defaultValue, setDefaultDate]);
   return (
     <div className={`c-date-field ${props.errors ? 'c-date-field--error' : ''}`}>
       <Select

@@ -81,7 +81,7 @@ const Register: React.FC<RegisterProps> = (props) => {
     if (!formState.isValid) {
       toast.error(t('form:form-error'));
     }
-  }, [errors]);
+  }, [errors, formState.isValid, t]);
   const onSubmit = async (data: RegisterFormData) => {
     switch (registerStep) {
       case RegisterStep.EMAIL:

@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next';
 import Picker from 'pickerjs';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useCallback } from 'react';
 
 import Button from 'components/atoms/Button';
 import Sheet from 'components/atoms/Sheet';
@@ -48,16 +48,16 @@ const DateField = (props: DateFieldProps) => {
     show: false,
     value: null,
   });
-  const setFullDate = () => {
+  const setFullDate = useCallback(() => {
     const { date, month, year } = state;
     if (!date || !month || !year) return;
     props.setValue(props.name, `${date}-${month}-${year}`);
     props.triggerValidation(props.name);
-  };
+  }, [state, props]);
   useEffect(() => {
     setFullDate();
-  }, [state]);
-  const setDefaultDate = () => {
+  }, [state, setFullDate]);
+  const setDefaultDate = useCallback(() => {
     const parsed = props.defaultValue.split('-');
     if (parsed.length !== 3) return;
     setState({
@@ -65,10 +65,10 @@ const DateField = (props: DateFieldProps) => {
       month: parsed[1],
       year: parsed[2],
     });
-  };
+  }, [props.defaultValue]);
   useEffect(() => {
     if (props.defaultValue) setDefaultDate();
-  }, []);
+  }, [props.defaultValue, setDefaultDate]);
   const openSheet = () => {
     setSheetData((prev) => ({
       ...prev,

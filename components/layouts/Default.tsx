@@ -52,7 +52,8 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps
       isLoggedIn: users.isLoggedIn,
       path: router.pathname,
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart.cart, users.isLoggedIn, router.pathname]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -61,7 +62,7 @@ const DefaultLayout = ({ children, navbar, isMobile, style }: DefaultLayoutProps
         dispatch(setErrorMessage(''));
       }, 5000);
     }
-  }, [errorMessage]);
+  }, [errorMessage, dispatch]);
 
   return (
     <div>

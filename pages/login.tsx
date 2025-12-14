@@ -52,7 +52,7 @@ const Login: React.FC<LoginProps> = (props) => {
     if (!formState.isValid) {
       toast.error(t('form:form-error'));
     }
-  }, [errors]);
+  }, [errors, formState.isValid, t]);
 
   useEffect(() => {
     (async () => {
@@ -87,7 +87,7 @@ const Login: React.FC<LoginProps> = (props) => {
         router.push('/login');
       }
     })();
-  }, [router]);
+  }, [router, dispatch]);
 
   const loginEmail = () => {
     setLoginStep(stepEnum.EMAIL);

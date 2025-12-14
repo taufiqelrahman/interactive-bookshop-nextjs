@@ -73,7 +73,7 @@ const CartItem = (props: CartItemProps) => {
       return;
     }
     debouncedChange();
-  }, [quantity]);
+  }, [quantity, debouncedChange]);
 
   const editItem = () => {
     dispatch(
