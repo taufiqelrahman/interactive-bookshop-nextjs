@@ -13,6 +13,7 @@ import { appWithTranslation } from 'next-i18next';
 import NProgress from 'nprogress';
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import * as gtag from 'lib/gtag';
 import { removeSecureCookie } from 'lib/secure-cookies';
@@ -364,4 +365,14 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async (c
     props: { currentLocale: ctx.locale },
   };
 });
-export default wrapper.withRedux(appWithTranslation(WiguApp));
+
+function App({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  return (
+    <Provider store={store}>
+      <WiguApp Component={Component} {...props} />
+    </Provider>
+  );
+}
+
+export default appWithTranslation(App);
