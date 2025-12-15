@@ -1,4 +1,4 @@
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect } from 'react';

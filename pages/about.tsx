@@ -1,4 +1,4 @@
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Image from 'next/image';
